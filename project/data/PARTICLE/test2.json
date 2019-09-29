@@ -1,0 +1,15 @@
+{
+	"id": 0,
+	"name": "TestParticle",
+	"texturePath": "data/TEXTURE/arrow.png",
+	"particleMax": 1024,
+	"emitterMax": 1,
+	"emitNumMin": 50,
+	"emitNumMax": 100,
+	"durationMin": 10,
+	"durationMax": 20,
+	"sizeX": 5.0,
+	"sizeY": 5.0,
+	"divX": 1.0,
+	"divY": 1.0
+}

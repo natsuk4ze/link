@@ -1,0 +1,14 @@
+{
+	"name": "ExplosionFlare",
+	"texturePath": "data/TEXTURE/Particle/ExplosionFlare.png",
+	"particleMax": 2048,
+	"emitterMax": 64,
+	"emitNumMin": 5,
+	"emitNumMax": 10,
+	"durationMin": 5,
+	"durationMax": 5,
+	"sizeX": 3.0,
+	"sizeY": 3.0,
+	"divX": 2.0,
+	"divY": 2.0
+}
