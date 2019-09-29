@@ -44,23 +44,23 @@ SceneManager::~SceneManager()
 /**************************************
 シーンチェンジ処理
 ***************************************/
-void SceneManager::ChangeScene(const char* sceneName)
+void SceneManager::ChangeScene(const int sceneID)
 {
 	//シーンの存在確認
-	if (!mInstance->ExistsScene(sceneName))
+	if (!mInstance->ExistsScene(sceneID))
 	{
 		MessageBox(0, "NextScene is Not Found", "Error", 0);
 		return;
 	}
 
 	//シーン切り替え
-	mInstance->_ChengeScene(string(sceneName));
+	mInstance->_ChengeScene(sceneID);
 }
 
 /**************************************
 シーンチェンジ処理(内部)
 ***************************************/
-void SceneManager::_ChengeScene(string next)
+void SceneManager::_ChengeScene(const int sceneID)
 {
 	//現在のシーンを終了
 	if (current != NULL)
@@ -72,7 +72,7 @@ void SceneManager::_ChengeScene(string next)
 
 	//切り替え
 	prev = current;
-	current = sceneContainer[next];
+	current = sceneContainer[sceneID];
 
 	//初期化
 	current->Init();
@@ -81,12 +81,12 @@ void SceneManager::_ChengeScene(string next)
 /**************************************
 シーン追加処理
 ***************************************/
-void SceneManager::Add(const char* sceneName, BaseScene* scene)
+void SceneManager::Add(const int sceneID, BaseScene* scene)
 {
-	if (ExistsScene(sceneName))
+	if (ExistsScene(sceneID))
 		return;
 
-	sceneContainer[string(sceneName)] = scene;
+	sceneContainer[sceneID] = scene;
 }
 
 /**************************************
@@ -122,9 +122,9 @@ void SceneManager::Uninit()
 /**************************************
 シーンの存在確認
 ***************************************/
-bool SceneManager::ExistsScene(const char* sceneName)
+bool SceneManager::ExistsScene(const int sceneID)
 {
-	return sceneContainer.count(string(sceneName)) != 0;
+	return sceneContainer.count(sceneID) != 0;
 }
 
 /**************************************

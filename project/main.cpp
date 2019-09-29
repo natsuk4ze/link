@@ -7,6 +7,7 @@
 #include "main.h"
 #include <time.h>
 #include "Framework\Tool\DebugWindow.h"
+#include "source\GameMain.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -36,6 +37,7 @@ static D3DXCOLOR backColor = D3DCOLOR_RGBA(0, 0, 50, 255);
 int					g_nCountFPS;			// FPSカウンタ
 bool				g_bDispDebug = true;	// デバッグ表示ON/OFF
 static bool flgPause = false;
+static GameMain* game;
 
 //=============================================================================
 // メイン関数
@@ -45,7 +47,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	UNREFERENCED_PARAMETER(hPrevInstance);	// 無くても良いけど、警告が出る（未使用宣言）
 	UNREFERENCED_PARAMETER(lpCmdLine);		// 無くても良いけど、警告が出る（未使用宣言）
 
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	DWORD dwExecLastTime;
 	DWORD dwFPSLastTime;
@@ -333,7 +335,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	// ライティングモード
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
-	framework = new Framework(hInstance, hWnd);
+	game = new GameMain(hInstance, hWnd);
 
 	return S_OK;
 }
@@ -343,7 +345,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 //=============================================================================
 void Uninit(void)
 {
-	SAFE_DELETE(framework);
+	SAFE_DELETE(game);
 
 	if (g_pD3DDevice != NULL)
 	{// デバイスの開放
@@ -363,7 +365,7 @@ void Uninit(void)
 //=============================================================================
 void Update(HWND hWnd)
 {
-	framework->Update();
+	game->Update();
 }
 
 //=============================================================================
@@ -375,7 +377,7 @@ void Draw(void)
 	{
 		g_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), backColor, 1.0f, 0);
 
-		framework->Draw();
+		game->Draw();
 
 		g_pD3DDevice->EndScene();
 	}

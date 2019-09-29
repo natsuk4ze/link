@@ -26,10 +26,10 @@ public:
 	~SceneManager();
 
 	//シーン切り替え処理
-	static void ChangeScene(const char* sceneName);
+	static void ChangeScene(const int sceneID);
 
 	//シーン追加処理
-	void Add(const char* sceneName, BaseScene* scene);
+	void Add(const int sceneID, BaseScene* scene);
 
 	//更新処理、描画処理、終了処理
 	void Update();
@@ -37,20 +37,20 @@ public:
 	void Uninit();
 
 	//シーン確認処理
-	bool ExistsScene(const char* sceneName);
+	bool ExistsScene(int sceneID);
 
 	//クリア処理
 	void Clear();
 
 private:
 	//シーンコンテナ
-	std::unordered_map<std::string, BaseScene*> sceneContainer;
+	std::unordered_map<int, BaseScene*> sceneContainer;
 
 	//現在のシーン、一つ前のシーン
 	BaseScene *current, *prev;
 
 	//シーン切り替え（内部処理）
-	void _ChengeScene(std::string next);
+	void _ChengeScene(const int sceneID);
 
 	//staticインスタンス
 	static SceneManager* mInstance;
