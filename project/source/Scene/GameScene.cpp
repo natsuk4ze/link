@@ -8,11 +8,17 @@
 #include "GameScene.h"
 #include "../../Framework/Tool/DebugWindow.h"
 
+#include "../../Framework/Renderer3D/TransformObject.h"
+
 /**************************************
 ‰Šú‰»ˆ—
 ***************************************/
 void GameScene::Init()
 {
+	object = new TransformObject();
+
+	//ƒJƒƒ‰‚ÌˆÊ’u‚ð‰Šú‰»
+
 }
 
 /**************************************
@@ -20,6 +26,7 @@ void GameScene::Init()
 ***************************************/
 void GameScene::Uninit()
 {
+	SAFE_DELETE(object);
 }
 
 /**************************************
@@ -35,5 +42,6 @@ void GameScene::Update()
 ***************************************/
 void GameScene::Draw()
 {
+	object->Draw();
 	Debug::Log("CurrentScene:Game");
 }

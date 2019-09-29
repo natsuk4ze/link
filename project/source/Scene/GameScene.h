@@ -14,16 +14,20 @@
 /**************************************
 前方宣言
 ***************************************/
+class TransformObject;
 
 /**************************************
 クラス定義
 ***************************************/
 class GameScene : public BaseScene
 {
+public:
 	void Init();
 	void Uninit();
 	void Update();
 	void Draw();
 
+private:
+	TransformObject *object;
 };
 #endif

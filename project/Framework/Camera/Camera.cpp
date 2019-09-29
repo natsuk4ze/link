@@ -24,7 +24,16 @@ Camera::Camera()
 ***************************************/
 void Camera::Init()
 {
-	const D3DXVECTOR3 InitPos = D3DXVECTOR3(0.0f, 0.0f, -150.0f);
+	//TODO:CameraÇ≈èâä˙âªÇ∑ÇÈÇÃÇ≈ÇÕÇ»Ç≠ÉvÉâÉOÉCÉìÇçÏê¨Ç∑ÇÈ
+	const float CameraAngleXZ = D3DXToRadian(45.0f);
+	const float CameraAngleY = D3DXToRadian(60.0f);
+	const float CameraLength = 50.0f;
+
+	const D3DXVECTOR3 InitPos = D3DXVECTOR3(
+		cosf(CameraAngleY) * cosf(CameraAngleXZ),
+		sinf(CameraAngleY),
+		cosf(CameraAngleY) * -sinf(CameraAngleXZ)) * CameraLength;
+
 	const D3DXVECTOR3 InitTarget = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	const float InitViewAngle = D3DXToRadian(60.0f);
 	const float InitViewAspect = (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT;
