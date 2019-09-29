@@ -1,0 +1,14 @@
+{
+	"name": "ExplosionEffect",
+	"texturePath": "data/TEXTURE/Particle/ExplosionFire.png",
+	"particleMax": 1024,
+	"emitterMax": 32,
+	"emitNumMin": 3,
+	"emitNumMax": 6,
+	"durationMin": 5,
+	"durationMax": 5,
+	"sizeX": 15.0,
+	"sizeY": 15.0,
+	"divX": 8.0,
+	"divY": 8.0
+}

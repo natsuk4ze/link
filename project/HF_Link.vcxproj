@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{996B903E-F0F3-45AE-BEBF-C0FD8C48906F}</ProjectGuid>
+    <RootNamespace>HFLink</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Framework\Animation\AnimationManager.cpp" />
+    <ClCompile Include="Framework\Animation\AnimContainer.cpp" />
+    <ClCompile Include="Framework\Animation\MyAllocateHierarchy.cpp" />
+    <ClCompile Include="Framework\Camera\Camera.cpp" />
+    <ClCompile Include="Framework\Camera\CameraShakePlugin.cpp" />
+    <ClCompile Include="Framework\Collider\BaseCollider.cpp" />
+    <ClCompile Include="Framework\Collider\BoxCollider3D.cpp" />
+    <ClCompile Include="Framework\Collider\ColliderManager.cpp" />
+    <ClCompile Include="Framework\Core\BaseGame.cpp" />
+    <ClCompile Include="Framework\Core\GameObject.cpp" />
+    <ClCompile Include="Framework\Core\SceneManager.cpp" />
+    <ClCompile Include="Framework\Core\Transform.cpp" />
+    <ClCompile Include="Framework\Input\Gamepad.cpp" />
+    <ClCompile Include="Framework\Input\input.cpp" />
+    <ClCompile Include="Framework\Input\Keyboard.cpp" />
+    <ClCompile Include="Framework\Input\Mouse.cpp" />
+    <ClCompile Include="Framework\Math\Quaternion.cpp" />
+    <ClCompile Include="Framework\Math\Vector3.cpp" />
+    <ClCompile Include="Framework\Particle\AnimationParticle.cpp" />
+    <ClCompile Include="Framework\Particle\BaseEmitter.cpp" />
+    <ClCompile Include="Framework\Particle\BaseParticle.cpp" />
+    <ClCompile Include="Framework\Particle\BaseParticleController.cpp" />
+    <ClCompile Include="Framework\Particle\ParticleJsonParser.cpp" />
+    <ClCompile Include="Framework\Particle\ParticleRenderer.cpp" />
+    <ClCompile Include="Framework\Particle\SceneParticleManager.cpp" />
+    <ClCompile Include="Framework\Pattern\ObserveSubject.cpp" />
+    <ClCompile Include="Framework\PostEffect\BaseEffectController.cpp" />
+    <ClCompile Include="Framework\PostEffect\BloomController.cpp" />
+    <ClCompile Include="Framework\PostEffect\CrossFilterController.cpp" />
+    <ClCompile Include="Framework\PostEffect\Effect\BloomFilter.cpp" />
+    <ClCompile Include="Framework\PostEffect\Effect\BlurFilter.cpp" />
+    <ClCompile Include="Framework\PostEffect\Effect\CrossBlurFilter.cpp" />
+    <ClCompile Include="Framework\PostEffect\Effect\MonotoneFilter.cpp" />
+    <ClCompile Include="Framework\PostEffect\Effect\ShockBlur.cpp" />
+    <ClCompile Include="Framework\PostEffect\Effect\SpeedBlurFilter.cpp" />
+    <ClCompile Include="Framework\PostEffect\Effect\SpikeNoise.cpp" />
+    <ClCompile Include="Framework\PostEffect\Effect\StrongBlurFilter.cpp" />
+    <ClCompile Include="Framework\PostEffect\PostEffectManager.cpp" />
+    <ClCompile Include="Framework\PostEffect\ScreenObject.cpp" />
+    <ClCompile Include="Framework\PostEffect\ShockBlurController.cpp" />
+    <ClCompile Include="Framework\PostEffect\SpeedBlurController.cpp" />
+    <ClCompile Include="Framework\PostEffect\SpikeNoiseController.cpp" />
+    <ClCompile Include="Framework\Renderer2D\Polygon2D.cpp" />
+    <ClCompile Include="Framework\Renderer3D\BillboardObject.cpp" />
+    <ClCompile Include="Framework\Renderer3D\BillboardTransform.cpp" />
+    <ClCompile Include="Framework\Renderer3D\BoardPolygon.cpp" />
+    <ClCompile Include="Framework\Renderer3D\MeshContainer.cpp" />
+    <ClCompile Include="Framework\Renderer3D\TransformObject.cpp" />
+    <ClCompile Include="Framework\Resource\ResourceManager.cpp" />
+    <ClCompile Include="Framework\Task\DelayedTask.cpp" />
+    <ClCompile Include="Framework\Task\PeriodicTask.cpp" />
+    <ClCompile Include="Framework\Task\Task.cpp" />
+    <ClCompile Include="Framework\Task\TaskManager.cpp" />
+    <ClCompile Include="Framework\Tool\DebugWindow.cpp" />
+    <ClCompile Include="Framework\Tool\ProfilerCPU.cpp" />
+    <ClCompile Include="Framework\Transition\BaseTransitionMask.cpp" />
+    <ClCompile Include="Framework\Transition\HexaPopTransitionMask.cpp" />
+    <ClCompile Include="Framework\Transition\HexaRotTransitionMask.cpp" />
+    <ClCompile Include="Framework\Transition\MistTransitionMask.cpp" />
+    <ClCompile Include="Framework\Transition\TransitionController.cpp" />
+    <ClCompile Include="Framework\Tween\Tween.cpp" />
+    <ClCompile Include="imgui\imgui.cpp" />
+    <ClCompile Include="imgui\imgui_demo.cpp" />
+    <ClCompile Include="imgui\imgui_draw.cpp" />
+    <ClCompile Include="imgui\imgui_impl_dx9.cpp" />
+    <ClCompile Include="imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="imgui\imgui_widgets.cpp" />
+    <ClCompile Include="json11\json11.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Framework\Animation\AnimationManager.h" />
+    <ClInclude Include="Framework\Animation\AnimContainer.h" />
+    <ClInclude Include="Framework\Animation\MyAllocateHierarchy.h" />
+    <ClInclude Include="Framework\Camera\Camera.h" />
+    <ClInclude Include="Framework\Camera\CameraShakePlugin.h" />
+    <ClInclude Include="Framework\Collider\BaseCollider.h" />
+    <ClInclude Include="Framework\Collider\BoxCollider3D.h" />
+    <ClInclude Include="Framework\Collider\ColliderManager.h" />
+    <ClInclude Include="Framework\Collider\ColliderObserver.h" />
+    <ClInclude Include="Framework\Core\BaseGame.h" />
+    <ClInclude Include="Framework\Core\BaseScene.h" />
+    <ClInclude Include="Framework\Core\GameObject.h" />
+    <ClInclude Include="Framework\Core\SceneManager.h" />
+    <ClInclude Include="Framework\Core\Transform.h" />
+    <ClInclude Include="Framework\Core\Utility.h" />
+    <ClInclude Include="Framework\Input\Gamepad.h" />
+    <ClInclude Include="Framework\Input\input.h" />
+    <ClInclude Include="Framework\Input\Keyboard.h" />
+    <ClInclude Include="Framework\Input\Mouse.h" />
+    <ClInclude Include="Framework\Math\Easing.h" />
+    <ClInclude Include="Framework\Math\Quaternion.h" />
+    <ClInclude Include="Framework\Math\TMath.h" />
+    <ClInclude Include="Framework\Math\Vector3.h" />
+    <ClInclude Include="Framework\Particle\AnimationParticle.h" />
+    <ClInclude Include="Framework\Particle\BaseEmitter.h" />
+    <ClInclude Include="Framework\Particle\BaseParticle.h" />
+    <ClInclude Include="Framework\Particle\BaseParticleController.h" />
+    <ClInclude Include="Framework\Particle\ParticleJsonParser.h" />
+    <ClInclude Include="Framework\Particle\ParticleRenderer.h" />
+    <ClInclude Include="Framework\Particle\SceneParticleManager.h" />
+    <ClInclude Include="Framework\Pattern\BaseObserver.h" />
+    <ClInclude Include="Framework\Pattern\BaseSingleton.h" />
+    <ClInclude Include="Framework\Pattern\BaseState.h" />
+    <ClInclude Include="Framework\Pattern\Delegate.h" />
+    <ClInclude Include="Framework\Pattern\ObserveSubject.h" />
+    <ClInclude Include="Framework\PostEffect\BaseEffectController.h" />
+    <ClInclude Include="Framework\PostEffect\BloomController.h" />
+    <ClInclude Include="Framework\PostEffect\CrossFilterController.h" />
+    <ClInclude Include="Framework\PostEffect\Effect\BloomFilter.h" />
+    <ClInclude Include="Framework\PostEffect\Effect\BlurFilter.h" />
+    <ClInclude Include="Framework\PostEffect\Effect\CrossBlurFilter.h" />
+    <ClInclude Include="Framework\PostEffect\Effect\MonotoneFilter.h" />
+    <ClInclude Include="Framework\PostEffect\Effect\ShockBlur.h" />
+    <ClInclude Include="Framework\PostEffect\Effect\SpeedBlurFilter.h" />
+    <ClInclude Include="Framework\PostEffect\Effect\SpikeNoise.h" />
+    <ClInclude Include="Framework\PostEffect\Effect\StrongBlurFilter.h" />
+    <ClInclude Include="Framework\PostEffect\PostEffectManager.h" />
+    <ClInclude Include="Framework\PostEffect\ScreenObject.h" />
+    <ClInclude Include="Framework\PostEffect\ShockBlurController.h" />
+    <ClInclude Include="Framework\PostEffect\SpeedBlurController.h" />
+    <ClInclude Include="Framework\PostEffect\SpikeNoiseController.h" />
+    <ClInclude Include="Framework\Renderer2D\Polygon2D.h" />
+    <ClInclude Include="Framework\Renderer3D\BillboardObject.h" />
+    <ClInclude Include="Framework\Renderer3D\BillboardTransform.h" />
+    <ClInclude Include="Framework\Renderer3D\BoardPolygon.h" />
+    <ClInclude Include="Framework\Renderer3D\MeshContainer.h" />
+    <ClInclude Include="Framework\Renderer3D\TransformObject.h" />
+    <ClInclude Include="Framework\Resource\ResourceManager.h" />
+    <ClInclude Include="Framework\Task\DelayedTask.h" />
+    <ClInclude Include="Framework\Task\PeriodicTask.h" />
+    <ClInclude Include="Framework\Task\Task.h" />
+    <ClInclude Include="Framework\Task\TaskManager.h" />
+    <ClInclude Include="Framework\Tool\DebugWindow.h" />
+    <ClInclude Include="Framework\Tool\ProfilerCPU.h" />
+    <ClInclude Include="Framework\Transition\BaseTransitionMask.h" />
+    <ClInclude Include="Framework\Transition\HexaPopTransitionMask.h" />
+    <ClInclude Include="Framework\Transition\HexaRotTransitionMask.h" />
+    <ClInclude Include="Framework\Transition\MistTransitionMask.h" />
+    <ClInclude Include="Framework\Transition\TransitionController.h" />
+    <ClInclude Include="Framework\Tween\Tween.h" />
+    <ClInclude Include="imgui\imconfig.h" />
+    <ClInclude Include="imgui\imgui.h" />
+    <ClInclude Include="imgui\imgui_impl_dx9.h" />
+    <ClInclude Include="imgui\imgui_impl_win32.h" />
+    <ClInclude Include="imgui\imgui_internal.h" />
+    <ClInclude Include="imgui\imstb_rectpack.h" />
+    <ClInclude Include="imgui\imstb_textedit.h" />
+    <ClInclude Include="imgui\imstb_truetype.h" />
+    <ClInclude Include="json11\json11.hpp" />
+    <ClInclude Include="main.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
