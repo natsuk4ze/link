@@ -74,6 +74,7 @@
     <ClCompile Include="source\Scene\GameScene.cpp" />
     <ClCompile Include="source\Scene\TitleScene.cpp" />
     <ClCompile Include="source\Scene\ResultScene.cpp" />
+    <ClCompile Include="Framework\Light\Light.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -161,5 +162,6 @@
     <ClInclude Include="source\Scene\GameScene.h" />
     <ClInclude Include="source\Scene\TitleScene.h" />
     <ClInclude Include="source\Scene\ResultScene.h" />
+    <ClInclude Include="Framework\Light\Light.h" />
   </ItemGroup>
 </Project>

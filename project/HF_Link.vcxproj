@@ -140,6 +140,7 @@
     <ClCompile Include="Framework\Input\input.cpp" />
     <ClCompile Include="Framework\Input\Keyboard.cpp" />
     <ClCompile Include="Framework\Input\Mouse.cpp" />
+    <ClCompile Include="Framework\Light\Light.cpp" />
     <ClCompile Include="Framework\Math\Quaternion.cpp" />
     <ClCompile Include="Framework\Math\Vector3.cpp" />
     <ClCompile Include="Framework\Particle\AnimationParticle.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="Framework\Input\input.h" />
     <ClInclude Include="Framework\Input\Keyboard.h" />
     <ClInclude Include="Framework\Input\Mouse.h" />
+    <ClInclude Include="Framework\Light\Light.h" />
     <ClInclude Include="Framework\Math\Easing.h" />
     <ClInclude Include="Framework\Math\Quaternion.h" />
     <ClInclude Include="Framework\Math\TMath.h" />

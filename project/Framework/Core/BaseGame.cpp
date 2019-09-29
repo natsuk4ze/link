@@ -6,6 +6,7 @@
 #include "BaseGame.h"
 #include "..\Input\input.h"
 #include "..\Camera\Camera.h"
+#include "../Light/Light.h"
 #include "..\Tool\DebugWindow.h"
 #include "..\PostEffect\PostEffectManager.h"
 #include "..\Tween\Tween.h"
@@ -47,6 +48,7 @@ BaseGame::BaseGame(HINSTANCE hInstance, HWND hWnd)
 	//ŠeŽí‰Šú‰»
 	Input::mInstance->Init(hInstance, hWnd);
 	Camera::mInstance->Init();
+	Light::Init();
 	Debug::Init(hWnd, pDevice);
 }
 
