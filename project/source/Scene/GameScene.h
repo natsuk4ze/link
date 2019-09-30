@@ -15,6 +15,7 @@
 前方宣言
 ***************************************/
 class TransformObject;
+class SkyBox;
 
 /**************************************
 クラス定義
@@ -28,6 +29,7 @@ public:
 	void Draw();
 
 private:
-	TransformObject *object;
+	TransformObject *object;	//表示テスト用オブジェクト
+	SkyBox *skybox;				//背景スカイボックス
 };
 #endif

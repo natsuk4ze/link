@@ -105,12 +105,19 @@ void Camera::Set()
 	D3DXMatrixInverse(&invProjection, NULL, &projection);
 	D3DXMatrixInverse(&invVPV, NULL, &VPV);
 }
-
+#include "../Tool/DebugWindow.h"
 /**************************************
 更新処理
 ***************************************/
 void Camera::Update()
 {
+	Debug::Begin("Camera");
+	Debug::Slider("x", target.x, -100.0f, 100.0f);
+	Debug::Slider("y", target.y, -100.0f, 100.0f);
+	Debug::Slider("z", target.z, -300.0f, 300.0f);
+	Debug::End();
+
+
 	//各プラグイン更新
 	for (auto& plugin : pluginList)
 	{
