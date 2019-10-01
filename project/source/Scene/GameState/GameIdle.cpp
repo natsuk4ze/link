@@ -6,12 +6,19 @@
 //
 //=====================================
 #include "GameIdle.h"
+#include "../../Field/FieldController.h"
 
 /**************************************
 更新処理
 ***************************************/
 GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 {
+	//入力確認
+	entity.field->CheckInput();
+
+	//各オブジェクト更新
+	entity.field->Update();
+
 	return State::Idle;
 }
 

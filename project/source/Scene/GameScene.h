@@ -16,8 +16,8 @@
 /**************************************
 前方宣言
 ***************************************/
-class TransformObject;
 class SkyBox;
+class FieldController;
 
 /**************************************
 クラス定義
@@ -43,8 +43,8 @@ private:
 	std::vector<BaseState<GameScene, State>*> fsm;
 	State currentState, prevState;
 
-	TransformObject *object;	//表示テスト用オブジェクト
-	SkyBox *skybox;				//背景スカイボックス
+	SkyBox *skybox;					//背景スカイボックス
+	FieldController *field;			//フィールドコントローラ
 
 	//ステート遷移処理
 	void ChangeState(State next);
