@@ -15,6 +15,7 @@
 ***************************************/
 class FieldCursor;
 class FieldGround;
+class PlaceModel;
 
 /**************************************
 クラス定義
@@ -39,6 +40,7 @@ private:
 
 	FieldCursor *cursor;					//カーソル
 	FieldGround *ground;					//地面
+	PlaceModel *model;						//3Dモデルマネージャ
 
 	int fieldBorder;						//フィールド範囲(マス単位)
 };

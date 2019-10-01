@@ -25,9 +25,6 @@ void GameScene::Init()
 	skybox = new SkyBox(D3DXVECTOR3(20000.0f, 20000.0f, 20000.0f));
 	field = new FieldController();
 
-	//ResourceManager::Instance()->LoadMesh("Model", "data/MODEL/transform.x");
-	//actor = new PlaceActor(D3DXVECTOR3(0.0f, 0.0f, 10.0f));
-
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
 	fsm[State::Initialize] = new GameInit();
@@ -44,7 +41,7 @@ void GameScene::Uninit()
 {
 	//インスタンス削除
 	SAFE_DELETE(skybox);
-	//SAFE_DELETE(actor);
+	SAFE_DELETE(field);
 
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);

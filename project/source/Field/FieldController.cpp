@@ -8,6 +8,7 @@
 #include "FieldController.h"
 #include "FieldCursor.h"
 #include "FieldGround.h"
+#include "../FieldObject/PlaceModel.h"
 
 #include "../../Framework/Input/input.h"
 
@@ -20,6 +21,7 @@ FieldController::FieldController() :
 	//インスタンス作成
 	cursor = new FieldCursor();
 	ground = new FieldGround();
+	model = new PlaceModel();
 
 	//カーソルの移動範囲を初期化
 	cursor->SetBorder(fieldBorder * PlaceOffset, fieldBorder * PlaceOffset);
@@ -32,6 +34,7 @@ FieldController::~FieldController()
 {
 	SAFE_DELETE(cursor);
 	SAFE_DELETE(ground);
+	SAFE_DELETE(model);
 }
 
 /**************************************
@@ -40,6 +43,7 @@ FieldController::~FieldController()
 void FieldController::Update()
 {
 	cursor->Update();
+	model->Update();
 }
 
 /**************************************
@@ -48,6 +52,7 @@ void FieldController::Update()
 void FieldController::Draw()
 {
 	ground->Draw();
+	model->Draw();
 
 	//カーソルには透過オブジェクトが含まれるので最後に描画
 	cursor->Draw();

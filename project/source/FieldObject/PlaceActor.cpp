@@ -6,6 +6,7 @@
 //
 //=====================================
 #include "PlaceActor.h"
+#include "../../Framework/Resource/ResourceManager.h"
 
 //=====================================
 // コンストラクタ
@@ -14,9 +15,12 @@ PlaceActor::PlaceActor(const D3DXVECTOR3& pos)
 {
 	// メッシュコンテナの作成
 	mesh = MeshContainer::Create();
+	mesh->Load("data/MODEL/PlaceActor/Cross-Junction.x");
+	//ResourceManager::Instance()->GetMesh("Model", mesh);
 
 	// ステータスセット
 	transform->SetPosition(pos);
+	transform->SetScale(ActorScale);
 	SetActive(true);
 }
 

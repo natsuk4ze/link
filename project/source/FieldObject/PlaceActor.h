@@ -29,7 +29,7 @@ protected:
 	EaseType easeType;					// イージングタイプ
 	// **************************
 
-	void PlayAnimation(int AnimType);	// アニメーション再生
+	virtual void PlayAnimation(int AnimType);	// アニメーション再生
 	void Rotate(float y);				// Y軸回転
 
 public:
@@ -38,6 +38,9 @@ public:
 
 	virtual void Update();
 	virtual void Draw();
+
+private:
+	const D3DXVECTOR3 ActorScale = D3DXVECTOR3(0.2f, 0.2f, 0.2f);
 };
 
 #endif

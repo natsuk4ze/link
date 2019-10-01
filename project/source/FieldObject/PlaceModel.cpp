@@ -16,6 +16,9 @@ using namespace std;
 PlaceModel::PlaceModel()
 {
 	actor.reserve(10000);
+
+	// ‚Æ‚è‚ ‚¦‚¸1‚Â•\Ž¦
+	actor.push_back(new PlaceActor(D3DXVECTOR3(0.0f, 0.0f, 0.0f)));
 }
 
 //=====================================
@@ -28,7 +31,6 @@ PlaceModel::~PlaceModel()
 		SAFE_DELETE(a);
 	}
 	actor.clear();
-	template <class T> vtTemp.swap(actor);
 }
 
 //=====================================

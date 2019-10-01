@@ -206,7 +206,9 @@
     <ClCompile Include="json11\json11.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="source\FieldObject\PlaceActor.cpp" />
-    <ClCompile Include="source\Field\FieldController.cpp" />    <ClCompile Include="source\GameMain.cpp" />
+    <ClCompile Include="source\FieldObject\PlaceModel.cpp" />
+    <ClCompile Include="source\Field\FieldController.cpp" />
+    <ClCompile Include="source\GameMain.cpp" />
     <ClCompile Include="source\Field\FieldCursor.cpp" />
     <ClCompile Include="source\Field\FieldGround.cpp" />
     <ClCompile Include="source\Scene\GameScene.cpp" />
@@ -299,6 +301,7 @@
     <ClInclude Include="json11\json11.hpp" />
     <ClInclude Include="main.h" />
     <ClInclude Include="source\FieldObject\PlaceActor.h" />
+    <ClInclude Include="source\FieldObject\PlaceModel.h" />
     <ClInclude Include="source\Field\FieldController.h" />
     <ClInclude Include="source\GameConfig.h" />
     <ClInclude Include="source\GameMain.h" />

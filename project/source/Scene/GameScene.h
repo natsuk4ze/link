@@ -1,8 +1,8 @@
 //=====================================
 //
 //GameScene.h
-//�@�\:�Q�[���V�[������
-//Author:GP12B332 21 ���ԗY��
+//機能:ゲームシーン処理
+//Author:GP12B332 21 立花雄太
 //
 //=====================================
 #ifndef _GAMESCENE_H_
@@ -14,13 +14,13 @@
 #include <vector>
 
 /**************************************
-�O���錾
+前方宣言
 ***************************************/
 class SkyBox;
 class FieldController;
 
 /**************************************
-�N���X��`
+クラス定義
 ***************************************/
 class GameScene : public BaseScene
 {
@@ -30,7 +30,7 @@ public:
 	void Update();
 	void Draw();
 
-	//�X�e�[�g��\���񋓎q
+	//ステートを表す列挙子
 	enum State
 	{
 		Initialize,
@@ -39,17 +39,17 @@ public:
 	};
 
 private:
-	//�V�[���X�e�[�g�}�V��
+	//シーンステートマシン
 	std::vector<BaseState<GameScene, State>*> fsm;
 	State currentState, prevState;
 
-	SkyBox *skybox;					//�w�i�X�J�C�{�b�N�X
-	FieldController *field;			//�t�B�[���h�R���g���[��
+	SkyBox *skybox;					//背景スカイボックス
+	FieldController *field;			//フィールドコントローラ
 
-	//�X�e�[�g�J�ڏ���
+	//ステート遷移処理
 	void ChangeState(State next);
 
-	//�e�X�e�[�g�N���X
+	//各ステートクラス
 	class GameInit;
 	class GameIdle;
 };

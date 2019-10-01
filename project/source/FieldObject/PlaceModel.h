@@ -21,11 +21,11 @@ class PlaceActor;
 class PlaceModel
 {
 private:
-	vector<PlaceActor*> actor;
+	std::vector<PlaceActor*> actor;
 
 public:
-	PlaceActor();
-	~PlaceActor();
+	PlaceModel();
+	~PlaceModel();
 	void Update();
 	void Draw();
 
