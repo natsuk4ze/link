@@ -10,11 +10,14 @@
 
 #include "../../main.h"
 #include "../../Framework/Core/BaseScene.h"
+#include "../../Framework/Pattern/BaseState.h"
+#include <vector>
 
 /**************************************
 前方宣言
 ***************************************/
 class TransformObject;
+class SkyBox;
 
 /**************************************
 クラス定義
@@ -27,7 +30,27 @@ public:
 	void Update();
 	void Draw();
 
+	//ステートを表す列挙子
+	enum State
+	{
+		Initialize,
+		Idle,
+		Max
+	};
+
 private:
-	TransformObject *object;
+	//シーンステートマシン
+	std::vector<BaseState<GameScene, State>*> fsm;
+	State currentState, prevState;
+
+	TransformObject *object;	//表示テスト用オブジェクト
+	SkyBox *skybox;				//背景スカイボックス
+
+	//ステート遷移処理
+	void ChangeState(State next);
+
+	//各ステートクラス
+	class GameInit;
+	class GameIdle;
 };
 #endif
