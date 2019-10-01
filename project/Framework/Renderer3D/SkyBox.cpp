@@ -51,6 +51,8 @@ void SkyBox::Draw()
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
 	pDevice->SetRenderState(D3DRS_LIGHTING, false);
 
+	pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
+
 	pDevice->SetStreamSource(0, vtxBuff, 0, sizeof(VERTEX_BILLBOARD));
 
 	for (int i = 0; i < Surface::Max; i++)
@@ -61,6 +63,8 @@ void SkyBox::Draw()
 
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
 	pDevice->SetRenderState(D3DRS_LIGHTING, true);
+
+	pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 }
 
 /**************************************
