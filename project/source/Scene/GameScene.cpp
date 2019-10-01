@@ -21,7 +21,7 @@ void GameScene::Init()
 {
 	//各インスタンス作成
 	skybox = new SkyBox(D3DXVECTOR3(20000.0f, 20000.0f, 20000.0f));
-	field = new FieldController();
+	field = new FieldModel::FieldController();
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);

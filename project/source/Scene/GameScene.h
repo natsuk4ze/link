@@ -16,9 +16,12 @@
 /**************************************
 前方宣言
 ***************************************/
-class SkyBox;
-class FieldController;
+namespace FieldModel
+{
+	class FieldController;
+}
 
+class SkyBox;
 /**************************************
 クラス定義
 ***************************************/
@@ -44,7 +47,7 @@ private:
 	State currentState, prevState;
 
 	SkyBox *skybox;					//背景スカイボックス
-	FieldController *field;			//フィールドコントローラ
+	FieldModel::FieldController *field;			//フィールドコントローラ
 
 	//ステート遷移処理
 	void ChangeState(State next);

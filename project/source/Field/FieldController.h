@@ -10,37 +10,39 @@
 
 #include "../../main.h"
 
-/**************************************
-前方宣言
-***************************************/
-class FieldCursor;
-class FieldGround;
-
-/**************************************
-クラス定義
-***************************************/
-class FieldController
+namespace FieldModel
 {
-public:
-	//コンストラクタ、デストラクタ
-	FieldController();
-	~FieldController();
+	/**************************************
+	前方宣言
+	***************************************/
+	class FieldCursor;
+	class FieldGround;
 
-	//更新、描画処理
-	void Update();
-	void Draw();
+	/**************************************
+	クラス定義
+	***************************************/
+	class FieldController
+	{
+	public:
+		//コンストラクタ、デストラクタ
+		FieldController();
+		~FieldController();
 
-	//入力確認処理
-	void CheckInput();
+		//更新、描画処理
+		void Update();
+		void Draw();
 
-private:
-	const float PlaceOffset = 10.0f;		//Placeの1マス毎のオフセット値
-	const float InitFieldBorder = 25;		//フィールド範囲の初期値
+		//入力確認処理
+		void CheckInput();
 
-	FieldCursor *cursor;					//カーソル
-	FieldGround *ground;					//地面
+	private:
+		const float PlaceOffset = 10.0f;		//Placeの1マス毎のオフセット値
+		const float InitFieldBorder = 25;		//フィールド範囲の初期値
 
-	int fieldBorder;						//フィールド範囲(マス単位)
-};
+		FieldCursor *cursor;					//カーソル
+		FieldGround *ground;					//地面
 
+		int fieldBorder;						//フィールド範囲(マス単位)
+	};
+}
 #endif
