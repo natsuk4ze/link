@@ -27,6 +27,8 @@ public:
 
 	static float GetPressHorizontail(int no = 0);
 	static float GetPressVertical(int no = 0);
+	static float GetRepeatHorizontal(int no = 0);
+	static float GetRepeatVertical(int no = 0);
 
 private:
 	LPDIRECTINPUT8 pDInput;					// IDirectInput8インターフェースへのポインタ

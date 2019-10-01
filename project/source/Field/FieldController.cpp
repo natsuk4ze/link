@@ -14,11 +14,15 @@
 /**************************************
 コンストラクタ
 ***************************************/
-FieldController::FieldController()
+FieldController::FieldController() :
+	fieldBorder(InitFieldBorder)
 {
 	//インスタンス作成
 	cursor = new FieldCursor();
 	ground = new FieldGround();
+
+	//カーソルの移動範囲を初期化
+	cursor->SetBorder(fieldBorder * PlaceOffset, fieldBorder * PlaceOffset);
 }
 
 /**************************************
@@ -54,5 +58,17 @@ void FieldController::Draw()
 ***************************************/
 void FieldController::CheckInput()
 {
+	float x = 0.0f, z = 0.0f;
 
+	//X軸方向の入力をX軸移動として取得
+	x = Input::GetRepeatHorizontal();
+
+	//X軸軸入力が無かったらY軸入力を確認（斜め移動を禁止するため）
+	if (x == 0.0f)
+	{
+		z = Input::GetRepeatVertical();
+	}
+
+	//カーソルを移動
+	cursor->Move(D3DXVECTOR3(x, 0.0f, z) * PlaceOffset);
 }

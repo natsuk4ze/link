@@ -31,9 +31,13 @@ public:
 	void CheckInput();
 
 private:
-	FieldCursor *cursor;
-	FieldGround *ground;
+	const float PlaceOffset = 10.0f;		//Placeの1マス毎のオフセット値
+	const float InitFieldBorder = 25;		//フィールド範囲の初期値
 
+	FieldCursor *cursor;					//カーソル
+	FieldGround *ground;					//地面
+
+	int fieldBorder;						//フィールド範囲(マス単位)
 };
 
 #endif

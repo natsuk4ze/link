@@ -164,7 +164,7 @@ void Transform::SetWorld(const D3DXMATRIX* parent) const
 	//e‚ð”½‰f
 	if (parent != NULL)
 	{
-		D3DXMatrixMultiply(&world, parent, &world);
+		D3DXMatrixMultiply(&world, &world, parent);
 	}
 
 	pDevice->SetTransform(D3DTS_WORLD, &world);
