@@ -11,21 +11,25 @@
 #include "../../Framework/Renderer3D/TransformObject.h"
 #include "../../Framework/Renderer3D/SkyBox.h"
 
+#include "GameState/GameInit.h"
+#include "GameState\GameIdle.h"
+
 /**************************************
 初期化処理
 ***************************************/
 void GameScene::Init()
 {
+	//各インスタンス作成
 	object = new TransformObject();
 	skybox = new SkyBox(D3DXVECTOR3(20000.0f, 20000.0f, 20000.0f));
 
-	//スカイボックスのテクスチャをロード
-	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_up.png", SkyBox::Surface::Up);
-	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_back.png", SkyBox::Surface::Back);
-	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_down.jpg", SkyBox::Surface::Down);
-	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_front.png", SkyBox::Surface::Front);
-	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_left.png", SkyBox::Surface::Left);
-	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_right.png", SkyBox::Surface::Right);
+	//ステートマシン作成
+	fsm.resize(State::Max, NULL);
+	fsm[State::Initialize] = new GameInit();
+	fsm[State::Idle] = new GameIdle();
+
+	//ステート初期化
+	ChangeState(State::Initialize);
 }
 
 /**************************************
@@ -33,8 +37,12 @@ void GameScene::Init()
 ***************************************/
 void GameScene::Uninit()
 {
+	//インスタンス削除
 	SAFE_DELETE(object);
 	SAFE_DELETE(skybox);
+
+	//ステートマシン削除
+	Utility::DeleteContainer(fsm);
 }
 
 /**************************************
@@ -42,7 +50,12 @@ void GameScene::Uninit()
 ***************************************/
 void GameScene::Update()
 {
+	State next = fsm[currentState]->OnUpdate(*this);
 
+	if (next != currentState)
+	{
+		ChangeState(next);
+	}
 }
 
 /**************************************
@@ -50,8 +63,24 @@ void GameScene::Update()
 ***************************************/
 void GameScene::Draw()
 {
+	//背景描画
 	skybox->Draw();
 
+	//オブジェクト描画
 	object->Draw();
-	Debug::Log("CurrentScene:Game");
+}
+
+/**************************************
+ステート遷移処理
+***************************************/
+void GameScene::ChangeState(State next)
+{
+	prevState = currentState;
+
+	currentState = next;
+
+	if (fsm[currentState] != NULL)
+	{
+		fsm[currentState]->OnStart(*this);
+	}
 }
