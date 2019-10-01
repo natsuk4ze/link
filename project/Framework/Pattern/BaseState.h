@@ -15,7 +15,7 @@ IStateMachineƒNƒ‰ƒX
 Œp³æ‚ÅOnUpdate(), OnStart()‚ğÀ‘•‚·‚é
 *****************************************************/
 template <class T, class ENUM>
-class IState {
+class BaseState {
 public:
 	virtual ENUM OnUpdate(T& entity) = 0;
 	virtual void OnStart(T& entity) = 0;

@@ -182,6 +182,7 @@
     <ClCompile Include="Framework\Renderer3D\BillboardTransform.cpp" />
     <ClCompile Include="Framework\Renderer3D\BoardPolygon.cpp" />
     <ClCompile Include="Framework\Renderer3D\MeshContainer.cpp" />
+    <ClCompile Include="Framework\Renderer3D\SkyBox.cpp" />
     <ClCompile Include="Framework\Renderer3D\TransformObject.cpp" />
     <ClCompile Include="Framework\Resource\ResourceManager.cpp" />
     <ClCompile Include="Framework\Task\DelayedTask.cpp" />
@@ -207,6 +208,8 @@
     <ClCompile Include="PlaceActor.cpp" />
     <ClCompile Include="source\GameMain.cpp" />
     <ClCompile Include="source\Scene\GameScene.cpp" />
+    <ClCompile Include="source\Scene\GameState\GameIdle.cpp" />
+    <ClCompile Include="source\Scene\GameState\GameInit.cpp" />
     <ClCompile Include="source\Scene\ResultScene.cpp" />
     <ClCompile Include="source\Scene\TitleScene.cpp" />
   </ItemGroup>
@@ -268,6 +271,7 @@
     <ClInclude Include="Framework\Renderer3D\BillboardTransform.h" />
     <ClInclude Include="Framework\Renderer3D\BoardPolygon.h" />
     <ClInclude Include="Framework\Renderer3D\MeshContainer.h" />
+    <ClInclude Include="Framework\Renderer3D\SkyBox.h" />
     <ClInclude Include="Framework\Renderer3D\TransformObject.h" />
     <ClInclude Include="Framework\Resource\ResourceManager.h" />
     <ClInclude Include="Framework\Task\DelayedTask.h" />
@@ -296,6 +300,8 @@
     <ClInclude Include="source\GameConfig.h" />
     <ClInclude Include="source\GameMain.h" />
     <ClInclude Include="source\Scene\GameScene.h" />
+    <ClInclude Include="source\Scene\GameState\GameIdle.h" />
+    <ClInclude Include="source\Scene\GameState\GameInit.h" />
     <ClInclude Include="source\Scene\ResultScene.h" />
     <ClInclude Include="source\Scene\TitleScene.h" />
   </ItemGroup>
