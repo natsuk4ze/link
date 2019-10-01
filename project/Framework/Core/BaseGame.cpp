@@ -13,7 +13,6 @@
 #include "../Tool/ProfilerCPU.h"
 #include "../Task/TaskManager.h"
 
-Camera* Camera::mInstance = NULL;
 Input* Input::mInstance = NULL;
 Tween* Tween::mInstance = NULL;
 /**************************************
@@ -25,7 +24,6 @@ BaseGame::BaseGame(HINSTANCE hInstance, HWND hWnd)
 
 	//インスタンス作成
 	sceneManager = new SceneManager();
-	Camera::mInstance = new Camera();
 	Input::mInstance = new Input();
 	Tween::mInstance = new Tween();
 
@@ -47,7 +45,6 @@ BaseGame::BaseGame(HINSTANCE hInstance, HWND hWnd)
 
 	//各種初期化
 	Input::mInstance->Init(hInstance, hWnd);
-	Camera::mInstance->Init();
 	Light::Init();
 	Debug::Init(hWnd, pDevice);
 }
@@ -65,7 +62,6 @@ BaseGame::~BaseGame()
 	SAFE_RELEASE(screenVtx);
 
 	SAFE_DELETE(sceneManager);
-	SAFE_DELETE(Camera::mInstance);
 	SAFE_DELETE(Input::mInstance);
 	SAFE_DELETE(Tween::mInstance);
 
@@ -79,7 +75,6 @@ void BaseGame::Update()
 {
 	Debug::Update();
 	Input::mInstance->Update();
-	Camera::mInstance->Update();
 
 	sceneManager->Update();
 
@@ -102,9 +97,6 @@ void BaseGame::Draw()
 	pDevice->GetRenderTarget(0, &oldSuf);
 	pDevice->SetRenderTarget(0, renderSurface);
 	pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BackColor, 1.0f, 0);
-
-	//カメラ設定
-	Camera::mInstance->Set();
 
 	//シーンを描画
 	sceneManager->Draw();

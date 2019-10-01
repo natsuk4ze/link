@@ -81,6 +81,7 @@
     <ClCompile Include="source\Field\FieldCursor.cpp" />
     <ClCompile Include="source\Field\FieldGround.cpp" />
     <ClCompile Include="source\Field\FieldController.cpp" />
+    <ClCompile Include="source\Field\FieldCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -175,5 +176,6 @@
     <ClInclude Include="source\Field\FieldCursor.h" />
     <ClInclude Include="source\Field\FieldGround.h" />
     <ClInclude Include="source\Field\FieldController.h" />
+    <ClInclude Include="source\Field\FieldCamera.h" />
   </ItemGroup>
 </Project>

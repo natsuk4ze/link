@@ -13,7 +13,9 @@
 ***************************************/
 void TitleScene::Init()
 {
-
+	//ÉJÉÅÉâçÏê¨
+	sceneCamera = new Camera();
+	Camera::SetMainCamera(sceneCamera);
 }
 
 /**************************************
@@ -21,6 +23,7 @@ void TitleScene::Init()
 ***************************************/
 void TitleScene::Uninit()
 {
+	SAFE_DELETE(sceneCamera);
 }
 
 /**************************************

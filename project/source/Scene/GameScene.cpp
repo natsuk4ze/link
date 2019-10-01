@@ -19,6 +19,10 @@
 ***************************************/
 void GameScene::Init()
 {
+	//カメラ作成
+	sceneCamera = new Camera();
+	Camera::SetMainCamera(sceneCamera);
+
 	//各インスタンス作成
 	skybox = new SkyBox(D3DXVECTOR3(20000.0f, 20000.0f, 20000.0f));
 	field = new FieldModel::FieldController();
@@ -37,6 +41,9 @@ void GameScene::Init()
 ***************************************/
 void GameScene::Uninit()
 {
+	//カメラ削除
+	SAFE_DELETE(sceneCamera);
+
 	//インスタンス削除
 	SAFE_DELETE(skybox);
 
@@ -49,6 +56,10 @@ void GameScene::Uninit()
 ***************************************/
 void GameScene::Update()
 {
+	//カメラ更新
+	sceneCamera->Update();
+
+	//ステートを更新
 	State next = fsm[currentState]->OnUpdate(*this);
 
 	if (next != currentState)
@@ -62,6 +73,9 @@ void GameScene::Update()
 ***************************************/
 void GameScene::Draw()
 {
+	//カメラセット
+	sceneCamera->Set();
+
 	//背景描画
 	skybox->Draw();
 

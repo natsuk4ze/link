@@ -13,6 +13,9 @@
 ***************************************/
 void ResultScene::Init()
 {
+	//ÉJÉÅÉâçÏê¨
+	sceneCamera = new Camera();
+	Camera::SetMainCamera(sceneCamera);
 }
 
 /**************************************
@@ -20,6 +23,7 @@ void ResultScene::Init()
 ***************************************/
 void ResultScene::Uninit()
 {
+	SAFE_DELETE(sceneCamera);
 }
 
 /**************************************
