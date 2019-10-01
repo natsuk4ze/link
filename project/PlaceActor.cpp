@@ -4,7 +4,7 @@
 // Author:GP12B332 19 染谷武志
 //
 //=====================================
-#include "PlaceActor.h"
+#include "source/FieldObject/PlaceActor.h"
 #include "Framework/Resource/ResourceManager.h"
 
 //=====================================
@@ -13,9 +13,9 @@
 PlaceActor::PlaceActor(const D3DXVECTOR3& pos) 
 {
 	// メッシュコンテナの作成
-	container->Create();
-	container->Load("data/MODEL/transform.x");
-	//ResourceManager::Instance()->GetMesh("tag", container);
+	mesh = MeshContainer::Create();
+	//mesh->Load("data/MODEL/transform.x");
+	ResourceManager::Instance()->GetMesh("Model", mesh);
 	
 	// ステータスセット
 	transform->SetPosition(pos);
@@ -27,7 +27,7 @@ PlaceActor::PlaceActor(const D3DXVECTOR3& pos)
 //=====================================
 PlaceActor::~PlaceActor()
 {
-	container->Release();
+	SAFE_RELEASE(mesh);
 }
 
 //=====================================
@@ -43,7 +43,8 @@ void PlaceActor::Update()
 //=====================================
 void PlaceActor::Draw()
 {
-	container->Draw();
+	transform->SetWorld();
+	mesh->Draw();
 }
 
 //=====================================
@@ -60,9 +61,9 @@ void PlaceActor::Rotate(float y)
 //=====================================
 void PlaceActor::PlayAnimation(int AnimType)
 {
-	switch (AnimType)
-	{
-	default:
-		break;
-	}
+	//switch (AnimType)
+	//{
+	//default:
+	//	break;
+	//}
 }

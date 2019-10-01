@@ -18,6 +18,7 @@
 ***************************************/
 class TransformObject;
 class SkyBox;
+//class PlaceActor;
 
 /**************************************
 クラス定義
@@ -45,6 +46,7 @@ private:
 
 	TransformObject *object;	//表示テスト用オブジェクト
 	SkyBox *skybox;				//背景スカイボックス
+	//PlaceActor* actor;
 
 	//ステート遷移処理
 	void ChangeState(State next);

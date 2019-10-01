@@ -10,9 +10,11 @@
 
 #include "../../Framework/Renderer3D/TransformObject.h"
 #include "../../Framework/Renderer3D/SkyBox.h"
+#include "../FieldObject/PlaceActor.h"
+#include "../../Framework/Resource/ResourceManager.h"
 
 #include "GameState/GameInit.h"
-#include "GameState\GameIdle.h"
+#include "GameState/GameIdle.h"
 
 /**************************************
 初期化処理
@@ -22,6 +24,9 @@ void GameScene::Init()
 	//各インスタンス作成
 	object = new TransformObject();
 	skybox = new SkyBox(D3DXVECTOR3(20000.0f, 20000.0f, 20000.0f));
+
+	//ResourceManager::Instance()->LoadMesh("Model", "data/MODEL/transform.x");
+	//actor = new PlaceActor(D3DXVECTOR3(0.0f, 0.0f, 10.0f));
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
@@ -40,6 +45,7 @@ void GameScene::Uninit()
 	//インスタンス削除
 	SAFE_DELETE(object);
 	SAFE_DELETE(skybox);
+	//SAFE_DELETE(actor);
 
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
@@ -68,6 +74,8 @@ void GameScene::Draw()
 
 	//オブジェクト描画
 	object->Draw();
+
+	//actor->Draw();
 }
 
 /**************************************

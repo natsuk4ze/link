@@ -1,6 +1,7 @@
 //=====================================
 //
 // プレイスアクター[PlaceActor.h]
+// 機能：フィールド上に設置される町や道、などの3Dオブジェクト
 // Author:GP12B332 19 染谷武志
 //
 //=====================================
@@ -8,7 +9,6 @@
 #define _PLACEACTOR_H_
 
 #include "Framework/Core/GameObject.h"
-#include "Framework/Animation/AnimationManager.h"
 #include "Framework/Renderer3D/MeshContainer.h"
 #include "Framework/Math/Easing.h"
 //**************************************
