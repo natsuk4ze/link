@@ -17,8 +17,7 @@
 前方宣言
 ***************************************/
 class SkyBox;
-class FieldCursor;
-class FieldGround;
+class FieldController;
 
 /**************************************
 クラス定義
@@ -44,9 +43,8 @@ private:
 	std::vector<BaseState<GameScene, State>*> fsm;
 	State currentState, prevState;
 
-	FieldCursor *cursor;		//カーソル
-	SkyBox *skybox;				//背景スカイボックス
-	FieldGround *ground;		//背景地面
+	SkyBox *skybox;					//背景スカイボックス
+	FieldController *field;			//フィールドコントローラ
 
 	//ステート遷移処理
 	void ChangeState(State next);

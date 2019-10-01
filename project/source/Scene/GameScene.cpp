@@ -9,8 +9,7 @@
 #include "../../Framework/Tool/DebugWindow.h"
 
 #include "../../Framework/Renderer3D/SkyBox.h"
-#include "../Model/FieldCursor.h"
-#include "../Model/FieldGround.h"
+#include "../Field/FieldController.h"
 
 #include "GameState/GameInit.h"
 #include "GameState\GameIdle.h"
@@ -21,9 +20,8 @@
 void GameScene::Init()
 {
 	//各インスタンス作成
-	cursor = new FieldCursor();
 	skybox = new SkyBox(D3DXVECTOR3(20000.0f, 20000.0f, 20000.0f));
-	ground = new FieldGround();
+	field = new FieldController();
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
@@ -40,7 +38,6 @@ void GameScene::Init()
 void GameScene::Uninit()
 {
 	//インスタンス削除
-	SAFE_DELETE(cursor);
 	SAFE_DELETE(skybox);
 
 	//ステートマシン削除
@@ -67,10 +64,9 @@ void GameScene::Draw()
 {
 	//背景描画
 	skybox->Draw();
-	ground->Draw();
 
 	//オブジェクト描画
-	cursor->Draw();
+	field->Draw();
 }
 
 /**************************************

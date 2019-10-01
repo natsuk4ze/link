@@ -6,14 +6,14 @@
 //
 //=====================================
 #include "GameIdle.h"
-#include "../../Model/FieldCursor.h"
+#include "../../Field/FieldController.h"
 
 /**************************************
 XVˆ—
 ***************************************/
 GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 {
-	entity.cursor->Update();
+	entity.field->Update();
 
 	return State::Idle;
 }
