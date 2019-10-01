@@ -22,12 +22,15 @@ class FieldGround;
 class FieldController
 {
 public:
+	//コンストラクタ、デストラクタ
 	FieldController();
 	~FieldController();
 
+	//更新、描画処理
 	void Update();
 	void Draw();
 
+	//入力確認処理
 	void CheckInput();
 
 private:
