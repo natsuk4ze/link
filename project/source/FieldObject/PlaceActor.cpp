@@ -15,8 +15,8 @@ PlaceActor::PlaceActor(const D3DXVECTOR3& pos)
 {
 	// メッシュコンテナの作成
 	mesh = MeshContainer::Create();
-	mesh->Load("data/MODEL/PlaceActor/Cross-Junction.x");
-	//ResourceManager::Instance()->GetMesh("Model", mesh);
+	//mesh->Load("data/MODEL/PlaceActor/Cross-Junction.x");
+	ResourceManager::Instance()->GetMesh("Model", mesh);
 
 	// ステータスセット
 	transform->SetPosition(pos);

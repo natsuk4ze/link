@@ -21,6 +21,9 @@
 ***************************************/
 void GameScene::Init()
 {
+	// 3Dオブジェクトのリソースをロード
+	ResourceManager::Instance()->LoadMesh("Model", "data/MODEL/PlaceActor/Cross-Junction.x");
+
 	//各インスタンス作成
 	skybox = new SkyBox(D3DXVECTOR3(20000.0f, 20000.0f, 20000.0f));
 	field = new FieldController();

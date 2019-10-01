@@ -7,7 +7,6 @@
 //=====================================
 #include "GameInit.h"
 #include "../../../Framework/Renderer3D/SkyBox.h"
-#include "../../../Framework/Resource/ResourceManager.h"
 
 /**************************************
 入場処理
@@ -22,8 +21,6 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	entity.skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_left.png", SkyBox::Surface::Left);
 	entity.skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_right.png", SkyBox::Surface::Right);
 
-	// 3Dオブジェクトをロード
-	//ResourceManager::Instance()->LoadMesh("Model", "data/MODEL/transform.x");
 }
 
 /**************************************
