@@ -44,7 +44,6 @@ private:
 
 	float borderX, borderZ;				//移動可能範囲
 	int cntFrame;						//フレームカウント
-	int squareIndex;					//次にセットするスクエア
 
 	std::vector<FieldCursorSquare*> squareContainer;	//四角形コンテナ
 
@@ -71,6 +70,9 @@ public:
 
 	//アクティブ判定
 	bool IsActive();
+
+	//比較関数
+	static bool Compare(const FieldCursorSquare* lhs, const FieldCursorSquare* rhs);
 
 private:
 	const D3DXVECTOR2 Size{ 5.0f, 5.0f };		//サイズ

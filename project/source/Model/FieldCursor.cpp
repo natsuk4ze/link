@@ -14,7 +14,7 @@
 コンストラクタ
 ***************************************/
 FieldCursor::FieldCursor() :
-	borderX(0.0f), borderZ(0.0f), squareIndex(0)
+	borderX(0.0f), borderZ(0.0f)
 {
 	//四角形生成
 	squareContainer.resize(SquareMax);
@@ -61,13 +61,17 @@ void FieldCursor::Draw()
 	//自身のワールド変換行列を作成
 	D3DXMATRIX mtxWorld = transform->GetMatrix();
 
-	//四角形を描画
+	//四角形をソートして描画
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
+
+	std::sort(squareContainer.begin(), squareContainer.end(), &FieldCursorSquare::Compare);
+
 	for (auto&& square : squareContainer)
 	{
 		square->Draw(mtxWorld);
 	}
+
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 }
@@ -100,9 +104,15 @@ FieldCursorSquareセット処理
 ***************************************/
 void FieldCursor::SetSquare()
 {
-	squareContainer[squareIndex]->Set();
+	auto itr = std::find_if(squareContainer.begin(), squareContainer.end(), [](auto&& square)
+	{
+		return !square->IsActive();
+	});
 
-	squareIndex = Math::WrapAround(0, SquareMax, ++squareIndex);
+	if (itr != squareContainer.end())
+	{
+		(*itr)->Set();
+	}
 }
 
 /**************************************
@@ -181,4 +191,12 @@ FieldCursorSquareアクティブ判定
 bool FieldCursorSquare::IsActive()
 {
 	return cntFrame < FadeDuration;
+}
+
+/**************************************
+FieldCursorSquare比較演算子
+***************************************/
+bool FieldCursorSquare::Compare(const FieldCursorSquare * lhs, const FieldCursorSquare * rhs)
+{
+	return lhs->cntFrame < rhs->cntFrame;
 }
