@@ -23,8 +23,11 @@ class PlaceActor :
 {
 protected:
 	MeshContainer* mesh;				// メッシュコンテナ
+
+	// ***継承先のクラスで設定***
 	int animType;						// アニメーションの種類
 	EaseType easeType;					// イージングタイプ
+	// **************************
 
 	void PlayAnimation(int AnimType);	// アニメーション再生
 	void Rotate(float y);				// Y軸回転

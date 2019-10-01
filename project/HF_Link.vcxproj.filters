@@ -75,10 +75,10 @@
     <ClCompile Include="source\Scene\TitleScene.cpp" />
     <ClCompile Include="source\Scene\ResultScene.cpp" />
     <ClCompile Include="Framework\Light\Light.cpp" />
-    <ClCompile Include="source\FieldObject\PlaceActor.cpp" />
     <ClCompile Include="Framework\Renderer3D\SkyBox.cpp" />
     <ClCompile Include="source\Scene\GameState\GameInit.cpp" />
     <ClCompile Include="source\Scene\GameState\GameIdle.cpp" />
+    <ClCompile Include="source\FieldObject\PlaceActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -167,9 +167,9 @@
     <ClInclude Include="source\Scene\TitleScene.h" />
     <ClInclude Include="source\Scene\ResultScene.h" />
     <ClInclude Include="Framework\Light\Light.h" />
-    <ClInclude Include="source\FieldObject\PlaceActor.h" />
     <ClInclude Include="Framework\Renderer3D\SkyBox.h" />
     <ClInclude Include="source\Scene\GameState\GameInit.h" />
     <ClInclude Include="source\Scene\GameState\GameIdle.h" />
+    <ClInclude Include="source\FieldObject\PlaceActor.h" />
   </ItemGroup>
 </Project>

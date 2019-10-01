@@ -12,9 +12,7 @@
 PlaceActor::PlaceActor(const D3DXVECTOR3& pos)
 {
 	// メッシュコンテナの作成
-	container->Create();
-	container->Load("data/MODEL/transform.x");
-	//ResourceManager::Instance()->GetMesh("tag", container);
+	mesh = MeshContainer::Create();
 
 	// ステータスセット
 	transform->SetPosition(pos);
@@ -26,7 +24,7 @@ PlaceActor::PlaceActor(const D3DXVECTOR3& pos)
 //=====================================
 PlaceActor::~PlaceActor()
 {
-	container->Release();
+	SAFE_RELEASE(mesh);
 }
 
 //=====================================
@@ -42,7 +40,8 @@ void PlaceActor::Update()
 //=====================================
 void PlaceActor::Draw()
 {
-	container->Draw();
+	transform->SetWorld();
+	mesh->Draw();
 }
 
 //=====================================
