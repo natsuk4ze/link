@@ -8,8 +8,8 @@
 #include "GameScene.h"
 #include "../../Framework/Tool/DebugWindow.h"
 
-#include "../../Framework/Renderer3D/TransformObject.h"
 #include "../../Framework/Renderer3D/SkyBox.h"
+#include "../Model/FieldCursor.h"
 
 #include "GameState/GameInit.h"
 #include "GameState\GameIdle.h"
@@ -20,7 +20,7 @@
 void GameScene::Init()
 {
 	//各インスタンス作成
-	object = new TransformObject();
+	cursor = new FieldCursor();
 	skybox = new SkyBox(D3DXVECTOR3(20000.0f, 20000.0f, 20000.0f));
 
 	//ステートマシン作成
@@ -38,7 +38,7 @@ void GameScene::Init()
 void GameScene::Uninit()
 {
 	//インスタンス削除
-	SAFE_DELETE(object);
+	SAFE_DELETE(cursor);
 	SAFE_DELETE(skybox);
 
 	//ステートマシン削除
@@ -67,7 +67,7 @@ void GameScene::Draw()
 	skybox->Draw();
 
 	//オブジェクト描画
-	object->Draw();
+	cursor->Draw();
 }
 
 /**************************************

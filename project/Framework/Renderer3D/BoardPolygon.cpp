@@ -5,32 +5,12 @@
 //
 //=====================================
 #include "BoardPolygon.h"
+#include "../Resource/ResourceManager.h"
 
 /**************************************
 マクロ定義
 ***************************************/
 #define BILLBOARD_DEFAULT_SIZE		(10.0f)
-
-/**************************************
-Create関数
-***************************************/
-BoardPolygon* BoardPolygon::Create()
-{
-	BoardPolygon* ptr = new BoardPolygon();
-	return ptr;
-}
-
-/**************************************
-Release関数
-***************************************/
-void BoardPolygon::Release()
-{
-	cntReference--;
-	if (cntReference == 0)
-	{
-		delete this;
-	}
-}
 
 /**************************************
 AddRef関数
@@ -74,6 +54,10 @@ BoardPolygon::BoardPolygon()
 
 	vtxBuff->Unlock();
 
+	ZeroMemory(&material, sizeof(D3DMATERIAL9));
+
+	material.Diffuse.r = material.Diffuse.g = material.Diffuse.b = material.Diffuse.a = 1.0f;
+
 	cntReference++;
 }
 
@@ -91,6 +75,11 @@ BoardPolygon::~BoardPolygon()
 ***************************************/
 void BoardPolygon::Draw()
 {
+	D3DMATERIAL9 matDef;
+	pDevice->GetMaterial(&matDef);
+
+	pDevice->SetMaterial(&material);
+
 	pDevice->SetTexture(0, texture);
 
 	pDevice->SetStreamSource(0, vtxBuff, 0, sizeof(VERTEX_BILLBOARD));
@@ -98,6 +87,8 @@ void BoardPolygon::Draw()
 	pDevice->SetFVF(FVF_VERTEX_BILLBOARD);
 
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
+
+	pDevice->SetMaterial(&matDef);
 }
 
 /**************************************
@@ -107,13 +98,13 @@ void BoardPolygon::LoadTexture(const char* path)
 {
 	SAFE_RELEASE(texture);
 
-	D3DXCreateTextureFromFile(pDevice, path, &texture);
+	ResourceManager::Instance()->GetTexture(path, texture);
 }
 
 /**************************************
 サイズ設定処理
 ***************************************/
-void BoardPolygon::SetSize(D3DXVECTOR2 size)
+void BoardPolygon::SetSize(const D3DXVECTOR2& size)
 {
 	VERTEX_BILLBOARD *pVtx;
 	vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
@@ -129,7 +120,7 @@ void BoardPolygon::SetSize(D3DXVECTOR2 size)
 /**************************************
 UV分割設定処理
 ***************************************/
-void BoardPolygon::SetTexDiv(D3DXVECTOR2 div)
+void BoardPolygon::SetTexDiv(const D3DXVECTOR2& div)
 {
 	texDiv = div;
 	texSize.x = 1.0f / div.x;

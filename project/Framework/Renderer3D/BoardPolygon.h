@@ -20,11 +20,9 @@ class BoardPolygon
 {
 	friend class ResourceManager;
 public:
-	//インスタンス作成関数
-	static BoardPolygon* Create();
-
-	//インスタンス解放関数
-	void Release();
+	//コンストラクタ、デストラクタ
+	BoardPolygon();
+	~BoardPolygon();
 
 	//描画処理
 	void Draw();
@@ -33,24 +31,23 @@ public:
 	void LoadTexture(const char* path);
 
 	//サイズ設定処理
-	void SetSize(D3DXVECTOR2 size);
+	void SetSize(const D3DXVECTOR2& size);
 
 	//UV分割設定処理
-	void SetTexDiv(D3DXVECTOR2 div);
+	void SetTexDiv(const D3DXVECTOR2& div);
 
 	//テクスチャ通し番号設定処理
 	void SetTextureIndex(int index);
 
 	void AddRef();
+
 protected:
-	BoardPolygon();
-	~BoardPolygon();
-
-
 	LPDIRECT3DDEVICE9 pDevice;
 
 	LPDIRECT3DVERTEXBUFFER9 vtxBuff;
 	LPDIRECT3DTEXTURE9 texture;
+
+	D3DMATERIAL9 material;
 
 	D3DXVECTOR2 texDiv;
 	D3DXVECTOR2 texSize;
