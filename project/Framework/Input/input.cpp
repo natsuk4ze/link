@@ -141,3 +141,43 @@ float Input::GetPressVertical(int no)
 
 	return 0.0f;
 }
+
+//=============================================================================
+// 垂直方向への入力処理
+//=============================================================================
+float Input::GetRepeatHorizontal(int no)
+{
+	//TODO:ゲームパッドもリピート入力に対応
+	if (no == 0)
+	{
+		if (Keyboard::GetRepeat(DIK_LEFT))
+			return -1.0f;
+
+		if (Keyboard::GetRepeat(DIK_RIGHT))
+			return 1.0f;
+
+		return 0.0f;
+	}
+
+	return 0.0f;
+}
+
+//=============================================================================
+// 垂直方向への入力処理
+//=============================================================================
+float Input::GetRepeatVertical(int no)
+{
+	//TODO:ゲームパッドもリピート入力に対応
+	if (no == 0)
+	{
+		if (Keyboard::GetRepeat(DIK_DOWN))
+			return -1.0f;
+
+		if (Keyboard::GetRepeat(DIK_UP))
+			return 1.0f;
+
+		return 0.0f;
+	}
+
+	return 0.0f;
+}

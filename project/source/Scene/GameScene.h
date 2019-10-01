@@ -1,8 +1,8 @@
 //=====================================
 //
 //GameScene.h
-//‹@”\:ƒQ[ƒ€ƒV[ƒ“ˆ—
-//Author:GP12B332 21 —§‰Ô—Y‘¾
+//ï¿½@ï¿½\:ï¿½Qï¿½[ï¿½ï¿½ï¿½Vï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//Author:GP12B332 21 ï¿½ï¿½ï¿½Ô—Yï¿½ï¿½
 //
 //=====================================
 #ifndef _GAMESCENE_H_
@@ -14,14 +14,13 @@
 #include <vector>
 
 /**************************************
-‘O•ûéŒ¾
+ï¿½Oï¿½ï¿½ï¿½éŒ¾
 ***************************************/
-class TransformObject;
 class SkyBox;
-//class PlaceActor;
+class FieldController;
 
 /**************************************
-ƒNƒ‰ƒX’è‹`
+ï¿½Nï¿½ï¿½ï¿½Xï¿½ï¿½`
 ***************************************/
 class GameScene : public BaseScene
 {
@@ -31,7 +30,7 @@ public:
 	void Update();
 	void Draw();
 
-	//ƒXƒe[ƒg‚ğ•\‚·—ñ‹“q
+	//ï¿½Xï¿½eï¿½[ï¿½gï¿½ï¿½\ï¿½ï¿½ï¿½ñ‹“q
 	enum State
 	{
 		Initialize,
@@ -40,18 +39,17 @@ public:
 	};
 
 private:
-	//ƒV[ƒ“ƒXƒe[ƒgƒ}ƒVƒ“
+	//ï¿½Vï¿½[ï¿½ï¿½ï¿½Xï¿½eï¿½[ï¿½gï¿½}ï¿½Vï¿½ï¿½
 	std::vector<BaseState<GameScene, State>*> fsm;
 	State currentState, prevState;
 
-	TransformObject *object;	//•\¦ƒeƒXƒg—pƒIƒuƒWƒFƒNƒg
-	SkyBox *skybox;				//”wŒiƒXƒJƒCƒ{ƒbƒNƒX
-	//PlaceActor* actor;
+	SkyBox *skybox;					//ï¿½wï¿½iï¿½Xï¿½Jï¿½Cï¿½{ï¿½bï¿½Nï¿½X
+	FieldController *field;			//ï¿½tï¿½Bï¿½[ï¿½ï¿½ï¿½hï¿½Rï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½
 
-	//ƒXƒe[ƒg‘JˆÚˆ—
+	//ï¿½Xï¿½eï¿½[ï¿½gï¿½Jï¿½Úï¿½ï¿½ï¿½
 	void ChangeState(State next);
 
-	//ŠeƒXƒe[ƒgƒNƒ‰ƒX
+	//ï¿½eï¿½Xï¿½eï¿½[ï¿½gï¿½Nï¿½ï¿½ï¿½X
 	class GameInit;
 	class GameIdle;
 };
