@@ -6,13 +6,15 @@
 //
 //=====================================
 #include "FieldCursor.h"
+#include "../../Framework/Math/Easing.h"
+
 #include <algorithm>
 
 /**************************************
 コンストラクタ
 ***************************************/
 FieldCursor::FieldCursor() :
-	borderX(0.0f), borderZ(0.0f)
+	borderX(0.0f), borderZ(0.0f), squareIndex(0)
 {
 	//四角形生成
 	squareContainer.resize(SquareMax);
@@ -40,7 +42,7 @@ void FieldCursor::Update()
 	{
 		SetSquare();
 	}
-	Math::WrapAround(0, EmitInterval, ++cntFrame);
+	cntFrame = Math::WrapAround(0, EmitInterval, ++cntFrame);
 
 	//四角形更新
 	for (auto&& square : squareContainer)
@@ -54,14 +56,20 @@ void FieldCursor::Update()
 ***************************************/
 void FieldCursor::Draw()
 {
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
 	//自身のワールド変換行列を作成
 	D3DXMATRIX mtxWorld = transform->GetMatrix();
 
 	//四角形を描画
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
 	for (auto&& square : squareContainer)
 	{
 		square->Draw(mtxWorld);
 	}
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 }
 
 /**************************************
@@ -92,13 +100,9 @@ FieldCursorSquareセット処理
 ***************************************/
 void FieldCursor::SetSquare()
 {
-	//非アクティブなスクエアを探してセット
-	auto itr = std::find_if(squareContainer.begin(), squareContainer.end(), [](auto square)
-	{
-		return !square->IsActive();
-	});
+	squareContainer[squareIndex]->Set();
 
-	(*itr)->Set();
+	squareIndex = Math::WrapAround(0, SquareMax, ++squareIndex);
 }
 
 /**************************************
@@ -141,7 +145,8 @@ void FieldCursorSquare::Update()
 	transform->Move(Vector3::Up * MoveSpeed);
 
 	//マテリアルの透過率を設定
-	material.Diffuse.a = 1.0f * cntFrame / FadeDuration;
+	float t = (float)cntFrame / FadeDuration;
+	material.Diffuse.a = Easing::EaseValue(t, 1.0f, 0.0f, EaseType::InExpo);
 }
 
 /**************************************
@@ -149,6 +154,9 @@ FieldCursorSquare描画処理
 ***************************************/
 void FieldCursorSquare::Draw(const D3DXMATRIX& parentMtx)
 {
+	if (!IsActive())
+		return;
+
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	//ワールド変換設定
@@ -164,6 +172,7 @@ FieldCursorSquareセット処理
 void FieldCursorSquare::Set()
 {
 	cntFrame = 0;
+	transform->SetPosition(Vector3::Zero);
 }
 
 /**************************************

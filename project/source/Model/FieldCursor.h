@@ -40,11 +40,11 @@ public:
 
 private:
 	const int SquareMax = 5;			//四角形最大数
-	const int EmitInterval = 30;		//四角形生成インターバル
+	const int EmitInterval = 10;		//四角形生成インターバル
 
 	float borderX, borderZ;				//移動可能範囲
 	int cntFrame;						//フレームカウント
-
+	int squareIndex;					//次にセットするスクエア
 
 	std::vector<FieldCursorSquare*> squareContainer;	//四角形コンテナ
 
@@ -73,9 +73,9 @@ public:
 	bool IsActive();
 
 private:
-	const D3DXVECTOR2 Size{ 10.0f, 10.0f };		//サイズ
+	const D3DXVECTOR2 Size{ 5.0f, 5.0f };		//サイズ
 	const int FadeDuration = 30;				//フェード時間
-	const float MoveSpeed = 5.0f;				//移動スピード
+	const float MoveSpeed = 0.3f;				//移動スピード
 
 	int cntFrame;					//フレームカウント
 	Transform *transform;			//SRT情報
