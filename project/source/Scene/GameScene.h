@@ -18,6 +18,7 @@
 ***************************************/
 class SkyBox;
 class FieldCursor;
+class FieldGround;
 
 /**************************************
 クラス定義
@@ -45,6 +46,7 @@ private:
 
 	FieldCursor *cursor;		//カーソル
 	SkyBox *skybox;				//背景スカイボックス
+	FieldGround *ground;		//背景地面
 
 	//ステート遷移処理
 	void ChangeState(State next);

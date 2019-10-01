@@ -197,6 +197,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="source\GameMain.cpp" />
     <ClCompile Include="source\Model\FieldCursor.cpp" />
+    <ClCompile Include="source\Model\FieldGround.cpp" />
     <ClCompile Include="source\Scene\GameScene.cpp" />
     <ClCompile Include="source\Scene\GameState\GameIdle.cpp" />
     <ClCompile Include="source\Scene\GameState\GameInit.cpp" />
@@ -289,6 +290,7 @@
     <ClInclude Include="source\GameConfig.h" />
     <ClInclude Include="source\GameMain.h" />
     <ClInclude Include="source\Model\FieldCursor.h" />
+    <ClInclude Include="source\Model\FieldGround.h" />
     <ClInclude Include="source\Scene\GameScene.h" />
     <ClInclude Include="source\Scene\GameState\GameIdle.h" />
     <ClInclude Include="source\Scene\GameState\GameInit.h" />

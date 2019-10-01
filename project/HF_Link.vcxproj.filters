@@ -79,6 +79,7 @@
     <ClCompile Include="source\Scene\GameState\GameInit.cpp" />
     <ClCompile Include="source\Scene\GameState\GameIdle.cpp" />
     <ClCompile Include="source\Model\FieldCursor.cpp" />
+    <ClCompile Include="source\Model\FieldGround.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -171,5 +172,6 @@
     <ClInclude Include="source\Scene\GameState\GameInit.h" />
     <ClInclude Include="source\Scene\GameState\GameIdle.h" />
     <ClInclude Include="source\Model\FieldCursor.h" />
+    <ClInclude Include="source\Model\FieldGround.h" />
   </ItemGroup>
 </Project>

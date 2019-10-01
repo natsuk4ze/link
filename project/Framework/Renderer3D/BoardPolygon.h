@@ -39,6 +39,9 @@ public:
 	//テクスチャ通し番号設定処理
 	void SetTextureIndex(int index);
 
+	//UV座標設定処理
+	void SetUV(const D3DXVECTOR2& uv);
+
 	void AddRef();
 
 protected:

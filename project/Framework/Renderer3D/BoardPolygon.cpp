@@ -159,3 +159,19 @@ void BoardPolygon::SetTextureIndex(int index)
 
 	vtxBuff->Unlock();
 }
+
+/**************************************
+UVÝ’èˆ—
+***************************************/
+void BoardPolygon::SetUV(const D3DXVECTOR2 & uv)
+{
+	VERTEX_MATERIAL *pVtx;
+	vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+	pVtx[1].tex = D3DXVECTOR2(uv.x, 0.0f);
+	pVtx[2].tex = D3DXVECTOR2(0.0f, uv.y);
+	pVtx[3].tex = D3DXVECTOR2(uv.x, uv.y);
+
+	vtxBuff->Unlock();
+}
