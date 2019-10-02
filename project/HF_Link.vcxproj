@@ -77,6 +77,14 @@
     <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -92,6 +100,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -117,6 +126,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -198,6 +208,8 @@
     <ClCompile Include="source\Field\Camera\FieldCamera.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCameraFar.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCameraQuater.cpp" />
+    <ClCompile Include="source\FieldObject\PlaceActor.cpp" />
+    <ClCompile Include="source\FieldObject\PlaceModel.cpp" />
     <ClCompile Include="source\Field\FieldController.cpp" />
     <ClCompile Include="source\GameMain.cpp" />
     <ClCompile Include="source\Field\FieldCursor.cpp" />
@@ -294,6 +306,8 @@
     <ClInclude Include="source\Field\Camera\FieldCamera.h" />
     <ClInclude Include="source\Field\Camera\FieldCameraFar.h" />
     <ClInclude Include="source\Field\Camera\FieldCameraQuater.h" />
+    <ClInclude Include="source\FieldObject\PlaceActor.h" />
+    <ClInclude Include="source\FieldObject\PlaceModel.h" />
     <ClInclude Include="source\Field\FieldController.h" />
     <ClInclude Include="source\GameConfig.h" />
     <ClInclude Include="source\GameMain.h" />

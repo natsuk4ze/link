@@ -10,6 +10,8 @@
 
 #include "../../main.h"
 
+class PlaceModel;
+
 namespace FieldModel
 {
 	/**************************************
@@ -40,10 +42,11 @@ namespace FieldModel
 
 	private:
 		const float PlaceOffset = 10.0f;		//Placeの1マス毎のオフセット値
-		const int InitFieldBorder = 25;		//フィールド範囲の初期値
+		const int InitFieldBorder = 25;			//フィールド範囲の初期値
 
 		FieldCursor *cursor;					//カーソル
 		FieldGround *ground;					//地面
+		::PlaceModel *model;					//3Dモデルマネージャ
 
 		int fieldBorder;						//フィールド範囲(マス単位)
 	};

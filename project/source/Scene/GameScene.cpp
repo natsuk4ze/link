@@ -9,11 +9,13 @@
 #include "../../Framework/Tool/DebugWindow.h"
 
 #include "../../Framework/Renderer3D/SkyBox.h"
+#include "../FieldObject/PlaceActor.h"
+#include "../../Framework/Resource/ResourceManager.h"
 #include "../Field/FieldController.h"
 #include "../Field/Camera/FieldCamera.h"
 
 #include "GameState/GameInit.h"
-#include "GameState\GameIdle.h"
+#include "GameState/GameIdle.h"
 
 /**************************************
 初期化処理
@@ -23,6 +25,9 @@ void GameScene::Init()
 	//カメラ作成
 	fieldCamera = new FieldCamera();
 	Camera::SetMainCamera(fieldCamera);
+
+	// 3Dオブジェクトのリソースをロード
+	ResourceManager::Instance()->LoadMesh("Model", "data/MODEL/PlaceActor/Cross-Junction.x");
 
 	//各インスタンス作成
 	skybox = new SkyBox(D3DXVECTOR3(20000.0f, 20000.0f, 20000.0f));
@@ -47,6 +52,7 @@ void GameScene::Uninit()
 
 	//インスタンス削除
 	SAFE_DELETE(skybox);
+	SAFE_DELETE(field);
 
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
