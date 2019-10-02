@@ -30,11 +30,13 @@ void GameScene::Init()
 	// 3Dオブジェクトのリソースをロード
 	ResourceManager::Instance()->LoadMesh("Model", "data/MODEL/PlaceActor/Cross-Junction.x");
 
+	//テキスト用にフォントをロード
+	TextViewer::LoadFont("data/FONT/mplus-2c-heavy.ttf");
+
 	//各インスタンス作成
 	skybox = new SkyBox(D3DXVECTOR3(20000.0f, 20000.0f, 20000.0f));
 	field = new FieldModel::FieldController();
-	TextViewer::LoadFont("data/FONT/mplus-2m-thin.ttf");
-	text = new TextViewer("M+ 2m thin", 50);
+	text = new TextViewer("M+ 2c heavy", 50);
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
@@ -90,15 +92,10 @@ void GameScene::Draw()
 	//オブジェクト描画
 	field->Draw();
 
-	Debug::Begin("Text");
-	static int x = 0;
-	static int y = 0;
-	static std::string str = "イベント発生！隕石接近中！";
-	Debug::Slider("X", x, 0, 1800);
-	Debug::Slider("Y", y, 0, 1000);
-	Debug::Input("message", str);
-	Debug::End();
-
+	//テキストビューワをテスト表示
+	static int x = 1650;
+	static int y = 950;
+	static std::string str = "イベント発生！";
 	text->SetText(str);
 	text->SetPos(x, y);
 	text->Draw();

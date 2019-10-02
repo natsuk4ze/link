@@ -22,17 +22,29 @@
 class TextViewer
 {
 public:
+	//コンストラクタ
+	//fontName : 使用するフォントの名前
+	//size : 表示フォントサイズ
 	TextViewer(const char* fontName, int size);
+
+	//デストラクタ
 	~TextViewer();
 
+	//描画処理
 	void Draw();
 
+	//座標セット処理
 	void SetPos(int x, int y);
 
+	//カラーセット処理
 	void SetColor(const D3DXCOLOR& color);
 
+	//表示テキストセット処理
 	void SetText(const std::string& message);
-
+	
+	//フォント読み込み処理
+	//自前のフォントを使用する場合にフォントを一時的にインストールする
+	// fontFileName : インストールするフォントファイルへのパス
 	static void LoadFont(const char* fontFileName);
 
 private:

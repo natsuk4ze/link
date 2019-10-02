@@ -52,7 +52,7 @@ private:
 	SkyBox *skybox;								//背景スカイボックス
 	FieldCamera* fieldCamera;					//フィールドカメラ
 	FieldModel::FieldController *field;			//フィールドコントローラ
-	TextViewer *text;
+	TextViewer *text;							//テスト用テキストビューワ
 
 	//ステート遷移処理
 	void ChangeState(State next);

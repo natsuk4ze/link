@@ -36,11 +36,13 @@ TextViewer::~TextViewer()
 ***************************************/
 void TextViewer::Draw()
 {
+	//テキストを中央寄せで表示するためのRectを計算
 	LONG left = posX - text.length() * fontSize / 2;
 	LONG top =  posY - fontSize / 2;
 	LONG right = left + text.length() * fontSize;
 	LONG bottom = top + fontSize;
 
+	//描画
 	RECT rect = { left, top, right, bottom};
 	font->DrawText(NULL, text.c_str(), -1, &rect, DT_CENTER | DT_VCENTER, color);
 }
@@ -71,7 +73,7 @@ void TextViewer::SetText(const std::string & message)
 }
 
 /**************************************
-テキストセット処理
+フォントロード処理
 ***************************************/
 void TextViewer::LoadFont(const char * fontFileName)
 {
