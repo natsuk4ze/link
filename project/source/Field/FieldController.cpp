@@ -74,4 +74,12 @@ namespace FieldModel
 		//カーソルを移動
 		cursor->Move(D3DXVECTOR3(x, 0.0f, z) * PlaceOffset);
 	}
+
+	/**************************************
+	カーソル取得処理
+	***************************************/
+	GameObject * FieldController::GetFieldCursor()
+	{
+		return cursor;
+	}
 }

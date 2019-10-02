@@ -16,6 +16,9 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 	//入力確認
 	entity.field->CheckInput();
 
+	//カメラ更新
+	entity.sceneCamera->Update();
+
 	//各オブジェクト更新
 	entity.field->Update();
 

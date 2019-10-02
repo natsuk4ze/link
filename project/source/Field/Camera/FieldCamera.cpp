@@ -13,7 +13,11 @@
 コンストラクタ
 ***************************************/
 FieldCamera::FieldCamera() :
-	targetObject(NULL), startPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f)), goalPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f)), cntFrame(0), currentMode(Mode::QuaterView)
+	targetObject(NULL),
+	startPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
+	goalPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f)), 
+	cntFrame(0),
+	currentMode(Mode::FarView)
 {
 	//パラメータ設定
 	const float CameraAngleXZ = D3DXToRadian(45.0f);

@@ -10,6 +10,7 @@
 
 #include "../../Framework/Renderer3D/SkyBox.h"
 #include "../Field/FieldController.h"
+#include "../Field/Camera/FieldCamera.h"
 
 #include "GameState/GameInit.h"
 #include "GameState\GameIdle.h"
@@ -20,7 +21,7 @@
 void GameScene::Init()
 {
 	//カメラ作成
-	sceneCamera = new Camera();
+	sceneCamera = new FieldCamera();
 	Camera::SetMainCamera(sceneCamera);
 
 	//各インスタンス作成
@@ -56,9 +57,6 @@ void GameScene::Uninit()
 ***************************************/
 void GameScene::Update()
 {
-	//カメラ更新
-	sceneCamera->Update();
-
 	//ステートを更新
 	State next = fsm[currentState]->OnUpdate(*this);
 

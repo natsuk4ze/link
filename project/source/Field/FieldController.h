@@ -35,9 +35,12 @@ namespace FieldModel
 		//入力確認処理
 		void CheckInput();
 
+		//カーソル取得処理
+		GameObject* GetFieldCursor();
+
 	private:
 		const float PlaceOffset = 10.0f;		//Placeの1マス毎のオフセット値
-		const float InitFieldBorder = 25;		//フィールド範囲の初期値
+		const int InitFieldBorder = 25;		//フィールド範囲の初期値
 
 		FieldCursor *cursor;					//カーソル
 		FieldGround *ground;					//地面

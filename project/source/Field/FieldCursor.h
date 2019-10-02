@@ -23,7 +23,7 @@ namespace FieldModel
 	/**************************************
 	FieldCursorクラス
 	***************************************/
-	class FieldCursor : GameObject
+	class FieldCursor : public GameObject
 	{
 	public:
 		//コンストラクタ、デストラクタ

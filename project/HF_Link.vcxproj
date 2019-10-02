@@ -196,6 +196,8 @@
     <ClCompile Include="json11\json11.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCamera.cpp" />
+    <ClCompile Include="source\Field\Camera\FieldCameraFar.cpp" />
+    <ClCompile Include="source\Field\Camera\FieldCameraQuater.cpp" />
     <ClCompile Include="source\Field\FieldController.cpp" />
     <ClCompile Include="source\GameMain.cpp" />
     <ClCompile Include="source\Field\FieldCursor.cpp" />
@@ -290,6 +292,8 @@
     <ClInclude Include="json11\json11.hpp" />
     <ClInclude Include="main.h" />
     <ClInclude Include="source\Field\Camera\FieldCamera.h" />
+    <ClInclude Include="source\Field\Camera\FieldCameraFar.h" />
+    <ClInclude Include="source\Field\Camera\FieldCameraQuater.h" />
     <ClInclude Include="source\Field\FieldController.h" />
     <ClInclude Include="source\GameConfig.h" />
     <ClInclude Include="source\GameMain.h" />
