@@ -55,6 +55,9 @@ void GameScene::Uninit()
 	//カメラ削除
 	SAFE_DELETE(fieldCamera);
 
+	//フォントをアンインストール
+	TextViewer::RemoveFont("data/FONT/mplus-2c-heavy.ttf");
+
 	//インスタンス削除
 	SAFE_DELETE(skybox);
 	SAFE_DELETE(field);

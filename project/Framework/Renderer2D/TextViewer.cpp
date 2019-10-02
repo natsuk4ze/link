@@ -79,3 +79,11 @@ void TextViewer::LoadFont(const char * fontFileName)
 {
 	AddFontResource(fontFileName);
 }
+
+/**************************************
+フォントロード処理
+***************************************/
+void TextViewer::RemoveFont(const char * fontFileName)
+{
+	RemoveFontResource(fontFileName);
+}

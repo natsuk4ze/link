@@ -44,8 +44,13 @@ public:
 	
 	//フォント読み込み処理
 	//自前のフォントを使用する場合にフォントを一時的にインストールする
-	// fontFileName : インストールするフォントファイルへのパス
+	//fontFileName : インストールするフォントファイルへのパス
 	static void LoadFont(const char* fontFileName);
+
+	//フォントアンインストール処理
+	//一時的にインストールした自前のフォントをアンインストールする
+	//fontFileName : アンインストールフォントファイルへのパス
+	static void RemoveFont(const char* fontFileName);
 
 private:
 	//フォントインターフェイス
