@@ -86,6 +86,7 @@
     <ClCompile Include="source\Field\Camera\FieldCameraQuater.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCameraFar.cpp" />
     <ClCompile Include="source\FieldObject\PlaceModel.cpp" />
+    <ClCompile Include="Framework\Renderer2D\TextViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -185,5 +186,6 @@
     <ClInclude Include="source\Field\Camera\FieldCameraQuater.h" />
     <ClInclude Include="source\Field\Camera\FieldCameraFar.h" />
     <ClInclude Include="source\FieldObject\PlaceModel.h" />
+    <ClInclude Include="Framework\Renderer2D\TextViewer.h" />
   </ItemGroup>
 </Project>

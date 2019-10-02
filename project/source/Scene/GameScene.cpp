@@ -13,6 +13,7 @@
 #include "../../Framework/Resource/ResourceManager.h"
 #include "../Field/FieldController.h"
 #include "../Field/Camera/FieldCamera.h"
+#include "../../Framework/Renderer2D/TextViewer.h"
 
 #include "GameState/GameInit.h"
 #include "GameState/GameIdle.h"
@@ -29,9 +30,13 @@ void GameScene::Init()
 	// 3Dオブジェクトのリソースをロード
 	ResourceManager::Instance()->LoadMesh("Model", "data/MODEL/PlaceActor/Cross-Junction.x");
 
+	//テキスト用にフォントをロード
+	TextViewer::LoadFont("data/FONT/mplus-2c-heavy.ttf");
+
 	//各インスタンス作成
 	skybox = new SkyBox(D3DXVECTOR3(20000.0f, 20000.0f, 20000.0f));
 	field = new FieldModel::FieldController();
+	text = new TextViewer("M+ 2c heavy", 50);
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
@@ -53,6 +58,7 @@ void GameScene::Uninit()
 	//インスタンス削除
 	SAFE_DELETE(skybox);
 	SAFE_DELETE(field);
+	SAFE_DELETE(text);
 
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
@@ -85,6 +91,14 @@ void GameScene::Draw()
 
 	//オブジェクト描画
 	field->Draw();
+
+	//テキストビューワをテスト表示
+	static int x = 1650;
+	static int y = 950;
+	static std::string str = "イベント発生！";
+	text->SetText(str);
+	text->SetPos(x, y);
+	text->Draw();
 }
 
 /**************************************

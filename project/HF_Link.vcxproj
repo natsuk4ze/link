@@ -178,6 +178,7 @@
     <ClCompile Include="Framework\PostEffect\SpeedBlurController.cpp" />
     <ClCompile Include="Framework\PostEffect\SpikeNoiseController.cpp" />
     <ClCompile Include="Framework\Renderer2D\Polygon2D.cpp" />
+    <ClCompile Include="Framework\Renderer2D\TextViewer.cpp" />
     <ClCompile Include="Framework\Renderer3D\BillboardObject.cpp" />
     <ClCompile Include="Framework\Renderer3D\BillboardTransform.cpp" />
     <ClCompile Include="Framework\Renderer3D\BoardPolygon.cpp" />
@@ -274,6 +275,7 @@
     <ClInclude Include="Framework\PostEffect\SpeedBlurController.h" />
     <ClInclude Include="Framework\PostEffect\SpikeNoiseController.h" />
     <ClInclude Include="Framework\Renderer2D\Polygon2D.h" />
+    <ClInclude Include="Framework\Renderer2D\TextViewer.h" />
     <ClInclude Include="Framework\Renderer3D\BillboardObject.h" />
     <ClInclude Include="Framework\Renderer3D\BillboardTransform.h" />
     <ClInclude Include="Framework\Renderer3D\BoardPolygon.h" />
