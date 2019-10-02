@@ -22,6 +22,8 @@ namespace FieldModel
 }
 
 class SkyBox;
+class FieldCamera;
+
 /**************************************
 クラス定義
 ***************************************/
@@ -46,7 +48,8 @@ private:
 	std::vector<BaseState<GameScene, State>*> fsm;
 	State currentState, prevState;
 
-	SkyBox *skybox;					//背景スカイボックス
+	SkyBox *skybox;								//背景スカイボックス
+	FieldCamera* fieldCamera;					//フィールドカメラ
 	FieldModel::FieldController *field;			//フィールドコントローラ
 
 	//ステート遷移処理

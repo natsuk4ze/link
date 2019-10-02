@@ -18,7 +18,14 @@ void FieldCamera::FieldCameraFar::OnStart(FieldCamera & entity)
 	entity.cntFrame = 0;
 
 	//ˆÚ“®æ‚ÌÀ•W‚ğİ’è
-	entity.goalPosition = D3DXVECTOR3(0.0f, 300.0f, 0.0f);
+	const float CameraAngleXZ = D3DXToRadian(90.0f);
+	const float CameraAngleY = D3DXToRadian(85.0f);
+	const float CameraLength = 150.0f;
+
+	entity.goalPosition = D3DXVECTOR3(
+		cosf(CameraAngleY) * cosf(CameraAngleXZ),
+		sinf(CameraAngleY),
+		cosf(CameraAngleY) * -sinf(CameraAngleXZ)) * CameraLength;
 }
 
 /**************************************

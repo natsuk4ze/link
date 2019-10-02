@@ -21,8 +21,8 @@
 void GameScene::Init()
 {
 	//カメラ作成
-	sceneCamera = new FieldCamera();
-	Camera::SetMainCamera(sceneCamera);
+	fieldCamera = new FieldCamera();
+	Camera::SetMainCamera(fieldCamera);
 
 	//各インスタンス作成
 	skybox = new SkyBox(D3DXVECTOR3(20000.0f, 20000.0f, 20000.0f));
@@ -43,7 +43,7 @@ void GameScene::Init()
 void GameScene::Uninit()
 {
 	//カメラ削除
-	SAFE_DELETE(sceneCamera);
+	SAFE_DELETE(fieldCamera);
 
 	//インスタンス削除
 	SAFE_DELETE(skybox);
@@ -72,7 +72,7 @@ void GameScene::Update()
 void GameScene::Draw()
 {
 	//カメラセット
-	sceneCamera->Set();
+	fieldCamera->Set();
 
 	//背景描画
 	skybox->Draw();

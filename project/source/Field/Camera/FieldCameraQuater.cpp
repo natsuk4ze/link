@@ -17,6 +17,7 @@ void FieldCamera::FieldCameraQuater::OnStart(FieldCamera & entity)
 	entity.startPosition = entity.transform.GetPosition() - entity.targetObject->GetPosition();
 	entity.cntFrame = 0;
 
+
 	//ˆÚ“®æ‚ÌÀ•W‚ğİ’è
 	const float CameraAngleXZ = D3DXToRadian(45.0f);
 	const float CameraAngleY = D3DXToRadian(60.0f);
@@ -26,6 +27,8 @@ void FieldCamera::FieldCameraQuater::OnStart(FieldCamera & entity)
 		cosf(CameraAngleY) * cosf(CameraAngleXZ),
 		sinf(CameraAngleY),
 		cosf(CameraAngleY) * -sinf(CameraAngleXZ)) * CameraLength;
+
+	entity.transform.SetRotation(D3DXVECTOR3(CameraAngleY, CameraAngleXZ, 0.0f));
 }
 
 /**************************************

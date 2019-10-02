@@ -24,9 +24,8 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	entity.skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_right.png", SkyBox::Surface::Right);
 
 	//カメラの追従目標にカーソルを設定してモード切替
-	FieldCamera *fieldCamera = dynamic_cast<FieldCamera*>(entity.sceneCamera);
-	fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
-	fieldCamera->ChangeMode();
+	entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
+	entity.fieldCamera->ChangeMode();
 }
 
 /**************************************

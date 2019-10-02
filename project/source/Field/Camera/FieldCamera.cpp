@@ -8,6 +8,7 @@
 #include "FieldCamera.h"
 #include "FieldCameraQuater.h"
 #include "FieldCameraFar.h"
+#include "../../../Framework/Input/input.h"
 
 /**************************************
 コンストラクタ
@@ -55,6 +56,16 @@ void FieldCamera::Update()
 	fsm[currentMode]->OnUpdate(*this);
 
 	Camera::Update();
+}
+
+/**************************************
+入力確認
+***************************************/
+void FieldCamera::CheckInput()
+{
+	//TODO：ゲームパッドからの入力に対応する
+	if (Keyboard::GetTrigger(DIK_SPACE))
+		ChangeMode();
 }
 
 /**************************************

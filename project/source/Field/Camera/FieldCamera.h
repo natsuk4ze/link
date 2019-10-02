@@ -37,6 +37,9 @@ public:
 	//更新処理
 	void Update();
 
+	//入力確認
+	void CheckInput();
+
 	//モード切替処理
 	void ChangeMode();
 
@@ -46,7 +49,8 @@ public:
 private:
 	GameObject *targetObject;						//追従目標
 	D3DXVECTOR3 startPosition, goalPosition;		//イージング用座標
-	int cntFrame;
+
+	int cntFrame;									//フレームカウント
 
 	Mode currentMode;								//現在のモード
 	std::vector<BaseState<FieldCamera, Mode>*> fsm;	//ステートマシン
