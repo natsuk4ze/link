@@ -12,6 +12,7 @@
 #include "../FieldObject/PlaceActor.h"
 #include "../../Framework/Resource/ResourceManager.h"
 #include "../Field/FieldController.h"
+#include "../Field/Camera/FieldCamera.h"
 
 #include "GameState/GameInit.h"
 #include "GameState/GameIdle.h"
@@ -21,12 +22,16 @@
 ***************************************/
 void GameScene::Init()
 {
+	//カメラ作成
+	fieldCamera = new FieldCamera();
+	Camera::SetMainCamera(fieldCamera);
+
 	// 3Dオブジェクトのリソースをロード
 	ResourceManager::Instance()->LoadMesh("Model", "data/MODEL/PlaceActor/Cross-Junction.x");
 
 	//各インスタンス作成
 	skybox = new SkyBox(D3DXVECTOR3(20000.0f, 20000.0f, 20000.0f));
-	field = new FieldController();
+	field = new FieldModel::FieldController();
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
@@ -42,6 +47,9 @@ void GameScene::Init()
 ***************************************/
 void GameScene::Uninit()
 {
+	//カメラ削除
+	SAFE_DELETE(fieldCamera);
+
 	//インスタンス削除
 	SAFE_DELETE(skybox);
 	SAFE_DELETE(field);
@@ -55,6 +63,7 @@ void GameScene::Uninit()
 ***************************************/
 void GameScene::Update()
 {
+	//ステートを更新
 	State next = fsm[currentState]->OnUpdate(*this);
 
 	if (next != currentState)
@@ -68,6 +77,9 @@ void GameScene::Update()
 ***************************************/
 void GameScene::Draw()
 {
+	//カメラセット
+	fieldCamera->Set();
+
 	//背景描画
 	skybox->Draw();
 

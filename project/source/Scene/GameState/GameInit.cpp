@@ -7,6 +7,8 @@
 //=====================================
 #include "GameInit.h"
 #include "../../../Framework/Renderer3D/SkyBox.h"
+#include "../../Field/Camera/FieldCamera.h"
+#include "../../Field/FieldController.h"
 
 /**************************************
 入場処理
@@ -21,6 +23,9 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	entity.skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_left.png", SkyBox::Surface::Left);
 	entity.skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_right.png", SkyBox::Surface::Right);
 
+	//カメラの追従目標にカーソルを設定してモード切替
+	entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
+	entity.fieldCamera->ChangeMode();
 }
 
 /**************************************

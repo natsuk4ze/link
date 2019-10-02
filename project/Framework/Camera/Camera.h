@@ -19,24 +19,34 @@ class Camera
 {
 	friend class BaseGame;
 public:
-	void Init();		//初期化
-	void Update();		//更新
-	void Set();			//カメラ情報反映処理
+	Camera();					//コンストラクタ
+	virtual ~Camera();			//デストラクタ
+
+	virtual void Update();		//更新
+	virtual void Set();			//カメラ情報反映処理
+
+	//プラグイン追加処理
+	virtual void AddPlugin(BaseCameraPlugin* plugin);
+	virtual void RemovePlugin(BaseCameraPlugin* plugin);
+
+	//メインカメラセット、ゲット処理
+	static void SetMainCamera(Camera* camera);
+	static Camera* MainCamera();
 
 	//与えたワールド座標をスクリーン座標に変換する関数
-	static void Projection(D3DXVECTOR3& out, const D3DXVECTOR3& pos);
+	void Projection(D3DXVECTOR3& out, const D3DXVECTOR3& pos);
 
 	//与えたスクリーン座標をワールド座標に変換する関数
-	static void UnProjection(D3DXVECTOR3& out, const D3DXVECTOR3& pos, float z);
+	void UnProjection(D3DXVECTOR3& out, const D3DXVECTOR3& pos, float z);
 
 	//ビュー行列取得処理
-	static D3DXMATRIX GetViewMtx();
+	D3DXMATRIX GetViewMtx();
 
 	//ビュー逆行列取得処理
-	static D3DXMATRIX GetInverseViewMtx();
+	D3DXMATRIX GetInverseViewMtx();
 
 	//プロジェクション行列取得処理
-	static D3DXMATRIX GetProjectionMtx();
+	D3DXMATRIX GetProjectionMtx();
 
 protected:
 	//SRT情報
@@ -66,13 +76,9 @@ protected:
 
 	//プラグインリスト
 	std::vector<BaseCameraPlugin*> pluginList;
-
-private:
-	static Camera* mInstance;
-
-	Camera();
-	Camera(const Camera&) {}
-	~Camera() {}
+	
+	//ゲームにセットされるカメラのインスタンス
+	static Camera* mainCamera;
 
 public:
 	//カメラを揺らすプラグイン

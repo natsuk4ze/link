@@ -11,20 +11,22 @@
 #include "../../main.h"
 #include "../../Framework/Renderer3D/BoardPolygon.h"
 
-/**************************************
-前方宣言
-***************************************/
-
-/**************************************
-クラス定義
-***************************************/
-class FieldGround : public BoardPolygon, public GameObject
+namespace FieldModel
 {
-public:
-	FieldGround();
-	~FieldGround();
+	/**************************************
+	前方宣言	
+	***************************************/
 
-	void Draw();
-};
+	/**************************************
+	クラス定義
+	***************************************/
+	class FieldGround : public BoardPolygon, public GameObject
+	{
+	public:
+		FieldGround();
+		~FieldGround();
 
+		void Draw();
+	};
+}
 #endif

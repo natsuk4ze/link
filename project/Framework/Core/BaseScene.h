@@ -7,9 +7,12 @@
 #ifndef _BASESCENE_H_
 #define _BASESCENE_H_
 
+#include "../Camera/Camera.h"
+
 /**************************************
-マクロ定義
+前方宣言
 ***************************************/
+
 
 /**************************************
 BaseSceneクラス
@@ -27,6 +30,9 @@ public:
 	virtual void Uninit() = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
+
+protected:
+	Camera * sceneCamera;
 };
 
 #endif

@@ -12,68 +12,81 @@
 
 #include "../../Framework/Input/input.h"
 
-/**************************************
-コンストラクタ
-***************************************/
-FieldController::FieldController() :
-	fieldBorder(InitFieldBorder)
+namespace FieldModel
 {
-	//インスタンス作成
-	cursor = new FieldCursor();
-	ground = new FieldGround();
-	model = new PlaceModel();
-
-	//カーソルの移動範囲を初期化
-	cursor->SetBorder(fieldBorder * PlaceOffset, fieldBorder * PlaceOffset);
-}
-
-/**************************************
-デストラクタ
-***************************************/
-FieldController::~FieldController()
-{
-	SAFE_DELETE(cursor);
-	SAFE_DELETE(ground);
-	SAFE_DELETE(model);
-}
-
-/**************************************
-更新処理
-***************************************/
-void FieldController::Update()
-{
-	cursor->Update();
-	model->Update();
-}
-
-/**************************************
-描画処理
-***************************************/
-void FieldController::Draw()
-{
-	ground->Draw();
-	model->Draw();
-
-	//カーソルには透過オブジェクトが含まれるので最後に描画
-	cursor->Draw();
-}
-
-/**************************************
-入力確認処理
-***************************************/
-void FieldController::CheckInput()
-{
-	float x = 0.0f, z = 0.0f;
-
-	//X軸方向の入力をX軸移動として取得
-	x = Input::GetRepeatHorizontal();
-
-	//X軸軸入力が無かったらY軸入力を確認（斜め移動を禁止するため）
-	if (x == 0.0f)
+	/**************************************
+	コンストラクタ
+	***************************************/
+	FieldController::FieldController() :
+		fieldBorder(InitFieldBorder)
 	{
-		z = Input::GetRepeatVertical();
+		//インスタンス作成
+		cursor = new FieldCursor();
+		ground = new FieldGround();
+
+		model = new ::PlaceModel();
+
+		//カーソルの移動範囲を初期化
+		cursor->SetBorder(fieldBorder * PlaceOffset, fieldBorder * PlaceOffset);
 	}
 
-	//カーソルを移動
-	cursor->Move(D3DXVECTOR3(x, 0.0f, z) * PlaceOffset);
+	/**************************************
+	デストラクタ
+	***************************************/
+	FieldController::~FieldController()
+	{
+		SAFE_DELETE(cursor);
+		SAFE_DELETE(ground);
+	}
+
+	/**************************************
+	更新処理
+	***************************************/
+	void FieldController::Update()
+	{
+		cursor->Update();
+		model->Update();
+
+	}
+
+	/**************************************
+	描画処理
+	***************************************/
+	void FieldController::Draw()
+	{
+		ground->Draw();
+
+		model->Draw();
+
+		//カーソルには透過オブジェクトが含まれるので最後に描画
+		cursor->Draw();
+	}
+
+	/**************************************
+	入力確認処理
+	***************************************/
+	void FieldController::CheckInput()
+	{
+		float x = 0.0f, z = 0.0f;
+
+		//X軸方向の入力をX軸移動として取得
+		x = Input::GetRepeatHorizontal();
+
+		//X軸軸入力が無かったらY軸入力を確認（斜め移動を禁止するため）
+		if (x == 0.0f)
+		{
+			z = Input::GetRepeatVertical();
+		}
+
+		//カーソルを移動
+		cursor->Move(D3DXVECTOR3(x, 0.0f, z) * PlaceOffset);
+	}
+
+	/**************************************
+	カーソル取得処理
+	***************************************/
+	GameObject * FieldController::GetFieldCursor()
+	{
+		return cursor;
+	}
 }

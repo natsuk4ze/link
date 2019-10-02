@@ -1,8 +1,8 @@
 //=====================================
 //
 //GameScene.h
-//æ©Ÿèƒ½:ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³å‡¦ç†
-//Author:GP12B332 21 ç«‹èŠ±é›„å¤ª
+//‹@”\:ƒQ[ƒ€ƒV[ƒ“ˆ—
+//Author:GP12B332 21 —§‰Ô—Y‘¾
 //
 //=====================================
 #ifndef _GAMESCENE_H_
@@ -14,13 +14,18 @@
 #include <vector>
 
 /**************************************
-å‰æ–¹å®£è¨€
+‘O•ûéŒ¾
 ***************************************/
+namespace FieldModel
+{
+	class FieldController;
+}
+
 class SkyBox;
-class FieldController;
+class FieldCamera;
 
 /**************************************
-ã‚¯ãƒ©ã‚¹å®šç¾©
+ƒNƒ‰ƒX’è‹`
 ***************************************/
 class GameScene : public BaseScene
 {
@@ -30,7 +35,7 @@ public:
 	void Update();
 	void Draw();
 
-	//ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è¡¨ã™åˆ—æŒ™å­
+	//ƒXƒe[ƒg‚ğ•\‚·—ñ‹“q
 	enum State
 	{
 		Initialize,
@@ -39,17 +44,18 @@ public:
 	};
 
 private:
-	//ã‚·ãƒ¼ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³
+	//ƒV[ƒ“ƒXƒe[ƒgƒ}ƒVƒ“
 	std::vector<BaseState<GameScene, State>*> fsm;
 	State currentState, prevState;
 
-	SkyBox *skybox;					//èƒŒæ™¯ã‚¹ã‚«ã‚¤ãƒœãƒƒã‚¯ã‚¹
-	FieldController *field;			//ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©
+	SkyBox *skybox;								//”wŒiƒXƒJƒCƒ{ƒbƒNƒX
+	FieldCamera* fieldCamera;					//ƒtƒB[ƒ‹ƒhƒJƒƒ‰
+	FieldModel::FieldController *field;			//ƒtƒB[ƒ‹ƒhƒRƒ“ƒgƒ[ƒ‰
 
-	//ã‚¹ãƒ†ãƒ¼ãƒˆé·ç§»å‡¦ç†
+	//ƒXƒe[ƒg‘JˆÚˆ—
 	void ChangeState(State next);
 
-	//å„ã‚¹ãƒ†ãƒ¼ãƒˆã‚¯ãƒ©ã‚¹
+	//ŠeƒXƒe[ƒgƒNƒ‰ƒX
 	class GameInit;
 	class GameIdle;
 };

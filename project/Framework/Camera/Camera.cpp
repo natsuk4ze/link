@@ -6,34 +6,19 @@
 //=====================================
 #include "Camera.h"
 #include "CameraShakePlugin.h"
+#include <algorithm>
 
 /**************************************
 staticメンバ
 ***************************************/
+Camera* Camera::mainCamera = NULL;
 
 /**************************************
 コンストラクタ
 ***************************************/
 Camera::Camera()
 {
-	pluginList.push_back(ShakePlugin::Instance());
-}
-
-/**************************************
-初期化処理
-***************************************/
-void Camera::Init()
-{
-	//TODO:Cameraで初期化するのではなくプラグインを作成する
-	const float CameraAngleXZ = D3DXToRadian(45.0f);
-	const float CameraAngleY = D3DXToRadian(60.0f);
-	const float CameraLength = 50.0f;
-
-	const D3DXVECTOR3 InitPos = D3DXVECTOR3(
-		cosf(CameraAngleY) * cosf(CameraAngleXZ),
-		sinf(CameraAngleY),
-		cosf(CameraAngleY) * -sinf(CameraAngleXZ)) * CameraLength;
-
+	const D3DXVECTOR3 InitPos = D3DXVECTOR3(0.0f, 50.0f, 50.0f);
 	const D3DXVECTOR3 InitTarget = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	const float InitViewAngle = D3DXToRadian(60.0f);
 	const float InitViewAspect = (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT;
@@ -59,10 +44,24 @@ void Camera::Init()
 }
 
 /**************************************
-セット処理
+デストラクタ
 ***************************************/
-void Camera::Set()
+Camera::~Camera()
 {
+	
+}
+
+/**************************************
+更新処理
+***************************************/
+void Camera::Update()
+{
+	//各プラグイン更新
+	for (auto& plugin : pluginList)
+	{
+		plugin->Update();
+	}
+
 	//作業領域に現在のパラメータを設定
 	eyeWork = transform.GetPosition();
 	targetWork = target;
@@ -74,17 +73,12 @@ void Camera::Set()
 		plugin->Apply(*this);
 	}
 
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
 	//ビュー行列作成
 	D3DXMatrixIdentity(&view);
 	D3DXMatrixLookAtLH(&view,
 		&eyeWork,
 		&targetWork,
 		&upWork);
-
-	//ビュー行列設定
-	pDevice->SetTransform(D3DTS_VIEW, &view);
 
 	//プロジェクション行列作成
 	D3DXMatrixIdentity(&projection);
@@ -94,9 +88,6 @@ void Camera::Set()
 		viewNear,
 		viewFar);
 
-	//プロジェクション行列設定
-	pDevice->SetTransform(D3DTS_PROJECTION, &projection);
-
 	//変換行列を計算
 	VPV = view * projection * viewport;
 
@@ -105,24 +96,51 @@ void Camera::Set()
 	D3DXMatrixInverse(&invProjection, NULL, &projection);
 	D3DXMatrixInverse(&invVPV, NULL, &VPV);
 }
-#include "../Tool/DebugWindow.h"
+
 /**************************************
-更新処理
+セット処理
 ***************************************/
-void Camera::Update()
+void Camera::Set()
 {
-	Debug::Begin("Camera");
-	Debug::Slider("x", target.x, -100.0f, 100.0f);
-	Debug::Slider("y", target.y, -100.0f, 100.0f);
-	Debug::Slider("z", target.z, -300.0f, 300.0f);
-	Debug::End();
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
+	//ビュー行列設定
+	pDevice->SetTransform(D3DTS_VIEW, &view);
 
-	//各プラグイン更新
-	for (auto& plugin : pluginList)
-	{
-		plugin->Update();
-	}
+	//プロジェクション行列設定
+	pDevice->SetTransform(D3DTS_PROJECTION, &projection);
+}
+
+/**************************************
+プラグイン追加処理
+***************************************/
+void Camera::AddPlugin(BaseCameraPlugin * plugin)
+{
+	pluginList.push_back(plugin);
+}
+
+/**************************************
+プラグイン削除処理
+***************************************/
+void Camera::RemovePlugin(BaseCameraPlugin *plugin)
+{
+	pluginList.erase(std::remove(pluginList.begin(), pluginList.end(), plugin), pluginList.end());	
+}
+
+/**************************************
+メインカメラ設定処理
+***************************************/
+void Camera::SetMainCamera(Camera * camera)
+{
+	mainCamera = camera;
+}
+
+/**************************************
+メインカメラ取得処理
+***************************************/
+Camera * Camera::MainCamera()
+{
+	return mainCamera;
 }
 
 /**************************************
@@ -130,7 +148,7 @@ void Camera::Update()
 ***************************************/
 void Camera::Projection(D3DXVECTOR3& out, const D3DXVECTOR3& pos)
 {
-	D3DXVec3TransformCoord(&out, &pos, &mInstance->VPV);
+	D3DXVec3TransformCoord(&out, &pos, &mainCamera->VPV);
 }
 
 /**************************************
@@ -138,7 +156,7 @@ void Camera::Projection(D3DXVECTOR3& out, const D3DXVECTOR3& pos)
 ***************************************/
 void Camera::UnProjection(D3DXVECTOR3& out, const D3DXVECTOR3& pos, float z)
 {
-	D3DXVec3TransformCoord(&out, &D3DXVECTOR3(pos.x, pos.y, z), &mInstance->invVPV);
+	D3DXVec3TransformCoord(&out, &D3DXVECTOR3(pos.x, pos.y, z), &mainCamera->invVPV);
 }
 
 /**************************************
@@ -146,7 +164,7 @@ void Camera::UnProjection(D3DXVECTOR3& out, const D3DXVECTOR3& pos, float z)
 ***************************************/
 D3DXMATRIX Camera::GetViewMtx()
 {
-	return mInstance->view;
+	return mainCamera->view;
 }
 
 /**************************************
@@ -154,7 +172,7 @@ D3DXMATRIX Camera::GetViewMtx()
 ***************************************/
 D3DXMATRIX Camera::GetInverseViewMtx()
 {
-	return mInstance->invView;
+	return mainCamera->invView;
 }
 
 /**************************************
@@ -162,6 +180,6 @@ D3DXMATRIX Camera::GetInverseViewMtx()
 ***************************************/
 D3DXMATRIX Camera::GetProjectionMtx()
 {
-	return mInstance->projection;
+	return mainCamera->projection;
 }
 

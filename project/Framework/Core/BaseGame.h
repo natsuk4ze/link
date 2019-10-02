@@ -12,6 +12,8 @@
 #include "../../main.h"
 #include "SceneManager.h"
 
+class Camera;
+
 /********************************************/
 /*!
 @brief ゲームのコアとなる部分のクラス
