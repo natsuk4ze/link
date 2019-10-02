@@ -23,6 +23,7 @@ namespace FieldModel
 
 class SkyBox;
 class FieldCamera;
+class TextViewer;
 
 /**************************************
 クラス定義
@@ -51,6 +52,7 @@ private:
 	SkyBox *skybox;								//背景スカイボックス
 	FieldCamera* fieldCamera;					//フィールドカメラ
 	FieldModel::FieldController *field;			//フィールドコントローラ
+	TextViewer *text;
 
 	//ステート遷移処理
 	void ChangeState(State next);
