@@ -7,6 +7,7 @@
 //=====================================
 #include "FieldCursor.h"
 #include "../../Framework/Math/Easing.h"
+#include "../../Framework/Tween/Tween.h"
 
 #include <algorithm>
 
@@ -89,7 +90,7 @@ namespace Field
 		position.x = Math::Clamp(-borderX, borderX, position.x + direction.x);
 		position.z = Math::Clamp(-borderZ, borderZ, position.z + direction.z);
 
-		transform->SetPosition(position);
+		Tween::Move(*this, position, MoveDuration, EaseType::Linear);
 	}
 
 	/**************************************

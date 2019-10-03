@@ -15,7 +15,7 @@
 
 namespace Field
 {
-	/**************************************
+/**************************************
 前方宣言
 ***************************************/
 	class FieldCursorSquare;
@@ -43,6 +43,7 @@ namespace Field
 	private:
 		const int SquareMax = 5;			//四角形最大数
 		const int EmitInterval = 10;		//四角形生成インターバル
+		const int MoveDuration = 4;			//移動時間
 
 		float borderX, borderZ;				//移動可能範囲
 		int cntFrame;						//フレームカウント
