@@ -117,6 +117,7 @@ namespace Field::Model
 			z++;
 		}
 
+		//コンテナの行数と列数を保存
 		placeRowMax = x;
 		placeColumMax = z;
 

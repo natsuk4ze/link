@@ -24,20 +24,24 @@ namespace Field::Model
 	class PlaceContainer
 	{
 	public:
+		//コンストラクタ、デストラクタ
 		PlaceContainer();
 		~PlaceContainer();
 
+		//更新処理、描画処理
 		void Update();
 		void Draw();
 
+		//指定したマス目のPlaceModelを取得
 		PlaceModel* GetPlace(int x, int z);
 
+		//CSVデータ読み込み
 		void LoadCSV(const char* filePath);
 
 	private:
 		const int PlaceMax = 10000;				//プレイスの最大数
 
-		std::vector<PlaceModel*> placeVector;
+		std::vector<PlaceModel*> placeVector;	//PlaceModelコンテナ
 
 		int placeRowMax;						//1行あたりのプレイス最大数
 		int placeColumMax;						//1列あたりのプレイス最大数
