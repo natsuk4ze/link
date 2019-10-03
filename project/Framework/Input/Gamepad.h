@@ -29,6 +29,16 @@
 #define GAMEPADMAX		4			// 同時に接続するジョイパッドの最大数をセット
 #define PADBUTTON_MAX	14			// 入力に使えるボタンの最大数
 
+#define POV_UP			(0x0001)			//ハットスイッチの上
+#define POV_RIGHTUP		(0x0002)			//ハットスイッチの右上
+#define POV_RIGHT		(0x0004)			//ハットスイッチの右
+#define POV_RIGHTDOWN	(0x0008)			//ハットスイッチの右下
+#define POV_DOWN		(0x0010)			//ハットスイッチの下
+#define POV_LEFTDOWN	(0x0020)			//ハットスイッチの左下
+#define POV_LEFT		(0x0040)			//ハットスイッチの左
+#define POV_LEFTUP		(0x0080)			//ハットスイッチの左上
+#define POV_MAX			(8)
+
 /**************************************
 クラス定義
 ***************************************/
@@ -39,8 +49,14 @@ namespace GamePad
 	void Update();
 
 	BOOL GetPress(int padNo, DWORD button);
+	BOOL GetRepeat(int padNo, DWORD button);
 	BOOL GetTrigger(int padNo, DWORD button);
 	BOOL GetRelease(int padNo, DWORD button);
+
+	BOOL GetPressPOV(int padNo, DWORD button);
+	BOOL GetRepeatPOV(int padNo, DWORD button);
+	BOOL GetTriggerPOV(int padNo, DWORD button);
+	BOOL GetReleasePOV(int padNo, DWORD button);
 
 	float GetRightStickX(int padNo);
 	float GetRightStickY(int padNo);
@@ -49,6 +65,8 @@ namespace GamePad
 	int GetTriggerY(int padNo);
 
 	int GetPadCount();
+
+	int GetButtonID(DWORD button);
 };
 
 #endif

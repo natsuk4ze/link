@@ -82,22 +82,24 @@ namespace Input
 	{
 		if (no == 0)
 		{
-			if (Keyboard::GetPress(DIK_LEFT) || GamePad::GetPress(0, BUTTON_LEFT))
+			if (Keyboard::GetPress(DIK_LEFT) || GamePad::GetPress(0, BUTTON_LEFT) || GamePad::GetPressPOV(0, POV_LEFT))
 				return -1.0f;
 
-			if (Keyboard::GetPress(DIK_RIGHT) || GamePad::GetPress(0, BUTTON_RIGHT))
+			if (Keyboard::GetPress(DIK_RIGHT) || GamePad::GetPress(0, BUTTON_RIGHT) || GamePad::GetPressPOV(0, POV_RIGHT))
 				return 1.0f;
 
 			return 0.0f;
 		}
+		else
+		{
+			if (GamePad::GetPress(no, BUTTON_LEFT) || GamePad::GetPressPOV(no, POV_LEFT))
+				return -1.0f;
 
-		if (GamePad::GetPress(no, BUTTON_LEFT))
-			return -1.0f;
+			if (GamePad::GetPress(no, BUTTON_RIGHT) || GamePad::GetPressPOV(no, POV_RIGHT))
+				return 1.0f;
 
-		if (GamePad::GetPress(no, BUTTON_RIGHT))
-			return 1.0f;
-
-		return 0.0f;
+			return 0.0f;
+		}
 	}
 
 	//=============================================================================
@@ -107,20 +109,22 @@ namespace Input
 	{
 		if (no == 0)
 		{
-			if (Keyboard::GetPress(DIK_DOWN) || GamePad::GetPress(0, BUTTON_DOWN))
+			if (Keyboard::GetPress(DIK_DOWN) || GamePad::GetPress(0, BUTTON_DOWN) || GamePad::GetPressPOV(0, POV_DOWN))
 				return -1.0f;
 
-			if (Keyboard::GetPress(DIK_UP) || GamePad::GetPress(0, BUTTON_UP))
+			if (Keyboard::GetPress(DIK_UP) || GamePad::GetPress(0, BUTTON_UP) || GamePad::GetPressPOV(0, POV_UP))
 				return 1.0f;
 
 			return 0.0f;
 		}
+		else
+		{
+			if (GamePad::GetPress(no, BUTTON_DOWN) || GamePad::GetPress(no, POV_DOWN))
+				return -1.0f;
 
-		if (GamePad::GetPress(no, BUTTON_DOWN))
-			return -1.0f;
-
-		if (GamePad::GetPress(no, BUTTON_UP))
-			return 1.0f;
+			if (GamePad::GetPress(no, BUTTON_UP) || GamePad::GetPress(no, POV_UP))
+				return 1.0f;
+		}
 
 		return 0.0f;
 	}
@@ -130,13 +134,22 @@ namespace Input
 	//=============================================================================
 	float GetRepeatHorizontal(int no)
 	{
-		//TODO:ゲームパッドもリピート入力に対応
 		if (no == 0)
 		{
-			if (Keyboard::GetRepeat(DIK_LEFT))
+			if (Keyboard::GetRepeat(DIK_LEFT) || GamePad::GetRepeat(0, BUTTON_LEFT) || GamePad::GetRepeatPOV(0, POV_LEFT))
 				return -1.0f;
 
-			if (Keyboard::GetRepeat(DIK_RIGHT))
+			if (Keyboard::GetRepeat(DIK_RIGHT) || GamePad::GetRepeat(0, BUTTON_RIGHT) || GamePad::GetRepeatPOV(0, POV_RIGHT))
+				return 1.0f;
+
+			return 0.0f;
+		}
+		else
+		{
+			if (GamePad::GetRepeat(no, BUTTON_LEFT) || GamePad::GetRepeatPOV(no, POV_LEFT))
+				return -1.0f;
+
+			if (GamePad::GetRepeat(no, BUTTON_RIGHT) || GamePad::GetRepeatPOV(no, POV_RIGHT))
 				return 1.0f;
 
 			return 0.0f;
@@ -150,16 +163,23 @@ namespace Input
 	//=============================================================================
 	float GetRepeatVertical(int no)
 	{
-		//TODO:ゲームパッドもリピート入力に対応
 		if (no == 0)
 		{
-			if (Keyboard::GetRepeat(DIK_DOWN))
+			if (Keyboard::GetRepeat(DIK_DOWN) || GamePad::GetRepeat(no, BUTTON_DOWN) || GamePad::GetRepeatPOV(no, POV_DOWN))
 				return -1.0f;
-
-			if (Keyboard::GetRepeat(DIK_UP))
+			
+			if (Keyboard::GetRepeat(DIK_UP) || GamePad::GetRepeat(no, BUTTON_UP) || GamePad::GetRepeatPOV(no, POV_UP))
 				return 1.0f;
 
 			return 0.0f;
+		}
+		else
+		{
+			if (GamePad::GetRepeat(no, BUTTON_DOWN) || GamePad::GetRepeatPOV(no, POV_DOWN))
+				return -1.0f;
+
+			if (GamePad::GetRepeat(no, BUTTON_UP) || GamePad::GetRepeatPOV(no, POV_UP))
+				return 1.0f;
 		}
 
 		return 0.0f;

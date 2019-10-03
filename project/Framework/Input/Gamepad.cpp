@@ -5,6 +5,7 @@
 //
 //=====================================
 #include "Gamepad.h"
+#include "../Tool/DebugWindow.h"
 
 namespace GamePad
 {
@@ -38,6 +39,14 @@ namespace GamePad
 	static DWORD	padState[GAMEPADMAX];	// パッド情報（複数対応）
 	static DWORD	padTrigger[GAMEPADMAX];
 	static DWORD	padRelease[GAMEPADMAX];
+	static DWORD	padRepeat[GAMEPADMAX];
+	static int		padRepeatCnt[GAMEPADMAX][PADBUTTON_MAX];
+
+	static DWORD	povState[GAMEPADMAX];
+	static DWORD	povTrigger[GAMEPADMAX];
+	static DWORD	povRelease[GAMEPADMAX];
+	static DWORD	povRepeat[GAMEPADMAX];
+	static int	povRepeatCnt[GAMEPADMAX][POV_MAX];
 
 	/**************************************
 	パッド検査コールバック
@@ -48,7 +57,6 @@ namespace GamePad
 
 		result = pInput->CreateDevice(lpddi->guidInstance, &pGamePad[padCount++], NULL);
 		return DIENUM_CONTINUE;	// 次のデバイスを列挙
-
 	}
 
 	/**************************************
@@ -233,55 +241,61 @@ namespace GamePad
 			padRelease[i] = ((lastPadState ^ padState[i]))	//前回と違っていて
 				& (~padState[i]);				//今OFFのやつ
 
-												//スティックのRepeat判定処理
-			padAxisYRepeat[i] = GetTriggerY(i);
-
-			if (BUTTON_UP & padState[i])
+			// Repeat設定
+			memcpy(&padRepeat[i], &padTrigger[i], sizeof(DWORD));
+			for (DWORD button = BUTTON_UP; button <= BUTTON_M; button = button << 1)
 			{
-				axisYRepeatCnt[i]++;
-				if (axisYRepeatCnt[i] >= 20 && axisYRepeatCnt[i] % INPUT_SHORTWAIT == 0)
+				int buttonID = GetButtonID(button);
+				if (GetPress(i, button))
 				{
-					padAxisYRepeat[i] = 1;
+					padRepeatCnt[i][buttonID]++;
+
+					if (padRepeatCnt[i][buttonID] >= 20 && padRepeatCnt[i][buttonID] % 5 == 0)
+					{
+						padRepeat[i] |= button;
+					}
+				}
+				else
+				{
+					padRepeat[i] &= ~button;
+					padRepeatCnt[i][buttonID] = 0;
 				}
 			}
-			else if (BUTTON_DOWN & padState[i])
+
+			//POV設定
+			DWORD lastPovState = povState[i];
+			ZeroMemory(&povState[i], sizeof(DWORD));
+
+			//入力
+			if (dijs.rgdwPOV[0] != -1)
 			{
-				axisYRepeatCnt[i]++;
-				if (axisYRepeatCnt[i] >= 20 && axisYRepeatCnt[i] % INPUT_SHORTWAIT == 0)
-				{
-					padAxisYRepeat[i] = -1;
-				}
-			}
-			else
-			{
-				axisYRepeatCnt[i] = 0;
-				padAxisYRepeat[i] = 0;
+				povState[i] = 1 << (dijs.rgdwPOV[0] / 4500);
 			}
 
-			padAxisXRepeat[i] = GetTriggerX(i);
+			//Trigger & Release設定
+			povTrigger[i] = ((lastPovState ^ povState[i]) & povState[i]);
+			povRelease[i] = ((lastPovState ^ povState[i]) & (~povState[i]));
 
-			if (BUTTON_RIGHT & padState[i])
+			//Repeat設定
+			memcpy(&povRepeat[i], &povTrigger[i], sizeof(DWORD));
+			for (DWORD pov = POV_UP; pov <= POV_LEFTUP; pov = pov << 1)
 			{
-				axisXRepeatCnt[i]++;
-				if (axisXRepeatCnt[i] >= 20 && axisXRepeatCnt[i] % INPUT_SHORTWAIT == 0)
+				int povID = GetButtonID(pov);
+				if (GetPressPOV(i, pov))
 				{
-					padAxisXRepeat[i] = 1;
+					povRepeatCnt[i][povID]++;
+
+					if (povRepeatCnt[i][povID] >= 20 && povRepeatCnt[i][povID] % 5 == 0)
+					{
+						povRepeat[i] |= pov;
+					}
+				}
+				else
+				{
+					povRepeat[i] &= ~pov;
+					povRepeatCnt[i][povID] = 0;
 				}
 			}
-			else if (BUTTON_LEFT & padState[i])
-			{
-				axisXRepeatCnt[i]++;
-				if (axisXRepeatCnt[i] >= 20 && axisXRepeatCnt[i] % INPUT_SHORTWAIT == 0)
-				{
-					padAxisXRepeat[i] = -1;
-				}
-			}
-			else
-			{
-				axisXRepeatCnt[i] = 0;
-				padAxisXRepeat[i] = 0;
-			}
-
 		}
 
 	}
@@ -292,6 +306,14 @@ namespace GamePad
 	BOOL GetPress(int padNo, DWORD button)
 	{
 		return (button & padState[padNo]);
+	}
+
+	/**************************************
+	リピート検出処理
+	***************************************/
+	BOOL GetRepeat(int padNo, DWORD button)
+	{
+		return (button & padRepeat[padNo]);
 	}
 
 	/**************************************
@@ -308,6 +330,38 @@ namespace GamePad
 	BOOL GetRelease(int padNo, DWORD button)
 	{
 		return (button & padRelease[padNo]);
+	}
+
+	/**************************************
+	ハットスイッチプレス検出処理
+	***************************************/
+	BOOL GetPressPOV(int padNo, DWORD button)
+	{
+		return (button & povState[padNo]);
+	}
+
+	/**************************************
+	ハットスイッチリピート検出処理
+	***************************************/
+	BOOL GetRepeatPOV(int padNo, DWORD button)
+	{
+		return (button & povRepeat[padNo]);
+	}
+
+	/**************************************
+	ハットスイッチトリガー検出処理
+	***************************************/
+	BOOL GetTriggerPOV(int padNo, DWORD button)
+	{
+		return (button & povTrigger[padNo]);
+	}
+
+	/**************************************
+	ハットスイッチリリース検出処理
+	***************************************/
+	BOOL GetReleasePOV(int padNo, DWORD button)
+	{
+		return (button & povRelease[padNo]);
 	}
 
 	/**************************************
@@ -349,6 +403,20 @@ namespace GamePad
 	}
 
 	/**************************************
+	ボタンID取得処理
+	***************************************/
+	int GetButtonID(DWORD button)
+	{
+		int id = 0;
+		for (DWORD bit = button; bit > 0x01; bit = bit >> 1)
+		{
+			id++;
+		}
+
+		return id;
+	}
+
+	/**************************************
 	右スティックX軸入力計算処理
 	***************************************/
 	float GetRightStickX(int padNo)
@@ -360,7 +428,6 @@ namespace GamePad
 
 		return (padAxislRx[padNo] / 65535.0f) - 0.5f;
 	}
-
 
 	/**************************************
 	右スティックY軸入力計算処理
