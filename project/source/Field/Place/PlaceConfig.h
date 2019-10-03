@@ -1,0 +1,56 @@
+//=====================================
+//
+//PlaceConfig.h
+//機能:プレイス設定
+//Author:GP12B332 21 立花雄太
+//
+//=====================================
+#ifndef _PLACECONFIG_H_
+#define _PLACECONFIG_H_
+
+namespace Field::Model
+{
+	/**************************************
+	PlaceModelのタイプを表す列挙子
+	***************************************/
+	enum PlaceType
+	{
+		None,			//初期状態
+		Road,			//道
+		Town,			//街
+		River,			//川
+		Bridge,			//橋
+		Junction,		//交差点
+		Moutain			//山
+	};
+
+	/**************************************
+	CSVのデータをPlaceTypeへ変換する関数
+	***************************************/
+	inline PlaceType IntToPlaceType(int n)
+	{
+		if (n == 0)
+			return PlaceType::Town;
+
+		if (n == 2)
+			return PlaceType::River;
+
+		if (n == 3)
+			return PlaceType::Moutain;
+
+		return PlaceType::None;
+	}
+
+	/**************************************
+	隣接方向を表す列挙子
+	***************************************/
+	enum Adjacency
+	{
+		Back,			//Zマイナス方向の隣接
+		Left,			//Xマイナス方向の隣接
+		Forward,		//Zプラス方向の隣接
+		Right,			//Xプラス方向の隣接
+		Max
+	};
+}
+#endif

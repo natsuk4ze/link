@@ -12,13 +12,18 @@
 
 class PlaceModel;
 
-namespace FieldModel
+namespace Field
 {
 	/**************************************
 	前方宣言
 	***************************************/
 	class FieldCursor;
 	class FieldGround;
+	
+	namespace Model
+	{
+		class PlaceContainer;
+	}
 
 	/**************************************
 	クラス定義
@@ -34,6 +39,10 @@ namespace FieldModel
 		void Update();
 		void Draw();
 
+		//データ読み込み処理
+		//TODO:読み込むデータを選択できるようにする
+		void Load();
+
 		//入力確認処理
 		void CheckInput();
 
@@ -46,7 +55,8 @@ namespace FieldModel
 
 		FieldCursor *cursor;					//カーソル
 		FieldGround *ground;					//地面
-		::PlaceModel *model;					//3Dモデルマネージャ
+		Model::PlaceContainer *placeContainer;	//プレイスコンテナ
+		::PlaceModel *model;					//3Dモデルマネージャ(テスト用）	
 
 		int fieldBorder;						//フィールド範囲(マス単位)
 	};

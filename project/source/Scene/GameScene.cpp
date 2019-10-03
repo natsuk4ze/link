@@ -35,7 +35,7 @@ void GameScene::Init()
 
 	//各インスタンス作成
 	skybox = new SkyBox(D3DXVECTOR3(20000.0f, 20000.0f, 20000.0f));
-	field = new FieldModel::FieldController();
+	field = new Field::FieldController();
 	text = new TextViewer("M+ 2c heavy", 50);
 
 	//ステートマシン作成
