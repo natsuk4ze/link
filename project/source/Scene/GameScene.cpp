@@ -14,6 +14,7 @@
 #include "../Field/FieldController.h"
 #include "../Field/Camera/FieldCamera.h"
 #include "../../Framework/Renderer2D/TextViewer.h"
+#include "../Viewer/GameScene/GameViewer/GameViewer.h"
 
 #include "GameState/GameInit.h"
 #include "GameState/GameIdle.h"
@@ -37,6 +38,7 @@ void GameScene::Init()
 	skybox = new SkyBox(D3DXVECTOR3(20000.0f, 20000.0f, 20000.0f));
 	field = new Field::FieldController();
 	text = new TextViewer("M+ 2c heavy", 50);
+	gameViewer = new GameViewer();
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
@@ -62,6 +64,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(skybox);
 	SAFE_DELETE(field);
 	SAFE_DELETE(text);
+	SAFE_DELETE(gameViewer);
 
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
@@ -79,6 +82,9 @@ void GameScene::Update()
 	{
 		ChangeState(next);
 	}
+
+	//ビュアー更新
+	gameViewer->Update();
 }
 
 /**************************************
@@ -102,6 +108,9 @@ void GameScene::Draw()
 	text->SetText(str);
 	text->SetPos(x, y);
 	text->Draw();
+
+	//ビュアー描画
+	gameViewer->Draw();
 }
 
 /**************************************

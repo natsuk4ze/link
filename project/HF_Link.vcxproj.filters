@@ -90,6 +90,30 @@
     <ClCompile Include="Library\json11\json11.cpp" />
     <ClCompile Include="source\Field\Place\FieldPlaceContainer.cpp" />
     <ClCompile Include="Framework\String\String.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\StockViewer.cpp">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\LevelViewer.cpp">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\GameViewer.cpp">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\GameViewerParam.cpp">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Viewer\Framework\BaseViewerDrawer.cpp">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Viewer\Framework\CountViewerDrawer.cpp">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Viewer\Framework\RotateViewerDrawer.cpp">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -195,5 +219,40 @@
     <ClInclude Include="Library\json11\json11.hpp" />
     <ClInclude Include="source\Field\Place\FieldPlaceContainer.h" />
     <ClInclude Include="Framework\String\String.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\StockViewer.h">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewer.h">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewerParam.h">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\TimerViewer.h">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\Framework\RotateViewerDrawer.h">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\Framework\BaseViewer.h">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\Framework\BaseViewerDrawer.h">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\Framework\CountViewerDrawer.h">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\LevelViewer.h">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ソースファイル">
+      <UniqueIdentifier>{2cffddb3-f778-4b2f-a9f4-8fa29988451a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\作業フォルダ">
+      <UniqueIdentifier>{8c50b45f-4aea-4307-a60f-4b74935d8dba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
