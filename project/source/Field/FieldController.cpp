@@ -23,14 +23,14 @@ namespace Field
 		inputRepeatCnt(0)
 	{
 		//インスタンス作成
-		cursor = new FieldCursor();
+		cursor = new FieldCursor(PlaceOffset);
 		ground = new FieldGround();
 		placeContainer = new Model::PlaceContainer();
 
 		model = new ::PlaceModel();
 
 		//カーソルの移動範囲を初期化
-		cursor->SetBorder(fieldBorder * PlaceOffset, fieldBorder * PlaceOffset);
+		cursor->SetBorder(fieldBorder / 2, fieldBorder / 2);
 	}
 
 	/**************************************
@@ -108,7 +108,7 @@ namespace Field
 		float z = Math::Clamp(-1.0f, 1.0f, triggerZ + repeatZ);
 		if (x != 0.0f || z != 0.0f)
 		{
-			cursor->Move(D3DXVECTOR3(x, 0.0f, z) * PlaceOffset);
+			cursor->Move((int)x, (int)z);
 		}
 	}
 
