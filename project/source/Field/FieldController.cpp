@@ -106,10 +106,7 @@ namespace Field
 		//ƒJ[ƒ\ƒ‹‚ğˆÚ“®
 		float x = Math::Clamp(-1.0f, 1.0f, triggerX + repeatX);
 		float z = Math::Clamp(-1.0f, 1.0f, triggerZ + repeatZ);
-		if (x != 0.0f || z != 0.0f)
-		{
-			cursor->Move((int)x, (int)z);
-		}
+		cursor->Move((int)x, (int)z);
 	}
 
 	/**************************************

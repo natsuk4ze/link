@@ -49,11 +49,18 @@ namespace Field
 		int borderX, borderZ;				//移動可能範囲
 		int cntFrame;						//フレームカウント
 		int posX, posZ;						//X座標、Z座標
+		int cntMove;						//移動カウント
+
+		D3DXVECTOR3 moveTarget;				//移動の目標地点
+		D3DXVECTOR3 startPos;				//移動のスタート地点
 
 		std::vector<FieldCursorSquare*> squareContainer;	//四角形コンテナ
 
 		//四角形セット処理
 		void SetSquare();
+
+		//移動内部処理
+		void Move();
 	};
 
 	/**************************************
