@@ -35,13 +35,16 @@ namespace Field::Model
 		void LoadCSV(const char* filePath);
 
 	private:
-		const int PlaceRowMax = 100;			//1行あたりのプレイス最大数
-		const int PlaceColumMax = 100;			//1列あたりのプレイス最大数
 		const int PlaceMax = 10000;				//プレイスの最大数
 
 		std::vector<PlaceModel*> placeVector;
 
-		bool initialized;
+		int placeRowMax;						//1行あたりのプレイス最大数
+		int placeColumMax;						//1列あたりのプレイス最大数
+
+		bool initialized;						//初期化フラグ
+
+		void MakeAdjacency();
 	};
 }
 

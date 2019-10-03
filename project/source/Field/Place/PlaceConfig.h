@@ -25,6 +25,23 @@ namespace Field::Model
 	};
 
 	/**************************************
+	CSVのデータをPlaceTypeへ変換する関数
+	***************************************/
+	inline PlaceType IntToPlaceType(int n)
+	{
+		if (n == 0)
+			return PlaceType::Town;
+
+		if (n == 2)
+			return PlaceType::River;
+
+		if (n == 3)
+			return PlaceType::Moutain;
+
+		return PlaceType::None;
+	}
+
+	/**************************************
 	隣接方向を表す列挙子
 	***************************************/
 	enum Adjacency

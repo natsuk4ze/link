@@ -9,6 +9,7 @@
 #include "FieldCursor.h"
 #include "FieldGround.h"
 #include "../FieldObject/PlaceModel.h"
+#include "Place\FieldPlaceContainer.h"
 
 #include "../../Framework/Input/input.h"
 
@@ -23,6 +24,7 @@ namespace Field
 		//インスタンス作成
 		cursor = new FieldCursor();
 		ground = new FieldGround();
+		placeContainer = new Model::PlaceContainer();
 
 		model = new ::PlaceModel();
 
@@ -37,6 +39,7 @@ namespace Field
 	{
 		SAFE_DELETE(cursor);
 		SAFE_DELETE(ground);
+		SAFE_DELETE(placeContainer);
 	}
 
 	/**************************************
@@ -45,8 +48,8 @@ namespace Field
 	void FieldController::Update()
 	{
 		cursor->Update();
+		placeContainer->Update();
 		model->Update();
-
 	}
 
 	/**************************************
@@ -56,10 +59,20 @@ namespace Field
 	{
 		ground->Draw();
 
+		placeContainer->Draw();
 		model->Draw();
 
 		//カーソルには透過オブジェクトが含まれるので最後に描画
 		cursor->Draw();
+	}
+
+	/**************************************
+	入力確認処理
+	TODO：読み込むデータを選択できるようにする
+	***************************************/
+	void FieldController::Load()
+	{
+		placeContainer->LoadCSV("data/FIELD/sample01.csv");
 	}
 
 	/**************************************

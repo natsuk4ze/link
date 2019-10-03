@@ -12,8 +12,8 @@
 ***************************************/
 void String::Split(std::vector<std::string>& out, std::string & str, const char delim)
 {
-	unsigned first = 0;						//始点
-	unsigned last = str.find_first_of(delim);	//終点（カンマの位置）
+	unsigned first = 0;							//始点
+	unsigned last = str.find_first_of(delim);	//終点
 
 	while (first < str.size())
 	{
