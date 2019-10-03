@@ -5,9 +5,9 @@
 //
 //=====================================
 #include "debugWindow.h"
-#include "../../imgui/imgui.h"
-#include "../../imgui/imgui_impl_win32.h"
-#include "../../imgui/imgui_impl_dx9.h"
+#include "../../Library/imgui/imgui.h"
+#include "../../Library/imgui/imgui_impl_win32.h"
+#include "../../Library/imgui/imgui_impl_dx9.h"
 #include "../Input/input.h"
 
 /**************************************
