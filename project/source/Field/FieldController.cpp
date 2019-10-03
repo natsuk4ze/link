@@ -12,7 +12,7 @@
 
 #include "../../Framework/Input/input.h"
 
-namespace FieldModel
+namespace Field
 {
 	/**************************************
 	コンストラクタ

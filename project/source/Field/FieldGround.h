@@ -11,7 +11,7 @@
 #include "../../main.h"
 #include "../../Framework/Renderer3D/BoardPolygon.h"
 
-namespace FieldModel
+namespace Field
 {
 	/**************************************
 	‘O•ûéŒ¾	
