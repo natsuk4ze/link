@@ -29,50 +29,44 @@
 #define GAMEPADMAX		4			// 同時に接続するジョイパッドの最大数をセット
 #define PADBUTTON_MAX	14			// 入力に使えるボタンの最大数
 
+#define POV_UP			(0x0001)			//ハットスイッチの上
+#define POV_RIGHTUP		(0x0002)			//ハットスイッチの右上
+#define POV_RIGHT		(0x0004)			//ハットスイッチの右
+#define POV_RIGHTDOWN	(0x0008)			//ハットスイッチの右下
+#define POV_DOWN		(0x0010)			//ハットスイッチの下
+#define POV_LEFTDOWN	(0x0020)			//ハットスイッチの左下
+#define POV_LEFT		(0x0040)			//ハットスイッチの左
+#define POV_LEFTUP		(0x0080)			//ハットスイッチの左上
+#define POV_MAX			(8)
+
 /**************************************
 クラス定義
 ***************************************/
-class GamePad
+namespace GamePad
 {
-public:
-	GamePad();
-	~GamePad(); 
 	HRESULT Init(LPDIRECTINPUT8 pInput);
-
+	void Uninit();
 	void Update();
 
-	static BOOL GetPress(int padNo, DWORD button);
-	static BOOL GetTrigger(int padNo, DWORD button);
-	static BOOL GetRelease(int padNo, DWORD button);
+	BOOL GetPress(int padNo, DWORD button);
+	BOOL GetRepeat(int padNo, DWORD button);
+	BOOL GetTrigger(int padNo, DWORD button);
+	BOOL GetRelease(int padNo, DWORD button);
 
-	static float GetRightStickX(int padNo);
-	static float GetRightStickY(int padNo);
+	BOOL GetPressPOV(int padNo, DWORD button);
+	BOOL GetRepeatPOV(int padNo, DWORD button);
+	BOOL GetTriggerPOV(int padNo, DWORD button);
+	BOOL GetReleasePOV(int padNo, DWORD button);
 
-	static int GetTriggerX(int padNo);
-	static int GetTriggerY(int padNo);
+	float GetRightStickX(int padNo);
+	float GetRightStickY(int padNo);
 
-	static int GetPadCount();
+	int GetTriggerX(int padNo);
+	int GetTriggerY(int padNo);
 
-private:
-	//スティックのRepeat状態検出用
-	int		padAxisXRepeat[GAMEPADMAX];
-	int		padAxisYRepeat[GAMEPADMAX];
-	int		lastAxisX[GAMEPADMAX];
-	int		lastAxisY[GAMEPADMAX];
-	int		axisXRepeatCnt[GAMEPADMAX];
-	int		axisYRepeatCnt[GAMEPADMAX];
+	int GetPadCount();
 
-	float	padAxislRx[GAMEPADMAX];
-	float	padAxislRy[GAMEPADMAX];
-
-	LPDIRECTINPUTDEVICE8	pGamePad[GAMEPADMAX] = { NULL,NULL,NULL,NULL };// パッドデバイス
-
-	DWORD	padState[GAMEPADMAX];	// パッド情報（複数対応）
-	DWORD	padTrigger[GAMEPADMAX];
-	DWORD	padRelease[GAMEPADMAX];
-	int		padCount;			// 検出したパッドの数
-
-	static GamePad* mInstance;
+	int GetButtonID(DWORD button);
 };
 
 #endif

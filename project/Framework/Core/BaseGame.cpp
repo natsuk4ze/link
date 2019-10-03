@@ -13,7 +13,6 @@
 #include "../Tool/ProfilerCPU.h"
 #include "../Task/TaskManager.h"
 
-Input* Input::mInstance = NULL;
 Tween* Tween::mInstance = NULL;
 /**************************************
 コンストラクタ
@@ -24,7 +23,6 @@ BaseGame::BaseGame(HINSTANCE hInstance, HWND hWnd)
 
 	//インスタンス作成
 	sceneManager = new SceneManager();
-	Input::mInstance = new Input();
 	Tween::mInstance = new Tween();
 
 	//描画領域作成
@@ -44,7 +42,7 @@ BaseGame::BaseGame(HINSTANCE hInstance, HWND hWnd)
 	PostEffectManager::Instance()->SetUse(flgEffect);
 
 	//各種初期化
-	Input::mInstance->Init(hInstance, hWnd);
+	Input::Init(hInstance, hWnd);
 	Light::Init();
 	Debug::Init(hWnd, pDevice);
 }
@@ -62,10 +60,10 @@ BaseGame::~BaseGame()
 	SAFE_RELEASE(screenVtx);
 
 	SAFE_DELETE(sceneManager);
-	SAFE_DELETE(Input::mInstance);
 	SAFE_DELETE(Tween::mInstance);
 
 	Debug::Uninit();
+	Input::Uninit();
 }
 
 /**************************************
@@ -74,7 +72,7 @@ BaseGame::~BaseGame()
 void BaseGame::Update()
 {
 	Debug::Update();
-	Input::mInstance->Update();
+	Input::Update();
 
 	sceneManager->Update();
 

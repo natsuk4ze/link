@@ -92,7 +92,8 @@ namespace Field
 		}
 
 		//ƒJ[ƒ\ƒ‹‚ðˆÚ“®
-		cursor->Move(D3DXVECTOR3(x, 0.0f, z) * PlaceOffset);
+		if(x != 0.0f || z != 0.0f)
+			cursor->Move(D3DXVECTOR3(x, 0.0f, z) * PlaceOffset);
 	}
 
 	/**************************************
