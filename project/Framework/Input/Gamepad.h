@@ -32,47 +32,23 @@
 /**************************************
 クラス定義
 ***************************************/
-class GamePad
+namespace GamePad
 {
-public:
-	GamePad();
-	~GamePad(); 
 	HRESULT Init(LPDIRECTINPUT8 pInput);
-
+	void Uninit();
 	void Update();
 
-	static BOOL GetPress(int padNo, DWORD button);
-	static BOOL GetTrigger(int padNo, DWORD button);
-	static BOOL GetRelease(int padNo, DWORD button);
+	BOOL GetPress(int padNo, DWORD button);
+	BOOL GetTrigger(int padNo, DWORD button);
+	BOOL GetRelease(int padNo, DWORD button);
 
-	static float GetRightStickX(int padNo);
-	static float GetRightStickY(int padNo);
+	float GetRightStickX(int padNo);
+	float GetRightStickY(int padNo);
 
-	static int GetTriggerX(int padNo);
-	static int GetTriggerY(int padNo);
+	int GetTriggerX(int padNo);
+	int GetTriggerY(int padNo);
 
-	static int GetPadCount();
-
-private:
-	//スティックのRepeat状態検出用
-	int		padAxisXRepeat[GAMEPADMAX];
-	int		padAxisYRepeat[GAMEPADMAX];
-	int		lastAxisX[GAMEPADMAX];
-	int		lastAxisY[GAMEPADMAX];
-	int		axisXRepeatCnt[GAMEPADMAX];
-	int		axisYRepeatCnt[GAMEPADMAX];
-
-	float	padAxislRx[GAMEPADMAX];
-	float	padAxislRy[GAMEPADMAX];
-
-	LPDIRECTINPUTDEVICE8	pGamePad[GAMEPADMAX] = { NULL,NULL,NULL,NULL };// パッドデバイス
-
-	DWORD	padState[GAMEPADMAX];	// パッド情報（複数対応）
-	DWORD	padTrigger[GAMEPADMAX];
-	DWORD	padRelease[GAMEPADMAX];
-	int		padCount;			// 検出したパッドの数
-
-	static GamePad* mInstance;
+	int GetPadCount();
 };
 
 #endif

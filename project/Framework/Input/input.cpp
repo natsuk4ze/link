@@ -6,178 +6,162 @@
 //=============================================================================
 #include "input.h"
 
-//*****************************************************************************
-// staticメンバ
-//*****************************************************************************
-#undef new
-//*****************************************************************************
-// コンストラクタ
-//*****************************************************************************
-Input::Input()
+namespace Input
 {
-	if (mInstance == NULL)
+	//*****************************************************************************
+	// グローバル変数
+	//*****************************************************************************
+	LPDIRECTINPUT8 pDInput = NULL;					// IDirectInput8インターフェースへのポインタ
+
+	//=============================================================================
+	// 入力処理の初期化
+	//=============================================================================
+	HRESULT Init(HINSTANCE hInst, HWND hWnd)
 	{
-		mInstance = this;
+		HRESULT hr;
+
+		if(!pDInput)
+		{
+			// DirectInputオブジェクトの作成
+			hr = DirectInput8Create(hInst, DIRECTINPUT_VERSION,
+				IID_IDirectInput8, (void**)&pDInput, NULL);
+		}
+
+		// キーボードの初期化
+		Keyboard::Init(hInst, hWnd, pDInput);
+
+		//マウス初期化
+		Mouse::Init(hInst, hWnd, pDInput);
+
+		//パッド初期化処理
+		GamePad::Init(pDInput);
+
+		return S_OK;
 	}
 
-	pad = new GamePad();
-	keyboard = new Keyboard();
-	mouse = new Mouse();
-}
-
-//=============================================================================
-// 入力処理の初期化
-//=============================================================================
-HRESULT Input::Init(HINSTANCE hInst, HWND hWnd)
-{
-	HRESULT hr;
-
-	//if(!pDInput)
+	//=============================================================================
+	// 入力処理の終了処理
+	//=============================================================================
+	void Uninit()
 	{
-		// DirectInputオブジェクトの作成
-		hr = DirectInput8Create(hInst, DIRECTINPUT_VERSION,
-									IID_IDirectInput8, (void**)&pDInput, NULL);
+		// キーボードの終了処理
+		Keyboard::Uninit();
+
+		//マウス終了処理
+		Mouse::Uninit();
+
+		//パッド終了処理
+		GamePad::Uninit();
+
+		if (pDInput)
+		{// DirectInputオブジェクトの開放
+			pDInput->Release();
+			pDInput = NULL;
+		}
 	}
 
-	// キーボードの初期化
-	keyboard->Init(hInst, hWnd, pDInput);
+	//=============================================================================
+	// 入力処理の更新処理
+	//=============================================================================
+	void Update(void)
+	{
+		// キーボードの更新
+		Keyboard::Update();
 
-	//マウス初期化
-	mouse->Init(hInst, hWnd, pDInput);
+		//マウス更新処理
+		Mouse::Update();
 
-	//パッド初期化処理
-	pad->Init(pDInput);
-
-	return S_OK;
-}
-
-//=============================================================================
-// 入力処理の終了処理
-//=============================================================================
-Input::~Input()
-{
-	// キーボードの終了処理
-	SAFE_DELETE(keyboard);
-
-	//マウス終了処理
-	SAFE_DELETE(mouse);
-
-	//パッド終了処理
-	SAFE_DELETE(pad);
-
-	if(pDInput)
-	{// DirectInputオブジェクトの開放
-		pDInput->Release();
-		pDInput = NULL;
+		//ゲームパッド更新処理
+		GamePad::Update();
 	}
 
-	if (mInstance == this)
+	//=============================================================================
+	// 水平方向への入力処理
+	//=============================================================================
+	float GetPressHorizontail(int no)
 	{
-		mInstance = NULL;
-	}
-}
+		if (no == 0)
+		{
+			if (Keyboard::GetPress(DIK_LEFT) || GamePad::GetPress(0, BUTTON_LEFT))
+				return -1.0f;
 
-//=============================================================================
-// 入力処理の更新処理
-//=============================================================================
-void Input::Update(void)
-{
-	// キーボードの更新
-	keyboard->Update();
+			if (Keyboard::GetPress(DIK_RIGHT) || GamePad::GetPress(0, BUTTON_RIGHT))
+				return 1.0f;
 
-	//マウス更新処理
-	mouse->Update();
+			return 0.0f;
+		}
 
-	//ゲームパッド更新処理
-	pad->Update();
-}
-
-//=============================================================================
-// 水平方向への入力処理
-//=============================================================================
-float Input::GetPressHorizontail(int no)
-{
-	if (no == 0)
-	{
-		if (Keyboard::GetPress(DIK_LEFT) || GamePad::GetPress(0, BUTTON_LEFT))
+		if (GamePad::GetPress(no, BUTTON_LEFT))
 			return -1.0f;
 
-		if (Keyboard::GetPress(DIK_RIGHT) || GamePad::GetPress(0, BUTTON_RIGHT))
+		if (GamePad::GetPress(no, BUTTON_RIGHT))
 			return 1.0f;
 
 		return 0.0f;
 	}
 
-	if (GamePad::GetPress(no, BUTTON_LEFT))
-		return -1.0f;
-
-	if (GamePad::GetPress(no, BUTTON_RIGHT))
-		return 1.0f;
-
-	return 0.0f;
-}
-
-//=============================================================================
-// 垂直方向への入力処理
-//=============================================================================
-float Input::GetPressVertical(int no)
-{
-	if (no == 0)
+	//=============================================================================
+	// 垂直方向への入力処理
+	//=============================================================================
+	float GetPressVertical(int no)
 	{
-		if (Keyboard::GetPress(DIK_DOWN) || GamePad::GetPress(0, BUTTON_DOWN))
+		if (no == 0)
+		{
+			if (Keyboard::GetPress(DIK_DOWN) || GamePad::GetPress(0, BUTTON_DOWN))
+				return -1.0f;
+
+			if (Keyboard::GetPress(DIK_UP) || GamePad::GetPress(0, BUTTON_UP))
+				return 1.0f;
+
+			return 0.0f;
+		}
+
+		if (GamePad::GetPress(no, BUTTON_DOWN))
 			return -1.0f;
 
-		if (Keyboard::GetPress(DIK_UP) || GamePad::GetPress(0, BUTTON_UP))
+		if (GamePad::GetPress(no, BUTTON_UP))
 			return 1.0f;
 
 		return 0.0f;
 	}
 
-	if (GamePad::GetPress(no, BUTTON_DOWN))
-		return -1.0f;
-
-	if (GamePad::GetPress(no, BUTTON_UP))
-		return 1.0f;
-
-	return 0.0f;
-}
-
-//=============================================================================
-// 垂直方向への入力処理
-//=============================================================================
-float Input::GetRepeatHorizontal(int no)
-{
-	//TODO:ゲームパッドもリピート入力に対応
-	if (no == 0)
+	//=============================================================================
+	// 垂直方向への入力処理
+	//=============================================================================
+	float GetRepeatHorizontal(int no)
 	{
-		if (Keyboard::GetRepeat(DIK_LEFT))
-			return -1.0f;
+		//TODO:ゲームパッドもリピート入力に対応
+		if (no == 0)
+		{
+			if (Keyboard::GetRepeat(DIK_LEFT))
+				return -1.0f;
 
-		if (Keyboard::GetRepeat(DIK_RIGHT))
-			return 1.0f;
+			if (Keyboard::GetRepeat(DIK_RIGHT))
+				return 1.0f;
+
+			return 0.0f;
+		}
 
 		return 0.0f;
 	}
 
-	return 0.0f;
-}
-
-//=============================================================================
-// 垂直方向への入力処理
-//=============================================================================
-float Input::GetRepeatVertical(int no)
-{
-	//TODO:ゲームパッドもリピート入力に対応
-	if (no == 0)
+	//=============================================================================
+	// 垂直方向への入力処理
+	//=============================================================================
+	float GetRepeatVertical(int no)
 	{
-		if (Keyboard::GetRepeat(DIK_DOWN))
-			return -1.0f;
+		//TODO:ゲームパッドもリピート入力に対応
+		if (no == 0)
+		{
+			if (Keyboard::GetRepeat(DIK_DOWN))
+				return -1.0f;
 
-		if (Keyboard::GetRepeat(DIK_UP))
-			return 1.0f;
+			if (Keyboard::GetRepeat(DIK_UP))
+				return 1.0f;
+
+			return 0.0f;
+		}
 
 		return 0.0f;
 	}
-
-	return 0.0f;
 }
