@@ -130,6 +130,56 @@ namespace Input
 	}
 
 	//=============================================================================
+	// …•½•ûŒü‚Ö‚Ì“ü—Íˆ—
+	//=============================================================================
+	float GetTriggerHorizontal(int no)
+	{
+		if (no == 0)
+		{
+			if (Keyboard::GetTrigger(DIK_LEFT) || GamePad::GetTrigger(0, BUTTON_LEFT) || GamePad::GetTriggerPOV(0, POV_LEFT))
+				return -1.0f;
+
+			if (Keyboard::GetTrigger(DIK_RIGHT) || GamePad::GetTrigger(0, BUTTON_RIGHT) || GamePad::GetTriggerPOV(0, POV_RIGHT))
+				return 1.0f;
+		}
+		else
+		{
+			if (GamePad::GetTrigger(no, BUTTON_LEFT) || GamePad::GetTriggerPOV(no, POV_LEFT))
+				return -1.0f;
+
+			if (GamePad::GetTrigger(no, BUTTON_RIGHT) || GamePad::GetTriggerPOV(no, POV_RIGHT))
+				return 1.0f;
+		}
+
+		return 0.0f;
+	}
+
+	//=============================================================================
+	// ‚’¼•ûŒü‚Ö‚Ì“ü—Íˆ—
+	//=============================================================================
+	float GetTriggerVertical(int no)
+	{
+		if (no == 0)
+		{
+			if (Keyboard::GetTrigger(DIK_DOWN) || GamePad::GetTrigger(0, BUTTON_DOWN) || GamePad::GetTriggerPOV(0, POV_DOWN))
+				return -1.0f;
+
+			if (Keyboard::GetTrigger(DIK_UP) || GamePad::GetTrigger(0, BUTTON_UP) || GamePad::GetTriggerPOV(0, POV_UP))
+				return 1.0f;
+		}
+		else
+		{
+			if (GamePad::GetTrigger(no, BUTTON_DOWN) || GamePad::GetTriggerPOV(no, POV_DOWN))
+				return -1.0f;
+
+			if (GamePad::GetTrigger(no, BUTTON_UP) || GamePad::GetTriggerPOV(no, POV_UP))
+				return 1.0f;
+		}
+
+		return 0.0f;
+	}
+
+	//=============================================================================
 	// ‚’¼•ûŒü‚Ö‚Ì“ü—Íˆ—
 	//=============================================================================
 	float GetRepeatHorizontal(int no)
