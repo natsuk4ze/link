@@ -19,17 +19,18 @@ namespace Field
 	コンストラクタ
 	***************************************/
 	FieldController::FieldController() :
-		fieldBorder(InitFieldBorder)
+		fieldBorder(InitFieldBorder),
+		inputRepeatCnt(0)
 	{
 		//インスタンス作成
-		cursor = new FieldCursor();
+		cursor = new FieldCursor(PlaceOffset);
 		ground = new FieldGround();
 		placeContainer = new Model::PlaceContainer();
 
 		model = new ::PlaceModel();
 
 		//カーソルの移動範囲を初期化
-		cursor->SetBorder(fieldBorder * PlaceOffset, fieldBorder * PlaceOffset);
+		cursor->SetBorder(fieldBorder / 2, fieldBorder / 2);
 	}
 
 	/**************************************
@@ -80,20 +81,32 @@ namespace Field
 	***************************************/
 	void FieldController::CheckInput()
 	{
-		float x = 0.0f, z = 0.0f;
+		//トリガー確認
+		float triggerX = 0.0f, triggerZ = 0.0f;
 
-		//X軸方向の入力をX軸移動として取得
-		x = Input::GetRepeatHorizontal();
+		triggerX = Input::GetTriggerHorizontal();
+		triggerZ = Input::GetTriggerVertical();
 
-		//X軸軸入力が無かったらY軸入力を確認（斜め移動を禁止するため）
-		if (x == 0.0f)
+		//リピート確認
+		float repeatX = 0.0f, repeatZ = 0.0f;
+		if((Input::GetPressHorizontail() != 0.0f || Input::GetPressVertical() != 0.0f))
 		{
-			z = Input::GetRepeatVertical();
+			inputRepeatCnt++;
+			if (inputRepeatCnt >= InputLongWait && inputRepeatCnt % InputShortWait == 0)
+			{
+				repeatX = Input::GetPressHorizontail();
+				repeatZ = Input::GetPressVertical();
+			}
+		}
+		else
+		{
+			inputRepeatCnt = 0;
 		}
 
 		//カーソルを移動
-		if(x != 0.0f || z != 0.0f)
-			cursor->Move(D3DXVECTOR3(x, 0.0f, z) * PlaceOffset);
+		float x = Math::Clamp(-1.0f, 1.0f, triggerX + repeatX);
+		float z = Math::Clamp(-1.0f, 1.0f, triggerZ + repeatZ);
+		cursor->Move((int)x, (int)z);
 	}
 
 	/**************************************

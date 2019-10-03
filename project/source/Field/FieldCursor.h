@@ -27,7 +27,7 @@ namespace Field
 	{
 	public:
 		//コンストラクタ、デストラクタ
-		FieldCursor();
+		FieldCursor(float positionOffset);
 		~FieldCursor();
 
 		//更新処理、描画処理
@@ -35,23 +35,32 @@ namespace Field
 		void Draw();
 
 		//移動処理
-		void Move(const D3DXVECTOR3& direction);
+		void Move(int x, int z);
 
 		//移動範囲設定処理
-		void SetBorder(float borderX, float borderZ);
+		void SetBorder(int borderX, int borderZ);
 
 	private:
 		const int SquareMax = 5;			//四角形最大数
 		const int EmitInterval = 10;		//四角形生成インターバル
 		const int MoveDuration = 4;			//移動時間
+		const float PositionOffset;			//1マス毎の座標オフセット			
 
-		float borderX, borderZ;				//移動可能範囲
+		int borderX, borderZ;				//移動可能範囲
 		int cntFrame;						//フレームカウント
+		int posX, posZ;						//X座標、Z座標
+		int cntMove;						//移動カウント
+
+		D3DXVECTOR3 moveTarget;				//移動の目標地点
+		D3DXVECTOR3 startPos;				//移動のスタート地点
 
 		std::vector<FieldCursorSquare*> squareContainer;	//四角形コンテナ
 
 		//四角形セット処理
 		void SetSquare();
+
+		//移動内部処理
+		void Move();
 	};
 
 	/**************************************
@@ -82,8 +91,8 @@ namespace Field
 		const int FadeDuration = 30;				//フェード時間
 		const float MoveSpeed = 0.3f;				//移動スピード
 
-		int cntFrame;					//フレームカウント
-		Transform *transform;			//SRT情報
+		int cntFrame;								//フレームカウント
+		Transform *transform;						//SRT情報
 	};
 }
 

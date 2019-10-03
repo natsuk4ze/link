@@ -52,6 +52,8 @@ namespace Field
 	private:
 		const float PlaceOffset = 10.0f;		//Placeの1マス毎のオフセット値
 		const int InitFieldBorder = 25;			//フィールド範囲の初期値
+		const int InputLongWait = 15;			//入力リピートの待機フレーム
+		const int InputShortWait = 5;			//入力リピートの待機フレーム
 
 		FieldCursor *cursor;					//カーソル
 		FieldGround *ground;					//地面
@@ -59,6 +61,7 @@ namespace Field
 		::PlaceModel *model;					//3Dモデルマネージャ(テスト用）	
 
 		int fieldBorder;						//フィールド範囲(マス単位)
+		int inputRepeatCnt;						//入力のリピートカウント
 	};
 }
 #endif

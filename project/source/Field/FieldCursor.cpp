@@ -7,7 +7,7 @@
 //=====================================
 #include "FieldCursor.h"
 #include "../../Framework/Math/Easing.h"
-#include "../../Framework/Tween/Tween.h"
+#include "../../Framework/Tool/DebugWindow.h"
 
 #include <algorithm>
 
@@ -16,8 +16,11 @@ namespace Field
 	/**************************************
 	コンストラクタ
 	***************************************/
-	FieldCursor::FieldCursor() :
-		borderX(0.0f), borderZ(0.0f)
+	FieldCursor::FieldCursor(float positionOffset) :
+		PositionOffset(positionOffset),
+		borderX(0), borderZ(0),
+		posX(0), posZ(0),
+		cntMove(MoveDuration)
 	{
 		//四角形生成
 		squareContainer.resize(SquareMax);
@@ -40,6 +43,9 @@ namespace Field
 	***************************************/
 	void FieldCursor::Update()
 	{
+		//移動
+		Move();
+
 		//30フレームおきに四角形を発生
 		if (cntFrame == 0)
 		{
@@ -82,21 +88,34 @@ namespace Field
 	/**************************************
 	移動処理
 	***************************************/
-	void FieldCursor::Move(const D3DXVECTOR3& direction)
+	void FieldCursor::Move(int x, int z)
 	{
-		D3DXVECTOR3 position = transform->GetPosition();
+		if (x == 0 && z == 0)
+			return;
 
-		//移動範囲に制限をかける
-		position.x = Math::Clamp(-borderX, borderX, position.x + direction.x);
-		position.z = Math::Clamp(-borderZ, borderZ, position.z + direction.z);
+		if (cntMove <= MoveDuration)
+			return;
 
-		Tween::Move(*this, position, MoveDuration, EaseType::Linear);
+		//移動開始地点を保存
+		startPos = D3DXVECTOR3(posX * PositionOffset, 0.0f, posZ * PositionOffset);
+
+		//X軸の移動を優先して使用(Clampで移動範囲を制限)
+		if (x != 0)
+			posX = Math::Clamp(-borderX, borderX, posX + x);
+		else
+			posZ = Math::Clamp(-borderZ, borderZ, posZ + z);
+
+		//移動先座標を計算
+		moveTarget = D3DXVECTOR3(posX * PositionOffset, 0.0f, posZ * PositionOffset);
+
+		//カウントリセット
+		cntMove = 0;
 	}
 
 	/**************************************
 	移動範囲設定処理
 	***************************************/
-	void FieldCursor::SetBorder(float borderX, float borderZ)
+	void FieldCursor::SetBorder(int borderX, int borderZ)
 	{
 		this->borderX = borderX;
 		this->borderZ = borderZ;
@@ -116,6 +135,21 @@ namespace Field
 		{
 			(*itr)->Set();
 		}
+	}
+
+	/**************************************
+	FieldCursor移動処理
+	***************************************/
+	void FieldCursor::Move()
+	{
+		cntMove++;
+
+		if (cntMove > MoveDuration)
+			return;
+
+		float t = 1.0f * cntMove / MoveDuration;
+		D3DXVECTOR3 position = Easing::EaseValue(t, startPos, moveTarget, EaseType::Linear);
+		transform->SetPosition(position);
 	}
 
 	/**************************************
