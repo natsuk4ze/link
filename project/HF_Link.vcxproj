@@ -92,6 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -112,6 +113,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -212,6 +214,7 @@
     <ClCompile Include="source\FieldObject\PlaceActor.cpp" />
     <ClCompile Include="source\FieldObject\PlaceModel.cpp" />
     <ClCompile Include="source\Field\FieldController.cpp" />
+    <ClCompile Include="source\Field\Place\FieldPlaceModel.cpp" />
     <ClCompile Include="source\GameMain.cpp" />
     <ClCompile Include="source\Field\FieldCursor.cpp" />
     <ClCompile Include="source\Field\FieldGround.cpp" />
@@ -311,6 +314,7 @@
     <ClInclude Include="source\FieldObject\PlaceActor.h" />
     <ClInclude Include="source\FieldObject\PlaceModel.h" />
     <ClInclude Include="source\Field\FieldController.h" />
+    <ClInclude Include="source\Field\Place\FieldPlaceModel.h" />
     <ClInclude Include="source\GameConfig.h" />
     <ClInclude Include="source\GameMain.h" />
     <ClInclude Include="source\Field\FieldCursor.h" />
