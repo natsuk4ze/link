@@ -89,6 +89,7 @@
     <ClCompile Include="Library\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Library\json11\json11.cpp" />
     <ClCompile Include="source\Field\Place\FieldPlaceContainer.cpp" />
+    <ClCompile Include="Framework\String\String.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -193,5 +194,6 @@
     <ClInclude Include="Library\imgui\imstb_truetype.h" />
     <ClInclude Include="Library\json11\json11.hpp" />
     <ClInclude Include="source\Field\Place\FieldPlaceContainer.h" />
+    <ClInclude Include="Framework\String\String.h" />
   </ItemGroup>
 </Project>
