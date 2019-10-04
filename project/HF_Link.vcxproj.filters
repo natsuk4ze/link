@@ -91,6 +91,11 @@
     <ClCompile Include="Framework\String\String.cpp" />
     <ClCompile Include="source\FieldObject\CrossJunctionActor.cpp" />
     <ClCompile Include="source\FieldObject\TJunctionActor.cpp" />
+    <ClCompile Include="source\FieldObject\CityActor.cpp" />
+    <ClCompile Include="source\FieldObject\CurveRoadActor.cpp" />
+    <ClCompile Include="source\FieldObject\MountainActor.cpp" />
+    <ClCompile Include="source\FieldObject\RiverActor.cpp" />
+    <ClCompile Include="source\FieldObject\StraightRoadActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -197,5 +202,10 @@
     <ClInclude Include="Framework\String\String.h" />
     <ClInclude Include="source\FieldObject\CrossJunctionActor.h" />
     <ClInclude Include="source\FieldObject\TJunctionActor.h" />
+    <ClInclude Include="source\FieldObject\CityActor.h" />
+    <ClInclude Include="source\FieldObject\CurveRoadActor.h" />
+    <ClInclude Include="source\FieldObject\MountainActor.h" />
+    <ClInclude Include="source\FieldObject\RiverActor.h" />
+    <ClInclude Include="source\FieldObject\StraightRoadActor.h" />
   </ItemGroup>
 </Project>
