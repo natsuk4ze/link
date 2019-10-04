@@ -219,6 +219,7 @@
     <ClCompile Include="source\Field\FieldController.cpp" />
     <ClCompile Include="source\Field\Place\FieldPlaceModel.cpp" />
     <ClCompile Include="source\Field\Place\FieldPlaceContainer.cpp" />
+    <ClCompile Include="source\Field\Route\RouteModel.cpp" />
     <ClCompile Include="source\GameMain.cpp" />
     <ClCompile Include="source\Field\FieldCursor.cpp" />
     <ClCompile Include="source\Field\FieldGround.cpp" />
@@ -323,6 +324,7 @@
     <ClInclude Include="source\Field\Place\FieldPlaceModel.h" />
     <ClInclude Include="source\Field\Place\PlaceConfig.h" />
     <ClInclude Include="source\Field\Place\FieldPlaceContainer.h" />
+    <ClInclude Include="source\Field\Route\RouteModel.h" />
     <ClInclude Include="source\GameConfig.h" />
     <ClInclude Include="source\GameMain.h" />
     <ClInclude Include="source\Field\FieldCursor.h" />
