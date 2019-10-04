@@ -78,7 +78,6 @@
     <ClCompile Include="source\Field\Camera\FieldCamera.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCameraQuater.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCameraFar.cpp" />
-    <ClCompile Include="source\FieldObject\PlaceModel.cpp" />
     <ClCompile Include="Framework\Renderer2D\TextViewer.cpp" />
     <ClCompile Include="source\Field\Place\FieldPlaceModel.cpp" />
     <ClCompile Include="Library\imgui\imgui.cpp" />
@@ -92,6 +91,13 @@
     <ClCompile Include="Framework\String\String.cpp" />
     <ClCompile Include="source\Field\Route\RouteModel.cpp" />
     <ClCompile Include="source\Field\Route\RouteProcessor.cpp" />
+    <ClCompile Include="source\FieldObject\CrossJunctionActor.cpp" />
+    <ClCompile Include="source\FieldObject\TJunctionActor.cpp" />
+    <ClCompile Include="source\FieldObject\CityActor.cpp" />
+    <ClCompile Include="source\FieldObject\CurveRoadActor.cpp" />
+    <ClCompile Include="source\FieldObject\MountainActor.cpp" />
+    <ClCompile Include="source\FieldObject\RiverActor.cpp" />
+    <ClCompile Include="source\FieldObject\StraightRoadActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -181,7 +187,6 @@
     <ClInclude Include="source\Field\Camera\FieldCamera.h" />
     <ClInclude Include="source\Field\Camera\FieldCameraQuater.h" />
     <ClInclude Include="source\Field\Camera\FieldCameraFar.h" />
-    <ClInclude Include="source\FieldObject\PlaceModel.h" />
     <ClInclude Include="Framework\Renderer2D\TextViewer.h" />
     <ClInclude Include="source\Field\Place\FieldPlaceModel.h" />
     <ClInclude Include="source\Field\Place\PlaceConfig.h" />
@@ -199,5 +204,12 @@
     <ClInclude Include="Framework\String\String.h" />
     <ClInclude Include="source\Field\Route\RouteModel.h" />
     <ClInclude Include="source\Field\Route\RouteProcessor.h" />
+    <ClInclude Include="source\FieldObject\CrossJunctionActor.h" />
+    <ClInclude Include="source\FieldObject\TJunctionActor.h" />
+    <ClInclude Include="source\FieldObject\CityActor.h" />
+    <ClInclude Include="source\FieldObject\CurveRoadActor.h" />
+    <ClInclude Include="source\FieldObject\MountainActor.h" />
+    <ClInclude Include="source\FieldObject\RiverActor.h" />
+    <ClInclude Include="source\FieldObject\StraightRoadActor.h" />
   </ItemGroup>
 </Project>

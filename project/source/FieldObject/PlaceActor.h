@@ -11,9 +11,28 @@
 #include "../../Framework/Core/GameObject.h"
 #include "../../Framework/Math/Easing.h"
 #include "../../Framework/Renderer3D/MeshContainer.h"
+#include "../Field/Place/PlaceConfig.h"
 //**************************************
 // マクロ定義
 //**************************************
+
+//**************************************
+// 列挙子設定
+//**************************************
+namespace FModel = Field::Model;
+namespace Field::Actor
+{
+	/**************************************
+	アクターのアニメーションタイプを表す列挙子
+	***************************************/
+	enum AnimType
+	{
+		Create,
+		Remove,
+		AnimMax
+	};
+}
+namespace FActor = Field::Actor;
 
 //**************************************
 // クラス定義
@@ -22,22 +41,23 @@ class PlaceActor :
 	public GameObject
 {
 protected:
+	// ***継承先のクラスで読み込み***
 	MeshContainer* mesh;				// メッシュコンテナ
-
-	// ***継承先のクラスで設定***
-	int animType;						// アニメーションの種類
-	EaseType easeType;					// イージングタイプ
-	// **************************
-
-	virtual void PlayAnimation(int AnimType);	// アニメーション再生
-	void Rotate(float y);				// Y軸回転
+	// ******************************
+	FActor::AnimType animType;			// アニメーションの種類
+	bool animActive;					// アニメーション再生中フラグ
 
 public:
-	PlaceActor(const D3DXVECTOR3& pos);
+	PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
 	virtual ~PlaceActor();
 
 	virtual void Update();
 	virtual void Draw();
+
+	// インターフェース
+	virtual void PlayAnimation(FActor::AnimType AnimType);	// アニメーション再生（再生させるときのみ呼び出す）
+	void Rotate(float y);									// Y軸回転
+	void SetColor(const D3DXCOLOR& color, UINT index);		// メッシュの色変更
 
 private:
 	const D3DXVECTOR3 ActorScale = D3DXVECTOR3(0.2f, 0.2f, 0.2f);

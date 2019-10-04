@@ -11,12 +11,10 @@
 //=====================================
 // コンストラクタ
 //=====================================
-PlaceActor::PlaceActor(const D3DXVECTOR3& pos)
+PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
 {
 	// メッシュコンテナの作成
 	mesh = MeshContainer::Create();
-	//mesh->Load("data/MODEL/PlaceActor/Cross-Junction.x");
-	ResourceManager::Instance()->GetMesh("Model", mesh);
 
 	// ステータスセット
 	transform->SetPosition(pos);
@@ -37,7 +35,21 @@ PlaceActor::~PlaceActor()
 //=====================================
 void PlaceActor::Update()
 {
-	this->PlayAnimation(animType);
+	if (!IsActive())
+		return;
+
+	if (!animActive)
+		return;
+
+	switch (animType)
+	{
+	case FActor::Create:
+		break;
+	case FActor::Remove:
+		break;
+	default:
+		break;
+	}
 }
 
 //=====================================
@@ -59,13 +71,18 @@ void PlaceActor::Rotate(float y)
 }
 
 //=====================================
-// アニメーション再生
+// アニメーションを再生させる
 //=====================================
-void PlaceActor::PlayAnimation(int AnimType)
+void PlaceActor::PlayAnimation(FActor::AnimType AnimType)
 {
-	//switch (AnimType)
-	//{
-	//default:
-	//	break;
-	//}
+	this->animType = AnimType;
+	this->animActive = true;
+}
+
+//=====================================
+// メッシュデータのカラー変更
+//=====================================
+void PlaceActor::SetColor(const D3DXCOLOR& color, UINT index)
+{
+	mesh->SetMaterialColor(color, index);
 }
