@@ -73,6 +73,10 @@ namespace Field::Model
 		//繋がっている街を取得
 		PlaceModel* GetConnectedTown(PlaceModel* self);
 
+		//使用判定
+		void SetUnused(bool use);
+		bool IsUnused();
+
 	private:
 		PlaceModel *edgeStart, *edgeEnd;			//端点のPlace
 		std::vector<PlaceModel*> route;				//道となるPlace
@@ -80,6 +84,8 @@ namespace Field::Model
 
 		static unsigned incrementID;				//インクリメントID
 		unsigned uniqueID;							//インスタンス固有のID
+
+		bool isUnused;								//使用判定
 
 		void _SetEdge(PlaceModel* place);			//端点設定内部処理
 	};

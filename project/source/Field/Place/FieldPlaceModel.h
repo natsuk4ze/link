@@ -69,6 +69,10 @@ namespace Field::Model
 		bool IsType(PlaceType type);
 		void SetType(PlaceType type);
 
+		//Š‘®ƒ‹[ƒgæ“¾
+		RouteModelPtr GetConnectingRoute();
+		RouteContainer GetConnectingRoutes();
+
 	private:
 		//ID
 		static unsigned incrementID;

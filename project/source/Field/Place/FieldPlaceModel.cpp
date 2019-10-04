@@ -258,4 +258,20 @@ namespace Field::Model
 	{
 		this->type = type;
 	}
+
+	/**************************************
+	ルート取得
+	***************************************/
+	RouteModelPtr PlaceModel::GetConnectingRoute()
+	{
+		return *(belongRouteList.begin());
+	}
+
+	/**************************************
+	タイプセット
+	***************************************/
+	RouteContainer PlaceModel::GetConnectingRoutes()
+	{
+		return belongRouteList;
+	}
 }

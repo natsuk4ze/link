@@ -91,6 +91,7 @@
     <ClCompile Include="source\Field\Place\FieldPlaceContainer.cpp" />
     <ClCompile Include="Framework\String\String.cpp" />
     <ClCompile Include="source\Field\Route\RouteModel.cpp" />
+    <ClCompile Include="source\Field\Route\RouteProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -197,5 +198,6 @@
     <ClInclude Include="source\Field\Place\FieldPlaceContainer.h" />
     <ClInclude Include="Framework\String\String.h" />
     <ClInclude Include="source\Field\Route\RouteModel.h" />
+    <ClInclude Include="source\Field\Route\RouteProcessor.h" />
   </ItemGroup>
 </Project>

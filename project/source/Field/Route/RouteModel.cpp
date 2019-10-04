@@ -28,7 +28,8 @@ namespace Field::Model
 	***************************************/
 	RouteModel::RouteModel() :
 		edgeStart(nullptr), edgeEnd(nullptr),
-		uniqueID(incrementID++)
+		uniqueID(incrementID++),
+		isUnused(false)
 	{
 
 	}
@@ -165,6 +166,22 @@ namespace Field::Model
 			return edgeEnd;
 
 		return nullptr;
+	}
+
+	/**************************************
+	使用判定セット処理
+	***************************************/
+	void RouteModel::SetUnused(bool use)
+	{
+		isUnused = use;
+	}
+
+	/**************************************
+	使用判定
+	***************************************/
+	bool RouteModel::IsUnused()
+	{
+		return isUnused;
 	}
 
 	/**************************************
