@@ -60,7 +60,7 @@ public:
 	void SetColor(const D3DXCOLOR& color, UINT index);		// メッシュの色変更
 
 private:
-	const D3DXVECTOR3 ActorScale = D3DXVECTOR3(0.2f, 0.2f, 0.2f);
+	static const D3DXVECTOR3 ActorScale;
 };
 
 #endif

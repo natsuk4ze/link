@@ -8,6 +8,11 @@
 #include "PlaceActor.h"
 #include "../../Framework/Resource/ResourceManager.h"
 
+//**************************************
+// クラスのメンバ変数初期化
+//**************************************
+const D3DXVECTOR3 PlaceActor::ActorScale = D3DXVECTOR3(0.2f, 0.2f, 0.2f);
+
 //=====================================
 // コンストラクタ
 //=====================================
