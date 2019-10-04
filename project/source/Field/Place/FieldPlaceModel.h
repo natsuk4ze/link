@@ -61,13 +61,17 @@ namespace Field::Model
 		PlaceModel* GetEdgeOpponent();
 
 		//ルートモデルへの所属、離脱
-		void BelongRoute(RouteModel* route);
-		void BelongRoute(std::vector<RouteModel*>& routes);
-		void ExitRoute(RouteModel* route);
+		void BelongRoute(std::shared_ptr<RouteModel> route);
+		void BelongRoute(std::vector<std::shared_ptr<RouteModel>>& routes);
+		void ExitRoute(std::shared_ptr<RouteModel> route);
 
 		//タイプ判定、変更処理
 		bool IsType(PlaceType type);
 		void SetType(PlaceType type);
+
+		//所属ルート取得
+		RouteModelPtr GetConnectingRoute();
+		RouteContainer GetConnectingRoutes();
 
 	private:
 		//ID
@@ -79,7 +83,7 @@ namespace Field::Model
 		int x, z;
 
 		//所属しているルートの参照コンテナ
-		std::vector<RouteModel*> belongRouteList;
+		std::vector<std::shared_ptr<RouteModel>> belongRouteList;
 
 		//隣接プレイス
 		std::vector<PlaceModel*> adjacencies;
