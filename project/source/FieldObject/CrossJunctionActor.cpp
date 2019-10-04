@@ -1,0 +1,69 @@
+//=====================================
+//
+// クロスジャンクションアクター[CrossJunctionActor.cpp]
+// 機能：十字路3Dモデル表示
+// Author:GP12B332 19 染谷武志
+//
+//=====================================
+#include "CrossJunctionActor.h"
+#include "../../Framework/Resource/ResourceManager.h"
+
+//=====================================
+// コンストラクタ
+//=====================================
+CrossJunctionActor::CrossJunctionActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
+	: PlaceActor(pos, currentLevel)
+{
+	// モデルデータ参照
+	switch (currentLevel)
+	{
+	case FModel::City:
+		ResourceManager::Instance()->GetMesh("CrossJunction-City", mesh);
+		break;
+	case FModel::World:
+		break;
+	case FModel::Space:
+		break;
+	default:
+		break;
+	}
+}
+
+//=====================================
+// デストラクタ（メッシュの開放は基底クラスで）
+//=====================================
+CrossJunctionActor::~CrossJunctionActor()
+{
+}
+
+//=====================================
+// 更新
+//=====================================
+void CrossJunctionActor::Update()
+{
+	if (!IsActive())
+		return;
+
+	if (!animActive)
+		return;
+
+	switch (animType)
+	{
+	case FActor::Create:
+		break;
+	case FActor::Remove:
+		break;
+	default:
+		break;
+	}
+}
+
+//=====================================
+// 描画
+//=====================================
+//void IntersectionActor::Draw()
+//{
+	//transform->SetWorld();
+	//mesh->Draw();
+//}
+

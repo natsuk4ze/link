@@ -58,7 +58,6 @@ namespace Field
 		FieldCursor *cursor;					//カーソル
 		FieldGround *ground;					//地面
 		Model::PlaceContainer *placeContainer;	//プレイスコンテナ
-		::PlaceModel *model;					//3Dモデルマネージャ(テスト用）	
 
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int inputRepeatCnt;						//入力のリピートカウント

@@ -9,6 +9,7 @@
 #include "../../../Framework/Renderer3D/SkyBox.h"
 #include "../../Field/Camera/FieldCamera.h"
 #include "../../Field/FieldController.h"
+#include "../../Framework/Resource/ResourceManager.h"
 
 /**************************************
 入場処理
@@ -29,6 +30,17 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 
 	//CSVデータをロード
 	entity.field->Load();
+
+	// 3Dオブジェクトのリソースをロード
+	// FieldLevel = City
+	ResourceManager::Instance()->LoadMesh("CrossJunction-City", "data/MODEL/PlaceActor/Cross-Junction.x");
+	ResourceManager::Instance()->LoadMesh("TJunction-City", "data/MODEL/PlaceActor/T-Junction.x");
+	ResourceManager::Instance()->LoadMesh("StraightRoad-City", "data/MODEL/PlaceActor/Straight.x");
+	ResourceManager::Instance()->LoadMesh("CurveRoad-City", "data/MODEL/PlaceActor/Curve.x");
+
+	// FieldLevel = World
+
+	// FieldLevel = Space
 }
 
 /**************************************

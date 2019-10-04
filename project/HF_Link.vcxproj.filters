@@ -78,7 +78,6 @@
     <ClCompile Include="source\Field\Camera\FieldCamera.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCameraQuater.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCameraFar.cpp" />
-    <ClCompile Include="source\FieldObject\PlaceModel.cpp" />
     <ClCompile Include="Framework\Renderer2D\TextViewer.cpp" />
     <ClCompile Include="source\Field\Place\FieldPlaceModel.cpp" />
     <ClCompile Include="Library\imgui\imgui.cpp" />
@@ -90,6 +89,8 @@
     <ClCompile Include="Library\json11\json11.cpp" />
     <ClCompile Include="source\Field\Place\FieldPlaceContainer.cpp" />
     <ClCompile Include="Framework\String\String.cpp" />
+    <ClCompile Include="source\FieldObject\CrossJunctionActor.cpp" />
+    <ClCompile Include="source\FieldObject\TJunctionActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -179,7 +180,6 @@
     <ClInclude Include="source\Field\Camera\FieldCamera.h" />
     <ClInclude Include="source\Field\Camera\FieldCameraQuater.h" />
     <ClInclude Include="source\Field\Camera\FieldCameraFar.h" />
-    <ClInclude Include="source\FieldObject\PlaceModel.h" />
     <ClInclude Include="Framework\Renderer2D\TextViewer.h" />
     <ClInclude Include="source\Field\Place\FieldPlaceModel.h" />
     <ClInclude Include="source\Field\Place\PlaceConfig.h" />
@@ -195,5 +195,7 @@
     <ClInclude Include="Library\json11\json11.hpp" />
     <ClInclude Include="source\Field\Place\FieldPlaceContainer.h" />
     <ClInclude Include="Framework\String\String.h" />
+    <ClInclude Include="source\FieldObject\CrossJunctionActor.h" />
+    <ClInclude Include="source\FieldObject\TJunctionActor.h" />
   </ItemGroup>
 </Project>
