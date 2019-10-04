@@ -8,8 +8,19 @@
 #ifndef _PLACECONFIG_H_
 #define _PLACECONFIG_H_
 
+#include <vector>
+
 namespace Field::Model
 {
+	/**************************************
+	型エイリアス
+	***************************************/
+	class RouteModel;
+	class PlaceModel;
+
+	using RouteModelPtr = std::shared_ptr<RouteModel>;
+	using RouteContainer = std::vector<std::shared_ptr<RouteModel>>;
+
 	/**************************************
 	PlaceModelのタイプを表す列挙子
 	***************************************/

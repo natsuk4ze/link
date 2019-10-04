@@ -34,18 +34,29 @@ namespace Field::Model
 	}
 
 	/**************************************
-	コンストラクタ
+	スマートポインタ作成処理
 	***************************************/
-	RouteModel::RouteModel(const std::vector<PlaceModel*>& placeVector) :
-		edgeStart(nullptr), edgeEnd(nullptr),
-		uniqueID(incrementID++)
+	RouteModelPtr RouteModel::Create()
 	{
-		route.assign(placeVector.begin(), placeVector.end());
+		RouteModelPtr ptr = std::make_shared<RouteModel>();
+		return ptr;
+	}
 
-		for (auto&& place : route)
+	/**************************************
+	スマートポインタ作成処理
+	***************************************/
+	RouteModelPtr RouteModel::Create(const std::vector<PlaceModel*>& placeVector)
+	{
+		RouteModelPtr ptr = std::make_shared<RouteModel>();
+
+		ptr->route.assign(placeVector.begin(), placeVector.end());
+
+		for (auto&& place : ptr->route)
 		{
-			place->BelongRoute(this);
+			place->BelongRoute(ptr);
 		}
+
+		return ptr;
 	}
 
 	/**************************************
@@ -54,11 +65,11 @@ namespace Field::Model
 	RouteModel::~RouteModel()
 	{
 		//自身に所属しているプレイスの所属を解除
-		edgeStart->ExitRoute(this);
-		edgeEnd->ExitRoute(this);
+		edgeStart->ExitRoute(shared_from_this());
+		edgeEnd->ExitRoute(shared_from_this());
 		for (auto&& place : route)
 		{
-			place->ExitRoute(this);
+			place->ExitRoute(shared_from_this());
 		}
 
 		adjacentRoute.clear();
@@ -85,7 +96,7 @@ namespace Field::Model
 	{
 		edgeEnd = place;
 		route.push_back(place);
-		place->BelongRoute(this);
+		place->BelongRoute(shared_from_this());
 	}
 
 	/**************************************
@@ -114,7 +125,7 @@ namespace Field::Model
 		else
 			edgeEnd = edge;
 
-		edge->BelongRoute(this);
+		edge->BelongRoute(shared_from_this());
 	}
 
 	/**************************************
@@ -129,17 +140,6 @@ namespace Field::Model
 		//終点から端点を設定
 		PlaceModel* last = *route.rbegin();
 		_SetEdge(last);
-	}
-
-	/**************************************
-	端点取得
-	***************************************/
-	PlaceModel * RouteModel::GetEdge(Edge type)
-	{
-		if (type == Edge::Start)
-			return edgeStart;
-		else
-			return edgeEnd;
 	}
 
 	/**************************************
@@ -168,22 +168,6 @@ namespace Field::Model
 	}
 
 	/**************************************
-	ルート取得（端点は含まない）
-	***************************************/
-	std::vector<PlaceModel*> RouteModel::GetRoute()
-	{
-		return route;
-	}
-
-	/**************************************
-	隣接ルート取得
-	***************************************/
-	std::vector<AdjacentRoute> RouteModel::GetAdjacencies()
-	{
-		return adjacentRoute;
-	}
-
-	/**************************************
 	端点設定（内部処理）
 	***************************************/
 	void RouteModel::_SetEdge(PlaceModel* place)
@@ -191,7 +175,7 @@ namespace Field::Model
 		//連結相手を取得
 		PlaceModel* opponent = place->GetEdgeOpponent();
 		SetEdge(opponent);
-		opponent->BelongRoute(this);
+		opponent->BelongRoute(shared_from_this());
 
 		//TODO:街なら出口を増やす
 	}

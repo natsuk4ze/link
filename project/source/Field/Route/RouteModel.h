@@ -20,6 +20,8 @@ namespace Field::Model
 	class PlaceModel;
 	class RouteModel;
 
+	typedef std::shared_ptr<RouteModel> RouteModelPtr;
+
 	/**************************************
 	隣接ルート情報
 	***************************************/
@@ -37,20 +39,18 @@ namespace Field::Model
 	/**************************************
 	クラス定義
 	***************************************/
-	class RouteModel
+	class RouteModel : public std::enable_shared_from_this<RouteModel>
 	{
+		friend class RouteProcessor;
 	public:
-		//端点の種類を表す列挙子
-		enum Edge
-		{
-			Start,		//始点
-			End,		//終点
-			Max
-		};
-
-		//コンストラクタ、デストラクタ
+		//コンストラクタ
 		RouteModel();
-		RouteModel(const std::vector<PlaceModel*>& routes);
+
+		//Create関数でこのクラスのshared_ptrを作成させる
+		static RouteModelPtr Create();
+		static RouteModelPtr Create(const std::vector<PlaceModel*>& placeVector);
+
+		//デストラクタ
 		~RouteModel();		//所属を離脱
 
 		//更新処理
@@ -63,22 +63,15 @@ namespace Field::Model
 		void AddAdjacency(PlaceModel* junction, PlaceModel* connectTarget, std::shared_ptr<RouteModel> opponent);
 		void AddAdjacency(const std::vector<AdjacentRoute>& adjacenctRoute);
 
-		//隣接ルート取得
-		std::vector<AdjacentRoute> GetAdjacencies();
-
 		//端点設定
 		void SetEdge();
 		void SetEdge(PlaceModel* edge);
 
 		//端点取得
-		PlaceModel* GetEdge(Edge type);
 		PlaceModel* GetOtherEdge(PlaceModel* edge);
 
 		//繋がっている街を取得
 		PlaceModel* GetConnectedTown(PlaceModel* self);
-
-		//ルートとなるプレイスの取得
-		std::vector<PlaceModel*> GetRoute();
 
 	private:
 		PlaceModel *edgeStart, *edgeEnd;			//端点のPlace

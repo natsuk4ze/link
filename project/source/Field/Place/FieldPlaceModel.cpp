@@ -50,6 +50,7 @@ namespace Field::Model
 	***************************************/
 	PlaceModel::~PlaceModel()
 	{
+		belongRouteList.clear();
 		SAFE_DELETE(actor);
 	}
 
@@ -208,20 +209,20 @@ namespace Field::Model
 	/**************************************
 	ルートモデルへの所属
 	***************************************/
-	void PlaceModel::BelongRoute(RouteModel* route)
+	void PlaceModel::BelongRoute(std::shared_ptr<RouteModel> route)
 	{
 		//重複確認
 		auto itr = std::find(belongRouteList.begin(), belongRouteList.end(), route);
 		if (itr == belongRouteList.end())
 		{
-			belongRouteList.push_back(route);
+			belongRouteList.push_back(std::shared_ptr<RouteModel>(route));
 		}
 	}
 
 	/**************************************
 	ルートモデルへの所属
 	***************************************/
-	void PlaceModel::BelongRoute(std::vector<RouteModel*>& routes)
+	void PlaceModel::BelongRoute(std::vector<std::shared_ptr<RouteModel>>& routes)
 	{
 		//重複確認(自身の所属リストとの差集合を求める)
 		auto exceptRoute = from(routes)
@@ -236,7 +237,7 @@ namespace Field::Model
 	/**************************************
 	ルートモデルから離脱
 	***************************************/
-	void PlaceModel::ExitRoute(RouteModel* route)
+	void PlaceModel::ExitRoute(std::shared_ptr<RouteModel> route)
 	{
 		auto itr = std::remove(belongRouteList.begin(), belongRouteList.end(), route);
 		belongRouteList.erase(itr, belongRouteList.end());
