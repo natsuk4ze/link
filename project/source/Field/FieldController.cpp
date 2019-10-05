@@ -21,6 +21,8 @@
 #include "../../Framework/Input/input.h"
 #include "../../Framework/Tool/DebugWindow.h"
 
+#include <algorithm>
+
 namespace Field
 {
 	/**************************************
@@ -58,7 +60,6 @@ namespace Field
 		SAFE_DELETE(placeContainer);
 		SAFE_DELETE(operateContainer);
 
-
 		//ステートマシン削除
 		Utility::DeleteContainer(fsm);
 	}
@@ -68,8 +69,21 @@ namespace Field
 	***************************************/
 	void FieldController::Update()
 	{
+		//使わなくなったルートコンテナを削除
+		auto itr = std::remove_if(routeContainer.begin(), routeContainer.end(), [](auto& ptr)
+		{
+			return ptr->IsUnused();
+		});
+		routeContainer.erase(itr, routeContainer.end());
+
+		//各更新処理
 		cursor->Update();
 		placeContainer->Update();
+
+		for (auto&& route : routeContainer)
+		{
+			route->Update();
+		}
 	}
 
 	/**************************************
