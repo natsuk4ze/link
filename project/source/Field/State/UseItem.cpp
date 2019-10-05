@@ -21,6 +21,6 @@ namespace Field
 	***************************************/
 	FieldController::State FieldController::UseItemState::OnUpdate(FieldController & entity)
 	{
-		return State::UseItem;
+		return State::Develop;
 	}
 }

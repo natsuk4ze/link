@@ -95,6 +95,20 @@ namespace Field::Model
 	}
 
 	/**************************************
+	プレイス取得処理
+	***************************************/
+	PlaceModel * Field::Model::PlaceContainer::GetPlace(const PlacePosition& position)
+	{
+		if (position.x < 0 || position.x >= placeRowMax)
+			return nullptr;
+
+		if (position.z < 0 || position.z >= placeColumMax)
+			return nullptr;
+
+		return placeVector[placeColumMax * position.z + position.x];
+	}
+
+	/**************************************
 	CSV読み込み処理
 	***************************************/
 	void PlaceContainer::LoadCSV(const char * filePath)
@@ -142,6 +156,14 @@ namespace Field::Model
 
 		//初期化完了
 		initialized = true;
+	}
+
+	/**************************************
+	行、列の最大数取得
+	***************************************/
+	PlacePosition Field::Model::PlaceContainer::GetPlaceBorder() const
+	{
+		return PlacePosition(placeRowMax, placeColumMax);
 	}
 
 	/**************************************

@@ -42,7 +42,10 @@ namespace Field
 		void SetBorder(int borderX, int borderZ);
 
 		//座標取得
-		Model::PlacePosition GetPos() const;
+		Model::PlacePosition GetModelPosition() const;
+
+		//座標設定処理
+		void SetModelPosition(int x, int z);
 
 	private:
 		const int SquareMax = 5;			//四角形最大数
@@ -65,6 +68,9 @@ namespace Field
 
 		//移動内部処理
 		void Move();
+
+		//ワールド座標系酸処理
+		D3DXVECTOR3 CalcWorldPosition() const;
 	};
 
 	/**************************************

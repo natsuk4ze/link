@@ -9,12 +9,17 @@
 #include "FieldCursor.h"
 #include "FieldGround.h"
 #include "Place\FieldPlaceContainer.h"
+#include "Place\OperatePlaceContainer.h"
+#include "Place\FieldPlaceModel.h"
+#include "Route\RouteModel.h"
+#include "Route\RouteProcessor.h"
 
 #include "State/BuildRoad.h"
 #include "State/FieldControllerIdle.h"
 #include "State/UseItem.h"
 
 #include "../../Framework/Input/input.h"
+#include "../../Framework/Tool/DebugWindow.h"
 
 namespace Field
 {
@@ -29,12 +34,13 @@ namespace Field
 		cursor = new FieldCursor(PlaceOffset);
 		ground = new FieldGround();
 		placeContainer = new Model::PlaceContainer();
+		operateContainer = new Model::OperatePlaceContainer();
 
 		//ステートマシン作成
 		fsm.resize(State::Max, NULL);
-		fsm[State::BuildRoad] = new BuildRoadState();
+		fsm[State::Build] = new BuildRoadState();
 		fsm[State::Idle] = new IdleState;
-		fsm[State::UseItem] = new UseItemState();
+		fsm[State::Develop] = new UseItemState();
 
 		//カーソルの移動範囲を初期化
 		cursor->SetBorder(fieldBorder / 2, fieldBorder / 2);
@@ -51,6 +57,9 @@ namespace Field
 		SAFE_DELETE(cursor);
 		SAFE_DELETE(ground);
 		SAFE_DELETE(placeContainer);
+		SAFE_DELETE(operateContainer);
+
+		routeContainer.clear();
 
 		//ステートマシン削除
 		Utility::DeleteContainer(fsm);
@@ -76,6 +85,8 @@ namespace Field
 
 		//カーソルには透過オブジェクトが含まれるので最後に描画
 		cursor->Draw();
+
+		Debug::Log("ControllerState:%d", current);
 	}
 
 	/**************************************
@@ -85,6 +96,10 @@ namespace Field
 	void FieldController::Load()
 	{
 		placeContainer->LoadCSV("data/FIELD/sample01.csv");
+
+		//カーソルのフィールドの中央へ設定
+		Model::PlacePosition border = placeContainer->GetPlaceBorder();
+		cursor->SetModelPosition(border.x / 2, border.z / 2);
 	}
 
 	/**************************************
@@ -118,6 +133,13 @@ namespace Field
 		float x = Math::Clamp(-1.0f, 1.0f, triggerX + repeatX);
 		float z = Math::Clamp(-1.0f, 1.0f, triggerZ + repeatZ);
 		cursor->Move((int)x, (int)z);
+
+		//現在のステートの更新処理を実行
+		State next = state->OnUpdate(*this);
+		if (next != current)
+		{
+			ChangeState(next);
+		}
 	}
 
 	/**************************************
@@ -136,7 +158,45 @@ namespace Field
 		if (fsm[next] == NULL)
 			return;
 
+		current = next;
 		state = fsm[next];
 		state->OnStart(*this);
+	}
+
+	/**************************************
+	カーソル位置のプレイスを取得
+	***************************************/
+	Model::PlaceModel * FieldController::GetPlace()
+	{
+		return placeContainer->GetPlace(cursor->GetModelPosition());
+	}
+
+	/**************************************
+	道を作る
+	***************************************/
+	void FieldController::BuildRoad()
+	{
+		using namespace Field::Model;
+
+		//操作対象のプレイスをRoadタイプに変換
+		std::vector<PlaceModel*> route = operateContainer->GetPlaces();
+		for (auto&& place : route)
+		{
+			if (place->IsType(PlaceType::None))
+				place->SetType(PlaceType::Road);
+		}
+
+		//ルートモデル作成
+		RouteModelPtr ptr = RouteModel::Create(route);
+		routeContainer.push_back(ptr);
+	
+		//端点設定
+		ptr->SetEdge();
+
+		//オブジェクト設定
+
+		//隣接するルートと連結させる
+		RouteProcessor::ConnectWithEdge(ptr, routeContainer);
+		RouteProcessor::Process(ptr, routeContainer);
 	}
 }

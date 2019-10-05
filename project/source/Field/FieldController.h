@@ -10,6 +10,8 @@
 
 #include "../../main.h"
 #include "../../Framework/Pattern/BaseState.h"
+#include "Place\PlaceConfig.h"
+
 #include <vector>
 
 class PlaceModel;
@@ -25,6 +27,7 @@ namespace Field
 	namespace Model
 	{
 		class PlaceContainer;
+		class OperatePlaceContainer;
 	}
 
 	/**************************************
@@ -36,9 +39,9 @@ namespace Field
 		//フィールドコントローラのモード列挙子
 		enum State
 		{
-			Idle,
-			BuildRoad,
-			UseItem,
+			Idle,			//特に何もしない状態
+			Build,			//道を作る状態
+			Develop,		//アイテムを使って川、山を開拓する状態
 			Max
 		};
 
@@ -68,18 +71,28 @@ namespace Field
 		const int InputLongWait = 15;			//入力リピートの待機フレーム
 		const int InputShortWait = 5;			//入力リピートの待機フレーム
 
-		FieldCursor *cursor;					//カーソル
-		FieldGround *ground;					//地面
-		Model::PlaceContainer *placeContainer;	//プレイスコンテナ
+		FieldCursor *cursor;								//カーソル
+		FieldGround *ground;								//地面
+
+		Model::PlaceContainer *placeContainer;				//プレイスコンテナ
+		Model::OperatePlaceContainer *operateContainer;		//操作対象プレイスのコンテナ
+		Model::RouteContainer routeContainer;				//ルートモデルコンテナ
 
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int inputRepeatCnt;						//入力のリピートカウント
 
+		State current;
 		ControllerState *state;						//現在のステート
 		std::vector<ControllerState*> fsm;			//ステートマシン
 
 		//ステート切り替え
 		void ChangeState(State next);
+
+		//カーソル位置のプレイスを取得
+		Model::PlaceModel* GetPlace();
+
+		//道を作る
+		void BuildRoad();
 
 		//各ステートクラスの前方宣言
 		class IdleState;

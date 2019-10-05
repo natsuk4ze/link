@@ -9,6 +9,8 @@
 #define _PLACECONTAINER_H_
 
 #include "../../../main.h"
+#include "PlaceConfig.h"
+
 #include <vector>
 
 namespace Field::Model
@@ -34,9 +36,13 @@ namespace Field::Model
 
 		//指定したマス目のPlaceModelを取得
 		PlaceModel* GetPlace(int x, int z);
+		PlaceModel* GetPlace(const PlacePosition& position);
 
 		//CSVデータ読み込み
 		void LoadCSV(const char* filePath);
+
+		//プレイスの行と列の最大数取得
+		PlacePosition GetPlaceBorder() const;
 
 	private:
 		const int PlaceMax = 10000;				//プレイスの最大数

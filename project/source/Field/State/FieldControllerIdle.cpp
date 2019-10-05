@@ -6,6 +6,7 @@
 //=====================================
 #include "FieldControllerIdle.h"
 #include "../../../Framework/Input/input.h"
+
 namespace Field
 {
 	/**************************************
@@ -13,7 +14,7 @@ namespace Field
 	***************************************/
 	void FieldController::IdleState::OnStart(FieldController & entity)
 	{
-
+		//ì¡Ç…âΩÇ‡ÇµÇ»Ç¢
 	}
 
 	/**************************************
@@ -21,7 +22,15 @@ namespace Field
 	***************************************/
 	FieldController::State FieldController::IdleState::OnUpdate(FieldController & entity)
 	{
-		return State::Idle;
+		State next = State::Idle;
+
+		//ZÉLÅ[Ç™âüÇ≥ÇÍÇΩÇÁBuildRoadÇ÷ëJà⁄
+		if (Keyboard::GetTrigger(DIK_Z))
+		{
+			next = State::Build;
+		}
+
+		return next;
 	}
 
 }

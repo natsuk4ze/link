@@ -104,19 +104,28 @@ namespace Field
 			return;
 
 		//移動開始地点を保存
-		startPos = D3DXVECTOR3(position.x * PositionOffset, 0.0f, position.z * PositionOffset);
+		startPos = CalcWorldPosition();
 
 		//X軸の移動を優先して使用(Clampで移動範囲を制限)
 		if (x != 0)
-			position.x = Math::Clamp(-borderX, borderX - 1, position.x + x);
+			position.x = Math::Clamp(0, borderX - 1, position.x + x);
 		else
-			position.z = Math::Clamp(-borderZ, borderZ - 1, position.z + z);
+			position.z = Math::Clamp(0, borderZ - 1, position.z + z);
 
 		//移動先座標を計算
-		moveTarget = D3DXVECTOR3(position.x * PositionOffset, 0.0f, position.z * PositionOffset);
+		moveTarget = CalcWorldPosition();
 
 		//カウントリセット
 		cntMove = 0;
+	}
+
+	/**************************************
+	座標設定
+	***************************************/
+	void FieldCursor::SetModelPosition(int x, int z)
+	{
+		position.x = x;
+		position.z = z;
 	}
 
 	/**************************************
@@ -131,7 +140,7 @@ namespace Field
 	/**************************************
 	座標取得処理
 	***************************************/
-	Model::PlacePosition FieldCursor::GetPos() const
+	Model::PlacePosition FieldCursor::GetModelPosition() const
 	{
 		return position;
 	}
@@ -165,6 +174,14 @@ namespace Field
 		float t = 1.0f * cntMove / MoveDuration;
 		D3DXVECTOR3 position = Easing::EaseValue(t, startPos, moveTarget, EaseType::Linear);
 		transform->SetPosition(position);
+	}
+
+	/**************************************
+	ワールド座標系酸処理
+	***************************************/
+	D3DXVECTOR3 FieldCursor::CalcWorldPosition() const
+	{
+		return D3DXVECTOR3((position.x - borderX / 2) * PositionOffset, 0.0f, (position.z - borderZ / 2) * PositionOffset);
 	}
 
 	/**************************************
