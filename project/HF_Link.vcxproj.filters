@@ -219,5 +219,6 @@
     <ClInclude Include="source\Field\State\FieldControllerIdle.h" />
     <ClInclude Include="source\Field\State\UseItem.h" />
     <ClInclude Include="source\Field\Place\OperatePlaceContainer.h" />
+    <ClInclude Include="source\Field\FieldConfig.h" />
   </ItemGroup>
 </Project>

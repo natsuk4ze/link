@@ -25,7 +25,7 @@ namespace Field
 	***************************************/
 	FieldCursor::FieldCursor(float positionOffset) :
 		PositionOffset(positionOffset),
-		borderX(0), borderZ(0),
+		fieldBorder(0, 0, 0, 0),
 		position(0, 0),
 		cntMove(MoveDuration)
 	{
@@ -108,9 +108,9 @@ namespace Field
 
 		//X軸の移動を優先して使用(Clampで移動範囲を制限)
 		if (x != 0)
-			position.x = Math::Clamp(0, borderX - 1, position.x + x);
+			position.x = Math::Clamp(fieldBorder.left,  fieldBorder.right, position.x + x);
 		else
-			position.z = Math::Clamp(0, borderZ - 1, position.z + z);
+			position.z = Math::Clamp(fieldBorder.back, fieldBorder.forward, position.z + z);
 
 		//移動先座標を計算
 		moveTarget = CalcWorldPosition();
@@ -131,16 +131,15 @@ namespace Field
 	/**************************************
 	移動範囲設定処理
 	***************************************/
-	void FieldCursor::SetBorder(int borderX, int borderZ)
+	void FieldCursor::SetBorder(int top, int left, int bottom, int right)
 	{
-		this->borderX = borderX;
-		this->borderZ = borderZ;
+
 	}
 
 	/**************************************
 	座標取得処理
 	***************************************/
-	Model::PlacePosition FieldCursor::GetModelPosition() const
+	FieldPosition FieldCursor::GetModelPosition() const
 	{
 		return position;
 	}

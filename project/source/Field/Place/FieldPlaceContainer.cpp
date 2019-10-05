@@ -97,7 +97,7 @@ namespace Field::Model
 	/**************************************
 	プレイス取得処理
 	***************************************/
-	PlaceModel * Field::Model::PlaceContainer::GetPlace(const PlacePosition& position)
+	PlaceModel* PlaceContainer::GetPlace(const FieldPosition& position)
 	{
 		if (position.x < 0 || position.x >= placeRowMax)
 			return nullptr;
@@ -161,9 +161,9 @@ namespace Field::Model
 	/**************************************
 	行、列の最大数取得
 	***************************************/
-	PlacePosition Field::Model::PlaceContainer::GetPlaceBorder() const
+	FieldPosition Field::Model::PlaceContainer::GetPlaceBorder() const
 	{
-		return PlacePosition(placeRowMax, placeColumMax);
+		return FieldPosition(placeRowMax, placeColumMax);
 	}
 
 	/**************************************

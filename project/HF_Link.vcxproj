@@ -337,6 +337,7 @@
     <ClInclude Include="source\Field\Camera\FieldCameraFar.h" />
     <ClInclude Include="source\Field\Camera\FieldCameraQuater.h" />
     <ClInclude Include="source\FieldObject\PlaceActor.h" />
+    <ClInclude Include="source\Field\FieldConfig.h" />
     <ClInclude Include="source\Field\FieldController.h" />
     <ClInclude Include="source\Field\Place\FieldPlaceModel.h" />
     <ClInclude Include="source\Field\Place\OperatePlaceContainer.h" />

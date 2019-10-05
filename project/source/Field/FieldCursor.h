@@ -11,7 +11,7 @@
 #include <vector>
 
 #include "../../main.h"
-#include "Place/PlaceConfig.h"
+#include "FieldConfig.h"
 #include "../../Framework/Renderer3D/BoardPolygon.h"
 
 namespace Field
@@ -39,10 +39,10 @@ namespace Field
 		void Move(int x, int z);
 
 		//移動範囲設定処理
-		void SetBorder(int borderX, int borderZ);
+		void SetBorder(int top, int left, int bottom, int right);
 
 		//座標取得
-		Model::PlacePosition GetModelPosition() const;
+		FieldPosition GetModelPosition() const;
 
 		//座標設定処理
 		void SetModelPosition(int x, int z);
@@ -53,10 +53,11 @@ namespace Field
 		const int MoveDuration = 4;			//移動時間
 		const float PositionOffset;			//1マス毎の座標オフセット			
 
-		int borderX, borderZ;				//移動可能範囲
 		int cntFrame;						//フレームカウント
 		int cntMove;						//移動カウント
-		Model::PlacePosition position;		//座標
+
+		FieldPosition position;				//座標
+		FieldBorder fieldBorder;			//移動可能な範囲
 
 		D3DXVECTOR3 moveTarget;				//移動の目標地点
 		D3DXVECTOR3 startPos;				//移動のスタート地点

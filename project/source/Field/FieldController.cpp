@@ -42,9 +42,6 @@ namespace Field
 		fsm[State::Idle] = new IdleState;
 		fsm[State::Develop] = new UseItemState();
 
-		//カーソルの移動範囲を初期化
-		cursor->SetBorder(fieldBorder / 2, fieldBorder / 2);
-
 		//ステート初期化
 		ChangeState(State::Idle);
 	}
@@ -98,7 +95,7 @@ namespace Field
 		placeContainer->LoadCSV("data/FIELD/sample01.csv");
 
 		//カーソルのフィールドの中央へ設定
-		Model::PlacePosition border = placeContainer->GetPlaceBorder();
+		FieldPosition border = placeContainer->GetPlaceBorder();
 		cursor->SetModelPosition(border.x / 2, border.z / 2);
 	}
 

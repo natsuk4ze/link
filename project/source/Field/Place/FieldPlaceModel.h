@@ -9,6 +9,7 @@
 #define _FIELDPLACEMODEL_H_
 
 #include "../../../main.h"
+#include "../FieldConfig.h"
 #include "PlaceConfig.h"
 
 #include <vector>
@@ -88,7 +89,7 @@ namespace Field::Model
 
 		//タイプ、座標
 		PlaceType type;
-		const PlacePosition Position;
+		const FieldPosition Position;
 
 		//所属しているルートの参照コンテナ
 		std::vector<std::shared_ptr<RouteModel>> belongRouteList;

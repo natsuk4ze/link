@@ -53,7 +53,7 @@ namespace Field::Model
 	PlaceModel::PlaceModel(PlaceType type, int x, int z) :
 		uniqueID(incrementID++),
 		type(type),
-		Position(PlacePosition(x, z)),
+		Position(x, z),
 		actor(nullptr)
 	{
 		//隣接プレイスのコンテナを準備
