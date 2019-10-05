@@ -126,14 +126,16 @@ namespace Field
 	{
 		position.x = x;
 		position.z = z;
+
+		SetPosition(CalcWorldPosition());
 	}
 
 	/**************************************
 	ˆÚ“®”ÍˆÍİ’èˆ—
 	***************************************/
-	void FieldCursor::SetBorder(int top, int left, int bottom, int right)
+	void FieldCursor::SetBorder(int forward, int right, int back, int left)
 	{
-
+		fieldBorder = FieldBorder(forward, right, back, left);
 	}
 
 	/**************************************

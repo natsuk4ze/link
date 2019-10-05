@@ -51,12 +51,13 @@ namespace Field
 	***************************************/
 	FieldController::~FieldController()
 	{
+		routeContainer.clear();
+
 		SAFE_DELETE(cursor);
 		SAFE_DELETE(ground);
 		SAFE_DELETE(placeContainer);
 		SAFE_DELETE(operateContainer);
 
-		routeContainer.clear();
 
 		//ステートマシン削除
 		Utility::DeleteContainer(fsm);
@@ -97,6 +98,9 @@ namespace Field
 		//カーソルのフィールドの中央へ設定
 		FieldPosition border = placeContainer->GetPlaceBorder();
 		cursor->SetModelPosition(border.x / 2, border.z / 2);
+
+		//NOTE:今はまだ移動範囲の拡大処理が無いのでここで移動範囲を決定してしまう
+		cursor->SetBorder(border.z - 1, border.x - 1, 0, 0);
 	}
 
 	/**************************************

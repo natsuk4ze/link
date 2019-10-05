@@ -39,7 +39,7 @@ namespace Field
 		void Move(int x, int z);
 
 		//ˆÚ“®”ÍˆÍİ’èˆ—
-		void SetBorder(int top, int left, int bottom, int right);
+		void SetBorder(int forward, int right, int back, int left);
 
 		//À•Wæ“¾
 		FieldPosition GetModelPosition() const;
