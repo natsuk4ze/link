@@ -61,6 +61,20 @@ namespace Field
 
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int inputRepeatCnt;						//入力のリピートカウント
+
+		//フィールドコントローラのモード列挙子
+		enum State
+		{
+			Idle,
+			BuildRoad,
+			UseItem,
+			Max
+		};
+
+		//各ステートクラスの前方宣言
+		class IdleState;
+		class BuildRoadState;
+		class UseItemState;
 	};
 }
 #endif
