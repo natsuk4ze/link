@@ -12,6 +12,25 @@
 
 #include <algorithm>
 
+/**************************************
+グローバル変数
+***************************************/
+#ifdef DEBUG_PLACEMODEL
+static const char* PolygonName[] =
+{
+	"None",
+	"Road",
+	"Town",
+	"River",
+	"Bridge",
+	"Junction",
+	"Mountain",
+};
+
+#include "../../../Framework/Resource/ResourceManager.h"
+#include "../../../Framework/Renderer3D/BoardPolygon.h"
+#endif
+
 namespace Field::Model
 {
 	/**************************************
@@ -42,7 +61,6 @@ namespace Field::Model
 		adjacencies.resize(Adjacency::Max, NULL);
 
 		//アクターの生成
-
 	}
 
 	/**************************************
@@ -74,6 +92,19 @@ namespace Field::Model
 		{
 			actor->Draw();
 		}
+
+#ifdef DEBUG_PLACEMODEL
+		//テスト描画
+		const float Base = -10.0f * 15;
+		Transform transform = Transform(
+			{ Base + x * 10.0f, 1.0f, Base + z * 10.0f },
+			{ D3DXToRadian(90.0f), 0.0f, 0.0f },
+			Vector3::One);
+		transform.SetWorld();
+		BoardPolygon *polygon;
+		ResourceManager::Instance()->GetPolygon(PolygonName[type], polygon);
+		polygon->Draw();
+#endif
 	}
 
 	/**************************************
