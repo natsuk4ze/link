@@ -101,9 +101,9 @@ namespace Field
 
 		//X軸の移動を優先して使用(Clampで移動範囲を制限)
 		if (x != 0)
-			posX = Math::Clamp(-borderX, borderX, posX + x);
+			posX = Math::Clamp(-borderX, borderX - 1, posX + x);
 		else
-			posZ = Math::Clamp(-borderZ, borderZ, posZ + z);
+			posZ = Math::Clamp(-borderZ, borderZ - 1, posZ + z);
 
 		//移動先座標を計算
 		moveTarget = D3DXVECTOR3(posX * PositionOffset, 0.0f, posZ * PositionOffset);

@@ -32,6 +32,7 @@ namespace Field::Model
 		placeVector.reserve(PlaceMax);
 
 #ifdef DEBUG_PLACEMODEL
+		//デバッグ表示用の板ポリゴンを作成する
 		ResourceManager::Instance()->MakePolygon("None", "", { 4.5f, 4.5f });
 		ResourceManager::Instance()->MakePolygon("Road", "data/TEXTURE/PlaceTest/road.jpg", { 4.5f, 4.5f });
 		ResourceManager::Instance()->MakePolygon("Town", "data/TEXTURE/PlaceTest/town.jpg", { 4.5f, 4.5f });

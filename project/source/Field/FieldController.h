@@ -51,7 +51,7 @@ namespace Field
 
 	private:
 		const float PlaceOffset = 10.0f;		//Placeの1マス毎のオフセット値
-		const int InitFieldBorder = 25;			//フィールド範囲の初期値
+		const int InitFieldBorder = 30;			//フィールド範囲の初期値
 		const int InputLongWait = 15;			//入力リピートの待機フレーム
 		const int InputShortWait = 5;			//入力リピートの待機フレーム
 
