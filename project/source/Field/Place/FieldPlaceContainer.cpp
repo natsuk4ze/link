@@ -12,6 +12,11 @@
 #include <fstream>
 #include <string>
 
+#ifdef DEBUG_PLACEMODEL
+#include "../../../Framework/Resource/ResourceManager.h"
+#include "../../../Framework/Renderer3D/BoardPolygon.h"
+#endif
+
 namespace Field::Model
 {
 	/**************************************
@@ -25,6 +30,18 @@ namespace Field::Model
 		initialized(false)
 	{
 		placeVector.reserve(PlaceMax);
+
+#ifdef DEBUG_PLACEMODEL
+		//デバッグ表示用の板ポリゴンを作成する
+		ResourceManager::Instance()->MakePolygon("None", "", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Road", "data/TEXTURE/PlaceTest/road.jpg", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Town", "data/TEXTURE/PlaceTest/town.jpg", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("River", "data/TEXTURE/PlaceTest/river.jpg", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Bridge", "data/TEXTURE/PlaceTest/road.jpg", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Junction", "data/TEXTURE/PlaceTest/junction.jpg", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Mountain", "data/TEXTURE/PlaceTest/mountain.jpg", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Operate", "data/TEXTURE/PlaceTest/operate.jpg", { 2.0f, 2.0f });
+#endif
 	}
 
 	/**************************************
@@ -79,6 +96,20 @@ namespace Field::Model
 	}
 
 	/**************************************
+	プレイス取得処理
+	***************************************/
+	PlaceModel* PlaceContainer::GetPlace(const FieldPosition& position)
+	{
+		if (position.x < 0 || position.x >= placeRowMax)
+			return nullptr;
+
+		if (position.z < 0 || position.z >= placeColumMax)
+			return nullptr;
+
+		return placeVector[placeColumMax * position.z + position.x];
+	}
+
+	/**************************************
 	CSV読み込み処理
 	***************************************/
 	void PlaceContainer::LoadCSV(const char * filePath)
@@ -126,6 +157,14 @@ namespace Field::Model
 
 		//初期化完了
 		initialized = true;
+	}
+
+	/**************************************
+	行、列の最大数取得
+	***************************************/
+	FieldPosition Field::Model::PlaceContainer::GetPlaceBorder() const
+	{
+		return FieldPosition(placeRowMax, placeColumMax);
 	}
 
 	/**************************************

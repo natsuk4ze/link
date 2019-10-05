@@ -98,6 +98,10 @@
     <ClCompile Include="source\FieldObject\MountainActor.cpp" />
     <ClCompile Include="source\FieldObject\RiverActor.cpp" />
     <ClCompile Include="source\FieldObject\StraightRoadActor.cpp" />
+    <ClCompile Include="source\Field\State\BuildRoad.cpp" />
+    <ClCompile Include="source\Field\State\FieldControllerIdle.cpp" />
+    <ClCompile Include="source\Field\State\UseItem.cpp" />
+    <ClCompile Include="source\Field\Place\OperatePlaceContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -211,5 +215,10 @@
     <ClInclude Include="source\FieldObject\MountainActor.h" />
     <ClInclude Include="source\FieldObject\RiverActor.h" />
     <ClInclude Include="source\FieldObject\StraightRoadActor.h" />
+    <ClInclude Include="source\Field\State\BuildRoad.h" />
+    <ClInclude Include="source\Field\State\FieldControllerIdle.h" />
+    <ClInclude Include="source\Field\State\UseItem.h" />
+    <ClInclude Include="source\Field\Place\OperatePlaceContainer.h" />
+    <ClInclude Include="source\Field\FieldConfig.h" />
   </ItemGroup>
 </Project>

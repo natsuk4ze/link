@@ -9,8 +9,19 @@
 #include "FieldCursor.h"
 #include "FieldGround.h"
 #include "Place\FieldPlaceContainer.h"
+#include "Place\OperatePlaceContainer.h"
+#include "Place\FieldPlaceModel.h"
+#include "Route\RouteModel.h"
+#include "Route\RouteProcessor.h"
+
+#include "State/BuildRoad.h"
+#include "State/FieldControllerIdle.h"
+#include "State/UseItem.h"
 
 #include "../../Framework/Input/input.h"
+#include "../../Framework/Tool/DebugWindow.h"
+
+#include <algorithm>
 
 namespace Field
 {
@@ -25,9 +36,16 @@ namespace Field
 		cursor = new FieldCursor(PlaceOffset);
 		ground = new FieldGround();
 		placeContainer = new Model::PlaceContainer();
+		operateContainer = new Model::OperatePlaceContainer();
 
-		//カーソルの移動範囲を初期化
-		cursor->SetBorder(fieldBorder / 2, fieldBorder / 2);
+		//ステートマシン作成
+		fsm.resize(State::Max, NULL);
+		fsm[State::Build] = new BuildRoadState();
+		fsm[State::Idle] = new IdleState;
+		fsm[State::Develop] = new UseItemState();
+
+		//ステート初期化
+		ChangeState(State::Idle);
 	}
 
 	/**************************************
@@ -35,9 +53,15 @@ namespace Field
 	***************************************/
 	FieldController::~FieldController()
 	{
+		routeContainer.clear();
+
 		SAFE_DELETE(cursor);
 		SAFE_DELETE(ground);
 		SAFE_DELETE(placeContainer);
+		SAFE_DELETE(operateContainer);
+
+		//ステートマシン削除
+		Utility::DeleteContainer(fsm);
 	}
 
 	/**************************************
@@ -45,8 +69,21 @@ namespace Field
 	***************************************/
 	void FieldController::Update()
 	{
+		//使わなくなったルートコンテナを削除
+		auto itr = std::remove_if(routeContainer.begin(), routeContainer.end(), [](auto& ptr)
+		{
+			return ptr->IsUnused();
+		});
+		routeContainer.erase(itr, routeContainer.end());
+
+		//各更新処理
 		cursor->Update();
 		placeContainer->Update();
+
+		for (auto&& route : routeContainer)
+		{
+			route->Update();
+		}
 	}
 
 	/**************************************
@@ -58,8 +95,12 @@ namespace Field
 
 		placeContainer->Draw();
 
+		operateContainer->DrawDebug();
+
 		//カーソルには透過オブジェクトが含まれるので最後に描画
 		cursor->Draw();
+
+		Debug::Log("ControllerState:%d", current);
 	}
 
 	/**************************************
@@ -69,6 +110,13 @@ namespace Field
 	void FieldController::Load()
 	{
 		placeContainer->LoadCSV("data/FIELD/sample01.csv");
+
+		//カーソルのフィールドの中央へ設定
+		FieldPosition border = placeContainer->GetPlaceBorder();
+		cursor->SetModelPosition(border.x / 2, border.z / 2);
+
+		//NOTE:今はまだ移動範囲の拡大処理が無いのでここで移動範囲を決定してしまう
+		cursor->SetBorder(border.z - 1, border.x - 1, 0, 0);
 	}
 
 	/**************************************
@@ -102,6 +150,13 @@ namespace Field
 		float x = Math::Clamp(-1.0f, 1.0f, triggerX + repeatX);
 		float z = Math::Clamp(-1.0f, 1.0f, triggerZ + repeatZ);
 		cursor->Move((int)x, (int)z);
+
+		//現在のステートの更新処理を実行
+		State next = state->OnUpdate(*this);
+		if (next != current)
+		{
+			ChangeState(next);
+		}
 	}
 
 	/**************************************
@@ -110,5 +165,55 @@ namespace Field
 	GameObject * FieldController::GetFieldCursor()
 	{
 		return cursor;
+	}
+
+	/**************************************
+	ステート切り替え処理
+	***************************************/
+	void FieldController::ChangeState(State next)
+	{
+		if (fsm[next] == NULL)
+			return;
+
+		current = next;
+		state = fsm[next];
+		state->OnStart(*this);
+	}
+
+	/**************************************
+	カーソル位置のプレイスを取得
+	***************************************/
+	Model::PlaceModel * FieldController::GetPlace()
+	{
+		return placeContainer->GetPlace(cursor->GetModelPosition());
+	}
+
+	/**************************************
+	道を作る
+	***************************************/
+	void FieldController::BuildRoad()
+	{
+		using namespace Field::Model;
+
+		//操作対象のプレイスをRoadタイプに変換
+		std::vector<PlaceModel*> route = operateContainer->GetPlaces();
+		for (auto&& place : route)
+		{
+			if (place->IsType(PlaceType::None))
+				place->SetType(PlaceType::Road);
+		}
+
+		//ルートモデル作成
+		RouteModelPtr ptr = RouteModel::Create(route);
+		routeContainer.push_back(ptr);
+	
+		//端点設定
+		ptr->SetEdge();
+
+		//オブジェクト設定
+
+		//隣接するルートと連結させる
+		RouteProcessor::ConnectWithEdge(ptr, routeContainer);
+		RouteProcessor::Process(ptr, routeContainer);
 	}
 }

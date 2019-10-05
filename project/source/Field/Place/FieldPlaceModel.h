@@ -9,10 +9,19 @@
 #define _FIELDPLACEMODEL_H_
 
 #include "../../../main.h"
+#include "../FieldConfig.h"
 #include "PlaceConfig.h"
 
 #include <vector>
 
+/**************************************
+マクロ定義
+***************************************/
+#define DEBUG_PLACEMODEL
+
+/**************************************
+前方宣言
+***************************************/
 class PlaceActor;
 
 namespace Field::Model
@@ -35,6 +44,9 @@ namespace Field::Model
 		//更新処理、描画処理
 		void Update();
 		void Draw();
+
+		//座標取得
+		FieldPosition GetPosition() const;
 
 		//隣接プレイスの追加
 		void AddAdjacency(PlaceModel *adjacency, Adjacency type);
@@ -80,7 +92,7 @@ namespace Field::Model
 
 		//タイプ、座標
 		PlaceType type;
-		int x, z;
+		const FieldPosition Position;
 
 		//所属しているルートの参照コンテナ
 		std::vector<std::shared_ptr<RouteModel>> belongRouteList;

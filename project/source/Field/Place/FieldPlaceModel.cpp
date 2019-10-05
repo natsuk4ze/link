@@ -12,6 +12,25 @@
 
 #include <algorithm>
 
+/**************************************
+グローバル変数
+***************************************/
+#ifdef DEBUG_PLACEMODEL
+static const char* PolygonName[] =
+{
+	"None",
+	"Road",
+	"Town",
+	"River",
+	"Bridge",
+	"Junction",
+	"Mountain",
+};
+
+#include "../../../Framework/Resource/ResourceManager.h"
+#include "../../../Framework/Renderer3D/BoardPolygon.h"
+#endif
+
 namespace Field::Model
 {
 	/**************************************
@@ -34,15 +53,13 @@ namespace Field::Model
 	PlaceModel::PlaceModel(PlaceType type, int x, int z) :
 		uniqueID(incrementID++),
 		type(type),
-		x(x),
-		z(z),
-		actor(NULL)
+		Position(x, z),
+		actor(nullptr)
 	{
 		//隣接プレイスのコンテナを準備
 		adjacencies.resize(Adjacency::Max, NULL);
 
 		//アクターの生成
-
 	}
 
 	/**************************************
@@ -74,6 +91,26 @@ namespace Field::Model
 		{
 			actor->Draw();
 		}
+
+#ifdef DEBUG_PLACEMODEL
+		//テスト描画
+		Transform transform = Transform(
+			{ Position.x * 10.0f, 1.0f, Position.z * 10.0f },
+			{ D3DXToRadian(90.0f), 0.0f, 0.0f },
+			Vector3::One);
+		transform.SetWorld();
+		BoardPolygon *polygon;
+		ResourceManager::Instance()->GetPolygon(PolygonName[type], polygon);
+		polygon->Draw();
+#endif
+	}
+
+	/**************************************
+	座標取得処理
+	***************************************/
+	FieldPosition PlaceModel::GetPosition() const
+	{
+		return Position;
 	}
 
 	/**************************************
@@ -89,6 +126,10 @@ namespace Field::Model
 	***************************************/
 	bool PlaceModel::CanStartRoute()
 	{
+		//空白タイプか橋でなければ道に出来ない
+		if(!ChangeableRoad())
+			return false;
+
 		//隣接プレイスに交差点、街、道が含まれていたらルートを始められる
 		for (auto&& adjacency : adjacencies)
 		{
@@ -175,6 +216,10 @@ namespace Field::Model
 
 			//連結不可であればcontinue
 			if (!adjacency->IsConnectableType())
+				continue;
+
+			//連結可能であってもTownは不可
+			if (adjacency->IsType(PlaceType::Town))
 				continue;
 
 			//同じルートに属していなければ連結できる

@@ -126,8 +126,9 @@ namespace Field::Model
 	***************************************/
 	RouteContainer RouteProcessor::Divide(RouteModelPtr & model, PlaceModel * junction, RouteContainer & routeContainer)
 	{
-		//分割後は使用しなくなるのでフラグを立てる
+		//分割後は使用しなくなるのでフラグを立てて、プレイスの所属を解除
 		model->SetUnused(true);
+		model->BreakAway();
 
 		//交差点を基準にしてルートを分割
 		std::vector<PlaceModel*> route = model->route;

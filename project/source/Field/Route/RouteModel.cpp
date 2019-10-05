@@ -65,14 +65,6 @@ namespace Field::Model
 	***************************************/
 	RouteModel::~RouteModel()
 	{
-		//自身に所属しているプレイスの所属を解除
-		edgeStart->ExitRoute(shared_from_this());
-		edgeEnd->ExitRoute(shared_from_this());
-		for (auto&& place : route)
-		{
-			place->ExitRoute(shared_from_this());
-		}
-
 		adjacentRoute.clear();
 		route.clear();
 	}
@@ -98,6 +90,20 @@ namespace Field::Model
 		edgeEnd = place;
 		route.push_back(place);
 		place->BelongRoute(shared_from_this());
+	}
+
+	/**************************************
+	プレイスの所属解除
+	***************************************/
+	void RouteModel::BreakAway()
+	{
+		//自身に所属しているプレイスの所属を解除
+		edgeStart->ExitRoute(shared_from_this());
+		edgeEnd->ExitRoute(shared_from_this());
+		for (auto&& place : route)
+		{
+			place->ExitRoute(shared_from_this());
+		}
 	}
 
 	/**************************************

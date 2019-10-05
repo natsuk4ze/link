@@ -59,6 +59,9 @@ namespace Field::Model
 		//ルートとなる道を追加
 		void AddRoad(PlaceModel* place);
 
+		//プレイスの所属解除
+		void BreakAway();
+
 		//隣接ルート追加
 		void AddAdjacency(PlaceModel* junction, PlaceModel* connectTarget, std::shared_ptr<RouteModel> opponent);
 		void AddAdjacency(const std::vector<AdjacentRoute>& adjacenctRoute);
