@@ -101,6 +101,7 @@
     <ClCompile Include="source\Field\State\BuildRoad.cpp" />
     <ClCompile Include="source\Field\State\FieldControllerIdle.cpp" />
     <ClCompile Include="source\Field\State\UseItem.cpp" />
+    <ClCompile Include="source\Field\Place\OperatePlaceContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -217,5 +218,6 @@
     <ClInclude Include="source\Field\State\BuildRoad.h" />
     <ClInclude Include="source\Field\State\FieldControllerIdle.h" />
     <ClInclude Include="source\Field\State\UseItem.h" />
+    <ClInclude Include="source\Field\Place\OperatePlaceContainer.h" />
   </ItemGroup>
 </Project>

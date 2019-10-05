@@ -89,6 +89,10 @@ namespace Field::Model
 	***************************************/
 	bool PlaceModel::CanStartRoute()
 	{
+		//空白タイプか橋でなければ道に出来ない
+		if(!ChangeableRoad())
+			return false;
+
 		//隣接プレイスに交差点、街、道が含まれていたらルートを始められる
 		for (auto&& adjacency : adjacencies)
 		{
