@@ -43,6 +43,9 @@ namespace Field::Model
 		//コンテナ取得処理
 		std::vector<PlaceModel*> GetPlaces();
 
+		//デバッグ表示
+		void DrawDebug();
+
 	private:
 		std::vector<PlaceModel*> container;		//PlaceModelコンテナ
 	};

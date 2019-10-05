@@ -45,6 +45,9 @@ namespace Field::Model
 		void Update();
 		void Draw();
 
+		//座標取得
+		FieldPosition GetPosition() const;
+
 		//隣接プレイスの追加
 		void AddAdjacency(PlaceModel *adjacency, Adjacency type);
 	

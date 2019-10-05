@@ -95,6 +95,8 @@ namespace Field
 
 		placeContainer->Draw();
 
+		operateContainer->DrawDebug();
+
 		//カーソルには透過オブジェクトが含まれるので最後に描画
 		cursor->Draw();
 

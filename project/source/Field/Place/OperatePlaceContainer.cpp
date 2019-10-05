@@ -8,6 +8,9 @@
 #include "OperatePlaceContainer.h"
 #include "FieldPlaceModel.h"
 
+#include "../../../Framework/Resource/ResourceManager.h"
+#include "../../../Framework/Renderer3D/BoardPolygon.h"
+
 #include <algorithm>
 
 namespace Field::Model
@@ -111,5 +114,31 @@ namespace Field::Model
 	std::vector<PlaceModel*> OperatePlaceContainer::GetPlaces()
 	{
 		return container;
+	}
+
+	/**************************************
+	デバッグ表示
+	***************************************/
+	void OperatePlaceContainer::DrawDebug()
+	{
+#ifdef DEBUG_PLACEMODEL
+		BoardPolygon *polygon;
+		ResourceManager::Instance()->GetPolygon("Operate", polygon);
+
+		for (auto&& place : container)
+		{
+			FieldPosition position = place->GetPosition();
+
+			Transform transform{
+				{position.x * 10.0f, 5.0f, position.z * 10.0f },
+				{ D3DXToRadian(90.0f), 0.0f, 0.0f },
+				Vector3::One
+			};
+
+			transform.SetWorld();
+
+			polygon->Draw();
+		}
+#endif
 	}
 }

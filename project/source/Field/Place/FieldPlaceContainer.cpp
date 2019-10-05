@@ -40,6 +40,7 @@ namespace Field::Model
 		ResourceManager::Instance()->MakePolygon("Bridge", "data/TEXTURE/PlaceTest/road.jpg", { 4.5f, 4.5f });
 		ResourceManager::Instance()->MakePolygon("Junction", "data/TEXTURE/PlaceTest/junction.jpg", { 4.5f, 4.5f });
 		ResourceManager::Instance()->MakePolygon("Mountain", "data/TEXTURE/PlaceTest/mountain.jpg", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Operate", "data/TEXTURE/PlaceTest/operate.jpg", { 2.0f, 2.0f });
 #endif
 	}
 

@@ -106,6 +106,14 @@ namespace Field::Model
 	}
 
 	/**************************************
+	座標取得処理
+	***************************************/
+	FieldPosition PlaceModel::GetPosition() const
+	{
+		return Position;
+	}
+
+	/**************************************
 	隣接プレイス追加
 	***************************************/
 	void PlaceModel::AddAdjacency(PlaceModel *adjacency, Adjacency type)
