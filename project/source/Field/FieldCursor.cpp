@@ -181,7 +181,7 @@ namespace Field
 	***************************************/
 	D3DXVECTOR3 FieldCursor::CalcWorldPosition() const
 	{
-		return D3DXVECTOR3((position.x - borderX / 2) * PositionOffset, 0.0f, (position.z - borderZ / 2) * PositionOffset);
+		return D3DXVECTOR3((position.x) * PositionOffset, 0.0f, (position.z) * PositionOffset);
 	}
 
 	/**************************************

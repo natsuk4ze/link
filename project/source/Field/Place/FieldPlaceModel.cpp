@@ -94,9 +94,8 @@ namespace Field::Model
 
 #ifdef DEBUG_PLACEMODEL
 		//ƒeƒXƒg•`‰æ
-		const float Base = -10.0f * 15;
 		Transform transform = Transform(
-			{ Base + Position.x * 10.0f, 1.0f, Base + Position.z * 10.0f },
+			{ Position.x * 10.0f, 1.0f, Position.z * 10.0f },
 			{ D3DXToRadian(90.0f), 0.0f, 0.0f },
 			Vector3::One);
 		transform.SetWorld();
