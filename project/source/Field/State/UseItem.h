@@ -17,7 +17,7 @@ namespace Field
 	/**************************************
 	ƒNƒ‰ƒX’è‹`
 	***************************************/
-	class FieldController::UseItemState : public BaseState<FieldController, FieldController::State>
+	class FieldController::UseItemState : public FieldController::ControllerState
 	{
 	public:
 		void OnStart(FieldController& entity);

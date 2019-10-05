@@ -5,7 +5,7 @@
 //
 //=====================================
 #include "FieldControllerIdle.h"
-
+#include "../../../Framework/Input/input.h"
 namespace Field
 {
 	/**************************************

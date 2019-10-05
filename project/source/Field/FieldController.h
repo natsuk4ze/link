@@ -9,6 +9,8 @@
 #define _FIELDCONTROLLER_H_
 
 #include "../../main.h"
+#include "../../Framework/Pattern/BaseState.h"
+#include <vector>
 
 class PlaceModel;
 
@@ -31,6 +33,15 @@ namespace Field
 	class FieldController
 	{
 	public:
+		//フィールドコントローラのモード列挙子
+		enum State
+		{
+			Idle,
+			BuildRoad,
+			UseItem,
+			Max
+		};
+
 		//コンストラクタ、デストラクタ
 		FieldController();
 		~FieldController();
@@ -49,6 +60,8 @@ namespace Field
 		//カーソル取得処理
 		GameObject* GetFieldCursor();
 
+		typedef BaseState<FieldController, FieldController::State> ControllerState;
+
 	private:
 		const float PlaceOffset = 10.0f;		//Placeの1マス毎のオフセット値
 		const int InitFieldBorder = 30;			//フィールド範囲の初期値
@@ -62,14 +75,11 @@ namespace Field
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int inputRepeatCnt;						//入力のリピートカウント
 
-		//フィールドコントローラのモード列挙子
-		enum State
-		{
-			Idle,
-			BuildRoad,
-			UseItem,
-			Max
-		};
+		ControllerState *state;						//現在のステート
+		std::vector<ControllerState*> fsm;			//ステートマシン
+
+		//ステート切り替え
+		void ChangeState(State next);
 
 		//各ステートクラスの前方宣言
 		class IdleState;

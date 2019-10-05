@@ -17,7 +17,7 @@ namespace Field
 	/**************************************
 	ƒNƒ‰ƒX’è‹`
 	***************************************/
-	class FieldController::IdleState : public BaseState<FieldController, FieldController::State>
+	class FieldController::IdleState : public FieldController::ControllerState
 	{
 		void OnStart(FieldController &entity);
 		State OnUpdate(FieldController& entity);

@@ -21,7 +21,7 @@ namespace Field
 	/**************************************
 	ƒNƒ‰ƒX’è‹`
 	***************************************/
-	class FieldController::BuildRoadState : public BaseState<FieldController, FieldController::State>
+	class FieldController::BuildRoadState : public FieldController::ControllerState
 	{
 	public:
 		void OnStart(FieldController& entity);

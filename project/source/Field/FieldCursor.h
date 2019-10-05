@@ -41,6 +41,9 @@ namespace Field
 		//移動範囲設定処理
 		void SetBorder(int borderX, int borderZ);
 
+		//座標取得
+		Model::PlacePosition GetPos() const;
+
 	private:
 		const int SquareMax = 5;			//四角形最大数
 		const int EmitInterval = 10;		//四角形生成インターバル

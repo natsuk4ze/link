@@ -129,6 +129,14 @@ namespace Field
 	}
 
 	/**************************************
+	座標取得処理
+	***************************************/
+	Model::PlacePosition FieldCursor::GetPos() const
+	{
+		return position;
+	}
+
+	/**************************************
 	FieldCursorSquareセット処理
 	***************************************/
 	void FieldCursor::SetSquare()

@@ -10,6 +10,10 @@
 #include "FieldGround.h"
 #include "Place\FieldPlaceContainer.h"
 
+#include "State/BuildRoad.h"
+#include "State/FieldControllerIdle.h"
+#include "State/UseItem.h"
+
 #include "../../Framework/Input/input.h"
 
 namespace Field
@@ -26,8 +30,17 @@ namespace Field
 		ground = new FieldGround();
 		placeContainer = new Model::PlaceContainer();
 
+		//ステートマシン作成
+		fsm.resize(State::Max, NULL);
+		fsm[State::BuildRoad] = new BuildRoadState();
+		fsm[State::Idle] = new IdleState;
+		fsm[State::UseItem] = new UseItemState();
+
 		//カーソルの移動範囲を初期化
 		cursor->SetBorder(fieldBorder / 2, fieldBorder / 2);
+
+		//ステート初期化
+		ChangeState(State::Idle);
 	}
 
 	/**************************************
@@ -38,6 +51,9 @@ namespace Field
 		SAFE_DELETE(cursor);
 		SAFE_DELETE(ground);
 		SAFE_DELETE(placeContainer);
+
+		//ステートマシン削除
+		Utility::DeleteContainer(fsm);
 	}
 
 	/**************************************
@@ -110,5 +126,17 @@ namespace Field
 	GameObject * FieldController::GetFieldCursor()
 	{
 		return cursor;
+	}
+
+	/**************************************
+	ステート切り替え処理
+	***************************************/
+	void FieldController::ChangeState(State next)
+	{
+		if (fsm[next] == NULL)
+			return;
+
+		state = fsm[next];
+		state->OnStart(*this);
 	}
 }

@@ -5,6 +5,8 @@
 //
 //=====================================
 #include "BuildRoad.h"
+#include "../../../Framework/Input/input.h"
+#include "../Place/OperatePlaceContainer.h"
 
 namespace Field
 {
@@ -13,6 +15,7 @@ namespace Field
 	***************************************/
 	void FieldController::BuildRoadState::OnStart(FieldController & entity)
 	{
+		
 	}
 
 	/**************************************
