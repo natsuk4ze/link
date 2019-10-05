@@ -53,9 +53,8 @@ namespace Field::Model
 	PlaceModel::PlaceModel(PlaceType type, int x, int z) :
 		uniqueID(incrementID++),
 		type(type),
-		x(x),
-		z(z),
-		actor(NULL)
+		Position(PlacePosition(x, z)),
+		actor(nullptr)
 	{
 		//隣接プレイスのコンテナを準備
 		adjacencies.resize(Adjacency::Max, NULL);
@@ -97,7 +96,7 @@ namespace Field::Model
 		//テスト描画
 		const float Base = -10.0f * 15;
 		Transform transform = Transform(
-			{ Base + x * 10.0f, 1.0f, Base + z * 10.0f },
+			{ Base + Position.x * 10.0f, 1.0f, Base + Position.z * 10.0f },
 			{ D3DXToRadian(90.0f), 0.0f, 0.0f },
 			Vector3::One);
 		transform.SetWorld();

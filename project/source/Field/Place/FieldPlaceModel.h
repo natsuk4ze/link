@@ -88,7 +88,7 @@ namespace Field::Model
 
 		//タイプ、座標
 		PlaceType type;
-		int x, z;
+		const PlacePosition Position;
 
 		//所属しているルートの参照コンテナ
 		std::vector<std::shared_ptr<RouteModel>> belongRouteList;

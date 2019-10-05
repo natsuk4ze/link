@@ -14,12 +14,19 @@
 namespace Field
 {
 	/**************************************
+	static変数
+	***************************************/
+	const D3DXVECTOR2 FieldCursorSquare::Size = { 5.0f, 5.0f };
+	const int FieldCursorSquare::FadeDuration = 30;
+	const float FieldCursorSquare::MoveSpeed = 0.3f;
+
+	/**************************************
 	コンストラクタ
 	***************************************/
 	FieldCursor::FieldCursor(float positionOffset) :
 		PositionOffset(positionOffset),
 		borderX(0), borderZ(0),
-		posX(0), posZ(0),
+		position(0, 0),
 		cntMove(MoveDuration)
 	{
 		//四角形生成
@@ -97,16 +104,16 @@ namespace Field
 			return;
 
 		//移動開始地点を保存
-		startPos = D3DXVECTOR3(posX * PositionOffset, 0.0f, posZ * PositionOffset);
+		startPos = D3DXVECTOR3(position.x * PositionOffset, 0.0f, position.z * PositionOffset);
 
 		//X軸の移動を優先して使用(Clampで移動範囲を制限)
 		if (x != 0)
-			posX = Math::Clamp(-borderX, borderX - 1, posX + x);
+			position.x = Math::Clamp(-borderX, borderX - 1, position.x + x);
 		else
-			posZ = Math::Clamp(-borderZ, borderZ - 1, posZ + z);
+			position.z = Math::Clamp(-borderZ, borderZ - 1, position.z + z);
 
 		//移動先座標を計算
-		moveTarget = D3DXVECTOR3(posX * PositionOffset, 0.0f, posZ * PositionOffset);
+		moveTarget = D3DXVECTOR3(position.x * PositionOffset, 0.0f, position.z * PositionOffset);
 
 		//カウントリセット
 		cntMove = 0;

@@ -73,5 +73,25 @@ namespace Field::Model
 		Right,			//Xプラス方向の隣接
 		Max
 	};
+
+	/**************************************
+	PlaceModelの座標構造体
+	***************************************/
+	struct PlacePosition
+	{
+		int x, z;
+
+		PlacePosition()
+		{
+			x = 0;
+			z = 0;
+		}
+
+		PlacePosition(int x, int z)
+		{
+			this->x = x;
+			this->z = z;
+		}
+	};
 }
 #endif

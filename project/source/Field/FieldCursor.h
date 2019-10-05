@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "../../main.h"
+#include "Place/PlaceConfig.h"
 #include "../../Framework/Renderer3D/BoardPolygon.h"
 
 namespace Field
@@ -48,8 +49,8 @@ namespace Field
 
 		int borderX, borderZ;				//移動可能範囲
 		int cntFrame;						//フレームカウント
-		int posX, posZ;						//X座標、Z座標
 		int cntMove;						//移動カウント
+		Model::PlacePosition position;		//座標
 
 		D3DXVECTOR3 moveTarget;				//移動の目標地点
 		D3DXVECTOR3 startPos;				//移動のスタート地点
@@ -87,9 +88,9 @@ namespace Field
 		static bool Compare(const FieldCursorSquare* lhs, const FieldCursorSquare* rhs);
 
 	private:
-		const D3DXVECTOR2 Size{ 5.0f, 5.0f };		//サイズ
-		const int FadeDuration = 30;				//フェード時間
-		const float MoveSpeed = 0.3f;				//移動スピード
+		static const D3DXVECTOR2 Size;				//サイズ
+		static const int FadeDuration;				//フェード時間
+		static const float MoveSpeed;				//移動スピード
 
 		int cntFrame;								//フレームカウント
 		Transform *transform;						//SRT情報
