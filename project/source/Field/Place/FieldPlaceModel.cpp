@@ -218,6 +218,10 @@ namespace Field::Model
 			if (!adjacency->IsConnectableType())
 				continue;
 
+			//連結可能であってもTownは不可
+			if (adjacency->IsType(PlaceType::Town))
+				continue;
+
 			//同じルートに属していなければ連結できる
 			if (!IsSameRoute(adjacency))
 				return adjacency;
