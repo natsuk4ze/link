@@ -24,10 +24,16 @@ namespace Field
 	{
 		State next = State::Idle;
 
-		//Zキーが押されたらBuildRoadへ遷移
+		//Zキーが押されたらBuildへ遷移
 		if (Keyboard::GetTrigger(DIK_Z))
 		{
 			next = State::Build;
+		}
+
+		//Xキーが押されたらDevelopへ遷移
+		if (Keyboard::GetTrigger(DIK_X))
+		{
+			next = State::Develop;
 		}
 
 		return next;

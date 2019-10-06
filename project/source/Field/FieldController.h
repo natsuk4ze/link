@@ -30,6 +30,10 @@ namespace Field
 		class OperatePlaceContainer;
 	}
 
+	using PlaceVector = std::vector<Model::PlaceModel*>;
+	using PlaceIterator = PlaceVector::iterator;
+	using ReversePlaceIterator = std::reverse_iterator<PlaceIterator>;
+
 	/**************************************
 	クラス定義
 	***************************************/
@@ -93,6 +97,10 @@ namespace Field
 
 		//道を作る
 		void BuildRoad();
+
+		//川、山の開発
+		void DevelopPlace(PlaceVector& route, PlaceIterator start);
+		PlaceIterator DevelopMountain(PlaceVector& route, PlaceIterator moutain);
 
 		//各ステートクラスの前方宣言
 		class IdleState;

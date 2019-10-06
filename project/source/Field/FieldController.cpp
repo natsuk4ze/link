@@ -216,4 +216,73 @@ namespace Field
 		RouteProcessor::ConnectWithEdge(ptr, routeContainer);
 		RouteProcessor::Process(ptr, routeContainer);
 	}
+
+	/**************************************
+	川、山を開発する
+	***************************************/
+	void FieldController::DevelopPlace(PlaceVector& route, PlaceIterator start)
+	{
+		using namespace Field::Model;
+
+		auto itr = std::find_if(start, route.end(), [](auto& place)
+		{
+			return place->IsType(PlaceType::Mountain) || place->IsType(PlaceType::River);
+		});
+
+		//開拓対象が見つからないのでリターン
+		if (itr == route.end())
+			return;
+
+		//山を開拓
+		if ((*itr)->IsType(PlaceType::Mountain))
+		{
+			itr = DevelopMountain(route, itr);
+		}
+
+		//開拓が終了した位置から再帰的に開拓
+		DevelopPlace(route, itr);
+	}
+
+	/**************************************
+	山を開発する
+	***************************************/
+	PlaceIterator FieldController::DevelopMountain(PlaceVector & route, PlaceIterator mountain)
+	{
+		using namespace Field::Model;
+
+		//対象のプレイスの前にある山,川以外のプレイスを探す
+		auto start = std::find_if(ReversePlaceIterator(mountain), route.rend(), [](auto& place)
+		{
+			return !place->IsType(PlaceType::Mountain);
+		});
+
+		//山以外が見つからなかったか、川の場合は早期リターン
+		if (start == route.rend() || (*(start + 1).base())->IsType(PlaceType::River))
+		{
+			return route.end();
+		}
+		
+
+		//対象のプレイスの後ろにある山、川以外のプレイスを探す
+		auto end = std::find_if(mountain, route.end(), [](auto& place)
+		{
+			return !place->IsType(PlaceType::Mountain);
+		});
+
+		//山以外が見つからなかったか、川の場合は早期リターン
+		if (end == route.end() || (*end)->IsType(PlaceType::River))
+		{
+			return route.end();
+		}
+
+		//startとendを結ぶプレイスを開拓する
+		PlaceVector container;
+		container.assign(start.base(), end);
+		for (auto&& place : container)
+		{
+			place->SetType(PlaceType::None);
+		}
+
+		return end + 1;
+	}
 }

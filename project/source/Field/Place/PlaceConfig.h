@@ -32,7 +32,7 @@ namespace Field::Model
 		River,			//ì
 		Bridge,			//‹´
 		Junction,		//Œğ·“_
-		Moutain			//R
+		Mountain			//R
 	};
 
 	/**************************************
@@ -57,7 +57,7 @@ namespace Field::Model
 			return PlaceType::River;
 
 		if (n == 3)
-			return PlaceType::Moutain;
+			return PlaceType::Mountain;
 
 		return PlaceType::None;
 	}
