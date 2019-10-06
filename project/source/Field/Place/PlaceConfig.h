@@ -74,5 +74,22 @@ namespace Field::Model
 		Max,
 		NotAdjacenct	//—×Ú‚µ‚Ä‚¢‚È‚¢
 	};
+
+	/**************************************
+	—×Ú•ûŒü‚Ì‹t‘¤‚ğ‹‚ß‚éˆ—
+	***************************************/
+	inline Adjacency GetInverseSide(const Adjacency adjacency)
+	{
+		if (adjacency == Back)
+			return Forward;
+		if (adjacency == Left)
+			return Right;
+		if (adjacency == Forward)
+			return Back;
+		if (adjacency == Right)
+			return Left;
+
+		return NotAdjacenct;
+	}
 }
 #endif

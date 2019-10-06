@@ -58,6 +58,10 @@ namespace Field::Model
 	***************************************/
 	bool OperatePlaceContainer::BeginDevelop(PlaceModel * place)
 	{
+		//開発可能タイプ以外か確認
+		if (place->IsDevelopableType())
+			return false;
+
 		//コンテナに追加してreturn true
 		container.push_back(place);
 

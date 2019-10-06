@@ -227,8 +227,7 @@ namespace Field
 		auto itr = std::find_if(start, route.end(), [](auto& place)
 		{
 			//川の開拓処理を入れていないので一旦コメントアウト
-			//return place->IsType(PlaceType::Mountain) || place->IsType(PlaceType::River);
-			return place->IsType(PlaceType::Mountain);
+			return place->IsType(PlaceType::Mountain) || place->IsType(PlaceType::River);
 		});
 
 		//開拓対象が見つからないのでリターン
@@ -239,6 +238,11 @@ namespace Field
 		if ((*itr)->IsType(PlaceType::Mountain))
 		{
 			itr = DevelopMountain(route, itr);
+		}
+		//川を開拓
+		else if ((*itr)->IsType(PlaceType::River))
+		{
+			itr = DevelopRiver(route, itr);
 		}
 
 		//開拓が終了した位置から再帰的に開拓
@@ -263,7 +267,6 @@ namespace Field
 		{
 			return route.end();
 		}
-		
 
 		//対象のプレイスの後ろにある山、川以外のプレイスを探す
 		auto end = std::find_if(mountain, route.end(), [](auto& place)
@@ -286,5 +289,50 @@ namespace Field
 		}
 
 		return end + 1;
+	}
+
+	/**************************************
+	山を開発する
+	***************************************/
+	PlaceIterator FieldController::DevelopRiver(PlaceVector & route, PlaceIterator river)
+	{
+		using namespace Field::Model;
+
+		//川の一つ前のプレイス（始点）がどの方向で隣接しているか確認
+		PlaceModel* start = *(river - 1);
+		Adjacency startAdjacency = (*river)->IsAdjacent(start);
+
+		//プレイスを前へ一つずつ確認していき終点を探す
+		PlaceIterator end = route.end();
+		for (auto itr = river + 1; itr != route.end(); itr++)
+		{
+			PlaceModel* prev = *(itr - 1);
+			PlaceModel* place = *itr;
+
+			//隣接方向が直線になっていなければ早期リターン
+			if (place->IsAdjacent(prev) != startAdjacency)
+				return itr;
+
+			//開拓可能以外のタイプであればbreak
+			if (!place->IsDevelopableType())
+			{
+				end = itr;
+				break;
+			}
+		}
+
+		//終点が見つからなかったので早期リターン
+		if(end == route.end())
+			return route.end();
+
+		//始点と終点の間の川を開拓
+		PlaceVector riverVector;
+		riverVector.assign(river, end);
+		for (auto&& river : riverVector)
+		{
+			river->SetType(PlaceType::None);
+		}
+
+		return end;
 	}
 }

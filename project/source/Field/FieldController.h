@@ -101,6 +101,7 @@ namespace Field
 		//川、山の開発
 		void DevelopPlace(PlaceVector& route, PlaceIterator start);
 		PlaceIterator DevelopMountain(PlaceVector& route, PlaceIterator moutain);
+		PlaceIterator DevelopRiver(PlaceVector& route, PlaceIterator river);
 
 		//各ステートクラスの前方宣言
 		class IdleState;
