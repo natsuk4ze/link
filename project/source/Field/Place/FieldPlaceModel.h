@@ -57,6 +57,9 @@ namespace Field::Model
 		//道に変えられるか
 		bool ChangeableRoad();
 
+		//開拓可能なタイプか
+		bool IsDevelopableType();
+
 		//placeと隣接しているか
 		bool IsAdjacent(PlaceModel* place);
 

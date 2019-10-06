@@ -102,6 +102,7 @@
     <ClCompile Include="source\Field\State\FieldControllerIdle.cpp" />
     <ClCompile Include="source\Field\State\UseItem.cpp" />
     <ClCompile Include="source\Field\Place\OperatePlaceContainer.cpp" />
+    <ClCompile Include="source\Field\FieldInputController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -220,5 +221,6 @@
     <ClInclude Include="source\Field\State\UseItem.h" />
     <ClInclude Include="source\Field\Place\OperatePlaceContainer.h" />
     <ClInclude Include="source\Field\FieldConfig.h" />
+    <ClInclude Include="source\Field\FieldInputController.h" />
   </ItemGroup>
 </Project>

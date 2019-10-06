@@ -5,7 +5,7 @@
 //
 //=====================================
 #include "UseItem.h"
-#include "../../../Framework/Input/input.h"
+#include "../FieldInputController.h"
 #include "../Place/OperatePlaceContainer.h"
 #include "../Place/FieldPlaceContainer.h"
 #include "../FieldCursor.h"
@@ -21,7 +21,7 @@ namespace Field
 		Model::PlaceModel* start = entity.GetPlace();
 
 		//ルートの開始を試みる
-		bool result = entity.operateContainer->Begin(start);
+		bool result = entity.operateContainer->BeginDevelop(start);
 
 		//開始できなかったらIdle状態へ遷移する
 		if (!result)
@@ -36,17 +36,17 @@ namespace Field
 	FieldController::State FieldController::UseItemState::OnUpdate(FieldController & entity)
 	{
 		//次のステート
-		State next = State::Build;
+		State next = State::Develop;
 
 		//カーソル位置のプレイスを操作対象として追加
 		Model::PlaceModel* place = entity.GetPlace();
-		entity.operateContainer->Add(place);
+		entity.operateContainer->AddDevelop(place);
 
 		//Xキーが押されたら操作対象のプレイスを道に変える
 		//TODO：キーボード以外の入力にも対応
-		if (Keyboard::GetTrigger(DIK_X))
+		if (GetDevelopTrigger())
 		{
-			if (entity.operateContainer->End())
+			if (entity.operateContainer->EndDevelop())
 			{
 				PlaceVector vector = entity.operateContainer->GetPlaces();
 				entity.DevelopPlace(vector, vector.begin());
@@ -58,7 +58,7 @@ namespace Field
 		}
 
 		//Zキーが押されたらIdleステートへ遷移
-		if (Keyboard::GetTrigger(DIK_Z))
+		if (GetDevelopCancel())
 		{
 			next = State::Idle;
 		}

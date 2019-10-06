@@ -159,6 +159,20 @@ namespace Field::Model
 	}
 
 	/**************************************
+	開拓可能なタイプか
+	***************************************/
+	bool PlaceModel::IsDevelopableType()
+	{
+		if (type == PlaceType::River)
+			return true;
+
+		if (type == PlaceType::Mountain)
+			return true;
+
+		return false;
+	}
+
+	/**************************************
 	プレイスと隣接しているか
 	***************************************/
 	bool PlaceModel::IsAdjacent(PlaceModel * place)

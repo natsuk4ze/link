@@ -10,6 +10,7 @@
 
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../../../Framework/Renderer3D/BoardPolygon.h"
+#include "../../../Library/cppLinq/cpplinq.hpp"
 
 #include <algorithm>
 
@@ -18,6 +19,9 @@ namespace Field::Model
 	/**************************************
 	using宣言
 	***************************************/
+	using cpplinq::from;
+	using cpplinq::where;
+	using cpplinq::count;
 
 	/**************************************
 	コンストラクタ
@@ -37,7 +41,7 @@ namespace Field::Model
 	/**************************************
 	プレイス追加開始処理
 	***************************************/
-	bool OperatePlaceContainer::Begin(PlaceModel * place)
+	bool OperatePlaceContainer::BeginRoute(PlaceModel * place)
 	{
 		//ルートを始められるプレイスであるか確認
 		if (!place->CanStartRoute())
@@ -50,9 +54,20 @@ namespace Field::Model
 	}
 
 	/**************************************
+	プレイス追加開始処理
+	***************************************/
+	bool OperatePlaceContainer::BeginDevelop(PlaceModel * place)
+	{
+		//コンテナに追加してreturn true
+		container.push_back(place);
+
+		return true;
+	}
+
+	/**************************************
 	プレイス追加処理
 	***************************************/
-	bool OperatePlaceContainer::Add(PlaceModel * place)
+	bool OperatePlaceContainer::AddRoute(PlaceModel * place)
 	{
 		//重複確認
 		auto itr = std::find(container.begin(), container.end(), place);
@@ -74,9 +89,29 @@ namespace Field::Model
 	}
 
 	/**************************************
+	プレイス追加処理
+	***************************************/
+	bool OperatePlaceContainer::AddDevelop(PlaceModel * place)
+	{
+		//重複確認
+		auto itr = std::find(container.begin(), container.end(), place);
+		if (itr != container.end())
+			return false;
+
+		//隣接判定
+		if (!place->IsAdjacent(*container.rbegin()))
+			return false;
+
+		//追加してreturn true
+		container.push_back(place);
+
+		return true;
+	}
+
+	/**************************************
 	追加終了処理
 	***************************************/
-	bool OperatePlaceContainer::End()
+	bool OperatePlaceContainer::EndRoute()
 	{
 		//ルートが成立するプレイスの数
 		const int validContainerSize = 2;
@@ -91,6 +126,26 @@ namespace Field::Model
 		//最後に追加したプレイスがルートを始められるタイプでなければreturn false
 		PlaceModel* last = *container.rbegin();
 		if (!last->CanStartRoute())
+		{
+			container.clear();
+			return false;
+		}
+
+		return true;
+	}
+
+	/**************************************
+	追加終了処理
+	***************************************/
+	bool OperatePlaceContainer::EndDevelop()
+	{
+		//開拓可能タイプ以外が2つ以上含まれていなければコンテナをクリアしてreturn false
+		int cntNonDevelopable = 
+			from(container) >>
+			where([](auto& place) { return !place->IsDevelopableType(); }) >>
+			count();
+
+		if (cntNonDevelopable < 2)
 		{
 			container.clear();
 			return false;
