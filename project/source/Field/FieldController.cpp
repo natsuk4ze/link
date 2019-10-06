@@ -30,7 +30,9 @@ namespace Field
 	***************************************/
 	FieldController::FieldController() :
 		fieldBorder(InitFieldBorder),
-		inputRepeatCnt(0)
+		inputRepeatCnt(0),
+		stockDevelopRiver(InitDevelopRiverStock),
+		stockDevelopMountain(stockDevelopMountain)
 	{
 		//インスタンス作成
 		cursor = new FieldCursor(PlaceOffset);
@@ -101,6 +103,8 @@ namespace Field
 		cursor->Draw();
 
 		Debug::Log("ControllerState:%d", current);
+		Debug::Log("StockRiver:%d", stockDevelopMountain);
+		Debug::Log("StockMountain:%d", stockDevelopMountain);
 	}
 
 	/**************************************
@@ -280,19 +284,31 @@ namespace Field
 			return route.end();
 		}
 
-		//startとendを結ぶプレイスを開拓する
+		//startとendを結ぶプレイスのコンテナを作成
 		PlaceVector container;
 		container.assign(start.base(), end);
-		for (auto&& place : container)
+
+		//ストックが足りていれば開拓
+		unsigned cntMountain = container.size();
+		if (cntMountain <= stockDevelopMountain)
 		{
-			place->SetType(PlaceType::None);
+			for (auto&& place : container)
+			{
+				place->SetType(PlaceType::None);
+			}
+
+			stockDevelopRiver -= cntMountain;
+		}
+		else
+		{
+			//エラーメッセージを再生
 		}
 
 		return end + 1;
 	}
 
 	/**************************************
-	山を開発する
+	川を開発する
 	***************************************/
 	PlaceIterator FieldController::DevelopRiver(PlaceVector & route, PlaceIterator river)
 	{
@@ -325,12 +341,24 @@ namespace Field
 		if(end == route.end())
 			return route.end();
 
-		//始点と終点の間の川を開拓
+		//始点と終点の間の川コンテナを作成
 		PlaceVector riverVector;
 		riverVector.assign(river, end);
-		for (auto&& river : riverVector)
+
+		//ストックが足りていれば開拓
+		unsigned cntRiver = riverVector.size();
+		if (cntRiver <= stockDevelopRiver)
 		{
-			river->SetType(PlaceType::None);
+			for (auto&& river : riverVector)
+			{
+				river->SetType(PlaceType::None);
+			}
+
+			stockDevelopRiver -= cntRiver;
+		}
+		else
+		{
+			//エラーメッセージの再生
 		}
 
 		return end;
