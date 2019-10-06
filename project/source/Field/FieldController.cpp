@@ -26,13 +26,23 @@
 namespace Field
 {
 	/**************************************
+	staticメンバ
+	***************************************/
+	const float FieldController::PlaceOffset = 10.0f;				//Placeの1マス毎のオフセット値
+	const int FieldController::InitFieldBorder = 30;				//フィールド範囲の初期値
+	const int FieldController::InputLongWait = 15;					//入力リピートの待機フレーム
+	const int FieldController::InputShortWait = 5;					//入力リピートの待機フレーム
+	const unsigned FieldController::InitDevelopRiverStock = 10;		//川開発ストックの初期数
+	const unsigned FieldController::InitDevelopMountainStock = 10;	//山開発ストックの初期数
+
+	/**************************************
 	コンストラクタ
 	***************************************/
 	FieldController::FieldController() :
 		fieldBorder(InitFieldBorder),
 		inputRepeatCnt(0),
 		stockDevelopRiver(InitDevelopRiverStock),
-		stockDevelopMountain(stockDevelopMountain)
+		stockDevelopMountain(InitDevelopMountainStock)
 	{
 		//インスタンス作成
 		cursor = new FieldCursor(PlaceOffset);
@@ -103,7 +113,7 @@ namespace Field
 		cursor->Draw();
 
 		Debug::Log("ControllerState:%d", current);
-		Debug::Log("StockRiver:%d", stockDevelopMountain);
+		Debug::Log("StockRiver:%d", stockDevelopRiver);
 		Debug::Log("StockMountain:%d", stockDevelopMountain);
 	}
 
@@ -349,9 +359,11 @@ namespace Field
 		unsigned cntRiver = riverVector.size();
 		if (cntRiver <= stockDevelopRiver)
 		{
+			Adjacency inverseStartAdjacency = GetInverseSide(startAdjacency);
 			for (auto&& river : riverVector)
 			{
-				river->SetType(PlaceType::None);
+				river->SetType(PlaceType::Bridge);
+				river->SetDirection(startAdjacency, inverseStartAdjacency);
 			}
 
 			stockDevelopRiver -= cntRiver;

@@ -79,11 +79,12 @@ namespace Field::Model
 			return false;
 
 		//—×Ú”»’è
-		if (place->IsAdjacent(container.back()) == Adjacency::NotAdjacenct)
+		Adjacency adjacency = place->IsAdjacent(container.back());
+		if (adjacency == Adjacency::NotAdjacenct)
 			return false;
 
 		//“¹‚Éo—ˆ‚é‚©
-		if (!place->ChangeableRoad())
+		if (!place->ChangeableRoad(adjacency))
 			return false;
 
 		//’Ç‰Á‚µ‚Äreturn true

@@ -60,6 +60,7 @@ namespace Field
 		//Zキーが押されたらIdleステートへ遷移
 		if (GetDevelopCancel())
 		{
+			entity.operateContainer->Clear();
 			next = State::Idle;
 		}
 

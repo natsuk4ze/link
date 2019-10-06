@@ -54,7 +54,9 @@ namespace Field::Model
 		uniqueID(incrementID++),
 		type(type),
 		Position(x, z),
-		actor(nullptr)
+		actor(nullptr),
+		prev(Adjacency::NotAdjacenct),
+		next(Adjacency::NotAdjacenct)
 	{
 		//隣接プレイスのコンテナを準備
 		adjacencies.resize(Adjacency::Max, NULL);
@@ -127,7 +129,7 @@ namespace Field::Model
 	bool PlaceModel::CanStartRoute()
 	{
 		//空白タイプか橋でなければ道に出来ない
-		if(!ChangeableRoad())
+		if(type != PlaceType::None && type != PlaceType::Bridge)
 			return false;
 
 		//隣接プレイスに交差点、街、道が含まれていたらルートを始められる
@@ -136,8 +138,21 @@ namespace Field::Model
 			if (adjacency == NULL)
 				continue;
 
-			if (adjacency->IsConnectableType())
+			if (!adjacency->IsConnectableType())
+				continue;
+
+			//橋タイプの場合、隣接方向も確認
+			if (type == PlaceType::Bridge)
+			{
+				Adjacency adjacenctType = IsAdjacent(adjacency);
+				if (adjacenctType == prev || adjacenctType == next)
+					return true;
+			}
+			//空白タイプなら無条件でtrue
+			else
+			{
 				return true;
+			}
 		}
 
 		return false;
@@ -146,14 +161,20 @@ namespace Field::Model
 	/**************************************
 	道に変えられるか
 	***************************************/
-	bool PlaceModel::ChangeableRoad()
+	bool PlaceModel::ChangeableRoad(Adjacency prev)
 	{
 		//Noneと橋のみ道にすることが出来る
 		if (type == PlaceType::None)
 			return true;
 
+		//橋の場合は方向も考慮
 		if (type == PlaceType::Bridge)
-			return true;
+		{
+			if (prev == this->prev || prev == this->next)
+				return true;
+			else
+				return false;
+		}
 
 		return false;
 	}
@@ -335,5 +356,14 @@ namespace Field::Model
 	RouteContainer PlaceModel::GetConnectingRoutes()
 	{
 		return belongRouteList;
+	}
+
+	/**************************************
+	方向セット処理
+	***************************************/
+	void PlaceModel::SetDirection(Adjacency prev, Adjacency next)
+	{
+		this->prev = prev;
+		this->next = next;
 	}
 }

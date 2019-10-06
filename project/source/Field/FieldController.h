@@ -70,12 +70,12 @@ namespace Field
 		typedef BaseState<FieldController, FieldController::State> ControllerState;
 
 	private:
-		const float PlaceOffset = 10.0f;				//Placeの1マス毎のオフセット値
-		const int InitFieldBorder = 30;					//フィールド範囲の初期値
-		const int InputLongWait = 15;					//入力リピートの待機フレーム
-		const int InputShortWait = 5;					//入力リピートの待機フレーム
-		const unsigned InitDevelopRiverStock = 10;		//川開発ストックの初期数
-		const unsigned InitDevelopMountainStock = 10;	//山開発ストックの初期数
+		static const float PlaceOffset;					//Placeの1マス毎のオフセット値
+		static const int InitFieldBorder;				//フィールド範囲の初期値
+		static const int InputLongWait;					//入力リピートの待機フレーム
+		static const int InputShortWait;				//入力リピートの待機フレーム
+		static const unsigned InitDevelopRiverStock;	//川開発ストックの初期数
+		static const unsigned InitDevelopMountainStock;	//山開発ストックの初期数
 
 		FieldCursor *cursor;								//カーソル
 		FieldGround *ground;								//地面

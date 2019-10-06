@@ -59,6 +59,7 @@ namespace Field
 		//Xキーが押されたらIdleステートへ遷移
 		if (GetBuildCancel())
 		{
+			entity.operateContainer->Clear();
 			next = State::Idle;
 		}
 
