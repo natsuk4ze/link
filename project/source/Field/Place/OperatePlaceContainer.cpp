@@ -75,7 +75,7 @@ namespace Field::Model
 			return false;
 
 		//—×Ú”»’è
-		if (!place->IsAdjacent(*container.rbegin()))
+		if (place->IsAdjacent(container.back()) == Adjacency::NotAdjacenct)
 			return false;
 
 		//“¹‚Éo—ˆ‚é‚©
@@ -99,7 +99,7 @@ namespace Field::Model
 			return false;
 
 		//—×Ú”»’è
-		if (!place->IsAdjacent(*container.rbegin()))
+		if (place->IsAdjacent(container.back()) == Adjacency::NotAdjacenct)
 			return false;
 
 		//’Ç‰Á‚µ‚Äreturn true

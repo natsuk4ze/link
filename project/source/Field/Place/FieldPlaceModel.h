@@ -61,7 +61,7 @@ namespace Field::Model
 		bool IsDevelopableType();
 
 		//placeと隣接しているか
-		bool IsAdjacent(PlaceModel* place);
+		Adjacency IsAdjacent(PlaceModel* place);
 
 		//連結できるタイプか
 		bool IsConnectableType();

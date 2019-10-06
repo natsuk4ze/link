@@ -175,7 +175,7 @@ namespace Field::Model
 	/**************************************
 	プレイスと隣接しているか
 	***************************************/
-	bool PlaceModel::IsAdjacent(PlaceModel * place)
+	Adjacency PlaceModel::IsAdjacent(PlaceModel * place)
 	{
 		//隣接プレイスの中から等しいものを検索
 		auto itr = std::find_if(adjacencies.begin(), adjacencies.end(), [&](auto adjacency)
@@ -183,7 +183,10 @@ namespace Field::Model
 			return adjacency == place;
 		});
 
-		return itr != adjacencies.end();
+		if (itr == adjacencies.end())
+			return Adjacency::NotAdjacenct;
+
+		return (Adjacency)std::distance(adjacencies.begin(), itr);
 	}
 
 	/**************************************

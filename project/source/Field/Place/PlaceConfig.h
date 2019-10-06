@@ -32,7 +32,7 @@ namespace Field::Model
 		River,			//川
 		Bridge,			//橋
 		Junction,		//交差点
-		Mountain			//山
+		Mountain		//山
 	};
 
 	/**************************************
@@ -71,7 +71,8 @@ namespace Field::Model
 		Left,			//Xマイナス方向の隣接
 		Forward,		//Zプラス方向の隣接
 		Right,			//Xプラス方向の隣接
-		Max
+		Max,
+		NotAdjacenct	//隣接していない
 	};
 }
 #endif

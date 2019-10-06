@@ -226,7 +226,9 @@ namespace Field
 
 		auto itr = std::find_if(start, route.end(), [](auto& place)
 		{
-			return place->IsType(PlaceType::Mountain) || place->IsType(PlaceType::River);
+			//川の開拓処理を入れていないので一旦コメントアウト
+			//return place->IsType(PlaceType::Mountain) || place->IsType(PlaceType::River);
+			return place->IsType(PlaceType::Mountain);
 		});
 
 		//開拓対象が見つからないのでリターン
