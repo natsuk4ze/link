@@ -55,10 +55,13 @@ namespace Field::Model
 		bool CanStartRoute();
 
 		//道に変えられるか
-		bool ChangeableRoad();
+		bool ChangeableRoad(Adjacency prev);
+
+		//開拓可能なタイプか
+		bool IsDevelopableType();
 
 		//placeと隣接しているか
-		bool IsAdjacent(PlaceModel* place);
+		Adjacency IsAdjacent(PlaceModel* place);
 
 		//連結できるタイプか
 		bool IsConnectableType();
@@ -85,6 +88,9 @@ namespace Field::Model
 		RouteModelPtr GetConnectingRoute();
 		RouteContainer GetConnectingRoutes();
 
+		//方向決定処理
+		void SetDirection(Adjacency prev, Adjacency next);
+
 	private:
 		//ID
 		static unsigned incrementID;
@@ -99,6 +105,9 @@ namespace Field::Model
 
 		//隣接プレイス
 		std::vector<PlaceModel*> adjacencies;
+
+		//連結方向
+		Adjacency prev, next;
 
 		//ゲームに表示するアクター
 		PlaceActor* actor;

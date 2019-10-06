@@ -26,11 +26,23 @@
 namespace Field
 {
 	/**************************************
+	staticメンバ
+	***************************************/
+	const float FieldController::PlaceOffset = 10.0f;				//Placeの1マス毎のオフセット値
+	const int FieldController::InitFieldBorder = 30;				//フィールド範囲の初期値
+	const int FieldController::InputLongWait = 15;					//入力リピートの待機フレーム
+	const int FieldController::InputShortWait = 5;					//入力リピートの待機フレーム
+	const unsigned FieldController::InitDevelopRiverStock = 10;		//川開発ストックの初期数
+	const unsigned FieldController::InitDevelopMountainStock = 10;	//山開発ストックの初期数
+
+	/**************************************
 	コンストラクタ
 	***************************************/
 	FieldController::FieldController() :
 		fieldBorder(InitFieldBorder),
-		inputRepeatCnt(0)
+		inputRepeatCnt(0),
+		stockDevelopRiver(InitDevelopRiverStock),
+		stockDevelopMountain(InitDevelopMountainStock)
 	{
 		//インスタンス作成
 		cursor = new FieldCursor(PlaceOffset);
@@ -101,6 +113,8 @@ namespace Field
 		cursor->Draw();
 
 		Debug::Log("ControllerState:%d", current);
+		Debug::Log("StockRiver:%d", stockDevelopRiver);
+		Debug::Log("StockMountain:%d", stockDevelopMountain);
 	}
 
 	/**************************************
@@ -215,5 +229,150 @@ namespace Field
 		//隣接するルートと連結させる
 		RouteProcessor::ConnectWithEdge(ptr, routeContainer);
 		RouteProcessor::Process(ptr, routeContainer);
+	}
+
+	/**************************************
+	川、山を開発する
+	***************************************/
+	void FieldController::DevelopPlace(PlaceVector& route, PlaceIterator start)
+	{
+		using namespace Field::Model;
+
+		auto itr = std::find_if(start, route.end(), [](auto& place)
+		{
+			//川の開拓処理を入れていないので一旦コメントアウト
+			return place->IsType(PlaceType::Mountain) || place->IsType(PlaceType::River);
+		});
+
+		//開拓対象が見つからないのでリターン
+		if (itr == route.end())
+			return;
+
+		//山を開拓
+		if ((*itr)->IsType(PlaceType::Mountain))
+		{
+			itr = DevelopMountain(route, itr);
+		}
+		//川を開拓
+		else if ((*itr)->IsType(PlaceType::River))
+		{
+			itr = DevelopRiver(route, itr);
+		}
+
+		//開拓が終了した位置から再帰的に開拓
+		DevelopPlace(route, itr);
+	}
+
+	/**************************************
+	山を開発する
+	***************************************/
+	PlaceIterator FieldController::DevelopMountain(PlaceVector & route, PlaceIterator mountain)
+	{
+		using namespace Field::Model;
+
+		//対象のプレイスの前にある山,川以外のプレイスを探す
+		auto start = std::find_if(ReversePlaceIterator(mountain), route.rend(), [](auto& place)
+		{
+			return !place->IsType(PlaceType::Mountain);
+		});
+
+		//山以外が見つからなかったか、川の場合は早期リターン
+		if (start == route.rend() || (*(start + 1).base())->IsType(PlaceType::River))
+		{
+			return route.end();
+		}
+
+		//対象のプレイスの後ろにある山、川以外のプレイスを探す
+		auto end = std::find_if(mountain, route.end(), [](auto& place)
+		{
+			return !place->IsType(PlaceType::Mountain);
+		});
+
+		//山以外が見つからなかったか、川の場合は早期リターン
+		if (end == route.end() || (*end)->IsType(PlaceType::River))
+		{
+			return route.end();
+		}
+
+		//startとendを結ぶプレイスのコンテナを作成
+		PlaceVector container;
+		container.assign(start.base(), end);
+
+		//ストックが足りていれば開拓
+		unsigned cntMountain = container.size();
+		if (cntMountain <= stockDevelopMountain)
+		{
+			for (auto&& place : container)
+			{
+				place->SetType(PlaceType::None);
+			}
+
+			stockDevelopRiver -= cntMountain;
+		}
+		else
+		{
+			//エラーメッセージを再生
+		}
+
+		return end + 1;
+	}
+
+	/**************************************
+	川を開発する
+	***************************************/
+	PlaceIterator FieldController::DevelopRiver(PlaceVector & route, PlaceIterator river)
+	{
+		using namespace Field::Model;
+
+		//川の一つ前のプレイス（始点）がどの方向で隣接しているか確認
+		PlaceModel* start = *(river - 1);
+		Adjacency startAdjacency = (*river)->IsAdjacent(start);
+
+		//プレイスを前へ一つずつ確認していき終点を探す
+		PlaceIterator end = route.end();
+		for (auto itr = river + 1; itr != route.end(); itr++)
+		{
+			PlaceModel* prev = *(itr - 1);
+			PlaceModel* place = *itr;
+
+			//隣接方向が直線になっていなければ早期リターン
+			if (place->IsAdjacent(prev) != startAdjacency)
+				return itr;
+
+			//開拓可能以外のタイプであればbreak
+			if (!place->IsDevelopableType())
+			{
+				end = itr;
+				break;
+			}
+		}
+
+		//終点が見つからなかったので早期リターン
+		if(end == route.end())
+			return route.end();
+
+		//始点と終点の間の川コンテナを作成
+		PlaceVector riverVector;
+		riverVector.assign(river, end);
+
+		//ストックが足りていれば開拓
+		unsigned cntRiver = riverVector.size();
+		if (cntRiver <= stockDevelopRiver)
+		{
+			Adjacency inverseStartAdjacency = GetInverseSide(startAdjacency);
+			for (auto&& river : riverVector)
+			{
+				river->SetType(PlaceType::Bridge);
+				river->SetDirection(startAdjacency, inverseStartAdjacency);
+			}
+
+			stockDevelopRiver -= cntRiver;
+		}
+		else
+		{
+			//エラーメッセージの再生
+		}
+
+		return end;
 	}
 }

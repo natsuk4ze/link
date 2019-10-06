@@ -141,12 +141,25 @@ namespace Field::Model
 	void RouteModel::SetEdge()
 	{
 		//始点から端点を設定
-		PlaceModel* first = *route.begin();
+		PlaceModel* first = route.front();
 		_SetEdge(first);
 
 		//終点から端点を設定
-		PlaceModel* last = *route.rbegin();
+		PlaceModel* last = route.back();
 		_SetEdge(last);
+
+		//各プレイスの方向を決定
+		unsigned routeSize = route.size();
+		
+		first->SetDirection(first->IsAdjacent(edgeStart), first->IsAdjacent(route[1]));
+
+		for (unsigned i = 1; i < routeSize - 1; i++)
+		{
+			PlaceModel* place = route[i];
+			place->SetDirection(place->IsAdjacent(route[i - 1]), place->IsAdjacent(route[i + 1]));
+		}
+
+		last->SetDirection(last->IsAdjacent(route[routeSize - 1]), last->IsAdjacent(edgeEnd));
 	}
 
 	/**************************************

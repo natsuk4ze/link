@@ -29,13 +29,16 @@ namespace Field::Model
 		~OperatePlaceContainer();
 
 		//プレイス追加開始処理
-		bool Begin(PlaceModel* place);
+		bool BeginRoute(PlaceModel* place);
+		bool BeginDevelop(PlaceModel* place);
 
 		//プレイス追加処理
-		bool Add(PlaceModel* place);
+		bool AddRoute(PlaceModel* place);
+		bool AddDevelop(PlaceModel* place);
 
 		//プレイス追加終了処理
-		bool End();
+		bool EndRoute();
+		bool EndDevelop();
 
 		//コンテナクリア処理
 		void Clear();

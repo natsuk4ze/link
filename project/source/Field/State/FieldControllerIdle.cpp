@@ -5,7 +5,7 @@
 //
 //=====================================
 #include "FieldControllerIdle.h"
-#include "../../../Framework/Input/input.h"
+#include "../FieldInputController.h"
 
 namespace Field
 {
@@ -24,10 +24,16 @@ namespace Field
 	{
 		State next = State::Idle;
 
-		//Zキーが押されたらBuildRoadへ遷移
-		if (Keyboard::GetTrigger(DIK_Z))
+		//Zキーが押されたらBuildへ遷移
+		if (GetBuildTrigger())
 		{
 			next = State::Build;
+		}
+
+		//Xキーが押されたらDevelopへ遷移
+		if (GetDevelopTrigger())
+		{
+			next = State::Develop;
 		}
 
 		return next;

@@ -30,6 +30,10 @@ namespace Field
 		class OperatePlaceContainer;
 	}
 
+	using PlaceVector = std::vector<Model::PlaceModel*>;
+	using PlaceIterator = PlaceVector::iterator;
+	using ReversePlaceIterator = std::reverse_iterator<PlaceIterator>;
+
 	/**************************************
 	クラス定義
 	***************************************/
@@ -66,10 +70,12 @@ namespace Field
 		typedef BaseState<FieldController, FieldController::State> ControllerState;
 
 	private:
-		const float PlaceOffset = 10.0f;		//Placeの1マス毎のオフセット値
-		const int InitFieldBorder = 30;			//フィールド範囲の初期値
-		const int InputLongWait = 15;			//入力リピートの待機フレーム
-		const int InputShortWait = 5;			//入力リピートの待機フレーム
+		static const float PlaceOffset;					//Placeの1マス毎のオフセット値
+		static const int InitFieldBorder;				//フィールド範囲の初期値
+		static const int InputLongWait;					//入力リピートの待機フレーム
+		static const int InputShortWait;				//入力リピートの待機フレーム
+		static const unsigned InitDevelopRiverStock;	//川開発ストックの初期数
+		static const unsigned InitDevelopMountainStock;	//山開発ストックの初期数
 
 		FieldCursor *cursor;								//カーソル
 		FieldGround *ground;								//地面
@@ -80,10 +86,12 @@ namespace Field
 
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int inputRepeatCnt;						//入力のリピートカウント
+		unsigned stockDevelopRiver;				//川開発アイテムストック
+		unsigned stockDevelopMountain;			//山開発アイテムストック
 
 		State current;
-		ControllerState *state;						//現在のステート
-		std::vector<ControllerState*> fsm;			//ステートマシン
+		ControllerState *state;					//現在のステート
+		std::vector<ControllerState*> fsm;		//ステートマシン
 
 		//ステート切り替え
 		void ChangeState(State next);
@@ -93,6 +101,11 @@ namespace Field
 
 		//道を作る
 		void BuildRoad();
+
+		//川、山の開発
+		void DevelopPlace(PlaceVector& route, PlaceIterator start);
+		PlaceIterator DevelopMountain(PlaceVector& route, PlaceIterator moutain);
+		PlaceIterator DevelopRiver(PlaceVector& route, PlaceIterator river);
 
 		//各ステートクラスの前方宣言
 		class IdleState;
