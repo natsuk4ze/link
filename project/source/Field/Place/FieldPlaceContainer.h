@@ -56,6 +56,9 @@ namespace Field::Model
 		//交差点が作られた際に呼ばれる処理
 		void OnCreateJunction(PlaceModel* place);
 
+		//混雑度計算
+		float CaclTrafficJamRate();
+
 	private:
 		const int PlaceMax = 10000;				//プレイスの最大数
 

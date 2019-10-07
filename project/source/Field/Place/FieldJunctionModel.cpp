@@ -7,6 +7,7 @@
 //=====================================
 #include "FieldJunctionModel.h"
 #include "FieldPlaceModel.h"
+#include "FieldTownModel.h"
 #include "../Route/RouteModel.h"
 
 namespace Field::Model
@@ -36,7 +37,7 @@ namespace Field::Model
 	/**************************************
 	¬G“xæ“¾ˆ—
 	***************************************/
-	float JunctionModel::TrafficJam()
+	float JunctionModel::TrafficJam(TownContainer& townContainer)
 	{
 		RouteContainer container = place->GetConnectingRoutes();
 
@@ -44,7 +45,12 @@ namespace Field::Model
 		float inflowNum = 0.0f;
 		for (auto&& route : container)
 		{
+			PlaceModel* opponent = route->GetOtherEdge(place);
 
+			if (!opponent->IsType(PlaceType::Town))
+				continue;
+
+			inflowNum += townContainer[opponent->ID()]->DepatureNum();
 		}
 
 		return inflowNum;

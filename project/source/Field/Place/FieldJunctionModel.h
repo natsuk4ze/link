@@ -9,6 +9,7 @@
 #define _FIELDJUNCTIONMODEL_H_
 
 #include "../../../main.h"
+#include <unordered_map>
 
 namespace Field::Model
 {
@@ -16,6 +17,7 @@ namespace Field::Model
 	前方宣言
 	***************************************/
 	class PlaceModel;
+	class TownModel;
 
 	/**************************************
 	クラス定義
@@ -23,15 +25,21 @@ namespace Field::Model
 	class JunctionModel
 	{
 	public:
+		using TownContainer = std::unordered_map<unsigned, TownModel*>;
+
+		//コンストラクタ、デストラクタ
 		JunctionModel(const PlaceModel* place);
 		~JunctionModel();
 
-		float TrafficJam();
+		//混雑度計算処理
+		float TrafficJam(TownContainer& townContainer);
 
 	private:
+		//ID
 		static unsigned incrementID;
 		const unsigned uniqueID;
 
+		//参照するプレイスモデル
 		const PlaceModel* place;
 	};
 }
