@@ -6,13 +6,16 @@
 //
 //=====================================
 #include "ItemModel.h"
+#include "ItemActor.h"
+#include "../../../main.h"
 
 //=====================================
 // コンストラクタ
 //=====================================
-ItemModel::ItemModel()
+ItemModel::ItemModel() :
+	actor(NULL)
 {
-
+	actor = new ItemActor(D3DXVECTOR3(0.0f, 3.0f, 0.0f));
 }
 
 //=====================================
@@ -20,5 +23,27 @@ ItemModel::ItemModel()
 //=====================================
 ItemModel::~ItemModel()
 {
+	SAFE_DELETE(actor);
+}
 
+//=====================================
+// 更新
+//=====================================
+void ItemModel::Update()
+{
+	if (actor != NULL)
+	{
+		actor->Update();
+	}
+}
+
+//=====================================
+// 描画
+//=====================================
+void ItemModel::Draw()
+{
+	if (actor != NULL)
+	{
+		actor->Draw();
+	}
 }

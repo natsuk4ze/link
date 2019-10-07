@@ -10,7 +10,7 @@
 
 #include "../../main.h"
 
-class PlaceModel;
+class ItemModel;
 
 namespace Field
 {
@@ -58,6 +58,7 @@ namespace Field
 		FieldCursor *cursor;					//カーソル
 		FieldGround *ground;					//地面
 		Model::PlaceContainer *placeContainer;	//プレイスコンテナ
+		ItemModel* item;						// アイテムモデル
 
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int inputRepeatCnt;						//入力のリピートカウント

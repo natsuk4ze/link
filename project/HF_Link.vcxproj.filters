@@ -96,6 +96,8 @@
     <ClCompile Include="source\FieldObject\MountainActor.cpp" />
     <ClCompile Include="source\FieldObject\RiverActor.cpp" />
     <ClCompile Include="source\FieldObject\StraightRoadActor.cpp" />
+    <ClCompile Include="source\Field\Item\ItemModel.cpp" />
+    <ClCompile Include="source\Field\Item\ItemActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -207,5 +209,7 @@
     <ClInclude Include="source\FieldObject\MountainActor.h" />
     <ClInclude Include="source\FieldObject\RiverActor.h" />
     <ClInclude Include="source\FieldObject\StraightRoadActor.h" />
+    <ClInclude Include="source\Field\Item\ItemModel.h" />
+    <ClInclude Include="source\Field\Item\ItemActor.h" />
   </ItemGroup>
 </Project>

@@ -15,11 +15,18 @@
 //**************************************
 // ƒNƒ‰ƒX’è‹`
 //**************************************
+class ItemActor;
 class ItemModel
 {
+private:
+	ItemActor* actor;
+
 public:
 	ItemModel();
 	~ItemModel();
+
+	void Update();
+	void Draw();
 };
 
 #endif

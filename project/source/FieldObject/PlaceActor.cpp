@@ -71,8 +71,7 @@ void PlaceActor::Draw()
 //=====================================
 void PlaceActor::Rotate(float y)
 {
-	D3DXQUATERNION rot = transform->GetRotation();
-	transform->SetRotation(D3DXQUATERNION(rot.x, rot.y + (FLOAT)y, rot.z, rot.w));
+	transform->Rotate(0.0f, y, 0.0f);
 }
 
 //=====================================

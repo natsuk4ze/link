@@ -9,6 +9,7 @@
 #include "FieldCursor.h"
 #include "FieldGround.h"
 #include "Place\FieldPlaceContainer.h"
+#include "Item/ItemModel.h"
 
 #include "../../Framework/Input/input.h"
 
@@ -25,6 +26,7 @@ namespace Field
 		cursor = new FieldCursor(PlaceOffset);
 		ground = new FieldGround();
 		placeContainer = new Model::PlaceContainer();
+		item = new ItemModel();
 
 		//カーソルの移動範囲を初期化
 		cursor->SetBorder(fieldBorder / 2, fieldBorder / 2);
@@ -38,6 +40,7 @@ namespace Field
 		SAFE_DELETE(cursor);
 		SAFE_DELETE(ground);
 		SAFE_DELETE(placeContainer);
+		SAFE_DELETE(item);
 	}
 
 	/**************************************
@@ -47,6 +50,7 @@ namespace Field
 	{
 		cursor->Update();
 		placeContainer->Update();
+		item->Update();
 	}
 
 	/**************************************
@@ -57,6 +61,8 @@ namespace Field
 		ground->Draw();
 
 		placeContainer->Draw();
+
+		item->Draw();
 
 		//カーソルには透過オブジェクトが含まれるので最後に描画
 		cursor->Draw();
