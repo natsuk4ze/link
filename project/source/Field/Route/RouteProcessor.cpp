@@ -136,8 +136,8 @@ namespace Field::Model
 		auto itrJunction = std::find(route.begin(), route.end(), junction);
 
 		std::vector<PlaceModel*> firstHalf, secondHalf;
-		firstHalf.assign(route.begin(), itrJunction - 1);
-		secondHalf.assign(itrJunction, route.end());		//Junctionも含めたいのでイテレータを+1
+		firstHalf.assign(route.begin(), itrJunction);
+		secondHalf.assign(itrJunction + 1, route.end());		//Junctionも含めないのでイテレータを+1
 
 		//前半のRouteModelを作成
 		RouteModelPtr first = RouteModel::Create(model->onConnectedTown, model->onCreateJunction, firstHalf);
