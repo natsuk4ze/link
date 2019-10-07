@@ -41,6 +41,7 @@ namespace Field::Model
 
 			//対象のPlaceを交差点にして分割
 			place->SetType(PlaceType::Junction);
+			(*model->onCreateJunction)(place);
 			divideList = Divide(model, place, routeContainer);
 
 			//繋がった相手も必要であれば分割する
@@ -48,7 +49,7 @@ namespace Field::Model
 			if (connectTarget->IsType(PlaceType::Road))
 			{
 				connectTarget->SetType(PlaceType::Junction);
-
+				(*model->onCreateJunction)(place);
 				RouteModelPtr opponent = connectTarget->GetConnectingRoute();
 				subDivList = Divide(opponent, connectTarget, routeContainer);
 			}
@@ -225,6 +226,7 @@ namespace Field::Model
 		if (place->IsType(PlaceType::Road))
 		{
 			place->SetType(PlaceType::Junction);
+			(*model->onCreateJunction)(place);
 			RouteContainer targetList = place->GetConnectingRoutes();
 
 			//取得した所属リストに新しく作ったルートが含まれるので削除

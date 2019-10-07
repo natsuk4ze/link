@@ -73,10 +73,15 @@ namespace Field
 	{
 		routeContainer.clear();
 
+		//インスタンス削除
 		SAFE_DELETE(cursor);
 		SAFE_DELETE(ground);
 		SAFE_DELETE(placeContainer);
 		SAFE_DELETE(operateContainer);
+
+		//デリゲート削除
+		SAFE_DELETE(onConnectTown);
+		SAFE_DELETE(onCreateJunction);
 
 		//ステートマシン削除
 		Utility::DeleteContainer(fsm);

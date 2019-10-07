@@ -10,6 +10,7 @@
 #include "FieldTownModel.h"
 #include "FieldJunctionModel.h"
 #include "../../../Framework/String/String.h"
+#include "../../../Framework/Tool/DebugWindow.h"
 
 #include <fstream>
 #include <string>
@@ -71,6 +72,10 @@ namespace Field::Model
 		{
 			place->Update();
 		}
+
+		//デバッグ表示
+		Debug::Log("CntLinkedTown:%d", townContainer.size());
+		Debug::Log("CntJunction:%d", junctionContainer.size());
 
 	}
 

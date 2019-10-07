@@ -217,5 +217,7 @@ namespace Field::Model
 		opponent->BelongRoute(shared_from_this());
 
 		//TODO:ŠX‚È‚çoŒû‚ð‘‚â‚·
+		if (opponent->IsType(PlaceType::Town))
+			(*onConnectedTown)(opponent);
 	}
 }
