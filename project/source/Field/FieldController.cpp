@@ -18,6 +18,8 @@
 #include "State/FieldControllerIdle.h"
 #include "State/UseItem.h"
 
+#include "Item/ItemModel.h"
+
 #include "../../Framework/Input/input.h"
 #include "../../Framework/Tool/DebugWindow.h"
 
@@ -49,6 +51,7 @@ namespace Field
 		ground = new FieldGround();
 		placeContainer = new Model::PlaceContainer();
 		operateContainer = new Model::OperatePlaceContainer();
+		item = new ItemModel();
 
 		//ステートマシン作成
 		fsm.resize(State::Max, NULL);
@@ -71,6 +74,7 @@ namespace Field
 		SAFE_DELETE(ground);
 		SAFE_DELETE(placeContainer);
 		SAFE_DELETE(operateContainer);
+		SAFE_DELETE(item);
 
 		//ステートマシン削除
 		Utility::DeleteContainer(fsm);
@@ -91,6 +95,7 @@ namespace Field
 		//各更新処理
 		cursor->Update();
 		placeContainer->Update();
+		item->Update();
 
 		for (auto&& route : routeContainer)
 		{
@@ -108,6 +113,8 @@ namespace Field
 		placeContainer->Draw();
 
 		operateContainer->DrawDebug();
+
+		item->Draw();
 
 		//カーソルには透過オブジェクトが含まれるので最後に描画
 		cursor->Draw();

@@ -8,6 +8,11 @@
 #include "PlaceActor.h"
 #include "../../Framework/Resource/ResourceManager.h"
 
+//**************************************
+// クラスのメンバ変数初期化
+//**************************************
+const D3DXVECTOR3 PlaceActor::ActorScale = D3DXVECTOR3(0.2f, 0.2f, 0.2f);
+
 //=====================================
 // コンストラクタ
 //=====================================
@@ -66,8 +71,7 @@ void PlaceActor::Draw()
 //=====================================
 void PlaceActor::Rotate(float y)
 {
-	D3DXQUATERNION rot = transform->GetRotation();
-	transform->SetRotation(D3DXQUATERNION(rot.x, rot.y + (FLOAT)y, rot.z, rot.w));
+	transform->Rotate(0.0f, y, 0.0f);
 }
 
 //=====================================
