@@ -91,6 +91,9 @@ namespace Field::Model
 		//•ûŒüŒˆ’èˆ—
 		void SetDirection(Adjacency prev, Adjacency next);
 
+		//©g‚ÉŒq‚ª‚Á‚Ä‚¢‚éŠX‚Ì’Tõˆ—
+		int FindLinkedTown();
+
 	private:
 		//ID
 		static unsigned incrementID;

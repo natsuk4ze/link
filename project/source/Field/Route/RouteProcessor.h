@@ -30,7 +30,7 @@ namespace Field::Model
 		//ルートをしていたプレイスで分割する
 		static RouteContainer Divide(RouteModelPtr& model, PlaceModel* junction, RouteContainer& routeContainer);
 
-		static int FindConnectingTown(PlaceModel* root, RouteModelPtr target, RouteContainer& searchedRoute, std::vector<PlaceModel*> searchedTown);
+		static int FindLinkedTown(PlaceModel* root, RouteModelPtr target, RouteContainer& searchedRoute, std::vector<PlaceModel*> searchedTown);
 
 	private:
 		RouteProcessor() {}

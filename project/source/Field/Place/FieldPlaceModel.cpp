@@ -9,6 +9,7 @@
 
 #include "../../FieldObject/PlaceActor.h"
 #include "../../../Library/cppLinq/cpplinq.hpp"
+#include "../Route/RouteProcessor.h"
 
 #include <algorithm>
 
@@ -365,5 +366,23 @@ namespace Field::Model
 	{
 		this->prev = prev;
 		this->next = next;
+	}
+
+	/**************************************
+	Œq‚ª‚Á‚Ä‚¢‚éŠX‚Ì’Tõˆ—
+	***************************************/
+	int PlaceModel::FindLinkedTown()
+	{
+		int cntTown = 0;
+
+		RouteContainer searchedRoute;
+		std::vector<PlaceModel*> searchedTown;
+
+		for (auto&& route : belongRouteList)
+		{
+			cntTown += RouteProcessor::FindLinkedTown(this, route, searchedRoute, searchedTown);
+		}
+
+		return cntTown;
 	}
 }

@@ -182,7 +182,7 @@ namespace Field::Model
 	/**************************************
 	Œq‚ª‚Á‚Ä‚¢‚éŠX‚ğ’Tõ‚·‚é
 	***************************************/
-	int RouteProcessor::FindConnectingTown(PlaceModel * root, RouteModelPtr target, RouteContainer & searchedRoute, std::vector<PlaceModel*> searchedTown)
+	int RouteProcessor::FindLinkedTown(PlaceModel * root, RouteModelPtr target, RouteContainer & searchedRoute, std::vector<PlaceModel*> searchedTown)
 	{
 		int cntTown = 0;
 
@@ -210,7 +210,7 @@ namespace Field::Model
 			if (from(searchedRoute) >> contains(ptr))
 				continue;
 
-			cntTown += FindConnectingTown(root, ptr, searchedRoute, searchedTown);
+			cntTown += FindLinkedTown(root, ptr, searchedRoute, searchedTown);
 		}
 
 		return cntTown;
