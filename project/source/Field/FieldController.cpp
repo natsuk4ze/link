@@ -42,7 +42,9 @@ namespace Field
 		fieldBorder(InitFieldBorder),
 		inputRepeatCnt(0),
 		stockDevelopRiver(InitDevelopRiverStock),
-		stockDevelopMountain(InitDevelopMountainStock)
+		stockDevelopMountain(InitDevelopMountainStock),
+		onConnectTown(nullptr),
+		onCreateJunction(nullptr)
 	{
 		//インスタンス作成
 		cursor = new FieldCursor(PlaceOffset);
@@ -55,6 +57,10 @@ namespace Field
 		fsm[State::Build] = new BuildRoadState();
 		fsm[State::Idle] = new IdleState;
 		fsm[State::Develop] = new UseItemState();
+
+		//デリゲート作成
+		onConnectTown = Delegate<Model::PlaceContainer, Model::PlaceModel*>::Create(placeContainer, &Model::PlaceContainer::OnConnectedTown);
+		onCreateJunction = Delegate<Model::PlaceContainer, Model::PlaceModel*>::Create(placeContainer, &Model::PlaceContainer::OnCreateJunction);
 
 		//ステート初期化
 		ChangeState(State::Idle);
@@ -218,7 +224,7 @@ namespace Field
 		}
 
 		//ルートモデル作成
-		RouteModelPtr ptr = RouteModel::Create(route);
+		RouteModelPtr ptr = RouteModel::Create(onConnectTown, onCreateJunction, route);
 		routeContainer.push_back(ptr);
 	
 		//端点設定

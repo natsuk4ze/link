@@ -48,6 +48,9 @@ namespace Field::Model
 		//座標取得
 		FieldPosition GetPosition() const;
 
+		//ID取得
+		unsigned ID() const;
+
 		//隣接プレイスの追加
 		void AddAdjacency(PlaceModel *adjacency, Adjacency type);
 	

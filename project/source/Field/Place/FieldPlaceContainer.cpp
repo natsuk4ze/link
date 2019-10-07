@@ -7,6 +7,8 @@
 //=====================================
 #include "FieldPlaceContainer.h"
 #include "FieldPlaceModel.h"
+#include "FieldTownModel.h"
+#include "FieldJunctionModel.h"
 #include "../../../Framework/String/String.h"
 
 #include <fstream>
@@ -27,6 +29,8 @@ namespace Field::Model
 	ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 	***************************************/
 	PlaceContainer::PlaceContainer() :
+		placeRowMax(0),
+		placeColumMax(0),
 		initialized(false)
 	{
 		placeVector.reserve(PlaceMax);
@@ -50,6 +54,9 @@ namespace Field::Model
 	PlaceContainer::~PlaceContainer()
 	{
 		Utility::DeleteContainer(placeVector);
+
+		Utility::DeleteMap(townContainer);
+		Utility::DeleteMap(junctionContainer);
 	}
 
 	/**************************************
@@ -165,6 +172,36 @@ namespace Field::Model
 	FieldPosition Field::Model::PlaceContainer::GetPlaceBorder() const
 	{
 		return FieldPosition(placeRowMax, placeColumMax);
+	}
+
+	/**************************************
+	ŠX‚ª“¹‚ÆŒq‚ª‚Á‚½‚Æ‚«‚Ìˆ—
+	***************************************/
+	void Field::Model::PlaceContainer::OnConnectedTown(PlaceModel * place)
+	{
+		unsigned placeID = place->ID();
+
+		//“o˜^Šm”F
+		if (townContainer.count(placeID) == 0)
+		{
+			townContainer.emplace(placeID, new TownModel(place));
+		}
+
+		townContainer[placeID]->AddGate();
+	}
+
+	/**************************************
+	Œð·“_‚ªì‚ç‚ê‚½‚Æ‚«‚Ìˆ—
+	***************************************/
+	void Field::Model::PlaceContainer::OnCreateJunction(PlaceModel * place)
+	{
+		unsigned placeID = place->ID();
+
+		//“o˜^Šm”F
+		if (junctionContainer.count(placeID) == 0)
+		{
+			junctionContainer.emplace(placeID, new JunctionModel(place));
+		}
 	}
 
 	/**************************************

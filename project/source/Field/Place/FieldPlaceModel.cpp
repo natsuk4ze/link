@@ -117,6 +117,14 @@ namespace Field::Model
 	}
 
 	/**************************************
+	IDæ“¾ˆ—
+	***************************************/
+	unsigned PlaceModel::ID() const
+	{
+		return uniqueID;
+	}
+
+	/**************************************
 	—×ÚƒvƒŒƒCƒX’Ç‰Á
 	***************************************/
 	void PlaceModel::AddAdjacency(PlaceModel *adjacency, Adjacency type)

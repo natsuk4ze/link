@@ -7,7 +7,8 @@
 //=====================================
 #include "RouteModel.h"
 #include "../Place/FieldPlaceModel.h"
-#include "./../../../Library/cppLinq/cpplinq.hpp"
+#include "../../../Library/cppLinq/cpplinq.hpp"
+#include "../../../Framework/Pattern/Delegate.h"
 
 #include <algorithm>
 
@@ -26,10 +27,12 @@ namespace Field::Model
 	/**************************************
 	コンストラクタ
 	***************************************/
-	RouteModel::RouteModel() :
+	RouteModel::RouteModel(DelegatePlace onConnectTown, DelegatePlace onCreateJunction) :
 		edgeStart(nullptr), edgeEnd(nullptr),
 		uniqueID(incrementID++),
-		isUnused(false)
+		isUnused(false),
+		onConnectedTown(onConnectTown),
+		onCreateJunction(onCreateJunction)
 	{
 
 	}
@@ -37,18 +40,18 @@ namespace Field::Model
 	/**************************************
 	スマートポインタ作成処理
 	***************************************/
-	RouteModelPtr RouteModel::Create()
+	RouteModelPtr RouteModel::Create(DelegatePlace onConnectTown, DelegatePlace onCreateJunction)
 	{
-		RouteModelPtr ptr = std::make_shared<RouteModel>();
+		RouteModelPtr ptr = std::make_shared<RouteModel>(onConnectTown, onCreateJunction);
 		return ptr;
 	}
 
 	/**************************************
 	スマートポインタ作成処理
 	***************************************/
-	RouteModelPtr RouteModel::Create(const std::vector<PlaceModel*>& placeVector)
+	RouteModelPtr RouteModel::Create(DelegatePlace onConnectTown, DelegatePlace onCreateJunction, const std::vector<PlaceModel*>& placeVector)
 	{
-		RouteModelPtr ptr = std::make_shared<RouteModel>();
+		RouteModelPtr ptr = std::make_shared<RouteModel>(onConnectTown, onCreateJunction);
 
 		ptr->route.assign(placeVector.begin(), placeVector.end());
 
