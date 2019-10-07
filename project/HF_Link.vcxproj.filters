@@ -99,9 +99,6 @@
     <ClCompile Include="source\Viewer\GameScene\GameViewer\GameViewer.cpp">
       <Filter>ソースファイル\作業フォルダ</Filter>
     </ClCompile>
-    <ClCompile Include="source\Viewer\GameScene\GameViewer\GameViewerParam.cpp">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClCompile>
     <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp">
       <Filter>ソースファイル\作業フォルダ</Filter>
     </ClCompile>

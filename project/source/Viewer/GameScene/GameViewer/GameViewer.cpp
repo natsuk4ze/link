@@ -6,10 +6,10 @@
 //=============================================================================
 #include "../../../../main.h"
 #include <vector>
-#include "../../Framework/BaseViewer.h"
 #include "StockViewer.h"
 #include "TimerViewer.h"
 #include "LevelViewer.h"
+#include "GameViewerParam.h"
 #include "GameViewer.h"
 
 //*****************************************************************************
@@ -35,6 +35,10 @@ GameViewer::GameViewer()
 GameViewer::~GameViewer()
 {
 	baseViewer.clear();
+
+	SAFE_DELETE(stockViewer);
+	SAFE_DELETE(timerViewer);
+	SAFE_DELETE(levelViewer);
 }
 
 //=============================================================================
@@ -72,4 +76,5 @@ void GameViewer::Draw(void)
 //=============================================================================
 void GameViewer::ReceiveParam()
 {
+
 }

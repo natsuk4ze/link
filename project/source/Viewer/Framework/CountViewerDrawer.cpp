@@ -52,3 +52,22 @@ void CountViewerDrawer::DrawCounter(int baseNumber, int parameterBox, int placeM
 		SetTexture(num, intervalNumberTex);
 	}
 }
+
+//=============================================================================
+// 数字ホッピング処理
+//=============================================================================
+void CountViewerDrawer::HopNumber(float numSizeY)
+{
+	if (isHopped)
+	{
+		numSizeY = initSizeNumY / 2 + hopValue * sinf(radian);
+
+		if (radian >= D3DX_PI)
+		{
+			radian = 0.0f;
+			isHopped = false;
+		}
+
+		radian += hopSpeed;
+	}
+}

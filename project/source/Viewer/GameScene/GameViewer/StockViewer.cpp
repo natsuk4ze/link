@@ -20,7 +20,7 @@ StockViewer::StockViewer()
 		num[i] = new CountViewerDrawer();
 		num[i]->LoadTexture("data/TEXTURE/Viewer/GameViewer/StockViewer/Number.png");
 		num[i]->MakeVertex();
-		num[i]->size = D3DXVECTOR3(7.50f, 15.0f, 0.0f);
+		//num[i]->size = initSizeNumber;
 		num[i]->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		num[i]->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.4f, SCREEN_HEIGHT / 10 * 2.70f + i*intervalViewerPos, 0.0f);
 		num[i]->SetColor(SET_COLOR_NOT_COLORED);
@@ -105,3 +105,22 @@ void StockViewer::Draw(void)
 			num[i]->intervalNumberScr, num[i]->intervalNumberTex);
 	}
 }
+
+////=============================================================================
+//// 数字ホッピング処理
+////=============================================================================
+//void StockViewer::HopNumber(int StockViewerType)
+//{
+//	if (num[StockViewerType]->isHopped)
+//	{
+//		num[StockViewerType]->size.y = initSizeNumber.y / 2 + hopValue * sinf(radian);
+//
+//		if (radian >= D3DX_PI)
+//		{
+//			radian = 0.0f;
+//			isHopped = false;
+//		}
+//
+//		radian += hopSpeed;
+//	}
+//}

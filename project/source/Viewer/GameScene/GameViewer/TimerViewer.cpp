@@ -58,6 +58,7 @@ void TimerViewer::Update(void)
 // •`‰æˆ—
 //=============================================================================
 void TimerViewer::Draw(void)
+
 {
 	//”wŒi‚ðæ‚É•`‰æ
 	bg->Draw();

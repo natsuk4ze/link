@@ -15,6 +15,14 @@
 class CountViewerDrawer :public BaseViewerDrawer
 {
 public:
+	//ホッピング関連変数
+	void HopNumber(float numSizeY);
+	bool isHopped;
+	float radian;
+	float hopValue = 30.0f;
+	float hopSpeed = 0.20f;
+	float initSizeNumY = 15.0f;
+
 	void DrawCounter(int baseNumber, int parameterBox, int placeMax,
 		float intervalNumberScr, float intervalNumberTex);
 
