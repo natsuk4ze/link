@@ -23,28 +23,34 @@ namespace Field::Model
 	class TownModel
 	{
 	public:
-		TownModel(PlaceModel* place);
+		//コンストラクタ、デストラクタ
+		TownModel(const PlaceModel* place);
 		~TownModel();
 
+		//出口追加処理
 		void AddGate();
 
+		//出てくる人数の取得処理
 		float DepatureNum();
 
+		//出口数取得処理
 		int GateNum();
 
+		//リンクレベル計算処理
 		int LinkLevel();
 
 	private:
-		static const float BaseDepatureNum;
+		static const float BaseDepatureNum;		//基準となる出発数
 
+		//ID
 		static unsigned incrementID;
 		const int uniqueID;
 
+		//参照するプレイスモデル
 		const PlaceModel* place;
 
+		//出口数
 		int cntGate;
-
-		int FindLinkedTown(const PlaceModel* place);
 	};
 }
 #endif

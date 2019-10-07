@@ -20,7 +20,7 @@ namespace Field::Model
 	/**************************************
 	コンストラクタ
 	***************************************/
-	TownModel::TownModel(PlaceModel * place) :
+	TownModel::TownModel(const PlaceModel * place) :
 		uniqueID(incrementID++),
 		place(place),
 		cntGate(0)
