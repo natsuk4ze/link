@@ -8,7 +8,7 @@
 #include "ItemActor.h"
 
 const D3DXVECTOR2 ItemActor::ActorSize = D3DXVECTOR2(3.0f, 6.0f);
-const float ItemActor::RotValue = 2.0f;
+const float ItemActor::RotValue = 1.5f;
 
 //=====================================
 // コンストラクタ
