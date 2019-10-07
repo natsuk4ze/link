@@ -104,6 +104,7 @@
     <ClCompile Include="source\Field\Place\OperatePlaceContainer.cpp" />
     <ClCompile Include="source\Field\FieldInputController.cpp" />
     <ClCompile Include="source\Field\Place\FieldTownModel.cpp" />
+    <ClCompile Include="source\Field\Place\FieldJunctionModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -224,5 +225,6 @@
     <ClInclude Include="source\Field\FieldConfig.h" />
     <ClInclude Include="source\Field\FieldInputController.h" />
     <ClInclude Include="source\Field\Place\FieldTownModel.h" />
+    <ClInclude Include="source\Field\Place\FieldJunctionModel.h" />
   </ItemGroup>
 </Project>

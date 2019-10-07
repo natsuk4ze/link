@@ -71,10 +71,10 @@ namespace Field::Model
 		void SetEdge(PlaceModel* edge);
 
 		//端点取得
-		PlaceModel* GetOtherEdge(PlaceModel* edge);
+		PlaceModel* GetOtherEdge(const PlaceModel* edge);
 
 		//繋がっている街を取得
-		PlaceModel* GetConnectedTown(PlaceModel* self);
+		PlaceModel* GetConnectedTown(const PlaceModel* self);
 
 		//使用判定
 		void SetUnused(bool use);

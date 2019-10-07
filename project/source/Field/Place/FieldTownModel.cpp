@@ -7,6 +7,7 @@
 //=====================================
 #include "FieldTownModel.h"
 #include "FieldPlaceModel.h"
+#include "../Route/RouteProcessor.h"
 
 namespace Field::Model
 {
@@ -56,5 +57,24 @@ namespace Field::Model
 	int TownModel::GateNum()
 	{
 		return cntGate;
+	}
+
+	/**************************************
+	ƒŠƒ“ƒNƒŒƒxƒ‹æ“¾ˆ—
+	***************************************/
+	int TownModel::LinkLevel()
+	{
+		int cntTown = 0;
+
+		RouteContainer searchedRoute;
+		std::vector<PlaceModel*> searchedTown;
+
+		RouteContainer belongRoute = place->GetConnectingRoutes();
+		for (auto&& route : belongRoute)
+		{
+			cntTown += RouteProcessor::FindLinkedTown(place, route, searchedRoute, searchedTown);
+		}
+
+		return cntTown;
 	}
 }

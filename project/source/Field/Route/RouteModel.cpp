@@ -165,7 +165,7 @@ namespace Field::Model
 	/**************************************
 	‘¼•û‚Ì’[“_Žæ“¾
 	***************************************/
-	PlaceModel * RouteModel::GetOtherEdge(PlaceModel * edge)
+	PlaceModel * RouteModel::GetOtherEdge(const PlaceModel * edge)
 	{
 		if (edgeStart == edge)
 			return edgeEnd;
@@ -176,7 +176,7 @@ namespace Field::Model
 	/**************************************
 	Œq‚ª‚Á‚Ä‚¢‚éŠX‚ðŽæ“¾
 	***************************************/
-	PlaceModel * RouteModel::GetConnectedTown(PlaceModel * self)
+	PlaceModel * RouteModel::GetConnectedTown(const PlaceModel * self)
 	{
 		if (edgeStart->IsType(PlaceType::Town) && edgeStart != self)
 			return edgeStart;

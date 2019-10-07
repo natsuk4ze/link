@@ -32,6 +32,8 @@ namespace Field::Model
 
 		int GateNum();
 
+		int LinkLevel();
+
 	private:
 		static const float BaseDepatureNum;
 
@@ -41,6 +43,8 @@ namespace Field::Model
 		const PlaceModel* place;
 
 		int cntGate;
+
+		int FindLinkedTown(const PlaceModel* place);
 	};
 }
 #endif
