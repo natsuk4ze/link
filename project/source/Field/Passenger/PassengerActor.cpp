@@ -1,26 +1,41 @@
 //=====================================
 //
-// プレイスアクター[PlaceActor.cpp]
-// 機能：フィールド上に設置される3Dオブジェクト用の基底クラス
+// パッセンジャーアクター[PassengerActor.h]
+// 機能：フィールド上を行き来するアクター
 // Author:GP12B332 19 染谷武志
 //
 //=====================================
-#include "PlaceActor.h"
+#include "PassengerActor.h"
+#include "../../../Framework/Resource/ResourceManager.h"
 
 //**************************************
 // クラスのメンバ変数初期化
 //**************************************
-const D3DXVECTOR3 PlaceActor::ActorScale = D3DXVECTOR3(0.2f, 0.2f, 0.2f);
+const D3DXVECTOR3 PassengerActor::ActorScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 
 //=====================================
 // コンストラクタ
 //=====================================
-PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
+PassengerActor::PassengerActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
 {
-	// メッシュコンテナの作成
 	mesh = MeshContainer::Create();
 
-	// ステータスセット
+	// レベルに合わせてモデル読み込み
+	switch (currentLevel)
+	{
+	case FModel::City:
+		ResourceManager::Instance()->GetMesh("Car", mesh);
+		break;
+	case FModel::World:
+		ResourceManager::Instance()->GetMesh("Train", mesh);
+		break;
+	case FModel::Space:
+		ResourceManager::Instance()->GetMesh("Rocket", mesh);
+		break;
+	default:
+		break;
+	}
+
 	transform->SetPosition(pos);
 	transform->SetScale(ActorScale);
 	this->SetActive(true);
@@ -29,7 +44,7 @@ PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
 //=====================================
 // デストラクタ
 //=====================================
-PlaceActor::~PlaceActor()
+PassengerActor::~PassengerActor()
 {
 	SAFE_RELEASE(mesh);
 }
@@ -37,29 +52,16 @@ PlaceActor::~PlaceActor()
 //=====================================
 // 更新
 //=====================================
-void PlaceActor::Update()
+void PassengerActor::Update()
 {
 	if (!this->IsActive())
 		return;
-
-	if (!animActive)
-		return;
-
-	switch (animType)
-	{
-	case FActor::Create:
-		break;
-	case FActor::Remove:
-		break;
-	default:
-		break;
-	}
 }
 
 //=====================================
 // 描画
 //=====================================
-void PlaceActor::Draw()
+void PassengerActor::Draw()
 {
 	if (!this->IsActive())
 		return;
@@ -69,26 +71,18 @@ void PlaceActor::Draw()
 }
 
 //=====================================
-// Y軸回転
+// メッシュの切り替え
 //=====================================
-void PlaceActor::Rotate(float y)
+void PassengerActor::ChangeMesh(const char* nextTag)
 {
-	transform->Rotate(0.0f, y, 0.0f);
+	mesh = NULL;
+	ResourceManager::Instance()->GetMesh(nextTag, mesh);
 }
 
 //=====================================
-// アニメーションを再生させる
+// 移動
 //=====================================
-void PlaceActor::PlayAnimation(FActor::AnimType AnimType)
+void PassengerActor::Move()
 {
-	this->animType = AnimType;
-	this->animActive = true;
-}
 
-//=====================================
-// メッシュデータのカラー変更
-//=====================================
-void PlaceActor::SetColor(const D3DXCOLOR& color, UINT index)
-{
-	mesh->SetMaterialColor(color, index);
 }

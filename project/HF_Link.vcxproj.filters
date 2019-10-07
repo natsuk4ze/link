@@ -105,6 +105,7 @@
     <ClCompile Include="source\Field\FieldInputController.cpp" />
     <ClCompile Include="source\Field\Item\ItemModel.cpp" />
     <ClCompile Include="source\Field\Item\ItemActor.cpp" />
+    <ClCompile Include="source\Field\Passenger\PassengerActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -226,5 +227,6 @@
     <ClInclude Include="source\Field\FieldInputController.h" />
     <ClInclude Include="source\Field\Item\ItemModel.h" />
     <ClInclude Include="source\Field\Item\ItemActor.h" />
+    <ClInclude Include="source\Field\Passenger\PassengerActor.h" />
   </ItemGroup>
 </Project>
