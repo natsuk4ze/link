@@ -15,7 +15,7 @@
 
 #include <vector>
 
-class PlaceModel;
+class ItemModel;
 
 namespace Field
 {
@@ -83,6 +83,8 @@ namespace Field
 		Model::PlaceContainer *placeContainer;				//プレイスコンテナ
 		Model::OperatePlaceContainer *operateContainer;		//操作対象プレイスのコンテナ
 		Model::RouteContainer routeContainer;				//ルートモデルコンテナ
+
+		ItemModel* item;						// アイテムモデル
 
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int inputRepeatCnt;						//入力のリピートカウント
