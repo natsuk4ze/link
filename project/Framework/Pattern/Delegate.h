@@ -11,12 +11,9 @@
 #include <memory>
 
 /**************************************
-前方宣言
-***************************************/
-
-/**************************************
 Delegater基底クラス
 ***************************************/
+template<class T>
 class DelegateBase
 {
 public:
@@ -24,16 +21,22 @@ public:
 	virtual ~DelegateBase() {}
 
 	//int型引数有り戻り値無しの関数
-	virtual void operator()(int arg) = 0;
+	virtual void operator()(T arg) = 0;
 };
+
+/**************************************
+型エイリアス
+***************************************/
+template<class T>
+using DelegatePtr = DelegateBase<T>*;
 
 /**************************************
 Delegaterクラス
 ***************************************/
-template <class T>
-class Delegate : public DelegateBase
+template <class OBJ, class ARG>
+class Delegate : public DelegateBase<ARG>
 {
-	typedef void(T::*EventFunc)(int);
+	typedef void(OBJ::*EventFunc)(ARG);
 public:
 	Delegate() :
 		object(NULL), func(NULL) {}
@@ -41,30 +44,30 @@ public:
 	virtual ~Delegate() {}
 
 	//引数なし戻り値なしの関数実行のオペレータ
-	virtual void operator()(int arg)
+	virtual void operator()(ARG arg)
 	{
 		//if (object != NULL && func != NULL)
 			(object->*func)(arg);
 	}
 
 	//オブジェクトと関数の登録処理
-	void Set(T* object, EventFunc func)
+	void Set(OBJ* object, EventFunc func)
 	{
 		this->object = object;
 		this->func = func;
 	}
 
 	//デリゲータ作成処理
-	static DelegateBase* Create(T* object, void (T::*func)(int))
+	static DelegatePtr<ARG> Create(OBJ* object, void (OBJ::*func)(ARG))
 	{
-		Delegate<T>* delegate = new Delegate<T>;
+		Delegate<OBJ, ARG>* delegate = new Delegate<OBJ, ARG>;
 		delegate->Set(object, func);
 		return  delegate;
 	}
 
 protected:
-	T* object;			//オブジェクト
-	EventFunc func;		//関数ポインタ
+	OBJ* object;			//オブジェクト
+	EventFunc func;			//関数ポインタ
 };
 
 #endif

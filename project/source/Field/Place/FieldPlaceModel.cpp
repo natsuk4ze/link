@@ -9,6 +9,7 @@
 
 #include "../../FieldObject/PlaceActor.h"
 #include "../../../Library/cppLinq/cpplinq.hpp"
+#include "../Route/RouteProcessor.h"
 
 #include <algorithm>
 
@@ -116,6 +117,14 @@ namespace Field::Model
 	}
 
 	/**************************************
+	ID取得処理
+	***************************************/
+	unsigned PlaceModel::ID() const
+	{
+		return uniqueID;
+	}
+
+	/**************************************
 	隣接プレイス追加
 	***************************************/
 	void PlaceModel::AddAdjacency(PlaceModel *adjacency, Adjacency type)
@@ -126,7 +135,7 @@ namespace Field::Model
 	/**************************************
 	ルートを始められるか
 	***************************************/
-	bool PlaceModel::CanStartRoute()
+	bool PlaceModel::CanStartRoute() const
 	{
 		//空白タイプか橋でなければ道に出来ない
 		if(type != PlaceType::None && type != PlaceType::Bridge)
@@ -161,7 +170,7 @@ namespace Field::Model
 	/**************************************
 	道に変えられるか
 	***************************************/
-	bool PlaceModel::ChangeableRoad(Adjacency prev)
+	bool PlaceModel::ChangeableRoad(Adjacency prev) const
 	{
 		//Noneと橋のみ道にすることが出来る
 		if (type == PlaceType::None)
@@ -182,7 +191,7 @@ namespace Field::Model
 	/**************************************
 	開拓可能なタイプか
 	***************************************/
-	bool PlaceModel::IsDevelopableType()
+	bool PlaceModel::IsDevelopableType() const
 	{
 		if (type == PlaceType::River)
 			return true;
@@ -196,7 +205,7 @@ namespace Field::Model
 	/**************************************
 	プレイスと隣接しているか
 	***************************************/
-	Adjacency PlaceModel::IsAdjacent(PlaceModel * place)
+	Adjacency PlaceModel::IsAdjacent(PlaceModel * place) const
 	{
 		//隣接プレイスの中から等しいものを検索
 		auto itr = std::find_if(adjacencies.begin(), adjacencies.end(), [&](auto adjacency)
@@ -213,7 +222,7 @@ namespace Field::Model
 	/**************************************
 	連結可能なタイプか
 	***************************************/
-	bool PlaceModel::IsConnectableType()
+	bool PlaceModel::IsConnectableType() const
 	{
 		if (type == PlaceType::Road)
 			return true;
@@ -230,7 +239,7 @@ namespace Field::Model
 	/**************************************
 	同じルートに属しているか
 	***************************************/
-	bool PlaceModel::IsSameRoute(PlaceModel * place)
+	bool PlaceModel::IsSameRoute(PlaceModel * place) const
 	{
 		//相手と自分の所属リストの積集合を求める
 		auto intersect = from(belongRouteList)
@@ -245,7 +254,7 @@ namespace Field::Model
 	連結相手の取得
 	TODO:連結相手を複数化
 	***************************************/
-	PlaceModel* PlaceModel::GetConnectTarget()
+	PlaceModel* PlaceModel::GetConnectTarget() const
 	{
 		for (auto&& adjacency : adjacencies)
 		{
@@ -271,7 +280,7 @@ namespace Field::Model
 	/**************************************
 	端点となるプレイスの取得
 	***************************************/
-	PlaceModel* PlaceModel::GetEdgeOpponent()
+	PlaceModel* PlaceModel::GetEdgeOpponent() const
 	{
 		for (auto&& adjacency : adjacencies)
 		{
@@ -329,7 +338,7 @@ namespace Field::Model
 	/**************************************
 	タイプ判定
 	***************************************/
-	bool PlaceModel::IsType(PlaceType type)
+	bool PlaceModel::IsType(PlaceType type) const
 	{
 		return this->type == type;
 	}
@@ -345,7 +354,7 @@ namespace Field::Model
 	/**************************************
 	ルート取得
 	***************************************/
-	RouteModelPtr PlaceModel::GetConnectingRoute()
+	RouteModelPtr PlaceModel::GetConnectingRoute() const
 	{
 		return *(belongRouteList.begin());
 	}
@@ -353,7 +362,7 @@ namespace Field::Model
 	/**************************************
 	タイプセット
 	***************************************/
-	RouteContainer PlaceModel::GetConnectingRoutes()
+	RouteContainer PlaceModel::GetConnectingRoutes() const
 	{
 		return belongRouteList;
 	}

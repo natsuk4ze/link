@@ -48,32 +48,35 @@ namespace Field::Model
 		//座標取得
 		FieldPosition GetPosition() const;
 
+		//ID取得
+		unsigned ID() const;
+
 		//隣接プレイスの追加
 		void AddAdjacency(PlaceModel *adjacency, Adjacency type);
 	
 		//ルートを始められるか
-		bool CanStartRoute();
+		bool CanStartRoute() const;
 
 		//道に変えられるか
-		bool ChangeableRoad(Adjacency prev);
+		bool ChangeableRoad(Adjacency prev) const;
 
 		//開拓可能なタイプか
-		bool IsDevelopableType();
+		bool IsDevelopableType() const;
 
 		//placeと隣接しているか
-		Adjacency IsAdjacent(PlaceModel* place);
+		Adjacency IsAdjacent(PlaceModel* place) const;
 
 		//連結できるタイプか
-		bool IsConnectableType();
+		bool IsConnectableType() const;
 
 		//同じルートに属しているか
-		bool IsSameRoute(PlaceModel* place);
+		bool IsSameRoute(PlaceModel* place) const;
 
 		//連結対象の取得
-		PlaceModel* GetConnectTarget();		//TODO:連結対象の複数化
+		PlaceModel* GetConnectTarget() const;		//TODO:連結対象の複数化
 
 		//端点となるPlaceの取得
-		PlaceModel* GetEdgeOpponent();
+		PlaceModel* GetEdgeOpponent()  const;
 
 		//ルートモデルへの所属、離脱
 		void BelongRoute(std::shared_ptr<RouteModel> route);
@@ -81,12 +84,12 @@ namespace Field::Model
 		void ExitRoute(std::shared_ptr<RouteModel> route);
 
 		//タイプ判定、変更処理
-		bool IsType(PlaceType type);
+		bool IsType(PlaceType type) const;
 		void SetType(PlaceType type);
 
 		//所属ルート取得
-		RouteModelPtr GetConnectingRoute();
-		RouteContainer GetConnectingRoutes();
+		RouteModelPtr GetConnectingRoute() const;
+		RouteContainer GetConnectingRoutes() const;
 
 		//方向決定処理
 		void SetDirection(Adjacency prev, Adjacency next);

@@ -7,7 +7,8 @@
 //=====================================
 #include "RouteModel.h"
 #include "../Place/FieldPlaceModel.h"
-#include "./../../../Library/cppLinq/cpplinq.hpp"
+#include "../../../Library/cppLinq/cpplinq.hpp"
+#include "../../../Framework/Pattern/Delegate.h"
 
 #include <algorithm>
 
@@ -26,10 +27,12 @@ namespace Field::Model
 	/**************************************
 	コンストラクタ
 	***************************************/
-	RouteModel::RouteModel() :
+	RouteModel::RouteModel(DelegatePlace onConnectTown, DelegatePlace onCreateJunction) :
 		edgeStart(nullptr), edgeEnd(nullptr),
 		uniqueID(incrementID++),
-		isUnused(false)
+		isUnused(false),
+		onConnectedTown(onConnectTown),
+		onCreateJunction(onCreateJunction)
 	{
 
 	}
@@ -37,18 +40,18 @@ namespace Field::Model
 	/**************************************
 	スマートポインタ作成処理
 	***************************************/
-	RouteModelPtr RouteModel::Create()
+	RouteModelPtr RouteModel::Create(DelegatePlace onConnectTown, DelegatePlace onCreateJunction)
 	{
-		RouteModelPtr ptr = std::make_shared<RouteModel>();
+		RouteModelPtr ptr = std::make_shared<RouteModel>(onConnectTown, onCreateJunction);
 		return ptr;
 	}
 
 	/**************************************
 	スマートポインタ作成処理
 	***************************************/
-	RouteModelPtr RouteModel::Create(const std::vector<PlaceModel*>& placeVector)
+	RouteModelPtr RouteModel::Create(DelegatePlace onConnectTown, DelegatePlace onCreateJunction, const std::vector<PlaceModel*>& placeVector)
 	{
-		RouteModelPtr ptr = std::make_shared<RouteModel>();
+		RouteModelPtr ptr = std::make_shared<RouteModel>(onConnectTown, onCreateJunction);
 
 		ptr->route.assign(placeVector.begin(), placeVector.end());
 
@@ -165,7 +168,7 @@ namespace Field::Model
 	/**************************************
 	他方の端点取得
 	***************************************/
-	PlaceModel * RouteModel::GetOtherEdge(PlaceModel * edge)
+	PlaceModel * RouteModel::GetOtherEdge(const PlaceModel * edge)
 	{
 		if (edgeStart == edge)
 			return edgeEnd;
@@ -176,7 +179,7 @@ namespace Field::Model
 	/**************************************
 	繋がっている街を取得
 	***************************************/
-	PlaceModel * RouteModel::GetConnectedTown(PlaceModel * self)
+	PlaceModel * RouteModel::GetConnectedTown(const PlaceModel * self)
 	{
 		if (edgeStart->IsType(PlaceType::Town) && edgeStart != self)
 			return edgeStart;
@@ -214,5 +217,7 @@ namespace Field::Model
 		opponent->BelongRoute(shared_from_this());
 
 		//TODO:街なら出口を増やす
+		if (opponent->IsType(PlaceType::Town))
+			(*onConnectedTown)(opponent);
 	}
 }

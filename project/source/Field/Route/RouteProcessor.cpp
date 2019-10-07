@@ -41,6 +41,7 @@ namespace Field::Model
 
 			//対象のPlaceを交差点にして分割
 			place->SetType(PlaceType::Junction);
+			(*model->onCreateJunction)(place);
 			divideList = Divide(model, place, routeContainer);
 
 			//繋がった相手も必要であれば分割する
@@ -48,7 +49,7 @@ namespace Field::Model
 			if (connectTarget->IsType(PlaceType::Road))
 			{
 				connectTarget->SetType(PlaceType::Junction);
-
+				(*model->onCreateJunction)(place);
 				RouteModelPtr opponent = connectTarget->GetConnectingRoute();
 				subDivList = Divide(opponent, connectTarget, routeContainer);
 			}
@@ -136,15 +137,15 @@ namespace Field::Model
 
 		std::vector<PlaceModel*> firstHalf, secondHalf;
 		firstHalf.assign(route.begin(), itrJunction);
-		secondHalf.assign(itrJunction + 1, route.end());		//Junctionも含めたいのでイテレータを+1
+		secondHalf.assign(itrJunction + 1, route.end());		//Junctionも含めないのでイテレータを+1
 
 		//前半のRouteModelを作成
-		RouteModelPtr first = RouteModel::Create(firstHalf);
+		RouteModelPtr first = RouteModel::Create(model->onConnectedTown, model->onCreateJunction, firstHalf);
 		first->SetEdge(model->edgeStart);
 		first->SetEdge(junction);
 
 		//後半のRouteModelを作成
-		RouteModelPtr second = RouteModel::Create(secondHalf);
+		RouteModelPtr second = RouteModel::Create(model->onConnectedTown, model->onCreateJunction, secondHalf);
 		second->SetEdge(junction);
 		second->SetEdge(model->edgeEnd);
 
@@ -182,7 +183,7 @@ namespace Field::Model
 	/**************************************
 	繋がっている街を探索する
 	***************************************/
-	int RouteProcessor::FindConnectingTown(PlaceModel * root, RouteModelPtr target, RouteContainer & searchedRoute, std::vector<PlaceModel*> searchedTown)
+	int RouteProcessor::FindLinkedTown(const PlaceModel * root, RouteModelPtr target, RouteContainer & searchedRoute, std::vector<PlaceModel*> searchedTown)
 	{
 		int cntTown = 0;
 
@@ -210,7 +211,7 @@ namespace Field::Model
 			if (from(searchedRoute) >> contains(ptr))
 				continue;
 
-			cntTown += FindConnectingTown(root, ptr, searchedRoute, searchedTown);
+			cntTown += FindLinkedTown(root, ptr, searchedRoute, searchedTown);
 		}
 
 		return cntTown;
@@ -225,6 +226,7 @@ namespace Field::Model
 		if (place->IsType(PlaceType::Road))
 		{
 			place->SetType(PlaceType::Junction);
+			(*model->onCreateJunction)(place);
 			RouteContainer targetList = place->GetConnectingRoutes();
 
 			//取得した所属リストに新しく作ったルートが含まれるので削除

@@ -10,6 +10,7 @@
 
 #include "../../main.h"
 #include "../../Framework/Pattern/BaseState.h"
+#include "../../Framework/Pattern/Delegate.h"
 #include "Place\PlaceConfig.h"
 
 #include <vector>
@@ -48,6 +49,7 @@ namespace Field
 			Develop,		//アイテムを使って川、山を開拓する状態
 			Max
 		};
+		using ControllerState = BaseState<FieldController, FieldController::State>;
 
 		//コンストラクタ、デストラクタ
 		FieldController();
@@ -66,8 +68,6 @@ namespace Field
 
 		//カーソル取得処理
 		GameObject* GetFieldCursor();
-
-		typedef BaseState<FieldController, FieldController::State> ControllerState;
 
 	private:
 		static const float PlaceOffset;					//Placeの1マス毎のオフセット値
@@ -94,6 +94,10 @@ namespace Field
 		State current;
 		ControllerState *state;					//現在のステート
 		std::vector<ControllerState*> fsm;		//ステートマシン
+
+		//デリゲータ
+		DelegatePtr<Model::PlaceModel*> onConnectTown;
+		DelegatePtr<Model::PlaceModel*> onCreateJunction;
 
 		//ステート切り替え
 		void ChangeState(State next);

@@ -7,7 +7,10 @@
 //=====================================
 #include "FieldPlaceContainer.h"
 #include "FieldPlaceModel.h"
+#include "FieldTownModel.h"
+#include "FieldJunctionModel.h"
 #include "../../../Framework/String/String.h"
+#include "../../../Framework/Tool/DebugWindow.h"
 
 #include <fstream>
 #include <string>
@@ -27,6 +30,8 @@ namespace Field::Model
 	ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 	***************************************/
 	PlaceContainer::PlaceContainer() :
+		placeRowMax(0),
+		placeColumMax(0),
 		initialized(false)
 	{
 		placeVector.reserve(PlaceMax);
@@ -50,6 +55,9 @@ namespace Field::Model
 	PlaceContainer::~PlaceContainer()
 	{
 		Utility::DeleteContainer(placeVector);
+
+		Utility::DeleteMap(townContainer);
+		Utility::DeleteMap(junctionContainer);
 	}
 
 	/**************************************
@@ -64,6 +72,11 @@ namespace Field::Model
 		{
 			place->Update();
 		}
+
+		//ƒfƒoƒbƒO•\Ž¦
+		Debug::Log("CntLinkedTown:%d", townContainer.size());
+		Debug::Log("CntJunction:%d", junctionContainer.size());
+		Debug::Log("TrafficJam: %f", CaclTrafficJamRate());
 
 	}
 
@@ -165,6 +178,77 @@ namespace Field::Model
 	FieldPosition Field::Model::PlaceContainer::GetPlaceBorder() const
 	{
 		return FieldPosition(placeRowMax, placeColumMax);
+	}
+
+	/**************************************
+	ŠX‚ª“¹‚ÆŒq‚ª‚Á‚½‚Æ‚«‚Ìˆ—
+	***************************************/
+	void Field::Model::PlaceContainer::OnConnectedTown(PlaceModel * place)
+	{
+		unsigned placeID = place->ID();
+
+		//“o˜^Šm”F
+		if (townContainer.count(placeID) == 0)
+		{
+			townContainer.emplace(placeID, new TownModel(place));
+		}
+
+		townContainer[placeID]->AddGate();
+	}
+
+	/**************************************
+	Œð·“_‚ªì‚ç‚ê‚½‚Æ‚«‚Ìˆ—
+	***************************************/
+	void Field::Model::PlaceContainer::OnCreateJunction(PlaceModel * place)
+	{
+		unsigned placeID = place->ID();
+
+		//“o˜^Šm”F
+		if (junctionContainer.count(placeID) == 0)
+		{
+			junctionContainer.emplace(placeID, new JunctionModel(place));
+		}
+	}
+
+	/**************************************
+	¬ŽG“xŒvŽZ
+	***************************************/
+	float Field::Model::PlaceContainer::CaclTrafficJamRate()
+	{
+		//oŒû‚ª‚ ‚éŠX‚ª‚È‚¯‚ê‚ÎŒvŽZ‚ª¬—§‚µ‚È‚¢‚Ì‚Å‘ŠúƒŠƒ^[ƒ“
+		if (townContainer.empty())
+			return 1.0f;
+
+		int sumGate = 0;
+		for (auto&& town : townContainer)
+		{
+			sumGate += town.second->GateNum();
+		}
+
+		//Œð·“_‚ª–³‚¢ê‡‚ÌŒvŽZŽ®
+		if (junctionContainer.empty())
+		{
+			return ((float)townContainer.size() / sumGate);
+		}
+		//Œð·“_‚ª‚ ‚éê‡‚ÌŒvŽZŽ®
+		else
+		{
+			float sumTrafficJam = 0.0f;
+			int validJunctionNum = 0;
+
+			for (auto&& junction : junctionContainer)
+			{
+				float trafficJam = junction.second->TrafficJam(townContainer);
+
+				if (trafficJam == 0.0f)
+					continue;
+
+				sumTrafficJam += trafficJam;
+				validJunctionNum++;
+			}
+
+			return Math::Min(sumTrafficJam * 0.01f * 1.5f / (validJunctionNum * sumGate), 1.0f);
+		}
 	}
 
 	/**************************************

@@ -103,6 +103,8 @@
     <ClCompile Include="source\Field\State\UseItem.cpp" />
     <ClCompile Include="source\Field\Place\OperatePlaceContainer.cpp" />
     <ClCompile Include="source\Field\FieldInputController.cpp" />
+    <ClCompile Include="source\Field\Place\FieldTownModel.cpp" />
+    <ClCompile Include="source\Field\Place\FieldJunctionModel.cpp" />
     <ClCompile Include="source\Field\Item\ItemModel.cpp" />
     <ClCompile Include="source\Field\Item\ItemActor.cpp" />
     <ClCompile Include="source\Field\Passenger\PassengerActor.cpp" />
@@ -225,6 +227,8 @@
     <ClInclude Include="source\Field\Place\OperatePlaceContainer.h" />
     <ClInclude Include="source\Field\FieldConfig.h" />
     <ClInclude Include="source\Field\FieldInputController.h" />
+    <ClInclude Include="source\Field\Place\FieldTownModel.h" />
+    <ClInclude Include="source\Field\Place\FieldJunctionModel.h" />
     <ClInclude Include="source\Field\Item\ItemModel.h" />
     <ClInclude Include="source\Field\Item\ItemActor.h" />
     <ClInclude Include="source\Field\Passenger\PassengerActor.h" />
