@@ -11,6 +11,7 @@
 #include "..\Pattern\BaseSingleton.h"
 
 #include <unordered_map>
+#include <chrono>
 
 class ProfilerNode;
 /**************************************
@@ -28,7 +29,7 @@ public:
 	void Update();
 	void Draw();
 	void Clear();
-
+	
 	void BeginLabel(const char* labe);
 	void EndLabel();
 
@@ -37,7 +38,11 @@ public:
 
 private:
 	std::unordered_map<std::string, std::unordered_map<std::string, ProfilerNode>> profilerMap;
+	
+	std::chrono::system_clock::time_point time, prevTime;
+	std::chrono::milliseconds::rep cntFPS;
 	DWORD cntFrame;
+
 	std::string currentLabel, prevLabel;
 
 	void CalcElapsed();
