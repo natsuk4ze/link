@@ -59,6 +59,9 @@ namespace Field::Model
 		//混雑度計算
 		float CaclTrafficJamRate();
 
+		//AI発展レベル計算
+		float CalcDevelopmentLevelAI();
+
 	private:
 		const int PlaceMax = 10000;				//プレイスの最大数
 

@@ -36,6 +36,7 @@ namespace Field
 	const int FieldController::InputShortWait = 5;					//入力リピートの待機フレーム
 	const unsigned FieldController::InitDevelopRiverStock = 10;		//川開発ストックの初期数
 	const unsigned FieldController::InitDevelopMountainStock = 10;	//山開発ストックの初期数
+	const int FieldController::DevelopmentInterval = 30;			//発展レベル上昇のインターバル
 
 	/**************************************
 	コンストラクタ
@@ -43,6 +44,8 @@ namespace Field
 	FieldController::FieldController() :
 		fieldBorder(InitFieldBorder),
 		inputRepeatCnt(0),
+		cntFrame(0),
+		developmentLevelAI(0),
 		stockDevelopRiver(InitDevelopRiverStock),
 		stockDevelopMountain(InitDevelopMountainStock),
 		onConnectTown(nullptr),
@@ -112,6 +115,14 @@ namespace Field
 		{
 			route->Update();
 		}
+
+		//AI発展レベルを計算
+		CalcDevelopmentLevelAI();
+
+		Debug::Log("ControllerState:%d", current);
+		Debug::Log("StockRiver:%d", stockDevelopRiver);
+		Debug::Log("StockMountain:%d", stockDevelopMountain);
+		Debug::Log("DevelopmentAILevel:%d", (int)developmentLevelAI);
 	}
 
 	/**************************************
@@ -129,10 +140,6 @@ namespace Field
 
 		//カーソルには透過オブジェクトが含まれるので最後に描画
 		cursor->Draw();
-
-		Debug::Log("ControllerState:%d", current);
-		Debug::Log("StockRiver:%d", stockDevelopRiver);
-		Debug::Log("StockMountain:%d", stockDevelopMountain);
 	}
 
 	/**************************************
@@ -164,7 +171,7 @@ namespace Field
 
 		//リピート確認
 		float repeatX = 0.0f, repeatZ = 0.0f;
-		if((Input::GetPressHorizontail() != 0.0f || Input::GetPressVertical() != 0.0f))
+		if ((Input::GetPressHorizontail() != 0.0f || Input::GetPressVertical() != 0.0f))
 		{
 			inputRepeatCnt++;
 			if (inputRepeatCnt >= InputLongWait && inputRepeatCnt % InputShortWait == 0)
@@ -238,7 +245,7 @@ namespace Field
 		//ルートモデル作成
 		RouteModelPtr ptr = RouteModel::Create(onConnectTown, onCreateJunction, route);
 		routeContainer.push_back(ptr);
-	
+
 		//端点設定
 		ptr->SetEdge();
 
@@ -366,7 +373,7 @@ namespace Field
 		}
 
 		//終点が見つからなかったので早期リターン
-		if(end == route.end())
+		if (end == route.end())
 			return route.end();
 
 		//始点と終点の間の川コンテナを作成
@@ -392,5 +399,19 @@ namespace Field
 		}
 
 		return end;
+	}
+
+	/**************************************
+	AI発展レベルの計算
+	***************************************/
+	void FieldController::CalcDevelopmentLevelAI()
+	{
+		cntFrame = Math::WrapAround((const int)0, DevelopmentInterval, cntFrame + 1);
+
+		//レベルの上昇はDevelopmentIntervalおきに行う
+		if (cntFrame != 0)
+			return;
+
+		developmentLevelAI += placeContainer->CalcDevelopmentLevelAI();
 	}
 }

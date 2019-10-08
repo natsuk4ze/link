@@ -23,7 +23,9 @@ namespace Field::Model
 	TownModel::TownModel(const PlaceModel * place) :
 		uniqueID(incrementID++),
 		place(place),
-		cntGate(0)
+		cntGate(0),
+		linkLevel(0),
+		developmentLevel(0)
 	{
 
 	}
@@ -64,7 +66,15 @@ namespace Field::Model
 	***************************************/
 	int TownModel::LinkLevel()
 	{
-		int cntTown = 0;
+		return linkLevel;
+	}
+
+	/**************************************
+	ê¨í∑Ç∑ÇÈéûÇ…åƒÇŒÇÍÇÈèàóù
+	***************************************/
+	float TownModel::OnGrowth(float trafficJamRate)
+	{
+		linkLevel = 0;
 
 		RouteContainer searchedRoute;
 		std::vector<PlaceModel*> searchedTown;
@@ -72,9 +82,10 @@ namespace Field::Model
 		RouteContainer belongRoute = place->GetConnectingRoutes();
 		for (auto&& route : belongRoute)
 		{
-			cntTown += RouteProcessor::FindLinkedTown(place, route, searchedRoute, searchedTown);
+			linkLevel += RouteProcessor::FindLinkedTown(place, route, searchedRoute, searchedTown);
 		}
 
-		return cntTown;
+		developmentLevel = linkLevel + linkLevel * trafficJamRate;
+		return developmentLevel;
 	}
 }
