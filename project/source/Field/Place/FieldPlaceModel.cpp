@@ -103,11 +103,7 @@ namespace Field::Model
 		transform.SetWorld();
 		BoardPolygon *polygon;
 		ResourceManager::Instance()->GetPolygon(PolygonName[type], polygon);
-		//polygon->Draw();
-
-		//アクターの生成
-		if(actor == NULL)	
-			actor = new StraightRoadActor(D3DXVECTOR3(Position.x * 10.0f, 0.0f, Position.z * 10.0f), FieldLevel::City);
+		polygon->Draw();
 #endif
 	}
 
