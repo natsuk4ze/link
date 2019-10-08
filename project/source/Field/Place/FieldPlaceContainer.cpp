@@ -11,6 +11,7 @@
 #include "FieldJunctionModel.h"
 #include "../../../Framework/String/String.h"
 #include "../../../Framework/Tool/DebugWindow.h"
+#include "../../../Framework/Tool/ProfilerCPU.h"
 
 #include <fstream>
 #include <string>
@@ -67,11 +68,14 @@ namespace Field::Model
 	{
 		if (!initialized)
 			return;
+		ProfilerCPU::Instance()->BeginLabel("Field");
 
+		ProfilerCPU::Instance()->Begin("Update");
 		for (auto&& place : placeVector)
 		{
 			place->Update();
 		}
+		ProfilerCPU::Instance()->End("Update");
 
 		//デバッグ表示
 		Debug::Log("CntLinkedTown:%d", townContainer.size());
@@ -88,10 +92,14 @@ namespace Field::Model
 		if (!initialized)
 			return;
 
+		ProfilerCPU::Instance()->Begin("Draw");
 		for (auto&& place : placeVector)
 		{
 			place->Draw();
 		}
+		ProfilerCPU::Instance()->End("Draw");
+
+		ProfilerCPU::Instance()->EndLabel();
 	}
 
 	/**************************************
@@ -256,6 +264,7 @@ namespace Field::Model
 	***************************************/
 	float Field::Model::PlaceContainer::CalcDevelopmentLevelAI()
 	{
+		ProfilerCPU::Instance()->Begin("CalculateTraffic");
 		float trafficJamRate = CaclTrafficJamRate();
 
 		float developLevel = 0.0f;
@@ -264,6 +273,7 @@ namespace Field::Model
 			developLevel += town.second->OnGrowth(1.0f - trafficJamRate);
 		}
 
+		ProfilerCPU::Instance()->End("CalculateTraffic");
 		return developLevel;
 	}
 
