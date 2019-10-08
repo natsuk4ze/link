@@ -111,6 +111,12 @@
     <ClCompile Include="Framework\Resource\MeshResource.cpp" />
     <ClCompile Include="Framework\Renderer2D\CircleGauge.cpp" />
     <ClCompile Include="source\Field\Info\FieldInfoActor.cpp" />
+    <ClCompile Include="source\Field\Info\CreateFieldInfoState.cpp" />
+    <ClCompile Include="source\Field\Info\IdleFieldInfoState.cpp" />
+    <ClCompile Include="source\Field\Info\RemoveFieldInfoState.cpp" />
+    <ClCompile Include="source\Field\Info\ConnectFieldInfoState.cpp" />
+    <ClCompile Include="source\Field\Info\LinkFieldInfoState.cpp" />
+    <ClCompile Include="source\Field\Info\CongestionFieldInfoState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -238,5 +244,11 @@
     <ClInclude Include="Framework\Resource\MeshResource.h" />
     <ClInclude Include="Framework\Renderer2D\CircleGauge.h" />
     <ClInclude Include="source\Field\Info\FieldInfoActor.h" />
+    <ClInclude Include="source\Field\Info\CreateFieldInfoState.h" />
+    <ClInclude Include="source\Field\Info\IdleFieldInfoState.h" />
+    <ClInclude Include="source\Field\Info\RemoveFieldInfoState.h" />
+    <ClInclude Include="source\Field\Info\ConnectFieldInfoState.h" />
+    <ClInclude Include="source\Field\Info\LinkFieldInfoState.h" />
+    <ClInclude Include="source\Field\Info\CongestionFieldInfoState.h" />
   </ItemGroup>
 </Project>

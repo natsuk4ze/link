@@ -6,24 +6,44 @@
 //
 //=====================================
 #include "FieldInfoActor.h"
+#include "CreateFieldInfoState.h"
+#include "IdleFieldInfoState.h"
+#include "RemoveFieldInfoState.h"
+#include "ConnectFieldInfoState.h"
+#include "LinkFieldInfoState.h"
+#include "CongestionFieldInfoState.h"
 
 //**************************************
 // クラスのメンバ変数初期化
 //**************************************
-const D3DXVECTOR3 FieldInfoActor::ActorScale = D3DXVECTOR3(10.0f, 10.0f, 10.0f);
+const D3DXVECTOR3 FieldInfoActor::ActorScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+const D3DXVECTOR2 FieldInfoActor::ActorSize = D3DXVECTOR2(2.0f, 2.0f);
 
 //=====================================
 // コンストラクタ
 //=====================================
-FieldInfoActor::FieldInfoActor(const D3DXVECTOR3& pos)
+FieldInfoActor::FieldInfoActor(const D3DXVECTOR3& pos, State state)
 {
 	transform->SetPosition(pos);
 	transform->SetScale(ActorScale);
 	this->SetActive(true);
 
+	// ビルボード作成
 	polygon = new BoardPolygon();
 	polygon->LoadTexture("data/TEXTURE/Info/Info.png");
-	polygon->SetSize(D3DXVECTOR2(ActorScale.x, ActorScale.y));
+	polygon->SetSize(ActorSize);
+
+	// ステートマシン作成
+	fsm.resize(State::Max, NULL);
+	fsm[State::Idle] = new IdleFieldInfoState();
+	fsm[State::Create] = new CreateFieldInfoState();
+	fsm[State::Remove] = new RemoveFieldInfoState();
+	fsm[State::Connect] = new ConnectFieldInfoState();
+	fsm[State::Link] = new LinkFieldInfoState();
+	fsm[State::Congestion] = new CongestionFieldInfoState();
+
+	// ステート初期化
+	this->ChangeState(state);
 }
 
 //=====================================
@@ -32,6 +52,9 @@ FieldInfoActor::FieldInfoActor(const D3DXVECTOR3& pos)
 FieldInfoActor::~FieldInfoActor()
 {
 	SAFE_DELETE(polygon);
+
+	// ステートマシン削除
+	Utility::DeleteContainer(fsm);
 }
 
 //=====================================
@@ -42,7 +65,12 @@ void FieldInfoActor::Update()
 	if (!this->IsActive())
 		return;;
 
-
+	// 現在のステート更新
+	State next = infoState->OnUpdate(*this);
+	if (next != current)
+	{
+		ChangeState(next);
+	}
 }
 
 //=====================================
@@ -56,4 +84,17 @@ void FieldInfoActor::Draw()
 	transform->SetWorld();
 	polygon->Draw();
 
+}
+
+//=====================================
+// ステートマシンの切り替え
+//=====================================
+void FieldInfoActor::ChangeState(State next)
+{
+	if (fsm[next] == NULL)
+		return;
+
+	current = next;
+	infoState = fsm[next];
+	infoState->OnStart(*this);
 }
