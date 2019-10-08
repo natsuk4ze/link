@@ -8,7 +8,7 @@
 #include "../Renderer3D/MeshContainer.h"
 #include "../Renderer3D/BoardPolygon.h"
 
-using namespace std;
+#include "MeshResource.h"
 
 /**************************************
 マクロ定義
@@ -19,15 +19,14 @@ using namespace std;
 ***************************************/
 void ResourceManager::LoadMesh(const char* tag, const char* path)
 {
-	string tagStr = string(tag);
+	std::string tagStr = tag;
 
 	//タグの重複確認
 	if (meshPool.count(tagStr) != 0)
 		SAFE_DELETE(meshPool[tagStr]);
 
-	//メッシュコンテナを生成してロード
-	meshPool[tagStr] = new MeshContainer();
-	meshPool[tagStr]->Load(path);
+	//メッシュリソースを生成
+	meshPool[tagStr] = new MeshResource(path);
 }
 
 /**************************************
@@ -35,7 +34,7 @@ void ResourceManager::LoadMesh(const char* tag, const char* path)
 ***************************************/
 void ResourceManager::ReleaseMesh(const char* tag)
 {
-	string tagStr = string(tag);
+	std::string tagStr = tag;
 
 	//タグの登録確認
 	if (meshPool.count(tagStr) == 0)
@@ -51,15 +50,14 @@ void ResourceManager::ReleaseMesh(const char* tag)
 ***************************************/
 bool ResourceManager::GetMesh(const char* tag, MeshContainer*& pOut)
 {
-	string tagStr = string(tag);
+	std::string tagStr = std::string(tag);
 
 	//登録確認
 	if (meshPool.count(tagStr) == 0)
 		return false;
 
 	//メッシュへの参照を格納
-	pOut = meshPool[tagStr];
-	pOut->AddRef();
+	meshPool[tagStr]->Clone(pOut);
 	return true;
 }
 
@@ -68,7 +66,7 @@ bool ResourceManager::GetMesh(const char* tag, MeshContainer*& pOut)
 ***************************************/
 void ResourceManager::LoadTexture(const char* path)
 {
-	string tagStr = string(path);
+	std::string tagStr = path;
 
 	//重複確認
 	if (texturePool.count(tagStr) != 0)
@@ -84,7 +82,7 @@ void ResourceManager::LoadTexture(const char* path)
 ***************************************/
 void ResourceManager::ReleaseTexture(const char* tag)
 {
-	string tagStr = string(tag);
+	std::string tagStr = tag;
 
 	//登録確認
 	if (texturePool.count(tagStr) == 0)
@@ -98,7 +96,7 @@ void ResourceManager::ReleaseTexture(const char* tag)
 ***************************************/
 bool ResourceManager::GetTexture(const char* path, LPDIRECT3DTEXTURE9& pOut)
 {
-	string tagStr = string(path);
+	std::string tagStr = path;
 
 	//登録確認
 	if (texturePool.count(tagStr) == 0)
@@ -107,6 +105,10 @@ bool ResourceManager::GetTexture(const char* path, LPDIRECT3DTEXTURE9& pOut)
 	}
 
 	pOut = texturePool[tagStr];
+
+	if(pOut != NULL)
+		pOut->AddRef();
+
 	return true;
 }
 
@@ -115,7 +117,7 @@ bool ResourceManager::GetTexture(const char* path, LPDIRECT3DTEXTURE9& pOut)
 ***************************************/
 void ResourceManager::MakePolygon(const char* tag, const char* path, const D3DXVECTOR2& size, const D3DXVECTOR2& uv)
 {
-	string tagStr = string(tag);
+	std::string tagStr = std::string(tag);
 
 	//登録確認
 	if (polygonPool.count(tagStr) == 0)
@@ -133,7 +135,7 @@ void ResourceManager::MakePolygon(const char* tag, const char* path, const D3DXV
 ***************************************/
 void ResourceManager::ReleasePolygon(const char* tag)
 {
-	string tagStr = string(tag);
+	std::string tagStr = std::string(tag);
 
 	//登録確認
 	if (polygonPool.count(tagStr) == 0)
@@ -147,7 +149,7 @@ void ResourceManager::ReleasePolygon(const char* tag)
 ***************************************/
 bool ResourceManager::GetPolygon(const char* tag, BoardPolygon*& pOut)
 {
-	string tagStr = string(tag);
+	std::string tagStr = std::string(tag);
 
 	//登録確認
 	if (polygonPool.count(tagStr) == 0)

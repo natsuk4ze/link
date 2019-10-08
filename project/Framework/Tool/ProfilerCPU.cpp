@@ -6,6 +6,7 @@
 //=====================================
 #include "ProfilerCPU.h"
 #include "DebugWindow.h"
+
 #include <string.h>
 #include <assert.h>
 
@@ -32,7 +33,18 @@ ProfilerCPU更新処理
 void ProfilerCPU::Update()
 {
 #ifdef USE_PROFILER_CPU
-	cntFrame++;
+	if (cntFrame % PROFILER_CPU_COUNT_INTERBAL == 0)
+	{
+		prevTime = time;
+		time = std::chrono::system_clock::now();
+
+		std::chrono::milliseconds deltaTime = std::chrono::duration_cast<std::chrono::milliseconds>(time - prevTime);
+		std::chrono::milliseconds frame = std::chrono::milliseconds(PROFILER_CPU_COUNT_INTERBAL * 1000);
+		cntFPS = frame / deltaTime;
+	}
+
+	Debug::Log("FPS:%d", cntFPS);
+	cntFrame = Math::WrapAround(0, PROFILER_CPU_COUNT_INTERBAL, ++cntFrame);
 #endif
 }
 
@@ -49,6 +61,7 @@ void ProfilerCPU::Draw()
 		Debug::Begin(profiler.first.c_str());
 
 		//FPS表示
+		Debug::Log("FPS:%d", cntFPS);
 
 		//総経過時間表示
 		double progress = 0.0;

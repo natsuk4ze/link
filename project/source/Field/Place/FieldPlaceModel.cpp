@@ -10,6 +10,7 @@
 #include "../../FieldObject/PlaceActor.h"
 #include "../../../Library/cppLinq/cpplinq.hpp"
 #include "../Route/RouteProcessor.h"
+#include "../../FieldObject/StraightRoadActor.h"
 
 #include <algorithm>
 
@@ -61,8 +62,6 @@ namespace Field::Model
 	{
 		//隣接プレイスのコンテナを準備
 		adjacencies.resize(Adjacency::Max, NULL);
-
-		//アクターの生成
 	}
 
 	/**************************************
