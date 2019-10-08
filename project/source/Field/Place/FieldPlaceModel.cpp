@@ -10,6 +10,7 @@
 #include "../../FieldObject/PlaceActor.h"
 #include "../../../Library/cppLinq/cpplinq.hpp"
 #include "../Route/RouteProcessor.h"
+#include "../../FieldObject/StraightRoadActor.h"
 
 #include <algorithm>
 
@@ -61,8 +62,6 @@ namespace Field::Model
 	{
 		//隣接プレイスのコンテナを準備
 		adjacencies.resize(Adjacency::Max, NULL);
-
-		//アクターの生成
 	}
 
 	/**************************************
@@ -104,7 +103,11 @@ namespace Field::Model
 		transform.SetWorld();
 		BoardPolygon *polygon;
 		ResourceManager::Instance()->GetPolygon(PolygonName[type], polygon);
-		polygon->Draw();
+		//polygon->Draw();
+
+		//アクターの生成
+		if(actor == NULL)	
+			actor = new StraightRoadActor(D3DXVECTOR3(Position.x * 10.0f, 0.0f, Position.z * 10.0f), FieldLevel::City);
 #endif
 	}
 

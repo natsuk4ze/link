@@ -5,6 +5,7 @@
 //
 //=====================================
 #include "TransformObject.h"
+#include "../Resource/ResourceManager.h"
 
 /**************************************
 ƒ}ƒNƒ’è‹`
@@ -15,8 +16,10 @@
 ***************************************/
 TransformObject::TransformObject()
 {
+	ResourceManager::Instance()->LoadMesh("Transform", "data/MODEL/transform.x");
+	
 	mesh = MeshContainer::Create();
-	mesh->Load("data/MODEL/transform.x");
+	ResourceManager::Instance()->GetMesh("Transform", mesh);
 }
 
 /**************************************

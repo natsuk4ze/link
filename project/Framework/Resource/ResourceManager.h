@@ -9,13 +9,15 @@
 
 #include "..\..\main.h"
 #include "..\Pattern\BaseSingleton.h"
-#include <map>
+#include <unordered_map>
 
 /**************************************
 前方宣言
 ***************************************/
 class MeshContainer;
 class BoardPolygon;
+
+class MeshResource;
 
 /**************************************
 クラス定義
@@ -46,9 +48,9 @@ private:
 	ResourceManager() {}
 	~ResourceManager() {}
 
-	std::map<std::string, MeshContainer*> meshPool;
-	std::map<std::string, LPDIRECT3DTEXTURE9> texturePool;
-	std::map<std::string, BoardPolygon*> polygonPool;
+	std::unordered_map<std::string, MeshResource*> meshPool;
+	std::unordered_map<std::string, LPDIRECT3DTEXTURE9> texturePool;
+	std::unordered_map<std::string, BoardPolygon*> polygonPool;
 };
 
 #endif
