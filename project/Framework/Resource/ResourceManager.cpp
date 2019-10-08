@@ -105,6 +105,7 @@ bool ResourceManager::GetTexture(const char* path, LPDIRECT3DTEXTURE9& pOut)
 	}
 
 	pOut = texturePool[tagStr];
+	pOut->AddRef();
 	return true;
 }
 

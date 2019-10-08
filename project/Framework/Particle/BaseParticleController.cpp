@@ -45,8 +45,7 @@ BaseParticleController::BaseParticleController() :
 ***************************************/
 BaseParticleController::~BaseParticleController()
 {
-	//テクスチャはResourceManagerにまかせているので開放しない
-
+	SAFE_RELEASE(texture);
 	SAFE_RELEASE(unitBuff);
 
 	Utility::DeleteContainer(particleContainer);
