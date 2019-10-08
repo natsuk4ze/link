@@ -12,11 +12,12 @@
 #include "../../Framework/Pattern/BaseState.h"
 #include "../../Framework/Pattern/Delegate.h"
 #include "Place\PlaceConfig.h"
+#include "Info/FieldInfoActor.h"
 
 #include <vector>
 
 class ItemModel;
-
+class FieldInfoActor;
 namespace Field
 {
 	/**************************************
@@ -85,6 +86,7 @@ namespace Field
 		Model::RouteContainer routeContainer;				//ルートモデルコンテナ
 
 		ItemModel* item;						// アイテムモデル
+		FieldInfoActor* info;
 
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int inputRepeatCnt;						//入力のリピートカウント

@@ -54,6 +54,7 @@ namespace Field
 		placeContainer = new Model::PlaceContainer();
 		operateContainer = new Model::OperatePlaceContainer();
 		item = new ItemModel();
+		info = new FieldInfoActor(D3DXVECTOR3(0.0f, 10.0f, 0.0f));
 
 		//ステートマシン作成
 		fsm.resize(State::Max, NULL);
@@ -82,6 +83,7 @@ namespace Field
 		SAFE_DELETE(placeContainer);
 		SAFE_DELETE(operateContainer);
 		SAFE_DELETE(item);
+		SAFE_DELETE(info);
 
 		//デリゲート削除
 		SAFE_DELETE(onConnectTown);
@@ -107,6 +109,7 @@ namespace Field
 		cursor->Update();
 		placeContainer->Update();
 		item->Update();
+		info->Update();
 
 		for (auto&& route : routeContainer)
 		{
@@ -126,6 +129,7 @@ namespace Field
 		operateContainer->DrawDebug();
 
 		item->Draw();
+		info->Draw();
 
 		//カーソルには透過オブジェクトが含まれるので最後に描画
 		cursor->Draw();

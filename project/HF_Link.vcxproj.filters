@@ -110,6 +110,7 @@
     <ClCompile Include="source\Field\Passenger\PassengerActor.cpp" />
     <ClCompile Include="Framework\Resource\MeshResource.cpp" />
     <ClCompile Include="Framework\Renderer2D\CircleGauge.cpp" />
+    <ClCompile Include="source\Field\Info\FieldInfoActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -236,5 +237,6 @@
     <ClInclude Include="source\Field\Passenger\PassengerActor.h" />
     <ClInclude Include="Framework\Resource\MeshResource.h" />
     <ClInclude Include="Framework\Renderer2D\CircleGauge.h" />
+    <ClInclude Include="source\Field\Info\FieldInfoActor.h" />
   </ItemGroup>
 </Project>
