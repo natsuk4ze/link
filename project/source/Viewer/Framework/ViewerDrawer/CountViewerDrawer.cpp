@@ -4,8 +4,8 @@
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#include "main.h"
-#include "source/Viewer/Framework/ViewerDrawer/CountViewerDrawer.h"
+#include"../../../../main.h"
+#include "CountViewerDrawer.h"
 
 //=============================================================================
 // オブジェクトの頂点座標の設定　（カウンター専用）
@@ -51,4 +51,23 @@ void CountViewerDrawer::DrawCounter(int baseNumber, int parameterBox, int placeM
 		SetVertex(nCntPlace, intervalNumberScr);
 		SetTexture(num, intervalNumberTex);
 	}
+}
+
+//=============================================================================
+// 数字ホッピング処理
+//=============================================================================
+float CountViewerDrawer::HopNumber(float sizeY, float initSizeY, float hopValue)
+{
+	if (isHopped == true)
+	{
+		sizeY = initSizeY + (hopValue * sinf(radian));
+		if (radian >= D3DX_PI)
+		{
+			radian = 0.0f;
+			isHopped = false;
+		}
+		radian += hopSpeed;
+	}
+
+	return sizeY;
 }

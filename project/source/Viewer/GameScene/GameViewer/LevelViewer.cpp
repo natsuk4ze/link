@@ -16,12 +16,13 @@ LevelViewer::LevelViewer()
 {
 	//”š
 	num = new CountViewerDrawer();
-	num->LoadTexture("data/TEXTURE/Viewer/GameViewer/LevelViewer/Number.png");
+	num->LoadTexture("data/TEXTURE/Viewer/GameViewer/LevelViewer/Num.png");
 	num->MakeVertex();
 	num->size = D3DXVECTOR3(15.0f, 30.0f, 0.0f);
 	num->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	num->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 8.550f, SCREEN_HEIGHT / 10 * 1.50f, 0.0f);
-	num->SetColor(SET_COLOR_YELLOW);
+
+	num->SetColor(SET_COLOR_NOT_COLORED);
 	num->parameterBox = 0;
 	num->intervalNumberScr = 40.0f;
 	num->intervalNumberTex = 0.1f;

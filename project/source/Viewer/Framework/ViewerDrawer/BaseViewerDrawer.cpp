@@ -4,8 +4,8 @@
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#include "main.h"
-#include "source/Viewer/Framework/ViewerDrawer/BaseViewerDrawer.h"
+#include"../../../../main.h"
+#include "BaseViewerDrawer.h"
 
 //=============================================================================
 // テクスチャの読み込み

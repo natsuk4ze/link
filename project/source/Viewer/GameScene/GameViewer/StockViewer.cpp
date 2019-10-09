@@ -7,6 +7,8 @@
 #include "../../../../main.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
+#include "../../../../Framework/Input/Keyboard.h"
+#include "../../../../Framework/Input/input.h"
 #include "StockViewer.h"
 
 //*****************************************************************************
@@ -20,7 +22,7 @@ StockViewer::StockViewer()
 		num[i] = new CountViewerDrawer();
 		num[i]->LoadTexture("data/TEXTURE/Viewer/GameViewer/StockViewer/Number.png");
 		num[i]->MakeVertex();
-		//num[i]->size = initSizeNumber;
+		num[i]->size = initNumSize;
 		num[i]->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		num[i]->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.4f, SCREEN_HEIGHT / 10 * 2.70f + i*intervalViewerPos, 0.0f);
 		num[i]->SetColor(SET_COLOR_NOT_COLORED);
@@ -29,6 +31,8 @@ StockViewer::StockViewer()
 		num[i]->intervalNumberTex = 0.10f;
 		num[i]->placeMax = 1;
 		num[i]->baseNumber = 10;
+		num[i]->isHopped = false;
+		num[i]->radian = 0;
 
 		//数字背景
 		numBG[i] = new BaseViewerDrawer();
@@ -78,9 +82,12 @@ StockViewer::~StockViewer()
 //=============================================================================
 void StockViewer::Update(void)
 {
-	for (int i = 0; i < stockViewerMax; i++)
+	if (Keyboard::GetTrigger(DIK_1))
 	{
+		num[Bridge]->isHopped = true;
 	}
+
+	Animate();
 }
 
 //=============================================================================
@@ -106,21 +113,13 @@ void StockViewer::Draw(void)
 	}
 }
 
-////=============================================================================
-//// 数字ホッピング処理
-////=============================================================================
-//void StockViewer::HopNumber(int StockViewerType)
-//{
-//	if (num[StockViewerType]->isHopped)
-//	{
-//		num[StockViewerType]->size.y = initSizeNumber.y / 2 + hopValue * sinf(radian);
-//
-//		if (radian >= D3DX_PI)
-//		{
-//			radian = 0.0f;
-//			isHopped = false;
-//		}
-//
-//		radian += hopSpeed;
-//	}
-//}
+//=============================================================================
+// アニメーション処理
+//=============================================================================
+void StockViewer::Animate(void)
+{
+	for (int i = 0; i < stockViewerMax; i++)
+	{
+		num[i]->size.y = num[i]->HopNumber(num[i]->size.y, initNumSize.y, hopNumValue);
+	}
+}

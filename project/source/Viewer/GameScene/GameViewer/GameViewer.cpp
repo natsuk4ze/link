@@ -62,6 +62,7 @@ void GameViewer::Draw(void)
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
 	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
 	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE,true);
 
 	for (int i = 0; i < baseViewerMax; i++)
 	{
@@ -69,6 +70,7 @@ void GameViewer::Draw(void)
 	}
 
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 }
 
 //=============================================================================

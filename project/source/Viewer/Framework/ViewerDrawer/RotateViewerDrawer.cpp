@@ -4,8 +4,8 @@
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#include "main.h"
-#include "source/Viewer/Framework/ViewerDrawer/RotateViewerDrawer.h"
+#include"../../../../main.h"
+#include "RotateViewerDrawer.h"
 
 //=============================================================================
 // オブジェクトサークルの作成　（回転オブジェクト用のサークルを作る）

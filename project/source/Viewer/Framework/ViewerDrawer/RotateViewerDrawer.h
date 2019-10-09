@@ -7,7 +7,7 @@
 #ifndef _ROTATE_VIEWER_DRAWER_H_
 #define _ROTATE_VIEWER_DRAWER_H_
 
-#include "source/Viewer/Framework/ViewerDrawer/BaseViewerDrawer.h"
+#include "BaseViewerDrawer.h"
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`

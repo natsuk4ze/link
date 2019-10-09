@@ -102,13 +102,13 @@
     <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp">
       <Filter>ソースファイル\作業フォルダ</Filter>
     </ClCompile>
-    <ClCompile Include="source\Viewer\Framework\BaseViewerDrawer.cpp">
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.cpp">
       <Filter>ソースファイル\作業フォルダ</Filter>
     </ClCompile>
-    <ClCompile Include="source\Viewer\Framework\CountViewerDrawer.cpp">
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.cpp">
       <Filter>ソースファイル\作業フォルダ</Filter>
     </ClCompile>
-    <ClCompile Include="source\Viewer\Framework\RotateViewerDrawer.cpp">
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp">
       <Filter>ソースファイル\作業フォルダ</Filter>
     </ClCompile>
   </ItemGroup>
@@ -228,19 +228,19 @@
     <ClInclude Include="source\Viewer\GameScene\GameViewer\TimerViewer.h">
       <Filter>ソースファイル\作業フォルダ</Filter>
     </ClInclude>
-    <ClInclude Include="source\Viewer\Framework\RotateViewerDrawer.h">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClInclude>
     <ClInclude Include="source\Viewer\Framework\BaseViewer.h">
       <Filter>ソースファイル\作業フォルダ</Filter>
     </ClInclude>
-    <ClInclude Include="source\Viewer\Framework\BaseViewerDrawer.h">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Viewer\Framework\CountViewerDrawer.h">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClInclude>
     <ClInclude Include="source\Viewer\GameScene\GameViewer\LevelViewer.h">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.h">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.h">
+      <Filter>ソースファイル\作業フォルダ</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.h">
       <Filter>ソースファイル\作業フォルダ</Filter>
     </ClInclude>
   </ItemGroup>

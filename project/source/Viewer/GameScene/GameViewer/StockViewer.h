@@ -48,20 +48,15 @@ private:
 		"data/TEXTURE/Viewer/GameViewer/StockViewer/EDF/EDF_Icon.png",
 	};
 
-	////ホッピング関連変数
-	//void HopNumber(int StockViewerType);
-	////bool isHopped;
-	//float radian;
-	//const float hopValue = 30.0f;
-	//const float hopSpeed = 0.20f;
-	//const D3DXVECTOR3 initSizeNumber = D3DXVECTOR3(7.50f, 15.0f, 0.0f);
-
-
 	BaseViewerDrawer *icon[stockViewerMax];
 	BaseViewerDrawer *iconBG[stockViewerMax];
 	BaseViewerDrawer *numBG[stockViewerMax];
 	CountViewerDrawer *num[stockViewerMax];
 
+	void Animate(void);
+
+	const float hopNumValue = 30.0f;
+	const D3DXVECTOR3 initNumSize = D3DXVECTOR3(7.50f, 15.0f, 0.0f);
 };
 
 

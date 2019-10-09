@@ -7,7 +7,7 @@
 #ifndef _COUNT_VIEWER_DRAWER_H_
 #define _COUNT_VIEWER_DRAWER_H_
 
-#include "CountViewerDrawer.h"
+#include "BaseViewerDrawer.h"
 
 //*****************************************************************************
 // クラス定義
@@ -32,6 +32,12 @@ public:
 
 	//進数　
 	int baseNumber;
+
+	//ホップアニメーション関連変数
+	float HopNumber(float sizeY, float initSizeY, float hopValue);
+	bool isHopped;
+	float radian;
+	const float hopSpeed = D3DX_PI/10;
 
 private:
 	void SetVertex(int placeCount, float placeInterval);
