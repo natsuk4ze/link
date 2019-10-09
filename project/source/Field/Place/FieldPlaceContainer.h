@@ -57,7 +57,7 @@ namespace Field::Model
 		void OnCreateJunction(PlaceModel* place);
 
 		//混雑度計算
-		float CaclTrafficJamRate();
+		void CaclTrafficJamRate();
 
 		//AI発展レベル計算
 		float CalcDevelopmentLevelAI();
@@ -73,6 +73,8 @@ namespace Field::Model
 		int placeColumMax;						//1列あたりのプレイス最大数
 
 		bool initialized;						//初期化フラグ
+
+		float trafficJamRate;						//混雑度
 
 		//隣接プレイス作成内部処理
 		void MakeAdjacency();

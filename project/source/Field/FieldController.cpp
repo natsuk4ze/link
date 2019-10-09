@@ -253,6 +253,9 @@ namespace Field
 		//隣接するルートと連結させる
 		RouteProcessor::ConnectWithEdge(ptr, routeContainer);
 		RouteProcessor::Process(ptr, routeContainer);
+
+		//道を新しく作ったので混雑度を再計算
+		placeContainer->CaclTrafficJamRate();
 	}
 
 	/**************************************

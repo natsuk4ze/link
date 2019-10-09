@@ -22,7 +22,8 @@ namespace Field::Model
 	***************************************/
 	JunctionModel::JunctionModel(const PlaceModel * place) :
 		uniqueID(incrementID++),
-		place(place)
+		place(place),
+		trafficJam(0.0f)
 	{
 
 	}
@@ -35,9 +36,9 @@ namespace Field::Model
 	}
 
 	/**************************************
-	¬G“xæ“¾ˆ—
+	¬G“xŒvZˆ—
 	***************************************/
-	float JunctionModel::TrafficJam(TownContainer& townContainer)
+	void JunctionModel::Calculate(TownContainer & townContainer)
 	{
 		RouteContainer container = place->GetConnectingRoutes();
 
@@ -53,7 +54,15 @@ namespace Field::Model
 			inflowNum += townContainer[opponent->ID()]->DepatureNum();
 		}
 
-		return inflowNum;
+		trafficJam = inflowNum;
+	}
+
+	/**************************************
+	¬G“xæ“¾ˆ—
+	***************************************/
+	float JunctionModel::TrafficJam(TownContainer& townContainer)
+	{
+		return trafficJam;
 	}
 
 }

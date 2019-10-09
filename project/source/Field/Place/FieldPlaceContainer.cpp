@@ -33,7 +33,8 @@ namespace Field::Model
 	PlaceContainer::PlaceContainer() :
 		placeRowMax(0),
 		placeColumMax(0),
-		initialized(false)
+		initialized(false),
+		trafficJamRate(0.0f)
 	{
 		placeVector.reserve(PlaceMax);
 
@@ -80,7 +81,7 @@ namespace Field::Model
 		//デバッグ表示
 		Debug::Log("CntLinkedTown:%d", townContainer.size());
 		Debug::Log("CntJunction:%d", junctionContainer.size());
-		Debug::Log("TrafficJam: %f", CaclTrafficJamRate());
+		Debug::Log("TrafficJam: %f", trafficJamRate);
 
 	}
 
@@ -221,11 +222,11 @@ namespace Field::Model
 	/**************************************
 	混雑度計算
 	***************************************/
-	float Field::Model::PlaceContainer::CaclTrafficJamRate()
+	void Field::Model::PlaceContainer::CaclTrafficJamRate()
 	{
 		//出口がある街がなければ計算が成立しないので早期リターン
 		if (townContainer.empty())
-			return 1.0f;
+			return;
 
 		int sumGate = 0;
 		for (auto&& town : townContainer)
@@ -236,11 +237,17 @@ namespace Field::Model
 		//交差点が無い場合の計算式
 		if (junctionContainer.empty())
 		{
-			return ((float)townContainer.size() / sumGate);
+			trafficJamRate = ((float)townContainer.size() / sumGate);
 		}
 		//交差点がある場合の計算式
 		else
 		{
+			//交差点ごとの混雑度を計算
+			for (auto&& junction : junctionContainer)
+			{
+				junction.second->Calculate(townContainer);
+			}
+
 			float sumTrafficJam = 0.0f;
 			int validJunctionNum = 0;
 
@@ -255,7 +262,7 @@ namespace Field::Model
 				validJunctionNum++;
 			}
 
-			return Math::Min(sumTrafficJam * 0.01f * 1.5f / (validJunctionNum * sumGate), 1.0f);
+			trafficJamRate = Math::Min(sumTrafficJam * 0.01f * 1.5f / (validJunctionNum * sumGate), 1.0f);
 		}
 	}
 
@@ -264,16 +271,12 @@ namespace Field::Model
 	***************************************/
 	float Field::Model::PlaceContainer::CalcDevelopmentLevelAI()
 	{
-		ProfilerCPU::Instance()->Begin("CalculateTraffic");
-		float trafficJamRate = CaclTrafficJamRate();
-
 		float developLevel = 0.0f;
 		for (auto&& town : townContainer)
 		{
 			developLevel += town.second->OnGrowth(1.0f - trafficJamRate);
 		}
 
-		ProfilerCPU::Instance()->End("CalculateTraffic");
 		return developLevel;
 	}
 
