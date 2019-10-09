@@ -78,7 +78,6 @@
     <ClCompile Include="source\Field\Camera\FieldCamera.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCameraQuater.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCameraFar.cpp" />
-    <ClCompile Include="source\FieldObject\PlaceModel.cpp" />
     <ClCompile Include="Framework\Renderer2D\TextViewer.cpp" />
     <ClCompile Include="source\Field\Place\FieldPlaceModel.cpp" />
     <ClCompile Include="Library\imgui\imgui.cpp" />
@@ -111,6 +110,34 @@
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp">
       <Filter>ソースファイル\作業フォルダ</Filter>
     </ClCompile>
+    <ClCompile Include="source\Field\Route\RouteModel.cpp" />
+    <ClCompile Include="source\Field\Route\RouteProcessor.cpp" />
+    <ClCompile Include="source\FieldObject\CrossJunctionActor.cpp" />
+    <ClCompile Include="source\FieldObject\TJunctionActor.cpp" />
+    <ClCompile Include="source\FieldObject\CityActor.cpp" />
+    <ClCompile Include="source\FieldObject\CurveRoadActor.cpp" />
+    <ClCompile Include="source\FieldObject\MountainActor.cpp" />
+    <ClCompile Include="source\FieldObject\RiverActor.cpp" />
+    <ClCompile Include="source\FieldObject\StraightRoadActor.cpp" />
+    <ClCompile Include="source\Field\State\BuildRoad.cpp" />
+    <ClCompile Include="source\Field\State\FieldControllerIdle.cpp" />
+    <ClCompile Include="source\Field\State\UseItem.cpp" />
+    <ClCompile Include="source\Field\Place\OperatePlaceContainer.cpp" />
+    <ClCompile Include="source\Field\FieldInputController.cpp" />
+    <ClCompile Include="source\Field\Place\FieldTownModel.cpp" />
+    <ClCompile Include="source\Field\Place\FieldJunctionModel.cpp" />
+    <ClCompile Include="source\Field\Item\ItemModel.cpp" />
+    <ClCompile Include="source\Field\Item\ItemActor.cpp" />
+    <ClCompile Include="source\Field\Passenger\PassengerActor.cpp" />
+    <ClCompile Include="Framework\Resource\MeshResource.cpp" />
+    <ClCompile Include="Framework\Renderer2D\CircleGauge.cpp" />
+    <ClCompile Include="source\Field\Info\FieldInfoActor.cpp" />
+    <ClCompile Include="source\Field\Info\CreateFieldInfoState.cpp" />
+    <ClCompile Include="source\Field\Info\IdleFieldInfoState.cpp" />
+    <ClCompile Include="source\Field\Info\RemoveFieldInfoState.cpp" />
+    <ClCompile Include="source\Field\Info\ConnectFieldInfoState.cpp" />
+    <ClCompile Include="source\Field\Info\LinkFieldInfoState.cpp" />
+    <ClCompile Include="source\Field\Info\CongestionFieldInfoState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -200,7 +227,6 @@
     <ClInclude Include="source\Field\Camera\FieldCamera.h" />
     <ClInclude Include="source\Field\Camera\FieldCameraQuater.h" />
     <ClInclude Include="source\Field\Camera\FieldCameraFar.h" />
-    <ClInclude Include="source\FieldObject\PlaceModel.h" />
     <ClInclude Include="Framework\Renderer2D\TextViewer.h" />
     <ClInclude Include="source\Field\Place\FieldPlaceModel.h" />
     <ClInclude Include="source\Field\Place\PlaceConfig.h" />
@@ -251,5 +277,34 @@
     <Filter Include="ソースファイル\作業フォルダ">
       <UniqueIdentifier>{8c50b45f-4aea-4307-a60f-4b74935d8dba}</UniqueIdentifier>
     </Filter>
+    <ClInclude Include="source\Field\Route\RouteModel.h" />
+    <ClInclude Include="source\Field\Route\RouteProcessor.h" />
+    <ClInclude Include="source\FieldObject\CrossJunctionActor.h" />
+    <ClInclude Include="source\FieldObject\TJunctionActor.h" />
+    <ClInclude Include="source\FieldObject\CityActor.h" />
+    <ClInclude Include="source\FieldObject\CurveRoadActor.h" />
+    <ClInclude Include="source\FieldObject\MountainActor.h" />
+    <ClInclude Include="source\FieldObject\RiverActor.h" />
+    <ClInclude Include="source\FieldObject\StraightRoadActor.h" />
+    <ClInclude Include="source\Field\State\BuildRoad.h" />
+    <ClInclude Include="source\Field\State\FieldControllerIdle.h" />
+    <ClInclude Include="source\Field\State\UseItem.h" />
+    <ClInclude Include="source\Field\Place\OperatePlaceContainer.h" />
+    <ClInclude Include="source\Field\FieldConfig.h" />
+    <ClInclude Include="source\Field\FieldInputController.h" />
+    <ClInclude Include="source\Field\Place\FieldTownModel.h" />
+    <ClInclude Include="source\Field\Place\FieldJunctionModel.h" />
+    <ClInclude Include="source\Field\Item\ItemModel.h" />
+    <ClInclude Include="source\Field\Item\ItemActor.h" />
+    <ClInclude Include="source\Field\Passenger\PassengerActor.h" />
+    <ClInclude Include="Framework\Resource\MeshResource.h" />
+    <ClInclude Include="Framework\Renderer2D\CircleGauge.h" />
+    <ClInclude Include="source\Field\Info\FieldInfoActor.h" />
+    <ClInclude Include="source\Field\Info\CreateFieldInfoState.h" />
+    <ClInclude Include="source\Field\Info\IdleFieldInfoState.h" />
+    <ClInclude Include="source\Field\Info\RemoveFieldInfoState.h" />
+    <ClInclude Include="source\Field\Info\ConnectFieldInfoState.h" />
+    <ClInclude Include="source\Field\Info\LinkFieldInfoState.h" />
+    <ClInclude Include="source\Field\Info\CongestionFieldInfoState.h" />
   </ItemGroup>
 </Project>

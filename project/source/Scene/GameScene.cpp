@@ -10,7 +10,6 @@
 
 #include "../../Framework/Renderer3D/SkyBox.h"
 #include "../FieldObject/PlaceActor.h"
-#include "../../Framework/Resource/ResourceManager.h"
 #include "../Field/FieldController.h"
 #include "../Field/Camera/FieldCamera.h"
 #include "../../Framework/Renderer2D/TextViewer.h"
@@ -27,9 +26,6 @@ void GameScene::Init()
 	//カメラ作成
 	fieldCamera = new FieldCamera();
 	Camera::SetMainCamera(fieldCamera);
-
-	// 3Dオブジェクトのリソースをロード
-	ResourceManager::Instance()->LoadMesh("Model", "data/MODEL/PlaceActor/Cross-Junction.x");
 
 	//テキスト用にフォントをロード
 	TextViewer::LoadFont("data/FONT/mplus-2c-heavy.ttf");

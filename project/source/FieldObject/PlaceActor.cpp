@@ -6,22 +6,24 @@
 //
 //=====================================
 #include "PlaceActor.h"
-#include "../../Framework/Resource/ResourceManager.h"
+
+//**************************************
+// クラスのメンバ変数初期化
+//**************************************
+const D3DXVECTOR3 PlaceActor::ActorScale = D3DXVECTOR3(0.2f, 0.2f, 0.2f);
 
 //=====================================
 // コンストラクタ
 //=====================================
-PlaceActor::PlaceActor(const D3DXVECTOR3& pos)
+PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
 {
 	// メッシュコンテナの作成
 	mesh = MeshContainer::Create();
-	//mesh->Load("data/MODEL/PlaceActor/Cross-Junction.x");
-	ResourceManager::Instance()->GetMesh("Model", mesh);
 
 	// ステータスセット
 	transform->SetPosition(pos);
 	transform->SetScale(ActorScale);
-	SetActive(true);
+	this->SetActive(true);
 }
 
 //=====================================
@@ -37,7 +39,21 @@ PlaceActor::~PlaceActor()
 //=====================================
 void PlaceActor::Update()
 {
-	this->PlayAnimation(animType);
+	if (!this->IsActive())
+		return;
+
+	if (!animActive)
+		return;
+
+	switch (animType)
+	{
+	case FActor::Create:
+		break;
+	case FActor::Remove:
+		break;
+	default:
+		break;
+	}
 }
 
 //=====================================
@@ -45,6 +61,9 @@ void PlaceActor::Update()
 //=====================================
 void PlaceActor::Draw()
 {
+	if (!this->IsActive())
+		return;
+
 	transform->SetWorld();
 	mesh->Draw();
 }
@@ -54,18 +73,22 @@ void PlaceActor::Draw()
 //=====================================
 void PlaceActor::Rotate(float y)
 {
-	D3DXQUATERNION rot = transform->GetRotation();
-	transform->SetRotation(D3DXQUATERNION(rot.x, rot.y + (FLOAT)y, rot.z, rot.w));
+	transform->Rotate(0.0f, y, 0.0f);
 }
 
 //=====================================
-// アニメーション再生
+// アニメーションを再生させる
 //=====================================
-void PlaceActor::PlayAnimation(int AnimType)
+void PlaceActor::PlayAnimation(FActor::AnimType AnimType)
 {
-	//switch (AnimType)
-	//{
-	//default:
-	//	break;
-	//}
+	this->animType = AnimType;
+	this->animActive = true;
+}
+
+//=====================================
+// メッシュデータのカラー変更
+//=====================================
+void PlaceActor::SetColor(const D3DXCOLOR& color, UINT index)
+{
+	mesh->SetMaterialColor(color, index);
 }

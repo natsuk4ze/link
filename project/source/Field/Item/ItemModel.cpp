@@ -1,56 +1,49 @@
 //=====================================
 //
-// プレイスモデル[PlaceModel.cpp]
-// 機能：フィールド上に設置される3Dオブジェクトを管理するクラス
+// アイテムモデル[ItemModel.cpp]
+// 機能：フィールド上のアイテムモデル
 // Author:GP12B332 19 染谷武志
 //
 //=====================================
-#include "PlaceModel.h"
-#include "PlaceActor.h"
-
-using namespace std;
+#include "ItemModel.h"
+#include "ItemActor.h"
+#include "../../../main.h"
 
 //=====================================
 // コンストラクタ
 //=====================================
-PlaceModel::PlaceModel()
+ItemModel::ItemModel() :
+	actor(NULL)
 {
-	actor.reserve(10000);
-
-	// とりあえず1つ表示
-	actor.push_back(new PlaceActor(D3DXVECTOR3(0.0f, 0.0f, 0.0f)));
+	actor = new ItemActor(D3DXVECTOR3(0.0f, 3.0f, 0.0f));
 }
 
 //=====================================
 // デストラクタ
 //=====================================
-PlaceModel::~PlaceModel()
+ItemModel::~ItemModel()
 {
-	for (auto &a : actor)
-	{
-		SAFE_DELETE(a);
-	}
-	actor.clear();
+	SAFE_DELETE(actor);
 }
 
 //=====================================
 // 更新
 //=====================================
-void PlaceModel::Update()
+void ItemModel::Update()
 {
-	for (auto &a : actor)
+	if (actor != NULL)
 	{
-		a->Update();
+		actor->Update();
 	}
 }
 
 //=====================================
 // 描画
 //=====================================
-void PlaceModel::Draw()
+void ItemModel::Draw()
 {
-	for (auto &a : actor)
+	if (actor != NULL)
 	{
-		a->Draw();
+		actor->Draw();
 	}
 }

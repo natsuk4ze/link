@@ -8,8 +8,19 @@
 #ifndef _PLACECONFIG_H_
 #define _PLACECONFIG_H_
 
+#include <vector>
+
 namespace Field::Model
 {
+	/**************************************
+	型エイリアス
+	***************************************/
+	class RouteModel;
+	class PlaceModel;
+
+	using RouteModelPtr = std::shared_ptr<RouteModel>;
+	using RouteContainer = std::vector<std::shared_ptr<RouteModel>>;
+
 	/**************************************
 	PlaceModelのタイプを表す列挙子
 	***************************************/
@@ -21,7 +32,17 @@ namespace Field::Model
 		River,			//川
 		Bridge,			//橋
 		Junction,		//交差点
-		Moutain			//山
+		Mountain		//山
+	};
+
+	/**************************************
+	フィールドレベルのタイプを表す列挙子
+	***************************************/
+	enum FieldLevel
+	{
+		City,	// 都市レベル
+		World,	// 国レベル
+		Space,	// 星レベル
 	};
 
 	/**************************************
@@ -36,7 +57,7 @@ namespace Field::Model
 			return PlaceType::River;
 
 		if (n == 3)
-			return PlaceType::Moutain;
+			return PlaceType::Mountain;
 
 		return PlaceType::None;
 	}
@@ -50,7 +71,25 @@ namespace Field::Model
 		Left,			//Xマイナス方向の隣接
 		Forward,		//Zプラス方向の隣接
 		Right,			//Xプラス方向の隣接
-		Max
+		Max,
+		NotAdjacenct	//隣接していない
 	};
+
+	/**************************************
+	隣接方向の逆側を求める処理
+	***************************************/
+	inline Adjacency GetInverseSide(const Adjacency adjacency)
+	{
+		if (adjacency == Back)
+			return Forward;
+		if (adjacency == Left)
+			return Right;
+		if (adjacency == Forward)
+			return Back;
+		if (adjacency == Right)
+			return Left;
+
+		return NotAdjacenct;
+	}
 }
 #endif

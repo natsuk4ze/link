@@ -9,8 +9,11 @@
 #define _FIELDCONTROLLER_H_
 
 #include "../../main.h"
+#include "../../Framework/Pattern/BaseState.h"
+#include "../../Framework/Pattern/Delegate.h"
+#include "Place\PlaceConfig.h"
 
-class PlaceModel;
+#include <vector>
 
 namespace Field
 {
@@ -23,7 +26,12 @@ namespace Field
 	namespace Model
 	{
 		class PlaceContainer;
+		class OperatePlaceContainer;
 	}
+
+	using PlaceVector = std::vector<Model::PlaceModel*>;
+	using PlaceIterator = PlaceVector::iterator;
+	using ReversePlaceIterator = std::reverse_iterator<PlaceIterator>;
 
 	/**************************************
 	クラス定義
@@ -31,6 +39,16 @@ namespace Field
 	class FieldController
 	{
 	public:
+		//フィールドコントローラのモード列挙子
+		enum State
+		{
+			Idle,			//特に何もしない状態
+			Build,			//道を作る状態
+			Develop,		//アイテムを使って川、山を開拓する状態
+			Max
+		};
+		using ControllerState = BaseState<FieldController, FieldController::State>;
+
 		//コンストラクタ、デストラクタ
 		FieldController();
 		~FieldController();
@@ -50,18 +68,51 @@ namespace Field
 		GameObject* GetFieldCursor();
 
 	private:
-		const float PlaceOffset = 10.0f;		//Placeの1マス毎のオフセット値
-		const int InitFieldBorder = 25;			//フィールド範囲の初期値
-		const int InputLongWait = 15;			//入力リピートの待機フレーム
-		const int InputShortWait = 5;			//入力リピートの待機フレーム
+		static const float PlaceOffset;					//Placeの1マス毎のオフセット値
+		static const int InitFieldBorder;				//フィールド範囲の初期値
+		static const int InputLongWait;					//入力リピートの待機フレーム
+		static const int InputShortWait;				//入力リピートの待機フレーム
+		static const unsigned InitDevelopRiverStock;	//川開発ストックの初期数
+		static const unsigned InitDevelopMountainStock;	//山開発ストックの初期数
 
-		FieldCursor *cursor;					//カーソル
-		FieldGround *ground;					//地面
-		Model::PlaceContainer *placeContainer;	//プレイスコンテナ
-		::PlaceModel *model;					//3Dモデルマネージャ(テスト用）	
+		FieldCursor *cursor;								//カーソル
+		FieldGround *ground;								//地面
+
+		Model::PlaceContainer *placeContainer;				//プレイスコンテナ
+		Model::OperatePlaceContainer *operateContainer;		//操作対象プレイスのコンテナ
+		Model::RouteContainer routeContainer;				//ルートモデルコンテナ
 
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int inputRepeatCnt;						//入力のリピートカウント
+		unsigned stockDevelopRiver;				//川開発アイテムストック
+		unsigned stockDevelopMountain;			//山開発アイテムストック
+
+		State current;
+		ControllerState *state;					//現在のステート
+		std::vector<ControllerState*> fsm;		//ステートマシン
+
+		//デリゲータ
+		DelegatePtr<Model::PlaceModel*> onConnectTown;
+		DelegatePtr<Model::PlaceModel*> onCreateJunction;
+
+		//ステート切り替え
+		void ChangeState(State next);
+
+		//カーソル位置のプレイスを取得
+		Model::PlaceModel* GetPlace();
+
+		//道を作る
+		void BuildRoad();
+
+		//川、山の開発
+		void DevelopPlace(PlaceVector& route, PlaceIterator start);
+		PlaceIterator DevelopMountain(PlaceVector& route, PlaceIterator moutain);
+		PlaceIterator DevelopRiver(PlaceVector& route, PlaceIterator river);
+
+		//各ステートクラスの前方宣言
+		class IdleState;
+		class BuildRoadState;
+		class UseItemState;
 	};
 }
 #endif

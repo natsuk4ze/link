@@ -52,7 +52,7 @@ private:
 
 	SkyBox *skybox;								//背景スカイボックス
 	FieldCamera* fieldCamera;					//フィールドカメラ
-	Field::FieldController *field;			//フィールドコントローラ
+	Field::FieldController *field;				//フィールドコントローラ
 	TextViewer *text;							//テスト用テキストビューワ
 	GameViewer *gameViewer;					//ゲームビュアー
 

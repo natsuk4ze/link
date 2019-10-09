@@ -1,0 +1,24 @@
+//=====================================
+//
+// リムーブフィールドインフォステート[RmoveFieldInfoState.cpp]
+// 機能：フィールドインフォアクターのステート（削除）
+// Author:GP12B332 19 染谷武志
+//
+//=====================================
+#include "RemoveFieldInfoState.h"
+
+//=====================================
+// 入場処理
+//=====================================
+void FieldInfoActor::RemoveFieldInfoState::OnStart(FieldInfoActor& entity)
+{
+
+}
+
+//=====================================
+// 更新処理
+//=====================================
+FieldInfoActor::State FieldInfoActor::RemoveFieldInfoState::OnUpdate(FieldInfoActor& entity)
+{
+	return State::Idle;
+}

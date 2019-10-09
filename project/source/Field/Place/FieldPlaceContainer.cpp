@@ -7,10 +7,18 @@
 //=====================================
 #include "FieldPlaceContainer.h"
 #include "FieldPlaceModel.h"
+#include "FieldTownModel.h"
+#include "FieldJunctionModel.h"
 #include "../../../Framework/String/String.h"
+#include "../../../Framework/Tool/DebugWindow.h"
 
 #include <fstream>
 #include <string>
+
+#ifdef DEBUG_PLACEMODEL
+#include "../../../Framework/Resource/ResourceManager.h"
+#include "../../../Framework/Renderer3D/BoardPolygon.h"
+#endif
 
 namespace Field::Model
 {
@@ -22,9 +30,23 @@ namespace Field::Model
 	コンストラクタ
 	***************************************/
 	PlaceContainer::PlaceContainer() :
+		placeRowMax(0),
+		placeColumMax(0),
 		initialized(false)
 	{
 		placeVector.reserve(PlaceMax);
+
+#ifdef DEBUG_PLACEMODEL
+		//デバッグ表示用の板ポリゴンを作成する
+		ResourceManager::Instance()->MakePolygon("None", "", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Road", "data/TEXTURE/PlaceTest/road.jpg", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Town", "data/TEXTURE/PlaceTest/town.jpg", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("River", "data/TEXTURE/PlaceTest/river.jpg", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Bridge", "data/TEXTURE/PlaceTest/Bridge.jpg", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Junction", "data/TEXTURE/PlaceTest/junction.jpg", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Mountain", "data/TEXTURE/PlaceTest/mountain.jpg", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Operate", "data/TEXTURE/PlaceTest/operate.jpg", { 2.0f, 2.0f });
+#endif
 	}
 
 	/**************************************
@@ -33,6 +55,9 @@ namespace Field::Model
 	PlaceContainer::~PlaceContainer()
 	{
 		Utility::DeleteContainer(placeVector);
+
+		Utility::DeleteMap(townContainer);
+		Utility::DeleteMap(junctionContainer);
 	}
 
 	/**************************************
@@ -47,6 +72,11 @@ namespace Field::Model
 		{
 			place->Update();
 		}
+
+		//デバッグ表示
+		Debug::Log("CntLinkedTown:%d", townContainer.size());
+		Debug::Log("CntJunction:%d", junctionContainer.size());
+		Debug::Log("TrafficJam: %f", CaclTrafficJamRate());
 
 	}
 
@@ -76,6 +106,20 @@ namespace Field::Model
 			return nullptr;
 
 		return placeVector[placeColumMax * z + x];
+	}
+
+	/**************************************
+	プレイス取得処理
+	***************************************/
+	PlaceModel* PlaceContainer::GetPlace(const FieldPosition& position)
+	{
+		if (position.x < 0 || position.x >= placeRowMax)
+			return nullptr;
+
+		if (position.z < 0 || position.z >= placeColumMax)
+			return nullptr;
+
+		return placeVector[placeColumMax * position.z + position.x];
 	}
 
 	/**************************************
@@ -126,6 +170,85 @@ namespace Field::Model
 
 		//初期化完了
 		initialized = true;
+	}
+
+	/**************************************
+	行、列の最大数取得
+	***************************************/
+	FieldPosition Field::Model::PlaceContainer::GetPlaceBorder() const
+	{
+		return FieldPosition(placeRowMax, placeColumMax);
+	}
+
+	/**************************************
+	街が道と繋がったときの処理
+	***************************************/
+	void Field::Model::PlaceContainer::OnConnectedTown(PlaceModel * place)
+	{
+		unsigned placeID = place->ID();
+
+		//登録確認
+		if (townContainer.count(placeID) == 0)
+		{
+			townContainer.emplace(placeID, new TownModel(place));
+		}
+
+		townContainer[placeID]->AddGate();
+	}
+
+	/**************************************
+	交差点が作られたときの処理
+	***************************************/
+	void Field::Model::PlaceContainer::OnCreateJunction(PlaceModel * place)
+	{
+		unsigned placeID = place->ID();
+
+		//登録確認
+		if (junctionContainer.count(placeID) == 0)
+		{
+			junctionContainer.emplace(placeID, new JunctionModel(place));
+		}
+	}
+
+	/**************************************
+	混雑度計算
+	***************************************/
+	float Field::Model::PlaceContainer::CaclTrafficJamRate()
+	{
+		//出口がある街がなければ計算が成立しないので早期リターン
+		if (townContainer.empty())
+			return 1.0f;
+
+		int sumGate = 0;
+		for (auto&& town : townContainer)
+		{
+			sumGate += town.second->GateNum();
+		}
+
+		//交差点が無い場合の計算式
+		if (junctionContainer.empty())
+		{
+			return ((float)townContainer.size() / sumGate);
+		}
+		//交差点がある場合の計算式
+		else
+		{
+			float sumTrafficJam = 0.0f;
+			int validJunctionNum = 0;
+
+			for (auto&& junction : junctionContainer)
+			{
+				float trafficJam = junction.second->TrafficJam(townContainer);
+
+				if (trafficJam == 0.0f)
+					continue;
+
+				sumTrafficJam += trafficJam;
+				validJunctionNum++;
+			}
+
+			return Math::Min(sumTrafficJam * 0.01f * 1.5f / (validJunctionNum * sumGate), 1.0f);
+		}
 	}
 
 	/**************************************

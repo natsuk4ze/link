@@ -8,22 +8,26 @@
 #define _MESHCONTAINER_H_
 
 #include "../../main.h"
+#include <vector>
 
 /**************************************
-マクロ定義
+前方宣言
 ***************************************/
+class MeshResource;
 
 /**************************************
 クラス定義
 ***************************************/
 class MeshContainer
 {
-	friend class ResourceManager;
+	friend class MeshResource;
 public:
+	MeshContainer();					//コンストラクタ
+	~MeshContainer();					//デストラクタ
+
 	static MeshContainer* Create();
 	void Release();
 
-	HRESULT Load(const char* filePath);	//Xファイルの読み込み
 	void Draw();						//モデルを描画
 
 	UINT GetMaterialNum();
@@ -31,19 +35,14 @@ public:
 	void SetMaterialColor(const D3DXCOLOR& color, UINT index);
 	void SetMaterialAlpha(float alpha, UINT index);
 
-	void AddRef();
-
 protected:								
-	MeshContainer();					//コンストラクタ
-	~MeshContainer();					//デストラクタ
+	LPD3DXMESH mesh;								//メッシュデータ
+	std::vector<D3DMATERIAL9> materials;			//マテリアル情報
+	std::vector<LPDIRECT3DTEXTURE9> textures;		//テクスチャ
+	DWORD materialNum;								//マテリアル数
 
-
-	LPD3DXMESH mesh;					//メッシュデータ
-	D3DMATERIAL9* materials;			//マテリアル情報
-	LPDIRECT3DTEXTURE9 *textures;		//テクスチャ
-	DWORD materialNum;					//マテリアル数
-
-	UINT cntReference;
+private:
+	MeshResource * resource;						//リソースの参照元
 };
 
 #endif

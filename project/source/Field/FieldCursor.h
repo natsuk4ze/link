@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "../../main.h"
+#include "FieldConfig.h"
 #include "../../Framework/Renderer3D/BoardPolygon.h"
 
 namespace Field
@@ -38,7 +39,13 @@ namespace Field
 		void Move(int x, int z);
 
 		//移動範囲設定処理
-		void SetBorder(int borderX, int borderZ);
+		void SetBorder(int forward, int right, int back, int left);
+
+		//座標取得
+		FieldPosition GetModelPosition() const;
+
+		//座標設定処理
+		void SetModelPosition(int x, int z);
 
 	private:
 		const int SquareMax = 5;			//四角形最大数
@@ -46,10 +53,11 @@ namespace Field
 		const int MoveDuration = 4;			//移動時間
 		const float PositionOffset;			//1マス毎の座標オフセット			
 
-		int borderX, borderZ;				//移動可能範囲
 		int cntFrame;						//フレームカウント
-		int posX, posZ;						//X座標、Z座標
 		int cntMove;						//移動カウント
+
+		FieldPosition position;				//座標
+		FieldBorder fieldBorder;			//移動可能な範囲
 
 		D3DXVECTOR3 moveTarget;				//移動の目標地点
 		D3DXVECTOR3 startPos;				//移動のスタート地点
@@ -61,6 +69,9 @@ namespace Field
 
 		//移動内部処理
 		void Move();
+
+		//ワールド座標系酸処理
+		D3DXVECTOR3 CalcWorldPosition() const;
 	};
 
 	/**************************************
@@ -87,9 +98,9 @@ namespace Field
 		static bool Compare(const FieldCursorSquare* lhs, const FieldCursorSquare* rhs);
 
 	private:
-		const D3DXVECTOR2 Size{ 5.0f, 5.0f };		//サイズ
-		const int FadeDuration = 30;				//フェード時間
-		const float MoveSpeed = 0.3f;				//移動スピード
+		static const D3DXVECTOR2 Size;				//サイズ
+		static const int FadeDuration;				//フェード時間
+		static const float MoveSpeed;				//移動スピード
 
 		int cntFrame;								//フレームカウント
 		Transform *transform;						//SRT情報
