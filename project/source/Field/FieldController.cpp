@@ -244,7 +244,6 @@ namespace Field
 
 		//ルートモデル作成
 		RouteModelPtr ptr = RouteModel::Create(onConnectTown, onCreateJunction, route);
-		routeContainer.push_back(ptr);
 
 		//端点設定
 		ptr->SetEdge();
