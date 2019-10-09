@@ -32,6 +32,9 @@ namespace Field::Model
 		~JunctionModel();
 
 		//混雑度計算処理
+		void Calculate(TownContainer& townContainer);
+
+		//混雑度取得処理
 		float TrafficJam(TownContainer& townContainer);
 
 	private:
@@ -41,6 +44,9 @@ namespace Field::Model
 
 		//参照するプレイスモデル
 		const PlaceModel* place;
+
+		//混雑度
+		float trafficJam;
 	};
 }
 #endif

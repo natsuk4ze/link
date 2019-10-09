@@ -11,6 +11,7 @@
 #include "FieldJunctionModel.h"
 #include "../../../Framework/String/String.h"
 #include "../../../Framework/Tool/DebugWindow.h"
+#include "../../../Framework/Tool/ProfilerCPU.h"
 
 #include <fstream>
 #include <string>
@@ -32,7 +33,8 @@ namespace Field::Model
 	PlaceContainer::PlaceContainer() :
 		placeRowMax(0),
 		placeColumMax(0),
-		initialized(false)
+		initialized(false),
+		trafficJamRate(0.0f)
 	{
 		placeVector.reserve(PlaceMax);
 
@@ -67,16 +69,19 @@ namespace Field::Model
 	{
 		if (!initialized)
 			return;
+		ProfilerCPU::Instance()->BeginLabel("Field");
 
+		ProfilerCPU::Instance()->Begin("Update");
 		for (auto&& place : placeVector)
 		{
 			place->Update();
 		}
+		ProfilerCPU::Instance()->End("Update");
 
 		//ƒfƒoƒbƒO•\Ž¦
 		Debug::Log("CntLinkedTown:%d", townContainer.size());
 		Debug::Log("CntJunction:%d", junctionContainer.size());
-		Debug::Log("TrafficJam: %f", CaclTrafficJamRate());
+		Debug::Log("TrafficJam: %f", trafficJamRate);
 
 	}
 
@@ -88,10 +93,14 @@ namespace Field::Model
 		if (!initialized)
 			return;
 
+		ProfilerCPU::Instance()->Begin("Draw");
 		for (auto&& place : placeVector)
 		{
 			place->Draw();
 		}
+		ProfilerCPU::Instance()->End("Draw");
+
+		ProfilerCPU::Instance()->EndLabel();
 	}
 
 	/**************************************
@@ -213,11 +222,11 @@ namespace Field::Model
 	/**************************************
 	¬ŽG“xŒvŽZ
 	***************************************/
-	float Field::Model::PlaceContainer::CaclTrafficJamRate()
+	void Field::Model::PlaceContainer::CaclTrafficJamRate()
 	{
 		//oŒû‚ª‚ ‚éŠX‚ª‚È‚¯‚ê‚ÎŒvŽZ‚ª¬—§‚µ‚È‚¢‚Ì‚Å‘ŠúƒŠƒ^[ƒ“
 		if (townContainer.empty())
-			return 1.0f;
+			return;
 
 		int sumGate = 0;
 		for (auto&& town : townContainer)
@@ -228,11 +237,17 @@ namespace Field::Model
 		//Œð·“_‚ª–³‚¢ê‡‚ÌŒvŽZŽ®
 		if (junctionContainer.empty())
 		{
-			return ((float)townContainer.size() / sumGate);
+			trafficJamRate = ((float)townContainer.size() / sumGate);
 		}
 		//Œð·“_‚ª‚ ‚éê‡‚ÌŒvŽZŽ®
 		else
 		{
+			//Œð·“_‚²‚Æ‚Ì¬ŽG“x‚ðŒvŽZ
+			for (auto&& junction : junctionContainer)
+			{
+				junction.second->Calculate(townContainer);
+			}
+
 			float sumTrafficJam = 0.0f;
 			int validJunctionNum = 0;
 
@@ -247,8 +262,22 @@ namespace Field::Model
 				validJunctionNum++;
 			}
 
-			return Math::Min(sumTrafficJam * 0.01f * 1.5f / (validJunctionNum * sumGate), 1.0f);
+			trafficJamRate = Math::Min(sumTrafficJam * 0.01f * 1.5f / (validJunctionNum * sumGate), 1.0f);
 		}
+	}
+
+	/**************************************
+	AI”­“WƒŒƒxƒ‹ŒvŽZ
+	***************************************/
+	float Field::Model::PlaceContainer::CalcDevelopmentLevelAI()
+	{
+		float developLevel = 0.0f;
+		for (auto&& town : townContainer)
+		{
+			developLevel += town.second->OnGrowth(1.0f - trafficJamRate);
+		}
+
+		return developLevel;
 	}
 
 	/**************************************

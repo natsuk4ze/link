@@ -39,6 +39,9 @@ namespace Field::Model
 		//リンクレベル計算処理
 		int LinkLevel();
 
+		//レベルが上がる際に呼ばれる処理
+		float OnGrowth(float trafficJamRate);
+
 	private:
 		static const float BaseDepatureNum;		//基準となる出発数
 
@@ -51,6 +54,12 @@ namespace Field::Model
 
 		//出口数
 		int cntGate;
+
+		//リンクレベル
+		int linkLevel;
+
+		//発展度
+		float developmentLevel;
 	};
 }
 #endif
