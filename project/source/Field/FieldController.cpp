@@ -18,8 +18,6 @@
 #include "State/FieldControllerIdle.h"
 #include "State/UseItem.h"
 
-#include "Item/ItemModel.h"
-
 #include "../../Framework/Input/input.h"
 #include "../../Framework/Tool/DebugWindow.h"
 

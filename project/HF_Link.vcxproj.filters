@@ -105,18 +105,18 @@
     <ClCompile Include="source\Field\FieldInputController.cpp" />
     <ClCompile Include="source\Field\Place\FieldTownModel.cpp" />
     <ClCompile Include="source\Field\Place\FieldJunctionModel.cpp" />
-    <ClCompile Include="source\Field\Item\ItemModel.cpp" />
-    <ClCompile Include="source\Field\Item\ItemActor.cpp" />
-    <ClCompile Include="source\Field\Passenger\PassengerActor.cpp" />
     <ClCompile Include="Framework\Resource\MeshResource.cpp" />
     <ClCompile Include="Framework\Renderer2D\CircleGauge.cpp" />
-    <ClCompile Include="source\Field\Info\FieldInfoActor.cpp" />
-    <ClCompile Include="source\Field\Info\CreateFieldInfoState.cpp" />
-    <ClCompile Include="source\Field\Info\IdleFieldInfoState.cpp" />
-    <ClCompile Include="source\Field\Info\RemoveFieldInfoState.cpp" />
-    <ClCompile Include="source\Field\Info\ConnectFieldInfoState.cpp" />
-    <ClCompile Include="source\Field\Info\LinkFieldInfoState.cpp" />
-    <ClCompile Include="source\Field\Info\CongestionFieldInfoState.cpp" />
+    <ClCompile Include="source\FieldObject\Info\CongestionFieldInfoState.cpp" />
+    <ClCompile Include="source\FieldObject\Info\ConnectFieldInfoState.cpp" />
+    <ClCompile Include="source\FieldObject\Info\CreateFieldInfoState.cpp" />
+    <ClCompile Include="source\FieldObject\Info\FieldInfoActor.cpp" />
+    <ClCompile Include="source\FieldObject\Info\IdleFieldInfoState.cpp" />
+    <ClCompile Include="source\FieldObject\Info\LinkFieldInfoState.cpp" />
+    <ClCompile Include="source\FieldObject\Info\RemoveFieldInfoState.cpp" />
+    <ClCompile Include="source\FieldObject\Item\ItemActor.cpp" />
+    <ClCompile Include="source\FieldObject\Item\ItemModel.cpp" />
+    <ClCompile Include="source\FieldObject\Passenger\PassengerActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -238,17 +238,17 @@
     <ClInclude Include="source\Field\FieldInputController.h" />
     <ClInclude Include="source\Field\Place\FieldTownModel.h" />
     <ClInclude Include="source\Field\Place\FieldJunctionModel.h" />
-    <ClInclude Include="source\Field\Item\ItemModel.h" />
-    <ClInclude Include="source\Field\Item\ItemActor.h" />
-    <ClInclude Include="source\Field\Passenger\PassengerActor.h" />
     <ClInclude Include="Framework\Resource\MeshResource.h" />
     <ClInclude Include="Framework\Renderer2D\CircleGauge.h" />
-    <ClInclude Include="source\Field\Info\FieldInfoActor.h" />
-    <ClInclude Include="source\Field\Info\CreateFieldInfoState.h" />
-    <ClInclude Include="source\Field\Info\IdleFieldInfoState.h" />
-    <ClInclude Include="source\Field\Info\RemoveFieldInfoState.h" />
-    <ClInclude Include="source\Field\Info\ConnectFieldInfoState.h" />
-    <ClInclude Include="source\Field\Info\LinkFieldInfoState.h" />
-    <ClInclude Include="source\Field\Info\CongestionFieldInfoState.h" />
+    <ClInclude Include="source\FieldObject\Info\CongestionFieldInfoState.h" />
+    <ClInclude Include="source\FieldObject\Info\ConnectFieldInfoState.h" />
+    <ClInclude Include="source\FieldObject\Info\CreateFieldInfoState.h" />
+    <ClInclude Include="source\FieldObject\Info\FieldInfoActor.h" />
+    <ClInclude Include="source\FieldObject\Info\IdleFieldInfoState.h" />
+    <ClInclude Include="source\FieldObject\Info\LinkFieldInfoState.h" />
+    <ClInclude Include="source\FieldObject\Info\RemoveFieldInfoState.h" />
+    <ClInclude Include="source\FieldObject\Item\ItemActor.h" />
+    <ClInclude Include="source\FieldObject\Item\ItemModel.h" />
+    <ClInclude Include="source\FieldObject\Passenger\PassengerActor.h" />
   </ItemGroup>
 </Project>
