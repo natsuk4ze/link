@@ -23,6 +23,10 @@ namespace Input
 
 	float GetPressHorizontail(int no = 0);
 	float GetPressVertical(int no = 0);
+
+	float GetTriggerHorizontal(int no = 0);
+	float GetTriggerVertical(int no = 0);
+
 	float GetRepeatHorizontal(int no = 0);
 	float GetRepeatVertical(int no = 0);
 };
