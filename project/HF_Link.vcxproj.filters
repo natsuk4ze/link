@@ -117,6 +117,7 @@
     <ClCompile Include="source\FieldObject\Item\ItemActor.cpp" />
     <ClCompile Include="source\FieldObject\Item\ItemModel.cpp" />
     <ClCompile Include="source\FieldObject\Passenger\PassengerActor.cpp" />
+    <ClCompile Include="source\FieldObject\BridgeActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -250,5 +251,6 @@
     <ClInclude Include="source\FieldObject\Item\ItemActor.h" />
     <ClInclude Include="source\FieldObject\Item\ItemModel.h" />
     <ClInclude Include="source\FieldObject\Passenger\PassengerActor.h" />
+    <ClInclude Include="source\FieldObject\BridgeActor.h" />
   </ItemGroup>
 </Project>
