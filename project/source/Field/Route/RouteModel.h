@@ -83,7 +83,7 @@ namespace Field::Model
 		bool IsUnused();
 
 		//全プレイス取得
-		const std::vector<const PlaceModel*> GetAllPlaces();
+		const std::vector<const PlaceModel*> GetAllPlaces() const;
 
 	private:
 		PlaceModel *edgeStart, *edgeEnd;			//端点のPlace

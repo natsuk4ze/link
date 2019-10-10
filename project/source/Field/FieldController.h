@@ -29,6 +29,11 @@ namespace Field
 		class OperatePlaceContainer;
 	}
 
+	namespace Actor
+	{
+		class PlaceActorController;
+	}
+
 	using PlaceVector = std::vector<Model::PlaceModel*>;
 	using PlaceIterator = PlaceVector::iterator;
 	using ReversePlaceIterator = std::reverse_iterator<PlaceIterator>;
@@ -82,11 +87,12 @@ namespace Field
 		Model::PlaceContainer *placeContainer;				//プレイスコンテナ
 		Model::OperatePlaceContainer *operateContainer;		//操作対象プレイスのコンテナ
 		Model::RouteContainer routeContainer;				//ルートモデルコンテナ
+		Actor::PlaceActorController* placeActController;	//プレイスアクターコントローラ
 
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int inputRepeatCnt;						//入力のリピートカウント
 		int cntFrame;							//フレームカウント
-		float developmentLevelAI;			//AI発展レベル
+		float developmentLevelAI;				//AI発展レベル
 		unsigned stockDevelopRiver;				//川開発アイテムストック
 		unsigned stockDevelopMountain;			//山開発アイテムストック
 

@@ -13,6 +13,7 @@
 #include "Place\FieldPlaceModel.h"
 #include "Route\RouteModel.h"
 #include "Route\RouteProcessor.h"
+#include "PlaceActorController.h"
 
 #include "State/BuildRoad.h"
 #include "State/FieldControllerIdle.h"
@@ -54,6 +55,7 @@ namespace Field
 		ground = new FieldGround();
 		placeContainer = new Model::PlaceContainer();
 		operateContainer = new Model::OperatePlaceContainer();
+		placeActController = new Actor::PlaceActorController();
 
 		//ステートマシン作成
 		fsm.resize(State::Max, NULL);
@@ -81,6 +83,7 @@ namespace Field
 		SAFE_DELETE(ground);
 		SAFE_DELETE(placeContainer);
 		SAFE_DELETE(operateContainer);
+		SAFE_DELETE(placeActController);
 
 		//デリゲート削除
 		SAFE_DELETE(onConnectTown);
@@ -111,6 +114,8 @@ namespace Field
 			route->Update();
 		}
 
+		placeActController->Update();
+
 		//AI発展レベルを計算
 		CalcDevelopmentLevelAI();
 
@@ -128,6 +133,7 @@ namespace Field
 		ground->Draw();
 
 		placeContainer->Draw();
+		placeActController->Draw();
 
 		operateContainer->DrawDebug();
 
@@ -249,6 +255,9 @@ namespace Field
 
 		//道を新しく作ったので混雑度を再計算
 		placeContainer->CaclTrafficJamRate();
+
+		//アクター生成
+		placeActController->SetActor(ptr);
 	}
 
 	/**************************************

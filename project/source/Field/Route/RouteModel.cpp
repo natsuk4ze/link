@@ -209,7 +209,7 @@ namespace Field::Model
 	/**************************************
 	全プレイス取得
 	***************************************/
-	const std::vector<const PlaceModel*> RouteModel::GetAllPlaces()
+	const std::vector<const PlaceModel*> RouteModel::GetAllPlaces() const
 	{
 		std::vector<const PlaceModel*> out;
 		out.reserve(route.size() + 2);
