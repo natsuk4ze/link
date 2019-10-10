@@ -22,8 +22,6 @@ class TJunctionActor :
 public:
 	TJunctionActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
 	~TJunctionActor();
-
-	void Update()override;
 };
 
 #endif

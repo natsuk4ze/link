@@ -35,25 +35,3 @@ RiverActor::RiverActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
 RiverActor::~RiverActor()
 {
 }
-
-//=====================================
-// çXêV
-//=====================================
-void RiverActor::Update()
-{
-	if (!IsActive())
-		return;
-
-	if (!animActive)
-		return;
-
-	switch (animType)
-	{
-	case FActor::Create:
-		break;
-	case FActor::Remove:
-		break;
-	default:
-		break;
-	}
-}

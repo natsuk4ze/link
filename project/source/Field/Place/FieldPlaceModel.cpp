@@ -7,10 +7,10 @@
 //=====================================
 #include "FieldPlaceModel.h"
 
-#include "../../FieldObject/PlaceActor.h"
+#include "../../FieldObject/Actor/PlaceActor.h"
 #include "../../../Library/cppLinq/cpplinq.hpp"
 #include "../Route/RouteProcessor.h"
-#include "../../FieldObject/StraightRoadActor.h"
+#include "../../FieldObject/Actor/StraightRoadActor.h"
 
 #include <algorithm>
 

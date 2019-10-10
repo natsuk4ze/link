@@ -9,7 +9,7 @@
 #include "../../Framework/Tool/DebugWindow.h"
 
 #include "../../Framework/Renderer3D/SkyBox.h"
-#include "../FieldObject/PlaceActor.h"
+#include "../FieldObject/Actor/PlaceActor.h"
 #include "../Field/FieldController.h"
 #include "../Field/Camera/FieldCamera.h"
 #include "../../Framework/Renderer2D/TextViewer.h"

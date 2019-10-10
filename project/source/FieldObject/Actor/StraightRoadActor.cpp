@@ -35,25 +35,3 @@ StraightRoadActor::StraightRoadActor(const D3DXVECTOR3& pos, FModel::FieldLevel 
 StraightRoadActor::~StraightRoadActor()
 {
 }
-
-//=====================================
-// çXêV
-//=====================================
-void StraightRoadActor::Update()
-{
-	if (!IsActive())
-		return;
-
-	if (!animActive)
-		return;
-
-	switch (animType)
-	{
-	case FActor::Create:
-		break;
-	case FActor::Remove:
-		break;
-	default:
-		break;
-	}
-}

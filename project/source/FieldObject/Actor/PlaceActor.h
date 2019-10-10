@@ -11,7 +11,9 @@
 #include "../../Framework/Core/GameObject.h"
 #include "../../Framework/Math/Easing.h"
 #include "../../Framework/Renderer3D/MeshContainer.h"
-#include "../Field/Place/PlaceConfig.h"
+#include "../../Field/Place/PlaceConfig.h"
+#include "../../Framework/Pattern/BaseState.h"
+
 //**************************************
 // マクロ定義
 //**************************************
@@ -20,19 +22,6 @@
 // 列挙子設定
 //**************************************
 namespace FModel = Field::Model;
-namespace Field::Actor
-{
-	/**************************************
-	アクターのアニメーションタイプを表す列挙子
-	***************************************/
-	enum AnimType
-	{
-		Create,
-		Remove,
-		AnimMax
-	};
-}
-namespace FActor = Field::Actor;
 
 //**************************************
 // クラス定義
@@ -40,24 +29,37 @@ namespace FActor = Field::Actor;
 class PlaceActor :
 	public GameObject
 {
+public:
+	/**************************************
+	アクターのステートを表す列挙子
+	***************************************/
+	enum State
+	{
+		Idle,	// 待機
+		Create,	// 作成
+		Remove,	// 削除
+		Link,	// リンクレベルが上がった
+		Max
+	};
+	using ActorState = BaseState<PlaceActor, State>;
+
+	PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
+	virtual ~PlaceActor();
+
+	virtual State Update();
+	virtual void Draw();
+
+	// インターフェース
+	void ChangeState(ActorState *next);					// アニメーション再生（再生させるときのみ呼び出す）
+	void Rotate(float y);								// Y軸回転
+	void SetColor(const D3DXCOLOR& color, UINT index);	// メッシュの色変更
+
 protected:
 	// ***継承先のクラスで読み込み***
 	MeshContainer* mesh;				// メッシュコンテナ
 	// ******************************
-	FActor::AnimType animType;			// アニメーションの種類
-	bool animActive;					// アニメーション再生中フラグ
 
-public:
-	PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
-	virtual ~PlaceActor();
-
-	virtual void Update();
-	virtual void Draw();
-
-	// インターフェース
-	virtual void PlayAnimation(FActor::AnimType AnimType);	// アニメーション再生（再生させるときのみ呼び出す）
-	void Rotate(float y);									// Y軸回転
-	void SetColor(const D3DXCOLOR& color, UINT index);		// メッシュの色変更
+	ActorState *state;					// 現在のステート
 
 private:
 	static const D3DXVECTOR3 ActorScale;

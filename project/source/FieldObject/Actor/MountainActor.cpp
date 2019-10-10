@@ -35,25 +35,3 @@ MountainActor::MountainActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentL
 MountainActor::~MountainActor()
 {
 }
-
-//=====================================
-// çXêV
-//=====================================
-void MountainActor::Update()
-{
-	if (!IsActive())
-		return;
-
-	if (!animActive)
-		return;
-
-	switch (animType)
-	{
-	case FActor::Create:
-		break;
-	case FActor::Remove:
-		break;
-	default:
-		break;
-	}
-}

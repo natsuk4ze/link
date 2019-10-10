@@ -35,35 +35,3 @@ CrossJunctionActor::CrossJunctionActor(const D3DXVECTOR3& pos, FModel::FieldLeve
 CrossJunctionActor::~CrossJunctionActor()
 {
 }
-
-//=====================================
-// XV
-//=====================================
-void CrossJunctionActor::Update()
-{
-	if (!IsActive())
-		return;
-
-	if (!animActive)
-		return;
-
-	switch (animType)
-	{
-	case FActor::Create:
-		break;
-	case FActor::Remove:
-		break;
-	default:
-		break;
-	}
-}
-
-//=====================================
-// •`‰æ
-//=====================================
-//void IntersectionActor::Draw()
-//{
-	//transform->SetWorld();
-	//mesh->Draw();
-//}
-

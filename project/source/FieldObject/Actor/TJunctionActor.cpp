@@ -35,25 +35,3 @@ TJunctionActor::TJunctionActor(const D3DXVECTOR3& pos, FModel::FieldLevel curren
 TJunctionActor::~TJunctionActor()
 {
 }
-
-//=====================================
-// çXêV
-//=====================================
-void TJunctionActor::Update()
-{
-	if (!IsActive())
-		return;
-
-	if (!animActive)
-		return;
-
-	switch (animType)
-	{
-	case FActor::Create:
-		break;
-	case FActor::Remove:
-		break;
-	default:
-		break;
-	}
-}

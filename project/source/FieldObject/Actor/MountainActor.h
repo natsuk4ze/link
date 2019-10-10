@@ -1,12 +1,12 @@
 //=====================================
 //
-// カーブロードアクター[CurveRoadActor.h]
-// 機能：カーブ用道3Dモデル表示
+// マウンテンアクター[MountainActor.h]
+// 機能：山（渦潮、ブラックホール）用3Dモデル表示
 // Author:GP12B332 19 染谷武志
 //
 //=====================================
-#ifndef _CURVEROADACTOR_H_
-#define _CURVEROADACTOR_H_
+#ifndef _MOUNTAINACTOR_H_
+#define _MOUNTAINACTOR_H_
 
 #include "PlaceActor.h"
 //**************************************
@@ -16,14 +16,12 @@
 //**************************************
 // クラス定義
 //**************************************
-class CurveRoadActor :
+class MountainActor :
 	public PlaceActor
 {
 public:
-	CurveRoadActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
-	~CurveRoadActor();
-
-	void Update()override;
+	MountainActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
+	~MountainActor();
 };
 
 #endif
