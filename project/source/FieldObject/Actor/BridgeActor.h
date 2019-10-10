@@ -22,8 +22,6 @@ class BridgeActor :
 public:
 	BridgeActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
 	~BridgeActor();
-
-	void Update()override;
 };
 
 #endif

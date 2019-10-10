@@ -35,25 +35,3 @@ BridgeActor::BridgeActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel
 BridgeActor::~BridgeActor()
 {
 }
-
-//=====================================
-// çXêV
-//=====================================
-void BridgeActor::Update()
-{
-	if (!IsActive())
-		return;
-
-	if (!animActive)
-		return;
-
-	switch (animType)
-	{
-	case FActor::Create:
-		break;
-	case FActor::Remove:
-		break;
-	default:
-		break;
-	}
-}
