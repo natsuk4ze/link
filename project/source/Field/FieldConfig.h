@@ -8,6 +8,10 @@
 #ifndef _FIELDCONFIG_H_
 #define _FIELDCONFIG_H_
 
+#include "Place\PlaceConfig.h"
+
+#include <vector>
+#include <algorithm>
 
 namespace Field
 {		
@@ -47,6 +51,75 @@ namespace Field
 
 		}
 	};
+
+	/**************************************
+	直線方向を表す列挙子
+	***************************************/
+	enum StraightType
+	{
+		NotStraight,
+		BackAndForward,
+		RightAndLeft
+	};
+
+	/**************************************
+	直線方向の判定処理
+	***************************************/
+	inline StraightType IsStraight(std::vector<Model::Adjacency>& adjacencyList)
+	{
+		if (adjacencyList.size() != 2)
+			return StraightType::NotStraight;
+
+		auto itrBack = std::find(adjacencyList.begin(), adjacencyList.end(), Model::Adjacency::Back);
+		auto itrForward = std::find(adjacencyList.begin(), adjacencyList.end(), Model::Adjacency::Forward);
+		if (itrBack != adjacencyList.end() && itrForward != adjacencyList.end())
+			return StraightType::BackAndForward;
+
+		auto itrRight = std::find(adjacencyList.begin(), adjacencyList.end(), Model::Adjacency::Right);
+		auto itrLeft = std::find(adjacencyList.begin(), adjacencyList.end(), Model::Adjacency::Left);
+		if (itrRight != adjacencyList.end() && itrLeft != adjacencyList.end())
+			return StraightType::RightAndLeft;
+
+		return StraightType::NotStraight;
+	}
+
+	/**************************************
+	カーブ方向を表す列挙子
+	***************************************/
+	enum CurveType
+	{
+		NotCurve,
+		BackAndRight,
+		BackAndLeft,
+		LeftAndForward,
+		ForwardAndRight
+	};
+
+	/**************************************
+	カーブ方向の判定処理
+	***************************************/
+	inline CurveType IsCurve(std::vector<Model::Adjacency>& adjacencyList)
+	{
+		if (adjacencyList.size() != 2)
+			return CurveType::NotCurve;
+
+		auto itrBack = std::find(adjacencyList.begin(), adjacencyList.end(), Model::Adjacency::Back);
+		auto itrLeft = std::find(adjacencyList.begin(), adjacencyList.end(), Model::Adjacency::Left);
+
+		if (itrBack != adjacencyList.end() && itrLeft != adjacencyList.end())
+			return CurveType::BackAndLeft;
+
+		auto itrRight = std::find(adjacencyList.begin(), adjacencyList.end(), Model::Adjacency::Right);
+		if (itrBack != adjacencyList.end() && itrRight != adjacencyList.end())
+			return CurveType::BackAndRight;
+
+		auto itrForward = std::find(adjacencyList.begin(), adjacencyList.end(), Model::Adjacency::Forward);
+		if (itrLeft != adjacencyList.end() && itrForward != adjacencyList.end())
+			return CurveType::LeftAndForward;
+		else
+			return CurveType::ForwardAndRight;
+
+	}
 }
 
 #endif
