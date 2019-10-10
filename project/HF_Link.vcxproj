@@ -233,6 +233,7 @@
     <ClCompile Include="source\FieldObject\Info\IdleFieldInfoState.cpp" />
     <ClCompile Include="source\FieldObject\Info\LinkFieldInfoState.cpp" />
     <ClCompile Include="source\FieldObject\Info\RemoveFieldInfoState.cpp" />
+    <ClCompile Include="source\Field\PlaceActorController.cpp" />
     <ClCompile Include="source\Field\Place\FieldJunctionModel.cpp" />
     <ClCompile Include="source\FieldObject\Item\ItemActor.cpp" />
     <ClCompile Include="source\FieldObject\Item\ItemModel.cpp" />
@@ -364,6 +365,7 @@
     <ClInclude Include="source\FieldObject\Info\IdleFieldInfoState.h" />
     <ClInclude Include="source\FieldObject\Info\LinkFieldInfoState.h" />
     <ClInclude Include="source\FieldObject\Info\RemoveFieldInfoState.h" />
+    <ClInclude Include="source\Field\PlaceActorController.h" />
     <ClInclude Include="source\Field\Place\FieldJunctionModel.h" />
     <ClInclude Include="source\FieldObject\Item\ItemActor.h" />
     <ClInclude Include="source\FieldObject\Item\ItemModel.h" />
