@@ -86,13 +86,17 @@ namespace Field::Model
 		//タイプ判定、変更処理
 		bool IsType(PlaceType type) const;
 		void SetType(PlaceType type);
+		const PlaceType GetType() const;
 
 		//所属ルート取得
 		RouteModelPtr GetConnectingRoute() const;
 		RouteContainer GetConnectingRoutes() const;
 
-		//方向決定処理
+		//方向決定処理、取得処理
 		void SetDirection(Adjacency prev, Adjacency next);
+		std::tuple<Adjacency, Adjacency> GetDirection() const;
+
+		std::vector<Adjacency> GetConnectingAdjacency() const;
 
 	private:
 		//ID

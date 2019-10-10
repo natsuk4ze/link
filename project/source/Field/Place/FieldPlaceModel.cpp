@@ -43,6 +43,7 @@ namespace Field::Model
 	using cpplinq::to_vector;
 	using cpplinq::intersect_with;
 	using cpplinq::except;
+	using cpplinq::count;
 
 	/**************************************
 	staticメンバ
@@ -137,7 +138,7 @@ namespace Field::Model
 	bool PlaceModel::CanStartRoute() const
 	{
 		//空白タイプか橋でなければ道に出来ない
-		if(type != PlaceType::None && type != PlaceType::Bridge)
+		if (type != PlaceType::None && type != PlaceType::Bridge)
 			return false;
 
 		//隣接プレイスに交差点、街、道が含まれていたらルートを始められる
@@ -321,7 +322,7 @@ namespace Field::Model
 			>> to_vector();
 
 		//差集合のコンテナを所属リストの末尾にコピーして追加
-		if(!exceptRoute.empty())
+		if (!exceptRoute.empty())
 			std::copy(exceptRoute.begin(), exceptRoute.end(), std::back_inserter(belongRouteList));
 	}
 
@@ -351,6 +352,14 @@ namespace Field::Model
 	}
 
 	/**************************************
+	タイプ取得
+	***************************************/
+	const PlaceType PlaceModel::GetType() const
+	{
+		return type;
+	}
+
+	/**************************************
 	ルート取得
 	***************************************/
 	RouteModelPtr PlaceModel::GetConnectingRoute() const
@@ -374,4 +383,41 @@ namespace Field::Model
 		this->prev = prev;
 		this->next = next;
 	}
+
+	/**************************************
+	方向ゲット処理
+	***************************************/
+	std::tuple<Adjacency, Adjacency> PlaceModel::GetDirection() const
+	{
+		return std::tuple<Adjacency, Adjacency>(prev, next);
+	}
+
+	/**************************************
+	連結方向取得処理
+	***************************************/
+	std::vector<Adjacency> PlaceModel::GetConnectingAdjacency() const
+	{
+		std::vector<Adjacency> out;
+		out.reserve(Adjacency::Max);
+
+		for (Adjacency i = Adjacency::Back; i < Adjacency::Max; i++)
+		{
+			if (adjacencies[i] == nullptr)
+				continue;
+
+			//隣接プレイスの所属ルートと自身の所属ルートの積集合を数える
+			auto cntIntersect = from(belongRouteList)
+				>> intersect_with(from(adjacencies[i]->GetConnectingRoutes()))
+				>> count();
+
+			//積集合が0なら繋がっていないのでコンティニュー
+			if (cntIntersect == 0)
+				continue;
+
+			out.push_back(i);
+		}
+
+		return out;
+	}
+
 }
