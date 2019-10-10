@@ -190,43 +190,6 @@ namespace Field::Model
 	}
 
 	/**************************************
-	繋がっている街を探索する
-	***************************************/
-	int RouteProcessor::FindLinkedTown(const PlaceModel * root, RouteModelPtr target, RouteContainer & searchedRoute, std::vector<PlaceModel*> searchedTown)
-	{
-		int cntTown = 0;
-
-		//対象に繋がっている街を確認
-		if (!(from(searchedRoute) >> contains(target)))
-		{
-			searchedRoute.push_back(target);
-
-			PlaceModel* town = target->GetConnectedTown(root);
-			if (town != nullptr && !(from(searchedTown) >> contains(town)))
-			{
-				cntTown++;
-				searchedTown.push_back(town);
-			}
-		}
-
-		//隣接しているルートに対して再帰的に探索
-		for (auto&& adjacency : target->adjacentRoute)
-		{
-			RouteModelPtr ptr = adjacency.route.lock();
-
-			if (!ptr)
-				continue;
-
-			if (from(searchedRoute) >> contains(ptr))
-				continue;
-
-			cntTown += FindLinkedTown(root, ptr, searchedRoute, searchedTown);
-		}
-
-		return cntTown;
-	}
-
-	/**************************************
 	連結処理（内部）
 	***************************************/
 	void RouteProcessor::_ConnectWithEdge(RouteModelPtr& model, PlaceModel *place, RouteContainer& routeContainer)

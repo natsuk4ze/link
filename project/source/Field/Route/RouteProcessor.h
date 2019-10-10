@@ -35,9 +35,6 @@ namespace Field::Model
 		//ルートをしていたプレイスで分割する
 		RouteContainer Divide(RouteModelPtr& model, PlaceModel* junction, RouteContainer& routeContainer);
 
-		//ルートに繋がっている街の探索
-		int FindLinkedTown(const PlaceModel* root, RouteModelPtr target, RouteContainer& searchedRoute, std::vector<PlaceModel*> searchedTown);
-
 	private:
 		//プレイスタイプを変化させた際のデリゲート
 		DelegatePtr<const PlaceModel*> onChangePlaceType;

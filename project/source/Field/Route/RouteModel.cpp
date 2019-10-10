@@ -18,6 +18,8 @@ namespace Field::Model
 	usingéŒ¾
 	***************************************/
 	using cpplinq::last_or_default;
+	using cpplinq::from;
+	using cpplinq::contains;
 
 	/**************************************
 	static•Ï”
@@ -188,6 +190,43 @@ namespace Field::Model
 			return edgeEnd;
 
 		return nullptr;
+	}
+
+	/**************************************
+	Œq‚ª‚Á‚Ä‚¢‚éŠX‚ğæ“¾
+	***************************************/
+	int RouteModel::FindLinkedTown(const PlaceModel * root, std::vector<RouteModelPtr> & searchedRoute, std::vector<PlaceModel*> searchedTown)
+	{
+		int cntTown = 0;
+
+		//‘ÎÛ‚ÉŒq‚ª‚Á‚Ä‚¢‚éŠX‚ğŠm”F
+		if (!(from(searchedRoute) >> contains(shared_from_this())))
+		{
+			searchedRoute.push_back(shared_from_this());
+
+			PlaceModel* town = this->GetConnectedTown(root);
+			if (town != nullptr && !(from(searchedTown) >> contains(town)))
+			{
+				cntTown++;
+				searchedTown.push_back(town);
+			}
+		}
+
+		//—×Ú‚µ‚Ä‚¢‚éƒ‹[ƒg‚É‘Î‚µ‚ÄÄ‹A“I‚É’Tõ
+		for (auto&& adjacency : this->adjacentRoute)
+		{
+			RouteModelPtr ptr = adjacency.route.lock();
+
+			if (!ptr)
+				continue;
+
+			if (from(searchedRoute) >> contains(ptr))
+				continue;
+
+			cntTown += ptr->FindLinkedTown(root, searchedRoute, searchedTown);
+		}
+
+		return cntTown;
 	}
 
 	/**************************************

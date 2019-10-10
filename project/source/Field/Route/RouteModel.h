@@ -78,6 +78,9 @@ namespace Field::Model
 		//Œq‚ª‚Á‚Ä‚¢‚éŠX‚ğæ“¾
 		PlaceModel* GetConnectedTown(const PlaceModel* self);
 
+		//ƒ‹[ƒg‚ÉŒq‚ª‚Á‚Ä‚¢‚éŠX‚Ì’Tõ
+		int FindLinkedTown(const PlaceModel* root, std::vector<RouteModelPtr>& searchedRoute, std::vector<PlaceModel*> searchedTown);
+
 		//g—p”»’è
 		void SetUnused(bool use);
 		bool IsUnused();
