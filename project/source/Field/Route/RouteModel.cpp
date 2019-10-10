@@ -207,6 +207,21 @@ namespace Field::Model
 	}
 
 	/**************************************
+	全プレイス取得
+	***************************************/
+	const std::vector<const PlaceModel*> RouteModel::GetAllPlaces()
+	{
+		std::vector<const PlaceModel*> out;
+		out.reserve(route.size() + 2);
+
+		out.push_back(edgeStart);
+		std::copy(route.begin(), route.end(), std::back_inserter(out));
+		out.push_back(edgeEnd);
+
+		return out;
+	}
+
+	/**************************************
 	端点設定（内部処理）
 	***************************************/
 	void RouteModel::_SetEdge(PlaceModel* place)

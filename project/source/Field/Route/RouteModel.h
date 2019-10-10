@@ -82,6 +82,9 @@ namespace Field::Model
 		void SetUnused(bool use);
 		bool IsUnused();
 
+		//全プレイス取得
+		const std::vector<const PlaceModel*> GetAllPlaces();
+
 	private:
 		PlaceModel *edgeStart, *edgeEnd;			//端点のPlace
 		std::vector<PlaceModel*> route;				//道となるPlace
