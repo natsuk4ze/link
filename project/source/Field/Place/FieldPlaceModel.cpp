@@ -268,20 +268,27 @@ namespace Field::Model
 	***************************************/
 	PlaceModel* PlaceModel::GetEdgeOpponent() const
 	{
+		PlaceModel* opponent = nullptr;
+
 		for (auto&& adjacency : adjacencies)
 		{
 			if (adjacency == NULL)
 				continue;
 
-			//道で同じルートに属していなければ端点として成立
-			if (adjacency->IsType(PlaceType::Road) && !IsSameRoute(adjacency))
+			//街を最優先で端点とする
+			if (adjacency->IsType(PlaceType::Town))
 				return adjacency;
 
 			//街か交差点なら端点として成立
-			if (adjacency->IsType(PlaceType::Town) || adjacency->IsType(PlaceType::Junction))
-				return adjacency;
+			if (adjacency->IsType(PlaceType::Junction))
+				opponent = adjacency;
+
+			//道で同じルートに属していなければ端点として成立
+			if (adjacency->IsType(PlaceType::Road) && !IsSameRoute(adjacency))
+				opponent = adjacency;
 		}
-		return nullptr;
+
+		return opponent;
 	}
 
 	/**************************************
@@ -399,6 +406,13 @@ namespace Field::Model
 		{
 			if (adjacencies[i] == nullptr)
 				continue;
+
+			//自身と相手が交差点同士なら連結している
+			if (type == PlaceType::Junction && adjacencies[i]->IsType(PlaceType::Junction))
+			{
+				out.push_back(static_cast<Adjacency>(i));
+				break;
+			}
 
 			//隣接プレイスの所属ルートと自身の所属ルートの積集合を数える
 			auto cntIntersect = from(belongRouteList)

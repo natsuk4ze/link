@@ -7,7 +7,7 @@
 //=====================================
 #include "FieldTownModel.h"
 #include "FieldPlaceModel.h"
-#include "../Route/RouteProcessor.h"
+#include "../Route/RouteModel.h"
 
 namespace Field::Model
 {
@@ -82,7 +82,7 @@ namespace Field::Model
 		RouteContainer belongRoute = place->GetConnectingRoutes();
 		for (auto&& route : belongRoute)
 		{
-			//linkLevel += RouteProcessor::FindLinkedTown(place, route, searchedRoute, searchedTown);
+			linkLevel += route->FindLinkedTown(place, searchedRoute, searchedTown);
 		}
 
 		developmentLevel = linkLevel + linkLevel * trafficJamRate;
