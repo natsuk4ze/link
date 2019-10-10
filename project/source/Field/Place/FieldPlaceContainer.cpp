@@ -189,7 +189,7 @@ namespace Field::Model
 	/**************************************
 	ŠX‚ª“¹‚ÆŒq‚ª‚Á‚½‚Æ‚«‚Ìˆ—
 	***************************************/
-	void Field::Model::PlaceContainer::OnConnectedTown(PlaceModel * place)
+	void Field::Model::PlaceContainer::OnConnectedTown(const PlaceModel * place)
 	{
 		unsigned placeID = place->ID();
 
@@ -205,7 +205,7 @@ namespace Field::Model
 	/**************************************
 	Œð·“_‚ªì‚ç‚ê‚½‚Æ‚«‚Ìˆ—
 	***************************************/
-	void Field::Model::PlaceContainer::OnCreateJunction(PlaceModel * place)
+	void Field::Model::PlaceContainer::OnCreateJunction(const PlaceModel * place)
 	{
 		unsigned placeID = place->ID();
 

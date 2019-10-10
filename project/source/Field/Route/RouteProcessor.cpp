@@ -22,6 +22,14 @@ namespace Field::Model
 	using cpplinq::contains;
 
 	/**************************************
+	コンストラクタ
+	***************************************/
+	RouteProcessor::RouteProcessor(DelegatePtr<const PlaceModel*> onChangePlaceType)
+	{
+		this->onChangePlaceType = onChangePlaceType;
+	}
+
+	/**************************************
 	新しく作ったルートに対して隣接しているルートと連結させて加工する
 	***************************************/
 	void RouteProcessor::Process(RouteModelPtr & model, RouteContainer & routeContainer)
@@ -81,7 +89,8 @@ namespace Field::Model
 			connectTarget->BelongRoute(divideList);
 
 			//交差点と連結対象のオブジェクトを設定
-
+			(*onChangePlaceType)(place);
+			(*onChangePlaceType)(connectTarget);
 
 			//ルートを分割した時点で正常にループできなくなるのでブレイク
 			break;

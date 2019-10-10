@@ -82,7 +82,7 @@ namespace Field::Model
 		RouteContainer belongRoute = place->GetConnectingRoutes();
 		for (auto&& route : belongRoute)
 		{
-			linkLevel += RouteProcessor::FindLinkedTown(place, route, searchedRoute, searchedTown);
+			//linkLevel += RouteProcessor::FindLinkedTown(place, route, searchedRoute, searchedTown);
 		}
 
 		developmentLevel = linkLevel + linkLevel * trafficJamRate;

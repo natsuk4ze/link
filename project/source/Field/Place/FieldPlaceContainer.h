@@ -51,10 +51,10 @@ namespace Field::Model
 		FieldPosition GetPlaceBorder() const;
 
 		//ŠX‚ª“¹‚ÆŒq‚ª‚Á‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚éˆ—
-		void OnConnectedTown(PlaceModel* place);
+		void OnConnectedTown(const PlaceModel* place);
 
 		//Œğ·“_‚ªì‚ç‚ê‚½Û‚ÉŒÄ‚Î‚ê‚éˆ—
-		void OnCreateJunction(PlaceModel* place);
+		void OnCreateJunction(const PlaceModel* place);
 
 		//¬G“xŒvZ
 		void CaclTrafficJamRate();

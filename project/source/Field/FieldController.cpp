@@ -48,7 +48,8 @@ namespace Field
 		stockDevelopRiver(InitDevelopRiverStock),
 		stockDevelopMountain(InitDevelopMountainStock),
 		onConnectTown(nullptr),
-		onCreateJunction(nullptr)
+		onCreateJunction(nullptr),
+		onChangePlaceType(nullptr)
 	{
 		//インスタンス作成
 		cursor = new FieldCursor(PlaceOffset);
@@ -64,8 +65,12 @@ namespace Field
 		fsm[State::Develop] = new UseItemState();
 
 		//デリゲート作成
-		onConnectTown = Delegate<Model::PlaceContainer, Model::PlaceModel*>::Create(placeContainer, &Model::PlaceContainer::OnConnectedTown);
-		onCreateJunction = Delegate<Model::PlaceContainer, Model::PlaceModel*>::Create(placeContainer, &Model::PlaceContainer::OnCreateJunction);
+		onConnectTown = Delegate<Model::PlaceContainer, const Model::PlaceModel*>::Create(placeContainer, &Model::PlaceContainer::OnConnectedTown);
+		onCreateJunction = Delegate<Model::PlaceContainer, const Model::PlaceModel*>::Create(placeContainer, &Model::PlaceContainer::OnCreateJunction);
+		onChangePlaceType = Delegate<Actor::PlaceActorController, const Model::PlaceModel*>::Create(placeActController, &Actor::PlaceActorController::ChangeActor);
+
+		//ルートプロセッサ作成
+		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
 
 		//ステート初期化
 		ChangeState(State::Idle);
@@ -83,11 +88,13 @@ namespace Field
 		SAFE_DELETE(ground);
 		SAFE_DELETE(placeContainer);
 		SAFE_DELETE(operateContainer);
+		SAFE_DELETE(routeProcessor);
 		SAFE_DELETE(placeActController);
 
 		//デリゲート削除
 		SAFE_DELETE(onConnectTown);
 		SAFE_DELETE(onCreateJunction);
+		SAFE_DELETE(onChangePlaceType);
 
 		//ステートマシン削除
 		Utility::DeleteContainer(fsm);
@@ -251,8 +258,8 @@ namespace Field
 		//オブジェクト設定
 
 		//隣接するルートと連結させる
-		RouteProcessor::ConnectWithEdge(ptr, routeContainer);
-		RouteProcessor::Process(ptr, routeContainer);
+		routeProcessor->ConnectWithEdge(ptr, routeContainer);
+		routeProcessor->Process(ptr, routeContainer);
 
 		//道を新しく作ったので混雑度を再計算
 		placeContainer->CaclTrafficJamRate();
