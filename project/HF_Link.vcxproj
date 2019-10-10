@@ -213,6 +213,7 @@
     <ClCompile Include="Library\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Library\json11\json11.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="source\FieldObject\Actor\BridgeActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\CityActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\CrossJunctionActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\CurveRoadActor.cpp" />
@@ -343,6 +344,7 @@
     <ClInclude Include="Library\imgui\imstb_truetype.h" />
     <ClInclude Include="Library\json11\json11.hpp" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="source\FieldObject\Actor\BridgeActor.h" />
     <ClInclude Include="source\FieldObject\Actor\CityActor.h" />
     <ClInclude Include="source\FieldObject\Actor\CrossJunctionActor.h" />
     <ClInclude Include="source\FieldObject\Actor\CurveRoadActor.h" />

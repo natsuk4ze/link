@@ -109,6 +109,7 @@
     <ClCompile Include="source\FieldObject\Item\ItemActor.cpp" />
     <ClCompile Include="source\FieldObject\Item\ItemModel.cpp" />
     <ClCompile Include="source\FieldObject\Passenger\PassengerActor.cpp" />
+    <ClCompile Include="source\FieldObject\Actor\BridgeActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\CityActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\CrossJunctionActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\CurveRoadActor.cpp" />
@@ -242,6 +243,7 @@
     <ClInclude Include="source\FieldObject\Item\ItemActor.h" />
     <ClInclude Include="source\FieldObject\Item\ItemModel.h" />
     <ClInclude Include="source\FieldObject\Passenger\PassengerActor.h" />
+    <ClInclude Include="source\FieldObject\Actor\BridgeActor.h" />
     <ClInclude Include="source\FieldObject\Actor\CityActor.h" />
     <ClInclude Include="source\FieldObject\Actor\CrossJunctionActor.h" />
     <ClInclude Include="source\FieldObject\Actor\CurveRoadActor.h" />
