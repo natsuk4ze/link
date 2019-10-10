@@ -69,39 +69,36 @@ namespace Field::Model
 	{
 		if (!initialized)
 			return;
-		ProfilerCPU::Instance()->BeginLabel("Field");
-
-		ProfilerCPU::Instance()->Begin("Update");
-		for (auto&& place : placeVector)
-		{
-			place->Update();
-		}
-		ProfilerCPU::Instance()->End("Update");
 
 		//デバッグ表示
 		Debug::Log("CntLinkedTown:%d", townContainer.size());
 		Debug::Log("CntJunction:%d", junctionContainer.size());
 		Debug::Log("TrafficJam: %f", trafficJamRate);
-
 	}
 
+#ifdef DEBUG_PLACEMODEL
 	/**************************************
 	描画処理
 	***************************************/
-	void PlaceContainer::Draw()
+	void PlaceContainer::DrawDebug()
 	{
 		if (!initialized)
 			return;
 
-		ProfilerCPU::Instance()->Begin("Draw");
+		LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+		pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
+		pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+
 		for (auto&& place : placeVector)
 		{
-			place->Draw();
+			place->DrawDebug();
 		}
-		ProfilerCPU::Instance()->End("Draw");
 
-		ProfilerCPU::Instance()->EndLabel();
+		pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
+		pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 	}
+#endif
 
 	/**************************************
 	プレイス取得処理

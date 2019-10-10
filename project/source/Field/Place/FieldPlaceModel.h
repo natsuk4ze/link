@@ -17,7 +17,6 @@
 /**************************************
 マクロ定義
 ***************************************/
-#define DEBUG_PLACEMODEL
 
 /**************************************
 前方宣言
@@ -40,10 +39,6 @@ namespace Field::Model
 		//コンストラクタ、デストラクタ
 		PlaceModel(PlaceType type, int x, int z);
 		~PlaceModel();
-
-		//更新処理、描画処理
-		void Update();
-		void Draw();
 
 		//座標取得
 		FieldPosition GetPosition() const;
@@ -98,6 +93,11 @@ namespace Field::Model
 
 		std::vector<Adjacency> GetConnectingAdjacency() const;
 
+#ifdef DEBUG_PLACEMODEL
+		//デバッグ用描画処理
+		void DrawDebug();
+#endif
+
 	private:
 		//ID
 		static unsigned incrementID;
@@ -115,9 +115,6 @@ namespace Field::Model
 
 		//連結方向
 		Adjacency prev, next;
-
-		//ゲームに表示するアクター
-		PlaceActor* actor;
 	};
 }
 

@@ -57,7 +57,6 @@ namespace Field::Model
 		uniqueID(incrementID++),
 		type(type),
 		Position(x, z),
-		actor(nullptr),
 		prev(Adjacency::NotAdjacenct),
 		next(Adjacency::NotAdjacenct)
 	{
@@ -71,34 +70,15 @@ namespace Field::Model
 	PlaceModel::~PlaceModel()
 	{
 		belongRouteList.clear();
-		SAFE_DELETE(actor);
 	}
 
-	/**************************************
-	更新処理
-	***************************************/
-	void PlaceModel::Update()
-	{
-		if (actor != NULL)
-		{
-			actor->Update();
-		}
-	}
-
+#ifdef DEBUG_PLACEMODEL
 	/**************************************
 	描画処理
 	***************************************/
-	void PlaceModel::Draw()
+	void PlaceModel::DrawDebug()
 	{
-		if (actor != NULL)
-		{
-			actor->Draw();
-		}
-
-#ifdef DEBUG_PLACEMODEL
 		//テスト描画
-		GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
-		GetDevice()->SetRenderState(D3DRS_ZWRITEENABLE, false);
 		Transform transform = Transform(
 			{ Position.x * 10.0f, 1.0f, Position.z * 10.0f },
 			{ D3DXToRadian(90.0f), 0.0f, 0.0f },
@@ -107,10 +87,8 @@ namespace Field::Model
 		BoardPolygon *polygon;
 		ResourceManager::Instance()->GetPolygon(PolygonName[type], polygon);
 		polygon->Draw();
-		GetDevice()->SetRenderState(D3DRS_ZWRITEENABLE, true);
-		GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
-#endif
 	}
+#endif
 
 	/**************************************
 	座標取得処理

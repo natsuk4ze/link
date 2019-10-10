@@ -11,14 +11,22 @@
 #include <vector>
 #include <algorithm>
 
+/**************************************
+マクロ定義
+***************************************/
+#define DEBUG_PLACEMODEL
+
 namespace Field::Model
 {
 	/**************************************
-	型エイリアス
+	前方宣言
 	***************************************/
 	class RouteModel;
 	class PlaceModel;
 
+	/**************************************
+	using宣言
+	***************************************/
 	using RouteModelPtr = std::shared_ptr<RouteModel>;
 	using RouteContainer = std::vector<std::shared_ptr<RouteModel>>;
 

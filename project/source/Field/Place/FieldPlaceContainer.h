@@ -9,6 +9,7 @@
 #define _PLACECONTAINER_H_
 
 #include "../../../main.h"
+#include "PlaceConfig.h"
 #include "../FieldConfig.h"
 
 #include <vector>
@@ -38,7 +39,6 @@ namespace Field::Model
 
 		//更新処理、描画処理
 		void Update();
-		void Draw();
 
 		//指定したマス目のPlaceModelを取得
 		PlaceModel* GetPlace(int x, int z);
@@ -61,6 +61,10 @@ namespace Field::Model
 
 		//AI発展レベル計算
 		float CalcDevelopmentLevelAI();
+
+#ifdef DEBUG_PLACEMODEL
+		void DrawDebug();
+#endif
 
 	private:
 		const int PlaceMax = 10000;				//プレイスの最大数

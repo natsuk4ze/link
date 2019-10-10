@@ -132,11 +132,12 @@ namespace Field
 	{
 		ground->Draw();
 
-		placeContainer->Draw();
 		placeActController->Draw();
 
+#ifdef DEBUG_PLACEMODEL
 		operateContainer->DrawDebug();
-
+		placeContainer->DrawDebug();
+#endif
 		//カーソルには透過オブジェクトが含まれるので最後に描画
 		cursor->Draw();
 	}
