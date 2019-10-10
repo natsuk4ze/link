@@ -97,6 +97,8 @@ namespace Field::Model
 
 #ifdef DEBUG_PLACEMODEL
 		//ƒeƒXƒg•`‰æ
+		GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+		GetDevice()->SetRenderState(D3DRS_ZWRITEENABLE, false);
 		Transform transform = Transform(
 			{ Position.x * 10.0f, 1.0f, Position.z * 10.0f },
 			{ D3DXToRadian(90.0f), 0.0f, 0.0f },
@@ -105,6 +107,8 @@ namespace Field::Model
 		BoardPolygon *polygon;
 		ResourceManager::Instance()->GetPolygon(PolygonName[type], polygon);
 		polygon->Draw();
+		GetDevice()->SetRenderState(D3DRS_ZWRITEENABLE, true);
+		GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 #endif
 	}
 
@@ -400,7 +404,7 @@ namespace Field::Model
 		std::vector<Adjacency> out;
 		out.reserve(Adjacency::Max);
 
-		for (Adjacency i = Adjacency::Back; i < Adjacency::Max; i++)
+		for (int i = Adjacency::Back; i < Adjacency::Max; i++)
 		{
 			if (adjacencies[i] == nullptr)
 				continue;
@@ -414,7 +418,7 @@ namespace Field::Model
 			if (cntIntersect == 0)
 				continue;
 
-			out.push_back(i);
+			out.push_back(static_cast<Adjacency>(i));
 		}
 
 		return out;

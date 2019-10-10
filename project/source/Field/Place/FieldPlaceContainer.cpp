@@ -41,13 +41,13 @@ namespace Field::Model
 #ifdef DEBUG_PLACEMODEL
 		//デバッグ表示用の板ポリゴンを作成する
 		ResourceManager::Instance()->MakePolygon("None", "", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("Road", "data/TEXTURE/PlaceTest/road.jpg", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("Town", "data/TEXTURE/PlaceTest/town.jpg", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("River", "data/TEXTURE/PlaceTest/river.jpg", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("Bridge", "data/TEXTURE/PlaceTest/Bridge.jpg", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("Junction", "data/TEXTURE/PlaceTest/junction.jpg", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("Mountain", "data/TEXTURE/PlaceTest/mountain.jpg", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("Operate", "data/TEXTURE/PlaceTest/operate.jpg", { 2.0f, 2.0f });
+		ResourceManager::Instance()->MakePolygon("Road", "data/TEXTURE/PlaceTest/road.png", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Town", "data/TEXTURE/PlaceTest/town.png", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("River", "data/TEXTURE/PlaceTest/river.png", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Bridge", "data/TEXTURE/PlaceTest/Bridge.png", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Junction", "data/TEXTURE/PlaceTest/junction.png", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Mountain", "data/TEXTURE/PlaceTest/mountain.png", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Operate", "data/TEXTURE/PlaceTest/operate.png", { 2.0f, 2.0f });
 #endif
 	}
 
