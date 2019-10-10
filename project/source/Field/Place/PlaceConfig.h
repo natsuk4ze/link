@@ -9,6 +9,7 @@
 #define _PLACECONFIG_H_
 
 #include <vector>
+#include <algorithm>
 
 namespace Field::Model
 {
@@ -76,20 +77,23 @@ namespace Field::Model
 	};
 
 	/**************************************
+	Adjacency列挙子の後置インクリメント
+	***************************************/
+	inline Adjacency operator++(Adjacency& adjacency, int)
+	{
+		return (adjacency == Adjacency::Max) ? adjacency : Adjacency(adjacency + 1);
+	}
+
+	/**************************************
 	隣接方向の逆側を求める処理
 	***************************************/
 	inline Adjacency GetInverseSide(const Adjacency adjacency)
 	{
-		if (adjacency == Back)
-			return Forward;
-		if (adjacency == Left)
-			return Right;
-		if (adjacency == Forward)
-			return Back;
-		if (adjacency == Right)
-			return Left;
+		if (adjacency >= Adjacency::Max)
+			return NotAdjacenct;
+		else
+			return (Adjacency)Math::WrapAround(Adjacency::Back, Adjacency::Max, adjacency + 2);
 
-		return NotAdjacenct;
 	}
 }
 #endif
