@@ -123,7 +123,7 @@ namespace Field::Actor
 	void PlaceActorController::SetActor(const RouteModelPtr routeModel)
 	{
 		auto places = routeModel->GetAllPlaces();
-		
+
 		ChangeActor(places.front());
 		ChangeActor(places.back());
 
@@ -139,6 +139,27 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::ChangeActor(const Model::PlaceModel * place)
 	{
+		PlaceType PrevType = place->GetPrevType();
+		unsigned PlaceID = place->ID();
+
+		bool resultErase = false;
+
+		//コンテナから使用中のアクターを削除
+		if (PrevType == PlaceType::Road)
+		{
+			resultErase |= EraseFromContainer(ActorPattern::StarightRoad, PlaceID);
+			resultErase |= EraseFromContainer(ActorPattern::Curve, PlaceID);
+		}
+		else if (PrevType == PlaceType::Junction)
+		{
+			resultErase |= EraseFromContainer(ActorPattern::TJunction, PlaceID);
+			resultErase |= EraseFromContainer(ActorPattern::CrossJunction, PlaceID);
+		}
+
+		if (resultErase)
+		{
+			SetActor(place);
+		}
 	}
 
 	/**************************************
@@ -193,6 +214,7 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::SetTown(const Model::PlaceModel * place)
 	{
+
 	}
 
 	/**************************************
@@ -214,6 +236,36 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::SetJunction(const Model::PlaceModel * place)
 	{
+		FieldPosition position = place->GetPosition();
+		D3DXVECTOR3 actorPos{position.x * 10.0f, 0.0f, position.z * 10.0f};
+
+		std::vector<Adjacency> adjacencyTypeList = place->GetConnectingAdjacency();
+
+		//十字路のアクター作成
+		if (adjacencyTypeList.size() == 4)
+		{
+			PlaceActor *actor = new CrossJunctionActor(actorPos, Model::FieldLevel::City);
+			AddContainer(ActorPattern::CrossJunction, place->ID(), actor);
+		}
+		//T字路のアクター生成
+		else
+		{
+			PlaceActor* actor = new TJunctionActor(actorPos, Model::FieldLevel::City);
+			
+			TjunctionType junctionType = IsTjunction(adjacencyTypeList);
+			float rotAngle = 0.0f;
+
+			if (junctionType == TjunctionType::ExceptRight)
+				rotAngle = 90.0f;
+			else if (junctionType == TjunctionType::ExceptBack)
+				rotAngle = 180.0f;
+			else if (junctionType == TjunctionType::ExceptLeft)
+				rotAngle = -90.0f;
+	
+			actor->Rotate(rotAngle);
+
+			AddContainer(ActorPattern::TJunction, place->ID(), actor);
+		}
 	}
 
 	/**************************************
@@ -231,4 +283,15 @@ namespace Field::Actor
 		actorMap[pattern]->emplace(key, actor);
 	}
 
+	/**************************************
+	コンテナからの削除処理
+	***************************************/
+	bool PlaceActorController::EraseFromContainer(ActorPattern pattern, unsigned key)
+	{
+		if (actorMap[pattern]->count(key) == 0)
+			return false;
+
+		actorMap[pattern]->erase(key);
+		return true;
+	}
 }

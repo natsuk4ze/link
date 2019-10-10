@@ -56,6 +56,7 @@ namespace Field::Model
 	PlaceModel::PlaceModel(PlaceType type, int x, int z) :
 		uniqueID(incrementID++),
 		type(type),
+		prevType(type),
 		Position(x, z),
 		prev(Adjacency::NotAdjacenct),
 		next(Adjacency::NotAdjacenct)
@@ -78,6 +79,9 @@ namespace Field::Model
 	***************************************/
 	void PlaceModel::DrawDebug()
 	{
+		if (type == PlaceType::None)
+			return;
+
 		//テスト描画
 		Transform transform = Transform(
 			{ Position.x * 10.0f, 1.0f, Position.z * 10.0f },
@@ -330,6 +334,7 @@ namespace Field::Model
 	***************************************/
 	void PlaceModel::SetType(PlaceType type)
 	{
+		prevType = this->type;
 		this->type = type;
 	}
 
@@ -339,6 +344,14 @@ namespace Field::Model
 	const PlaceType PlaceModel::GetType() const
 	{
 		return type;
+	}
+
+	/**************************************
+	以前のタイプ取得
+	***************************************/
+	const PlaceType PlaceModel::GetPrevType() const
+	{
+		return prevType;
 	}
 
 	/**************************************

@@ -58,9 +58,9 @@ namespace Field::Actor
 			CrossJunction,
 			TJunction,
 			Curve,
+			StarightRoad,
 			Mountain,
 			River,
-			StarightRoad,
 			Max
 		};
 
@@ -82,6 +82,7 @@ namespace Field::Actor
 		void SetMountain(const Model::PlaceModel* place);
 
 		void AddContainer(ActorPattern pattern, unsigned key, PlaceActor* actor);
+		bool EraseFromContainer(ActorPattern pattern, unsigned key);
 	};
 }
 #endif

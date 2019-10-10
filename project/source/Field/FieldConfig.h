@@ -14,7 +14,7 @@
 #include <algorithm>
 
 namespace Field
-{		
+{
 	/**************************************
 	PlaceModelの座標構造体
 	***************************************/
@@ -119,6 +119,41 @@ namespace Field
 		else
 			return CurveType::ForwardAndRight;
 
+	}
+
+	/**************************************
+	十字路の向き列挙子
+	***************************************/
+	enum TjunctionType
+	{
+		NotTjunction,
+		ExceptBack,
+		ExceptLeft,
+		ExceptForward,
+		ExceptRight
+	};
+
+	/**************************************
+	十字路の向きの判定処理
+	***************************************/
+	inline TjunctionType IsTjunction(std::vector<Model::Adjacency>& adjacencyList)
+	{
+		if (adjacencyList.size() != 3)
+			return TjunctionType::NotTjunction;
+
+		auto itr = std::find(adjacencyList.begin(), adjacencyList.end(), Model::Adjacency::Back);
+		if (itr == adjacencyList.end())
+			return TjunctionType::ExceptBack;
+
+		itr = std::find(adjacencyList.begin(), adjacencyList.end(), Model::Adjacency::Left);
+		if (itr == adjacencyList.end())
+			return TjunctionType::ExceptLeft;
+
+		itr = std::find(adjacencyList.begin(), adjacencyList.end(), Model::Adjacency::Forward);
+		if (itr == adjacencyList.end())
+			return TjunctionType::ExceptForward;
+
+		return TjunctionType::ExceptRight;
 	}
 }
 

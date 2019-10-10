@@ -82,6 +82,7 @@ namespace Field::Model
 		bool IsType(PlaceType type) const;
 		void SetType(PlaceType type);
 		const PlaceType GetType() const;
+		const PlaceType GetPrevType() const;
 
 		//所属ルート取得
 		RouteModelPtr GetConnectingRoute() const;
@@ -103,8 +104,10 @@ namespace Field::Model
 		static unsigned incrementID;
 		unsigned uniqueID;
 
-		//タイプ、座標
-		PlaceType type;
+		//タイプ
+		PlaceType type, prevType;
+
+		//座標
 		const FieldPosition Position;
 
 		//所属しているルートの参照コンテナ
