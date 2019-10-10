@@ -77,14 +77,6 @@ namespace Field::Model
 	};
 
 	/**************************************
-	Adjacency列挙子の後置インクリメント
-	***************************************/
-	inline Adjacency operator++(Adjacency& adjacency, int)
-	{
-		return (adjacency == Adjacency::Max) ? adjacency : Adjacency(adjacency + 1);
-	}
-
-	/**************************************
 	隣接方向の逆側を求める処理
 	***************************************/
 	inline Adjacency GetInverseSide(const Adjacency adjacency)
