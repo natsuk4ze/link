@@ -100,8 +100,7 @@ namespace Field
 	***************************************/
 	inline CurveType IsCurve(std::vector<Model::Adjacency>& adjacencyList)
 	{
-		if (adjacencyList.size() != 2)
-			return CurveType::NotCurve;
+		assert(adjacencyList.size() == 2);
 
 		auto itrBack = std::find(adjacencyList.begin(), adjacencyList.end(), Model::Adjacency::Back);
 		auto itrLeft = std::find(adjacencyList.begin(), adjacencyList.end(), Model::Adjacency::Left);
@@ -138,8 +137,7 @@ namespace Field
 	***************************************/
 	inline TjunctionType IsTjunction(std::vector<Model::Adjacency>& adjacencyList)
 	{
-		if (adjacencyList.size() != 3)
-			return TjunctionType::NotTjunction;
+		assert(adjacencyList.size() == 3);
 
 		auto itr = std::find(adjacencyList.begin(), adjacencyList.end(), Model::Adjacency::Back);
 		if (itr == adjacencyList.end())
