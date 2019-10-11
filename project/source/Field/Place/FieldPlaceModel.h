@@ -89,8 +89,8 @@ namespace Field::Model
 		RouteContainer GetConnectingRoutes() const;
 
 		//•ûŒüŒˆ’èˆ—Aæ“¾ˆ—
-		void SetDirection(Adjacency prev, Adjacency next);
-		std::tuple<Adjacency, Adjacency> GetDirection() const;
+		void AddDirection(Adjacency direction);
+		void AddDirection(PlaceModel* place);
 
 		std::vector<Adjacency> GetConnectingAdjacency() const;
 
@@ -117,7 +117,7 @@ namespace Field::Model
 		std::vector<PlaceModel*> adjacencies;
 
 		//˜AŒ‹•ûŒü
-		Adjacency prev, next;
+		std::vector<Adjacency> connectDirection;
 	};
 }
 

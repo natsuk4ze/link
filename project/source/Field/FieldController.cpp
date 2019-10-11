@@ -400,7 +400,8 @@ namespace Field
 			for (auto&& river : riverVector)
 			{
 				river->SetType(PlaceType::Bridge);
-				river->SetDirection(startAdjacency, inverseStartAdjacency);
+				river->AddDirection(startAdjacency);
+				river->AddDirection(inverseStartAdjacency);
 			}
 
 			stockDevelopRiver -= cntRiver;

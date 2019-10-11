@@ -39,8 +39,10 @@ namespace Field::Model
 
 		//対象のルートのPlaceに対して1個ずつ隣接ルートを確認する
 		std::vector<PlaceModel*> route = model->route;
+		int cnt = 0;
 		for (auto&& place : route)
 		{
+			cnt++;
 			PlaceModel* connectTarget = place->GetConnectTarget();
 
 			//連結対象な見つからなかったのでコンティニュー
@@ -49,8 +51,11 @@ namespace Field::Model
 
 			//対象のPlaceを交差点にして分割
 			place->SetType(PlaceType::Junction);
-			(*model->onCreateJunction)(place);
 			divideList = Divide(model, place, routeContainer);
+			(*model->onCreateJunction)(place);
+
+			place->AddDirection(connectTarget);
+			connectTarget->AddDirection(place);
 
 			//繋がった相手も必要であれば分割する
 			RouteContainer subDivList;
@@ -121,6 +126,7 @@ namespace Field::Model
 		if (start->IsType(PlaceType::Road) || start->IsType(PlaceType::Junction))
 		{
 			_ConnectWithEdge(model, start, routeContainer);
+			start->AddDirection(model->edgeStart);
 		}
 
 		//終点の連結を確認
@@ -128,6 +134,7 @@ namespace Field::Model
 		if (end->IsType(PlaceType::Road) || end->IsType(PlaceType::Junction))
 		{
 			_ConnectWithEdge(model, end, routeContainer);
+			end->AddDirection(model->edgeEnd);
 		}
 	}
 
@@ -199,6 +206,7 @@ namespace Field::Model
 		{
 			place->SetType(PlaceType::Junction);
 			(*model->onCreateJunction)(place);
+
 			RouteContainer targetList = place->GetConnectingRoutes();
 
 			//取得した所属リストに新しく作ったルートが含まれるので削除

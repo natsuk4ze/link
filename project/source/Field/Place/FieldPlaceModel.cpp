@@ -57,12 +57,12 @@ namespace Field::Model
 		uniqueID(incrementID++),
 		type(type),
 		prevType(type),
-		Position(x, z),
-		prev(Adjacency::NotAdjacenct),
-		next(Adjacency::NotAdjacenct)
+		Position(x, z)
 	{
 		//隣接プレイスのコンテナを準備
 		adjacencies.resize(Adjacency::Max, NULL);
+
+		connectDirection.reserve(Adjacency::Max);
 	}
 
 	/**************************************
@@ -140,7 +140,7 @@ namespace Field::Model
 			if (type == PlaceType::Bridge)
 			{
 				Adjacency adjacenctType = IsAdjacent(adjacency);
-				if (adjacenctType == prev || adjacenctType == next)
+				if (Utility::IsContain(connectDirection, adjacenctType))
 					return true;
 			}
 			//空白タイプなら無条件でtrue
@@ -165,7 +165,7 @@ namespace Field::Model
 		//橋の場合は方向も考慮
 		if (type == PlaceType::Bridge)
 		{
-			if (prev == this->prev || prev == this->next)
+			if (Utility::IsContain(connectDirection, prev))
 				return true;
 			else
 				return false;
@@ -380,18 +380,24 @@ namespace Field::Model
 	/**************************************
 	方向セット処理
 	***************************************/
-	void PlaceModel::SetDirection(Adjacency prev, Adjacency next)
+	void PlaceModel::AddDirection(Adjacency direction)
 	{
-		this->prev = prev;
-		this->next = next;
+		if (direction == Adjacency::NotAdjacenct)
+			return;
+
+		auto itr = std::find(connectDirection.begin(), connectDirection.end(), direction);
+		if (itr == connectDirection.end())
+			connectDirection.push_back(direction);
 	}
 
 	/**************************************
-	方向ゲット処理
+	方向セット処理
 	***************************************/
-	std::tuple<Adjacency, Adjacency> PlaceModel::GetDirection() const
+	void PlaceModel::AddDirection(PlaceModel* place)
 	{
-		return std::tuple<Adjacency, Adjacency>(prev, next);
+		Adjacency adjacencyType = IsAdjacent(place);
+
+		AddDirection(adjacencyType);
 	}
 
 	/**************************************
@@ -399,38 +405,7 @@ namespace Field::Model
 	***************************************/
 	std::vector<Adjacency> PlaceModel::GetConnectingAdjacency() const
 	{
-		std::vector<Adjacency> out;
-		out.reserve(Adjacency::Max);
-
-		for (int i = Adjacency::Back; i < Adjacency::Max; i++)
-		{
-			if (adjacencies[i] == nullptr)
-				continue;
-
-			//自身と相手が交差点同士なら連結している
-			if (type == PlaceType::Junction && adjacencies[i]->IsType(PlaceType::Junction))
-			{
-				out.push_back(static_cast<Adjacency>(i));
-				continue;
-			}
-
-			//隣接プレイスの所属ルートと自身の所属ルートの積集合を数える
-			auto cntIntersect = from(belongRouteList)
-				>> intersect_with(from(adjacencies[i]->GetConnectingRoutes()))
-				>> count();
-
-			//積集合が0なら繋がっていないのでコンティニュー
-			if (cntIntersect == 0)
-				continue;
-
-			//隣接方向が向きと一致してないならコンティニュー
-			if (i != prev && i != next)
-				continue;
-
-			out.push_back(static_cast<Adjacency>(i));
-		}
-
-		return out;
+		return connectDirection;
 	}
 
 }
