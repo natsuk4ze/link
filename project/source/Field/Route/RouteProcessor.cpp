@@ -62,7 +62,7 @@ namespace Field::Model
 			if (connectTarget->IsType(PlaceType::Road))
 			{
 				connectTarget->SetType(PlaceType::Junction);
-				(*model->onCreateJunction)(place);
+				(*model->onCreateJunction)(connectTarget);
 				RouteModelPtr opponent = connectTarget->GetConnectingRoute();
 				subDivList = Divide(opponent, connectTarget, routeContainer);
 			}
