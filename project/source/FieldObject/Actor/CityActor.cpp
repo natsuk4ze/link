@@ -6,7 +6,7 @@
 //
 //=====================================
 #include "CityActor.h"
-#include "../../Framework/Resource/ResourceManager.h"
+#include "../../../Framework/Resource/ResourceManager.h"
 
 //=====================================
 // コンストラクタ
@@ -34,26 +34,4 @@ CityActor::CityActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
 //=====================================
 CityActor::~CityActor()
 {
-}
-
-//=====================================
-// 更新
-//=====================================
-void CityActor::Update()
-{
-	if (!IsActive())
-		return;
-
-	if (!animActive)
-		return;
-
-	switch (animType)
-	{
-	case FActor::Create:
-		break;
-	case FActor::Remove:
-		break;
-	default:
-		break;
-	}
 }

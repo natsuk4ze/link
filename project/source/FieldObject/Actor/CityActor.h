@@ -1,12 +1,12 @@
 //=====================================
 //
-// マウンテンアクター[MountainActor.h]
-// 機能：山（渦潮、ブラックホール）用3Dモデル表示
+// シティアクター[CityActor.cpp]
+// 機能：都市（国、星）用3Dモデル表示
 // Author:GP12B332 19 染谷武志
 //
 //=====================================
-#ifndef _MOUNTAINACTOR_H_
-#define _MOUNTAINACTOR_H_
+#ifndef _CITYACTOR_H_
+#define _CITYACTOR_H_
 
 #include "PlaceActor.h"
 //**************************************
@@ -16,14 +16,12 @@
 //**************************************
 // クラス定義
 //**************************************
-class MountainActor :
+class CityActor :
 	public PlaceActor
 {
 public:
-	MountainActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
-	~MountainActor();
-
-	void Update()override;
+	CityActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
+	~CityActor();
 };
 
 #endif

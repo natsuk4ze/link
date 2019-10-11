@@ -6,7 +6,7 @@
 //
 //=====================================
 #include "CrossJunctionActor.h"
-#include "../../Framework/Resource/ResourceManager.h"
+#include "../../../Framework/Resource/ResourceManager.h"
 
 //=====================================
 // コンストラクタ
@@ -35,35 +35,3 @@ CrossJunctionActor::CrossJunctionActor(const D3DXVECTOR3& pos, FModel::FieldLeve
 CrossJunctionActor::~CrossJunctionActor()
 {
 }
-
-//=====================================
-// 更新
-//=====================================
-void CrossJunctionActor::Update()
-{
-	if (!IsActive())
-		return;
-
-	if (!animActive)
-		return;
-
-	switch (animType)
-	{
-	case FActor::Create:
-		break;
-	case FActor::Remove:
-		break;
-	default:
-		break;
-	}
-}
-
-//=====================================
-// 描画
-//=====================================
-//void IntersectionActor::Draw()
-//{
-	//transform->SetWorld();
-	//mesh->Draw();
-//}
-

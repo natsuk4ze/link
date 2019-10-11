@@ -6,7 +6,7 @@
 //
 //=====================================
 #include "MountainActor.h"
-#include "../../Framework/Resource/ResourceManager.h"
+#include "../../../Framework/Resource/ResourceManager.h"
 
 //=====================================
 // コンストラクタ
@@ -34,26 +34,4 @@ MountainActor::MountainActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentL
 //=====================================
 MountainActor::~MountainActor()
 {
-}
-
-//=====================================
-// 更新
-//=====================================
-void MountainActor::Update()
-{
-	if (!IsActive())
-		return;
-
-	if (!animActive)
-		return;
-
-	switch (animType)
-	{
-	case FActor::Create:
-		break;
-	case FActor::Remove:
-		break;
-	default:
-		break;
-	}
 }

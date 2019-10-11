@@ -10,13 +10,13 @@
 #include "Route\RouteModel.h"
 #include "FieldConfig.h"
 
-#include "../FieldObject/CityActor.h"
-#include "../FieldObject/CrossJunctionActor.h"
-#include "../FieldObject/CurveRoadActor.h"
-#include "../FieldObject/MountainActor.h"
-#include "../FieldObject/RiverActor.h"
-#include "../FieldObject/StraightRoadActor.h"
-#include "../FieldObject/TJunctionActor.h"
+#include "../FieldObject/Actor/CityActor.h"
+#include "../FieldObject/Actor/CrossJunctionActor.h"
+#include "../FieldObject/Actor/CurveRoadActor.h"
+#include "../FieldObject/Actor/MountainActor.h"
+#include "../FieldObject/Actor/RiverActor.h"
+#include "../FieldObject/Actor/StraightRoadActor.h"
+#include "../FieldObject/Actor/TJunctionActor.h"
 
 namespace Field::Actor
 {

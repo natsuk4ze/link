@@ -6,7 +6,7 @@
 //
 //=====================================
 #include "RiverActor.h"
-#include "../../Framework/Resource/ResourceManager.h"
+#include "../../../Framework/Resource/ResourceManager.h"
 
 //=====================================
 // コンストラクタ
@@ -34,26 +34,4 @@ RiverActor::RiverActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
 //=====================================
 RiverActor::~RiverActor()
 {
-}
-
-//=====================================
-// 更新
-//=====================================
-void RiverActor::Update()
-{
-	if (!IsActive())
-		return;
-
-	if (!animActive)
-		return;
-
-	switch (animType)
-	{
-	case FActor::Create:
-		break;
-	case FActor::Remove:
-		break;
-	default:
-		break;
-	}
 }

@@ -22,8 +22,6 @@ class RiverActor :
 public:
 	RiverActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
 	~RiverActor();
-
-	void Update()override;
 };
 
 #endif
