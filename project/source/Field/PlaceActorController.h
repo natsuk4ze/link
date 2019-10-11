@@ -30,8 +30,8 @@ namespace Field::Actor
 	前方宣言
 	***************************************/
 	using RouteModelPtr = std::shared_ptr<Field::Model::RouteModel>;
-	using ActorContainer = std::unordered_map<unsigned, std::unique_ptr<PlaceActor>>;
-	using ActorMap = std::vector<ActorContainer*>;
+	using ActorMap = std::unordered_map<unsigned, std::unique_ptr<PlaceActor>>;
+	using ActorContainer = std::vector<ActorMap*>;
 
 	/**************************************
 	クラス定義
@@ -64,15 +64,7 @@ namespace Field::Actor
 			Max
 		};
 
-		ActorMap actorMap;
-
-		ActorContainer cityContainer;
-		ActorContainer crossJunctionContainer;
-		ActorContainer tJunctionContainer;
-		ActorContainer curveContainer;
-		ActorContainer mountainContainer;
-		ActorContainer riverContainer;
-		ActorContainer straightContainer;
+		ActorContainer actorContainer;
 
 		void SetRoad(const Model::PlaceModel* place);
 		void SetTown(const Model::PlaceModel* place);
