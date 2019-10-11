@@ -17,7 +17,6 @@
 /**************************************
 マクロ定義
 ***************************************/
-#define DEBUG_PLACEMODEL
 
 /**************************************
 前方宣言
@@ -40,10 +39,6 @@ namespace Field::Model
 		//コンストラクタ、デストラクタ
 		PlaceModel(PlaceType type, int x, int z);
 		~PlaceModel();
-
-		//更新処理、描画処理
-		void Update();
-		void Draw();
 
 		//座標取得
 		FieldPosition GetPosition() const;
@@ -86,21 +81,33 @@ namespace Field::Model
 		//タイプ判定、変更処理
 		bool IsType(PlaceType type) const;
 		void SetType(PlaceType type);
+		const PlaceType GetType() const;
+		const PlaceType GetPrevType() const;
 
 		//所属ルート取得
 		RouteModelPtr GetConnectingRoute() const;
 		RouteContainer GetConnectingRoutes() const;
 
-		//方向決定処理
-		void SetDirection(Adjacency prev, Adjacency next);
+		//方向決定処理、取得処理
+		void AddDirection(Adjacency direction);
+		void AddDirection(PlaceModel* place);
+
+		std::vector<Adjacency> GetConnectingAdjacency() const;
+
+#ifdef DEBUG_PLACEMODEL
+		//デバッグ用描画処理
+		void DrawDebug();
+#endif
 
 	private:
 		//ID
 		static unsigned incrementID;
 		unsigned uniqueID;
 
-		//タイプ、座標
-		PlaceType type;
+		//タイプ
+		PlaceType type, prevType;
+
+		//座標
 		const FieldPosition Position;
 
 		//所属しているルートの参照コンテナ
@@ -110,10 +117,7 @@ namespace Field::Model
 		std::vector<PlaceModel*> adjacencies;
 
 		//連結方向
-		Adjacency prev, next;
-
-		//ゲームに表示するアクター
-		PlaceActor* actor;
+		std::vector<Adjacency> connectDirection;
 	};
 }
 

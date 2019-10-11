@@ -27,6 +27,12 @@ namespace Field
 	{
 		class PlaceContainer;
 		class OperatePlaceContainer;
+		class RouteProcessor;
+	}
+
+	namespace Actor
+	{
+		class PlaceActorController;
 	}
 
 	using PlaceVector = std::vector<Model::PlaceModel*>;
@@ -74,6 +80,7 @@ namespace Field
 		static const int InputShortWait;				//入力リピートの待機フレーム
 		static const unsigned InitDevelopRiverStock;	//川開発ストックの初期数
 		static const unsigned InitDevelopMountainStock;	//山開発ストックの初期数
+		static const int DevelopmentInterval;			//AI発展レベルが上がるインターバル
 
 		FieldCursor *cursor;								//カーソル
 		FieldGround *ground;								//地面
@@ -81,9 +88,14 @@ namespace Field
 		Model::PlaceContainer *placeContainer;				//プレイスコンテナ
 		Model::OperatePlaceContainer *operateContainer;		//操作対象プレイスのコンテナ
 		Model::RouteContainer routeContainer;				//ルートモデルコンテナ
+		Model::RouteProcessor *routeProcessor;				//ルートプロセッサ
+		Actor::PlaceActorController* placeActController;	//プレイスアクターコントローラ
+
 
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int inputRepeatCnt;						//入力のリピートカウント
+		int cntFrame;							//フレームカウント
+		float developmentLevelAI;				//AI発展レベル
 		unsigned stockDevelopRiver;				//川開発アイテムストック
 		unsigned stockDevelopMountain;			//山開発アイテムストック
 
@@ -92,8 +104,9 @@ namespace Field
 		std::vector<ControllerState*> fsm;		//ステートマシン
 
 		//デリゲータ
-		DelegatePtr<Model::PlaceModel*> onConnectTown;
-		DelegatePtr<Model::PlaceModel*> onCreateJunction;
+		DelegatePtr<const Model::PlaceModel*> onConnectTown;
+		DelegatePtr<const Model::PlaceModel*> onCreateJunction;
+		DelegatePtr<const Model::PlaceModel*> onChangePlaceType;
 
 		//ステート切り替え
 		void ChangeState(State next);
@@ -108,6 +121,9 @@ namespace Field
 		void DevelopPlace(PlaceVector& route, PlaceIterator start);
 		PlaceIterator DevelopMountain(PlaceVector& route, PlaceIterator moutain);
 		PlaceIterator DevelopRiver(PlaceVector& route, PlaceIterator river);
+		
+		//AI発展レベルの計算
+		void CalcDevelopmentLevelAI();
 
 		//各ステートクラスの前方宣言
 		class IdleState;

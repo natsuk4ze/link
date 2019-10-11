@@ -6,7 +6,7 @@
 //
 //=====================================
 #include "CurveRoadActor.h"
-#include "../../Framework/Resource/ResourceManager.h"
+#include "../../../Framework/Resource/ResourceManager.h"
 
 //=====================================
 // コンストラクタ
@@ -34,26 +34,4 @@ CurveRoadActor::CurveRoadActor(const D3DXVECTOR3& pos, FModel::FieldLevel curren
 //=====================================
 CurveRoadActor::~CurveRoadActor()
 {
-}
-
-//=====================================
-// 更新
-//=====================================
-void CurveRoadActor::Update()
-{
-	if (!IsActive())
-		return;
-
-	if (!animActive)
-		return;
-
-	switch (animType)
-	{
-	case FActor::Create:
-		break;
-	case FActor::Remove:
-		break;
-	default:
-		break;
-	}
 }

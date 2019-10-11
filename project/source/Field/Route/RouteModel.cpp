@@ -18,6 +18,8 @@ namespace Field::Model
 	using宣言
 	***************************************/
 	using cpplinq::last_or_default;
+	using cpplinq::from;
+	using cpplinq::contains;
 
 	/**************************************
 	static変数
@@ -154,15 +156,18 @@ namespace Field::Model
 		//各プレイスの方向を決定
 		unsigned routeSize = route.size();
 		
-		first->SetDirection(first->IsAdjacent(edgeStart), first->IsAdjacent(route[1]));
+		first->AddDirection(first->IsAdjacent(edgeStart));
+		first->AddDirection(first->IsAdjacent(route[1]));
 
 		for (unsigned i = 1; i < routeSize - 1; i++)
 		{
 			PlaceModel* place = route[i];
-			place->SetDirection(place->IsAdjacent(route[i - 1]), place->IsAdjacent(route[i + 1]));
+			place->AddDirection(place->IsAdjacent(route[i - 1]));
+			place->AddDirection(place->IsAdjacent(route[i + 1]));
 		}
 
-		last->SetDirection(last->IsAdjacent(route[routeSize - 1]), last->IsAdjacent(edgeEnd));
+		last->AddDirection(last->IsAdjacent(route[routeSize - 2]));
+		last->AddDirection(last->IsAdjacent(edgeEnd));
 	}
 
 	/**************************************
@@ -191,6 +196,43 @@ namespace Field::Model
 	}
 
 	/**************************************
+	繋がっている街を取得
+	***************************************/
+	int RouteModel::FindLinkedTown(const PlaceModel * root, std::vector<RouteModelPtr> & searchedRoute, std::vector<PlaceModel*> searchedTown)
+	{
+		int cntTown = 0;
+
+		//対象に繋がっている街を確認
+		if (!(from(searchedRoute) >> contains(shared_from_this())))
+		{
+			searchedRoute.push_back(shared_from_this());
+
+			PlaceModel* town = this->GetConnectedTown(root);
+			if (town != nullptr && !(from(searchedTown) >> contains(town)))
+			{
+				cntTown++;
+				searchedTown.push_back(town);
+			}
+		}
+
+		//隣接しているルートに対して再帰的に探索
+		for (auto&& adjacency : this->adjacentRoute)
+		{
+			RouteModelPtr ptr = adjacency.route.lock();
+
+			if (!ptr)
+				continue;
+
+			if (from(searchedRoute) >> contains(ptr))
+				continue;
+
+			cntTown += ptr->FindLinkedTown(root, searchedRoute, searchedTown);
+		}
+
+		return cntTown;
+	}
+
+	/**************************************
 	使用判定セット処理
 	***************************************/
 	void RouteModel::SetUnused(bool use)
@@ -207,6 +249,21 @@ namespace Field::Model
 	}
 
 	/**************************************
+	全プレイス取得
+	***************************************/
+	const std::vector<const PlaceModel*> RouteModel::GetAllPlaces() const
+	{
+		std::vector<const PlaceModel*> out;
+		out.reserve(route.size() + 2);
+
+		out.push_back(edgeStart);
+		std::copy(route.begin(), route.end(), std::back_inserter(out));
+		out.push_back(edgeEnd);
+
+		return out;
+	}
+
+	/**************************************
 	端点設定（内部処理）
 	***************************************/
 	void RouteModel::_SetEdge(PlaceModel* place)
@@ -216,8 +273,10 @@ namespace Field::Model
 		SetEdge(opponent);
 		opponent->BelongRoute(shared_from_this());
 
-		//TODO:街なら出口を増やす
+		//街なら出口を増やす
 		if (opponent->IsType(PlaceType::Town))
 			(*onConnectedTown)(opponent);
+
+		//交差点なら所属ルートを追加
 	}
 }

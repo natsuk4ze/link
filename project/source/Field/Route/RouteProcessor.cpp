@@ -22,6 +22,14 @@ namespace Field::Model
 	using cpplinq::contains;
 
 	/**************************************
+	コンストラクタ
+	***************************************/
+	RouteProcessor::RouteProcessor(DelegatePtr<const PlaceModel*> onChangePlaceType)
+	{
+		this->onChangePlaceType = onChangePlaceType;
+	}
+
+	/**************************************
 	新しく作ったルートに対して隣接しているルートと連結させて加工する
 	***************************************/
 	void RouteProcessor::Process(RouteModelPtr & model, RouteContainer & routeContainer)
@@ -31,8 +39,10 @@ namespace Field::Model
 
 		//対象のルートのPlaceに対して1個ずつ隣接ルートを確認する
 		std::vector<PlaceModel*> route = model->route;
+		int cnt = 0;
 		for (auto&& place : route)
 		{
+			cnt++;
 			PlaceModel* connectTarget = place->GetConnectTarget();
 
 			//連結対象な見つからなかったのでコンティニュー
@@ -41,15 +51,18 @@ namespace Field::Model
 
 			//対象のPlaceを交差点にして分割
 			place->SetType(PlaceType::Junction);
-			(*model->onCreateJunction)(place);
 			divideList = Divide(model, place, routeContainer);
+			(*model->onCreateJunction)(place);
+
+			place->AddDirection(connectTarget);
+			connectTarget->AddDirection(place);
 
 			//繋がった相手も必要であれば分割する
+			connectTarget->SetType(PlaceType::Junction);
 			RouteContainer subDivList;
-			if (connectTarget->IsType(PlaceType::Road))
+			if (connectTarget->GetPrevType() == PlaceType::Road)
 			{
-				connectTarget->SetType(PlaceType::Junction);
-				(*model->onCreateJunction)(place);
+				(*model->onCreateJunction)(connectTarget);
 				RouteModelPtr opponent = connectTarget->GetConnectingRoute();
 				subDivList = Divide(opponent, connectTarget, routeContainer);
 			}
@@ -81,7 +94,8 @@ namespace Field::Model
 			connectTarget->BelongRoute(divideList);
 
 			//交差点と連結対象のオブジェクトを設定
-
+			(*onChangePlaceType)(place);
+			(*onChangePlaceType)(connectTarget);
 
 			//ルートを分割した時点で正常にループできなくなるのでブレイク
 			break;
@@ -112,6 +126,7 @@ namespace Field::Model
 		if (start->IsType(PlaceType::Road) || start->IsType(PlaceType::Junction))
 		{
 			_ConnectWithEdge(model, start, routeContainer);
+			start->AddDirection(model->edgeStart);
 		}
 
 		//終点の連結を確認
@@ -119,6 +134,7 @@ namespace Field::Model
 		if (end->IsType(PlaceType::Road) || end->IsType(PlaceType::Junction))
 		{
 			_ConnectWithEdge(model, end, routeContainer);
+			end->AddDirection(model->edgeEnd);
 		}
 	}
 
@@ -181,52 +197,16 @@ namespace Field::Model
 	}
 
 	/**************************************
-	繋がっている街を探索する
-	***************************************/
-	int RouteProcessor::FindLinkedTown(const PlaceModel * root, RouteModelPtr target, RouteContainer & searchedRoute, std::vector<PlaceModel*> searchedTown)
-	{
-		int cntTown = 0;
-
-		//対象に繋がっている街を確認
-		if (!(from(searchedRoute) >> contains(target)))
-		{
-			searchedRoute.push_back(target);
-
-			PlaceModel* town = target->GetConnectedTown(root);
-			if (town != nullptr && !(from(searchedTown) >> contains(town)))
-			{
-				cntTown++;
-				searchedTown.push_back(town);
-			}
-		}
-
-		//隣接しているルートに対して再帰的に探索
-		for (auto&& adjacency : target->adjacentRoute)
-		{
-			RouteModelPtr ptr = adjacency.route.lock();
-
-			if (!ptr)
-				continue;
-
-			if (from(searchedRoute) >> contains(ptr))
-				continue;
-
-			cntTown += FindLinkedTown(root, ptr, searchedRoute, searchedTown);
-		}
-
-		return cntTown;
-	}
-
-	/**************************************
 	連結処理（内部）
 	***************************************/
 	void RouteProcessor::_ConnectWithEdge(RouteModelPtr& model, PlaceModel *place, RouteContainer& routeContainer)
 	{
 		//連結対象が道なら交差点にしてルートを分割
-		if (place->IsType(PlaceType::Road))
+		place->SetType(PlaceType::Junction);
+		if (place->GetPrevType() == PlaceType::Road)
 		{
-			place->SetType(PlaceType::Junction);
 			(*model->onCreateJunction)(place);
+
 			RouteContainer targetList = place->GetConnectingRoutes();
 
 			//取得した所属リストに新しく作ったルートが含まれるので削除

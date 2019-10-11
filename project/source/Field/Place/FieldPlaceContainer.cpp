@@ -11,6 +11,7 @@
 #include "FieldJunctionModel.h"
 #include "../../../Framework/String/String.h"
 #include "../../../Framework/Tool/DebugWindow.h"
+#include "../../../Framework/Tool/ProfilerCPU.h"
 
 #include <fstream>
 #include <string>
@@ -32,20 +33,21 @@ namespace Field::Model
 	PlaceContainer::PlaceContainer() :
 		placeRowMax(0),
 		placeColumMax(0),
-		initialized(false)
+		initialized(false),
+		trafficJamRate(0.0f)
 	{
 		placeVector.reserve(PlaceMax);
 
 #ifdef DEBUG_PLACEMODEL
 		//デバッグ表示用の板ポリゴンを作成する
 		ResourceManager::Instance()->MakePolygon("None", "", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("Road", "data/TEXTURE/PlaceTest/road.jpg", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("Town", "data/TEXTURE/PlaceTest/town.jpg", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("River", "data/TEXTURE/PlaceTest/river.jpg", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("Bridge", "data/TEXTURE/PlaceTest/Bridge.jpg", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("Junction", "data/TEXTURE/PlaceTest/junction.jpg", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("Mountain", "data/TEXTURE/PlaceTest/mountain.jpg", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("Operate", "data/TEXTURE/PlaceTest/operate.jpg", { 2.0f, 2.0f });
+		ResourceManager::Instance()->MakePolygon("Road", "data/TEXTURE/PlaceTest/road.png", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Town", "data/TEXTURE/PlaceTest/town.png", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("River", "data/TEXTURE/PlaceTest/river.png", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Bridge", "data/TEXTURE/PlaceTest/Bridge.png", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Junction", "data/TEXTURE/PlaceTest/junction.png", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Mountain", "data/TEXTURE/PlaceTest/mountain.png", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Operate", "data/TEXTURE/PlaceTest/operate.png", { 2.0f, 2.0f });
 #endif
 	}
 
@@ -68,31 +70,35 @@ namespace Field::Model
 		if (!initialized)
 			return;
 
-		for (auto&& place : placeVector)
-		{
-			place->Update();
-		}
-
 		//デバッグ表示
 		Debug::Log("CntLinkedTown:%d", townContainer.size());
 		Debug::Log("CntJunction:%d", junctionContainer.size());
-		Debug::Log("TrafficJam: %f", CaclTrafficJamRate());
-
+		Debug::Log("TrafficJam: %f", trafficJamRate);
 	}
 
+#ifdef DEBUG_PLACEMODEL
 	/**************************************
 	描画処理
 	***************************************/
-	void PlaceContainer::Draw()
+	void PlaceContainer::DrawDebug()
 	{
 		if (!initialized)
 			return;
 
+		LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+		pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
+		pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+
 		for (auto&& place : placeVector)
 		{
-			place->Draw();
+			place->DrawDebug();
 		}
+
+		pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
+		pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 	}
+#endif
 
 	/**************************************
 	プレイス取得処理
@@ -183,7 +189,7 @@ namespace Field::Model
 	/**************************************
 	街が道と繋がったときの処理
 	***************************************/
-	void Field::Model::PlaceContainer::OnConnectedTown(PlaceModel * place)
+	void Field::Model::PlaceContainer::OnConnectedTown(const PlaceModel * place)
 	{
 		unsigned placeID = place->ID();
 
@@ -199,7 +205,7 @@ namespace Field::Model
 	/**************************************
 	交差点が作られたときの処理
 	***************************************/
-	void Field::Model::PlaceContainer::OnCreateJunction(PlaceModel * place)
+	void Field::Model::PlaceContainer::OnCreateJunction(const PlaceModel * place)
 	{
 		unsigned placeID = place->ID();
 
@@ -213,11 +219,11 @@ namespace Field::Model
 	/**************************************
 	混雑度計算
 	***************************************/
-	float Field::Model::PlaceContainer::CaclTrafficJamRate()
+	void Field::Model::PlaceContainer::CaclTrafficJamRate()
 	{
 		//出口がある街がなければ計算が成立しないので早期リターン
 		if (townContainer.empty())
-			return 1.0f;
+			return;
 
 		int sumGate = 0;
 		for (auto&& town : townContainer)
@@ -228,11 +234,17 @@ namespace Field::Model
 		//交差点が無い場合の計算式
 		if (junctionContainer.empty())
 		{
-			return ((float)townContainer.size() / sumGate);
+			trafficJamRate = ((float)townContainer.size() / sumGate);
 		}
 		//交差点がある場合の計算式
 		else
 		{
+			//交差点ごとの混雑度を計算
+			for (auto&& junction : junctionContainer)
+			{
+				junction.second->Calculate(townContainer);
+			}
+
 			float sumTrafficJam = 0.0f;
 			int validJunctionNum = 0;
 
@@ -247,8 +259,22 @@ namespace Field::Model
 				validJunctionNum++;
 			}
 
-			return Math::Min(sumTrafficJam * 0.01f * 1.5f / (validJunctionNum * sumGate), 1.0f);
+			trafficJamRate = Math::Min(sumTrafficJam * 0.01f * 1.5f / (validJunctionNum * sumGate), 1.0f);
 		}
+	}
+
+	/**************************************
+	AI発展レベル計算
+	***************************************/
+	float Field::Model::PlaceContainer::CalcDevelopmentLevelAI()
+	{
+		float developLevel = 0.0f;
+		for (auto&& town : townContainer)
+		{
+			developLevel += town.second->OnGrowth(1.0f - trafficJamRate);
+		}
+
+		return developLevel;
 	}
 
 	/**************************************

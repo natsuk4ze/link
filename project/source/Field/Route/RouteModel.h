@@ -22,7 +22,7 @@ namespace Field::Model
 	class RouteModel;
 
 	using RouteModelPtr = std::shared_ptr<RouteModel>;
-	using DelegatePlace = DelegatePtr<PlaceModel*>;
+	using DelegatePlace = DelegatePtr<const PlaceModel*>;
 	
 	/**************************************
 	隣接ルート情報
@@ -78,9 +78,15 @@ namespace Field::Model
 		//繋がっている街を取得
 		PlaceModel* GetConnectedTown(const PlaceModel* self);
 
+		//ルートに繋がっている街の探索
+		int FindLinkedTown(const PlaceModel* root, std::vector<RouteModelPtr>& searchedRoute, std::vector<PlaceModel*> searchedTown);
+
 		//使用判定
 		void SetUnused(bool use);
 		bool IsUnused();
+
+		//全プレイス取得
+		const std::vector<const PlaceModel*> GetAllPlaces() const;
 
 	private:
 		PlaceModel *edgeStart, *edgeEnd;			//端点のPlace
@@ -92,8 +98,8 @@ namespace Field::Model
 
 		bool isUnused;								//使用判定
 
-		DelegatePtr<PlaceModel*> onConnectedTown;	//街と道が繋がったときのデリゲータ
-		DelegatePtr<PlaceModel*> onCreateJunction;	//交差点を作ったときのデリゲータ
+		DelegatePtr<const PlaceModel*> onConnectedTown;	//街と道が繋がったときのデリゲータ
+		DelegatePtr<const PlaceModel*> onCreateJunction;	//交差点を作ったときのデリゲータ
 
 		void _SetEdge(PlaceModel* place);			//端点設定内部処理
 	};

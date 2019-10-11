@@ -24,6 +24,8 @@ PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
 	transform->SetPosition(pos);
 	transform->SetScale(ActorScale);
 	this->SetActive(true);
+
+	state = NULL;
 }
 
 //=====================================
@@ -37,23 +39,11 @@ PlaceActor::~PlaceActor()
 //=====================================
 // 更新
 //=====================================
-void PlaceActor::Update()
+PlaceActor::State PlaceActor::Update()
 {
-	if (!this->IsActive())
-		return;
+	// 状態の更新
+	return state->OnUpdate(*this);
 
-	if (!animActive)
-		return;
-
-	switch (animType)
-	{
-	case FActor::Create:
-		break;
-	case FActor::Remove:
-		break;
-	default:
-		break;
-	}
 }
 
 //=====================================
@@ -77,12 +67,11 @@ void PlaceActor::Rotate(float y)
 }
 
 //=====================================
-// アニメーションを再生させる
+// ステートの切り替え
 //=====================================
-void PlaceActor::PlayAnimation(FActor::AnimType AnimType)
+void PlaceActor::ChangeState(ActorState *next)
 {
-	this->animType = AnimType;
-	this->animActive = true;
+	state = next;
 }
 
 //=====================================

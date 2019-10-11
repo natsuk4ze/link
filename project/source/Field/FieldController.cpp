@@ -13,12 +13,11 @@
 #include "Place\FieldPlaceModel.h"
 #include "Route\RouteModel.h"
 #include "Route\RouteProcessor.h"
+#include "PlaceActorController.h"
 
 #include "State/BuildRoad.h"
 #include "State/FieldControllerIdle.h"
 #include "State/UseItem.h"
-
-#include "Item/ItemModel.h"
 
 #include "../../Framework/Input/input.h"
 #include "../../Framework/Tool/DebugWindow.h"
@@ -36,6 +35,7 @@ namespace Field
 	const int FieldController::InputShortWait = 5;					//入力リピートの待機フレーム
 	const unsigned FieldController::InitDevelopRiverStock = 10;		//川開発ストックの初期数
 	const unsigned FieldController::InitDevelopMountainStock = 10;	//山開発ストックの初期数
+	const int FieldController::DevelopmentInterval = 30;			//発展レベル上昇のインターバル
 
 	/**************************************
 	コンストラクタ
@@ -43,16 +43,20 @@ namespace Field
 	FieldController::FieldController() :
 		fieldBorder(InitFieldBorder),
 		inputRepeatCnt(0),
+		cntFrame(0),
+		developmentLevelAI(0),
 		stockDevelopRiver(InitDevelopRiverStock),
 		stockDevelopMountain(InitDevelopMountainStock),
 		onConnectTown(nullptr),
-		onCreateJunction(nullptr)
+		onCreateJunction(nullptr),
+		onChangePlaceType(nullptr)
 	{
 		//インスタンス作成
 		cursor = new FieldCursor(PlaceOffset);
 		ground = new FieldGround();
 		placeContainer = new Model::PlaceContainer();
 		operateContainer = new Model::OperatePlaceContainer();
+		placeActController = new Actor::PlaceActorController();
 
 		//ステートマシン作成
 		fsm.resize(State::Max, NULL);
@@ -61,8 +65,12 @@ namespace Field
 		fsm[State::Develop] = new UseItemState();
 
 		//デリゲート作成
-		onConnectTown = Delegate<Model::PlaceContainer, Model::PlaceModel*>::Create(placeContainer, &Model::PlaceContainer::OnConnectedTown);
-		onCreateJunction = Delegate<Model::PlaceContainer, Model::PlaceModel*>::Create(placeContainer, &Model::PlaceContainer::OnCreateJunction);
+		onConnectTown = Delegate<Model::PlaceContainer, const Model::PlaceModel*>::Create(placeContainer, &Model::PlaceContainer::OnConnectedTown);
+		onCreateJunction = Delegate<Model::PlaceContainer, const Model::PlaceModel*>::Create(placeContainer, &Model::PlaceContainer::OnCreateJunction);
+		onChangePlaceType = Delegate<Actor::PlaceActorController, const Model::PlaceModel*>::Create(placeActController, &Actor::PlaceActorController::ChangeActor);
+
+		//ルートプロセッサ作成
+		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
 
 		//ステート初期化
 		ChangeState(State::Idle);
@@ -80,10 +88,13 @@ namespace Field
 		SAFE_DELETE(ground);
 		SAFE_DELETE(placeContainer);
 		SAFE_DELETE(operateContainer);
+		SAFE_DELETE(routeProcessor);
+		SAFE_DELETE(placeActController);
 
 		//デリゲート削除
 		SAFE_DELETE(onConnectTown);
 		SAFE_DELETE(onCreateJunction);
+		SAFE_DELETE(onChangePlaceType);
 
 		//ステートマシン削除
 		Utility::DeleteContainer(fsm);
@@ -109,6 +120,16 @@ namespace Field
 		{
 			route->Update();
 		}
+
+		placeActController->Update();
+
+		//AI発展レベルを計算
+		CalcDevelopmentLevelAI();
+
+		Debug::Log("ControllerState:%d", current);
+		Debug::Log("StockRiver:%d", stockDevelopRiver);
+		Debug::Log("StockMountain:%d", stockDevelopMountain);
+		Debug::Log("DevelopmentAILevel:%d", (int)developmentLevelAI);
 	}
 
 	/**************************************
@@ -118,16 +139,14 @@ namespace Field
 	{
 		ground->Draw();
 
-		placeContainer->Draw();
+		placeActController->Draw();
 
+#ifdef DEBUG_PLACEMODEL
 		operateContainer->DrawDebug();
-
+		placeContainer->DrawDebug();
+#endif
 		//カーソルには透過オブジェクトが含まれるので最後に描画
 		cursor->Draw();
-
-		Debug::Log("ControllerState:%d", current);
-		Debug::Log("StockRiver:%d", stockDevelopRiver);
-		Debug::Log("StockMountain:%d", stockDevelopMountain);
 	}
 
 	/**************************************
@@ -159,7 +178,7 @@ namespace Field
 
 		//リピート確認
 		float repeatX = 0.0f, repeatZ = 0.0f;
-		if((Input::GetPressHorizontail() != 0.0f || Input::GetPressVertical() != 0.0f))
+		if ((Input::GetPressHorizontail() != 0.0f || Input::GetPressVertical() != 0.0f))
 		{
 			inputRepeatCnt++;
 			if (inputRepeatCnt >= InputLongWait && inputRepeatCnt % InputShortWait == 0)
@@ -232,16 +251,21 @@ namespace Field
 
 		//ルートモデル作成
 		RouteModelPtr ptr = RouteModel::Create(onConnectTown, onCreateJunction, route);
-		routeContainer.push_back(ptr);
-	
+
 		//端点設定
 		ptr->SetEdge();
 
 		//オブジェクト設定
 
 		//隣接するルートと連結させる
-		RouteProcessor::ConnectWithEdge(ptr, routeContainer);
-		RouteProcessor::Process(ptr, routeContainer);
+		routeProcessor->ConnectWithEdge(ptr, routeContainer);
+		routeProcessor->Process(ptr, routeContainer);
+
+		//道を新しく作ったので混雑度を再計算
+		placeContainer->CaclTrafficJamRate();
+
+		//アクター生成
+		placeActController->SetActor(ptr);
 	}
 
 	/**************************************
@@ -361,7 +385,7 @@ namespace Field
 		}
 
 		//終点が見つからなかったので早期リターン
-		if(end == route.end())
+		if (end == route.end())
 			return route.end();
 
 		//始点と終点の間の川コンテナを作成
@@ -376,7 +400,8 @@ namespace Field
 			for (auto&& river : riverVector)
 			{
 				river->SetType(PlaceType::Bridge);
-				river->SetDirection(startAdjacency, inverseStartAdjacency);
+				river->AddDirection(startAdjacency);
+				river->AddDirection(inverseStartAdjacency);
 			}
 
 			stockDevelopRiver -= cntRiver;
@@ -387,5 +412,19 @@ namespace Field
 		}
 
 		return end;
+	}
+
+	/**************************************
+	AI発展レベルの計算
+	***************************************/
+	void FieldController::CalcDevelopmentLevelAI()
+	{
+		cntFrame = Math::WrapAround((const int)0, DevelopmentInterval, cntFrame + 1);
+
+		//レベルの上昇はDevelopmentIntervalおきに行う
+		if (cntFrame != 0)
+			return;
+
+		developmentLevelAI += placeContainer->CalcDevelopmentLevelAI();
 	}
 }
