@@ -27,19 +27,21 @@ namespace Field::Actor
 	using Model::Adjacency;
 
 	/**************************************
+	using宣言
+	***************************************/
+	const float PlaceActorController::PlacePositionOffset = 10.0f;
+
+	/**************************************
 	コンストラクタ
 	***************************************/
 	PlaceActorController::PlaceActorController()
 	{
-		actorMap.resize(ActorPattern::Max, NULL);
+		actorContainer.resize(ActorPattern::Max, NULL);
 
-		actorMap[ActorPattern::City] = &cityContainer;
-		actorMap[ActorPattern::CrossJunction] = &crossJunctionContainer;
-		actorMap[ActorPattern::TJunction] = &tJunctionContainer;
-		actorMap[ActorPattern::Curve] = &curveContainer;
-		actorMap[ActorPattern::Mountain] = &mountainContainer;
-		actorMap[ActorPattern::River] = &riverContainer;
-		actorMap[ActorPattern::StarightRoad] = &straightContainer;
+		for (auto&& actorMap : actorContainer)
+		{
+			actorMap = new ActorMap();
+		}
 	}
 
 	/**************************************
@@ -47,11 +49,12 @@ namespace Field::Actor
 	***************************************/
 	PlaceActorController::~PlaceActorController()
 	{
-		for (auto&& map : actorMap)
+		for (auto&& actorMap : actorContainer)
 		{
-			map->clear();
+			actorMap->clear();
+			SAFE_DELETE(actorMap);
 		}
-		actorMap.clear();
+		actorContainer.clear();
 	}
 
 	/**************************************
@@ -74,7 +77,7 @@ namespace Field::Actor
 	void PlaceActorController::Draw()
 	{
 		//NOTE:インスタンシングで描画するために結構いじるかも
-		for (auto&& map : actorMap)
+		for (auto&& map : actorContainer)
 		{
 			for (auto&& pair : *map)
 			{
@@ -163,12 +166,20 @@ namespace Field::Actor
 	}
 
 	/**************************************
+	PlaceModelからPlaceActorへの座標変換処理
+	***************************************/
+	D3DXVECTOR3 PlaceActorController::CalcActorPosition(const Model::PlaceModel * place)
+	{
+		FieldPosition position = place->GetPosition();
+		return D3DXVECTOR3( position.x * PlacePositionOffset, 0.0f, position.z * PlacePositionOffset );
+	}
+
+	/**************************************
 	ロードセット処理
 	***************************************/
 	void PlaceActorController::SetRoad(const Model::PlaceModel * place)
 	{
-		FieldPosition position = place->GetPosition();
-		D3DXVECTOR3 actorPos{ position.x * 10.0f, 0.0f, position.z * 10.0f };
+		D3DXVECTOR3 actorPos = CalcActorPosition(place);
 
 		//連結情報からどのタイプの道かを判定
 		std::vector<Adjacency> AdjacencyType = place->GetConnectingAdjacency();
@@ -236,8 +247,7 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::SetJunction(const Model::PlaceModel * place)
 	{
-		FieldPosition position = place->GetPosition();
-		D3DXVECTOR3 actorPos{position.x * 10.0f, 0.0f, position.z * 10.0f};
+		D3DXVECTOR3 actorPos = CalcActorPosition(place);
 
 		std::vector<Adjacency> adjacencyTypeList = place->GetConnectingAdjacency();
 
@@ -280,7 +290,7 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::AddContainer(ActorPattern pattern, unsigned key, PlaceActor * actor)
 	{
-		actorMap[pattern]->emplace(key, actor);
+		actorContainer[pattern]->emplace(key, actor);
 	}
 
 	/**************************************
@@ -288,10 +298,10 @@ namespace Field::Actor
 	***************************************/
 	bool PlaceActorController::EraseFromContainer(ActorPattern pattern, unsigned key)
 	{
-		if (actorMap[pattern]->count(key) == 0)
+		if (actorContainer[pattern]->count(key) == 0)
 			return false;
 
-		actorMap[pattern]->erase(key);
+		actorContainer[pattern]->erase(key);
 		return true;
 	}
 }

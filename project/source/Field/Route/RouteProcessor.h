@@ -27,7 +27,7 @@ namespace Field::Model
 		RouteProcessor() {}
 
 		//新しく作ったルートに対して隣接しているルートと連結させて加工する
-		void Process(RouteModelPtr& model, RouteContainer& routeContainer);
+		void Process(RouteModelPtr& model, RouteContainer& routeContainer, std::vector<PlaceModel*>* ignoreList = NULL);
 
 		//新しく作ったルートを端点で他と連結させる
 		void ConnectWithEdge(RouteModelPtr& model, RouteContainer& routeContainer);
