@@ -6,7 +6,7 @@
 //
 //=====================================
 #include "TJunctionActor.h"
-#include "../../Framework/Resource/ResourceManager.h"
+#include "../../../Framework/Resource/ResourceManager.h"
 
 //=====================================
 // コンストラクタ

@@ -43,6 +43,7 @@ namespace Field::Model
 	using cpplinq::to_vector;
 	using cpplinq::intersect_with;
 	using cpplinq::except;
+	using cpplinq::count;
 
 	/**************************************
 	staticメンバ
@@ -55,13 +56,13 @@ namespace Field::Model
 	PlaceModel::PlaceModel(PlaceType type, int x, int z) :
 		uniqueID(incrementID++),
 		type(type),
-		Position(x, z),
-		actor(nullptr),
-		prev(Adjacency::NotAdjacenct),
-		next(Adjacency::NotAdjacenct)
+		prevType(type),
+		Position(x, z)
 	{
 		//隣接プレイスのコンテナを準備
 		adjacencies.resize(Adjacency::Max, NULL);
+
+		connectDirection.reserve(Adjacency::Max);
 	}
 
 	/**************************************
@@ -70,31 +71,17 @@ namespace Field::Model
 	PlaceModel::~PlaceModel()
 	{
 		belongRouteList.clear();
-		SAFE_DELETE(actor);
 	}
 
-	/**************************************
-	更新処理
-	***************************************/
-	void PlaceModel::Update()
-	{
-		if (actor != NULL)
-		{
-			actor->Update();
-		}
-	}
-
+#ifdef DEBUG_PLACEMODEL
 	/**************************************
 	描画処理
 	***************************************/
-	void PlaceModel::Draw()
+	void PlaceModel::DrawDebug()
 	{
-		if (actor != NULL)
-		{
-			actor->Draw();
-		}
+		if (type == PlaceType::None)
+			return;
 
-#ifdef DEBUG_PLACEMODEL
 		//テスト描画
 		Transform transform = Transform(
 			{ Position.x * 10.0f, 1.0f, Position.z * 10.0f },
@@ -104,8 +91,8 @@ namespace Field::Model
 		BoardPolygon *polygon;
 		ResourceManager::Instance()->GetPolygon(PolygonName[type], polygon);
 		polygon->Draw();
-#endif
 	}
+#endif
 
 	/**************************************
 	座標取得処理
@@ -137,7 +124,7 @@ namespace Field::Model
 	bool PlaceModel::CanStartRoute() const
 	{
 		//空白タイプか橋でなければ道に出来ない
-		if(type != PlaceType::None && type != PlaceType::Bridge)
+		if (type != PlaceType::None && type != PlaceType::Bridge)
 			return false;
 
 		//隣接プレイスに交差点、街、道が含まれていたらルートを始められる
@@ -153,7 +140,7 @@ namespace Field::Model
 			if (type == PlaceType::Bridge)
 			{
 				Adjacency adjacenctType = IsAdjacent(adjacency);
-				if (adjacenctType == prev || adjacenctType == next)
+				if (Utility::IsContain(connectDirection, adjacenctType))
 					return true;
 			}
 			//空白タイプなら無条件でtrue
@@ -178,7 +165,7 @@ namespace Field::Model
 		//橋の場合は方向も考慮
 		if (type == PlaceType::Bridge)
 		{
-			if (prev == this->prev || prev == this->next)
+			if (Utility::IsContain(connectDirection, prev))
 				return true;
 			else
 				return false;
@@ -281,20 +268,27 @@ namespace Field::Model
 	***************************************/
 	PlaceModel* PlaceModel::GetEdgeOpponent() const
 	{
+		PlaceModel* opponent = nullptr;
+
 		for (auto&& adjacency : adjacencies)
 		{
 			if (adjacency == NULL)
 				continue;
 
-			//道で同じルートに属していなければ端点として成立
-			if (adjacency->IsType(PlaceType::Road) && !IsSameRoute(adjacency))
+			//街を最優先で端点とする
+			if (adjacency->IsType(PlaceType::Town))
 				return adjacency;
 
 			//街か交差点なら端点として成立
-			if (adjacency->IsType(PlaceType::Town) || adjacency->IsType(PlaceType::Junction))
-				return adjacency;
+			if (adjacency->IsType(PlaceType::Junction))
+				opponent = adjacency;
+
+			//道で同じルートに属していなければ端点として成立
+			if (adjacency->IsType(PlaceType::Road) && !IsSameRoute(adjacency))
+				opponent = adjacency;
 		}
-		return nullptr;
+
+		return opponent;
 	}
 
 	/**************************************
@@ -321,7 +315,7 @@ namespace Field::Model
 			>> to_vector();
 
 		//差集合のコンテナを所属リストの末尾にコピーして追加
-		if(!exceptRoute.empty())
+		if (!exceptRoute.empty())
 			std::copy(exceptRoute.begin(), exceptRoute.end(), std::back_inserter(belongRouteList));
 	}
 
@@ -347,7 +341,24 @@ namespace Field::Model
 	***************************************/
 	void PlaceModel::SetType(PlaceType type)
 	{
+		prevType = this->type;
 		this->type = type;
+	}
+
+	/**************************************
+	タイプ取得
+	***************************************/
+	const PlaceType PlaceModel::GetType() const
+	{
+		return type;
+	}
+
+	/**************************************
+	以前のタイプ取得
+	***************************************/
+	const PlaceType PlaceModel::GetPrevType() const
+	{
+		return prevType;
 	}
 
 	/**************************************
@@ -369,9 +380,32 @@ namespace Field::Model
 	/**************************************
 	方向セット処理
 	***************************************/
-	void PlaceModel::SetDirection(Adjacency prev, Adjacency next)
+	void PlaceModel::AddDirection(Adjacency direction)
 	{
-		this->prev = prev;
-		this->next = next;
+		if (direction == Adjacency::NotAdjacenct)
+			return;
+
+		auto itr = std::find(connectDirection.begin(), connectDirection.end(), direction);
+		if (itr == connectDirection.end())
+			connectDirection.push_back(direction);
 	}
+
+	/**************************************
+	方向セット処理
+	***************************************/
+	void PlaceModel::AddDirection(PlaceModel* place)
+	{
+		Adjacency adjacencyType = IsAdjacent(place);
+
+		AddDirection(adjacencyType);
+	}
+
+	/**************************************
+	連結方向取得処理
+	***************************************/
+	std::vector<Adjacency> PlaceModel::GetConnectingAdjacency() const
+	{
+		return connectDirection;
+	}
+
 }

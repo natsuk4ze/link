@@ -7,6 +7,8 @@
 #ifndef _UTILITY_H_
 #define _UTILITY_H_
 
+#include <algorithm>
+
 /**************************************
 前方宣言
 ***************************************/
@@ -18,9 +20,8 @@
 /**************************************
 クラス定義
 ***************************************/
-class Utility
+namespace Utility
 {
-public:
 	/**************************************
 	クラス定義
 	***************************************/
@@ -49,8 +50,17 @@ public:
 		map.clear();
 	}
 
-private:
-	Utility();
+	/**************************************
+	コンテナ内検索処理
+	***************************************/
+	template<class T, class OBJ>
+	static inline bool IsContain(T container, OBJ target)
+	{
+		auto itr = std::find(container.begin(), container.end(), target);
+
+		return itr != container.end();
+	}
+
 };
 
 #endif

@@ -27,6 +27,12 @@ namespace Field
 	{
 		class PlaceContainer;
 		class OperatePlaceContainer;
+		class RouteProcessor;
+	}
+
+	namespace Actor
+	{
+		class PlaceActorController;
 	}
 
 	using PlaceVector = std::vector<Model::PlaceModel*>;
@@ -82,11 +88,14 @@ namespace Field
 		Model::PlaceContainer *placeContainer;				//プレイスコンテナ
 		Model::OperatePlaceContainer *operateContainer;		//操作対象プレイスのコンテナ
 		Model::RouteContainer routeContainer;				//ルートモデルコンテナ
+		Model::RouteProcessor *routeProcessor;				//ルートプロセッサ
+		Actor::PlaceActorController* placeActController;	//プレイスアクターコントローラ
+
 
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int inputRepeatCnt;						//入力のリピートカウント
 		int cntFrame;							//フレームカウント
-		float developmentLevelAI;			//AI発展レベル
+		float developmentLevelAI;				//AI発展レベル
 		unsigned stockDevelopRiver;				//川開発アイテムストック
 		unsigned stockDevelopMountain;			//山開発アイテムストック
 
@@ -95,8 +104,9 @@ namespace Field
 		std::vector<ControllerState*> fsm;		//ステートマシン
 
 		//デリゲータ
-		DelegatePtr<Model::PlaceModel*> onConnectTown;
-		DelegatePtr<Model::PlaceModel*> onCreateJunction;
+		DelegatePtr<const Model::PlaceModel*> onConnectTown;
+		DelegatePtr<const Model::PlaceModel*> onCreateJunction;
+		DelegatePtr<const Model::PlaceModel*> onChangePlaceType;
 
 		//ステート切り替え
 		void ChangeState(State next);

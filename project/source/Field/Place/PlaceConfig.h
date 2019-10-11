@@ -9,15 +9,24 @@
 #define _PLACECONFIG_H_
 
 #include <vector>
+#include <algorithm>
+
+/**************************************
+マクロ定義
+***************************************/
+#define DEBUG_PLACEMODEL
 
 namespace Field::Model
 {
 	/**************************************
-	型エイリアス
+	前方宣言
 	***************************************/
 	class RouteModel;
 	class PlaceModel;
 
+	/**************************************
+	using宣言
+	***************************************/
 	using RouteModelPtr = std::shared_ptr<RouteModel>;
 	using RouteContainer = std::vector<std::shared_ptr<RouteModel>>;
 
@@ -80,16 +89,11 @@ namespace Field::Model
 	***************************************/
 	inline Adjacency GetInverseSide(const Adjacency adjacency)
 	{
-		if (adjacency == Back)
-			return Forward;
-		if (adjacency == Left)
-			return Right;
-		if (adjacency == Forward)
-			return Back;
-		if (adjacency == Right)
-			return Left;
+		if (adjacency >= Adjacency::Max)
+			return NotAdjacenct;
+		else
+			return (Adjacency)Math::WrapAround(Adjacency::Back, Adjacency::Max, adjacency + 2);
 
-		return NotAdjacenct;
 	}
 }
 #endif

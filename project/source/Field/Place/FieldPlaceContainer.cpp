@@ -41,13 +41,13 @@ namespace Field::Model
 #ifdef DEBUG_PLACEMODEL
 		//デバッグ表示用の板ポリゴンを作成する
 		ResourceManager::Instance()->MakePolygon("None", "", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("Road", "data/TEXTURE/PlaceTest/road.jpg", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("Town", "data/TEXTURE/PlaceTest/town.jpg", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("River", "data/TEXTURE/PlaceTest/river.jpg", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("Bridge", "data/TEXTURE/PlaceTest/Bridge.jpg", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("Junction", "data/TEXTURE/PlaceTest/junction.jpg", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("Mountain", "data/TEXTURE/PlaceTest/mountain.jpg", { 4.5f, 4.5f });
-		ResourceManager::Instance()->MakePolygon("Operate", "data/TEXTURE/PlaceTest/operate.jpg", { 2.0f, 2.0f });
+		ResourceManager::Instance()->MakePolygon("Road", "data/TEXTURE/PlaceTest/road.png", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Town", "data/TEXTURE/PlaceTest/town.png", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("River", "data/TEXTURE/PlaceTest/river.png", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Bridge", "data/TEXTURE/PlaceTest/Bridge.png", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Junction", "data/TEXTURE/PlaceTest/junction.png", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Mountain", "data/TEXTURE/PlaceTest/mountain.png", { 4.5f, 4.5f });
+		ResourceManager::Instance()->MakePolygon("Operate", "data/TEXTURE/PlaceTest/operate.png", { 2.0f, 2.0f });
 #endif
 	}
 
@@ -69,39 +69,36 @@ namespace Field::Model
 	{
 		if (!initialized)
 			return;
-		ProfilerCPU::Instance()->BeginLabel("Field");
-
-		ProfilerCPU::Instance()->Begin("Update");
-		for (auto&& place : placeVector)
-		{
-			place->Update();
-		}
-		ProfilerCPU::Instance()->End("Update");
 
 		//デバッグ表示
 		Debug::Log("CntLinkedTown:%d", townContainer.size());
 		Debug::Log("CntJunction:%d", junctionContainer.size());
 		Debug::Log("TrafficJam: %f", trafficJamRate);
-
 	}
 
+#ifdef DEBUG_PLACEMODEL
 	/**************************************
 	描画処理
 	***************************************/
-	void PlaceContainer::Draw()
+	void PlaceContainer::DrawDebug()
 	{
 		if (!initialized)
 			return;
 
-		ProfilerCPU::Instance()->Begin("Draw");
+		LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+		pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
+		pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+
 		for (auto&& place : placeVector)
 		{
-			place->Draw();
+			place->DrawDebug();
 		}
-		ProfilerCPU::Instance()->End("Draw");
 
-		ProfilerCPU::Instance()->EndLabel();
+		pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
+		pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 	}
+#endif
 
 	/**************************************
 	プレイス取得処理
@@ -192,7 +189,7 @@ namespace Field::Model
 	/**************************************
 	街が道と繋がったときの処理
 	***************************************/
-	void Field::Model::PlaceContainer::OnConnectedTown(PlaceModel * place)
+	void Field::Model::PlaceContainer::OnConnectedTown(const PlaceModel * place)
 	{
 		unsigned placeID = place->ID();
 
@@ -208,7 +205,7 @@ namespace Field::Model
 	/**************************************
 	交差点が作られたときの処理
 	***************************************/
-	void Field::Model::PlaceContainer::OnCreateJunction(PlaceModel * place)
+	void Field::Model::PlaceContainer::OnCreateJunction(const PlaceModel * place)
 	{
 		unsigned placeID = place->ID();
 

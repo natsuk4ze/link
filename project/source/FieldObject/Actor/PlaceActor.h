@@ -8,11 +8,11 @@
 #ifndef _PLACEACTOR_H_
 #define _PLACEACTOR_H_
 
-#include "../../Framework/Core/GameObject.h"
-#include "../../Framework/Math/Easing.h"
-#include "../../Framework/Renderer3D/MeshContainer.h"
+#include "../../../Framework/Core/GameObject.h"
+#include "../../../Framework/Math/Easing.h"
+#include "../../../Framework/Renderer3D/MeshContainer.h"
 #include "../../Field/Place/PlaceConfig.h"
-#include "../../Framework/Pattern/BaseState.h"
+#include "../../../Framework/Pattern/BaseState.h"
 
 //**************************************
 // É}ÉNÉçíËã`
