@@ -59,13 +59,13 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::Update()
 	{
-		for (auto&& map : actorMap)
-		{
-			for (auto&& pair : *map)
-			{
-				pair.second->Update();
-			}
-		}
+		//for (auto&& map : actorMap)
+		//{
+		//	for (auto&& pair : *map)
+		//	{
+		//		pair.second->Update();
+		//	}
+		//}
 	}
 
 	/**************************************
