@@ -58,10 +58,10 @@ namespace Field::Model
 			connectTarget->AddDirection(place);
 
 			//繋がった相手も必要であれば分割する
+			connectTarget->SetType(PlaceType::Junction);
 			RouteContainer subDivList;
-			if (connectTarget->IsType(PlaceType::Road))
+			if (connectTarget->GetPrevType() == PlaceType::Road)
 			{
-				connectTarget->SetType(PlaceType::Junction);
 				(*model->onCreateJunction)(connectTarget);
 				RouteModelPtr opponent = connectTarget->GetConnectingRoute();
 				subDivList = Divide(opponent, connectTarget, routeContainer);
@@ -202,9 +202,9 @@ namespace Field::Model
 	void RouteProcessor::_ConnectWithEdge(RouteModelPtr& model, PlaceModel *place, RouteContainer& routeContainer)
 	{
 		//連結対象が道なら交差点にしてルートを分割
-		if (place->IsType(PlaceType::Road))
+		place->SetType(PlaceType::Junction);
+		if (place->GetPrevType() == PlaceType::Road)
 		{
-			place->SetType(PlaceType::Junction);
 			(*model->onCreateJunction)(place);
 
 			RouteContainer targetList = place->GetConnectingRoutes();
