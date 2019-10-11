@@ -5,10 +5,34 @@
 //
 //=============================================================================
 #include "../../../../main.h"
-#include "GameViewer.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
 #include "StockViewer.h"
+
+//*****************************************************************************
+// グローバル変数
+//*****************************************************************************
+
+//ストックビュアーの種類数
+const int StockViewer::stockViewerMax;
+
+//ビュアーの表示間隔
+static const float intervalViewerPos = 185.0f;
+
+//アイテムアイコンテクスチャパス
+static const char *iconTexPath[StockViewer::stockViewerMax]
+{
+	"data/TEXTURE/Viewer/GameViewer/StockViewer/Bridge/BridgeIcon.png",
+	"data/TEXTURE/Viewer/GameViewer/StockViewer/Drill/DrillIcon.png",
+	"data/TEXTURE/Viewer/GameViewer/StockViewer/Insurance/InsuranceIcon.png",
+	"data/TEXTURE/Viewer/GameViewer/StockViewer/EDF/EDF_Icon.png",
+};
+
+//数字のホップ量
+static const float hopNumValue = 30.0f;
+
+//数字の初期サイズ
+static const D3DXVECTOR3 initNumSize = D3DXVECTOR3(7.50f, 15.0f, 0.0f);
 
 //*****************************************************************************
 // コンストラクタ

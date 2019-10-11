@@ -5,7 +5,6 @@
 //
 //=============================================================================
 #include "../../../../main.h"
-#include "GameViewer.h"
 #include "../../../../Framework/Renderer2D/CircleGauge.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
@@ -23,7 +22,6 @@ LevelViewer::LevelViewer()
 	num->size = D3DXVECTOR3(15.0f, 30.0f, 0.0f);
 	num->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	num->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 8.550f, SCREEN_HEIGHT / 10 * 1.50f, 0.0f);
-
 	num->SetColor(SET_COLOR_RIGHTBLUE);
 	ratioLevelBox = 1.0;
 	levelAI_Box = 0;

@@ -5,7 +5,6 @@
 //
 //=============================================================================
 #include "../../../../main.h"
-#include "GameViewer.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
 #include "TimerViewer.h"

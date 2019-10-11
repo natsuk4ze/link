@@ -15,6 +15,9 @@
 class RotateViewerDrawer :public BaseViewerDrawer
 {
 public:
+	RotateViewerDrawer();
+	~RotateViewerDrawer();
+
 	void CreateCircle();
 	void MakeVertex();
 	void SetVertex();

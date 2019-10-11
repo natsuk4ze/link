@@ -5,18 +5,11 @@
 //
 //=============================================================================
 #include "../../../../main.h"
-#include "../../Framework/BaseViewer.h"
-#include <vector>
 #include "StockViewer.h"
 #include "TimerViewer.h"
 #include "LevelViewer.h"
 #include "GameViewerParam.h"
 #include "GameViewer.h"
-
-//*****************************************************************************
-// グローバル変数
-//*****************************************************************************
-static std::vector <BaseViewer*> baseViewer{};
 
 //*****************************************************************************
 // コンストラクタ

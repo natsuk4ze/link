@@ -7,6 +7,8 @@
 #ifndef _GAME_VIEWER_H_
 #define _GAME_VIEWER_H_
 
+#include <vector>
+
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
@@ -14,6 +16,7 @@ class StockViewer;
 class TimerViewer;
 class LevelViewer;
 class GameViewerParam;
+class BaseViewer;
 
 //*****************************************************************************
 // クラス定義
@@ -29,7 +32,9 @@ public:
 
 	//パラメータ受け取り
 	void ReceiveParam(GameViewerParam&param);
-	
+
+	std::vector <BaseViewer*> baseViewer;
+
 private:
 	int baseViewerMax;
 

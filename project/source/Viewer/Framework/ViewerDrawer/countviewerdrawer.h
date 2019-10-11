@@ -15,6 +15,9 @@
 class CountViewerDrawer :public BaseViewerDrawer
 {
 public:
+	CountViewerDrawer();
+	~CountViewerDrawer();
+
 	void DrawCounter(int baseNumber, int parameterBox, int placeMax,
 		float intervalNumberScr, float intervalNumberTex);
 

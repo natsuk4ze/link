@@ -30,6 +30,9 @@
 class BaseViewerDrawer
 {
 public:
+	BaseViewerDrawer();
+	virtual ~BaseViewerDrawer();
+
 	LPDIRECT3DTEXTURE9 texture;
 	VERTEX_2D vertexWk[NUM_VERTEX];
 	D3DXVECTOR3	position;

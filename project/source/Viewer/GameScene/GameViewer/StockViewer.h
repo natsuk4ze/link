@@ -27,6 +27,7 @@ public:
 	void Update(void);
 	void Draw(void);
 
+	//ストックビュアーの種類
 	enum StockViewerType
 	{
 		Bridge,
@@ -35,33 +36,20 @@ public:
 		EDF
 	};
 
+	//ストックビュアーの種類数
 	static const int stockViewerMax = 4;
 
 	//パラメータを受けとる箱
 	int parameterBox[stockViewerMax];
 
 private:
-	BaseViewerDrawer * icon[stockViewerMax];
+	BaseViewerDrawer *icon[stockViewerMax];
 	BaseViewerDrawer *iconBG[stockViewerMax];
-	BaseViewerDrawer *numBG[stockViewerMax];
 	CountViewerDrawer *num[stockViewerMax];
+	BaseViewerDrawer *numBG[stockViewerMax];
 
+	//アニメーション
 	void Animate(void);
-
-	//ビュアーの表示間隔
-	const float intervalViewerPos = 185.0f;
-
-	//アイテムアイコンテクスチャパス
-	const char *iconTexPath[stockViewerMax]
-	{
-		"data/TEXTURE/Viewer/GameViewer/StockViewer/Bridge/BridgeIcon.png",
-		"data/TEXTURE/Viewer/GameViewer/StockViewer/Drill/DrillIcon.png",
-		"data/TEXTURE/Viewer/GameViewer/StockViewer/Insurance/InsuranceIcon.png",
-		"data/TEXTURE/Viewer/GameViewer/StockViewer/EDF/EDF_Icon.png",
-	};
-
-	const float hopNumValue = 30.0f;
-	const D3DXVECTOR3 initNumSize = D3DXVECTOR3(7.50f, 15.0f, 0.0f);
 };
 
 
