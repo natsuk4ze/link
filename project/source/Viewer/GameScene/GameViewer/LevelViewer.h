@@ -14,7 +14,6 @@
 //*****************************************************************************
 class CountViewerDrawer;
 class CircleGauge;
-class GameViewer;
 
 //*****************************************************************************
 // クラス定義
@@ -28,12 +27,13 @@ public:
 	void Update(void);
 	void Draw(void);
 
+	//パラメータを受けとる箱
+	int levelAI_Box;
+	float ratioLevelBox;
+
 private:
 	CircleGauge *circleGuage;
 	CountViewerDrawer *num;
-	GameViewer *gameViewer;
-
-	void UpdateParam(void);
 };
 
 #endif

@@ -6,11 +6,8 @@
 //=============================================================================
 #include "../../../../main.h"
 #include "GameViewer.h"
-#include "GameViewerParam.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
-#include "../../../../Framework/Input/Keyboard.h"
-#include "../../../../Framework/Input/input.h"
 #include "StockViewer.h"
 
 //*****************************************************************************
@@ -28,7 +25,7 @@ StockViewer::StockViewer()
 		num[i]->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		num[i]->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.4f, SCREEN_HEIGHT / 10 * 2.70f + i*intervalViewerPos, 0.0f);
 		num[i]->SetColor(SET_COLOR_NOT_COLORED);
-		num[i]->parameterBox = 0;
+		parameterBox[i] = 0;
 		num[i]->intervalNumberScr = 120.0f;
 		num[i]->intervalNumberTex = 0.10f;
 		num[i]->placeMax = 1;
@@ -84,12 +81,6 @@ StockViewer::~StockViewer()
 //=============================================================================
 void StockViewer::Update(void)
 {
-	//if (Keyboard::GetTrigger(DIK_1))
-	//{
-	//	num[Bridge]->isHopped = true;
-	//}
-
-	UpdateParam();
 	Animate();
 }
 
@@ -111,7 +102,7 @@ void StockViewer::Draw(void)
 		numBG[i]->Draw();
 		numBG[i]->SetVertex();
 
-		num[i]->DrawCounter(num[i]->baseNumber, num[i]->parameterBox, num[i]->placeMax,
+		num[i]->DrawCounter(num[i]->baseNumber, parameterBox[i], num[i]->placeMax,
 			num[i]->intervalNumberScr, num[i]->intervalNumberTex);
 	}
 }
@@ -126,18 +117,4 @@ void StockViewer::Animate(void)
 		//ホッピング処理
 		num[i]->size.y = num[i]->HopNumber(num[i]->size.y, initNumSize.y, hopNumValue);
 	}
-}
-
-//=============================================================================
-// パラメータ更新処理
-//=============================================================================
-void StockViewer::UpdateParam(void)
-{
-	GameViewerParam param;
-
-	gameViewer->ReceiveParam(param);
-	num[Bridge]->parameterBox = param.stockBuildItem;
-	num[Drill]->parameterBox = param.stockBreakItem;
-	num[Insurance]->parameterBox = param.stockInsurance;
-	num[EDF]->parameterBox = param.stockEDF;
 }

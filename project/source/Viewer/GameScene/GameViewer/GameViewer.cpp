@@ -5,6 +5,7 @@
 //
 //=============================================================================
 #include "../../../../main.h"
+#include "../../Framework/BaseViewer.h"
 #include <vector>
 #include "StockViewer.h"
 #include "TimerViewer.h"
@@ -74,9 +75,20 @@ void GameViewer::Draw(void)
 }
 
 //=============================================================================
-// パラメータコンテナ処理
+// パラメータ受け取り処理
 //=============================================================================
 void GameViewer::ReceiveParam(GameViewerParam&param)
 {
-	
+	//ストックビュアー
+	stockViewer->parameterBox[stockViewer->Bridge] = param.stockBuildItem;
+	stockViewer->parameterBox[stockViewer->Drill] = param.stockBreakItem;
+	stockViewer->parameterBox[stockViewer->EDF] = param.stockEDF;
+	stockViewer->parameterBox[stockViewer->Insurance] = param.stockInsurance;
+
+	//タイマービュアー
+	timerViewer->parameterBox = param.remainTime;
+
+	//AIレベルビュアー
+	levelViewer->levelAI_Box = param.levelAI;
+	levelViewer->ratioLevelBox = param.ratioLevel;
 }

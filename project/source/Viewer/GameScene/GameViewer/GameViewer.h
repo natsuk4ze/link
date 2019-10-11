@@ -7,8 +7,6 @@
 #ifndef _GAME_VIEWER_H_
 #define _GAME_VIEWER_H_
 
-#include "../../Framework/BaseViewer.h"
-
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
@@ -20,7 +18,7 @@ class GameViewerParam;
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class GameViewer:public BaseViewer
+class GameViewer
 {
 public:
 	GameViewer();
@@ -29,8 +27,9 @@ public:
 	void Update(void);
 	void Draw(void);
 
+	//パラメータ受け取り
 	void ReceiveParam(GameViewerParam&param);
-
+	
 private:
 	int baseViewerMax;
 

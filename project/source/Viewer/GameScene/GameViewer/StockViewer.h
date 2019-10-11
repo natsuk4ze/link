@@ -14,7 +14,6 @@
 //*****************************************************************************
 class BaseViewerDrawer;
 class CountViewerDrawer;
-class GameViewer;
 
 //*****************************************************************************
 // クラス定義
@@ -28,20 +27,6 @@ public:
 	void Update(void);
 	void Draw(void);
 
-private:
-	static const int stockViewerMax = 4;
-
-	BaseViewerDrawer * icon[stockViewerMax];
-	BaseViewerDrawer *iconBG[stockViewerMax];
-	BaseViewerDrawer *numBG[stockViewerMax];
-	CountViewerDrawer *num[stockViewerMax];
-	GameViewer *gameViewer;
-
-	void UpdateParam(void);
-	void Animate(void);
-
-	const float intervalViewerPos = 185.0f;
-
 	enum StockViewerType
 	{
 		Bridge,
@@ -49,6 +34,22 @@ private:
 		Insurance,
 		EDF
 	};
+
+	static const int stockViewerMax = 4;
+
+	//パラメータを受けとる箱
+	int parameterBox[stockViewerMax];
+
+private:
+	BaseViewerDrawer * icon[stockViewerMax];
+	BaseViewerDrawer *iconBG[stockViewerMax];
+	BaseViewerDrawer *numBG[stockViewerMax];
+	CountViewerDrawer *num[stockViewerMax];
+
+	void Animate(void);
+
+	//ビュアーの表示間隔
+	const float intervalViewerPos = 185.0f;
 
 	//アイテムアイコンテクスチャパス
 	const char *iconTexPath[stockViewerMax]

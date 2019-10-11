@@ -18,9 +18,6 @@ public:
 	void DrawCounter(int baseNumber, int parameterBox, int placeMax,
 		float intervalNumberScr, float intervalNumberTex);
 
-	//パラメータを受けとる箱
-	int parameterBox;
-
 	//スクリーン上の表示間隔
 	float intervalNumberScr;
 

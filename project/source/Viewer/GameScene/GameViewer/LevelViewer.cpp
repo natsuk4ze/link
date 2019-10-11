@@ -6,7 +6,6 @@
 //=============================================================================
 #include "../../../../main.h"
 #include "GameViewer.h"
-#include "GameViewerParam.h"
 #include "../../../../Framework/Renderer2D/CircleGauge.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
@@ -26,7 +25,8 @@ LevelViewer::LevelViewer()
 	num->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 8.550f, SCREEN_HEIGHT / 10 * 1.50f, 0.0f);
 
 	num->SetColor(SET_COLOR_RIGHTBLUE);
-	num->parameterBox = 0;
+	ratioLevelBox = 1.0;
+	levelAI_Box = 0;
 	num->intervalNumberScr = 40.0f;
 	num->intervalNumberTex = 0.1f;
 	num->placeMax = 5;
@@ -63,20 +63,9 @@ void LevelViewer::Update(void)
 void LevelViewer::Draw(void)
 {
 	//”wŒi‚ðæ‚É•`‰æ
-	circleGuage->SetPercent(0.75f);
+	circleGuage->SetPercent(ratioLevelBox);
 	circleGuage->Draw();
 
-	num->DrawCounter(num->baseNumber, num->parameterBox, num->placeMax,
+	num->DrawCounter(num->baseNumber, levelAI_Box, num->placeMax,
 		num->intervalNumberScr, num->intervalNumberTex);
-}
-
-//=============================================================================
-// ƒpƒ‰ƒ[ƒ^XVˆ—
-//=============================================================================
-void LevelViewer::UpdateParam(void)
-{
-	GameViewerParam param;
-
-	gameViewer->ReceiveParam(param);
-	num->parameterBox = param.levelAI;
 }

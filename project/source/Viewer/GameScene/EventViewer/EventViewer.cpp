@@ -13,15 +13,15 @@
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-
+static std::vector <EventViewer*> eventViewer{};
 
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
 EventViewer::EventViewer()
 {
-	eventTelop = new EventTelop();
-	eventMessage = new EventMessage();
+	eventViewer.push_back(eventTelop = new EventTelop());
+	eventViewer.push_back(eventMessage = new EventMessage());
 }
 
 //*****************************************************************************
@@ -29,6 +29,8 @@ EventViewer::EventViewer()
 //*****************************************************************************
 EventViewer::~EventViewer()
 {
+	eventViewer.clear();
+
 	SAFE_DELETE(eventTelop);
 	SAFE_DELETE(eventMessage);
 }
@@ -38,8 +40,10 @@ EventViewer::~EventViewer()
 //=============================================================================
 void EventViewer::Update()
 {
-	eventTelop->Update();
-	eventMessage->Update();
+	for (int i = 0; i < eventViewerMax; i++)
+	{
+		eventViewer[i]->Update();
+	}
 }
 
 //=============================================================================
@@ -54,8 +58,10 @@ void EventViewer::Draw(void)
 	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 
-	eventTelop->Draw();
-	eventMessage->Draw();
+	for (int i = 0; i < eventViewerMax; i++)
+	{
+		eventViewer[i]->Draw();
+	}
 
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);

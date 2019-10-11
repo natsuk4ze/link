@@ -14,7 +14,6 @@
 //*****************************************************************************
 class BaseViewerDrawer;
 class CountViewerDrawer;
-class GameViewer;
 
 //*****************************************************************************
 // クラス定義
@@ -28,12 +27,12 @@ public:
 	void Update(void);
 	void Draw(void);
 
+	//パラメータを受けとる箱
+	int parameterBox;
+
 private:
 	BaseViewerDrawer *bg;
 	CountViewerDrawer *num;
-	GameViewer *gameViewer;
-
-	void UpdateParam(void);
 };
 
 #endif

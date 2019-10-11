@@ -6,7 +6,6 @@
 //=============================================================================
 #include "../../../../main.h"
 #include "GameViewer.h"
-#include"GameViewerParam.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
 #include "TimerViewer.h"
@@ -24,7 +23,7 @@ TimerViewer::TimerViewer()
 	num->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	num->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.5f, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
 	num->SetColor(SET_COLOR_BLACK);
-	num->parameterBox = 0;
+	parameterBox = 0;
 	num->intervalNumberScr = 60.0f;
 	num->intervalNumberTex = 0.1f;
 	num->placeMax = 3;
@@ -54,7 +53,6 @@ TimerViewer::~TimerViewer()
 //=============================================================================
 void TimerViewer::Update(void)
 {
-	UpdateParam();
 }
 
 //=============================================================================
@@ -66,17 +64,6 @@ void TimerViewer::Draw(void)
 	bg->Draw();
 	bg->SetVertex();
 
-	num->DrawCounter(num->baseNumber, num->parameterBox, num->placeMax,
+	num->DrawCounter(num->baseNumber, parameterBox, num->placeMax,
 		num->intervalNumberScr, num->intervalNumberTex);
-}
-
-//=============================================================================
-// パラメータ更新処理
-//=============================================================================
-void TimerViewer::UpdateParam(void)
-{
-	GameViewerParam param;
-
-	gameViewer->ReceiveParam(param);
-	num->parameterBox = param.remainTime;
 }
