@@ -32,10 +32,16 @@ namespace Field::Model
 	/**************************************
 	新しく作ったルートに対して隣接しているルートと連結させて加工する
 	***************************************/
-	void RouteProcessor::Process(RouteModelPtr & model, RouteContainer & routeContainer)
+	void RouteProcessor::Process(RouteModelPtr & model, RouteContainer & routeContainer, std::vector<PlaceModel*> *ignoreList)
 	{
 		//分割したルートのリスト
 		RouteContainer divideList;
+
+		//無視リストがNULLなら作成
+		if (ignoreList == NULL)
+		{
+			ignoreList = &model->route;
+		}
 
 		//対象のルートのPlaceに対して1個ずつ隣接ルートを確認する
 		std::vector<PlaceModel*> route = model->route;
@@ -47,6 +53,10 @@ namespace Field::Model
 
 			//連結対象な見つからなかったのでコンティニュー
 			if (connectTarget == nullptr)
+				continue;
+
+			//連結対象が無視リストに含まれていたらコンティニュー
+			if (Utility::IsContain(*ignoreList, connectTarget))
 				continue;
 
 			//対象のPlaceを交差点にして分割
@@ -111,7 +121,7 @@ namespace Field::Model
 		{
 			for (auto&& divModel : divideList)
 			{
-				Process(divModel, routeContainer);
+				Process(divModel, routeContainer, ignoreList);
 			}
 		}
 	}
