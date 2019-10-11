@@ -1,44 +1,39 @@
+
 //=============================================================================
 //
-// Gameシーンビュアー管理処理 [GameViewer.h]
+// イベントメッセージ処理 [EventMessage.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _GAME_VIEWER_H_
-#define _GAME_VIEWER_H_
+#ifndef _EVENT_MESSAGE_H_
+#define _EVENT_MESSAGE_H_
 
-#include "../../Framework/BaseViewer.h"
+#include "../EventViewer/EventViewer.h"
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
-class StockViewer;
-class TimerViewer;
-class LevelViewer;
-class GameViewerParam;
+class BaseViewerDrawer;
+class TextViewer;
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class GameViewer:public BaseViewer
+class EventMessage :public EventViewer
 {
 public:
-	GameViewer();
-	~GameViewer();
+	EventMessage();
+	~EventMessage();
 
 	void Update(void);
 	void Draw(void);
+	//void Set(const string message);
 
-	void ReceiveParam(GameViewerParam&param);
+	bool isPlaying;
 
 private:
-	int baseViewerMax;
-
-	StockViewer *stockViewer;
-	TimerViewer *timerViewer;
-	LevelViewer *levelViewer;
-	GameViewerParam *gameViewerParam;
+	BaseViewerDrawer *bg;
+	TextViewer *text;
 };
 
 #endif
-

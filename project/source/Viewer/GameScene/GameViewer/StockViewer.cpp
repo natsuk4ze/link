@@ -5,6 +5,8 @@
 //
 //=============================================================================
 #include "../../../../main.h"
+#include "GameViewer.h"
+#include "GameViewerParam.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
 #include "../../../../Framework/Input/Keyboard.h"
@@ -82,11 +84,12 @@ StockViewer::~StockViewer()
 //=============================================================================
 void StockViewer::Update(void)
 {
-	if (Keyboard::GetTrigger(DIK_1))
-	{
-		num[Bridge]->isHopped = true;
-	}
+	//if (Keyboard::GetTrigger(DIK_1))
+	//{
+	//	num[Bridge]->isHopped = true;
+	//}
 
+	UpdateParam();
 	Animate();
 }
 
@@ -120,6 +123,21 @@ void StockViewer::Animate(void)
 {
 	for (int i = 0; i < stockViewerMax; i++)
 	{
+		//ホッピング処理
 		num[i]->size.y = num[i]->HopNumber(num[i]->size.y, initNumSize.y, hopNumValue);
 	}
+}
+
+//=============================================================================
+// パラメータ更新処理
+//=============================================================================
+void StockViewer::UpdateParam(void)
+{
+	GameViewerParam param;
+
+	gameViewer->ReceiveParam(param);
+	num[Bridge]->parameterBox = param.stockBuildItem;
+	num[Drill]->parameterBox = param.stockBreakItem;
+	num[Insurance]->parameterBox = param.stockInsurance;
+	num[EDF]->parameterBox = param.stockEDF;
 }

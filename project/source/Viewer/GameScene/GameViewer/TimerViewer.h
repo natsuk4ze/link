@@ -14,6 +14,7 @@
 //*****************************************************************************
 class BaseViewerDrawer;
 class CountViewerDrawer;
+class GameViewer;
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -30,6 +31,9 @@ public:
 private:
 	BaseViewerDrawer *bg;
 	CountViewerDrawer *num;
+	GameViewer *gameViewer;
+
+	void UpdateParam(void);
 };
 
 #endif

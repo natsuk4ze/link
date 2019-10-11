@@ -89,27 +89,6 @@
     <ClCompile Include="Library\json11\json11.cpp" />
     <ClCompile Include="source\Field\Place\FieldPlaceContainer.cpp" />
     <ClCompile Include="Framework\String\String.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\GameViewer\StockViewer.cpp">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Viewer\GameScene\GameViewer\LevelViewer.cpp">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Viewer\GameScene\GameViewer\GameViewer.cpp">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.cpp">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.cpp">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClCompile>
     <ClCompile Include="source\Field\Route\RouteModel.cpp" />
     <ClCompile Include="source\Field\Route\RouteProcessor.cpp" />
     <ClCompile Include="source\FieldObject\CrossJunctionActor.cpp" />
@@ -138,6 +117,16 @@
     <ClCompile Include="source\Field\Info\ConnectFieldInfoState.cpp" />
     <ClCompile Include="source\Field\Info\LinkFieldInfoState.cpp" />
     <ClCompile Include="source\Field\Info\CongestionFieldInfoState.cpp" />
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\GameViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\LevelViewer.cpp" />
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\StockViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp" />
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\EventViewer\EventViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\EventViewer\EventMessage.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\EventViewer\EventTelop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -242,41 +231,20 @@
     <ClInclude Include="Library\json11\json11.hpp" />
     <ClInclude Include="source\Field\Place\FieldPlaceContainer.h" />
     <ClInclude Include="Framework\String\String.h" />
-    <ClInclude Include="source\Viewer\GameScene\GameViewer\StockViewer.h">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewer.h">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewerParam.h">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Viewer\GameScene\GameViewer\TimerViewer.h">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Viewer\Framework\BaseViewer.h">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Viewer\GameScene\GameViewer\LevelViewer.h">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.h">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.h">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.h">
-      <Filter>ソースファイル\作業フォルダ</Filter>
-    </ClInclude>
+    <ClInclude Include="source\Viewer\Framework\BaseViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewer.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\StockViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewerParam.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\LevelViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\TimerViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\EventViewer\EventViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h" />
+    <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="ソースファイル">
-      <UniqueIdentifier>{2cffddb3-f778-4b2f-a9f4-8fa29988451a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソースファイル\作業フォルダ">
-      <UniqueIdentifier>{8c50b45f-4aea-4307-a60f-4b74935d8dba}</UniqueIdentifier>
-    </Filter>
     <ClInclude Include="source\Field\Route\RouteModel.h" />
     <ClInclude Include="source\Field\Route\RouteProcessor.h" />
     <ClInclude Include="source\FieldObject\CrossJunctionActor.h" />

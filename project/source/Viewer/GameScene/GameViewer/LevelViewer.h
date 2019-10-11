@@ -12,8 +12,9 @@
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
-class BaseViewerDrawer;
 class CountViewerDrawer;
+class CircleGauge;
+class GameViewer;
 
 //*****************************************************************************
 // クラス定義
@@ -28,8 +29,11 @@ public:
 	void Draw(void);
 
 private:
-	BaseViewerDrawer *circleGuage;
+	CircleGauge *circleGuage;
 	CountViewerDrawer *num;
+	GameViewer *gameViewer;
+
+	void UpdateParam(void);
 };
 
 #endif

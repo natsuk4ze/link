@@ -14,6 +14,7 @@
 //*****************************************************************************
 class BaseViewerDrawer;
 class CountViewerDrawer;
+class GameViewer;
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -29,6 +30,16 @@ public:
 
 private:
 	static const int stockViewerMax = 4;
+
+	BaseViewerDrawer * icon[stockViewerMax];
+	BaseViewerDrawer *iconBG[stockViewerMax];
+	BaseViewerDrawer *numBG[stockViewerMax];
+	CountViewerDrawer *num[stockViewerMax];
+	GameViewer *gameViewer;
+
+	void UpdateParam(void);
+	void Animate(void);
+
 	const float intervalViewerPos = 185.0f;
 
 	enum StockViewerType
@@ -47,13 +58,6 @@ private:
 		"data/TEXTURE/Viewer/GameViewer/StockViewer/Insurance/InsuranceIcon.png",
 		"data/TEXTURE/Viewer/GameViewer/StockViewer/EDF/EDF_Icon.png",
 	};
-
-	BaseViewerDrawer *icon[stockViewerMax];
-	BaseViewerDrawer *iconBG[stockViewerMax];
-	BaseViewerDrawer *numBG[stockViewerMax];
-	CountViewerDrawer *num[stockViewerMax];
-
-	void Animate(void);
 
 	const float hopNumValue = 30.0f;
 	const D3DXVECTOR3 initNumSize = D3DXVECTOR3(7.50f, 15.0f, 0.0f);

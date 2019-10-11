@@ -1,38 +1,32 @@
 //=============================================================================
 //
-// タイマービュアー処理 [TimerViewer.cpp]
+// イベントテロップ処理 [EventTelop.cpp]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
 #include "../../../../main.h"
-#include "GameViewer.h"
-#include"GameViewerParam.h"
+#include "../../../../Framework/Pattern/Delegate.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
-#include "TimerViewer.h"
+#include "EventTelop.h"
 
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-TimerViewer::TimerViewer()
+EventTelop::EventTelop()
 {
-	//数字
-	num = new CountViewerDrawer();
-	num->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Number.png");
-	num->MakeVertex();
-	num->size = D3DXVECTOR3(15.0f, 30.0f, 0.0f);
-	num->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	num->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.5f, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
-	num->SetColor(SET_COLOR_BLACK);
-	num->parameterBox = 0;
-	num->intervalNumberScr = 60.0f;
-	num->intervalNumberTex = 0.1f;
-	num->placeMax = 3;
-	num->baseNumber = 10;
+	//テキスト
+	text = new BaseViewerDrawer();
+	//text->LoadTexture("data/TEXTURE/Viewer/GameViewer/EventTelop/Number.png");
+	text->MakeVertex();
+	text->size = D3DXVECTOR3(15.0f, 30.0f, 0.0f);
+	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	text->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.5f, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
+	text->SetColor(SET_COLOR_NOT_COLORED);
 
 	//背景
 	bg = new BaseViewerDrawer();
-	bg->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/BG.png");
+	//bg->LoadTexture("data/TEXTURE/Viewer/GameViewer/EventTelop/BG.png");
 	bg->MakeVertex();
 	bg->size = D3DXVECTOR3(204.80f, 51.20f, 0.0f);
 	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -43,40 +37,36 @@ TimerViewer::TimerViewer()
 //*****************************************************************************
 // デストラクタ
 //*****************************************************************************
-TimerViewer::~TimerViewer()
+EventTelop::~EventTelop()
 {
-	SAFE_DELETE(num);
+	SAFE_DELETE(text);
 	SAFE_DELETE(bg);
 }
 
 //=============================================================================
 // 更新処理
 //=============================================================================
-void TimerViewer::Update(void)
+void EventTelop::Update(void)
 {
-	UpdateParam();
 }
 
 //=============================================================================
 // 描画処理
 //=============================================================================
-void TimerViewer::Draw(void)
+void EventTelop::Draw(void)
 {
 	//背景を先に描画
 	bg->Draw();
 	bg->SetVertex();
 
-	num->DrawCounter(num->baseNumber, num->parameterBox, num->placeMax,
-		num->intervalNumberScr, num->intervalNumberTex);
+	text->Draw();
+	text->SetVertex();
 }
 
-//=============================================================================
-// パラメータ更新処理
-//=============================================================================
-void TimerViewer::UpdateParam(void)
-{
-	GameViewerParam param;
-
-	gameViewer->ReceiveParam(param);
-	num->parameterBox = param.remainTime;
-}
+////=============================================================================
+//// テロップセット処理
+////=============================================================================
+//void EventTelop::Set(TelopID id, DelegateBase onFinish)
+//{
+//
+//}

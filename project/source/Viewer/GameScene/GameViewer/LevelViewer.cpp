@@ -5,6 +5,9 @@
 //
 //=============================================================================
 #include "../../../../main.h"
+#include "GameViewer.h"
+#include "GameViewerParam.h"
+#include "../../../../Framework/Renderer2D/CircleGauge.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
 #include "LevelViewer.h"
@@ -16,27 +19,26 @@ LevelViewer::LevelViewer()
 {
 	//”Žš
 	num = new CountViewerDrawer();
-	num->LoadTexture("data/TEXTURE/Viewer/GameViewer/LevelViewer/Num.png");
+	num->LoadTexture("data/TEXTURE/Viewer/GameViewer/LevelViewer/Number.png");
 	num->MakeVertex();
 	num->size = D3DXVECTOR3(15.0f, 30.0f, 0.0f);
 	num->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	num->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 8.550f, SCREEN_HEIGHT / 10 * 1.50f, 0.0f);
 
-	num->SetColor(SET_COLOR_NOT_COLORED);
+	num->SetColor(SET_COLOR_RIGHTBLUE);
 	num->parameterBox = 0;
 	num->intervalNumberScr = 40.0f;
 	num->intervalNumberTex = 0.1f;
 	num->placeMax = 5;
 	num->baseNumber = 10;
 
-	//”wŒi
-	circleGuage = new BaseViewerDrawer();
+	//‰~ƒQ[ƒW
+	circleGuage = new CircleGauge(D3DXVECTOR2(128.0f, 128.0f));
 	circleGuage->LoadTexture("data/TEXTURE/Viewer/GameViewer/LevelViewer/CircleGuage.png");
-	circleGuage->MakeVertex();
-	circleGuage->size = D3DXVECTOR3(128.0f, 128.0f, 0.0f);
-	circleGuage->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	circleGuage->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 9.0f, SCREEN_HEIGHT / 10 * 1.50f, 0.0f);
-	circleGuage->SetColor(SET_COLOR_NOT_COLORED);
+	circleGuage->SetScale(D3DXVECTOR3(2.0f, 2.0f, 0.0f));
+	circleGuage->SetRotation(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	circleGuage->SetPosition(D3DXVECTOR3(SCREEN_WIDTH / 10 * 9.0f, SCREEN_HEIGHT / 10 * 1.50f, 0.0f));
+	circleGuage->SetFillStart(circleGuage->Top);
 }
 
 //*****************************************************************************
@@ -61,9 +63,20 @@ void LevelViewer::Update(void)
 void LevelViewer::Draw(void)
 {
 	//”wŒi‚ðæ‚É•`‰æ
+	circleGuage->SetPercent(0.75f);
 	circleGuage->Draw();
-	circleGuage->SetVertex();
 
 	num->DrawCounter(num->baseNumber, num->parameterBox, num->placeMax,
 		num->intervalNumberScr, num->intervalNumberTex);
+}
+
+//=============================================================================
+// ƒpƒ‰ƒ[ƒ^XVˆ—
+//=============================================================================
+void LevelViewer::UpdateParam(void)
+{
+	GameViewerParam param;
+
+	gameViewer->ReceiveParam(param);
+	num->parameterBox = param.levelAI;
 }
