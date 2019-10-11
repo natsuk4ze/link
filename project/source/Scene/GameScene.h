@@ -24,6 +24,7 @@ namespace Field
 class SkyBox;
 class FieldCamera;
 class TextViewer;
+class GameViewer;
 
 /**************************************
 クラス定義
@@ -53,6 +54,7 @@ private:
 	FieldCamera* fieldCamera;					//フィールドカメラ
 	Field::FieldController *field;				//フィールドコントローラ
 	TextViewer *text;							//テスト用テキストビューワ
+	GameViewer *gameViewer;					//ゲームビュアー
 
 	//ステート遷移処理
 	void ChangeState(State next);

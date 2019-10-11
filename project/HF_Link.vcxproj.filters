@@ -99,6 +99,16 @@
     <ClCompile Include="source\Field\Place\FieldJunctionModel.cpp" />
     <ClCompile Include="Framework\Resource\MeshResource.cpp" />
     <ClCompile Include="Framework\Renderer2D\CircleGauge.cpp" />
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\GameViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\LevelViewer.cpp" />
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\StockViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp" />
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\EventViewer\EventViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\EventViewer\EventMessage.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\EventViewer\EventTelop.cpp" />
     <ClCompile Include="source\FieldObject\Info\CongestionFieldInfoState.cpp" />
     <ClCompile Include="source\FieldObject\Info\ConnectFieldInfoState.cpp" />
     <ClCompile Include="source\FieldObject\Info\CreateFieldInfoState.cpp" />
@@ -222,6 +232,20 @@
     <ClInclude Include="Library\json11\json11.hpp" />
     <ClInclude Include="source\Field\Place\FieldPlaceContainer.h" />
     <ClInclude Include="Framework\String\String.h" />
+    <ClInclude Include="source\Viewer\Framework\BaseViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewer.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\StockViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewerParam.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\LevelViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\TimerViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\EventViewer\EventViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h" />
+    <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="source\Field\Route\RouteModel.h" />
     <ClInclude Include="source\Field\Route\RouteProcessor.h" />
     <ClInclude Include="source\Field\State\BuildRoad.h" />
