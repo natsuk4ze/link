@@ -128,7 +128,7 @@ namespace Field::Actor
 		ChangeActor(places.back());
 
 		unsigned PlaceMax = places.size() - 1;
-		for(unsigned i = 0; i < PlaceMax; i++)
+		for(unsigned i = 1; i < PlaceMax; i++)
 		{ 
 			SetActor(places[i]);
 		}

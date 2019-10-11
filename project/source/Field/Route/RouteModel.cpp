@@ -164,7 +164,7 @@ namespace Field::Model
 			place->SetDirection(place->IsAdjacent(route[i - 1]), place->IsAdjacent(route[i + 1]));
 		}
 
-		last->SetDirection(last->IsAdjacent(route[routeSize - 1]), last->IsAdjacent(edgeEnd));
+		last->SetDirection(last->IsAdjacent(route[routeSize - 2]), last->IsAdjacent(edgeEnd));
 	}
 
 	/**************************************

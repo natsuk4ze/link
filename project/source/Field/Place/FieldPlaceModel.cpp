@@ -411,7 +411,7 @@ namespace Field::Model
 			if (type == PlaceType::Junction && adjacencies[i]->IsType(PlaceType::Junction))
 			{
 				out.push_back(static_cast<Adjacency>(i));
-				break;
+				continue;
 			}
 
 			//隣接プレイスの所属ルートと自身の所属ルートの積集合を数える
@@ -421,6 +421,10 @@ namespace Field::Model
 
 			//積集合が0なら繋がっていないのでコンティニュー
 			if (cntIntersect == 0)
+				continue;
+
+			//隣接方向が向きと一致してないならコンティニュー
+			if (i != prev && i != next)
 				continue;
 
 			out.push_back(static_cast<Adjacency>(i));
