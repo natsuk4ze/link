@@ -79,7 +79,7 @@ namespace Field::Model
 	***************************************/
 	void PlaceModel::DrawDebug()
 	{
-		if (type == PlaceType::None)
+		if (type == PlaceType::None || type == PlaceType::Road || type == PlaceType::Junction)
 			return;
 
 		//ƒeƒXƒg•`‰æ

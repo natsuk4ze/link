@@ -10,7 +10,7 @@
 //**************************************
 // クラスのメンバ変数初期化
 //**************************************
-const D3DXVECTOR3 PlaceActor::ActorScale = D3DXVECTOR3(0.2f, 0.2f, 0.2f);
+const D3DXVECTOR3 PlaceActor::ActorScale = D3DXVECTOR3(0.25f, 0.25f, 0.25f);
 
 //=====================================
 // コンストラクタ

@@ -64,7 +64,11 @@ namespace Field::Actor
 			Max
 		};
 
+		static const float PlacePositionOffset;
+
 		ActorContainer actorContainer;
+
+		inline D3DXVECTOR3 CalcActorPosition(const Model::PlaceModel* place);
 
 		void SetRoad(const Model::PlaceModel* place);
 		void SetTown(const Model::PlaceModel* place);
