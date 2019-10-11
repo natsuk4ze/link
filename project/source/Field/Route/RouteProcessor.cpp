@@ -126,7 +126,7 @@ namespace Field::Model
 		if (start->IsType(PlaceType::Road) || start->IsType(PlaceType::Junction))
 		{
 			_ConnectWithEdge(model, start, routeContainer);
-			start->AddDirection(model->edgeStart);
+			start->AddDirection(model->route.front());
 		}
 
 		//終点の連結を確認
@@ -134,7 +134,7 @@ namespace Field::Model
 		if (end->IsType(PlaceType::Road) || end->IsType(PlaceType::Junction))
 		{
 			_ConnectWithEdge(model, end, routeContainer);
-			end->AddDirection(model->edgeEnd);
+			end->AddDirection(model->route.back());
 		}
 	}
 
