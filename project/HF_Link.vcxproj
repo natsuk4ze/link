@@ -220,6 +220,10 @@
     <ClCompile Include="source\FieldObject\Actor\MountainActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\PlaceActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\RiverActor.cpp" />
+    <ClCompile Include="source\FieldObject\Actor\State\CreateActorState.cpp" />
+    <ClCompile Include="source\FieldObject\Actor\State\IdleActorState.cpp" />
+    <ClCompile Include="source\FieldObject\Actor\State\LinkActorState.cpp" />
+    <ClCompile Include="source\FieldObject\Actor\State\RemoveActorState.cpp" />
     <ClCompile Include="source\FieldObject\Actor\StraightRoadActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\TJunctionActor.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCamera.cpp" />
@@ -350,6 +354,10 @@
     <ClInclude Include="source\FieldObject\Actor\CurveRoadActor.h" />
     <ClInclude Include="source\FieldObject\Actor\MountainActor.h" />
     <ClInclude Include="source\FieldObject\Actor\RiverActor.h" />
+    <ClInclude Include="source\FieldObject\Actor\State\CreateActorState.h" />
+    <ClInclude Include="source\FieldObject\Actor\State\IdleActorState.h" />
+    <ClInclude Include="source\FieldObject\Actor\State\LinkActorState.h" />
+    <ClInclude Include="source\FieldObject\Actor\State\RemoveActorState.h" />
     <ClInclude Include="source\FieldObject\Actor\StraightRoadActor.h" />
     <ClInclude Include="source\FieldObject\Actor\TJunctionActor.h" />
     <ClInclude Include="source\Field\Camera\FieldCamera.h" />

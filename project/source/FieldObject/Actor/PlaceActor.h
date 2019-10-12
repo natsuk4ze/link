@@ -63,6 +63,12 @@ protected:
 
 private:
 	static const D3DXVECTOR3 ActorScale;
+
+	// ステートの前方宣言
+	class IdleActorState;
+	class CreateActorState;
+	class RemoveActorState;
+	class LinkActorState;
 };
 
 #endif
