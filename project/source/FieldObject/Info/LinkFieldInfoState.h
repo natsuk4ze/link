@@ -18,8 +18,8 @@ class FieldInfoActor::LinkFieldInfoState :
 	public FieldInfoActor::InfoState
 {
 public:
-	void OnStart(FieldInfoActor& entity);
-	State OnUpdate(FieldInfoActor& entity);
+	void OnStart(FieldInfoActor& entity)override;
+	State OnUpdate(FieldInfoActor& entity)override;
 };
 
 #endif

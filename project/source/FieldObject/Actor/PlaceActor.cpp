@@ -72,6 +72,7 @@ void PlaceActor::Rotate(float y)
 void PlaceActor::ChangeState(ActorState *next)
 {
 	state = next;
+	state->OnStart(*this);
 }
 
 //=====================================
