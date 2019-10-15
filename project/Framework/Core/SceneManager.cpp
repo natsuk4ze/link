@@ -8,6 +8,7 @@
 #include "BaseScene.h"
 #include "../Resource/ResourceManager.h"
 #include "../Tool/ProfilerCPU.h"
+#include "../Tween/Tween.h"
 
 using namespace std;
 /**************************************
@@ -68,6 +69,7 @@ void SceneManager::_ChengeScene(const int sceneID)
 		current->Uninit();
 		ResourceManager::Instance()->AllRelease();
 		ProfilerCPU::Instance()->Clear();
+		Tween::mInstance->ClearAll();
 	}
 
 	//Ø‚è‘Ö‚¦
