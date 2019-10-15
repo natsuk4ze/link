@@ -171,7 +171,7 @@ namespace Field::Actor
 	D3DXVECTOR3 PlaceActorController::CalcActorPosition(const Model::PlaceModel * place)
 	{
 		FieldPosition position = place->GetPosition();
-		return D3DXVECTOR3( position.x * PlacePositionOffset, 0.0f, position.z * PlacePositionOffset );
+		return D3DXVECTOR3( position.x * PlacePositionOffset, 0.0f, position.z * -PlacePositionOffset );
 	}
 
 	/**************************************
