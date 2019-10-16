@@ -24,6 +24,9 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 	//各オブジェクト更新
 	entity.field->Update();
 
+	//制限時間の更新
+	entity.remainTime--;
+
 	return State::Idle;
 }
 
