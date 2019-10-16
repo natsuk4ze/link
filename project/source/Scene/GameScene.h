@@ -26,6 +26,9 @@ class FieldCamera;
 class TextViewer;
 class GameViewer;
 
+//※イベントコントローラーが出来たらそっち移動
+class EventViewer;
+
 /**************************************
 クラス定義
 ***************************************/
@@ -54,7 +57,10 @@ private:
 	FieldCamera* fieldCamera;					//フィールドカメラ
 	Field::FieldController *field;				//フィールドコントローラ
 	TextViewer *text;							//テスト用テキストビューワ
-	GameViewer *gameViewer;					//ゲームビュアー
+	GameViewer *gameViewer;						//ゲームビュアー
+
+	//※イベントコントローラーが出来たらそっち移動
+	EventViewer *eventViewer;
 
 	//ステート遷移処理
 	void ChangeState(State next);

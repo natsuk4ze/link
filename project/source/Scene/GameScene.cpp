@@ -18,6 +18,9 @@
 #include "GameState/GameInit.h"
 #include "GameState/GameIdle.h"
 
+//※イベントコントローラーが出来たらそっち移動
+#include "../Viewer/GameScene/EventViewer/EventViewer.h"
+
 /**************************************
 初期化処理
 ***************************************/
@@ -35,6 +38,9 @@ void GameScene::Init()
 	field = new Field::FieldController();
 	text = new TextViewer("M+ 2c heavy", 50);
 	gameViewer = new GameViewer();
+
+	//※イベントコントローラーが出来たらそっち移動
+	eventViewer = new EventViewer();
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
@@ -62,6 +68,9 @@ void GameScene::Uninit()
 	SAFE_DELETE(text);
 	SAFE_DELETE(gameViewer);
 
+	//※イベントコントローラーが出来たらそっち移動
+	SAFE_DELETE(eventViewer);
+
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
 }
@@ -81,6 +90,9 @@ void GameScene::Update()
 
 	//ビュアー更新
 	gameViewer->Update();
+
+	//※イベントコントローラーが出来たらそっち移動
+	eventViewer->Update();
 }
 
 /**************************************
@@ -107,6 +119,9 @@ void GameScene::Draw()
 
 	//ビュアー描画
 	gameViewer->Draw();
+
+	//※イベントコントローラーが出来たらそっち移動
+	eventViewer->Draw();
 }
 
 /**************************************

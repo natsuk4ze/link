@@ -28,7 +28,7 @@ public:
 	void Draw(void);
 
 	//ƒpƒ‰ƒ[ƒ^‚ğó‚¯‚Æ‚é” 
-	int parameterBox;
+	float parameterBox;
 
 private:
 	BaseViewerDrawer *bg;

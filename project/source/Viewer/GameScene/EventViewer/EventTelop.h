@@ -8,38 +8,47 @@
 #ifndef _EVENT_TELOP_H_
 #define _EVENT_TELOP_H_
 
-#include "../EventViewer/EventViewer.h"
+#include "../../Framework/BaseViewer.h"
+#include "../../../../Framework/Pattern/Delegate.h"
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
-class BaseViewerDrawer;
-class CountViewerDrawer;
-//template<class T> class DelegateBase;
+class TelopDrawer;
+template<class T> class DelegateBase;
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class EventTelop :public EventViewer
+class EventTelop :public BaseViewer
 {
 public:
 	EventTelop();
 	~EventTelop();
 
+	//テロップの種類
 	enum TelopID
 	{
-
+		PositiveEvent01,
+		PositiveEvent02,
+		NegativeEvent01,
+		NegativeEvent02
 	};
 
+	//テロップの種類数
+	static const int typeMax = 4;
 
 	void Update(void);
 	void Draw(void);
-	//void Set(TelopID id, DelegateBase onFinish);
+	void Set(TelopID id, DelegateBase<void>* onFinish);
 
 private:
-	BaseViewerDrawer *bg;
-	BaseViewerDrawer *text;
-	//DelegateBase* onFinish;
+	TelopDrawer *text[typeMax];
+	TelopDrawer *bg[typeMax];
+
+	DelegateBase<void>* onFinish;
+
+	void Play(int i);
 };
 
 #endif
