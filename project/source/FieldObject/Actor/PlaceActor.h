@@ -61,6 +61,7 @@ protected:
 
 	ActorState *state;					// ステートマシンの受取先
 	State current;						// 現在のステート
+	FModel::PlaceType type;				// アクターの種類
 
 private:
 	static const D3DXVECTOR3 ActorScale;

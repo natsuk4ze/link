@@ -27,6 +27,8 @@ CurveRoadActor::CurveRoadActor(const D3DXVECTOR3& pos, FModel::FieldLevel curren
 	default:
 		break;
 	}
+
+	type = FModel::Road;
 }
 
 //=====================================
