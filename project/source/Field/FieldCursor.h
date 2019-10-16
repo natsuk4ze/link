@@ -69,9 +69,6 @@ namespace Field
 
 		//ˆÚ“®“à•”ˆ—
 		void Move();
-
-		//ƒ[ƒ‹ƒhÀ•WŒn_ˆ—
-		D3DXVECTOR3 CalcWorldPosition() const;
 	};
 
 	/**************************************

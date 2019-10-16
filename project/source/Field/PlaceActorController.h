@@ -68,8 +68,6 @@ namespace Field::Actor
 
 		ActorContainer actorContainer;
 
-		inline D3DXVECTOR3 CalcActorPosition(const Model::PlaceModel* place);
-
 		void SetRoad(const Model::PlaceModel* place);
 		void SetTown(const Model::PlaceModel* place);
 		void SetRiver(const Model::PlaceModel* place);
