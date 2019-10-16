@@ -12,7 +12,7 @@
 //=====================================
 void PlaceActor::LinkActorState::OnStart(PlaceActor& entity)
 {
-
+	entity.current = Link;
 }
 
 //=====================================
@@ -20,5 +20,5 @@ void PlaceActor::LinkActorState::OnStart(PlaceActor& entity)
 //=====================================
 PlaceActor::State PlaceActor::LinkActorState::OnUpdate(PlaceActor& entity)
 {
-	return State::Idle;
+	return entity.current;
 }

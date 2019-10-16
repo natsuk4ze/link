@@ -12,7 +12,7 @@
 //=====================================
 void PlaceActor::RemoveActorState::OnStart(PlaceActor& entity)
 {
-
+	entity.current = Remove;
 }
 
 //=====================================
@@ -20,5 +20,5 @@ void PlaceActor::RemoveActorState::OnStart(PlaceActor& entity)
 //=====================================
 PlaceActor::State PlaceActor::RemoveActorState::OnUpdate(PlaceActor& entity)
 {
-	return State::Idle;
+	return entity.current;
 }
