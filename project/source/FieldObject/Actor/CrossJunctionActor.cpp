@@ -8,6 +8,7 @@
 #include "CrossJunctionActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "State/CreateActorState.h"
+#include "../Animation/ActorAnimation.h"
 
 //=====================================
 // コンストラクタ
@@ -34,6 +35,10 @@ CrossJunctionActor::CrossJunctionActor(const D3DXVECTOR3& pos, FModel::FieldLeve
 	// テスト
 	state = new CreateActorState();
 	state->OnStart(*this);
+	ActorAnimation::RotateAndExpantion(*this, [&] 
+	{
+		current = Idle;
+	});
 
 }
 

@@ -19,6 +19,7 @@
 #include "GameState/GameIdle.h"
 
 #include "../FieldObject/Actor/CrossJunctionActor.h"
+#include "../FieldObject/Actor/CityActor.h"
 
 /**************************************
 初期化処理
@@ -46,7 +47,7 @@ void GameScene::Init()
 	//ステート初期化
 	ChangeState(State::Initialize);
 
-	testActor = new CrossJunctionActor(D3DXVECTOR3(150.0f, 0.0f, 150.0f), FModel::City);
+	testActor = new CityActor(D3DXVECTOR3(150.0f, 0.0f, 150.0f), FModel::City);
 }
 
 /**************************************

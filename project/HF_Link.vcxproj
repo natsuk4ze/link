@@ -226,6 +226,7 @@
     <ClCompile Include="source\FieldObject\Actor\State\RemoveActorState.cpp" />
     <ClCompile Include="source\FieldObject\Actor\StraightRoadActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\TJunctionActor.cpp" />
+    <ClCompile Include="source\FieldObject\Animation\ActorAnimation.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCamera.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCameraFar.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCameraQuater.cpp" />
@@ -371,6 +372,7 @@
     <ClInclude Include="source\FieldObject\Actor\State\RemoveActorState.h" />
     <ClInclude Include="source\FieldObject\Actor\StraightRoadActor.h" />
     <ClInclude Include="source\FieldObject\Actor\TJunctionActor.h" />
+    <ClInclude Include="source\FieldObject\Animation\ActorAnimation.h" />
     <ClInclude Include="source\Field\Camera\FieldCamera.h" />
     <ClInclude Include="source\Field\Camera\FieldCameraFar.h" />
     <ClInclude Include="source\Field\Camera\FieldCameraQuater.h" />
