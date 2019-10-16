@@ -12,7 +12,7 @@
 //=====================================
 void PlaceActor::IdleActorState::OnStart(PlaceActor& entity)
 {
-
+	entity.current = Idle;
 }
 
 //=====================================
@@ -20,5 +20,5 @@ void PlaceActor::IdleActorState::OnStart(PlaceActor& entity)
 //=====================================
 PlaceActor::State PlaceActor::IdleActorState::OnUpdate(PlaceActor& entity)
 {
-	return State::Idle;
+	return entity.current;
 }

@@ -27,6 +27,8 @@ CrossJunctionActor::CrossJunctionActor(const D3DXVECTOR3& pos, FModel::FieldLeve
 	default:
 		break;
 	}
+
+	type = FModel::Junction;
 }
 
 //=====================================

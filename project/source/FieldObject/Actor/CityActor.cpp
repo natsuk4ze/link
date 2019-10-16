@@ -27,6 +27,8 @@ CityActor::CityActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
 	default:
 		break;
 	}
+
+	type = FModel::Town;
 }
 
 //=====================================
