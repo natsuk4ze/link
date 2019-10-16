@@ -174,7 +174,7 @@ namespace Field
 		float triggerX = 0.0f, triggerZ = 0.0f;
 
 		triggerX = Input::GetTriggerHorizontal();
-		triggerZ = Input::GetTriggerVertical();
+		triggerZ = -Input::GetTriggerVertical();
 
 		//リピート確認
 		float repeatX = 0.0f, repeatZ = 0.0f;
@@ -184,7 +184,7 @@ namespace Field
 			if (inputRepeatCnt >= InputLongWait && inputRepeatCnt % InputShortWait == 0)
 			{
 				repeatX = Input::GetPressHorizontail();
-				repeatZ = Input::GetPressVertical();
+				repeatZ = -Input::GetPressVertical();
 			}
 		}
 		else

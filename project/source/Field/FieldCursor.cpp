@@ -104,7 +104,7 @@ namespace Field
 			return;
 
 		//移動開始地点を保存
-		startPos = CalcWorldPosition();
+		startPos = position.ConvertToWorldPosition();
 
 		//X軸の移動を優先して使用(Clampで移動範囲を制限)
 		if (x != 0)
@@ -113,7 +113,7 @@ namespace Field
 			position.z = Math::Clamp(fieldBorder.back, fieldBorder.forward, position.z + z);
 
 		//移動先座標を計算
-		moveTarget = CalcWorldPosition();
+		moveTarget = position.ConvertToWorldPosition();
 
 		//カウントリセット
 		cntMove = 0;
@@ -127,7 +127,7 @@ namespace Field
 		position.x = x;
 		position.z = z;
 
-		SetPosition(CalcWorldPosition());
+		SetPosition(position.ConvertToWorldPosition());
 	}
 
 	/**************************************
@@ -175,14 +175,6 @@ namespace Field
 		float t = 1.0f * cntMove / MoveDuration;
 		D3DXVECTOR3 position = Easing::EaseValue(t, startPos, moveTarget, EaseType::Linear);
 		transform->SetPosition(position);
-	}
-
-	/**************************************
-	ワールド座標系酸処理
-	***************************************/
-	D3DXVECTOR3 FieldCursor::CalcWorldPosition() const
-	{
-		return D3DXVECTOR3((position.x) * PositionOffset, 0.0f, (position.z) * PositionOffset);
 	}
 
 	/**************************************

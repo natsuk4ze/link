@@ -166,20 +166,11 @@ namespace Field::Actor
 	}
 
 	/**************************************
-	PlaceModelからPlaceActorへの座標変換処理
-	***************************************/
-	D3DXVECTOR3 PlaceActorController::CalcActorPosition(const Model::PlaceModel * place)
-	{
-		FieldPosition position = place->GetPosition();
-		return D3DXVECTOR3( position.x * PlacePositionOffset, 0.0f, position.z * -PlacePositionOffset );
-	}
-
-	/**************************************
 	ロードセット処理
 	***************************************/
 	void PlaceActorController::SetRoad(const Model::PlaceModel * place)
 	{
-		D3DXVECTOR3 actorPos = CalcActorPosition(place);
+		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
 		//連結情報からどのタイプの道かを判定
 		std::vector<Adjacency> AdjacencyType = place->GetConnectingAdjacency();
@@ -247,7 +238,7 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::SetJunction(const Model::PlaceModel * place)
 	{
-		D3DXVECTOR3 actorPos = CalcActorPosition(place);
+		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
 		std::vector<Adjacency> adjacencyTypeList = place->GetConnectingAdjacency();
 

@@ -84,7 +84,7 @@ namespace Field::Model
 
 		//ƒeƒXƒg•`‰æ
 		Transform transform = Transform(
-			{ Position.x * 10.0f, 1.0f, Position.z * 10.0f },
+			Position.ConvertToWorldPosition() + Vector3::Up,
 			{ D3DXToRadian(90.0f), 0.0f, 0.0f },
 			Vector3::One);
 		transform.SetWorld();
