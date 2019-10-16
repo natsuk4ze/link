@@ -7,6 +7,7 @@
 //=====================================
 #include "CurveRoadActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
+#include "State/CreateActorState.h"
 
 //=====================================
 // コンストラクタ
@@ -29,6 +30,10 @@ CurveRoadActor::CurveRoadActor(const D3DXVECTOR3& pos, FModel::FieldLevel curren
 	}
 
 	type = FModel::Road;
+
+	// テスト
+	state = new CreateActorState();
+	state->OnStart(*this);
 }
 
 //=====================================

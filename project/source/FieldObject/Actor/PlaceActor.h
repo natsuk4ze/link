@@ -63,18 +63,18 @@ protected:
 	State current;						// 現在のステート
 	FModel::PlaceType type;				// アクターの種類
 
+	// ステートの前方宣言
+	class IdleActorState;
+	class CreateActorState;
+	class RemoveActorState;
+	class LinkActorState;
+
 private:
 	static const D3DXVECTOR3 ActorScale;
 
 #if _DEBUG
 	void Debug();
 #endif
-
-	// ステートの前方宣言
-	class IdleActorState;
-	class CreateActorState;
-	class RemoveActorState;
-	class LinkActorState;
 };
 
 #endif

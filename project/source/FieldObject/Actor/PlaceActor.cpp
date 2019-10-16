@@ -27,10 +27,6 @@ PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel) 
 	transform->SetPosition(pos);
 	transform->SetScale(ActorScale);
 	this->SetActive(true);
-
-	// ƒeƒXƒg
-	state = new CreateActorState();
-	state->OnStart(*this);
 }
 
 //=====================================

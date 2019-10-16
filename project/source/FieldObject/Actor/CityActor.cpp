@@ -7,6 +7,7 @@
 //=====================================
 #include "CityActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
+#include "State/CreateActorState.h"
 
 //=====================================
 // コンストラクタ
@@ -29,6 +30,10 @@ CityActor::CityActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
 	}
 
 	type = FModel::Town;
+
+	// テスト
+	state = new CreateActorState();
+	state->OnStart(*this);
 }
 
 //=====================================

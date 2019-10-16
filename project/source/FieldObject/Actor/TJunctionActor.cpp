@@ -7,6 +7,7 @@
 //=====================================
 #include "TJunctionActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
+#include "State/CreateActorState.h"
 
 //=====================================
 // コンストラクタ
@@ -29,6 +30,11 @@ TJunctionActor::TJunctionActor(const D3DXVECTOR3& pos, FModel::FieldLevel curren
 	}
 
 	type = FModel::Junction;
+
+	// テスト
+	state = new CreateActorState();
+	state->OnStart(*this);
+
 }
 
 //=====================================

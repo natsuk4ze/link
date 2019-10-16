@@ -7,6 +7,7 @@
 //=====================================
 #include "CrossJunctionActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
+#include "State/CreateActorState.h"
 
 //=====================================
 // コンストラクタ
@@ -29,6 +30,11 @@ CrossJunctionActor::CrossJunctionActor(const D3DXVECTOR3& pos, FModel::FieldLeve
 	}
 
 	type = FModel::Junction;
+
+	// テスト
+	state = new CreateActorState();
+	state->OnStart(*this);
+
 }
 
 //=====================================
