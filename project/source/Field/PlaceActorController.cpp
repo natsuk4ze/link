@@ -198,12 +198,12 @@ namespace Field::Actor
 			float rotAngle = 0.0f;
 			
 			CurveType curveType = IsCurve(AdjacencyType);
-			if (curveType == CurveType::BackAndLeft)
+			if (curveType == CurveType::LeftAndForward)
 				rotAngle = -90.0f;
 			else if (curveType == CurveType::BackAndRight)
-				rotAngle = 180.0f;
-			else if (curveType == CurveType::ForwardAndRight)
 				rotAngle = 90.0f;
+			else if (curveType == CurveType::ForwardAndRight)
+				rotAngle = 180.0f;
 
 			actor->Rotate(rotAngle);
 
