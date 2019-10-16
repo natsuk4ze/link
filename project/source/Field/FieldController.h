@@ -12,6 +12,7 @@
 #include "../../Framework/Pattern/BaseState.h"
 #include "../../Framework/Pattern/Delegate.h"
 #include "Place\PlaceConfig.h"
+#include "../Viewer/GameScene/GameViewer/GameViewerParam.h"
 
 #include <vector>
 
@@ -72,6 +73,9 @@ namespace Field
 
 		//カーソル取得処理
 		GameObject* GetFieldCursor();
+
+		//ビューワパラメータ埋め込み
+		void EmbedViewerParam(GameViewerParam& param);
 
 	private:
 		static const float PlaceOffset;					//Placeの1マス毎のオフセット値

@@ -216,6 +216,19 @@ namespace Field
 	}
 
 	/**************************************
+	ビューワパラメータ埋め込み処理
+	***************************************/
+	void FieldController::EmbedViewerParam(GameViewerParam & param)
+	{
+		param.levelAI = developmentLevelAI;
+		param.ratioLevel = (float)developmentLevelAI / 9999.0f;
+		param.stockBreakItem = stockDevelopMountain;
+		param.stockBuildItem = stockDevelopRiver;
+		param.stockEDF = stockEDF;
+		param.stockInsurance = stockInsurance;
+	}
+
+	/**************************************
 	ステート切り替え処理
 	***************************************/
 	void FieldController::ChangeState(State next)
