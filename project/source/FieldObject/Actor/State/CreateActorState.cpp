@@ -14,8 +14,17 @@
 //=====================================
 void PlaceActor::CreateActorState::OnStart(PlaceActor& entity)
 {
-	Tween::Scale(entity, D3DXVECTOR3(0.0f, 0.0f, 0.0f), entity.ActorScale, 120, OutCirc);
-	entity.cntState = 0;
+	entity.current = Create;
+
+	//Tween::Move(entity, entity.GetPosition() + D3DXVECTOR3(0.0f, 30.0f, 0.0f), entity.GetPosition(), 60, OutCirc);
+	Tween::Rotate(entity, entity.ActorScale + D3DXVECTOR3(0.0f, 180.0f, 0.0f), entity.ActorScale, 60, OutCirc);
+	Tween::Scale(entity, D3DXVECTOR3(0.0f, 0.0f, 0.0f), entity.ActorScale, 60, OutCirc, [&entity] 
+	{
+		// コールバックで現在のステートをアイドルに変更してTweenを終了する
+		entity.ChangeState(new IdleActorState());
+		//entity.state = Idle;
+	});
+
 }
 
 //=====================================
@@ -23,16 +32,5 @@ void PlaceActor::CreateActorState::OnStart(PlaceActor& entity)
 //=====================================
 PlaceActor::State PlaceActor::CreateActorState::OnUpdate(PlaceActor& entity)
 {
-	State current = State::Create;
-
-	entity.cntState++;
-
-	if (entity.cntState == 120)
-	{
-		entity.ChangeState(new IdleActorState());
-		current = State::Idle;
-		return current;
-	}
-
-	return current;
+	return entity.current;
 }

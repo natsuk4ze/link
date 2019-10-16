@@ -7,6 +7,7 @@
 //=====================================
 #include "PlaceActor.h"
 #include "State/CreateActorState.h"
+#include "../../../Framework/Tool/DebugWindow.h"
 
 //**************************************
 // クラスのメンバ変数初期化
@@ -16,18 +17,18 @@ const D3DXVECTOR3 PlaceActor::ActorScale = D3DXVECTOR3(0.25f, 0.25f, 0.25f);
 //=====================================
 // コンストラクタ
 //=====================================
-PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
+PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel) :
+	state(NULL), current()
 {
 	// メッシュコンテナの作成
 	mesh = MeshContainer::Create();
 
 	// ステータスセット
 	transform->SetPosition(pos);
-	transform->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	transform->SetScale(ActorScale);
 	this->SetActive(true);
 
-	// state = NULL;
-
+	// テスト
 	state = new CreateActorState();
 	state->OnStart(*this);
 }
@@ -38,6 +39,7 @@ PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
 PlaceActor::~PlaceActor()
 {
 	SAFE_RELEASE(mesh);
+	state = NULL;
 }
 
 //=====================================
@@ -45,9 +47,19 @@ PlaceActor::~PlaceActor()
 //=====================================
 PlaceActor::State PlaceActor::Update()
 {
-	// 状態の更新
-	return state->OnUpdate(*this);
+	State next = Idle;
 
+	// 状態の更新
+	if (state != NULL)
+	{
+		next = state->OnUpdate(*this);
+	}
+
+#if _DEBUG
+	Debug();
+#endif
+
+	return next;
 }
 
 //=====================================
@@ -85,4 +97,11 @@ void PlaceActor::ChangeState(ActorState *next)
 void PlaceActor::SetColor(const D3DXCOLOR& color, UINT index)
 {
 	mesh->SetMaterialColor(color, index);
+}
+
+void PlaceActor::Debug()
+{
+	Debug::Begin("PlaceActor", false);
+	Debug::Text("State = %d\n", current);
+	Debug::End();
 }
