@@ -25,6 +25,7 @@ class SkyBox;
 class FieldCamera;
 class TextViewer;
 class GameViewer;
+class EventController;
 
 /**************************************
 クラス定義
@@ -54,8 +55,8 @@ private:
 	FieldCamera* fieldCamera;					//フィールドカメラ
 	Field::FieldController *field;				//フィールドコントローラ
 	TextViewer *text;							//テスト用テキストビューワ
-	GameViewer *gameViewer;					//ゲームビュアー
-
+	GameViewer *gameViewer;						//ゲームビュアー
+	EventController *eventController;			// イベントコントローラー
 	//ステート遷移処理
 	void ChangeState(State next);
 

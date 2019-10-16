@@ -4,27 +4,28 @@
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#ifndef _EventBase_H_
-#define _EventBase_H_
-
-
-//*****************************************************************************
-// マクロ定義
-//*****************************************************************************
-
+#ifndef _EVENTBASE_H_
+#define _EVENTBASE_H_
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
 class EventBase
 {
-private:
+protected:
+	const char* Message = nullptr;
+	int Type = 0;
+	int FieldLevel = 0;
+	int RemainingTime = 0;
+	bool UseFlag = true;
 
 public:
-	EventBase();
+	EventBase(int FieldLevel, int Type);
 	~EventBase();
 	virtual void Update(void);
 	virtual void Draw(void);
+	virtual void SetEventViewerMsg(void);
+	bool GetUse(void) { return this->UseFlag; };
 };
 
 #endif

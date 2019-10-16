@@ -1,28 +1,32 @@
 //=============================================================================
 //
-// イベントマネージャークラス [EventManager.h]
+// 隕石イベントクラス [Meteorite.h]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#ifndef _EventManager_H_
-#define _EventManager_H_
+#ifndef _METEORITE_H_
+#define _METEORITE_H_
 
 #include "EventBase.h"
-#include <vector>
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class EventManager
+class Meteorite : public EventBase
 {
 private:
-	std::vector<EventBase*> EventVec;
+	D3DXVECTOR3 Pos;
+	D3DXVECTOR3 GoalPos;
+	D3DXVECTOR3 FallDirection;
+	static LPDIRECT3DDEVICE9 Device;
+	static LPD3DXMESH SphereMesh;
+	static D3DMATERIAL9 Material;
 
 public:
-	EventManager();
-	~EventManager();
-	void Update(void);
-	void Draw(void);
+	Meteorite(D3DXVECTOR3 GoalPos);
+	~Meteorite();
+	void Update(void) override;
+	void Draw(void) override;
 };
 
 #endif

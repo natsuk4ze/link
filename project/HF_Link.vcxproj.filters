@@ -133,6 +133,12 @@
     <Filter Include="source\Event">
       <UniqueIdentifier>{82124ad5-8c40-4efb-8687-440c770051d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\Event\PlusEvent">
+      <UniqueIdentifier>{08d0950d-1944-47e9-949d-c0b27dbd3db7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Event\MinusEvent">
+      <UniqueIdentifier>{e69d0ac5-f54f-4118-9706-285d513e818c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\cppLinq\cpplinq.hpp">
@@ -580,12 +586,17 @@
       <Filter>source\Viewer\Framework\ViewerDrawer</Filter>
     </ClInclude>
     <ClInclude Include="main.h" />
-    <ClInclude Include="source\Event\EventManager.h">
-      <Filter>source\Event</Filter>
-    </ClInclude>
     <ClInclude Include="source\Event\EventBase.h">
       <Filter>source\Event</Filter>
     </ClInclude>
+    <ClInclude Include="source\Event\EventController.h">
+      <Filter>source\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Event\EventMessageContainer.h">
+      <Filter>source\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Event\MinusEvent\CityDestroyEvent.h" />
+    <ClInclude Include="source\Event\EventConfig.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Library\imgui\imgui.cpp">
@@ -985,9 +996,13 @@
     <ClCompile Include="source\Event\EventBase.cpp">
       <Filter>source\Event</Filter>
     </ClCompile>
-    <ClCompile Include="source\Event\EventManager.cpp">
+    <ClCompile Include="source\Event\EventController.cpp">
       <Filter>source\Event</Filter>
     </ClCompile>
+    <ClCompile Include="source\Event\EventMessageContainer.cpp">
+      <Filter>source\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Event\MinusEvent\CityDestroyEvent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
