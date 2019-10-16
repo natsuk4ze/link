@@ -6,6 +6,7 @@
 //
 //=====================================
 #include "PlaceActor.h"
+#include "State/CreateActorState.h"
 
 //**************************************
 // クラスのメンバ変数初期化
@@ -22,10 +23,13 @@ PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
 
 	// ステータスセット
 	transform->SetPosition(pos);
-	transform->SetScale(ActorScale);
+	transform->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	this->SetActive(true);
 
-	state = NULL;
+	// state = NULL;
+
+	state = new CreateActorState();
+	state->OnStart(*this);
 }
 
 //=====================================

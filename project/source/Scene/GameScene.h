@@ -13,6 +13,9 @@
 #include "../../Framework/Pattern/BaseState.h"
 #include <vector>
 
+// モデル表示テスト用
+#include "../FieldObject/Actor/PlaceActor.h"
+
 /**************************************
 前方宣言
 ***************************************/
@@ -62,5 +65,7 @@ private:
 	//各ステートクラス
 	class GameInit;
 	class GameIdle;
+
+	PlaceActor* testActor;
 };
 #endif

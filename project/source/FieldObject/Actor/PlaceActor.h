@@ -60,6 +60,7 @@ protected:
 	// ******************************
 
 	ActorState *state;					// 現在のステート
+	int cntState;						// ステート内での現在フレームのカウントに使用
 
 private:
 	static const D3DXVECTOR3 ActorScale;

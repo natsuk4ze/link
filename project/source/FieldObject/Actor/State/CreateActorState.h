@@ -16,6 +16,7 @@
 class PlaceActor::CreateActorState :
 	public PlaceActor::ActorState
 {
+	friend class Tween;
 public:
 	void OnStart(PlaceActor& entity)override;
 	State OnUpdate(PlaceActor& entity)override;

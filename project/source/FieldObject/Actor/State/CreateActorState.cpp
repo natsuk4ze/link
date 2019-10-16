@@ -6,13 +6,16 @@
 //
 //=====================================
 #include "CreateActorState.h"
+#include "../../../../Framework/Tween/Tween.h"
+#include "IdleActorState.h"
 
 //=====================================
 // ì¸èÍèàóù
 //=====================================
 void PlaceActor::CreateActorState::OnStart(PlaceActor& entity)
 {
-
+	Tween::Scale(entity, D3DXVECTOR3(0.0f, 0.0f, 0.0f), entity.ActorScale, 120, OutCirc);
+	entity.cntState = 0;
 }
 
 //=====================================
@@ -20,5 +23,16 @@ void PlaceActor::CreateActorState::OnStart(PlaceActor& entity)
 //=====================================
 PlaceActor::State PlaceActor::CreateActorState::OnUpdate(PlaceActor& entity)
 {
-	return State::Idle;
+	State current = State::Create;
+
+	entity.cntState++;
+
+	if (entity.cntState == 120)
+	{
+		entity.ChangeState(new IdleActorState());
+		current = State::Idle;
+		return current;
+	}
+
+	return current;
 }
