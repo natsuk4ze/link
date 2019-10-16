@@ -57,7 +57,9 @@ private:
 	FieldCamera* fieldCamera;					//フィールドカメラ
 	Field::FieldController *field;				//フィールドコントローラ
 	TextViewer *text;							//テスト用テキストビューワ
-	GameViewer *gameViewer;					//ゲームビュアー
+	GameViewer *gameViewer;						//ゲームビュアー
+
+	float remainTime;							//ステージの残り時間
 
 	//ステート遷移処理
 	void ChangeState(State next);

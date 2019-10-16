@@ -47,6 +47,8 @@ namespace Field
 		developmentLevelAI(0),
 		stockDevelopRiver(InitDevelopRiverStock),
 		stockDevelopMountain(InitDevelopMountainStock),
+		stockEDF(0),
+		stockInsurance(0),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
 		onChangePlaceType(nullptr)
