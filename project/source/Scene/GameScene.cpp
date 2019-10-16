@@ -85,6 +85,12 @@ void GameScene::Update()
 		ChangeState(next);
 	}
 
+	//ビューワパラメータをビューワに渡す
+	GameViewerParam param;
+	param.remainTime = remainTime / 30.0f;
+	field->EmbedViewerParam(param);
+	gameViewer->ReceiveParam(param);
+
 	//ビュアー更新
 	gameViewer->Update();
 

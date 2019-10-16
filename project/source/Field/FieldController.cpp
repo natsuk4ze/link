@@ -47,6 +47,8 @@ namespace Field
 		developmentLevelAI(0),
 		stockDevelopRiver(InitDevelopRiverStock),
 		stockDevelopMountain(InitDevelopMountainStock),
+		stockEDF(0),
+		stockInsurance(0),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
 		onChangePlaceType(nullptr)
@@ -211,6 +213,19 @@ namespace Field
 	GameObject * FieldController::GetFieldCursor()
 	{
 		return cursor;
+	}
+
+	/**************************************
+	ビューワパラメータ埋め込み処理
+	***************************************/
+	void FieldController::EmbedViewerParam(GameViewerParam & param)
+	{
+		param.levelAI = developmentLevelAI;
+		param.ratioLevel = (float)developmentLevelAI / 9999.0f;
+		param.stockBreakItem = stockDevelopMountain;
+		param.stockBuildItem = stockDevelopRiver;
+		param.stockEDF = stockEDF;
+		param.stockInsurance = stockInsurance;
 	}
 
 	/**************************************

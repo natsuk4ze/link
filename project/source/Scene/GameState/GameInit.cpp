@@ -31,6 +31,10 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	//CSVデータをロード
 	entity.field->Load();
 
+	//ゲームに必要なパラメータを初期化
+	//TODO : ステージの制限時間を引き継げるようにする
+	entity.remainTime = 30 * 180;
+
 	// 3Dオブジェクトのリソースをロード
 	// FieldLevel = City
 	ResourceManager::Instance()->LoadMesh("CrossJunction-City", "data/MODEL/PlaceActor/Cross-Junction.x");
