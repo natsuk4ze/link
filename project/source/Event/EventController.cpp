@@ -21,6 +21,8 @@
 #include "../../Framework/Renderer3D/BoardPolygon.h"
 #endif
 
+using namespace EventConfig;
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -31,7 +33,9 @@ bool RemoveCondition(EventBase *Event) { return Event == NULL ? true : false; }
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-
+//std::vector<Field::Model::PlaceModel*> *EventController::route = nullptr;
+std::vector<EventInfo> EventController::EventCSVData;
+std::vector<EventBase*> EventController::EventVec;
 
 
 //=============================================================================
@@ -62,6 +66,8 @@ EventController::~EventController()
 //=============================================================================
 void EventController::Update()
 {
+	//CheckEventHappen();
+
 	for (auto &Event : EventVec)
 	{
 		if (Event->GetUse())
@@ -98,13 +104,10 @@ void EventController::Draw()
 //=============================================================================
 void EventController::DrawDebug()
 {
-	//if (!initialized)
-	//	return;
+	LPDIRECT3DDEVICE9 Device = GetDevice();
 
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
-	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	Device->SetRenderState(D3DRS_ZWRITEENABLE, false);
+	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 
 	for (auto& Object : EventCSVData)
 	{
@@ -120,10 +123,58 @@ void EventController::DrawDebug()
 		polygon->Draw();
 	}
 
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
-	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+	Device->SetRenderState(D3DRS_ZWRITEENABLE, true);
+	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 }
 #endif
+
+//=============================================================================
+// イベントの発生をチェック
+//=============================================================================
+//void EventController::CheckEventHappen(void)
+//{
+//	//for (auto &place : *route)
+//	//{
+//	//	Field::FieldPosition Pos = place->GetPosition();
+//	//	for (auto &EventPlace : EventCSVData)
+//	//	{
+//	//		if (Pos.x == EventPlace.x && Pos.z == EventPlace.z)
+//	//		{
+//	//			switch (EventPlace.EventType)
+//	//			{
+//	//			case CityLevelUp:
+//	//				break;
+//	//			case NewCity:
+//	//				break;
+//	//			case ChipRecovery:
+//	//				break;
+//	//			case FamousPeople:
+//	//				break;
+//	//			case Bonus:
+//	//				break;
+//	//			case AILevelUp:
+//	//				break;
+//	//			case CityLevelDecrease:
+//	//				break;
+//	//			case CityDestroy:
+//	//				EventVec.push_back(new CityDestroyEvent(FieldLevel, Vector3::Zero));
+//	//				break;
+//	//			case AILevelDecrease:
+//	//				break;
+//	//			case MoveInverse:
+//	//				break;
+//	//			case BanSpecialChip:
+//	//				break;
+//	//			case CongestionUp:
+//	//				break;
+//	//			default:
+//	//				break;
+//	//			}
+//	//			//EventVec.push_back(new )
+//	//		}
+//	//	}
+//	//}
+//}
 
 //=============================================================================
 // CSVの読み込む
@@ -171,7 +222,46 @@ void EventController::LoadCSV(const char* FilePath)
 //=============================================================================
 // イベント発生の確認
 //=============================================================================
-void EventController::ReceiveEvent(void)
+void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& RoutePtr,int FieldLevel)
 {
-
+	for (auto &place : RoutePtr)
+	{
+		Field::FieldPosition Pos = place->GetPosition();
+		for (auto &EventPlace : EventCSVData)
+		{
+			if (Pos.x == EventPlace.x && Pos.z == EventPlace.z)
+			{
+				switch (EventPlace.EventType)
+				{
+				case CityLevelUp:
+					break;
+				case NewCity:
+					break;
+				case ChipRecovery:
+					break;
+				case FamousPeople:
+					break;
+				case Bonus:
+					break;
+				case AILevelUp:
+					break;
+				case CityLevelDecrease:
+					break;
+				case CityDestroy:
+					EventVec.push_back(new CityDestroyEvent(FieldLevel, Vector3::Zero));
+					break;
+				case AILevelDecrease:
+					break;
+				case MoveInverse:
+					break;
+				case BanSpecialChip:
+					break;
+				case CongestionUp:
+					break;
+				default:
+					break;
+				}
+			}
+		}
+	}
 }

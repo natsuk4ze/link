@@ -83,9 +83,6 @@ void GameScene::Update()
 
 	//ビュアー更新
 	gameViewer->Update();
-
-	// イベント更新
-	eventController->Update();
 }
 
 /**************************************

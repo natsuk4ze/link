@@ -9,26 +9,28 @@
 
 #include "EventBase.h"
 #include <vector>
+#include "../Field/Place/FieldPlaceModel.h"
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
 //*****************************************************************************
+struct EventInfo
+{
+	int x;
+	int z;
+	int EventType;
+};
 
 class EventController
 {
 private:
-	struct EventInfo
-	{
-		int x;
-		int z;
-		int EventType;
-	};
-
-	std::vector<EventInfo> EventCSVData;
-	std::vector<EventBase*> EventVec;
+	static std::vector<EventInfo> EventCSVData;
+	static std::vector<EventBase*> EventVec;
+	//static std::vector<Field::Model::PlaceModel*> *route;
 	int FieldLevel;
 
 	void LoadCSV(const char* FilePath);
+	//void CheckEventHappen(void);
 
 #if _DEBUG
 	void DrawDebug(void);
@@ -37,9 +39,10 @@ private:
 public:
 	EventController(int FieldLevel);
 	~EventController();
-	void ReceiveEvent(void);
 	void Update(void);
 	void Draw(void);
+	static void CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& route, int FieldLevel);
+	//static void ReceiveRoute(std::vector<Field::Model::PlaceModel*>& route);
 };
 
 #endif
