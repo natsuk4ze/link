@@ -364,7 +364,7 @@ namespace Field
 				place->SetType(PlaceType::None);
 			}
 
-			stockDevelopRiver -= cntMountain;
+			stockDevelopMountain -= cntMountain;
 		}
 		else
 		{

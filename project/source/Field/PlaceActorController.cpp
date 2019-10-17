@@ -18,6 +18,8 @@
 #include "../FieldObject/Actor/StraightRoadActor.h"
 #include "../FieldObject/Actor/TJunctionActor.h"
 
+#include "../FieldObject/Animation/ActorAnimation.h"
+
 namespace Field::Actor
 {
 	/**************************************
@@ -186,6 +188,8 @@ namespace Field::Actor
 			if (straightType == StraightType::RightAndLeft)
 				actor->Rotate(90.0f);
 
+			ActorAnimation::Fall(*actor);
+
 			AddContainer(ActorPattern::StarightRoad, place->ID(), actor);
 		}
 		//カーブの場合
@@ -206,6 +210,7 @@ namespace Field::Actor
 				rotAngle = 180.0f;
 
 			actor->Rotate(rotAngle);
+			ActorAnimation::Fall(*actor);
 
 			AddContainer(ActorPattern::Curve, place->ID(), actor);
 		}
@@ -246,6 +251,7 @@ namespace Field::Actor
 		if (adjacencyTypeList.size() == 4)
 		{
 			PlaceActor *actor = new CrossJunctionActor(actorPos, Model::FieldLevel::City);
+			ActorAnimation::RotateAndExpantion(*actor);
 			AddContainer(ActorPattern::CrossJunction, place->ID(), actor);
 		}
 		//T字路のアクター生成
@@ -264,6 +270,7 @@ namespace Field::Actor
 				rotAngle = -90.0f;
 	
 			actor->Rotate(rotAngle);
+			ActorAnimation::RotateAndExpantion(*actor);
 
 			AddContainer(ActorPattern::TJunction, place->ID(), actor);
 		}

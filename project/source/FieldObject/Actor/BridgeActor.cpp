@@ -30,9 +30,6 @@ BridgeActor::BridgeActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel
 	}
 
 	type = FModel::Bridge;
-
-	// ƒeƒXƒg
-	ActorAnimation::Fall(*this);
 }
 
 //=====================================

@@ -30,9 +30,6 @@ RiverActor::RiverActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
 	}
 
 	type = FModel::River;
-
-	// ƒeƒXƒg
-	ActorAnimation::Fall(*this);
 }
 
 //=====================================

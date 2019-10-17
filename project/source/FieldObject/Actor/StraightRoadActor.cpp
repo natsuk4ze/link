@@ -30,9 +30,6 @@ StraightRoadActor::StraightRoadActor(const D3DXVECTOR3& pos, FModel::FieldLevel 
 	}
 
 	type = FModel::River;
-
-	// ƒeƒXƒg
-	ActorAnimation::Fall(*this);
 }
 
 //=====================================
