@@ -8,6 +8,7 @@
 #define _CAMERA_H_
 
 #include "../../main.h"
+#include "ViewFrustrum.h"
 
 #include <vector>
 
@@ -31,22 +32,25 @@ public:
 
 	//メインカメラセット、ゲット処理
 	static void SetMainCamera(Camera* camera);
-	static Camera* MainCamera();
+	static const Camera* MainCamera();
 
 	//与えたワールド座標をスクリーン座標に変換する関数
-	void Projection(D3DXVECTOR3& out, const D3DXVECTOR3& pos);
+	D3DXVECTOR3 Projection(const D3DXVECTOR3& pos) const;
 
 	//与えたスクリーン座標をワールド座標に変換する関数
-	void UnProjection(D3DXVECTOR3& out, const D3DXVECTOR3& pos, float z);
+	D3DXVECTOR3 UnProjection(const D3DXVECTOR3& pos, float z) const;
 
 	//ビュー行列取得処理
-	D3DXMATRIX GetViewMtx();
+	D3DXMATRIX GetViewMtx() const;
 
 	//ビュー逆行列取得処理
-	D3DXMATRIX GetInverseViewMtx();
+	D3DXMATRIX GetInverseViewMtx() const;
 
 	//プロジェクション行列取得処理
-	D3DXMATRIX GetProjectionMtx();
+	D3DXMATRIX GetProjectionMtx() const;
+
+	//視錐台取得処理
+	ViewFrustrum GetViewFrustrum() const;
 
 protected:
 	//SRT情報
@@ -66,6 +70,9 @@ protected:
 	float viewNear;
 	float viewFar;
 
+	//視錐台
+	ViewFrustrum viewFrustrum;
+
 	//ビュー、プロジェクション行列、ビューポート行列
 	D3DXMATRIX view, projection, viewport;
 	D3DXMATRIX VPV;
@@ -79,6 +86,8 @@ protected:
 	
 	//ゲームにセットされるカメラのインスタンス
 	static Camera* mainCamera;
+
+	void CalculateFrustrum();
 
 public:
 	//カメラを揺らすプラグイン
