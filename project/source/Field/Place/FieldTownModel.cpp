@@ -88,4 +88,12 @@ namespace Field::Model
 		developmentLevel = linkLevel + linkLevel * trafficJamRate;
 		return developmentLevel;
 	}
+
+	/**************************************
+	”­“W“x‰ÁZˆ—
+	***************************************/
+	void TownModel::AddDevelopmentLevel(float num)
+	{
+		developmentLevel += num;
+	}
 }

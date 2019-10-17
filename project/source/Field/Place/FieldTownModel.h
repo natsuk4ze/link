@@ -42,6 +42,9 @@ namespace Field::Model
 		//ƒŒƒxƒ‹‚ªã‚ª‚éÛ‚ÉŒÄ‚Î‚ê‚éˆ—
 		float OnGrowth(float trafficJamRate);
 
+		//”­“W“x‰ÁZˆ—
+		void AddDevelopmentLevel(float num);
+
 	private:
 		static const float BaseDepatureNum;		//Šî€‚Æ‚È‚éo”­”
 

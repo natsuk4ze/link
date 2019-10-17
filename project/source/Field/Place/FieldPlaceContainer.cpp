@@ -278,6 +278,17 @@ namespace Field::Model
 	}
 
 	/**************************************
+	ŠX‚Ì”­“W“x‘‰Á
+	***************************************/
+	void Field::Model::PlaceContainer::AddDevelopmentLevel(float num)
+	{
+		for (auto&& town : townContainer)
+		{
+			town.second->AddDevelopmentLevel(num);
+		}
+	}
+
+	/**************************************
 	—×Úî•ñì¬
 	***************************************/
 	void PlaceContainer::MakeAdjacency()

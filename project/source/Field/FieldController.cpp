@@ -244,7 +244,7 @@ namespace Field
 	***************************************/
 	void FieldController::AddLevelDevelopment(float num)
 	{
-
+		placeContainer->AddDevelopmentLevel(num);
 	}
 
 	/**************************************
@@ -262,6 +262,7 @@ namespace Field
 	***************************************/
 	void FieldController::SetDevelopSpeedBonus()
 	{
+
 	}
 
 	/**************************************
@@ -516,6 +517,6 @@ namespace Field
 		if (cntFrame != 0)
 			return;
 
-		developmentLevelAI += placeContainer->CalcDevelopmentLevelAI();
+		AddLevelAI(placeContainer->CalcDevelopmentLevelAI());
 	}
 }

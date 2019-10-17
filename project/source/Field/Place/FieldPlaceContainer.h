@@ -62,6 +62,9 @@ namespace Field::Model
 		//AI”­“WƒŒƒxƒ‹ŒvŽZ
 		float CalcDevelopmentLevelAI();
 
+		//ŠX‚Ì”­“W“x‚ð‰ÁŽZ
+		void AddDevelopmentLevel(float num);
+
 #ifdef DEBUG_PLACEMODEL
 		void DrawDebug();
 #endif
