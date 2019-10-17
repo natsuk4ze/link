@@ -10,6 +10,7 @@
 
 #include "../../Framework/BaseViewer.h"
 #include "../../../../Framework/Pattern/Delegate.h"
+#include <vector>
 
 //*****************************************************************************
 // ‘O•ûéŒ¾
@@ -46,8 +47,10 @@ private:
 	TelopDrawer *text[typeMax];
 	TelopDrawer *bg[typeMax];
 
+	//Ä¶I—¹’Ê’m
 	DelegateBase<void>* onFinish;
 
+	//Ä¶
 	void Play(int i);
 };
 

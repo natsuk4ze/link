@@ -32,7 +32,15 @@ public:
 
 private:
 	BaseViewerDrawer *bg;
-	CountViewerDrawer *num;
+
+	//¬”“_
+	BaseViewerDrawer *point;
+
+	//­”•”
+	CountViewerDrawer *fewNum;
+
+	//®”•”
+	CountViewerDrawer *intNum;
 };
 
 #endif

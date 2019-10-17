@@ -83,7 +83,6 @@ EventTelop::EventTelop()
 	{
 		//テキスト
 		text[i] = new TelopDrawer();
-		text[i]->isActive = false;
 		text[i]->LoadTexture(textTexPath[i]);
 		text[i]->MakeVertexText();
 		text[i]->size = D3DXVECTOR3(512, 128.0f, 0.0f);
@@ -93,7 +92,6 @@ EventTelop::EventTelop()
 
 		//背景
 		bg[i] = new TelopDrawer();
-		bg[i]->isActive = false;
 		bg[i]->percentage = 0.0f;
 		bg[i]->LoadTexture(bgTexPath[i]);
 		bg[i]->MakeVertexBG();
@@ -127,13 +125,15 @@ void EventTelop::Update(void)
 		Play(i);
 	}
 
-	text[PositiveEvent01]->isActive = true;
-	bg[PositiveEvent01]->isActive = true;
+
+#ifdef _DEBUG
 
 	if (Keyboard::GetTrigger(DIK_T))
 	{
-		text[PositiveEvent01]->isPlaying = true;
+		Set(PositiveEvent01, onFinish);
 	}
+
+#endif
 }
 
 //=============================================================================
@@ -144,13 +144,13 @@ void EventTelop::Draw(void)
 	for (int i = 0; i < typeMax; i++)
 	{
 		//背景を先に描画
-		if (bg[i]->isActive)
+		if (bg[i]->isPlaying)
 		{
 			bg[i]->Draw();
 			bg[i]->SetVertexBG(bg[i]->percentage);
 		}
 
-		if (text[i]->isActive)
+		if (text[i]->isPlaying)
 		{
 			text[i]->Draw();
 			text[i]->SetVertex();
@@ -167,7 +167,7 @@ void EventTelop::Play(int i)
 	D3DXVECTOR3 initPos = D3DXVECTOR3(3000.0f, SCREEN_HEIGHT / 2, 0.0f);
 	text[i]->position = initPos;
 
-	if (text[i]->isPlaying)
+	if (text[i]->isPlaying&&bg[i]->isPlaying)
 	{
 		if (text[i]->currentAnim == text[i]->WaitBG_Open && bg[i]->isBG_Openinig == false)
 		{
@@ -197,6 +197,13 @@ void EventTelop::Play(int i)
 			text[i]->position = initPos;
 			text[i]->isPlaying = false;
 		}
+		if (text[i]->currentAnim > animMax)
+		{
+			bg[i]->isPlaying = false;
+
+			//再生終了の通知
+			(*onFinish)();
+		}
 	}
 }
 
@@ -205,10 +212,10 @@ void EventTelop::Play(int i)
 //=============================================================================
 void EventTelop::Set(TelopID id, DelegateBase<void>* onFinish)
 {
-	//アクティブにする
-	text[id]->isActive = true;
-	bg[id]->isActive = true;
+	//再生状態にする
+	text[id]->isPlaying = true;
+	bg[id]->isPlaying = true;
 
 	//テロップ再生終了通知
-	onFinish;
+	this->onFinish = onFinish;
 }

@@ -24,6 +24,17 @@ public:
 	virtual void operator()(T arg) = 0;
 };
 
+template<>
+class DelegateBase<void>
+{
+public:
+	DelegateBase() {}
+	virtual ~DelegateBase() {}
+
+	//int型引数有り戻り値無しの関数
+	virtual void operator()() = 0;
+};
+
 /**************************************
 型エイリアス
 ***************************************/

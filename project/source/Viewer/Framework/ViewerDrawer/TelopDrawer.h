@@ -33,14 +33,12 @@ public:
 	void SetVertex();
 	void SetVertexBG(float percentage);
 
-	bool isActive;
 	float percentage;
 
 	void PlayBG_Open();
 	void PlayBG_Close();
 
 	void PlayBG(void);
-	void PlayText(void);
 
 	float GetCountObject(float duration);
 
