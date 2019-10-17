@@ -8,6 +8,7 @@
 #define _EVENT_VIEWER_H_
 
 #include <vector>
+#include "EventTelop.h"
 
 //*****************************************************************************
 // ‘O•ûéŒ¾

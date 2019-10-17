@@ -79,26 +79,42 @@ static const float textAnimDuration[animMax] = {
 //*****************************************************************************
 EventTelop::EventTelop()
 {
+	//テキスト
+	text = new TelopDrawer();
+	text->MakeVertexText();
+	text->size = D3DXVECTOR3(512, 128.0f, 0.0f);
+	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	text->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 5), SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
+	text->SetColor(SET_COLOR_NOT_COLORED);
+
+	//背景
+	bg = new TelopDrawer();
+	bg->percentage = 0.0f;
+	bg->MakeVertexBG();
+	bg->size = D3DXVECTOR3(SCREEN_WIDTH / 2, 60.0f, 0.0f);
+	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	bg->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 5), SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
+	bg->SetColor(SET_COLOR_NOT_COLORED);
+
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+	//コンテナにテクスチャ情報をロードする
 	for (int i = 0; i < typeMax; i++)
 	{
-		//テキスト
-		text[i] = new TelopDrawer();
-		text[i]->LoadTexture(textTexPath[i]);
-		text[i]->MakeVertexText();
-		text[i]->size = D3DXVECTOR3(512, 128.0f, 0.0f);
-		text[i]->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		text[i]->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 5), SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
-		text[i]->SetColor(SET_COLOR_NOT_COLORED);
+		LPDIRECT3DTEXTURE9 tTex;
+		LPDIRECT3DTEXTURE9 bgTex;
 
-		//背景
-		bg[i] = new TelopDrawer();
-		bg[i]->percentage = 0.0f;
-		bg[i]->LoadTexture(bgTexPath[i]);
-		bg[i]->MakeVertexBG();
-		bg[i]->size = D3DXVECTOR3(SCREEN_WIDTH / 2, 60.0f, 0.0f);
-		bg[i]->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		bg[i]->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 5), SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
-		bg[i]->SetColor(SET_COLOR_NOT_COLORED);
+		D3DXCreateTextureFromFile(pDevice,
+			textTexPath[i],
+			&tTex);
+
+		textTexContainer.push_back(tTex);
+
+		D3DXCreateTextureFromFile(pDevice,
+			bgTexPath[i],
+			&bgTex);
+
+		bgTexContainer.push_back(bgTex);
 	}
 }
 
@@ -107,24 +123,17 @@ EventTelop::EventTelop()
 //*****************************************************************************
 EventTelop::~EventTelop()
 {
-	for (int i = 0; i < typeMax; i++)
-	{
-		SAFE_DELETE(text[i]);
-		SAFE_DELETE(bg[i]);
-	}
+	SAFE_DELETE(text);
+	SAFE_DELETE(bg);
 }
 
 //=============================================================================
 // 更新処理
 //=============================================================================
-void EventTelop::Update(void)
+void EventTelop::Update()
 {
-	for (int i = 0; i < typeMax; i++)
-	{
-		bg[i]->PlayBG();
-		Play(i);
-	}
-
+	bg->PlayBG();
+	Play();
 
 #ifdef _DEBUG
 
@@ -141,65 +150,62 @@ void EventTelop::Update(void)
 //=============================================================================
 void EventTelop::Draw(void)
 {
-	for (int i = 0; i < typeMax; i++)
+	//背景を先に描画
+	if (bg->isPlaying)
 	{
-		//背景を先に描画
-		if (bg[i]->isPlaying)
-		{
-			bg[i]->Draw();
-			bg[i]->SetVertexBG(bg[i]->percentage);
-		}
+		bg->Draw();
+		bg->SetVertexBG(bg->percentage);
+	}
 
-		if (text[i]->isPlaying)
-		{
-			text[i]->Draw();
-			text[i]->SetVertex();
-		}
+	if (text->isPlaying)
+	{
+		text->Draw();
+		text->SetVertex();
 	}
 }
 
 //=============================================================================
 // テロップ再生処理
 //=============================================================================
-void EventTelop::Play(int i)
+void EventTelop::Play()
 {
 	//画面外へ初期化
 	D3DXVECTOR3 initPos = D3DXVECTOR3(3000.0f, SCREEN_HEIGHT / 2, 0.0f);
-	text[i]->position = initPos;
+	text->position = initPos;
 
-	if (text[i]->isPlaying&&bg[i]->isPlaying)
+	if (text->isPlaying&&bg->isPlaying)
 	{
-		if (text[i]->currentAnim == text[i]->WaitBG_Open && bg[i]->isBG_Openinig == false)
+		if (text->currentAnim == text->WaitBG_Open && bg->isBG_Openinig == false)
 		{
-			bg[i]->PlayBG_Open();
+			bg->PlayBG_Open();
 		}
-		if (text[i]->currentAnim == text[i]->WaitBG_Close && bg[i]->isBG_Closing == false)
+		if (text->currentAnim == text->WaitBG_Close && bg->isBG_Closing == false)
 		{
-			bg[i]->PlayBG_Close();
+			bg->PlayBG_Close();
 		}
 
-		text[i]->countFrame++;
+		text->countFrame++;
 
-		text[i]->position.x = Easing::EaseValue(text[i]->GetCountObject(textAnimDuration[text[i]->currentAnim]),
-			textStartPositionX[text[i]->currentAnim],
-			textEndPositionX[text[i]->currentAnim],
-			textAnimType[text[i]->currentAnim]);
+		text->position.x = Easing::EaseValue(text->GetCountObject(textAnimDuration[text->currentAnim]),
+			textStartPositionX[text->currentAnim],
+			textEndPositionX[text->currentAnim],
+			textAnimType[text->currentAnim]);
 
-		if (text[i]->countFrame == textAnimDuration[text[i]->currentAnim])
+		if (text->countFrame == textAnimDuration[text->currentAnim])
 		{
-			text[i]->countFrame = 0;
-			text[i]->currentAnim++;
+			text->countFrame = 0;
+			text->currentAnim++;
 		}
-		if (text[i]->currentAnim == animMax)
+		if (text->currentAnim == animMax)
 		{
-			text[i]->countFrame = 0;
-			text[i]->currentAnim = 0;
-			text[i]->position = initPos;
-			text[i]->isPlaying = false;
+			text->countFrame = 0;
+			text->currentAnim = 0;
+			text->position = initPos;
+			text->isPlaying = false;
 		}
-		if (text[i]->currentAnim > animMax)
+		if (text->currentAnim > animMax)
 		{
-			bg[i]->isPlaying = false;
+			bg->isPlaying = false;
 
 			//再生終了の通知
 			(*onFinish)();
@@ -208,13 +214,25 @@ void EventTelop::Play(int i)
 }
 
 //=============================================================================
+// テクスチャ情報受け渡し処理
+//=============================================================================
+void EventTelop::PassTexture(TelopID id)
+{
+	text->texture = textTexContainer[id];
+	bg->texture = bgTexContainer[id];
+}
+
+//=============================================================================
 // テロップセット処理
 //=============================================================================
 void EventTelop::Set(TelopID id, DelegateBase<void>* onFinish)
 {
+	//テクスチャ情報受け渡し
+	PassTexture(id);
+
 	//再生状態にする
-	text[id]->isPlaying = true;
-	bg[id]->isPlaying = true;
+	text->isPlaying = true;
+	bg->isPlaying = true;
 
 	//テロップ再生終了通知
 	this->onFinish = onFinish;

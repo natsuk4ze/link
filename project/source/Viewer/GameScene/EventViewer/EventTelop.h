@@ -24,9 +24,6 @@ template<class T> class DelegateBase;
 class EventTelop :public BaseViewer
 {
 public:
-	EventTelop();
-	~EventTelop();
-
 	//テロップの種類
 	enum TelopID
 	{
@@ -36,22 +33,33 @@ public:
 		NegativeEvent02
 	};
 
+	EventTelop();
+	~EventTelop();
+
 	//テロップの種類数
 	static const int typeMax = 4;
 
-	void Update(void);
+	void Update();
 	void Draw(void);
 	void Set(TelopID id, DelegateBase<void>* onFinish);
 
 private:
-	TelopDrawer *text[typeMax];
-	TelopDrawer *bg[typeMax];
+	TelopDrawer *text;
+	TelopDrawer *bg;
 
 	//再生終了通知
 	DelegateBase<void>* onFinish;
 
+	//テキストのテクスチャ情報コンテナ
+	std::vector <LPDIRECT3DTEXTURE9> textTexContainer;
+	//背景のテクスチャ情報コンテナ
+	std::vector <LPDIRECT3DTEXTURE9> bgTexContainer;
+
 	//再生
-	void Play(int i);
+	void Play();
+
+	//テクスチャ情報受け渡し
+	void PassTexture(TelopID id);
 };
 
 #endif
