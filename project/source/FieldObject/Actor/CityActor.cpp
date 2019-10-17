@@ -7,7 +7,6 @@
 //=====================================
 #include "CityActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
-#include "State/CreateActorState.h"
 #include "../Animation/ActorAnimation.h"
 
 //=====================================
@@ -33,12 +32,7 @@ CityActor::CityActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
 	type = FModel::Town;
 
 	// ƒeƒXƒg
-	state = new CreateActorState();
-	state->OnStart(*this);
-	ActorAnimation::RotateAndExpantion(*this, [&]
-	{
-		current = Idle;
-	});
+	ActorAnimation::RotateAndExpantion(*this);
 }
 
 //=====================================

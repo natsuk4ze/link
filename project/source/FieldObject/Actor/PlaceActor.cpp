@@ -6,8 +6,8 @@
 //
 //=====================================
 #include "PlaceActor.h"
-#include "State/CreateActorState.h"
 #include "../../../Framework/Tool/DebugWindow.h"
+#include "../Animation/ActorAnimation.h"
 
 //**************************************
 // クラスのメンバ変数初期化
@@ -17,8 +17,7 @@ const D3DXVECTOR3 PlaceActor::ActorScale = D3DXVECTOR3(0.25f, 0.25f, 0.25f);
 //=====================================
 // コンストラクタ
 //=====================================
-PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel) :
-	state(NULL), current(), type()
+PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel) 
 {
 	// メッシュコンテナの作成
 	mesh = MeshContainer::Create();
@@ -35,27 +34,17 @@ PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel) 
 PlaceActor::~PlaceActor()
 {
 	SAFE_RELEASE(mesh);
-	state = NULL;
 }
 
 //=====================================
 // 更新
 //=====================================
-PlaceActor::State PlaceActor::Update()
+void PlaceActor::Update()
 {
-	State next = Idle;
-
-	// 状態の更新
-	if (state != NULL)
-	{
-		next = state->OnUpdate(*this);
-	}
 
 #if _DEBUG
 	Debug();
 #endif
-
-	return next;
 }
 
 //=====================================
@@ -79,15 +68,6 @@ void PlaceActor::Rotate(float y)
 }
 
 //=====================================
-// ステートの切り替え
-//=====================================
-void PlaceActor::ChangeState(ActorState *next)
-{
-	state = next;
-	state->OnStart(*this);
-}
-
-//=====================================
 // メッシュデータのカラー変更
 //=====================================
 void PlaceActor::SetColor(const D3DXCOLOR& color, UINT index)
@@ -95,9 +75,38 @@ void PlaceActor::SetColor(const D3DXCOLOR& color, UINT index)
 	mesh->SetMaterialColor(color, index);
 }
 
+//=====================================
+// デバッグ
+//=====================================
 void PlaceActor::Debug()
 {
 	Debug::Begin("PlaceActor", false);
-	Debug::Text("State = %d\n", current);
+	Debug::Text("ChangeAnimation");
+	Debug::NewLine();
+	if (Debug::Button("Fall"))
+	{
+		ActorAnimation::Fall(*this);
+	}
+	Debug::NewLine();
+	if (Debug::Button("RotateAndExpantion"))
+	{
+		ActorAnimation::RotateAndExpantion(*this);
+	}
+	Debug::NewLine();
+	if (Debug::Button("RotateAndShrink"))
+	{
+		ActorAnimation::RotateAndShrink(*this);
+	}
+	Debug::NewLine();
+	if (Debug::Button("ExpantionYAndReturnToOrigin"))
+	{
+		ActorAnimation::ExpantionYAndReturnToOrigin(*this);
+	}
+	Debug::NewLine();
+	if (Debug::Button("ResetScale"))
+	{
+		transform->SetScale(ActorScale);
+	}
+	Debug::NewLine();
 	Debug::End();
 }

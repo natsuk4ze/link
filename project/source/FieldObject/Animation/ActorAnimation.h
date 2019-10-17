@@ -17,10 +17,11 @@ class ActorAnimation
 {
 	friend class Tween;
 public:
-	static void Fall(GameObject& ref, std::function<void(void)> callback = nullptr);
-	static void RotateAndExpantion(GameObject& ref, std::function<void(void)> callback = nullptr);
-	static void RotateAndShrink(GameObject& ref, std::function<void(void)> callback = nullptr);
-
+	static void Fall(GameObject& ref, std::function<void(void)> callback = nullptr);				// —‰º
+	static void RotateAndExpantion(GameObject& ref, std::function<void(void)> callback = nullptr);	// ‰ñ“]‚µ‚È‚ª‚çŠg‘å
+	static void RotateAndShrink(GameObject& ref, std::function<void(void)> callback = nullptr);		// ‰ñ“]‚µ‚È‚ª‚çk¬
+	static void Shrink(GameObject& ref, std::function<void(void)> callback = nullptr);				// k¬
+	static void ExpantionYAndReturnToOrigin(GameObject& ref, std::function<void(void)> callback = nullptr);	// Y²‚ğŠg‘å‚µ‚ÄÅI“I‚É‚à‚Æ‚É–ß‚é
 };
 
 #endif

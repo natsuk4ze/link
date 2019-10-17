@@ -7,7 +7,6 @@
 //=====================================
 #include "CrossJunctionActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
-#include "State/CreateActorState.h"
 #include "../Animation/ActorAnimation.h"
 
 //=====================================
@@ -33,13 +32,7 @@ CrossJunctionActor::CrossJunctionActor(const D3DXVECTOR3& pos, FModel::FieldLeve
 	type = FModel::Junction;
 
 	// ƒeƒXƒg
-	state = new CreateActorState();
-	state->OnStart(*this);
-	ActorAnimation::RotateAndExpantion(*this, [&] 
-	{
-		current = Idle;
-	});
-
+	ActorAnimation::Fall(*this);
 }
 
 //=====================================

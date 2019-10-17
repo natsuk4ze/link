@@ -33,3 +33,17 @@ void ActorAnimation::RotateAndShrink(GameObject& ref, std::function<void(void)> 
 	Tween::Rotate(ref, ref.GetRotation() + D3DXVECTOR3(0.0f, 180.0f, 0.0f), ref.GetRotation(), 30, OutCirc);
 	Tween::Scale(ref, ref.GetScale(), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30, OutCirc, callback);
 }
+
+//=====================================
+// Yé≤ÇägëÂÇµÇƒç≈èIìIÇ…Ç‡Ç∆Ç…ñﬂÇÈ
+//=====================================
+void ActorAnimation::ExpantionYAndReturnToOrigin(GameObject& ref, std::function<void(void)> callback) 
+{
+	Tween::Scale(ref, ref.GetScale(), ref.GetScale() + D3DXVECTOR3(0.0f, 0.1f, 0.0f), 30, OutBack, [&ref, &callback] 
+	{
+		Tween::Scale(ref, ref.GetScale(), ref.GetScale() - D3DXVECTOR3(0.0f, 0.1f, 0.0f), 30, InOutQuint, [&callback]
+		{
+			callback;
+		});
+	});
+}
