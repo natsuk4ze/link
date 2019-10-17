@@ -28,7 +28,7 @@ using namespace EventConfig;
 //*****************************************************************************
 // 使用していないイベントを削除
 //bool RemoveCondition(EventBase *Event) { return !Event->GetUse(); }
-bool RemoveCondition(EventBase *Event) { return Event == NULL ? true : false; }
+bool RemoveCondition(EventBase *Event) { return Event == nullptr ? true : false; }
 
 //*****************************************************************************
 // グローバル変数
@@ -44,8 +44,6 @@ std::vector<EventBase*> EventController::EventVec;
 EventController::EventController(int FieldLevel) : FieldLevel(FieldLevel)
 {
 	LoadCSV("data/FIELD/sample01_Event.csv");
-
-	//EventVec.push_back(new CityDestroyEvent(FieldLevel, D3DXVECTOR3(150.0f, 0.0f, 150.0f)));
 
 #if _DEBUG
 	ResourceManager::Instance()->MakePolygon("Event", "data/TEXTURE/PlaceTest/Event.png", { 4.5f, 4.5f }, { 12.0f,1.0f });
@@ -66,8 +64,6 @@ EventController::~EventController()
 //=============================================================================
 void EventController::Update()
 {
-	//CheckEventHappen();
-
 	for (auto &Event : EventVec)
 	{
 		if (Event->GetUse())
@@ -113,7 +109,7 @@ void EventController::DrawDebug()
 	{
 		//テスト描画
 		Transform transform = Transform(
-			{ Object.x * 10.0f, 1.0f, Object.z * 10.0f },
+			{ Object.x * 10.0f, 1.0f, Object.z * -10.0f },
 			{ D3DXToRadian(90.0f), 0.0f, 0.0f },
 			Vector3::One);
 		transform.SetWorld();
@@ -127,54 +123,6 @@ void EventController::DrawDebug()
 	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 }
 #endif
-
-//=============================================================================
-// イベントの発生をチェック
-//=============================================================================
-//void EventController::CheckEventHappen(void)
-//{
-//	//for (auto &place : *route)
-//	//{
-//	//	Field::FieldPosition Pos = place->GetPosition();
-//	//	for (auto &EventPlace : EventCSVData)
-//	//	{
-//	//		if (Pos.x == EventPlace.x && Pos.z == EventPlace.z)
-//	//		{
-//	//			switch (EventPlace.EventType)
-//	//			{
-//	//			case CityLevelUp:
-//	//				break;
-//	//			case NewCity:
-//	//				break;
-//	//			case ChipRecovery:
-//	//				break;
-//	//			case FamousPeople:
-//	//				break;
-//	//			case Bonus:
-//	//				break;
-//	//			case AILevelUp:
-//	//				break;
-//	//			case CityLevelDecrease:
-//	//				break;
-//	//			case CityDestroy:
-//	//				EventVec.push_back(new CityDestroyEvent(FieldLevel, Vector3::Zero));
-//	//				break;
-//	//			case AILevelDecrease:
-//	//				break;
-//	//			case MoveInverse:
-//	//				break;
-//	//			case BanSpecialChip:
-//	//				break;
-//	//			case CongestionUp:
-//	//				break;
-//	//			default:
-//	//				break;
-//	//			}
-//	//			//EventVec.push_back(new )
-//	//		}
-//	//	}
-//	//}
-//}
 
 //=============================================================================
 // CSVの読み込む
@@ -205,7 +153,6 @@ void EventController::LoadCSV(const char* FilePath)
 		for (auto &str : subStr)
 		{
 			int Type = std::stoi(str);
-			// 
 			if (Type != EventConfig::NoEvent)
 			{
 				EventCSVData.push_back(EventInfo{ x, z, Type });
@@ -222,16 +169,16 @@ void EventController::LoadCSV(const char* FilePath)
 //=============================================================================
 // イベント発生の確認
 //=============================================================================
-void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& RoutePtr,int FieldLevel)
+void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& RoutePtr, int FieldLevel)
 {
 	for (auto &place : RoutePtr)
 	{
 		Field::FieldPosition Pos = place->GetPosition();
-		for (auto &EventPlace : EventCSVData)
+		for (auto EventPlace = EventCSVData.begin(); EventPlace != EventCSVData.end();)
 		{
-			if (Pos.x == EventPlace.x && Pos.z == EventPlace.z)
+			if (Pos.x == EventPlace->x && Pos.z == EventPlace->z)
 			{
-				switch (EventPlace.EventType)
+				switch (EventPlace->EventType)
 				{
 				case CityLevelUp:
 					break;
@@ -261,7 +208,11 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 				default:
 					break;
 				}
+
+				EventPlace = EventCSVData.erase(EventPlace);
 			}
+			else
+				++EventPlace;
 		}
 	}
 }
