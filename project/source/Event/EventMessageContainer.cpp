@@ -179,7 +179,9 @@ void EventMessageContainer::GetEventMessage(int FieldLevel, int EventType, const
 
 		if (FieldLevel == Field::Model::City)
 		{
-
+			MessageContainer.push_back("町消滅イベントメッセージ1番だよ！");
+			MessageContainer.push_back("町消滅イベントメッセージ2番だよ！");
+			MessageContainer.push_back("町消滅イベントメッセージ3番だよ！");
 		}
 		else if (FieldLevel == Field::Model::World)
 		{

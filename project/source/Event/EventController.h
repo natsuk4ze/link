@@ -31,7 +31,7 @@ private:
 	void LoadCSV(const char* FilePath);
 
 public:
-	EventController();
+	EventController(int FieldLevel);
 	~EventController();
 	void ReceiveEvent(void);
 	void Update(void);

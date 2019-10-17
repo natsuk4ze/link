@@ -31,11 +31,11 @@ bool RemoveCondition(EventBase *Event) { return Event == NULL ? true : false; }
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-EventController::EventController()
+EventController::EventController(int FieldLevel) : FieldLevel(FieldLevel)
 {
-	LoadCSV("data/FIELD/sample01_Event.csv");
+	//LoadCSV("data/FIELD/sample01_Event.csv");
 
-	//EventVec.push_back(new Meteorite(D3DXVECTOR3(150.0f, 0.0f, 150.0f)));
+	EventVec.push_back(new CityDestroyEvent(FieldLevel, D3DXVECTOR3(150.0f, 0.0f, 150.0f)));
 
 }
 
