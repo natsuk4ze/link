@@ -139,7 +139,7 @@ namespace Field
 		PlaceIterator DevelopMountain(PlaceVector& route, PlaceIterator moutain);
 		PlaceIterator DevelopRiver(PlaceVector& route, PlaceIterator river);
 		
-		//AI発展レベルの計算
+		//AI発展レベルの計算、加算
 		void CalcDevelopmentLevelAI();
 
 		//各ステートクラスの前方宣言
