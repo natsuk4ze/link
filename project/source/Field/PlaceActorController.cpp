@@ -115,6 +115,7 @@ namespace Field::Actor
 
 		case PlaceType::Road:
 			SetRoad(place);
+			break;
 
 		case PlaceType::Town:
 			SetTown(place);
