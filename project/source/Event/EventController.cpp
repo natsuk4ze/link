@@ -9,11 +9,17 @@
 #include "EventConfig.h"
 #include "MinusEvent/CityDestroyEvent.h"
 
+
 #include "../../Framework/Core/Utility.h"
 #include "../../Framework/String/String.h"
 
 #include <fstream>
 #include <string>
+
+#if _DEBUG
+#include "../../Framework/Resource/ResourceManager.h"
+#include "../../Framework/Renderer3D/BoardPolygon.h"
+#endif
 
 //*****************************************************************************
 // マクロ定義
@@ -33,10 +39,13 @@ bool RemoveCondition(EventBase *Event) { return Event == NULL ? true : false; }
 //=============================================================================
 EventController::EventController(int FieldLevel) : FieldLevel(FieldLevel)
 {
-	//LoadCSV("data/FIELD/sample01_Event.csv");
+	LoadCSV("data/FIELD/sample01_Event.csv");
 
-	EventVec.push_back(new CityDestroyEvent(FieldLevel, D3DXVECTOR3(150.0f, 0.0f, 150.0f)));
+	//EventVec.push_back(new CityDestroyEvent(FieldLevel, D3DXVECTOR3(150.0f, 0.0f, 150.0f)));
 
+#if _DEBUG
+	ResourceManager::Instance()->MakePolygon("Event", "data/TEXTURE/PlaceTest/Event.png", { 4.5f, 4.5f }, { 12.0f,1.0f });
+#endif
 }
 
 //=============================================================================
@@ -77,7 +86,44 @@ void EventController::Draw()
 	{
 		Event->Draw();
 	}
+
+#if _DEBUG
+	DrawDebug();
+#endif
 }
+
+#if _DEBUG
+//=============================================================================
+// イベントマス描画
+//=============================================================================
+void EventController::DrawDebug()
+{
+	//if (!initialized)
+	//	return;
+
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+
+	for (auto& Object : EventCSVData)
+	{
+		//テスト描画
+		Transform transform = Transform(
+			{ Object.x * 10.0f, 1.0f, Object.z * 10.0f },
+			{ D3DXToRadian(90.0f), 0.0f, 0.0f },
+			Vector3::One);
+		transform.SetWorld();
+		BoardPolygon *polygon;
+		ResourceManager::Instance()->GetPolygon("Event", polygon);
+		polygon->SetTextureIndex(Object.EventType);
+		polygon->Draw();
+	}
+
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+}
+#endif
 
 //=============================================================================
 // CSVの読み込む

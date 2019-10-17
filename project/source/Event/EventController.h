@@ -30,6 +30,10 @@ private:
 
 	void LoadCSV(const char* FilePath);
 
+#if _DEBUG
+	void DrawDebug(void);
+#endif
+
 public:
 	EventController(int FieldLevel);
 	~EventController();
