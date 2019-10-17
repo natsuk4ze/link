@@ -595,8 +595,12 @@
     <ClInclude Include="source\Event\EventMessageContainer.h">
       <Filter>source\Event</Filter>
     </ClInclude>
-    <ClInclude Include="source\Event\MinusEvent\CityDestroyEvent.h" />
-    <ClInclude Include="source\Event\EventConfig.h" />
+    <ClInclude Include="source\Event\EventConfig.h">
+      <Filter>source\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Event\MinusEvent\CityDestroyEvent.h">
+      <Filter>source\Event\MinusEvent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Library\imgui\imgui.cpp">
@@ -1002,7 +1006,9 @@
     <ClCompile Include="source\Event\EventMessageContainer.cpp">
       <Filter>source\Event</Filter>
     </ClCompile>
-    <ClCompile Include="source\Event\MinusEvent\CityDestroyEvent.cpp" />
+    <ClCompile Include="source\Event\MinusEvent\CityDestroyEvent.cpp">
+      <Filter>source\Event\MinusEvent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

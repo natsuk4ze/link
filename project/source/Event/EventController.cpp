@@ -113,7 +113,7 @@ void EventController::DrawDebug()
 	{
 		//ƒeƒXƒg•`‰æ
 		Transform transform = Transform(
-			{ Object.x * 10.0f, 1.0f, Object.z * 10.0f },
+			{ Object.x * 10.0f, 1.0f, Object.z * -10.0f },
 			{ D3DXToRadian(90.0f), 0.0f, 0.0f },
 			Vector3::One);
 		transform.SetWorld();
