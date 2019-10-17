@@ -218,6 +218,7 @@
     <ClCompile Include="source\FieldObject\Actor\CrossJunctionActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\CurveRoadActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\MountainActor.cpp" />
+    <ClCompile Include="source\FieldObject\Actor\NoneActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\PlaceActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\RiverActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\StraightRoadActor.cpp" />
@@ -361,6 +362,7 @@
     <ClInclude Include="source\FieldObject\Actor\CrossJunctionActor.h" />
     <ClInclude Include="source\FieldObject\Actor\CurveRoadActor.h" />
     <ClInclude Include="source\FieldObject\Actor\MountainActor.h" />
+    <ClInclude Include="source\FieldObject\Actor\NoneActor.h" />
     <ClInclude Include="source\FieldObject\Actor\RiverActor.h" />
     <ClInclude Include="source\FieldObject\Actor\StraightRoadActor.h" />
     <ClInclude Include="source\FieldObject\Actor\TJunctionActor.h" />

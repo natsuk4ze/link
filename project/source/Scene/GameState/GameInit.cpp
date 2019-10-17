@@ -32,6 +32,7 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	entity.field->Load();
 
 	// 3Dオブジェクトのリソースをロード
+	ResourceManager::Instance()->LoadMesh("NoneActor", "data/MODEL/PlaceActor/ground.x");
 	// FieldLevel = City
 	ResourceManager::Instance()->LoadMesh("CrossJunction-City", "data/MODEL/PlaceActor/Cross-Junction.x");
 	ResourceManager::Instance()->LoadMesh("TJunction-City", "data/MODEL/PlaceActor/T-Junction.x");

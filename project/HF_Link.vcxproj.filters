@@ -130,6 +130,7 @@
     <ClCompile Include="source\FieldObject\Actor\TJunctionActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\PlaceActor.cpp" />
     <ClCompile Include="source\FieldObject\Animation\ActorAnimation.cpp" />
+    <ClCompile Include="source\FieldObject\Actor\NoneActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -246,6 +247,7 @@
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h" />
     <ClInclude Include="source\FieldObject\Animation\ActorAnimation.h" />
+    <ClInclude Include="source\FieldObject\Actor\NoneActor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Field\Route\RouteModel.h" />
