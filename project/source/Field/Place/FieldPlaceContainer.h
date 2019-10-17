@@ -65,6 +65,9 @@ namespace Field::Model
 		//街の発展度を加算
 		void AddDevelopmentLevel(float num);
 
+		//混雑度増加バイアスを設定
+		void SetTrafficjamBias(float bias);
+
 #ifdef DEBUG_PLACEMODEL
 		void DrawDebug();
 #endif
@@ -81,7 +84,8 @@ namespace Field::Model
 
 		bool initialized;						//初期化フラグ
 
-		float trafficJamRate;						//混雑度
+		float trafficJamRate;					//混雑度
+		float trafficJamBias;					//混雑度バイアス
 
 		//隣接プレイス作成内部処理
 		void MakeAdjacency();

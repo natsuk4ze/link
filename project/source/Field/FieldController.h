@@ -86,7 +86,7 @@ namespace Field
 		void DestroyTown();							//街を破壊する
 		void ReverseOperation(bool isReverse);		//操作の反転（引数 true:反転させる false:元に戻す)
 		void SealUsingItem(bool isSeal);			//ストック使用封印（引数 true:封印する false:封印を解除)
-		void RaiseTrafficJam();						//混雑度を上昇させる
+		void RaiseTrafficJam(float bias);			//混雑度を上昇させる
 
 	private:
 		static const float PlaceOffset;					//Placeの1マス毎のオフセット値
@@ -106,7 +106,6 @@ namespace Field
 		Model::RouteProcessor *routeProcessor;				//ルートプロセッサ
 		Actor::PlaceActorController* placeActController;	//プレイスアクターコントローラ
 
-		
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int inputRepeatCnt;						//入力のリピートカウント
 		int cntFrame;							//フレームカウント

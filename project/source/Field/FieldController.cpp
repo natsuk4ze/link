@@ -289,6 +289,7 @@ namespace Field
 	***************************************/
 	void FieldController::ReverseOperation(bool isReverse)
 	{
+		//InputController‚ğì‚Á‚Ä‚©‚ç
 	}
 
 	/**************************************
@@ -296,13 +297,16 @@ namespace Field
 	***************************************/
 	void FieldController::SealUsingItem(bool isSeal)
 	{
+		//Developper‚ğì‚Á‚Ä‚©‚ç
 	}
 
 	/**************************************
 	¬G“x‚ğã¸‚³‚¹‚é
 	***************************************/
-	void FieldController::RaiseTrafficJam()
+	void FieldController::RaiseTrafficJam(float bias)
 	{
+		//TODOF‰ğœˆ—‚ğÀ‘•‚·‚é
+		
 	}
 
 	/**************************************

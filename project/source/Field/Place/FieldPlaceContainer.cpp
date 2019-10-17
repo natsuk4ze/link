@@ -34,7 +34,8 @@ namespace Field::Model
 		placeRowMax(0),
 		placeColumMax(0),
 		initialized(false),
-		trafficJamRate(0.0f)
+		trafficJamRate(0.0f),
+		trafficJamBias(0.0f)
 	{
 		placeVector.reserve(PlaceMax);
 
@@ -271,7 +272,7 @@ namespace Field::Model
 		float developLevel = 0.0f;
 		for (auto&& town : townContainer)
 		{
-			developLevel += town.second->OnGrowth(1.0f - trafficJamRate, bonus);
+			developLevel += town.second->OnGrowth(1.0f - trafficJamRate + trafficJamBias, bonus);
 		}
 
 		return developLevel;
@@ -286,6 +287,14 @@ namespace Field::Model
 		{
 			town.second->AddDevelopmentLevel(num);
 		}
+	}
+
+	/**************************************
+	混雑度増加バイアス設定処理
+	***************************************/
+	void Field::Model::PlaceContainer::SetTrafficjamBias(float bias)
+	{
+		trafficJamBias = bias;
 	}
 
 	/**************************************
