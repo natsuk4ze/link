@@ -33,10 +33,10 @@ public:
 	//ƒpƒ‰ƒ[ƒ^ó‚¯æ‚è
 	void ReceiveParam(GameViewerParam&param);
 
-	std::vector <BaseViewer*> baseViewer;
+	std::vector <BaseViewer*> gameViewer;
 
 private:
-	int baseViewerMax;
+	int gameViewerMax;
 
 	StockViewer *stockViewer;
 	TimerViewer *timerViewer;

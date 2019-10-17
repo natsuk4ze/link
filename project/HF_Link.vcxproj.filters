@@ -155,6 +155,7 @@
     <ClInclude Include="source\Viewer\GameScene\GameViewer\TimerViewer.h" />
     <ClInclude Include="source\GameConfig.h" />
     <ClInclude Include="source\GameMain.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\TelopDrawer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -293,6 +294,7 @@
     <ClCompile Include="source\Viewer\GameScene\GameViewer\StockViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp" />
     <ClCompile Include="source\GameMain.cpp" />
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\TelopDrawer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

@@ -7,11 +7,15 @@
 #ifndef _EVENT_VIEWER_H_
 #define _EVENT_VIEWER_H_
 
+#include <vector>
+#include "EventTelop.h"
+
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
 class EventTelop;
 class EventMessage;
+class BaseViewer;
 
 //*****************************************************************************
 // クラス定義
@@ -22,8 +26,10 @@ public:
 	EventViewer();
 	~EventViewer();
 
-	virtual void Update(void);
-	virtual void Draw(void);
+	void Update(void);
+	void Draw(void);
+
+	std::vector <BaseViewer*> eventViewer;
 
 private:
 	int eventViewerMax;
