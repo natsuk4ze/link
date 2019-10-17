@@ -37,16 +37,14 @@ public:
 	};
 
 	//ストックビュアーの種類数
-	static const int stockViewerMax = 4;
+	static const int typeMax = 4;
 
 	//パラメータを受けとる箱
-	int parameterBox[stockViewerMax];
+	int parameterBox[typeMax];
 
 private:
-	BaseViewerDrawer *icon[stockViewerMax];
-	BaseViewerDrawer *iconBG[stockViewerMax];
-	CountViewerDrawer *num[stockViewerMax];
-	BaseViewerDrawer *numBG[stockViewerMax];
+	BaseViewerDrawer *icon[typeMax];
+	CountViewerDrawer *num[typeMax];
 
 	//アニメーション
 	void Animate(void);

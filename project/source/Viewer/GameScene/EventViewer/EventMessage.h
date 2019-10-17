@@ -8,7 +8,7 @@
 #ifndef _EVENT_MESSAGE_H_
 #define _EVENT_MESSAGE_H_
 
-#include "../EventViewer/EventViewer.h"
+#include "../../Framework/BaseViewer.h"
 
 //*****************************************************************************
 // 前方宣言
@@ -19,7 +19,7 @@ class TextViewer;
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class EventMessage :public EventViewer
+class EventMessage :public BaseViewer
 {
 public:
 	EventMessage();

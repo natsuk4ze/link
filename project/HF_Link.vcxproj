@@ -165,6 +165,7 @@
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\countviewerdrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\TelopDrawer.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventViewer.h" />
@@ -304,6 +305,7 @@
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.cpp" />
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\TelopDrawer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventMessage.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventTelop.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventViewer.cpp" />
