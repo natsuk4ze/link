@@ -16,11 +16,11 @@
 //*****************************************************************************
 GameViewer::GameViewer()
 {
-	baseViewer.push_back(stockViewer = new StockViewer());
-	baseViewer.push_back(timerViewer = new TimerViewer());
-	baseViewer.push_back(levelViewer = new LevelViewer());
+	gameViewer.push_back(stockViewer = new StockViewer());
+	gameViewer.push_back(timerViewer = new TimerViewer());
+	gameViewer.push_back(levelViewer = new LevelViewer());
 
-	baseViewerMax = baseViewer.size();
+	gameViewerMax = gameViewer.size();
 }
 
 //*****************************************************************************
@@ -28,11 +28,8 @@ GameViewer::GameViewer()
 //*****************************************************************************
 GameViewer::~GameViewer()
 {
-	baseViewer.clear();
-
-	SAFE_DELETE(stockViewer);
-	SAFE_DELETE(timerViewer);
-	SAFE_DELETE(levelViewer);
+	//インスタンスを入れた配列をクリア
+	gameViewer.clear();
 }
 
 //=============================================================================
@@ -40,9 +37,9 @@ GameViewer::~GameViewer()
 //=============================================================================
 void GameViewer::Update()
 {
-	for (int i = 0; i < baseViewerMax; i++)
+	for (int i = 0; i < gameViewerMax; i++)
 	{
-		baseViewer[i]->Update();
+		gameViewer[i]->Update();
 	}
 }
 
@@ -58,9 +55,9 @@ void GameViewer::Draw(void)
 	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE,true);
 
-	for (int i = 0; i < baseViewerMax; i++)
+	for (int i = 0; i < gameViewerMax; i++)
 	{
-		baseViewer[i]->Draw();
+		gameViewer[i]->Draw();
 	}
 
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);

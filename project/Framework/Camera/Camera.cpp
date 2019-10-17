@@ -95,6 +95,9 @@ void Camera::Update()
 	D3DXMatrixInverse(&invView, NULL, &view);
 	D3DXMatrixInverse(&invProjection, NULL, &projection);
 	D3DXMatrixInverse(&invVPV, NULL, &VPV);
+
+	//視錐台計算
+	CalculateFrustrum();
 }
 
 /**************************************
@@ -138,7 +141,7 @@ void Camera::SetMainCamera(Camera * camera)
 /**************************************
 メインカメラ取得処理
 ***************************************/
-Camera * Camera::MainCamera()
+const Camera * Camera::MainCamera()
 {
 	return mainCamera;
 }
@@ -146,23 +149,27 @@ Camera * Camera::MainCamera()
 /**************************************
 スクリーン投影処理
 ***************************************/
-void Camera::Projection(D3DXVECTOR3& out, const D3DXVECTOR3& pos)
+D3DXVECTOR3 Camera::Projection(const D3DXVECTOR3& pos) const
 {
+	D3DXVECTOR3 out;
 	D3DXVec3TransformCoord(&out, &pos, &mainCamera->VPV);
+	return out;
 }
 
 /**************************************
 スクリーン逆投影処理
 ***************************************/
-void Camera::UnProjection(D3DXVECTOR3& out, const D3DXVECTOR3& pos, float z)
+D3DXVECTOR3 Camera::UnProjection(const D3DXVECTOR3& pos, float z) const
 {
+	D3DXVECTOR3 out;
 	D3DXVec3TransformCoord(&out, &D3DXVECTOR3(pos.x, pos.y, z), &mainCamera->invVPV);
+	return out;
 }
 
 /**************************************
 スクリーン逆投影処理
 ***************************************/
-D3DXMATRIX Camera::GetViewMtx()
+D3DXMATRIX Camera::GetViewMtx() const
 {
 	return mainCamera->view;
 }
@@ -170,7 +177,7 @@ D3DXMATRIX Camera::GetViewMtx()
 /**************************************
 スクリーン逆投影処理
 ***************************************/
-D3DXMATRIX Camera::GetInverseViewMtx()
+D3DXMATRIX Camera::GetInverseViewMtx() const
 {
 	return mainCamera->invView;
 }
@@ -178,8 +185,38 @@ D3DXMATRIX Camera::GetInverseViewMtx()
 /**************************************
 スクリーン逆投影処理
 ***************************************/
-D3DXMATRIX Camera::GetProjectionMtx()
+D3DXMATRIX Camera::GetProjectionMtx() const
 {
 	return mainCamera->projection;
+}
+
+/**************************************
+視錐台取得処理
+***************************************/
+ViewFrustrum Camera::GetViewFrustrum() const
+{
+	return viewFrustrum;
+}
+
+/**************************************
+視錐台算出処理
+***************************************/
+void Camera::CalculateFrustrum()
+{
+	const D3DXVECTOR3 LeftTop = { 0.0f, 0.0f, 0.0f };
+	const D3DXVECTOR3 RightTop = { (float)SCREEN_WIDTH, 0.0f, 0.0f };
+	const D3DXVECTOR3 LeftBottom = { 0.0f, (float)SCREEN_HEIGHT, 0.0f };
+	const D3DXVECTOR3 RightBottom = { (float)SCREEN_WIDTH, (float)SCREEN_HEIGHT, 0.0f };
+
+	viewFrustrum.SetVertex(
+		UnProjection(LeftTop, 0.0f),
+		UnProjection(RightTop, 0.0f),
+		UnProjection(LeftBottom, 0.0f),
+		UnProjection(RightBottom, 0.0f),
+		UnProjection(LeftTop, 1.0f),
+		UnProjection(RightTop, 1.0f),
+		UnProjection(LeftBottom, 1.0f),
+		UnProjection(RightBottom, 1.0f)
+	);
 }
 

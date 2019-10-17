@@ -14,6 +14,7 @@
 //*****************************************************************************
 class CountViewerDrawer;
 class CircleGauge;
+class BaseViewerDrawer;
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -34,6 +35,7 @@ public:
 private:
 	CircleGauge *circleGuage;
 	CountViewerDrawer *num;
+	BaseViewerDrawer *bg;
 };
 
 #endif

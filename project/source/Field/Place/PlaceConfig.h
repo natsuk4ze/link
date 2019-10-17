@@ -10,6 +10,8 @@
 
 #include <vector>
 #include <algorithm>
+#include <memory>
+#include "../../../Framework/Math/TMath.h"
 
 /**************************************
 É}ÉNÉçíËã`

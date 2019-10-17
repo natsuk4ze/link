@@ -28,11 +28,19 @@ public:
 	void Draw(void);
 
 	//パラメータを受けとる箱
-	int parameterBox;
+	float parameterBox;
 
 private:
 	BaseViewerDrawer *bg;
-	CountViewerDrawer *num;
+
+	//小数点
+	BaseViewerDrawer *point;
+
+	//少数部
+	CountViewerDrawer *fewNum;
+
+	//整数部
+	CountViewerDrawer *intNum;
 };
 
 #endif

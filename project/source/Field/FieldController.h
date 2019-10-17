@@ -12,6 +12,7 @@
 #include "../../Framework/Pattern/BaseState.h"
 #include "../../Framework/Pattern/Delegate.h"
 #include "Place\PlaceConfig.h"
+#include "../Viewer/GameScene/GameViewer/GameViewerParam.h"
 
 #include <vector>
 
@@ -73,6 +74,9 @@ namespace Field
 		//カーソル取得処理
 		GameObject* GetFieldCursor();
 
+		//ビューワパラメータ埋め込み
+		void EmbedViewerParam(GameViewerParam& param);
+
 	private:
 		static const float PlaceOffset;					//Placeの1マス毎のオフセット値
 		static const int InitFieldBorder;				//フィールド範囲の初期値
@@ -91,13 +95,15 @@ namespace Field
 		Model::RouteProcessor *routeProcessor;				//ルートプロセッサ
 		Actor::PlaceActorController* placeActController;	//プレイスアクターコントローラ
 
-
+		
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int inputRepeatCnt;						//入力のリピートカウント
 		int cntFrame;							//フレームカウント
 		float developmentLevelAI;				//AI発展レベル
 		unsigned stockDevelopRiver;				//川開発アイテムストック
 		unsigned stockDevelopMountain;			//山開発アイテムストック
+		unsigned stockEDF;						//地球防衛軍のストック
+		unsigned stockInsurance;				//保険のストック
 
 		State current;
 		ControllerState *state;					//現在のステート

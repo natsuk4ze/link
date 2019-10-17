@@ -16,19 +16,19 @@
 //*****************************************************************************
 EventMessage::EventMessage()
 {
-	//ƒeƒLƒXƒg
-	//text = new TextViewer();
+	////ƒeƒLƒXƒg
+	////text = new TextViewer();
 
-	//”wŒi
-	bg = new BaseViewerDrawer();
-	//bg->LoadTexture("data/TEXTURE/Viewer/GameViewer/EventMessage/BG.png");
-	bg->MakeVertex();
-	bg->size = D3DXVECTOR3(204.80f, 51.20f, 0.0f);
-	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	bg->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.3, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
-	bg->SetColor(SET_COLOR_NOT_COLORED);
+	////”wŒi
+	//bg = new BaseViewerDrawer();
+	////bg->LoadTexture("data/TEXTURE/Viewer/GameViewer/EventMessage/BG.png");
+	//bg->MakeVertex();
+	//bg->size = D3DXVECTOR3(204.80f, 51.20f, 0.0f);
+	//bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	//bg->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.3, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
+	//bg->SetColor(SET_COLOR_NOT_COLORED);
 
-	isPlaying = false;
+	//isPlaying = false;
 }
 
 //*****************************************************************************
@@ -36,8 +36,8 @@ EventMessage::EventMessage()
 //*****************************************************************************
 EventMessage::~EventMessage()
 {
-	SAFE_DELETE(text);
-	SAFE_DELETE(bg);
+	//SAFE_DELETE(text);
+	//SAFE_DELETE(bg);
 }
 
 //=============================================================================
@@ -52,11 +52,11 @@ void EventMessage::Update(void)
 //=============================================================================
 void EventMessage::Draw(void)
 {
-	//”wŒi‚ðæ‚É•`‰æ
-	bg->Draw();
-	bg->SetVertex();
+	////”wŒi‚ðæ‚É•`‰æ
+	//bg->Draw();
+	//bg->SetVertex();
 
-	text->Draw();
+	//text->Draw();
 }
 
 ////=============================================================================

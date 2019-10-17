@@ -21,7 +21,18 @@ public:
 	virtual ~DelegateBase() {}
 
 	//int型引数有り戻り値無しの関数
-	virtual void operator()(T arg) = 0;
+	virtual void operator()(T arg = NULL) = 0;
+};
+
+template<>
+class DelegateBase<void>
+{
+public:
+	DelegateBase() {}
+	virtual ~DelegateBase() {}
+
+	//int型引数有り戻り値無しの関数
+	virtual void operator()() = 0;
 };
 
 /**************************************

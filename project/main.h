@@ -60,9 +60,9 @@
 #define	NUM_POLYGON		(2)		// ポリゴン数
 
 //解放、削除関連
-#define SAFE_RELEASE(p)				{if(p){p->Release(); p = NULL;}}
-#define SAFE_DELETE(p)				{delete(p); p = NULL;}
-#define SAFE_DELETE_ARRAY(p)		{if(p){delete[](p); p = NULL;}}
+#define SAFE_RELEASE(p)				{if(p) {p->Release();	p = NULL;}}
+#define SAFE_DELETE(p)				{if(p) {delete(p);		p = NULL;}}
+#define SAFE_DELETE_ARRAY(p)		{if(p) {delete[](p);	p = NULL;}}
 
 // 上記２Ｄポリゴン頂点フォーマットに合わせた構造体を定義
 typedef struct
