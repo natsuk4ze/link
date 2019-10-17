@@ -9,6 +9,8 @@
 #include "EventConfig.h"
 #include "MinusEvent/CityDestroyEvent.h"
 
+//イベントビューア（おーはま追記）
+#include "../Viewer/GameScene/EventViewer/EventViewer.h"
 
 #include "../../Framework/Core/Utility.h"
 #include "../../Framework/String/String.h"
@@ -47,6 +49,9 @@ EventController::EventController(int FieldLevel) : FieldLevel(FieldLevel)
 
 	//EventVec.push_back(new CityDestroyEvent(FieldLevel, D3DXVECTOR3(150.0f, 0.0f, 150.0f)));
 
+	//イベントビューア（おーはま追記）
+	eventViewer = new EventViewer();
+
 #if _DEBUG
 	ResourceManager::Instance()->MakePolygon("Event", "data/TEXTURE/PlaceTest/Event.png", { 4.5f, 4.5f }, { 12.0f,1.0f });
 #endif
@@ -59,6 +64,8 @@ EventController::~EventController()
 {
 	// イベントベクトル削除
 	Utility::DeleteContainer(EventVec);
+	//イベントビューア（おーはま追記）
+	SAFE_DELETE(eventViewer);
 }
 
 //=============================================================================
@@ -80,6 +87,9 @@ void EventController::Update()
 		}
 	}
 
+	//イベントビューア（おーはま追記）
+	eventViewer->Update();
+
 	EventVec.erase(std::remove_if(std::begin(EventVec), std::end(EventVec), RemoveCondition), std::end(EventVec));
 }
 
@@ -92,6 +102,9 @@ void EventController::Draw()
 	{
 		Event->Draw();
 	}
+
+	//イベントビューア（おーはま追記）
+	eventViewer->Draw();
 
 #if _DEBUG
 	DrawDebug();

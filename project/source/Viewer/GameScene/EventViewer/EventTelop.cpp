@@ -6,9 +6,12 @@
 //=============================================================================
 #include "../../../../main.h"
 #include "../../Framework/ViewerDrawer/TelopDrawer.h"
-#include "../../../../Framework/Input/input.h"
 #include"../../../../Framework/Math/Easing.h"
 #include "EventTelop.h"
+
+#ifdef _DEBUG
+#include "../../../../Framework/Input/input.h"
+#endif
 
 //*****************************************************************************
 // グローバル変数
@@ -132,7 +135,6 @@ EventTelop::~EventTelop()
 //=============================================================================
 void EventTelop::Update()
 {
-	bg->PlayBG();
 	Play();
 
 #ifdef _DEBUG
@@ -169,6 +171,8 @@ void EventTelop::Draw(void)
 //=============================================================================
 void EventTelop::Play()
 {
+	bg->PlayBG();
+
 	//画面外へ初期化
 	D3DXVECTOR3 initPos = D3DXVECTOR3(3000.0f, SCREEN_HEIGHT / 2, 0.0f);
 	text->position = initPos;

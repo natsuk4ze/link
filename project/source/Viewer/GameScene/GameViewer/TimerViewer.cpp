@@ -98,6 +98,6 @@ void TimerViewer::Draw(void)
 		intNum->intervalNumberScr, intNum->intervalNumberTex);
 
 	//¬”•”
-	fewNum->DrawCounter(fewNum->baseNumber, (int)((parameterBox - (int)parameterBox)*100), fewNum->placeMax,
+	fewNum->DrawCounter(fewNum->baseNumber, (int)((parameterBox - (int)parameterBox)*pow(fewNum->baseNumber, fewNum->placeMax)), fewNum->placeMax,
 		fewNum->intervalNumberScr, fewNum->intervalNumberTex);
 }

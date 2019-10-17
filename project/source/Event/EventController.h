@@ -12,6 +12,11 @@
 #include "../Field/Place/FieldPlaceModel.h"
 
 //*****************************************************************************
+// 前方宣言(おーはま追記)
+//*****************************************************************************
+class EventViewer;
+
+//*****************************************************************************
 // クラス定義
 //*****************************************************************************
 struct EventInfo
@@ -27,6 +32,10 @@ private:
 	static std::vector<EventInfo> EventCSVData;
 	static std::vector<EventBase*> EventVec;
 	//static std::vector<Field::Model::PlaceModel*> *route;
+
+	//イベントビューア（おーはま追記）
+	EventViewer *eventViewer;
+
 	int FieldLevel;
 
 	void LoadCSV(const char* FilePath);
