@@ -50,7 +50,7 @@ public:
 	virtual void Draw();
 
 	// インターフェース
-	void ChangeState(ActorState *next);					// アニメーション再生（再生させるときのみ呼び出す）
+	void ChangeState(ActorState *next);					// ステートの変更
 	void Rotate(float y);								// Y軸回転
 	void SetColor(const D3DXCOLOR& color, UINT index);	// メッシュの色変更
 
@@ -59,10 +59,16 @@ protected:
 	MeshContainer* mesh;				// メッシュコンテナ
 	// ******************************
 
-	ActorState *state;					// 現在のステート
+	ActorState *state;					// ステートマシンの受取先
+	State current;						// 現在のステート
+	FModel::PlaceType type;				// アクターの種類
 
 private:
 	static const D3DXVECTOR3 ActorScale;
+
+#if _DEBUG
+	void Debug();
+#endif
 
 	// ステートの前方宣言
 	class IdleActorState;

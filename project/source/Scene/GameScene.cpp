@@ -14,12 +14,14 @@
 #include "../Field/Camera/FieldCamera.h"
 #include "../../Framework/Renderer2D/TextViewer.h"
 #include "../Viewer/GameScene/GameViewer/GameViewer.h"
+#include "../Event/EventController.h"
 
 #include "GameState/GameInit.h"
 #include "GameState/GameIdle.h"
 
 //※イベントコントローラーが出来たらそっち移動
 #include "../Viewer/GameScene/EventViewer/EventViewer.h"
+#include "../FieldObject/Actor/CrossJunctionActor.h"
 
 /**************************************
 初期化処理
@@ -38,6 +40,7 @@ void GameScene::Init()
 	field = new Field::FieldController();
 	text = new TextViewer("M+ 2c heavy", 50);
 	gameViewer = new GameViewer();
+	eventController = new EventController(Field::Model::City);
 
 	//※イベントコントローラーが出来たらそっち移動
 	eventViewer = new EventViewer();
@@ -49,6 +52,8 @@ void GameScene::Init()
 
 	//ステート初期化
 	ChangeState(State::Initialize);
+
+	testActor = new CrossJunctionActor(D3DXVECTOR3(150.0f, 0.0f, 150.0f), FModel::City);
 }
 
 /**************************************
@@ -73,6 +78,8 @@ void GameScene::Uninit()
 
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
+
+	SAFE_DELETE(testActor);
 }
 
 /**************************************
@@ -88,11 +95,19 @@ void GameScene::Update()
 		ChangeState(next);
 	}
 
+	//ビューワパラメータをビューワに渡す
+	GameViewerParam param;
+	param.remainTime = remainTime / 30.0f;
+	field->EmbedViewerParam(param);
+	gameViewer->ReceiveParam(param);
+
 	//ビュアー更新
 	gameViewer->Update();
 
 	//※イベントコントローラーが出来たらそっち移動
 	eventViewer->Update();
+
+	testActor->Update();
 }
 
 /**************************************
@@ -105,6 +120,8 @@ void GameScene::Draw()
 
 	//背景描画
 	skybox->Draw();
+
+	testActor->Draw();
 
 	//オブジェクト描画
 	field->Draw();
@@ -122,6 +139,9 @@ void GameScene::Draw()
 
 	//※イベントコントローラーが出来たらそっち移動
 	eventViewer->Draw();
+
+	// イベント描画
+	eventController->Draw();
 }
 
 /**************************************

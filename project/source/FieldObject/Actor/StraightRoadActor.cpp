@@ -27,6 +27,8 @@ StraightRoadActor::StraightRoadActor(const D3DXVECTOR3& pos, FModel::FieldLevel 
 	default:
 		break;
 	}
+
+	type = FModel::River;
 }
 
 //=====================================

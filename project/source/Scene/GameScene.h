@@ -13,6 +13,9 @@
 #include "../../Framework/Pattern/BaseState.h"
 #include <vector>
 
+// モデル表示テスト用
+#include "../FieldObject/Actor/PlaceActor.h"
+
 /**************************************
 前方宣言
 ***************************************/
@@ -25,6 +28,7 @@ class SkyBox;
 class FieldCamera;
 class TextViewer;
 class GameViewer;
+class EventController;
 
 //※イベントコントローラーが出来たらそっち移動
 class EventViewer;
@@ -62,11 +66,17 @@ private:
 	//※イベントコントローラーが出来たらそっち移動
 	EventViewer *eventViewer;
 
+
+	EventController *eventController;			// イベントコントローラー
+	float remainTime;							//ステージの残り時間
+
 	//ステート遷移処理
 	void ChangeState(State next);
 
 	//各ステートクラス
 	class GameInit;
 	class GameIdle;
+
+	PlaceActor* testActor;
 };
 #endif

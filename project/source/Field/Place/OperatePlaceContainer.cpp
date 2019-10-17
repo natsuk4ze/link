@@ -190,7 +190,7 @@ namespace Field::Model
 			FieldPosition position = place->GetPosition();
 
 			Transform transform{
-				{position.x * 10.0f, 5.0f, position.z * 10.0f },
+				position.ConvertToWorldPosition() + Vector3::Up * 5.0f,
 				{ D3DXToRadian(90.0f), 0.0f, 0.0f },
 				Vector3::One
 			};

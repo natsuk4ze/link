@@ -19,6 +19,8 @@
 #include "State/FieldControllerIdle.h"
 #include "State/UseItem.h"
 
+#include "../Event/EventController.h"
+
 #include "../../Framework/Input/input.h"
 #include "../../Framework/Tool/DebugWindow.h"
 
@@ -47,6 +49,8 @@ namespace Field
 		developmentLevelAI(0),
 		stockDevelopRiver(InitDevelopRiverStock),
 		stockDevelopMountain(InitDevelopMountainStock),
+		stockEDF(0),
+		stockInsurance(0),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
 		onChangePlaceType(nullptr)
@@ -174,7 +178,7 @@ namespace Field
 		float triggerX = 0.0f, triggerZ = 0.0f;
 
 		triggerX = Input::GetTriggerHorizontal();
-		triggerZ = Input::GetTriggerVertical();
+		triggerZ = -Input::GetTriggerVertical();
 
 		//リピート確認
 		float repeatX = 0.0f, repeatZ = 0.0f;
@@ -184,7 +188,7 @@ namespace Field
 			if (inputRepeatCnt >= InputLongWait && inputRepeatCnt % InputShortWait == 0)
 			{
 				repeatX = Input::GetPressHorizontail();
-				repeatZ = Input::GetPressVertical();
+				repeatZ = -Input::GetPressVertical();
 			}
 		}
 		else
@@ -211,6 +215,19 @@ namespace Field
 	GameObject * FieldController::GetFieldCursor()
 	{
 		return cursor;
+	}
+
+	/**************************************
+	ビューワパラメータ埋め込み処理
+	***************************************/
+	void FieldController::EmbedViewerParam(GameViewerParam & param)
+	{
+		param.levelAI = developmentLevelAI;
+		param.ratioLevel = (float)developmentLevelAI / 9999.0f;
+		param.stockBreakItem = stockDevelopMountain;
+		param.stockBuildItem = stockDevelopRiver;
+		param.stockEDF = stockEDF;
+		param.stockInsurance = stockInsurance;
 	}
 
 	/**************************************
@@ -248,6 +265,9 @@ namespace Field
 			if (place->IsType(PlaceType::None))
 				place->SetType(PlaceType::Road);
 		}
+
+		//ルートベクトルを渡す
+		EventController::CheckEventHappen(route, City);
 
 		//ルートモデル作成
 		RouteModelPtr ptr = RouteModel::Create(onConnectTown, onCreateJunction, route);

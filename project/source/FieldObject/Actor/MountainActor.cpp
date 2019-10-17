@@ -27,6 +27,8 @@ MountainActor::MountainActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentL
 	default:
 		break;
 	}
+
+	type = FModel::Road;
 }
 
 //=====================================

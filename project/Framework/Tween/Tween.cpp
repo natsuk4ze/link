@@ -74,68 +74,83 @@ void Tween::ClearContainer()
 }
 
 /**************************************
+クリア処理
+***************************************/
+void Tween::ClearAll()
+{
+	for (auto&& tweener : tweenerContainer)
+	{
+		SAFE_DELETE(tweener);
+	}
+
+	tweenerContainer.clear();
+}
+
+/**************************************
 移動処理
 ***************************************/
-void Tween::Move(GameObject& ref, const D3DXVECTOR3& start, const D3DXVECTOR3& end, int duration, EaseType type)
+void Tween::Move(GameObject& ref, const D3DXVECTOR3& start, const D3DXVECTOR3& end, int duration, EaseType type, std::function<void(void)> callback)
 {
-	MoveTweener *tweener = new MoveTweener(ref.transform, start, end, duration, type);
+	MoveTweener *tweener = new MoveTweener(ref.transform, start, end, duration, type, callback);
 	mInstance->tweenerContainer.push_back(tweener);
 }
 
 /**************************************
 移動処理
 ***************************************/
-void Tween::Move(GameObject& ref, const D3DXVECTOR3& end, int duration, EaseType type)
+void Tween::Move(GameObject& ref, const D3DXVECTOR3& end, int duration, EaseType type, std::function<void(void)> callback)
 {
 	D3DXVECTOR3 start = ref.transform->GetPosition();
-	Move(ref, start, end, duration, type);
+	Move(ref, start, end, duration, type, callback);
 }
 
 /**************************************
 スケール処理
 ***************************************/
-void Tween::Scale(GameObject& ref, const D3DXVECTOR3& start, const D3DXVECTOR3& end, int duration, EaseType type)
+void Tween::Scale(GameObject& ref, const D3DXVECTOR3& start, const D3DXVECTOR3& end, int duration, EaseType type, std::function<void(void)> callback)
 {
-	ScaleTweener *tweener = new ScaleTweener(ref.transform, start, end, duration, type);
+	ScaleTweener *tweener = new ScaleTweener(ref.transform, start, end, duration, type, callback);
 	mInstance->tweenerContainer.push_back(tweener);
 }
 
 /**************************************
 スケール処理
 ***************************************/
-void Tween::Scale(GameObject& ref, const D3DXVECTOR3& end, int duration, EaseType type)
+void Tween::Scale(GameObject& ref, const D3DXVECTOR3& end, int duration, EaseType type, std::function<void(void)> callback)
 {
 	D3DXVECTOR3 start = ref.transform->GetScale();
-	Scale(ref, start, end, duration, type);
+	Scale(ref, start, end, duration, type, callback);
 }
 
 /**************************************
 回転処理
 ***************************************/
-void Tween::Rotate(GameObject& ref, const D3DXVECTOR3& start, const D3DXVECTOR3& end, int duration, EaseType type)
+void Tween::Rotate(GameObject& ref, const D3DXVECTOR3& start, const D3DXVECTOR3& end, int duration, EaseType type, std::function<void(void)> callback)
 {
-	RotateTweener *tweener = new RotateTweener(ref.transform, start, end, duration, type);
+	RotateTweener *tweener = new RotateTweener(ref.transform, start, end, duration, type, callback);
 	mInstance->tweenerContainer.push_back(tweener);
 }
 
 /**************************************
 回転処理
 ***************************************/
-void Tween::Rotate(GameObject& ref, const D3DXVECTOR3& end, int duration, EaseType type)
+void Tween::Rotate(GameObject& ref, const D3DXVECTOR3& end, int duration, EaseType type, std::function<void(void)> callback)
 {
 	D3DXVECTOR3 start = ref.transform->GetEulerAngle();
-	Rotate(ref, start, end, duration, type);
+	Rotate(ref, start, end, duration, type, callback);
 }
 
 /**************************************
 Tweenerコンストラクタ
 ***************************************/
-Tween::Tweener::Tweener(std::shared_ptr<Transform>& ref, int duration, EaseType type)
+Tween::Tweener::Tweener(std::shared_ptr<Transform>& ref, int duration, EaseType type, Callback callback) :
+	reference(ref),
+	cntFrame(0),
+	duration(duration),
+	type(type),
+	callback(callback)
 {
-	this->reference = ref;
-	cntFrame = 0;
-	this->duration = duration;
-	this->type = type;
+
 }
 
 /**************************************
@@ -151,20 +166,35 @@ Tweener終了判定
 ***************************************/
 inline bool Tween::Tweener::IsFinished()
 {
-	if (!reference.lock())
+	if (reference.expired())
 		return true;
 
 	return cntFrame >= duration;
 }
 
 /**************************************
+コールバックのチェック判定
+***************************************/
+inline void Tween::Tweener::CheckCallback()
+{
+	if (cntFrame < duration)
+		return;
+
+	if (callback == nullptr)
+		return;
+
+	callback();
+}
+
+/**************************************
 MoveTweenerコンストラクタ
 ***************************************/
-Tween::MoveTweener::MoveTweener(std::shared_ptr<Transform>& ref, const D3DXVECTOR3& start, const D3DXVECTOR3& end, int duration, EaseType type)
-	: Tweener(ref, duration, type)
+Tween::MoveTweener::MoveTweener(std::shared_ptr<Transform>& ref, const D3DXVECTOR3& start, const D3DXVECTOR3& end, int duration, EaseType type, Callback callback) :
+	Tweener(ref, duration, type, callback),
+	start(start),
+	end(end)
 {
-	this->start = start;
-	this->end = end;
+
 }
 
 /**************************************
@@ -179,17 +209,19 @@ void Tween::MoveTweener::Update()
 	{
 		float t = (float)cntFrame / duration;
 		transform->SetPosition(Easing::EaseValue(t, start, end, type));
+		CheckCallback();
 	}
 }
 
 /**************************************
 ScaleTweenerコンストラクタ
 ***************************************/
-Tween::ScaleTweener::ScaleTweener(std::shared_ptr<Transform>& ref, const D3DXVECTOR3& start, const D3DXVECTOR3& end, int duration, EaseType type)
-	: Tweener(ref, duration, type)
+Tween::ScaleTweener::ScaleTweener(std::shared_ptr<Transform>& ref, const D3DXVECTOR3& start, const D3DXVECTOR3& end, int duration, EaseType type, Callback callback) :
+	Tweener(ref, duration, type, callback),
+	start(start),
+	end(end)
 {
-	this->start = start;
-	this->end = end;
+
 }
 
 /**************************************
@@ -204,17 +236,19 @@ void Tween::ScaleTweener::Update()
 	{
 		float t = (float)cntFrame / duration;
 		transform->SetScale(Easing::EaseValue(t, start, end, type));
+		CheckCallback();
 	}
 }
 
 /**************************************
 RotateTweenerコンストラクタ
 ***************************************/
-Tween::RotateTweener::RotateTweener(std::shared_ptr<Transform>& ref, const D3DXVECTOR3& start, const D3DXVECTOR3& end, int duration, EaseType type)
-	: Tweener(ref, duration, type)
+Tween::RotateTweener::RotateTweener(std::shared_ptr<Transform>& ref, const D3DXVECTOR3& start, const D3DXVECTOR3& end, int duration, EaseType type, Callback callback) :
+	Tweener(ref, duration, type, callback),
+	start(Quaternion::ToQuaternion(start)),
+	end(Quaternion::ToQuaternion(end))
 {
-	this->start = Quaternion::ToQuaternion(start);
-	this->end = Quaternion::ToQuaternion(end);
+
 }
 
 /**************************************
@@ -231,5 +265,6 @@ void Tween::RotateTweener::Update()
 		D3DXQUATERNION quaternion;
 		D3DXQuaternionSlerp(&quaternion, &start, &end, t);
 		transform->SetRotation(quaternion);
+		CheckCallback();
 	}
 }

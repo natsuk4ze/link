@@ -33,6 +33,12 @@ namespace Field
 			this->x = x;
 			this->z = z;
 		}
+
+		inline D3DXVECTOR3 ConvertToWorldPosition() const
+		{
+			return { x * 10.0f, 0.0f, z * -10.0f };
+		}
+
 	};
 
 	/**************************************
