@@ -77,6 +77,17 @@ namespace Field
 		//ビューワパラメータ埋め込み
 		void EmbedViewerParam(GameViewerParam& param);
 
+		//イベント操作用のインターフェース
+		void AddLevelAI(float num);					//AI発展レベルを増やす
+		void AddLevelDevelopment(float num);		//街の発展レベルを増やす
+		void AddStockItem(int num);					//ストックアイテムの数を増やす
+		void SetDevelopSpeedBonus();				//発展スピードへのボーナス付与
+		void CreateNewTown();						//新しい街を出現させる
+		void DestroyTown();							//街を破壊する
+		void ReverseOperation(bool isReverse);		//操作の反転（引数 true:反転させる false:元に戻す)
+		void SealUsingItem(bool isSeal);			//ストック使用封印（引数 true:封印する false:封印を解除)
+		void RaiseTrafficJam();						//混雑度を上昇させる
+
 	private:
 		static const float PlaceOffset;					//Placeの1マス毎のオフセット値
 		static const int InitFieldBorder;				//フィールド範囲の初期値
