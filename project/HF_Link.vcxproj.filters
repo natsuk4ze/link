@@ -133,6 +133,7 @@
     <ClCompile Include="source\FieldObject\Actor\State\CreateActorState.cpp" />
     <ClCompile Include="source\FieldObject\Actor\State\RemoveActorState.cpp" />
     <ClCompile Include="source\FieldObject\Actor\State\LinkActorState.cpp" />
+    <ClCompile Include="Framework\Camera\ViewFrustrum.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -248,6 +249,7 @@
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h" />
+    <ClInclude Include="Framework\Camera\ViewFrustrum.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Field\Route\RouteModel.h" />
