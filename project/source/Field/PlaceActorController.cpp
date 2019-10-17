@@ -278,7 +278,7 @@ namespace Field::Actor
 
 			if (junctionType == TjunctionType::ExceptRight)
 				rotAngle = 90.0f;
-			else if (junctionType == TjunctionType::ExceptBack)
+			else if (junctionType == TjunctionType::ExceptForward)
 				rotAngle = 180.0f;
 			else if (junctionType == TjunctionType::ExceptLeft)
 				rotAngle = -90.0f;
