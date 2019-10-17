@@ -14,10 +14,13 @@
 #include "../Field/Camera/FieldCamera.h"
 #include "../../Framework/Renderer2D/TextViewer.h"
 #include "../Viewer/GameScene/GameViewer/GameViewer.h"
+#include "../Event/EventController.h"
 
 #include "GameState/GameInit.h"
 #include "GameState/GameIdle.h"
 
+//※イベントコントローラーが出来たらそっち移動
+#include "../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../FieldObject/Actor/CrossJunctionActor.h"
 
 /**************************************
@@ -37,6 +40,10 @@ void GameScene::Init()
 	field = new Field::FieldController();
 	text = new TextViewer("M+ 2c heavy", 50);
 	gameViewer = new GameViewer();
+	eventController = new EventController(Field::Model::City);
+
+	//※イベントコントローラーが出来たらそっち移動
+	eventViewer = new EventViewer();
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
@@ -66,6 +73,9 @@ void GameScene::Uninit()
 	SAFE_DELETE(text);
 	SAFE_DELETE(gameViewer);
 
+	//※イベントコントローラーが出来たらそっち移動
+	SAFE_DELETE(eventViewer);
+
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
 
@@ -93,6 +103,9 @@ void GameScene::Update()
 
 	//ビュアー更新
 	gameViewer->Update();
+
+	//※イベントコントローラーが出来たらそっち移動
+	eventViewer->Update();
 
 	testActor->Update();
 }
@@ -123,6 +136,12 @@ void GameScene::Draw()
 
 	//ビュアー描画
 	gameViewer->Draw();
+
+	//※イベントコントローラーが出来たらそっち移動
+	eventViewer->Draw();
+
+	// イベント描画
+	eventController->Draw();
 }
 
 /**************************************

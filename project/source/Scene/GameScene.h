@@ -28,6 +28,10 @@ class SkyBox;
 class FieldCamera;
 class TextViewer;
 class GameViewer;
+class EventController;
+
+//※イベントコントローラーが出来たらそっち移動
+class EventViewer;
 
 /**************************************
 クラス定義
@@ -59,6 +63,11 @@ private:
 	TextViewer *text;							//テスト用テキストビューワ
 	GameViewer *gameViewer;						//ゲームビュアー
 
+	//※イベントコントローラーが出来たらそっち移動
+	EventViewer *eventViewer;
+
+
+	EventController *eventController;			// イベントコントローラー
 	float remainTime;							//ステージの残り時間
 
 	//ステート遷移処理

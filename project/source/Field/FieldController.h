@@ -95,7 +95,7 @@ namespace Field
 		Model::RouteProcessor *routeProcessor;				//ルートプロセッサ
 		Actor::PlaceActorController* placeActController;	//プレイスアクターコントローラ
 
-
+		
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int inputRepeatCnt;						//入力のリピートカウント
 		int cntFrame;							//フレームカウント

@@ -20,7 +20,7 @@ public:
 	float ratioLevel;
 
 	//残り時間
-	int remainTime;
+	float remainTime;
 
 	//橋ストック数
 	int stockBuildItem;
