@@ -7,6 +7,7 @@
 //=====================================
 #include "CurveRoadActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
+#include "../Animation/ActorAnimation.h"
 
 //=====================================
 // コンストラクタ
@@ -29,6 +30,9 @@ CurveRoadActor::CurveRoadActor(const D3DXVECTOR3& pos, FModel::FieldLevel curren
 	}
 
 	type = FModel::Road;
+
+	// テスト
+	ActorAnimation::Fall(*this);
 }
 
 //=====================================

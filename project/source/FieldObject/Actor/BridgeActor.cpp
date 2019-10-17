@@ -7,6 +7,7 @@
 //=====================================
 #include "BridgeActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
+#include "../Animation/ActorAnimation.h"
 
 //=====================================
 // コンストラクタ
@@ -29,6 +30,9 @@ BridgeActor::BridgeActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel
 	}
 
 	type = FModel::Bridge;
+
+	// テスト
+	ActorAnimation::Fall(*this);
 }
 
 //=====================================

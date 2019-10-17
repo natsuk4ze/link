@@ -7,6 +7,7 @@
 //=====================================
 #include "CrossJunctionActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
+#include "../Animation/ActorAnimation.h"
 
 //=====================================
 // コンストラクタ
@@ -29,6 +30,9 @@ CrossJunctionActor::CrossJunctionActor(const D3DXVECTOR3& pos, FModel::FieldLeve
 	}
 
 	type = FModel::Junction;
+
+	// テスト
+	ActorAnimation::Fall(*this);
 }
 
 //=====================================

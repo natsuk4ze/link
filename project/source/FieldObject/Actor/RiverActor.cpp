@@ -7,6 +7,7 @@
 //=====================================
 #include "RiverActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
+#include "../Animation/ActorAnimation.h"
 
 //=====================================
 // コンストラクタ
@@ -29,6 +30,9 @@ RiverActor::RiverActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
 	}
 
 	type = FModel::River;
+
+	// テスト
+	ActorAnimation::Fall(*this);
 }
 
 //=====================================

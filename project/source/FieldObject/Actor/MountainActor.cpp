@@ -7,6 +7,7 @@
 //=====================================
 #include "MountainActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
+#include "../Animation/ActorAnimation.h"
 
 //=====================================
 // コンストラクタ
@@ -29,6 +30,9 @@ MountainActor::MountainActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentL
 	}
 
 	type = FModel::Road;
+
+	// テスト
+	ActorAnimation::Fall(*this);
 }
 
 //=====================================

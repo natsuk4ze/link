@@ -7,6 +7,7 @@
 //=====================================
 #include "CityActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
+#include "../Animation/ActorAnimation.h"
 
 //=====================================
 // コンストラクタ
@@ -18,7 +19,7 @@ CityActor::CityActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
 	switch (currentLevel)
 	{
 	case FModel::City:
-		//ResourceManager::Instance()->GetMesh("City-City", mesh);
+		ResourceManager::Instance()->GetMesh("Town-City", mesh);
 		break;
 	case FModel::World:
 		break;
@@ -29,6 +30,9 @@ CityActor::CityActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
 	}
 
 	type = FModel::Town;
+
+	// テスト
+	ActorAnimation::RotateAndExpantion(*this);
 }
 
 //=====================================

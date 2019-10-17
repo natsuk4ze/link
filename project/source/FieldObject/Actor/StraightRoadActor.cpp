@@ -7,6 +7,7 @@
 //=====================================
 #include "StraightRoadActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
+#include "../Animation/ActorAnimation.h"
 
 //=====================================
 // コンストラクタ
@@ -29,6 +30,9 @@ StraightRoadActor::StraightRoadActor(const D3DXVECTOR3& pos, FModel::FieldLevel 
 	}
 
 	type = FModel::River;
+
+	// テスト
+	ActorAnimation::Fall(*this);
 }
 
 //=====================================
