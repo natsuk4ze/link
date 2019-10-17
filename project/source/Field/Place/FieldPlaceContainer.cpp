@@ -266,12 +266,12 @@ namespace Field::Model
 	/**************************************
 	AI”­“WƒŒƒxƒ‹ŒvŽZ
 	***************************************/
-	float Field::Model::PlaceContainer::CalcDevelopmentLevelAI()
+	float Field::Model::PlaceContainer::CalcDevelopmentLevelAI(float bonus)
 	{
 		float developLevel = 0.0f;
 		for (auto&& town : townContainer)
 		{
-			developLevel += town.second->OnGrowth(1.0f - trafficJamRate);
+			developLevel += town.second->OnGrowth(1.0f - trafficJamRate, bonus);
 		}
 
 		return developLevel;

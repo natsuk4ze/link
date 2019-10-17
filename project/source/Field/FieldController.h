@@ -115,6 +115,7 @@ namespace Field
 		unsigned stockDevelopMountain;			//山開発アイテムストック
 		unsigned stockEDF;						//地球防衛軍のストック
 		unsigned stockInsurance;				//保険のストック
+		float developSpeedBonus;				//発展スピード増加ボーナス
 
 		State current;
 		ControllerState *state;					//現在のステート

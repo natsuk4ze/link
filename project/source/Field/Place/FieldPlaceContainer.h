@@ -60,7 +60,7 @@ namespace Field::Model
 		void CaclTrafficJamRate();
 
 		//AI”­“WƒŒƒxƒ‹ŒvŽZ
-		float CalcDevelopmentLevelAI();
+		float CalcDevelopmentLevelAI(float bonus);
 
 		//ŠX‚Ì”­“W“x‚ð‰ÁŽZ
 		void AddDevelopmentLevel(float num);

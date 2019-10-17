@@ -51,6 +51,7 @@ namespace Field
 		stockDevelopMountain(InitDevelopMountainStock),
 		stockEDF(0),
 		stockInsurance(0),
+		developSpeedBonus(1.0f),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
 		onChangePlaceType(nullptr)
@@ -222,7 +223,7 @@ namespace Field
 	***************************************/
 	void FieldController::EmbedViewerParam(GameViewerParam & param)
 	{
-		param.levelAI = developmentLevelAI;
+		param.levelAI = (int)developmentLevelAI;
 		param.ratioLevel = (float)developmentLevelAI / 9999.0f;
 		param.stockBreakItem = stockDevelopMountain;
 		param.stockBuildItem = stockDevelopRiver;
@@ -262,7 +263,9 @@ namespace Field
 	***************************************/
 	void FieldController::SetDevelopSpeedBonus()
 	{
-
+		//TODO ; ‰ðœˆ—‚ðŽÀ‘•‚·‚é
+		//TODO : ŒöŠJ”{—¦‚ð‚¿‚á‚ñ‚ÆŒˆ‚ß‚é
+		developSpeedBonus = 1.5f;
 	}
 
 	/**************************************
@@ -517,6 +520,7 @@ namespace Field
 		if (cntFrame != 0)
 			return;
 
-		AddLevelAI(placeContainer->CalcDevelopmentLevelAI());
+		float raiseValue = placeContainer->CalcDevelopmentLevelAI(developSpeedBonus);
+		AddLevelAI(raiseValue);
 	}
 }
