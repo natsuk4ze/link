@@ -68,11 +68,29 @@ void PlaceActor::Rotate(float y)
 }
 
 //=====================================
+// 座標のセット
+//=====================================
+void PlaceActor::SetPosition(const D3DXVECTOR3& pos)
+{
+	transform->SetPosition(pos);
+}
+
+//=====================================
 // メッシュデータのカラー変更
 //=====================================
 void PlaceActor::SetColor(const D3DXCOLOR& color, UINT index)
 {
 	mesh->SetMaterialColor(color, index);
+}
+
+//=====================================
+// 座標、回転、大きさをリセット
+//=====================================
+void PlaceActor::ResetTransform()
+{
+	transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	transform->SetScale(ActorScale);
+	transform->SetRotation(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 }
 
 //=====================================

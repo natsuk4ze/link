@@ -30,9 +30,6 @@ TJunctionActor::TJunctionActor(const D3DXVECTOR3& pos, FModel::FieldLevel curren
 	}
 
 	type = FModel::Junction;
-
-	// ƒeƒXƒg
-	ActorAnimation::Fall(*this);
 }
 
 //=====================================

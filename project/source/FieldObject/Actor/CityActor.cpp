@@ -30,9 +30,6 @@ CityActor::CityActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
 	}
 
 	type = FModel::Town;
-
-	// ƒeƒXƒg
-	ActorAnimation::RotateAndExpantion(*this);
 }
 
 //=====================================

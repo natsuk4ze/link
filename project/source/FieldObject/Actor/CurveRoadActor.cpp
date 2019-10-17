@@ -30,9 +30,6 @@ CurveRoadActor::CurveRoadActor(const D3DXVECTOR3& pos, FModel::FieldLevel curren
 	}
 
 	type = FModel::Road;
-
-	// ƒeƒXƒg
-	ActorAnimation::Fall(*this);
 }
 
 //=====================================
