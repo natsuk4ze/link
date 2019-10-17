@@ -14,6 +14,7 @@
 #include "../Field/Camera/FieldCamera.h"
 #include "../../Framework/Renderer2D/TextViewer.h"
 #include "../Viewer/GameScene/GameViewer/GameViewer.h"
+#include "../Event/EventController.h"
 
 #include "GameState/GameInit.h"
 #include "GameState/GameIdle.h"
@@ -37,6 +38,7 @@ void GameScene::Init()
 	field = new Field::FieldController();
 	text = new TextViewer("M+ 2c heavy", 50);
 	gameViewer = new GameViewer();
+	eventController = new EventController(Field::Model::City);
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
@@ -123,6 +125,9 @@ void GameScene::Draw()
 
 	//ビュアー描画
 	gameViewer->Draw();
+
+	// イベント描画
+	eventController->Draw();
 }
 
 /**************************************

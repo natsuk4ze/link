@@ -19,6 +19,8 @@
 #include "State/FieldControllerIdle.h"
 #include "State/UseItem.h"
 
+#include "../Event/EventController.h"
+
 #include "../../Framework/Input/input.h"
 #include "../../Framework/Tool/DebugWindow.h"
 
@@ -263,6 +265,9 @@ namespace Field
 			if (place->IsType(PlaceType::None))
 				place->SetType(PlaceType::Road);
 		}
+
+		//ルートベクトルを渡す
+		EventController::CheckEventHappen(route, City);
 
 		//ルートモデル作成
 		RouteModelPtr ptr = RouteModel::Create(onConnectTown, onCreateJunction, route);

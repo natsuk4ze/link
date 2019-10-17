@@ -1,290 +1,1010 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Framework\Animation\AnimationManager.cpp" />
-    <ClCompile Include="Framework\Animation\AnimContainer.cpp" />
-    <ClCompile Include="Framework\Animation\MyAllocateHierarchy.cpp" />
-    <ClCompile Include="Framework\Camera\Camera.cpp" />
-    <ClCompile Include="Framework\Camera\CameraShakePlugin.cpp" />
-    <ClCompile Include="Framework\Collider\BaseCollider.cpp" />
-    <ClCompile Include="Framework\Collider\BoxCollider3D.cpp" />
-    <ClCompile Include="Framework\Collider\ColliderManager.cpp" />
-    <ClCompile Include="Framework\Core\BaseGame.cpp" />
-    <ClCompile Include="Framework\Core\GameObject.cpp" />
-    <ClCompile Include="Framework\Core\SceneManager.cpp" />
-    <ClCompile Include="Framework\Core\Transform.cpp" />
-    <ClCompile Include="Framework\Input\Gamepad.cpp" />
-    <ClCompile Include="Framework\Input\input.cpp" />
-    <ClCompile Include="Framework\Input\Keyboard.cpp" />
-    <ClCompile Include="Framework\Input\Mouse.cpp" />
-    <ClCompile Include="Framework\Math\Quaternion.cpp" />
-    <ClCompile Include="Framework\Math\Vector3.cpp" />
-    <ClCompile Include="Framework\Particle\AnimationParticle.cpp" />
-    <ClCompile Include="Framework\Particle\BaseEmitter.cpp" />
-    <ClCompile Include="Framework\Particle\BaseParticle.cpp" />
-    <ClCompile Include="Framework\Particle\BaseParticleController.cpp" />
-    <ClCompile Include="Framework\Particle\ParticleJsonParser.cpp" />
-    <ClCompile Include="Framework\Particle\ParticleRenderer.cpp" />
-    <ClCompile Include="Framework\Particle\SceneParticleManager.cpp" />
-    <ClCompile Include="Framework\Pattern\ObserveSubject.cpp" />
-    <ClCompile Include="Framework\PostEffect\Effect\BloomFilter.cpp" />
-    <ClCompile Include="Framework\PostEffect\Effect\BlurFilter.cpp" />
-    <ClCompile Include="Framework\PostEffect\Effect\CrossBlurFilter.cpp" />
-    <ClCompile Include="Framework\PostEffect\Effect\MonotoneFilter.cpp" />
-    <ClCompile Include="Framework\PostEffect\Effect\ShockBlur.cpp" />
-    <ClCompile Include="Framework\PostEffect\Effect\SpeedBlurFilter.cpp" />
-    <ClCompile Include="Framework\PostEffect\Effect\SpikeNoise.cpp" />
-    <ClCompile Include="Framework\PostEffect\Effect\StrongBlurFilter.cpp" />
-    <ClCompile Include="Framework\PostEffect\BaseEffectController.cpp" />
-    <ClCompile Include="Framework\PostEffect\BloomController.cpp" />
-    <ClCompile Include="Framework\PostEffect\CrossFilterController.cpp" />
-    <ClCompile Include="Framework\PostEffect\PostEffectManager.cpp" />
-    <ClCompile Include="Framework\PostEffect\ScreenObject.cpp" />
-    <ClCompile Include="Framework\PostEffect\ShockBlurController.cpp" />
-    <ClCompile Include="Framework\PostEffect\SpeedBlurController.cpp" />
-    <ClCompile Include="Framework\PostEffect\SpikeNoiseController.cpp" />
-    <ClCompile Include="Framework\Renderer2D\Polygon2D.cpp" />
-    <ClCompile Include="Framework\Renderer3D\BillboardObject.cpp" />
-    <ClCompile Include="Framework\Renderer3D\BillboardTransform.cpp" />
-    <ClCompile Include="Framework\Renderer3D\BoardPolygon.cpp" />
-    <ClCompile Include="Framework\Renderer3D\MeshContainer.cpp" />
-    <ClCompile Include="Framework\Renderer3D\TransformObject.cpp" />
-    <ClCompile Include="Framework\Resource\ResourceManager.cpp" />
-    <ClCompile Include="Framework\Task\DelayedTask.cpp" />
-    <ClCompile Include="Framework\Task\PeriodicTask.cpp" />
-    <ClCompile Include="Framework\Task\Task.cpp" />
-    <ClCompile Include="Framework\Task\TaskManager.cpp" />
-    <ClCompile Include="Framework\Tool\DebugWindow.cpp" />
-    <ClCompile Include="Framework\Tool\ProfilerCPU.cpp" />
-    <ClCompile Include="Framework\Transition\BaseTransitionMask.cpp" />
-    <ClCompile Include="Framework\Transition\HexaPopTransitionMask.cpp" />
-    <ClCompile Include="Framework\Transition\HexaRotTransitionMask.cpp" />
-    <ClCompile Include="Framework\Transition\MistTransitionMask.cpp" />
-    <ClCompile Include="Framework\Transition\TransitionController.cpp" />
-    <ClCompile Include="Framework\Tween\Tween.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="source\GameMain.cpp" />
-    <ClCompile Include="source\Scene\GameScene.cpp" />
-    <ClCompile Include="source\Scene\TitleScene.cpp" />
-    <ClCompile Include="source\Scene\ResultScene.cpp" />
-    <ClCompile Include="Framework\Light\Light.cpp" />
-    <ClCompile Include="Framework\Renderer3D\SkyBox.cpp" />
-    <ClCompile Include="source\Scene\GameState\GameInit.cpp" />
-    <ClCompile Include="source\Scene\GameState\GameIdle.cpp" />
-    <ClCompile Include="source\Field\FieldCursor.cpp" />
-    <ClCompile Include="source\Field\FieldGround.cpp" />
-    <ClCompile Include="source\Field\FieldController.cpp" />
-    <ClCompile Include="source\Field\Camera\FieldCamera.cpp" />
-    <ClCompile Include="source\Field\Camera\FieldCameraQuater.cpp" />
-    <ClCompile Include="source\Field\Camera\FieldCameraFar.cpp" />
-    <ClCompile Include="Framework\Renderer2D\TextViewer.cpp" />
-    <ClCompile Include="source\Field\Place\FieldPlaceModel.cpp" />
-    <ClCompile Include="Library\imgui\imgui.cpp" />
-    <ClCompile Include="Library\imgui\imgui_demo.cpp" />
-    <ClCompile Include="Library\imgui\imgui_draw.cpp" />
-    <ClCompile Include="Library\imgui\imgui_impl_dx9.cpp" />
-    <ClCompile Include="Library\imgui\imgui_impl_win32.cpp" />
-    <ClCompile Include="Library\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="Library\json11\json11.cpp" />
-    <ClCompile Include="source\Field\Place\FieldPlaceContainer.cpp" />
-    <ClCompile Include="Framework\String\String.cpp" />
-    <ClCompile Include="source\Field\Route\RouteModel.cpp" />
-    <ClCompile Include="source\Field\Route\RouteProcessor.cpp" />
-    <ClCompile Include="source\Field\State\BuildRoad.cpp" />
-    <ClCompile Include="source\Field\State\FieldControllerIdle.cpp" />
-    <ClCompile Include="source\Field\State\UseItem.cpp" />
-    <ClCompile Include="source\Field\Place\OperatePlaceContainer.cpp" />
-    <ClCompile Include="source\Field\FieldInputController.cpp" />
-    <ClCompile Include="source\Field\Place\FieldTownModel.cpp" />
-    <ClCompile Include="source\Field\Place\FieldJunctionModel.cpp" />
-    <ClCompile Include="Framework\Resource\MeshResource.cpp" />
-    <ClCompile Include="Framework\Renderer2D\CircleGauge.cpp" />
-    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\GameViewer\GameViewer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\GameViewer\LevelViewer.cpp" />
-    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\GameViewer\StockViewer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp" />
-    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\EventViewer\EventViewer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\EventViewer\EventMessage.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\EventViewer\EventTelop.cpp" />
-    <ClCompile Include="source\FieldObject\Info\CongestionFieldInfoState.cpp" />
-    <ClCompile Include="source\FieldObject\Info\ConnectFieldInfoState.cpp" />
-    <ClCompile Include="source\FieldObject\Info\CreateFieldInfoState.cpp" />
-    <ClCompile Include="source\FieldObject\Info\FieldInfoActor.cpp" />
-    <ClCompile Include="source\FieldObject\Info\IdleFieldInfoState.cpp" />
-    <ClCompile Include="source\FieldObject\Info\LinkFieldInfoState.cpp" />
-    <ClCompile Include="source\FieldObject\Info\RemoveFieldInfoState.cpp" />
-    <ClCompile Include="source\FieldObject\Item\ItemActor.cpp" />
-    <ClCompile Include="source\FieldObject\Item\ItemModel.cpp" />
-    <ClCompile Include="source\FieldObject\Passenger\PassengerActor.cpp" />
-    <ClCompile Include="source\Field\PlaceActorController.cpp" />
-    <ClCompile Include="source\FieldObject\Actor\BridgeActor.cpp" />
-    <ClCompile Include="source\FieldObject\Actor\CityActor.cpp" />
-    <ClCompile Include="source\FieldObject\Actor\CrossJunctionActor.cpp" />
-    <ClCompile Include="source\FieldObject\Actor\CurveRoadActor.cpp" />
-    <ClCompile Include="source\FieldObject\Actor\MountainActor.cpp" />
-    <ClCompile Include="source\FieldObject\Actor\RiverActor.cpp" />
-    <ClCompile Include="source\FieldObject\Actor\StraightRoadActor.cpp" />
-    <ClCompile Include="source\FieldObject\Actor\TJunctionActor.cpp" />
-    <ClCompile Include="source\FieldObject\Actor\PlaceActor.cpp" />
-    <ClCompile Include="source\FieldObject\Actor\State\IdleActorState.cpp" />
-    <ClCompile Include="source\FieldObject\Actor\State\CreateActorState.cpp" />
-    <ClCompile Include="source\FieldObject\Actor\State\RemoveActorState.cpp" />
-    <ClCompile Include="source\FieldObject\Actor\State\LinkActorState.cpp" />
+    <Filter Include="Library">
+      <UniqueIdentifier>{aeb305ee-1462-4396-996e-4e7c2234dc10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\cppLinq">
+      <UniqueIdentifier>{da90435d-8713-4a4f-9177-4ee409ef79d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\imgui">
+      <UniqueIdentifier>{be7e8153-5bde-4634-a0f0-3be017d78d34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\json11">
+      <UniqueIdentifier>{45a8d2df-6ed8-4bc3-a0ef-ad214ffc5270}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework">
+      <UniqueIdentifier>{a33b7a1b-0a56-485e-9371-932689554fb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Animation">
+      <UniqueIdentifier>{02b0376c-e369-48de-b946-ce1a20afaec1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Camera">
+      <UniqueIdentifier>{13002677-6e92-435f-bace-dcde16f00c36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Collider">
+      <UniqueIdentifier>{60d816ef-472e-4071-87b2-072506cfe1a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Core">
+      <UniqueIdentifier>{51b24620-b6f0-4b8b-9b13-cc41e04c9d82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Input">
+      <UniqueIdentifier>{6a45e83c-f31b-4a4d-86fe-65e3911427d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Light">
+      <UniqueIdentifier>{403334d5-82a3-4d23-bb85-c165acd502df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Math">
+      <UniqueIdentifier>{ea232ca3-752b-4f6b-840f-fe9ae4dbc8b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Particle">
+      <UniqueIdentifier>{d24fb6ec-e34c-4eed-a264-f6fc61effef5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Pattern">
+      <UniqueIdentifier>{8ae41a68-2046-4067-b52a-b40e03b27a13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Renderer2D">
+      <UniqueIdentifier>{be4f5bec-bec6-4310-8cf4-b555f9103ced}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Renderer3D">
+      <UniqueIdentifier>{2d33a7f7-7552-42ef-a4c3-20ca259aadf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Resource">
+      <UniqueIdentifier>{bcb25044-97c2-4191-95bb-0dcbed8bffcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\String">
+      <UniqueIdentifier>{618335b9-7766-43d5-bbed-7be595f7591f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Task">
+      <UniqueIdentifier>{0c3c2828-1069-4331-b2a5-a698136f2ce1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Tool">
+      <UniqueIdentifier>{70c13e0a-fae0-4732-a997-b4ffc7e18aae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Transition">
+      <UniqueIdentifier>{3a3d61bc-7a33-4045-a1f1-d3431d18258b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Tween">
+      <UniqueIdentifier>{8cc13bd9-76f6-47dc-b639-003d5ec546fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\PostEffect">
+      <UniqueIdentifier>{a1451fa5-9622-4d0b-a5e7-c30ac978dc30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{b35bc3eb-1cf1-45ad-a072-ececb5ca1a8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Field">
+      <UniqueIdentifier>{b83cb529-4903-4b95-92e2-bded1db8bfc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\FieldObject">
+      <UniqueIdentifier>{78be3b7a-9f4e-40c7-aa2b-a88d4226086e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Scene">
+      <UniqueIdentifier>{0078de21-9e40-4b7f-b77c-7feff71d245b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Viewer">
+      <UniqueIdentifier>{4b823ef8-fa1f-47ae-9e2f-efdd8d5fa118}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Field\Camera">
+      <UniqueIdentifier>{59ae0710-1d6e-4f59-8174-cd666ee38251}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Field\Place">
+      <UniqueIdentifier>{60f1a4bc-973d-4491-8540-830b48588b88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Field\Route">
+      <UniqueIdentifier>{26067bf6-baf5-416b-ae95-2cf0647bf623}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Field\State">
+      <UniqueIdentifier>{da901291-3434-4102-bbd9-32329da479d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\FieldObject\Actor">
+      <UniqueIdentifier>{5938d15b-f2fe-4379-ab9b-a373f6dbbf23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\FieldObject\Info">
+      <UniqueIdentifier>{e1dfd5a2-3d4c-472f-b877-53fe7c1a78a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\FieldObject\Item">
+      <UniqueIdentifier>{9332c103-48c5-4996-8320-3daa2ef4d872}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\FieldObject\Passenger">
+      <UniqueIdentifier>{9f695be5-c6d3-422b-9a35-75268e296dfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\FieldObject\Actor\State">
+      <UniqueIdentifier>{e38766ef-098b-497f-808b-524efa20637f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Scene\GameState">
+      <UniqueIdentifier>{443dda71-4f5b-45a9-b9e7-7e1e8fd59ac4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Viewer\Framework">
+      <UniqueIdentifier>{9d625517-3f9f-4802-8d85-c9bfd1058282}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Viewer\GameScene">
+      <UniqueIdentifier>{277af40d-fe9a-4bcd-bcde-6a508bae7e52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Viewer\GameScene\EventViewer">
+      <UniqueIdentifier>{2857d1bf-bf2b-41ba-85fb-03915646e764}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Viewer\GameScene\GameViewer">
+      <UniqueIdentifier>{ac5453fd-65c4-48dd-b1b9-526c98faede4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Viewer\Framework\ViewerDrawer">
+      <UniqueIdentifier>{60490ab5-e79f-4466-b021-8624083b71b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Event">
+      <UniqueIdentifier>{82124ad5-8c40-4efb-8687-440c770051d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Event\PlusEvent">
+      <UniqueIdentifier>{08d0950d-1944-47e9-949d-c0b27dbd3db7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Event\MinusEvent">
+      <UniqueIdentifier>{e69d0ac5-f54f-4118-9706-285d513e818c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Framework\Animation\AnimationManager.h" />
-    <ClInclude Include="Framework\Animation\AnimContainer.h" />
-    <ClInclude Include="Framework\Animation\MyAllocateHierarchy.h" />
-    <ClInclude Include="Framework\Camera\Camera.h" />
-    <ClInclude Include="Framework\Camera\CameraShakePlugin.h" />
-    <ClInclude Include="Framework\Collider\BaseCollider.h" />
-    <ClInclude Include="Framework\Collider\BoxCollider3D.h" />
-    <ClInclude Include="Framework\Collider\ColliderManager.h" />
-    <ClInclude Include="Framework\Collider\ColliderObserver.h" />
-    <ClInclude Include="Framework\Core\BaseGame.h" />
-    <ClInclude Include="Framework\Core\BaseScene.h" />
-    <ClInclude Include="Framework\Core\GameObject.h" />
-    <ClInclude Include="Framework\Core\SceneManager.h" />
-    <ClInclude Include="Framework\Core\Transform.h" />
-    <ClInclude Include="Framework\Core\Utility.h" />
-    <ClInclude Include="Framework\Input\Gamepad.h" />
-    <ClInclude Include="Framework\Input\input.h" />
-    <ClInclude Include="Framework\Input\Keyboard.h" />
-    <ClInclude Include="Framework\Input\Mouse.h" />
-    <ClInclude Include="Framework\Math\Easing.h" />
-    <ClInclude Include="Framework\Math\Quaternion.h" />
-    <ClInclude Include="Framework\Math\TMath.h" />
-    <ClInclude Include="Framework\Math\Vector3.h" />
-    <ClInclude Include="Framework\Particle\AnimationParticle.h" />
-    <ClInclude Include="Framework\Particle\BaseEmitter.h" />
-    <ClInclude Include="Framework\Particle\BaseParticle.h" />
-    <ClInclude Include="Framework\Particle\BaseParticleController.h" />
-    <ClInclude Include="Framework\Particle\ParticleJsonParser.h" />
-    <ClInclude Include="Framework\Particle\ParticleRenderer.h" />
-    <ClInclude Include="Framework\Particle\SceneParticleManager.h" />
-    <ClInclude Include="Framework\Pattern\BaseObserver.h" />
-    <ClInclude Include="Framework\Pattern\BaseSingleton.h" />
-    <ClInclude Include="Framework\Pattern\BaseState.h" />
-    <ClInclude Include="Framework\Pattern\Delegate.h" />
-    <ClInclude Include="Framework\Pattern\ObserveSubject.h" />
-    <ClInclude Include="Framework\PostEffect\Effect\BloomFilter.h" />
-    <ClInclude Include="Framework\PostEffect\Effect\BlurFilter.h" />
-    <ClInclude Include="Framework\PostEffect\Effect\CrossBlurFilter.h" />
-    <ClInclude Include="Framework\PostEffect\Effect\MonotoneFilter.h" />
-    <ClInclude Include="Framework\PostEffect\Effect\ShockBlur.h" />
-    <ClInclude Include="Framework\PostEffect\Effect\SpeedBlurFilter.h" />
-    <ClInclude Include="Framework\PostEffect\Effect\SpikeNoise.h" />
-    <ClInclude Include="Framework\PostEffect\Effect\StrongBlurFilter.h" />
-    <ClInclude Include="Framework\PostEffect\BaseEffectController.h" />
-    <ClInclude Include="Framework\PostEffect\BloomController.h" />
-    <ClInclude Include="Framework\PostEffect\CrossFilterController.h" />
-    <ClInclude Include="Framework\PostEffect\PostEffectManager.h" />
-    <ClInclude Include="Framework\PostEffect\ScreenObject.h" />
-    <ClInclude Include="Framework\PostEffect\ShockBlurController.h" />
-    <ClInclude Include="Framework\PostEffect\SpeedBlurController.h" />
-    <ClInclude Include="Framework\PostEffect\SpikeNoiseController.h" />
-    <ClInclude Include="Framework\Renderer2D\Polygon2D.h" />
-    <ClInclude Include="Framework\Renderer3D\BillboardObject.h" />
-    <ClInclude Include="Framework\Renderer3D\BillboardTransform.h" />
-    <ClInclude Include="Framework\Renderer3D\BoardPolygon.h" />
-    <ClInclude Include="Framework\Renderer3D\MeshContainer.h" />
-    <ClInclude Include="Framework\Renderer3D\TransformObject.h" />
-    <ClInclude Include="Framework\Resource\ResourceManager.h" />
-    <ClInclude Include="Framework\Task\DelayedTask.h" />
-    <ClInclude Include="Framework\Task\PeriodicTask.h" />
-    <ClInclude Include="Framework\Task\Task.h" />
-    <ClInclude Include="Framework\Task\TaskManager.h" />
-    <ClInclude Include="Framework\Tool\DebugWindow.h" />
-    <ClInclude Include="Framework\Tool\ProfilerCPU.h" />
-    <ClInclude Include="Framework\Transition\BaseTransitionMask.h" />
-    <ClInclude Include="Framework\Transition\HexaPopTransitionMask.h" />
-    <ClInclude Include="Framework\Transition\HexaRotTransitionMask.h" />
-    <ClInclude Include="Framework\Transition\MistTransitionMask.h" />
-    <ClInclude Include="Framework\Transition\TransitionController.h" />
-    <ClInclude Include="Framework\Tween\Tween.h" />
+    <ClInclude Include="Library\cppLinq\cpplinq.hpp">
+      <Filter>Library\cppLinq</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\imgui\imconfig.h">
+      <Filter>Library\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\imgui\imgui.h">
+      <Filter>Library\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\imgui\imgui_impl_dx9.h">
+      <Filter>Library\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\imgui\imgui_impl_win32.h">
+      <Filter>Library\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\imgui\imgui_internal.h">
+      <Filter>Library\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\imgui\imstb_rectpack.h">
+      <Filter>Library\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\imgui\imstb_textedit.h">
+      <Filter>Library\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\imgui\imstb_truetype.h">
+      <Filter>Library\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\json11\json11.hpp">
+      <Filter>Library\json11</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Animation\AnimationManager.h">
+      <Filter>Framework\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Animation\AnimContainer.h">
+      <Filter>Framework\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Animation\MyAllocateHierarchy.h">
+      <Filter>Framework\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Camera\Camera.h">
+      <Filter>Framework\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Camera\CameraShakePlugin.h">
+      <Filter>Framework\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Collider\BaseCollider.h">
+      <Filter>Framework\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Collider\BoxCollider3D.h">
+      <Filter>Framework\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Collider\ColliderManager.h">
+      <Filter>Framework\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Collider\ColliderObserver.h">
+      <Filter>Framework\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Core\BaseGame.h">
+      <Filter>Framework\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Core\BaseScene.h">
+      <Filter>Framework\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Core\GameObject.h">
+      <Filter>Framework\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Core\SceneManager.h">
+      <Filter>Framework\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Core\Transform.h">
+      <Filter>Framework\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Core\Utility.h">
+      <Filter>Framework\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Input\Gamepad.h">
+      <Filter>Framework\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Input\input.h">
+      <Filter>Framework\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Input\Keyboard.h">
+      <Filter>Framework\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Input\Mouse.h">
+      <Filter>Framework\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Light\Light.h">
+      <Filter>Framework\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Math\Easing.h">
+      <Filter>Framework\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Math\Quaternion.h">
+      <Filter>Framework\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Math\TMath.h">
+      <Filter>Framework\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Math\Vector3.h">
+      <Filter>Framework\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Particle\AnimationParticle.h">
+      <Filter>Framework\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Particle\BaseEmitter.h">
+      <Filter>Framework\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Particle\BaseParticle.h">
+      <Filter>Framework\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Particle\BaseParticleController.h">
+      <Filter>Framework\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Particle\ParticleJsonParser.h">
+      <Filter>Framework\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Particle\ParticleRenderer.h">
+      <Filter>Framework\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Particle\SceneParticleManager.h">
+      <Filter>Framework\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Pattern\BaseObserver.h">
+      <Filter>Framework\Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Pattern\BaseSingleton.h">
+      <Filter>Framework\Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Pattern\BaseState.h">
+      <Filter>Framework\Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Pattern\Delegate.h">
+      <Filter>Framework\Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Pattern\ObserveSubject.h">
+      <Filter>Framework\Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Renderer2D\CircleGauge.h">
+      <Filter>Framework\Renderer2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Renderer2D\Polygon2D.h">
+      <Filter>Framework\Renderer2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Renderer2D\TextViewer.h">
+      <Filter>Framework\Renderer2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Renderer3D\BillboardObject.h">
+      <Filter>Framework\Renderer3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Renderer3D\BillboardTransform.h">
+      <Filter>Framework\Renderer3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Renderer3D\BoardPolygon.h">
+      <Filter>Framework\Renderer3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Renderer3D\MeshContainer.h">
+      <Filter>Framework\Renderer3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Renderer3D\SkyBox.h">
+      <Filter>Framework\Renderer3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Renderer3D\TransformObject.h">
+      <Filter>Framework\Renderer3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Tween\Tween.h">
+      <Filter>Framework\Tween</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Transition\BaseTransitionMask.h">
+      <Filter>Framework\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Transition\HexaPopTransitionMask.h">
+      <Filter>Framework\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Transition\HexaRotTransitionMask.h">
+      <Filter>Framework\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Transition\MistTransitionMask.h">
+      <Filter>Framework\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Transition\TransitionController.h">
+      <Filter>Framework\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Tool\DebugWindow.h">
+      <Filter>Framework\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Tool\ProfilerCPU.h">
+      <Filter>Framework\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Task\DelayedTask.h">
+      <Filter>Framework\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Task\PeriodicTask.h">
+      <Filter>Framework\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Task\Task.h">
+      <Filter>Framework\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Task\TaskManager.h">
+      <Filter>Framework\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\String\String.h">
+      <Filter>Framework\String</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Resource\MeshResource.h">
+      <Filter>Framework\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Resource\ResourceManager.h">
+      <Filter>Framework\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\PostEffect\BaseEffectController.h">
+      <Filter>Framework\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\PostEffect\BloomController.h">
+      <Filter>Framework\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\PostEffect\CrossFilterController.h">
+      <Filter>Framework\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\PostEffect\Effect\BloomFilter.h">
+      <Filter>Framework\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\PostEffect\Effect\BlurFilter.h">
+      <Filter>Framework\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\PostEffect\Effect\CrossBlurFilter.h">
+      <Filter>Framework\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\PostEffect\Effect\MonotoneFilter.h">
+      <Filter>Framework\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\PostEffect\Effect\ShockBlur.h">
+      <Filter>Framework\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\PostEffect\Effect\SpeedBlurFilter.h">
+      <Filter>Framework\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\PostEffect\Effect\SpikeNoise.h">
+      <Filter>Framework\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\PostEffect\Effect\StrongBlurFilter.h">
+      <Filter>Framework\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\PostEffect\PostEffectManager.h">
+      <Filter>Framework\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\PostEffect\ScreenObject.h">
+      <Filter>Framework\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\PostEffect\ShockBlurController.h">
+      <Filter>Framework\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\PostEffect\SpeedBlurController.h">
+      <Filter>Framework\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\PostEffect\SpikeNoiseController.h">
+      <Filter>Framework\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Actor\State\CreateActorState.h">
+      <Filter>source\FieldObject\Actor\State</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Actor\State\IdleActorState.h">
+      <Filter>source\FieldObject\Actor\State</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Actor\State\LinkActorState.h">
+      <Filter>source\FieldObject\Actor\State</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Actor\State\RemoveActorState.h">
+      <Filter>source\FieldObject\Actor\State</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Actor\BridgeActor.h">
+      <Filter>source\FieldObject\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Actor\CityActor.h">
+      <Filter>source\FieldObject\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Actor\CrossJunctionActor.h">
+      <Filter>source\FieldObject\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Actor\CurveRoadActor.h">
+      <Filter>source\FieldObject\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Actor\MountainActor.h">
+      <Filter>source\FieldObject\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Actor\PlaceActor.h">
+      <Filter>source\FieldObject\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Actor\RiverActor.h">
+      <Filter>source\FieldObject\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Actor\StraightRoadActor.h">
+      <Filter>source\FieldObject\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Actor\TJunctionActor.h">
+      <Filter>source\FieldObject\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Info\CongestionFieldInfoState.h">
+      <Filter>source\FieldObject\Info</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Info\ConnectFieldInfoState.h">
+      <Filter>source\FieldObject\Info</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Info\CreateFieldInfoState.h">
+      <Filter>source\FieldObject\Info</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Info\FieldInfoActor.h">
+      <Filter>source\FieldObject\Info</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Info\IdleFieldInfoState.h">
+      <Filter>source\FieldObject\Info</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Info\LinkFieldInfoState.h">
+      <Filter>source\FieldObject\Info</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Info\RemoveFieldInfoState.h">
+      <Filter>source\FieldObject\Info</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Passenger\PassengerActor.h">
+      <Filter>source\FieldObject\Passenger</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Item\ItemActor.h">
+      <Filter>source\FieldObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FieldObject\Item\ItemModel.h">
+      <Filter>source\FieldObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\FieldConfig.h">
+      <Filter>source\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\FieldController.h">
+      <Filter>source\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\FieldCursor.h">
+      <Filter>source\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\FieldGround.h">
+      <Filter>source\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\FieldInputController.h">
+      <Filter>source\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\PlaceActorController.h">
+      <Filter>source\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\Camera\FieldCamera.h">
+      <Filter>source\Field\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\Camera\FieldCameraFar.h">
+      <Filter>source\Field\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\Camera\FieldCameraQuater.h">
+      <Filter>source\Field\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\State\BuildRoad.h">
+      <Filter>source\Field\State</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\State\FieldControllerIdle.h">
+      <Filter>source\Field\State</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\State\UseItem.h">
+      <Filter>source\Field\State</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\Route\RouteModel.h">
+      <Filter>source\Field\Route</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\Route\RouteProcessor.h">
+      <Filter>source\Field\Route</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\Place\FieldJunctionModel.h">
+      <Filter>source\Field\Place</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\Place\FieldPlaceContainer.h">
+      <Filter>source\Field\Place</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\Place\FieldPlaceModel.h">
+      <Filter>source\Field\Place</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\Place\FieldTownModel.h">
+      <Filter>source\Field\Place</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\Place\OperatePlaceContainer.h">
+      <Filter>source\Field\Place</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Field\Place\PlaceConfig.h">
+      <Filter>source\Field\Place</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene\GameScene.h">
+      <Filter>source\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene\ResultScene.h">
+      <Filter>source\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene\TitleScene.h">
+      <Filter>source\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene\GameState\GameIdle.h">
+      <Filter>source\Scene\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene\GameState\GameInit.h">
+      <Filter>source\Scene\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameConfig.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameMain.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h">
+      <Filter>source\Viewer\GameScene\EventViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h">
+      <Filter>source\Viewer\GameScene\EventViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\GameScene\EventViewer\EventViewer.h">
+      <Filter>source\Viewer\GameScene\EventViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewer.h">
+      <Filter>source\Viewer\GameScene\GameViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewerParam.h">
+      <Filter>source\Viewer\GameScene\GameViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\LevelViewer.h">
+      <Filter>source\Viewer\GameScene\GameViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\StockViewer.h">
+      <Filter>source\Viewer\GameScene\GameViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\TimerViewer.h">
+      <Filter>source\Viewer\GameScene\GameViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\Framework\BaseViewer.h">
+      <Filter>source\Viewer\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.h">
+      <Filter>source\Viewer\Framework\ViewerDrawer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\countviewerdrawer.h">
+      <Filter>source\Viewer\Framework\ViewerDrawer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.h">
+      <Filter>source\Viewer\Framework\ViewerDrawer</Filter>
+    </ClInclude>
     <ClInclude Include="main.h" />
-    <ClInclude Include="source\GameMain.h" />
-    <ClInclude Include="source\GameConfig.h" />
-    <ClInclude Include="source\Scene\GameScene.h" />
-    <ClInclude Include="source\Scene\TitleScene.h" />
-    <ClInclude Include="source\Scene\ResultScene.h" />
-    <ClInclude Include="Framework\Light\Light.h" />
-    <ClInclude Include="Framework\Renderer3D\SkyBox.h" />
-    <ClInclude Include="source\Scene\GameState\GameInit.h" />
-    <ClInclude Include="source\Scene\GameState\GameIdle.h" />
-    <ClInclude Include="source\Field\FieldCursor.h" />
-    <ClInclude Include="source\Field\FieldGround.h" />
-    <ClInclude Include="source\Field\FieldController.h" />
-    <ClInclude Include="source\Field\Camera\FieldCamera.h" />
-    <ClInclude Include="source\Field\Camera\FieldCameraQuater.h" />
-    <ClInclude Include="source\Field\Camera\FieldCameraFar.h" />
-    <ClInclude Include="Framework\Renderer2D\TextViewer.h" />
-    <ClInclude Include="source\Field\Place\FieldPlaceModel.h" />
-    <ClInclude Include="source\Field\Place\PlaceConfig.h" />
-    <ClInclude Include="Library\cppLinq\cpplinq.hpp" />
-    <ClInclude Include="Library\imgui\imconfig.h" />
-    <ClInclude Include="Library\imgui\imgui.h" />
-    <ClInclude Include="Library\imgui\imgui_impl_dx9.h" />
-    <ClInclude Include="Library\imgui\imgui_impl_win32.h" />
-    <ClInclude Include="Library\imgui\imgui_internal.h" />
-    <ClInclude Include="Library\imgui\imstb_rectpack.h" />
-    <ClInclude Include="Library\imgui\imstb_textedit.h" />
-    <ClInclude Include="Library\imgui\imstb_truetype.h" />
-    <ClInclude Include="Library\json11\json11.hpp" />
-    <ClInclude Include="source\Field\Place\FieldPlaceContainer.h" />
-    <ClInclude Include="Framework\String\String.h" />
-    <ClInclude Include="source\Viewer\Framework\BaseViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewer.h" />
-    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.h" />
-    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.h" />
-    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.h" />
-    <ClInclude Include="source\Viewer\GameScene\GameViewer\StockViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewerParam.h" />
-    <ClInclude Include="source\Viewer\GameScene\GameViewer\LevelViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\GameViewer\TimerViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\EventViewer\EventViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h" />
-    <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h" />
+    <ClInclude Include="source\Event\EventBase.h">
+      <Filter>source\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Event\EventController.h">
+      <Filter>source\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Event\EventMessageContainer.h">
+      <Filter>source\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Event\MinusEvent\CityDestroyEvent.h" />
+    <ClInclude Include="source\Event\EventConfig.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\Field\Route\RouteModel.h" />
-    <ClInclude Include="source\Field\Route\RouteProcessor.h" />
-    <ClInclude Include="source\Field\State\BuildRoad.h" />
-    <ClInclude Include="source\Field\State\FieldControllerIdle.h" />
-    <ClInclude Include="source\Field\State\UseItem.h" />
-    <ClInclude Include="source\Field\Place\OperatePlaceContainer.h" />
-    <ClInclude Include="source\Field\FieldConfig.h" />
-    <ClInclude Include="source\Field\FieldInputController.h" />
-    <ClInclude Include="source\Field\Place\FieldTownModel.h" />
-    <ClInclude Include="source\Field\Place\FieldJunctionModel.h" />
-    <ClInclude Include="Framework\Resource\MeshResource.h" />
-    <ClInclude Include="Framework\Renderer2D\CircleGauge.h" />
-    <ClInclude Include="source\FieldObject\Info\CongestionFieldInfoState.h" />
-    <ClInclude Include="source\FieldObject\Info\ConnectFieldInfoState.h" />
-    <ClInclude Include="source\FieldObject\Info\CreateFieldInfoState.h" />
-    <ClInclude Include="source\FieldObject\Info\FieldInfoActor.h" />
-    <ClInclude Include="source\FieldObject\Info\IdleFieldInfoState.h" />
-    <ClInclude Include="source\FieldObject\Info\LinkFieldInfoState.h" />
-    <ClInclude Include="source\FieldObject\Info\RemoveFieldInfoState.h" />
-    <ClInclude Include="source\FieldObject\Item\ItemActor.h" />
-    <ClInclude Include="source\FieldObject\Item\ItemModel.h" />
-    <ClInclude Include="source\FieldObject\Passenger\PassengerActor.h" />
-    <ClInclude Include="source\Field\PlaceActorController.h" />
-    <ClInclude Include="source\FieldObject\Actor\BridgeActor.h" />
-    <ClInclude Include="source\FieldObject\Actor\CityActor.h" />
-    <ClInclude Include="source\FieldObject\Actor\CrossJunctionActor.h" />
-    <ClInclude Include="source\FieldObject\Actor\CurveRoadActor.h" />
-    <ClInclude Include="source\FieldObject\Actor\MountainActor.h" />
-    <ClInclude Include="source\FieldObject\Actor\RiverActor.h" />
-    <ClInclude Include="source\FieldObject\Actor\StraightRoadActor.h" />
-    <ClInclude Include="source\FieldObject\Actor\TJunctionActor.h" />
-    <ClInclude Include="source\FieldObject\Actor\PlaceActor.h" />
-    <ClInclude Include="source\FieldObject\Actor\State\IdleActorState.h" />
-    <ClInclude Include="source\FieldObject\Actor\State\CreateActorState.h" />
-    <ClInclude Include="source\FieldObject\Actor\State\RemoveActorState.h" />
-    <ClInclude Include="source\FieldObject\Actor\State\LinkActorState.h" />
+    <ClCompile Include="Library\imgui\imgui.cpp">
+      <Filter>Library\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\imgui\imgui_demo.cpp">
+      <Filter>Library\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\imgui\imgui_draw.cpp">
+      <Filter>Library\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\imgui\imgui_impl_dx9.cpp">
+      <Filter>Library\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\imgui\imgui_impl_win32.cpp">
+      <Filter>Library\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\imgui\imgui_widgets.cpp">
+      <Filter>Library\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\json11\json11.cpp">
+      <Filter>Library\json11</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Animation\AnimationManager.cpp">
+      <Filter>Framework\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Animation\AnimContainer.cpp">
+      <Filter>Framework\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Animation\MyAllocateHierarchy.cpp">
+      <Filter>Framework\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Camera\Camera.cpp">
+      <Filter>Framework\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Camera\CameraShakePlugin.cpp">
+      <Filter>Framework\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Collider\BaseCollider.cpp">
+      <Filter>Framework\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Collider\BoxCollider3D.cpp">
+      <Filter>Framework\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Collider\ColliderManager.cpp">
+      <Filter>Framework\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Core\BaseGame.cpp">
+      <Filter>Framework\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Core\GameObject.cpp">
+      <Filter>Framework\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Core\SceneManager.cpp">
+      <Filter>Framework\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Core\Transform.cpp">
+      <Filter>Framework\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Input\Gamepad.cpp">
+      <Filter>Framework\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Input\input.cpp">
+      <Filter>Framework\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Input\Keyboard.cpp">
+      <Filter>Framework\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Input\Mouse.cpp">
+      <Filter>Framework\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Light\Light.cpp">
+      <Filter>Framework\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Math\Quaternion.cpp">
+      <Filter>Framework\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Math\Vector3.cpp">
+      <Filter>Framework\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Particle\AnimationParticle.cpp">
+      <Filter>Framework\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Particle\BaseEmitter.cpp">
+      <Filter>Framework\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Particle\BaseParticle.cpp">
+      <Filter>Framework\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Particle\BaseParticleController.cpp">
+      <Filter>Framework\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Particle\ParticleJsonParser.cpp">
+      <Filter>Framework\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Particle\ParticleRenderer.cpp">
+      <Filter>Framework\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Particle\SceneParticleManager.cpp">
+      <Filter>Framework\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Pattern\ObserveSubject.cpp">
+      <Filter>Framework\Pattern</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Renderer2D\CircleGauge.cpp">
+      <Filter>Framework\Renderer2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Renderer2D\Polygon2D.cpp">
+      <Filter>Framework\Renderer2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Renderer2D\TextViewer.cpp">
+      <Filter>Framework\Renderer2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Renderer3D\BillboardObject.cpp">
+      <Filter>Framework\Renderer3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Renderer3D\BillboardTransform.cpp">
+      <Filter>Framework\Renderer3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Renderer3D\BoardPolygon.cpp">
+      <Filter>Framework\Renderer3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Renderer3D\MeshContainer.cpp">
+      <Filter>Framework\Renderer3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Renderer3D\SkyBox.cpp">
+      <Filter>Framework\Renderer3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Renderer3D\TransformObject.cpp">
+      <Filter>Framework\Renderer3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Tween\Tween.cpp">
+      <Filter>Framework\Tween</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Transition\BaseTransitionMask.cpp">
+      <Filter>Framework\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Transition\HexaPopTransitionMask.cpp">
+      <Filter>Framework\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Transition\HexaRotTransitionMask.cpp">
+      <Filter>Framework\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Transition\MistTransitionMask.cpp">
+      <Filter>Framework\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Transition\TransitionController.cpp">
+      <Filter>Framework\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Tool\DebugWindow.cpp">
+      <Filter>Framework\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Tool\ProfilerCPU.cpp">
+      <Filter>Framework\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Task\DelayedTask.cpp">
+      <Filter>Framework\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Task\PeriodicTask.cpp">
+      <Filter>Framework\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Task\Task.cpp">
+      <Filter>Framework\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Task\TaskManager.cpp">
+      <Filter>Framework\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\String\String.cpp">
+      <Filter>Framework\String</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Resource\MeshResource.cpp">
+      <Filter>Framework\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Resource\ResourceManager.cpp">
+      <Filter>Framework\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\PostEffect\BaseEffectController.cpp">
+      <Filter>Framework\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\PostEffect\BloomController.cpp">
+      <Filter>Framework\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\PostEffect\CrossFilterController.cpp">
+      <Filter>Framework\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\PostEffect\Effect\BloomFilter.cpp">
+      <Filter>Framework\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\PostEffect\Effect\BlurFilter.cpp">
+      <Filter>Framework\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\PostEffect\Effect\CrossBlurFilter.cpp">
+      <Filter>Framework\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\PostEffect\Effect\MonotoneFilter.cpp">
+      <Filter>Framework\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\PostEffect\Effect\ShockBlur.cpp">
+      <Filter>Framework\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\PostEffect\Effect\SpeedBlurFilter.cpp">
+      <Filter>Framework\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\PostEffect\Effect\SpikeNoise.cpp">
+      <Filter>Framework\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\PostEffect\Effect\StrongBlurFilter.cpp">
+      <Filter>Framework\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\PostEffect\PostEffectManager.cpp">
+      <Filter>Framework\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\PostEffect\ScreenObject.cpp">
+      <Filter>Framework\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\PostEffect\ShockBlurController.cpp">
+      <Filter>Framework\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\PostEffect\SpeedBlurController.cpp">
+      <Filter>Framework\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\PostEffect\SpikeNoiseController.cpp">
+      <Filter>Framework\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Actor\State\CreateActorState.cpp">
+      <Filter>source\FieldObject\Actor\State</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Actor\State\IdleActorState.cpp">
+      <Filter>source\FieldObject\Actor\State</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Actor\State\LinkActorState.cpp">
+      <Filter>source\FieldObject\Actor\State</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Actor\State\RemoveActorState.cpp">
+      <Filter>source\FieldObject\Actor\State</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Actor\BridgeActor.cpp">
+      <Filter>source\FieldObject\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Actor\CityActor.cpp">
+      <Filter>source\FieldObject\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Actor\CrossJunctionActor.cpp">
+      <Filter>source\FieldObject\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Actor\CurveRoadActor.cpp">
+      <Filter>source\FieldObject\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Actor\MountainActor.cpp">
+      <Filter>source\FieldObject\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Actor\PlaceActor.cpp">
+      <Filter>source\FieldObject\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Actor\RiverActor.cpp">
+      <Filter>source\FieldObject\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Actor\StraightRoadActor.cpp">
+      <Filter>source\FieldObject\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Actor\TJunctionActor.cpp">
+      <Filter>source\FieldObject\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Info\CongestionFieldInfoState.cpp">
+      <Filter>source\FieldObject\Info</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Info\ConnectFieldInfoState.cpp">
+      <Filter>source\FieldObject\Info</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Info\CreateFieldInfoState.cpp">
+      <Filter>source\FieldObject\Info</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Info\FieldInfoActor.cpp">
+      <Filter>source\FieldObject\Info</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Info\IdleFieldInfoState.cpp">
+      <Filter>source\FieldObject\Info</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Info\LinkFieldInfoState.cpp">
+      <Filter>source\FieldObject\Info</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Info\RemoveFieldInfoState.cpp">
+      <Filter>source\FieldObject\Info</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Passenger\PassengerActor.cpp">
+      <Filter>source\FieldObject\Passenger</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Item\ItemActor.cpp">
+      <Filter>source\FieldObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FieldObject\Item\ItemModel.cpp">
+      <Filter>source\FieldObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Field\FieldController.cpp">
+      <Filter>source\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Field\FieldCursor.cpp">
+      <Filter>source\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Field\FieldGround.cpp">
+      <Filter>source\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Field\FieldInputController.cpp">
+      <Filter>source\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Field\PlaceActorController.cpp">
+      <Filter>source\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Field\Camera\FieldCamera.cpp">
+      <Filter>source\Field\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Field\Camera\FieldCameraFar.cpp">
+      <Filter>source\Field\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Field\Camera\FieldCameraQuater.cpp">
+      <Filter>source\Field\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Field\State\BuildRoad.cpp">
+      <Filter>source\Field\State</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Field\State\FieldControllerIdle.cpp">
+      <Filter>source\Field\State</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Field\State\UseItem.cpp">
+      <Filter>source\Field\State</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Field\Route\RouteModel.cpp">
+      <Filter>source\Field\Route</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Field\Route\RouteProcessor.cpp">
+      <Filter>source\Field\Route</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Field\Place\FieldJunctionModel.cpp">
+      <Filter>source\Field\Place</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Field\Place\FieldPlaceContainer.cpp">
+      <Filter>source\Field\Place</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Field\Place\FieldPlaceModel.cpp">
+      <Filter>source\Field\Place</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Field\Place\FieldTownModel.cpp">
+      <Filter>source\Field\Place</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Field\Place\OperatePlaceContainer.cpp">
+      <Filter>source\Field\Place</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scene\GameScene.cpp">
+      <Filter>source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scene\ResultScene.cpp">
+      <Filter>source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scene\TitleScene.cpp">
+      <Filter>source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scene\GameState\GameIdle.cpp">
+      <Filter>source\Scene\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scene\GameState\GameInit.cpp">
+      <Filter>source\Scene\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameMain.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Viewer\GameScene\EventViewer\EventMessage.cpp">
+      <Filter>source\Viewer\GameScene\EventViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Viewer\GameScene\EventViewer\EventTelop.cpp">
+      <Filter>source\Viewer\GameScene\EventViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Viewer\GameScene\EventViewer\EventViewer.cpp">
+      <Filter>source\Viewer\GameScene\EventViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\GameViewer.cpp">
+      <Filter>source\Viewer\GameScene\GameViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\LevelViewer.cpp">
+      <Filter>source\Viewer\GameScene\GameViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\StockViewer.cpp">
+      <Filter>source\Viewer\GameScene\GameViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp">
+      <Filter>source\Viewer\GameScene\GameViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp">
+      <Filter>source\Viewer\Framework\ViewerDrawer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.cpp">
+      <Filter>source\Viewer\Framework\ViewerDrawer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.cpp">
+      <Filter>source\Viewer\Framework\ViewerDrawer</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="source\Event\EventBase.cpp">
+      <Filter>source\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Event\EventController.cpp">
+      <Filter>source\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Event\EventMessageContainer.cpp">
+      <Filter>source\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Event\MinusEvent\CityDestroyEvent.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="imgui.ini" />
   </ItemGroup>
 </Project>
