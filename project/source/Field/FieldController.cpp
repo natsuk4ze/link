@@ -306,7 +306,7 @@ namespace Field
 	void FieldController::RaiseTrafficJam(float bias)
 	{
 		//TODOF‰ðœˆ—‚ðŽÀ‘•‚·‚é
-		
+		placeContainer->SetTrafficjamBias(bias);
 	}
 
 	/**************************************
