@@ -13,7 +13,8 @@
 //=====================================
 void ActorAnimation::Fall(GameObject& ref, std::function<void(void)> callback)
 {
-	Tween::Move(ref, ref.GetPosition() + D3DXVECTOR3(0.0f, 50.0f, 0.0f), ref.GetPosition(), 30, InQuint, callback);
+	Tween::Move(ref, ref.GetPosition() + D3DXVECTOR3(0.0f, 50.0f, 0.0f), ref.GetPosition(), 30, InQuint);
+	Tween::Scale(ref, D3DXVECTOR3(0.0f, 0.0f, 0.0f), ref.GetScale(), 30, InQuint, callback);
 }
 
 //=====================================
