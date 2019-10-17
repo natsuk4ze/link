@@ -51,6 +51,7 @@ namespace Field
 		stockDevelopMountain(InitDevelopMountainStock),
 		stockEDF(0),
 		stockInsurance(0),
+		developSpeedBonus(1.0f),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
 		onChangePlaceType(nullptr)
@@ -222,12 +223,90 @@ namespace Field
 	***************************************/
 	void FieldController::EmbedViewerParam(GameViewerParam & param)
 	{
-		param.levelAI = developmentLevelAI;
+		param.levelAI = (int)developmentLevelAI;
 		param.ratioLevel = (float)developmentLevelAI / 9999.0f;
 		param.stockBreakItem = stockDevelopMountain;
 		param.stockBuildItem = stockDevelopRiver;
 		param.stockEDF = stockEDF;
 		param.stockInsurance = stockInsurance;
+	}
+
+	/**************************************
+	AI発展レベルを増やす
+	***************************************/
+	void FieldController::AddLevelAI(float num)
+	{
+		float MaxLevel = 9999.0f;
+		developmentLevelAI = Math::Clamp(0.0f, MaxLevel, developmentLevelAI + num);
+	}
+
+	/**************************************
+	街の発展レベルを増やす
+	***************************************/
+	void FieldController::AddLevelDevelopment(float num)
+	{
+		placeContainer->AddDevelopmentLevel(num);
+	}
+
+	/**************************************
+	ストックアイテムの数を増やす
+	***************************************/
+	void FieldController::AddStockItem(int num)
+	{
+		unsigned StockMax = 50;
+		stockDevelopMountain = Math::Clamp((unsigned)0, StockMax, stockDevelopMountain + num);
+		stockDevelopRiver = Math::Clamp((unsigned)0, StockMax, stockDevelopRiver + num);
+	}
+
+	/**************************************
+	発展スピードへのボーナス付与
+	***************************************/
+	void FieldController::SetDevelopSpeedBonus()
+	{
+		//TODO ; 解除処理を実装する
+		//TODO : 公開倍率をちゃんと決める
+		developSpeedBonus = 1.5f;
+	}
+
+	/**************************************
+	新しい街を出現させる
+	***************************************/
+	void FieldController::CreateNewTown()
+	{
+		//NOTE:後で作る
+	}
+
+	/**************************************
+	街を破壊する
+	***************************************/
+	void FieldController::DestroyTown()
+	{
+		//NOTE：後で作る
+	}
+
+	/**************************************
+	操作を反転させる
+	***************************************/
+	void FieldController::ReverseOperation(bool isReverse)
+	{
+		//InputControllerを作ってから
+	}
+
+	/**************************************
+	ストックアイテム使用を封印する
+	***************************************/
+	void FieldController::SealUsingItem(bool isSeal)
+	{
+		//Developperを作ってから
+	}
+
+	/**************************************
+	混雑度を上昇させる
+	***************************************/
+	void FieldController::RaiseTrafficJam(float bias)
+	{
+		//TODO：解除処理を実装する
+		placeContainer->SetTrafficjamBias(bias);
 	}
 
 	/**************************************
@@ -445,6 +524,7 @@ namespace Field
 		if (cntFrame != 0)
 			return;
 
-		developmentLevelAI += placeContainer->CalcDevelopmentLevelAI();
+		float raiseValue = placeContainer->CalcDevelopmentLevelAI(developSpeedBonus);
+		AddLevelAI(raiseValue);
 	}
 }
