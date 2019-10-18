@@ -22,7 +22,7 @@
 //※イベントコントローラーが出来たらそっち移動
 #include "../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../FieldObject/Actor/CrossJunctionActor.h"
-#include "../FieldObject/Actor/CityActor.h"
+#include "../FieldObject/Actor/BridgeActor.h"
 
 /**************************************
 初期化処理
@@ -56,7 +56,7 @@ void GameScene::Init()
 	//ステート初期化
 	ChangeState(State::Initialize);
 
-	testActor = new CityActor(D3DXVECTOR3(150.0f, 0.0f, 150.0f), FModel::City);
+	//testActor = new BridgeActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), FModel::City);
 }
 
 /**************************************
@@ -79,10 +79,10 @@ void GameScene::Uninit()
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
 
+	//SAFE_DELETE(testActor);
 	//デリゲート削除
 	SAFE_DELETE(onBuildRoad);
 
-	SAFE_DELETE(testActor);
 }
 
 /**************************************
@@ -107,7 +107,7 @@ void GameScene::Update()
 	//ビュアー更新
 	gameViewer->Update();
 
-	testActor->Update();
+	//testActor->Update();
 }
 
 /**************************************
@@ -121,7 +121,7 @@ void GameScene::Draw()
 	//背景描画
 	skybox->Draw();
 
-	testActor->Draw();
+	//testActor->Draw();
 
 	//オブジェクト描画
 	field->Draw();

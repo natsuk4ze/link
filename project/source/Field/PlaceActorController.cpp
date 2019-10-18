@@ -17,6 +17,7 @@
 #include "../FieldObject/Actor/RiverActor.h"
 #include "../FieldObject/Actor/StraightRoadActor.h"
 #include "../FieldObject/Actor/TJunctionActor.h"
+#include "../FieldObject/Actor/BridgeActor.h"
 
 #include "../FieldObject/Animation/ActorAnimation.h"
 
@@ -190,7 +191,7 @@ namespace Field::Actor
 				actor->Rotate(90.0f);
 
 			// 生成アニメーション
-			ActorAnimation::Fall(*actor);
+			ActorAnimation::FallAndExpantion(*actor);
 
 			AddContainer(ActorPattern::StarightRoad, place->ID(), actor);
 		}
@@ -214,7 +215,7 @@ namespace Field::Actor
 			actor->Rotate(rotAngle);
 
 			// 生成アニメーション
-			ActorAnimation::Fall(*actor);
+			ActorAnimation::FallAndExpantion(*actor);
 
 			AddContainer(ActorPattern::Curve, place->ID(), actor);
 		}
@@ -248,6 +249,16 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::SetBridge(const Model::PlaceModel * place)
 	{
+		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
+
+		//アクター生成
+		PlaceActor* actor = new BridgeActor(actorPos, Model::FieldLevel::City);
+
+		// 生成アニメーション
+		ActorAnimation::FallAndExpantion(*actor);
+
+		AddContainer(ActorPattern::StarightRoad, place->ID(), actor);
+
 	}
 
 	/**************************************

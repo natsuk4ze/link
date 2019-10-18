@@ -1,7 +1,7 @@
 //=============================================================================
 //
-// ƒCƒxƒ“ƒgƒRƒ“ƒgƒ[ƒ‰[ƒNƒ‰ƒX [EventController.cpp]
-// Author : HAL“Œ‹ GP12B332 41 —ŠŠM‹»
+// ã‚¤ãƒ™ãƒ³ãƒˆã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã‚¯ãƒ©ã‚¹ [EventController.cpp]
+// Author : HALæ±äº¬ GP12B332 41 é ¼å‡±èˆˆ
 //
 //=============================================================================
 #include "../../main.h"
@@ -33,18 +33,18 @@
 using namespace EventConfig;
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
-// g—p‚µ‚Ä‚¢‚È‚¢ƒCƒxƒ“ƒg‚ğíœ
+// ä½¿ç”¨ã—ã¦ã„ãªã„ã‚¤ãƒ™ãƒ³ãƒˆã‚’å‰Šé™¤
 bool RemoveCondition(EventBase *Event) { return Event == nullptr ? true : false; }
 
 //*****************************************************************************
-// ƒOƒ[ƒoƒ‹•Ï”
+// ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 //*****************************************************************************
 
 
 //=============================================================================
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 EventController::EventController(int FieldLevel) : FieldLevel(FieldLevel)
 {
@@ -58,11 +58,11 @@ EventController::EventController(int FieldLevel) : FieldLevel(FieldLevel)
 }
 
 //=============================================================================
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //=============================================================================
 EventController::~EventController()
 {
-	// ƒCƒxƒ“ƒgƒxƒNƒgƒ‹íœ
+	// ã‚¤ãƒ™ãƒ³ãƒˆãƒ™ã‚¯ãƒˆãƒ«å‰Šé™¤
 	Utility::DeleteContainer(EventVec);
 	EventCSVData.clear();
 
@@ -72,7 +72,7 @@ EventController::~EventController()
 }
 
 //=============================================================================
-// XV
+// æ›´æ–°
 //=============================================================================
 void EventController::Update()
 {
@@ -84,19 +84,19 @@ void EventController::Update()
 		}
 		else
 		{
-			// g—pŠ®—¹‚ÌƒCƒxƒ“ƒg‚ğíœ
+			// ä½¿ç”¨å®Œäº†ã®ã‚¤ãƒ™ãƒ³ãƒˆã‚’å‰Šé™¤
 			SAFE_DELETE(Event);
 		}
 	}
 
-	// ƒCƒxƒ“ƒgƒrƒ…[ƒAXV
+	// ã‚¤ãƒ™ãƒ³ãƒˆãƒ“ãƒ¥ãƒ¼ã‚¢æ›´æ–°
 	eventViewer->Update();
 
 	EventVec.erase(std::remove_if(std::begin(EventVec), std::end(EventVec), RemoveCondition), std::end(EventVec));
 }
 
 //=============================================================================
-// •`‰æ
+// æç”»
 //=============================================================================
 void EventController::Draw()
 {
@@ -105,18 +105,18 @@ void EventController::Draw()
 		Event->Draw();
 	}
 
-	// ƒCƒxƒ“ƒgƒrƒ…[ƒA•`‰æ
+	// ã‚¤ãƒ™ãƒ³ãƒˆãƒ“ãƒ¥ãƒ¼ã‚¢æç”»
 	eventViewer->Draw();
 
 #if _DEBUG
-	// ƒCƒxƒ“ƒgƒ}ƒX‚Ì‰Â‹‰»•`‰æ
+	// ã‚¤ãƒ™ãƒ³ãƒˆãƒã‚¹ã®å¯è¦–åŒ–æç”»
 	DrawDebug();
 #endif
 }
 
 #if _DEBUG
 //=============================================================================
-// ƒCƒxƒ“ƒgƒ}ƒX‚Ì‰Â‹‰»•`‰æ
+// ã‚¤ãƒ™ãƒ³ãƒˆãƒã‚¹ã®å¯è¦–åŒ–æç”»
 //=============================================================================
 void EventController::DrawDebug()
 {
@@ -127,7 +127,7 @@ void EventController::DrawDebug()
 
 	for (auto& Object : EventCSVData)
 	{
-		//ƒeƒXƒg•`‰æ
+		//ãƒ†ã‚¹ãƒˆæç”»
 		Transform transform = Transform(
 			Object.Pos.ConvertToWorldPosition() + D3DXVECTOR3(0.0f, 1.0f, 0.0f),
 			{ D3DXToRadian(90.0f), 0.0f, 0.0f },
@@ -145,26 +145,26 @@ void EventController::DrawDebug()
 #endif
 
 //=============================================================================
-// CSV‚Ì“Ç‚İ‚Ş
+// CSVã®èª­ã¿è¾¼ã‚€
 //=============================================================================
 void EventController::LoadCSV(const char* FilePath)
 {
-	//‰Šú‰»Ï‚İ‚Å‚ ‚ê‚ÎƒŠƒ^[ƒ“
+	//åˆæœŸåŒ–æ¸ˆã¿ã§ã‚ã‚Œã°ãƒªã‚¿ãƒ¼ãƒ³
 	//if (initialized)
 	//	return;
 
-	//CSVƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚İ
+	//CSVãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã¿
 	std::ifstream stream(FilePath);
 
-	std::string line;			// CSV‚ğ1s‚¸‚Â“Ç‚Şƒoƒbƒtƒ@
-	const char Delim = ',';		// ‹æØ‚è•¶š
-	int x = 0;					// Event‚ÌXˆÊ’u
-	int z = 0;					// Event‚ÌZˆÊ’u
+	std::string line;			// CSVã‚’1è¡Œãšã¤èª­ã‚€ãƒãƒƒãƒ•ã‚¡
+	const char Delim = ',';		// åŒºåˆ‡ã‚Šæ–‡å­—
+	int x = 0;					// Eventã®Xä½ç½®
+	int z = 0;					// Eventã®Zä½ç½®
 
-	//CSV‚ÌI‚í‚è‚Ü‚Å“Ç‚İ‚İ‘±‚¯‚é
+	//CSVã®çµ‚ã‚ã‚Šã¾ã§èª­ã¿è¾¼ã¿ç¶šã‘ã‚‹
 	while (std::getline(stream, line))
 	{
-		//1s•ª“Ç‚İ‚ñ‚¾ƒf[ƒ^‚ğ‹æØ‚è•¶š‚Å•ªŠ„‚·‚é
+		//1è¡Œåˆ†èª­ã¿è¾¼ã‚“ã ãƒ‡ãƒ¼ã‚¿ã‚’åŒºåˆ‡ã‚Šæ–‡å­—ã§åˆ†å‰²ã™ã‚‹
 		std::vector<std::string> subStr;
 		String::Split(subStr, line, Delim);
 
@@ -183,12 +183,12 @@ void EventController::LoadCSV(const char* FilePath)
 		z++;
 	}
 
-	//‰Šú‰»Š®—¹
+	//åˆæœŸåŒ–å®Œäº†
 	//initialized = true;
 }
 
 //=============================================================================
-// ƒCƒxƒ“ƒg”­¶‚ÌŠm”F
+// ã‚¤ãƒ™ãƒ³ãƒˆç™ºç”Ÿã®ç¢ºèª
 //=============================================================================
 void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& RoutePtr, int FieldLevel)
 {
@@ -201,7 +201,7 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 			{
 				EventBase* Ptr = nullptr;
 
-				// ƒCƒxƒ“ƒgƒCƒ“ƒXƒ^ƒ“ƒXì¬
+				// ã‚¤ãƒ™ãƒ³ãƒˆã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ä½œæˆ
 				switch (EventPlace->EventType)
 				{
 				case CityLevelUp:
@@ -243,15 +243,17 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 				default:
 					break;
 				}
-
-				// ƒCƒxƒ“ƒgƒƒbƒZ[ƒWİ’u
+				if (Ptr != nullptr)
+				{
+				// ã‚¤ãƒ™ãƒ³ãƒˆãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¨­ç½®
 				eventViewer->SetEventMessage(Ptr->GetEventMessage(FieldLevel));
 
-				// ƒCƒxƒ“ƒgƒxƒNƒgƒ‹‚ÉƒvƒbƒVƒ…
+				// ã‚¤ãƒ™ãƒ³ãƒˆãƒ™ã‚¯ãƒˆãƒ«ã«ãƒ—ãƒƒã‚·ãƒ¥
 				EventVec.push_back(Ptr);
-
-				// CSVƒf[ƒ^‚©‚ç”­¶‚µ‚½ƒCƒxƒ“ƒg‚Ì‘—¿‚ğíœ
+          
+				// CSVãƒ‡ãƒ¼ã‚¿ã‹ã‚‰ç™ºç”Ÿã—ãŸã‚¤ãƒ™ãƒ³ãƒˆã®è³‡æ–™ã‚’å‰Šé™¤
 				EventPlace = EventCSVData.erase(EventPlace);
+				}
 			}
 			else
 				++EventPlace;
@@ -260,7 +262,7 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 }
 
 //=============================================================================
-// FieldController‚Ìƒ|ƒCƒ“ƒ^‚ğó‚¯æ‚é
+// FieldControllerã®ãƒã‚¤ãƒ³ã‚¿ã‚’å—ã‘å–ã‚‹
 //=============================================================================
 void EventController::ReceiveFieldController(Field::FieldController *Ptr)
 {
