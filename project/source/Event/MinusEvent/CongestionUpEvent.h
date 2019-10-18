@@ -15,8 +15,10 @@
 class CongestionUpEvent : public EventBase
 {
 private:
+	int RemainTime;
+
 public:
-	CongestionUpEvent();
+	CongestionUpEvent(int RemainTime);
 	~CongestionUpEvent();
 	void Update(void) override;
 	void Draw(void) override;

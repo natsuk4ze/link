@@ -10,7 +10,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-
+const int AILevelDecreaseNum = -1;
 
 //*****************************************************************************
 // スタティック変数宣言
@@ -38,7 +38,8 @@ AILevelDecreaseEvent::~AILevelDecreaseEvent()
 //=============================================================================
 void AILevelDecreaseEvent::Update()
 {
-
+	fieldController->AdjustLevelAI(AILevelDecreaseNum);
+	UseFlag = false;
 }
 
 //=============================================================================
@@ -58,9 +59,7 @@ string AILevelDecreaseEvent::GetEventMessage(int FieldLevel)
 
 	if (FieldLevel == Field::Model::City)
 	{
-		MessageContainer.push_back("隕石が来た！！！");
-		MessageContainer.push_back("このドリルは天を貫くドリルだ！！");
-		MessageContainer.push_back("怒涛合体！天元突破グレンラガン！");
+		MessageContainer.push_back("AIレベル減らすイベント");
 	}
 	else if (FieldLevel == Field::Model::World)
 	{

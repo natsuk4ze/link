@@ -42,6 +42,7 @@ void GameScene::Init()
 	text = new TextViewer("M+ 2c heavy", 50);
 	gameViewer = new GameViewer();
 	eventController = new EventController(Field::Model::City);
+	eventController->ReceiveFieldController(field);
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);

@@ -38,7 +38,8 @@ BonusEvent::~BonusEvent()
 //=============================================================================
 void BonusEvent::Update()
 {
-
+	//fieldController->SetDevelopSpeedBonus();
+	UseFlag = false;
 }
 
 //=============================================================================
@@ -58,9 +59,7 @@ string BonusEvent::GetEventMessage(int FieldLevel)
 
 	if (FieldLevel == Field::Model::City)
 	{
-		MessageContainer.push_back("隕石が来た！！！");
-		MessageContainer.push_back("このドリルは天を貫くドリルだ！！");
-		MessageContainer.push_back("怒涛合体！天元突破グレンラガン！");
+		MessageContainer.push_back("ラッキーセブン！");
 	}
 	else if (FieldLevel == Field::Model::World)
 	{

@@ -15,8 +15,10 @@
 class BanStockUseEvent : public EventBase
 {
 private:
+	int RemainTime;
+
 public:
-	BanStockUseEvent();
+	BanStockUseEvent(int RemainTime);
 	~BanStockUseEvent();
 	void Update(void) override;
 	void Draw(void) override;

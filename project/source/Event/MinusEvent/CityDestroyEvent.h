@@ -23,7 +23,7 @@ private:
 	static D3DMATERIAL9 Material;
 
 public:
-	CityDestroyEvent(int FieldLevel, D3DXVECTOR3 GoalPos);
+	CityDestroyEvent(D3DXVECTOR3 GoalPos);
 	~CityDestroyEvent();
 	void Update(void) override;
 	void Draw(void) override;

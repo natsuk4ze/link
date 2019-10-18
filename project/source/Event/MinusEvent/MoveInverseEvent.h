@@ -15,8 +15,10 @@
 class MoveInverseEvent : public EventBase
 {
 private:
+	int RemainTime;
+
 public:
-	MoveInverseEvent();
+	MoveInverseEvent(int RemainTime);
 	~MoveInverseEvent();
 	void Update(void) override;
 	void Draw(void) override;

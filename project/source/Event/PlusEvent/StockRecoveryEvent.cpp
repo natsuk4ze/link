@@ -10,7 +10,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-
+const int AddStockNum = 10;
 
 //*****************************************************************************
 // スタティック変数宣言
@@ -38,7 +38,8 @@ StockRecoveryEvent::~StockRecoveryEvent()
 //=============================================================================
 void StockRecoveryEvent::Update()
 {
-
+	fieldController->AddStockItem(AddStockNum);
+	UseFlag = false;
 }
 
 //=============================================================================
@@ -58,9 +59,7 @@ string StockRecoveryEvent::GetEventMessage(int FieldLevel)
 
 	if (FieldLevel == Field::Model::City)
 	{
-		MessageContainer.push_back("隕石が来た！！！");
-		MessageContainer.push_back("このドリルは天を貫くドリルだ！！");
-		MessageContainer.push_back("怒涛合体！天元突破グレンラガン！");
+		MessageContainer.push_back("危機管理！(ストック使用回数回復)");
 	}
 	else if (FieldLevel == Field::Model::World)
 	{

@@ -33,7 +33,7 @@ D3DMATERIAL9 CityDestroyEvent::Material =
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CityDestroyEvent::CityDestroyEvent(int FieldLevel, D3DXVECTOR3 GoalPos) : GoalPos(GoalPos)
+CityDestroyEvent::CityDestroyEvent(D3DXVECTOR3 GoalPos) : GoalPos(GoalPos)
 {
 	Pos = GoalPos + D3DXVECTOR3(MeteoriteDistance, MeteoriteDistance, 0.0f);
 	FallDirection = GoalPos - Pos;
@@ -73,6 +73,7 @@ void CityDestroyEvent::Update()
 	}
 	else
 	{
+		fieldController->DestroyTown();
 		this->UseFlag = false;
 	}
 }
@@ -110,9 +111,7 @@ string CityDestroyEvent::GetEventMessage(int FieldLevel)
 
 	if (FieldLevel == Field::Model::City)
 	{
-		MessageContainer.push_back("隕石が来た！！！");
-		MessageContainer.push_back("このドリルは天を貫くドリルだ！！");
-		MessageContainer.push_back("怒涛合体！天元突破グレンラガン！");
+		MessageContainer.push_back("この町は焚き火にしよう");
 	}
 	else if (FieldLevel == Field::Model::World)
 	{

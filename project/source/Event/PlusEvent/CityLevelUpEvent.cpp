@@ -10,7 +10,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-
+const int CityLevelUpNum = 1;
 
 //*****************************************************************************
 // スタティック変数宣言
@@ -38,7 +38,8 @@ CityLevelUpEvent::~CityLevelUpEvent()
 //=============================================================================
 void CityLevelUpEvent::Update()
 {
-
+	fieldController->AdjustLevelDevelopment(CityLevelUpNum);
+	UseFlag = false;
 }
 
 //=============================================================================
@@ -58,9 +59,7 @@ string CityLevelUpEvent::GetEventMessage(int FieldLevel)
 
 	if (FieldLevel == Field::Model::City)
 	{
-		MessageContainer.push_back("隕石が来た！！！");
-		MessageContainer.push_back("このドリルは天を貫くドリルだ！！");
-		MessageContainer.push_back("怒涛合体！天元突破グレンラガン！");
+		MessageContainer.push_back("発展は止まるじゃねぇぞ！");
 	}
 	else if (FieldLevel == Field::Model::World)
 	{

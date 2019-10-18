@@ -15,8 +15,10 @@
 class FamousPeopleEvent : public EventBase
 {
 private:
+	int RemainTime;
+
 public:
-	FamousPeopleEvent();
+	FamousPeopleEvent(int RemainTime);
 	~FamousPeopleEvent();
 	void Update(void) override;
 	void Draw(void) override;

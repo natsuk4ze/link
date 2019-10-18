@@ -11,7 +11,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-
+const float CongestionBias = 1.0f;
 
 //*****************************************************************************
 // スタティック変数宣言
@@ -21,9 +21,9 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CongestionUpEvent::CongestionUpEvent()
+CongestionUpEvent::CongestionUpEvent(int RemainTime) : RemainTime(RemainTime)
 {
-
+	fieldController->RaiseTrafficJam(CongestionBias);
 }
 
 //=============================================================================
@@ -39,7 +39,12 @@ CongestionUpEvent::~CongestionUpEvent()
 //=============================================================================
 void CongestionUpEvent::Update()
 {
-
+	RemainTime--;
+	if (RemainTime <= 0)
+	{
+		fieldController->RaiseTrafficJam(0.0f);
+		UseFlag = false;
+	}
 }
 
 //=============================================================================
@@ -59,9 +64,7 @@ string CongestionUpEvent::GetEventMessage(int FieldLevel)
 
 	if (FieldLevel == Field::Model::City)
 	{
-		MessageContainer.push_back("隕石が来た！！！");
-		MessageContainer.push_back("このドリルは天を貫くドリルだ！！");
-		MessageContainer.push_back("怒涛合体！天元突破グレンラガン！");
+		MessageContainer.push_back("交差点混雑度上昇イベント");
 	}
 	else if (FieldLevel == Field::Model::World)
 	{

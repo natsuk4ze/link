@@ -20,9 +20,9 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-MoveInverseEvent::MoveInverseEvent()
+MoveInverseEvent::MoveInverseEvent(int RemainTime) : RemainTime(RemainTime)
 {
-
+	fieldController->ReverseOperation(true);
 }
 
 //=============================================================================
@@ -38,7 +38,12 @@ MoveInverseEvent::~MoveInverseEvent()
 //=============================================================================
 void MoveInverseEvent::Update()
 {
-
+	RemainTime--;
+	if (RemainTime <= 0)
+	{
+		fieldController->ReverseOperation(false);
+		UseFlag = false;
+	}
 }
 
 //=============================================================================
@@ -58,9 +63,7 @@ string MoveInverseEvent::GetEventMessage(int FieldLevel)
 
 	if (FieldLevel == Field::Model::City)
 	{
-		MessageContainer.push_back("隕石が来た！！！");
-		MessageContainer.push_back("このドリルは天を貫くドリルだ！！");
-		MessageContainer.push_back("怒涛合体！天元突破グレンラガン！");
+		MessageContainer.push_back("操作反転イベント");
 	}
 	else if (FieldLevel == Field::Model::World)
 	{

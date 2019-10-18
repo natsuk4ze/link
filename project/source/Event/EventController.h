@@ -8,10 +8,8 @@
 #define _EVENTCONTROLLER_H_
 
 #include "EventBase.h"
-#include <vector>
-#include "../Field/FieldController.h"
 #include "../Viewer/GameScene/EventViewer/EventViewer.h"
-
+#include "../Field/Place/FieldPlaceModel.h"
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -20,8 +18,7 @@ class EventController
 {
 	struct EventInfo
 	{
-		int x;
-		int z;
+		Field::FieldPosition Pos;
 		int EventType;
 	};
 
@@ -29,6 +26,7 @@ private:
 	std::vector<EventInfo> EventCSVData;
 	std::vector<EventBase*> EventVec;
 	EventViewer *eventViewer;
+	Field::FieldController *fieldController;
 	int FieldLevel;
 
 	void LoadCSV(const char* FilePath);
@@ -43,6 +41,7 @@ public:
 	void Update(void);
 	void Draw(void);
 	void CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& route, int FieldLevel);
+	void ReceiveFieldController(Field::FieldController *Ptr);
 };
 
 #endif

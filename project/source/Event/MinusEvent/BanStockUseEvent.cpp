@@ -20,9 +20,10 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-BanStockUseEvent::BanStockUseEvent()
+BanStockUseEvent::BanStockUseEvent(int RemainTime) : RemainTime(RemainTime)
 {
-
+	// ストック使用封印
+	fieldController->SealUsingItem(true);
 }
 
 //=============================================================================
@@ -38,7 +39,13 @@ BanStockUseEvent::~BanStockUseEvent()
 //=============================================================================
 void BanStockUseEvent::Update()
 {
-
+	RemainTime--;
+	if (RemainTime <= 0)
+	{
+		// 封印解除
+		fieldController->SealUsingItem(false);
+		UseFlag = false;
+	}
 }
 
 //=============================================================================
@@ -58,9 +65,7 @@ string BanStockUseEvent::GetEventMessage(int FieldLevel)
 
 	if (FieldLevel == Field::Model::City)
 	{
-		MessageContainer.push_back("隕石が来た！！！");
-		MessageContainer.push_back("このドリルは天を貫くドリルだ！！");
-		MessageContainer.push_back("怒涛合体！天元突破グレンラガン！");
+		MessageContainer.push_back("ストック使用禁止イベント");
 	}
 	else if (FieldLevel == Field::Model::World)
 	{

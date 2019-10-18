@@ -10,7 +10,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-
+const float SpeedBonusNum = 1.5f;
 
 //*****************************************************************************
 // スタティック変数宣言
@@ -20,9 +20,9 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-FamousPeopleEvent::FamousPeopleEvent()
+FamousPeopleEvent::FamousPeopleEvent(int RemainTime) : RemainTime(RemainTime)
 {
-
+	fieldController->SetDevelopSpeedBonus(SpeedBonusNum);
 }
 
 //=============================================================================
@@ -38,7 +38,14 @@ FamousPeopleEvent::~FamousPeopleEvent()
 //=============================================================================
 void FamousPeopleEvent::Update()
 {
+	RemainTime--;
+	if (RemainTime <= 0)
+	{
+		// ボーナス停止処理
+		fieldController->SetDevelopSpeedBonus(1.0f);
 
+		UseFlag = false;
+	}
 }
 
 //=============================================================================
@@ -58,9 +65,7 @@ string FamousPeopleEvent::GetEventMessage(int FieldLevel)
 
 	if (FieldLevel == Field::Model::City)
 	{
-		MessageContainer.push_back("隕石が来た！！！");
-		MessageContainer.push_back("このドリルは天を貫くドリルだ！！");
-		MessageContainer.push_back("怒涛合体！天元突破グレンラガン！");
+		MessageContainer.push_back("たいへんよくできました！");
 	}
 	else if (FieldLevel == Field::Model::World)
 	{
