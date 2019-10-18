@@ -8,6 +8,7 @@
 #define _EVENT_VIEWER_H_
 
 #include <vector>
+#include <string>
 #include "EventTelop.h"
 
 //*****************************************************************************
@@ -28,6 +29,7 @@ public:
 
 	void Update(void);
 	void Draw(void);
+	void SetEventMessage(const std::string Message);
 
 	std::vector <BaseViewer*> eventViewer;
 

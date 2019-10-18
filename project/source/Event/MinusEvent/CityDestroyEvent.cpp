@@ -102,3 +102,36 @@ void CityDestroyEvent::Draw()
 	SphereMesh->DrawSubset(0);
 }
 
+//=============================================================================
+// イベントメッセージを取得
+//=============================================================================
+string CityDestroyEvent::GetEventMessage(int FieldLevel)
+{
+	vector<string> MessageContainer;
+
+	if (FieldLevel == Field::Model::City)
+	{
+		MessageContainer.push_back("隕石が来た！！！");
+		MessageContainer.push_back("このドリルは天を貫くドリルだ！！");
+		MessageContainer.push_back("怒涛合体！天元突破グレンラガン！");
+	}
+	else if (FieldLevel == Field::Model::World)
+	{
+
+	}
+	else if (FieldLevel == Field::Model::Space)
+	{
+
+	}
+
+	if (!MessageContainer.empty())
+	{
+		int MessageNo = rand() % MessageContainer.size();
+		return MessageContainer.at(MessageNo);
+	}
+	else
+	{
+		string ErrMsg = "イベントメッセージがありません";
+		return ErrMsg;
+	}
+}

@@ -7,15 +7,21 @@
 #ifndef _EVENTBASE_H_
 #define _EVENTBASE_H_
 
+#include <string>
+#include <vector>
+#include "../Field/Place/PlaceConfig.h"
+
+using namespace std;
+
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
 //*****************************************************************************
 class EventBase
 {
 protected:
-	const char* Message = nullptr;
-	int Type = 0;
-	int FieldLevel = 0;
+	//const char* Message = nullptr;
+	//int Type = 0;
+	//int FieldLevel = 0;
 	int RemainingTime = 0;
 	bool UseFlag = true;
 
@@ -24,7 +30,7 @@ public:
 	~EventBase();
 	virtual void Update(void);
 	virtual void Draw(void);
-	virtual void SetEventViewerMsg(void);
+	virtual string GetEventMessage(int FieldLevel) = 0;
 	bool GetUse(void) { return this->UseFlag; };
 };
 
