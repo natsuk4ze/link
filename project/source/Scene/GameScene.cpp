@@ -51,6 +51,10 @@ void GameScene::Init()
 	fsm[State::Initialize] = new GameInit();
 	fsm[State::Idle] = new GameIdle();
 
+	//デリゲートを作成して設定
+	onBuildRoad = Delegate<GameScene, Route&>::Create(this, &GameScene::OnBuildRoad);
+	field->SetCallbackOnBuildRoad(onBuildRoad);
+
 	//ステート初期化
 	ChangeState(State::Initialize);
 
@@ -79,6 +83,9 @@ void GameScene::Uninit()
 
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
+
+	//デリゲート削除
+	SAFE_DELETE(onBuildRoad);
 
 	SAFE_DELETE(testActor);
 }
@@ -158,4 +165,12 @@ void GameScene::ChangeState(State next)
 	{
 		fsm[currentState]->OnStart(*this);
 	}
+}
+
+/**************************************
+イベントコントローラへのPlace受け渡し処理
+***************************************/
+void GameScene::OnBuildRoad(Route& route)
+{
+	eventController->CheckEventHappen(route, Field::Model::FieldLevel::City);
 }

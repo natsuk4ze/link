@@ -77,6 +77,9 @@ namespace Field
 		//ビューワパラメータ埋め込み
 		void EmbedViewerParam(GameViewerParam& param);
 
+		//道作成時のデリゲータ設定処理
+		void SetCallbackOnBuildRoad(DelegatePtr<std::vector<Model::PlaceModel*>&> callback);
+
 		//イベント操作用のインターフェース
 		void AddLevelAI(float num);					//AI発展レベルを増やす
 		void AddLevelDevelopment(float num);		//街の発展レベルを増やす
@@ -124,6 +127,7 @@ namespace Field
 		DelegatePtr<const Model::PlaceModel*> onConnectTown;
 		DelegatePtr<const Model::PlaceModel*> onCreateJunction;
 		DelegatePtr<const Model::PlaceModel*> onChangePlaceType;
+		DelegatePtr<std::vector<Model::PlaceModel*>&> onBuildRoad;
 
 		//ステート切り替え
 		void ChangeState(State next);

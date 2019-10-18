@@ -232,6 +232,14 @@ namespace Field
 	}
 
 	/**************************************
+	道作成時のデリゲータ設定処理
+	***************************************/
+	void FieldController::SetCallbackOnBuildRoad(DelegatePtr<std::vector<Model::PlaceModel*>&> callback)
+	{
+		onBuildRoad = callback;
+	}
+
+	/**************************************
 	AI発展レベルを増やす
 	***************************************/
 	void FieldController::AddLevelAI(float num)
@@ -365,6 +373,9 @@ namespace Field
 
 		//アクター生成
 		placeActController->SetActor(ptr);
+
+		//コールバック
+		(*onBuildRoad)(route);
 	}
 
 	/**************************************
