@@ -154,6 +154,8 @@
     <ClInclude Include="Framework\Camera\ViewFrustrum.h" />
     <ClInclude Include="source\FieldObject\Actor\NoneActor.h" />
     <ClInclude Include="source\FieldObject\Animation\ActorAnimation.h" />
+    <ClInclude Include="source\Scene\GameState\GameFinish.h" />
+    <ClInclude Include="source\Scene\GameState\GameLevelUp.h" />
     <ClInclude Include="source\Event\PlusEvent\CityLevelUpEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\NewCityEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\StockRecoveryEvent.h" />
@@ -302,6 +304,8 @@
     <ClCompile Include="Framework\Camera\ViewFrustrum.cpp" />
     <ClCompile Include="source\FieldObject\Actor\NoneActor.cpp" />
     <ClCompile Include="source\FieldObject\Animation\ActorAnimation.cpp" />
+    <ClCompile Include="source\Scene\GameState\GameFinish.cpp" />
+    <ClCompile Include="source\Scene\GameState\GameLevelUp.cpp" />
     <ClCompile Include="source\Event\PlusEvent\CityLevelUpEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\NewCityEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\StockRecoveryEvent.cpp" />

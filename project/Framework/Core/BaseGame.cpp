@@ -12,6 +12,7 @@
 #include "..\Tween\Tween.h"
 #include "../Tool/ProfilerCPU.h"
 #include "../Task/TaskManager.h"
+#include "../Transition/TransitionController.h"
 
 Tween* Tween::mInstance = NULL;
 /**************************************
@@ -74,12 +75,20 @@ void BaseGame::Update()
 	Debug::Update();
 	Input::Update();
 
-	sceneManager->Update();
+	static bool pause = false;
+	if (Keyboard::GetTrigger(DIK_P))
+		pause = !pause;
 
-	PostEffectManager::Instance()->Update();
-	Tween::mInstance->Update();
-	ProfilerCPU::Instance()->Update();
-	TaskManager::Instance()->Update();
+	if (!pause)
+	{
+		sceneManager->Update();
+
+		PostEffectManager::Instance()->Update();
+		Tween::mInstance->Update();
+		ProfilerCPU::Instance()->Update();
+		TaskManager::Instance()->Update();
+		TransitionController::Instance()->Update();
+	}
 }
 
 /**************************************
@@ -96,8 +105,14 @@ void BaseGame::Draw()
 	pDevice->SetRenderTarget(0, renderSurface);
 	pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BackColor, 1.0f, 0);
 
+	//トランジションマスクを描画
+	TransitionController::Instance()->DrawMask();
+
 	//シーンを描画
 	sceneManager->Draw();
+
+	//トランジション背景を描画
+	TransitionController::Instance()->DrawTransition();
 
 	//レンダーターゲット復元
 	pDevice->SetRenderTarget(0, oldSuf);

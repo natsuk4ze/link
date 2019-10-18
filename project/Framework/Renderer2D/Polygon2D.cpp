@@ -5,6 +5,7 @@
 //
 //=====================================
 #include "Polygon2D.h"
+#include "../Resource/ResourceManager.h"
 
 /**************************************
 ƒ}ƒNƒ’è‹`
@@ -102,7 +103,7 @@ void Polygon2D::LoadTexture(const char* path)
 {
 	SAFE_RELEASE(texture);
 
-	D3DXCreateTextureFromFile(pDevice, path, &texture);
+	ResourceManager::Instance()->GetTexture(path, texture);
 }
 
 /**************************************

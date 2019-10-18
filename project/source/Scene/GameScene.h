@@ -55,12 +55,19 @@ public:
 	{
 		Initialize,
 		Idle,
+		Finish,
+		LevelUp,
 		Max
 	};
 
+	//ステート遷移処理
+	void ChangeState(State next);
+
 private:
+	using SceneState = BaseState<GameScene, State>;
+
 	//シーンステートマシン
-	std::vector<BaseState<GameScene, State>*> fsm;
+	std::vector<SceneState*> fsm;
 	State currentState, prevState;
 
 	SkyBox *skybox;								//背景スカイボックス
@@ -70,21 +77,26 @@ private:
 	GameViewer *gameViewer;						//ゲームビュアー
 	EventController *eventController;			//イベントコントローラー
 
-	float remainTime;							//ステージの残り時間
+	int remainTime;								//ステージの残り時間
 
 	//デリゲータ
 	DelegatePtr<Route&> onBuildRoad;	//道を生成したときのデリゲータ
 
-	//ステート遷移処理
-	void ChangeState(State next);
-
 	//イベントコントローラへのPlace受け渡し処理
 	void OnBuildRoad(Route& route);
+
+	//レベルアップ処理
+	void OnLevelUp();
 
 	//各ステートクラス
 	class GameInit;
 	class GameIdle;
+	class GameFinish;
+	class GameLevelUp;
 
 	PlaceActor* testActor;
+
+	//デバッグ用フィールドレベル
+	static int level;
 };
 #endif

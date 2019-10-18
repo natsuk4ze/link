@@ -59,16 +59,15 @@ void TransitionController::Update()
 
 	if (res != MaskResult::Continuous)
 	{
+		isRunning = false;
+
 		if (callback != NULL)
 		{
 			callback();
-			callback = NULL;
 		}
 
 		if (res == MaskResult::FinishTransitionOut)
 			isDrawBG = false;
-
-		isRunning = false;
 	}
 }
 
@@ -90,8 +89,8 @@ void TransitionController::DrawTransition()
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	pDevice->SetRenderState(D3DRS_STENCILREF, 0);
-	pDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
+	pDevice->SetRenderState(D3DRS_STENCILREF, 1);
+	pDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_GREATEREQUAL);
 
 	transitionBG->Draw();
 

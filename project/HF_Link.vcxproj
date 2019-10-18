@@ -166,8 +166,10 @@
     <ClInclude Include="source\GameConfig.h" />
     <ClInclude Include="source\GameMain.h" />
     <ClInclude Include="source\Scene\GameScene.h" />
+    <ClInclude Include="source\Scene\GameState\GameFinish.h" />
     <ClInclude Include="source\Scene\GameState\GameIdle.h" />
     <ClInclude Include="source\Scene\GameState\GameInit.h" />
+    <ClInclude Include="source\Scene\GameState\GameLevelUp.h" />
     <ClInclude Include="source\Scene\ResultScene.h" />
     <ClInclude Include="source\Scene\TitleScene.h" />
     <ClInclude Include="source\Viewer\Framework\BaseViewer.h" />
@@ -316,8 +318,10 @@
     <ClCompile Include="source\Field\State\UseItem.cpp" />
     <ClCompile Include="source\GameMain.cpp" />
     <ClCompile Include="source\Scene\GameScene.cpp" />
+    <ClCompile Include="source\Scene\GameState\GameFinish.cpp" />
     <ClCompile Include="source\Scene\GameState\GameIdle.cpp" />
     <ClCompile Include="source\Scene\GameState\GameInit.cpp" />
+    <ClCompile Include="source\Scene\GameState\GameLevelUp.cpp" />
     <ClCompile Include="source\Scene\ResultScene.cpp" />
     <ClCompile Include="source\Scene\TitleScene.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp" />

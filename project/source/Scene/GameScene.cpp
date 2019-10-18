@@ -7,6 +7,9 @@
 //=====================================
 #include "GameScene.h"
 #include "../../Framework/Tool/DebugWindow.h"
+#include "../GameConfig.h"
+#include "../../Framework/Transition/TransitionController.h"
+#include "../../Framework/Core/SceneManager.h"
 
 #include "../../Framework/Renderer3D/SkyBox.h"
 #include "../FieldObject/Actor/PlaceActor.h"
@@ -15,14 +18,22 @@
 #include "../../Framework/Renderer2D/TextViewer.h"
 #include "../Viewer/GameScene/GameViewer/GameViewer.h"
 #include "../Event/EventController.h"
+#include "../Field/Place/PlaceConfig.h"
 
 #include "GameState/GameInit.h"
 #include "GameState/GameIdle.h"
+#include "GameState/GameFinish.h"
+#include "GameState/GameLevelUp.h"
 
-//※イベントコントローラーが出来たらそっち移動
-#include "../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../FieldObject/Actor/CrossJunctionActor.h"
 #include "../FieldObject/Actor/BridgeActor.h"
+
+#include "../../Framework/Tool/DebugWindow.h"
+
+/**************************************
+staticメンバ
+***************************************/
+int GameScene::level = 0;		//デバッグ用フィールドレベル（本番では非staticメンバにする
 
 /**************************************
 初期化処理
@@ -48,6 +59,8 @@ void GameScene::Init()
 	fsm.resize(State::Max, NULL);
 	fsm[State::Initialize] = new GameInit();
 	fsm[State::Idle] = new GameIdle();
+	fsm[State::Finish] = new GameFinish();
+	fsm[State::LevelUp] = new GameLevelUp();
 
 	//デリゲートを作成して設定
 	onBuildRoad = Delegate<GameScene, Route&>::Create(this, &GameScene::OnBuildRoad);
@@ -75,6 +88,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(field);
 	SAFE_DELETE(text);
 	SAFE_DELETE(gameViewer);
+	SAFE_DELETE(eventController);
 
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
@@ -98,6 +112,9 @@ void GameScene::Update()
 		ChangeState(next);
 	}
 
+	//カメラ更新
+	fieldCamera->Update();
+
 	//ビューワパラメータをビューワに渡す
 	GameViewerParam param;
 	param.remainTime = remainTime / 30.0f;
@@ -106,8 +123,6 @@ void GameScene::Update()
 
 	//ビュアー更新
 	gameViewer->Update();
-
-	//testActor->Update();
 }
 
 /**************************************
@@ -162,4 +177,19 @@ void GameScene::ChangeState(State next)
 void GameScene::OnBuildRoad(Route& route)
 {
 	eventController->CheckEventHappen(route, Field::Model::FieldLevel::City);
+}
+
+/**************************************
+レベルアップ処理
+***************************************/
+void GameScene::OnLevelUp()
+{
+	//テストなのでインクリメントしてしまう
+	//本番ではちゃんと制限する
+	
+	TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
+	{
+		level++;
+		SceneManager::ChangeScene(GameConfig::SceneID::Game);
+	});
 }

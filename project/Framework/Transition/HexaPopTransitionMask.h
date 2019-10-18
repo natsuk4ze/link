@@ -47,6 +47,12 @@ private:
 		bool active;
 	};
 
+	//定数メンバ
+	static const int DivineX;			//X方向を埋める六角形の数
+	static const int DivineY;			//Y方向を埋める六角形の数
+	static const float Duration;		//六角形のイージングにかける秒
+	static const float Interval;		//Y方向のイテレータを動かすインターバル
+
 	//カウンタ
 	int cntFrame;
 	UINT rowIndex;

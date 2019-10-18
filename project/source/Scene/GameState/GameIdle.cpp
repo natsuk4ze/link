@@ -15,12 +15,11 @@
 ***************************************/
 GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 {
+	State next = State::Idle;
+
 	//入力確認
 	entity.field->CheckInput();
 	entity.fieldCamera->CheckInput();
-
-	//カメラ更新
-	entity.fieldCamera->Update();
 
 	//各オブジェクト更新
 	entity.field->Update();
@@ -31,7 +30,18 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 	//制限時間の更新
 	entity.remainTime--;
 
-	return State::Idle;
+	//残り時間が0になったら終了
+	if (entity.remainTime == 0)
+	{
+		next = State::Finish;
+	}
+	//AI発展レベルが最大に到達していたらレベルアップ
+	else if (entity.field->ShouldLevelUp())
+	{
+		next = State::LevelUp;
+	}
+
+	return next;
 }
 
 /**************************************

@@ -80,6 +80,9 @@ namespace Field
 		//道作成時のデリゲータ設定処理
 		void SetCallbackOnBuildRoad(DelegatePtr<std::vector<Model::PlaceModel*>&> callback);
 
+		//レベルアップするべきかどうか
+		bool ShouldLevelUp();
+
 		//イベント操作用のインターフェース
 		void AdjustLevelAI(float num);				//AI発展レベルを調整
 		void AdjustLevelDevelopment(float num);		//街の発展レベルを調整
@@ -99,6 +102,7 @@ namespace Field
 		static const unsigned InitDevelopRiverStock;	//川開発ストックの初期数
 		static const unsigned InitDevelopMountainStock;	//山開発ストックの初期数
 		static const int DevelopmentInterval;			//AI発展レベルが上がるインターバル
+		static const float MaxDevelopmentLevelAI;		//AI発展レベルの最大値
 
 		FieldCursor *cursor;								//カーソル
 		FieldGround *ground;								//地面
