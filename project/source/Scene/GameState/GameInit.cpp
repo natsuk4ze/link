@@ -10,6 +10,7 @@
 #include "../../Field/Camera/FieldCamera.h"
 #include "../../Field/FieldController.h"
 #include "../../../Framework/Resource/ResourceManager.h"
+#include "../../../Framework/Transition/TransitionController.h"
 
 /**************************************
 入場処理
@@ -47,6 +48,12 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	// FieldLevel = World
 
 	// FieldLevel = Space
+
+	//トランジション画面をオフにして遷移
+	TransitionController::Instance()->SetTransition(true, TransitionType::HexaPop, [&]()
+	{
+		entity.ChangeState(State::Idle);
+	});
 }
 
 /**************************************
@@ -54,5 +61,5 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 ***************************************/
 GameScene::State GameScene::GameInit::OnUpdate(GameScene & entity)
 {
-	return GameScene::State::Idle;
+	return GameScene::State::Initialize;
 }

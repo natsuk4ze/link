@@ -59,6 +59,8 @@ void TransitionController::Update()
 
 	if (res != MaskResult::Continuous)
 	{
+		isRunning = false;
+
 		if (callback != NULL)
 		{
 			callback();
@@ -67,8 +69,6 @@ void TransitionController::Update()
 
 		if (res == MaskResult::FinishTransitionOut)
 			isDrawBG = false;
-
-		isRunning = false;
 	}
 }
 

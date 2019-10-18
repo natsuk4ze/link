@@ -60,6 +60,9 @@ public:
 		Max
 	};
 
+	//ステート遷移処理
+	void ChangeState(State next);
+
 private:
 	using SceneState = BaseState<GameScene, State>;
 
@@ -78,9 +81,6 @@ private:
 
 	//デリゲータ
 	DelegatePtr<Route&> onBuildRoad;	//道を生成したときのデリゲータ
-
-	//ステート遷移処理
-	void ChangeState(State next);
 
 	//イベントコントローラへのPlace受け渡し処理
 	void OnBuildRoad(Route& route);
