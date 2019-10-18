@@ -27,7 +27,8 @@ public:
 		Left,		//左面
 		Right,		//右面
 		Top,		//上面
-		Bottom		//下面
+		Bottom,		//下面
+		Max,
 	};
 
 	//コンストラクタ、デストラクタ
@@ -36,6 +37,9 @@ public:
 
 	//面の法線取得処理 ※正規化済み
 	D3DXVECTOR3 GetNormal(Surface surfaceID);
+
+	// 面上のある一点を取得
+	D3DXVECTOR3 GetSurfacePoint(Surface surfaceID);
 
 	//頂点設定処理
 	void SetVertex(
