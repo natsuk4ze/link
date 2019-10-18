@@ -18,6 +18,7 @@
 #include "../FieldObject/Actor/StraightRoadActor.h"
 #include "../FieldObject/Actor/TJunctionActor.h"
 #include "../FieldObject/Actor/BridgeActor.h"
+#include "../FieldObject/Actor/NoneActor.h"
 
 #include "../FieldObject/Animation/ActorAnimation.h"
 
@@ -65,13 +66,13 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::Update()
 	{
-		//for (auto&& map : actorMap)
-		//{
-		//	for (auto&& pair : *map)
-		//	{
-		//		pair.second->Update();
-		//	}
-		//}
+		for (auto&& map : actorContainer)
+		{
+			for (auto&& pair : *map)
+			{
+				pair.second->Update();
+			}
+		}
 	}
 
 	/**************************************
@@ -120,6 +121,10 @@ namespace Field::Actor
 
 		case PlaceType::Town:
 			SetTown(place);
+			break;
+			
+		case PlaceType::None:
+			SetNone(place);
 			break;
 		}
 	}
@@ -234,7 +239,7 @@ namespace Field::Actor
 		// 生成アニメーション
 		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
 
-		AddContainer(ActorPattern::StarightRoad, place->ID(), actor);
+		AddContainer(ActorPattern::City, place->ID(), actor);
 	}
 
 	/**************************************
@@ -254,10 +259,19 @@ namespace Field::Actor
 		//アクター生成
 		PlaceActor* actor = new BridgeActor(actorPos, Model::FieldLevel::City);
 
+		//回転角度を決定
+		std::vector<Adjacency> AdjacencyType = place->GetConnectingAdjacency();
+		StraightType straightType = IsStraight(AdjacencyType);
+
+		float rotateAngle = straightType == StraightType::BackAndForward ? 90.0f : 0.0f;
+
+		//回転
+		actor->Rotate(rotateAngle);
+
 		// 生成アニメーション
 		ActorAnimation::FallAndExpantion(*actor);
 
-		AddContainer(ActorPattern::StarightRoad, place->ID(), actor);
+		AddContainer(ActorPattern::Bridge, place->ID(), actor);
 
 	}
 
@@ -308,6 +322,25 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::SetMountain(const Model::PlaceModel * place)
 	{
+	}
+
+	/**************************************
+	Noneセット処理
+	***************************************/
+	void PlaceActorController::SetNone(const Model::PlaceModel * place)
+	{
+		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
+
+		//真っ平らだと不自然なので高さに少し凹凸をつける
+		const float HeightRange = -2.0f;
+		actorPos.y += Math::RandomRange(HeightRange, 0.0f);
+
+		PlaceActor* actor = new NoneActor(actorPos, Model::FieldLevel::City);
+
+		// 生成アニメーション
+		ActorAnimation::RotateAndExpantion(*actor);
+
+		AddContainer(ActorPattern::None, place->ID(), actor);
 	}
 
 	/**************************************
