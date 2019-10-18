@@ -18,6 +18,7 @@
 #include "../FieldObject/Actor/StraightRoadActor.h"
 #include "../FieldObject/Actor/TJunctionActor.h"
 #include "../FieldObject/Actor/BridgeActor.h"
+#include "../FieldObject/Actor/NoneActor.h"
 
 #include "../FieldObject/Animation/ActorAnimation.h"
 
@@ -120,6 +121,10 @@ namespace Field::Actor
 
 		case PlaceType::Town:
 			SetTown(place);
+			break;
+			
+		case PlaceType::None:
+			SetNone(place);
 			break;
 		}
 	}
@@ -317,6 +322,25 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::SetMountain(const Model::PlaceModel * place)
 	{
+	}
+
+	/**************************************
+	Noneセット処理
+	***************************************/
+	void PlaceActorController::SetNone(const Model::PlaceModel * place)
+	{
+		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
+
+		//真っ平らだと不自然なので高さに少し凹凸をつける
+		const float HeightRange = -2.0f;
+		actorPos.y += Math::RandomRange(HeightRange, 0.0f);
+
+		PlaceActor* actor = new NoneActor(actorPos, Model::FieldLevel::City);
+
+		// 生成アニメーション
+		ActorAnimation::RotateAndExpantion(*actor);
+
+		AddContainer(ActorPattern::None, place->ID(), actor);
 	}
 
 	/**************************************

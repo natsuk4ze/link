@@ -62,6 +62,7 @@ namespace Field::Actor
 			Mountain,
 			River,
 			Bridge,
+			None,
 			Max
 		};
 
@@ -75,6 +76,7 @@ namespace Field::Actor
 		void SetBridge(const Model::PlaceModel* place);
 		void SetJunction(const Model::PlaceModel* place);
 		void SetMountain(const Model::PlaceModel* place);
+		void SetNone(const Model::PlaceModel* place);
 
 		void AddContainer(ActorPattern pattern, unsigned key, PlaceActor* actor);
 		bool EraseFromContainer(ActorPattern pattern, unsigned key);
