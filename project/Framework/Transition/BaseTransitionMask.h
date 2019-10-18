@@ -38,6 +38,8 @@ public:
 	virtual void Set(bool isTransitionOut) = 0;
 
 protected:
+	static const int FramePerSecond;
+
 	bool active;
 	bool isTransitionOut;
 

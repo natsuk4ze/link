@@ -8,8 +8,9 @@
 #include "../Renderer2D/Polygon2D.h"
 
 /**************************************
-マクロ定義
+staticメンバ
 ***************************************/
+const int BaseTransitionMask::FramePerSecond = 30;
 
 /**************************************
 コンストラクタ
