@@ -41,9 +41,7 @@ void GameScene::Init()
 	text = new TextViewer("M+ 2c heavy", 50);
 	gameViewer = new GameViewer();
 	eventController = new EventController(Field::Model::City);
-
-	//※イベントコントローラーが出来たらそっち移動
-	eventViewer = new EventViewer();
+	eventController->ReceiveFieldController(field);
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
@@ -73,9 +71,6 @@ void GameScene::Uninit()
 	SAFE_DELETE(text);
 	SAFE_DELETE(gameViewer);
 
-	//※イベントコントローラーが出来たらそっち移動
-	SAFE_DELETE(eventViewer);
-
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
 
@@ -103,9 +98,6 @@ void GameScene::Update()
 
 	//ビュアー更新
 	gameViewer->Update();
-
-	//※イベントコントローラーが出来たらそっち移動
-	eventViewer->Update();
 
 	testActor->Update();
 }
@@ -136,9 +128,6 @@ void GameScene::Draw()
 
 	//ビュアー描画
 	gameViewer->Draw();
-
-	//※イベントコントローラーが出来たらそっち移動
-	eventViewer->Draw();
 
 	// イベント描画
 	eventController->Draw();

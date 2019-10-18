@@ -61,3 +61,11 @@ void EventViewer::Draw(void)
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 }
+
+//=============================================================================
+// イベント発生メッセージを設置
+//=============================================================================
+void EventViewer::SetEventMessage(const std::string Message)
+{
+	eventMessage->SetEventMessage(Message);
+}

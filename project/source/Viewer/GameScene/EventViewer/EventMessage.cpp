@@ -16,8 +16,8 @@
 //*****************************************************************************
 EventMessage::EventMessage()
 {
-	////テキスト
-	////text = new TextViewer();
+	//テキスト
+	text = new TextViewer("cinecaption", 50);
 
 	////背景
 	//bg = new BaseViewerDrawer();
@@ -36,7 +36,7 @@ EventMessage::EventMessage()
 //*****************************************************************************
 EventMessage::~EventMessage()
 {
-	//SAFE_DELETE(text);
+	SAFE_DELETE(text);
 	//SAFE_DELETE(bg);
 }
 
@@ -56,13 +56,14 @@ void EventMessage::Draw(void)
 	//bg->Draw();
 	//bg->SetVertex();
 
-	//text->Draw();
+	text->Draw();
 }
 
-////=============================================================================
-//// メッセージセット処理
-////=============================================================================
-//void EventMessage::Set(const string message)
-//{
-//
-//}
+//=============================================================================
+// メッセージセット処理
+//=============================================================================
+void EventMessage::SetEventMessage(const std::string Message)
+{
+	text->SetText(Message);
+	text->SetPos(1600, 900);
+}

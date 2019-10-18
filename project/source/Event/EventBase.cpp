@@ -19,9 +19,9 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-EventBase::EventBase(int FieldLevel, int Type) : FieldLevel(FieldLevel), Type(Type)
+EventBase::EventBase(int FieldLevel, int Type)
 {
-	EventMessageContainer::GetEventMessage(FieldLevel, Type, &Message);
+	//EventMessageContainer::GetEventMessage(FieldLevel, Type, &Message);
 }
 
 //=============================================================================
@@ -44,14 +44,6 @@ void EventBase::Update()
 // 描画
 //=============================================================================
 void EventBase::Draw()
-{
-
-}
-
-//=============================================================================
-// イベント発生メッセージを設置
-//=============================================================================
-void EventBase::SetEventViewerMsg()
 {
 
 }

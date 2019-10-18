@@ -267,7 +267,7 @@ namespace Field
 		}
 
 		//ルートベクトルを渡す
-		EventController::CheckEventHappen(route, City);
+		//EventController::CheckEventHappen(route, City);
 
 		//ルートモデル作成
 		RouteModelPtr ptr = RouteModel::Create(onConnectTown, onCreateJunction, route);
