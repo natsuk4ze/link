@@ -1,27 +1,34 @@
 //=============================================================================
 //
-// イベント基底クラス [EventBase.cpp]
+// 有名人イベントクラス [FamousPeopleEvent.cpp]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#include "EventBase.h"
+#include "../../../main.h"
+#include "FamousPeopleEvent.h"
+
+//*****************************************************************************
+// マクロ定義
+//*****************************************************************************
+const float SpeedBonusNum = 1.5f;
 
 //*****************************************************************************
 // スタティック変数宣言
 //*****************************************************************************
-Field::FieldController *EventBase::fieldController = nullptr;
+
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-EventBase::EventBase() : UseFlag(true)
+FamousPeopleEvent::FamousPeopleEvent(int RemainTime) : RemainTime(RemainTime)
 {
+	fieldController->SetDevelopSpeedBonus(SpeedBonusNum);
 }
 
 //=============================================================================
 // デストラクタ
 //=============================================================================
-EventBase::~EventBase()
+FamousPeopleEvent::~FamousPeopleEvent()
 {
 
 }
@@ -29,24 +36,54 @@ EventBase::~EventBase()
 //=============================================================================
 // 更新
 //=============================================================================
-void EventBase::Update()
+void FamousPeopleEvent::Update()
 {
+	RemainTime--;
+	if (RemainTime <= 0)
+	{
+		// ボーナス停止処理
+		fieldController->SetDevelopSpeedBonus(1.0f);
 
+		UseFlag = false;
+	}
 }
 
 //=============================================================================
 // 描画
 //=============================================================================
-void EventBase::Draw()
+void FamousPeopleEvent::Draw()
 {
 
 }
 
 //=============================================================================
-// FieldControllerのポインタを受け取る
+// イベントメッセージを取得
 //=============================================================================
-void EventBase::ReceiveFieldController(Field::FieldController *Ptr)
+string FamousPeopleEvent::GetEventMessage(int FieldLevel)
 {
-	fieldController = Ptr;
-}
+	vector<string> MessageContainer;
 
+	if (FieldLevel == Field::Model::City)
+	{
+		MessageContainer.push_back("たいへんよくできました！");
+	}
+	else if (FieldLevel == Field::Model::World)
+	{
+
+	}
+	else if (FieldLevel == Field::Model::Space)
+	{
+
+	}
+
+	if (!MessageContainer.empty())
+	{
+		int MessageNo = rand() % MessageContainer.size();
+		return MessageContainer.at(MessageNo);
+	}
+	else
+	{
+		string ErrMsg = "イベントメッセージがありません";
+		return ErrMsg;
+	}
+}

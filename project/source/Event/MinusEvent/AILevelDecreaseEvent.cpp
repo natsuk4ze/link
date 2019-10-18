@@ -1,27 +1,34 @@
 //=============================================================================
 //
-// イベント基底クラス [EventBase.cpp]
+// AIレベル減少イベントクラス [AILevelDecreaseEvent.cpp]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#include "EventBase.h"
+#include "../../../main.h"
+#include "AILevelDecreaseEvent.h"
+
+//*****************************************************************************
+// マクロ定義
+//*****************************************************************************
+const int AILevelDecreaseNum = -1;
 
 //*****************************************************************************
 // スタティック変数宣言
 //*****************************************************************************
-Field::FieldController *EventBase::fieldController = nullptr;
+
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-EventBase::EventBase() : UseFlag(true)
+AILevelDecreaseEvent::AILevelDecreaseEvent()
 {
+
 }
 
 //=============================================================================
 // デストラクタ
 //=============================================================================
-EventBase::~EventBase()
+AILevelDecreaseEvent::~AILevelDecreaseEvent()
 {
 
 }
@@ -29,24 +36,48 @@ EventBase::~EventBase()
 //=============================================================================
 // 更新
 //=============================================================================
-void EventBase::Update()
+void AILevelDecreaseEvent::Update()
 {
-
+	fieldController->AdjustLevelAI(AILevelDecreaseNum);
+	UseFlag = false;
 }
 
 //=============================================================================
 // 描画
 //=============================================================================
-void EventBase::Draw()
+void AILevelDecreaseEvent::Draw()
 {
 
 }
 
 //=============================================================================
-// FieldControllerのポインタを受け取る
+// イベントメッセージを取得
 //=============================================================================
-void EventBase::ReceiveFieldController(Field::FieldController *Ptr)
+string AILevelDecreaseEvent::GetEventMessage(int FieldLevel)
 {
-	fieldController = Ptr;
-}
+	vector<string> MessageContainer;
 
+	if (FieldLevel == Field::Model::City)
+	{
+		MessageContainer.push_back("AIレベル減らすイベント");
+	}
+	else if (FieldLevel == Field::Model::World)
+	{
+
+	}
+	else if (FieldLevel == Field::Model::Space)
+	{
+
+	}
+
+	if (!MessageContainer.empty())
+	{
+		int MessageNo = rand() % MessageContainer.size();
+		return MessageContainer.at(MessageNo);
+	}
+	else
+	{
+		string ErrMsg = "イベントメッセージがありません";
+		return ErrMsg;
+	}
+}

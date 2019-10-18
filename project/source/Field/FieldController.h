@@ -81,10 +81,10 @@ namespace Field
 		void SetCallbackOnBuildRoad(DelegatePtr<std::vector<Model::PlaceModel*>&> callback);
 
 		//イベント操作用のインターフェース
-		void AddLevelAI(float num);					//AI発展レベルを増やす
-		void AddLevelDevelopment(float num);		//街の発展レベルを増やす
+		void AdjustLevelAI(float num);				//AI発展レベルを調整
+		void AdjustLevelDevelopment(float num);		//街の発展レベルを調整
 		void AddStockItem(int num);					//ストックアイテムの数を増やす
-		void SetDevelopSpeedBonus();				//発展スピードへのボーナス付与
+		void SetDevelopSpeedBonus(float num);		//発展スピードへのボーナス付与
 		void CreateNewTown();						//新しい街を出現させる
 		void DestroyTown();							//街を破壊する
 		void ReverseOperation(bool isReverse);		//操作の反転（引数 true:反転させる false:元に戻す)

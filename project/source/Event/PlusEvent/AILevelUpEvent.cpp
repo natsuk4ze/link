@@ -1,27 +1,34 @@
 //=============================================================================
 //
-// イベント基底クラス [EventBase.cpp]
+// AIレベル上昇イベントクラス [AILevelUpEvent.cpp]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#include "EventBase.h"
+#include "../../../main.h"
+#include "AILevelUpEvent.h"
+
+//*****************************************************************************
+// マクロ定義
+//*****************************************************************************
+const int AILevelUpNum = 1;
 
 //*****************************************************************************
 // スタティック変数宣言
 //*****************************************************************************
-Field::FieldController *EventBase::fieldController = nullptr;
+
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-EventBase::EventBase() : UseFlag(true)
+AILevelUpEvent::AILevelUpEvent()
 {
+
 }
 
 //=============================================================================
 // デストラクタ
 //=============================================================================
-EventBase::~EventBase()
+AILevelUpEvent::~AILevelUpEvent()
 {
 
 }
@@ -29,24 +36,48 @@ EventBase::~EventBase()
 //=============================================================================
 // 更新
 //=============================================================================
-void EventBase::Update()
+void AILevelUpEvent::Update()
 {
-
+	fieldController->AdjustLevelAI(AILevelUpNum);
+	UseFlag = false;
 }
 
 //=============================================================================
 // 描画
 //=============================================================================
-void EventBase::Draw()
+void AILevelUpEvent::Draw()
 {
 
 }
 
 //=============================================================================
-// FieldControllerのポインタを受け取る
+// イベントメッセージを取得
 //=============================================================================
-void EventBase::ReceiveFieldController(Field::FieldController *Ptr)
+string AILevelUpEvent::GetEventMessage(int FieldLevel)
 {
-	fieldController = Ptr;
-}
+	vector<string> MessageContainer;
 
+	if (FieldLevel == Field::Model::City)
+	{
+		MessageContainer.push_back("このドリルは天を貫くドリルだ！！");
+	}
+	else if (FieldLevel == Field::Model::World)
+	{
+
+	}
+	else if (FieldLevel == Field::Model::Space)
+	{
+
+	}
+
+	if (!MessageContainer.empty())
+	{
+		int MessageNo = rand() % MessageContainer.size();
+		return MessageContainer.at(MessageNo);
+	}
+	else
+	{
+		string ErrMsg = "イベントメッセージがありません";
+		return ErrMsg;
+	}
+}

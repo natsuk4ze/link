@@ -1,27 +1,34 @@
 //=============================================================================
 //
-// イベント基底クラス [EventBase.cpp]
+// 操作反転イベントクラス [MoveInverseEvent.cpp]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#include "EventBase.h"
+#include "../../../main.h"
+#include "MoveInverseEvent.h"
+
+//*****************************************************************************
+// マクロ定義
+//*****************************************************************************
+
 
 //*****************************************************************************
 // スタティック変数宣言
 //*****************************************************************************
-Field::FieldController *EventBase::fieldController = nullptr;
+
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-EventBase::EventBase() : UseFlag(true)
+MoveInverseEvent::MoveInverseEvent(int RemainTime) : RemainTime(RemainTime)
 {
+	fieldController->ReverseOperation(true);
 }
 
 //=============================================================================
 // デストラクタ
 //=============================================================================
-EventBase::~EventBase()
+MoveInverseEvent::~MoveInverseEvent()
 {
 
 }
@@ -29,24 +36,52 @@ EventBase::~EventBase()
 //=============================================================================
 // 更新
 //=============================================================================
-void EventBase::Update()
+void MoveInverseEvent::Update()
 {
-
+	RemainTime--;
+	if (RemainTime <= 0)
+	{
+		fieldController->ReverseOperation(false);
+		UseFlag = false;
+	}
 }
 
 //=============================================================================
 // 描画
 //=============================================================================
-void EventBase::Draw()
+void MoveInverseEvent::Draw()
 {
 
 }
 
 //=============================================================================
-// FieldControllerのポインタを受け取る
+// イベントメッセージを取得
 //=============================================================================
-void EventBase::ReceiveFieldController(Field::FieldController *Ptr)
+string MoveInverseEvent::GetEventMessage(int FieldLevel)
 {
-	fieldController = Ptr;
-}
+	vector<string> MessageContainer;
 
+	if (FieldLevel == Field::Model::City)
+	{
+		MessageContainer.push_back("操作反転イベント");
+	}
+	else if (FieldLevel == Field::Model::World)
+	{
+
+	}
+	else if (FieldLevel == Field::Model::Space)
+	{
+
+	}
+
+	if (!MessageContainer.empty())
+	{
+		int MessageNo = rand() % MessageContainer.size();
+		return MessageContainer.at(MessageNo);
+	}
+	else
+	{
+		string ErrMsg = "イベントメッセージがありません";
+		return ErrMsg;
+	}
+}

@@ -17,7 +17,7 @@
 EventMessage::EventMessage()
 {
 	//テキスト
-	text = new TextViewer("cinecaption", 50);
+	text = new TextViewer("cinecaption", 40);
 
 	////背景
 	//bg = new BaseViewerDrawer();

@@ -9,6 +9,7 @@
 
 #include <string>
 #include <vector>
+#include "../Field/FieldController.h"
 #include "../Field/Place/PlaceConfig.h"
 
 using namespace std;
@@ -19,19 +20,17 @@ using namespace std;
 class EventBase
 {
 protected:
-	//const char* Message = nullptr;
-	//int Type = 0;
-	//int FieldLevel = 0;
-	int RemainingTime = 0;
-	bool UseFlag = true;
+	bool UseFlag;
+	static Field::FieldController *fieldController;
 
 public:
-	EventBase(int FieldLevel, int Type);
+	EventBase();
 	~EventBase();
 	virtual void Update(void);
 	virtual void Draw(void);
 	virtual string GetEventMessage(int FieldLevel) = 0;
 	bool GetUse(void) { return this->UseFlag; };
+	static void ReceiveFieldController(Field::FieldController *Ptr);
 };
 
 #endif
