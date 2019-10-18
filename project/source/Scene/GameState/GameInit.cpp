@@ -29,9 +29,6 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
 	entity.fieldCamera->ChangeMode();
 
-	//CSVデータをロード
-	entity.field->Load();
-
 	//ゲームに必要なパラメータを初期化
 	//TODO : ステージの制限時間を引き継げるようにする
 	entity.remainTime = 30 * 180;
@@ -49,6 +46,9 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	// FieldLevel = World
 
 	// FieldLevel = Space
+
+	//CSVデータをロード
+	entity.field->Load();
 
 	//トランジション画面をオフにして遷移
 	TransitionController::Instance()->SetTransition(true, TransitionType::HexaPop, [&]()

@@ -143,7 +143,7 @@ namespace Field
 	***************************************/
 	void FieldController::Draw()
 	{
-		ground->Draw();
+		//ground->Draw();
 
 		placeActController->Draw();
 
@@ -162,6 +162,13 @@ namespace Field
 	void FieldController::Load()
 	{
 		placeContainer->LoadCSV("data/FIELD/sample01.csv");
+
+		//アクター生成
+		auto places = placeContainer->GetAllPlaces();
+		for (auto&& place : places)
+		{
+			placeActController->SetActor(place);
+		}
 
 		//カーソルのフィールドの中央へ設定
 		FieldPosition border = placeContainer->GetPlaceBorder();

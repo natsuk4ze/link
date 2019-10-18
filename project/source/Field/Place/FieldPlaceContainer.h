@@ -44,6 +44,9 @@ namespace Field::Model
 		PlaceModel* GetPlace(int x, int z);
 		PlaceModel* GetPlace(const FieldPosition& position);
 
+		//全PlaceModel取得処理
+		std::vector<const PlaceModel*> GetAllPlaces() const;
+
 		//CSVデータ読み込み
 		void LoadCSV(const char* filePath);
 

@@ -65,13 +65,13 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::Update()
 	{
-		//for (auto&& map : actorMap)
-		//{
-		//	for (auto&& pair : *map)
-		//	{
-		//		pair.second->Update();
-		//	}
-		//}
+		for (auto&& map : actorContainer)
+		{
+			for (auto&& pair : *map)
+			{
+				pair.second->Update();
+			}
+		}
 	}
 
 	/**************************************
@@ -234,7 +234,7 @@ namespace Field::Actor
 		// 生成アニメーション
 		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
 
-		AddContainer(ActorPattern::StarightRoad, place->ID(), actor);
+		AddContainer(ActorPattern::City, place->ID(), actor);
 	}
 
 	/**************************************
