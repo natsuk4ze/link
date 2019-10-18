@@ -8,6 +8,8 @@
 #include "PlaceActor.h"
 #include "../../../Framework/Tool/DebugWindow.h"
 #include "../Animation/ActorAnimation.h"
+#include "../../../Framework/Camera/ViewFrustrum.h"
+#include "../../../Framework/Camera/Camera.h"
 
 //**************************************
 // クラスのメンバ変数初期化
@@ -17,7 +19,8 @@ const D3DXVECTOR3 PlaceActor::ActorScale = D3DXVECTOR3(0.25f, 0.25f, 0.25f);
 //=====================================
 // コンストラクタ
 //=====================================
-PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel) 
+PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel) :
+	onCamera(true)
 {
 	// メッシュコンテナの作成
 	mesh = MeshContainer::Create();
@@ -41,6 +44,8 @@ PlaceActor::~PlaceActor()
 //=====================================
 void PlaceActor::Update()
 {
+	if (!CheckOnCamera())
+		return;
 
 #if _DEBUG
 	Debug();
@@ -53,6 +58,9 @@ void PlaceActor::Update()
 void PlaceActor::Draw()
 {
 	if (!this->IsActive())
+		return;
+
+	if (!onCamera)
 		return;
 
 	transform->SetWorld();
@@ -94,8 +102,40 @@ void PlaceActor::ResetTransform()
 }
 
 //=====================================
+// カメラ内判定
+//=====================================
+bool PlaceActor::CheckOnCamera()
+{
+	D3DXVECTOR3 obj = transform->GetPosition();
+
+	for (int i = 0; i < 4; i++)
+	{
+		D3DXVECTOR3 nor = Camera::MainCamera()->GetViewFrustrum().GetNormal(ViewFrustrum::Surface(i));
+		D3DXVECTOR3 vec = obj - Camera::MainCamera()->GetViewFrustrum().GetSurfacePoint(ViewFrustrum::Surface(i));
+
+		// 視錐台の法線と、視錐台からオブジェクトへのベクトルから内積計算
+		float dot = D3DXVec3Dot(&nor, &vec);
+
+		if (dot > 0)
+		{
+			onCamera = true;
+		}
+		else
+		{
+			// 1つでもfalseならリターン
+			onCamera = false;
+			break;
+		}
+
+	}
+
+	return onCamera;
+}
+
+//=====================================
 // デバッグ
 //=====================================
+#if _DEBUG
 void PlaceActor::Debug()
 {
 	Debug::Begin("PlaceActor", false);
@@ -126,5 +166,11 @@ void PlaceActor::Debug()
 		transform->SetScale(ActorScale);
 	}
 	Debug::NewLine();
+	Debug::Text("OnCamera = %s", onCamera ? "true" : "false");
+	if (Debug::Button("OnCamera"))
+	{
+		onCamera ? onCamera = false : onCamera = true;
+	}
 	Debug::End();
 }
+#endif

@@ -43,9 +43,13 @@ public:
 
 protected:
 	// ***継承先のクラスで読み込み***
-	MeshContainer* mesh;				// メッシュコンテナ
-	FModel::PlaceType type;				// アクターの種類
+	MeshContainer* mesh;								// メッシュコンテナ
+	FModel::PlaceType type;								// アクターの種類
 	// ******************************
+
+	bool onCamera;										// 描画範囲の可否判定
+
+	bool CheckOnCamera();								// カメラ内判定
 
 private:
 	static const D3DXVECTOR3 ActorScale;
