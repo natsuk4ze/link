@@ -374,29 +374,34 @@ namespace Field
 	{
 		using namespace Field::Model;
 
-		auto itr = std::find_if(start, route.end(), [](auto& place)
+		auto head = std::find_if(start, route.end(), [](auto& place)
 		{
 			//川の開拓処理を入れていないので一旦コメントアウト
 			return place->IsType(PlaceType::Mountain) || place->IsType(PlaceType::River);
 		});
 
 		//開拓対象が見つからないのでリターン
-		if (itr == route.end())
+		if (head == route.end())
 			return;
 
 		//山を開拓
-		if ((*itr)->IsType(PlaceType::Mountain))
+		if ((*head)->IsType(PlaceType::Mountain))
 		{
-			itr = DevelopMountain(route, itr);
+			head = DevelopMountain(route, head);
 		}
 		//川を開拓
-		else if ((*itr)->IsType(PlaceType::River))
+		else if ((*head)->IsType(PlaceType::River))
 		{
-			itr = DevelopRiver(route, itr);
+			head = DevelopRiver(route, head);
 		}
 
 		//開拓が終了した位置から再帰的に開拓
-		DevelopPlace(route, itr);
+		auto nextHead = std::find_if(head, route.end(), [](auto&& place)
+		{
+			return !place->IsDevelopableType();
+		});
+
+		DevelopPlace(route, nextHead);
 	}
 
 	/**************************************
