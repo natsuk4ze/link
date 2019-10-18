@@ -47,12 +47,12 @@ StockViewer::StockViewer()
 		num[i]->MakeVertex();
 		num[i]->size = initNumSize;
 		num[i]->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		num[i]->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.3f, SCREEN_HEIGHT / 10 * 2.50f + i*intervalViewerPos, 0.0f);
+		num[i]->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.21f, SCREEN_HEIGHT / 10 * 2.50f + i*intervalViewerPos, 0.0f);
 		num[i]->SetColor(SET_COLOR_NOT_COLORED);
 		parameterBox[i] = 0;
-		num[i]->intervalNumberScr = 120.0f;
+		num[i]->intervalNumberScr = 35.0f;
 		num[i]->intervalNumberTex = 0.10f;
-		num[i]->placeMax = 1;
+		num[i]->placeMax = 2;
 		num[i]->baseNumber = 10;
 		num[i]->isHopped = false;
 		num[i]->radian = 0;

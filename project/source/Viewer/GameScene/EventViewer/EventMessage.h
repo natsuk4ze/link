@@ -9,6 +9,7 @@
 #define _EVENT_MESSAGE_H_
 
 #include "../../Framework/BaseViewer.h"
+#include <string>
 
 //*****************************************************************************
 // 前方宣言
@@ -27,13 +28,23 @@ public:
 
 	void Update(void);
 	void Draw(void);
-	//void Set(const string message);
-
-	bool isPlaying;
+	void Set(const std::string &message);
 
 private:
 	BaseViewerDrawer *bg;
 	TextViewer *text;
+
+	//フレームカウント
+	int countFrame;
+
+	//現在再生中のアニメーション
+	int currentAnim;
+
+	//再生中かどうか
+	bool isPlaying;
+
+	//アニメーションさせる
+	void Animate(void);
 };
 
 #endif

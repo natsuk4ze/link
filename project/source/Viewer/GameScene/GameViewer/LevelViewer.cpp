@@ -19,15 +19,15 @@ LevelViewer::LevelViewer()
 	num = new CountViewerDrawer();
 	num->LoadTexture("data/TEXTURE/Viewer/GameViewer/LevelViewer/Num.png");
 	num->MakeVertex();
-	num->size = D3DXVECTOR3(20.0f, 46.0f, 0.0f);
+	num->size = D3DXVECTOR3(30.0f, 69.0f, 0.0f);
 	num->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	num->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 8.550f, SCREEN_HEIGHT / 10 * 1.50f, 0.0f);
+	num->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 8.54f, SCREEN_HEIGHT / 10 * 1.60f, 0.0f);
 	num->SetColor(SET_COLOR_NOT_COLORED);
 	ratioLevelBox = 1.0;
 	levelAI_Box = 0;
-	num->intervalNumberScr = 40.0f;
+	num->intervalNumberScr = 60.0f;
 	num->intervalNumberTex = 0.1f;
-	num->placeMax = 5;
+	num->placeMax = 4;
 	num->baseNumber = 10;
 
 	//”wŒi
