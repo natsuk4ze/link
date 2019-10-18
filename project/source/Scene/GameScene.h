@@ -55,12 +55,15 @@ public:
 	{
 		Initialize,
 		Idle,
+		Finish,
 		Max
 	};
 
 private:
+	using SceneState = BaseState<GameScene, State>;
+
 	//シーンステートマシン
-	std::vector<BaseState<GameScene, State>*> fsm;
+	std::vector<SceneState*> fsm;
 	State currentState, prevState;
 
 	SkyBox *skybox;								//背景スカイボックス
@@ -84,6 +87,7 @@ private:
 	//各ステートクラス
 	class GameInit;
 	class GameIdle;
+	class GameFinish;
 
 	PlaceActor* testActor;
 };

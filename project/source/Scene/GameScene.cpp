@@ -18,9 +18,8 @@
 
 #include "GameState/GameInit.h"
 #include "GameState/GameIdle.h"
+#include "GameState/GameFinish.h"
 
-//※イベントコントローラーが出来たらそっち移動
-#include "../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../FieldObject/Actor/CrossJunctionActor.h"
 #include "../FieldObject/Actor/CityActor.h"
 
@@ -48,6 +47,7 @@ void GameScene::Init()
 	fsm.resize(State::Max, NULL);
 	fsm[State::Initialize] = new GameInit();
 	fsm[State::Idle] = new GameIdle();
+	fsm[State::Finish] = new GameFinish();
 
 	//デリゲートを作成して設定
 	onBuildRoad = Delegate<GameScene, Route&>::Create(this, &GameScene::OnBuildRoad);
