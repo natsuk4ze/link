@@ -103,7 +103,7 @@ void PlaceActor::Debug()
 	Debug::NewLine();
 	if (Debug::Button("Fall"))
 	{
-		ActorAnimation::Fall(*this);
+		ActorAnimation::FallAndExpantion(*this);
 	}
 	Debug::NewLine();
 	if (Debug::Button("RotateAndExpantion"))
