@@ -53,9 +53,9 @@ static const float animDuration[animMax] = {
 //アニメーションシーン
 enum animScene
 {
-    PopOut,
+    In,
 	Wait,
-	FadeOut
+	Out
 };
 
 //*****************************************************************************
@@ -94,6 +94,11 @@ void EventMessage::Update(void)
 {
 	Animate();
 
+	if (currentAnim == Out)
+	{
+		FadeOut();
+	}
+
 #ifdef _DEBUG
 
 	if (Keyboard::GetTrigger(DIK_M))
@@ -122,6 +127,7 @@ void EventMessage::Draw(void)
 //=============================================================================
 void EventMessage::Animate(void)
 {
+	//再生中なら実行
 	if (isPlaying)
 	{
 		//フレーム更新
@@ -152,18 +158,37 @@ void EventMessage::Animate(void)
 			currentAnim++;
 		}
 
+		//アニメーション終了
 		if (currentAnim == animMax)
 		{
 			countFrame = 0;
 			currentAnim = 0;
 			time = 0;
+			alpha = 1.0f;
+			text->SetColor(SET_COLOR_NOT_COLORED);
+			bg->SetColor(SET_COLOR_NOT_COLORED);
 			isPlaying = false;
 		}
 
-		//ポジションをセット
+		//ポジションをセット(*後に変更予定)
 		text->SetPos((int)position.x,(int)position.y);
 		bg->position = D3DXVECTOR3(position.x, position.y, 0.0f);
 	}
+}
+
+//=============================================================================
+// フェードアウト処理
+//=============================================================================
+void EventMessage::FadeOut(void)
+{
+	//フェードアウト中はα値を減算
+	if (alpha > 0.0f)
+	{
+		alpha -= 0.05f;
+	}
+
+	text->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, alpha));
+	bg->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, alpha));
 }
 
 //=============================================================================
@@ -171,6 +196,9 @@ void EventMessage::Animate(void)
 //=============================================================================
 void EventMessage::Set(const std::string &message)
 {
+	//テキストにメッセージをセット
 	text->SetText(message);
+
+	//再生状態に移行
 	isPlaying = true;
 }

@@ -43,8 +43,14 @@ private:
 	//再生中かどうか
 	bool isPlaying;
 
+	//α値
+	float alpha = 1.0f;
+
 	//アニメーションさせる
 	void Animate(void);
+
+	//フェードアウトさせる
+	void FadeOut(void);
 };
 
 #endif
