@@ -251,7 +251,7 @@ namespace Field
 	/**************************************
 	AI”­“WƒŒƒxƒ‹‚ð‘‚â‚·
 	***************************************/
-	void FieldController::AddLevelAI(float num)
+	void FieldController::AdjustLevelAI(float num)
 	{
 		float MaxLevel = 9999.0f;
 		developmentLevelAI = Math::Clamp(0.0f, MaxLevel, developmentLevelAI + num);
@@ -260,7 +260,7 @@ namespace Field
 	/**************************************
 	ŠX‚Ì”­“WƒŒƒxƒ‹‚ð‘‚â‚·
 	***************************************/
-	void FieldController::AddLevelDevelopment(float num)
+	void FieldController::AdjustLevelDevelopment(float num)
 	{
 		placeContainer->AddDevelopmentLevel(num);
 	}
@@ -278,11 +278,11 @@ namespace Field
 	/**************************************
 	”­“WƒXƒs[ƒh‚Ö‚Ìƒ{[ƒiƒX•t—^
 	***************************************/
-	void FieldController::SetDevelopSpeedBonus()
+	void FieldController::SetDevelopSpeedBonus(float num)
 	{
 		//TODO ; ‰ðœˆ—‚ðŽÀ‘•‚·‚é
 		//TODO : ŒöŠJ”{—¦‚ð‚¿‚á‚ñ‚ÆŒˆ‚ß‚é
-		developSpeedBonus = 1.5f;
+		developSpeedBonus = num;
 	}
 
 	/**************************************
@@ -568,6 +568,6 @@ namespace Field
 			return;
 
 		float raiseValue = placeContainer->CalcDevelopmentLevelAI(developSpeedBonus);
-		AddLevelAI(raiseValue);
+		AdjustLevelAI(raiseValue);
 	}
 }

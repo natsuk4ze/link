@@ -7,14 +7,23 @@
 #include "../../main.h"
 #include "EventController.h"
 #include "EventConfig.h"
+#include "PlusEvent/AILevelUpEvent.h"
+#include "PlusEvent/BonusEvent.h"
+#include "PlusEvent/CityLevelUpEvent.h"
+#include "PlusEvent/FamousPeopleEvent.h"
+#include "PlusEvent/NewCityEvent.h"
+#include "PlusEvent/StockRecoveryEvent.h"
+#include "MinusEvent/AILevelDecreaseEvent.h"
+#include "MinusEvent/BanStockUseEvent.h"
 #include "MinusEvent/CityDestroyEvent.h"
-#include "../Field/Place/FieldPlaceModel.h"
+#include "MinusEvent/CityLevelDecreaseEvent.h"
+#include "MinusEvent/CongestionUpEvent.h"
+#include "MinusEvent/MoveInverseEvent.h"
 
 #include "../../Framework/Core/Utility.h"
 #include "../../Framework/String/String.h"
 
 #include <fstream>
-#include <string>
 
 #if _DEBUG
 #include "../../Framework/Resource/ResourceManager.h"
@@ -27,15 +36,11 @@ using namespace EventConfig;
 // マクロ定義
 //*****************************************************************************
 // 使用していないイベントを削除
-//bool RemoveCondition(EventBase *Event) { return !Event->GetUse(); }
 bool RemoveCondition(EventBase *Event) { return Event == nullptr ? true : false; }
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-//std::vector<Field::Model::PlaceModel*> *EventController::route = nullptr;
-//std::vector<EventInfo> EventController::EventCSVData;
-//std::vector<EventBase*> EventController::EventVec;
 
 
 //=============================================================================
@@ -59,6 +64,9 @@ EventController::~EventController()
 {
 	// イベントベクトル削除
 	Utility::DeleteContainer(EventVec);
+	EventCSVData.clear();
+
+	fieldController = nullptr;
 
 	SAFE_DELETE(eventViewer);
 }
@@ -76,10 +84,12 @@ void EventController::Update()
 		}
 		else
 		{
+			// 使用完了のイベントを削除
 			SAFE_DELETE(Event);
 		}
 	}
 
+	// イベントビューア更新
 	eventViewer->Update();
 
 	EventVec.erase(std::remove_if(std::begin(EventVec), std::end(EventVec), RemoveCondition), std::end(EventVec));
@@ -95,16 +105,18 @@ void EventController::Draw()
 		Event->Draw();
 	}
 
+	// イベントビューア描画
 	eventViewer->Draw();
 
 #if _DEBUG
+	// イベントマスの可視化描画
 	DrawDebug();
 #endif
 }
 
 #if _DEBUG
 //=============================================================================
-// イベントマス描画
+// イベントマスの可視化描画
 //=============================================================================
 void EventController::DrawDebug()
 {
@@ -117,7 +129,7 @@ void EventController::DrawDebug()
 	{
 		//テスト描画
 		Transform transform = Transform(
-			{ Object.x * 10.0f, 1.0f, Object.z * -10.0f },
+			Object.Pos.ConvertToWorldPosition() + D3DXVECTOR3(0.0f, 1.0f, 0.0f),
 			{ D3DXToRadian(90.0f), 0.0f, 0.0f },
 			Vector3::One);
 		transform.SetWorld();
@@ -163,7 +175,8 @@ void EventController::LoadCSV(const char* FilePath)
 			int Type = std::stoi(str);
 			if (Type != EventConfig::NoEvent)
 			{
-				EventCSVData.push_back(EventInfo{ x, z, Type });
+				Field::FieldPosition Pos = { x, z };
+				EventCSVData.push_back(EventInfo{ Pos, Type });
 			}
 			x++;
 		}
@@ -181,48 +194,66 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 {
 	for (auto &place : RoutePtr)
 	{
-		Field::FieldPosition Pos = place->GetPosition();
+		Field::FieldPosition PlacePos = place->GetPosition();
 		for (auto EventPlace = EventCSVData.begin(); EventPlace != EventCSVData.end();)
 		{
-			if (Pos.x == EventPlace->x && Pos.z == EventPlace->z)
+			if (PlacePos.x == EventPlace->Pos.x && PlacePos.z == EventPlace->Pos.z)
 			{
 				EventBase* Ptr = nullptr;
 
+				// イベントインスタンス作成
 				switch (EventPlace->EventType)
 				{
 				case CityLevelUp:
+					Ptr = new CityLevelUpEvent();
 					break;
 				case NewCity:
+					Ptr = new NewCityEvent();
 					break;
-				case ChipRecovery:
+				case StockRecovery:
+					Ptr = new StockRecoveryEvent();
 					break;
 				case FamousPeople:
+					//Ptr = new FamousPeopleEvent();
 					break;
 				case Bonus:
+					Ptr = new BonusEvent();
 					break;
 				case AILevelUp:
+					Ptr = new AILevelUpEvent();
 					break;
 				case CityLevelDecrease:
+					Ptr = new CityLevelDecreaseEvent();
 					break;
 				case CityDestroy:
-					Ptr = new CityDestroyEvent(FieldLevel, Vector3::Zero);
-					//EventVec.push_back(new CityDestroyEvent(FieldLevel, Vector3::Zero));
+					Ptr = new CityDestroyEvent(D3DXVECTOR3(150.0f, 0.0f, -150.0f));
 					break;
 				case AILevelDecrease:
+					Ptr = new AILevelDecreaseEvent();
 					break;
 				case MoveInverse:
+					//Ptr = new MoveInverseEvent();
 					break;
-				case BanSpecialChip:
+				case BanStockUse:
+					//Ptr = new BanStockUseEvent();
 					break;
 				case CongestionUp:
+					//Ptr = new CongestionUpEvent();
 					break;
 				default:
 					break;
 				}
-				
+				if (Ptr != nullptr)
+				{
+				// イベントメッセージ設置
 				eventViewer->SetEventMessage(Ptr->GetEventMessage(FieldLevel));
 
+				// イベントベクトルにプッシュ
+				EventVec.push_back(Ptr);
+          
+				// CSVデータから発生したイベントの資料を削除
 				EventPlace = EventCSVData.erase(EventPlace);
+				}
 			}
 			else
 				++EventPlace;
@@ -231,9 +262,9 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 }
 
 //=============================================================================
-// フィールドコントローラを受け取る
+// FieldControllerのポインタを受け取る
 //=============================================================================
-void EventController::ReceiveFieldController(Field::FieldController* Ptr)
+void EventController::ReceiveFieldController(Field::FieldController *Ptr)
 {
-	fieldController = Ptr;
+	EventBase::ReceiveFieldController(Ptr);
 }

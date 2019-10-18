@@ -92,7 +92,6 @@
     <ClInclude Include="Library\json11\json11.hpp" />
     <ClInclude Include="source\Event\EventBase.h" />
     <ClInclude Include="source\Event\EventController.h" />
-    <ClInclude Include="source\Event\EventMessageContainer.h" />
     <ClInclude Include="source\Field\Camera\FieldCamera.h" />
     <ClInclude Include="source\Field\Camera\FieldCameraFar.h" />
     <ClInclude Include="source\Field\Camera\FieldCameraQuater.h" />
@@ -157,6 +156,17 @@
     <ClInclude Include="source\FieldObject\Animation\ActorAnimation.h" />
     <ClInclude Include="source\Scene\GameState\GameFinish.h" />
     <ClInclude Include="source\Scene\GameState\GameLevelUp.h" />
+    <ClInclude Include="source\Event\PlusEvent\CityLevelUpEvent.h" />
+    <ClInclude Include="source\Event\PlusEvent\NewCityEvent.h" />
+    <ClInclude Include="source\Event\PlusEvent\StockRecoveryEvent.h" />
+    <ClInclude Include="source\Event\PlusEvent\FamousPeopleEvent.h" />
+    <ClInclude Include="source\Event\PlusEvent\BonusEvent.h" />
+    <ClInclude Include="source\Event\PlusEvent\AILevelUpEvent.h" />
+    <ClInclude Include="source\Event\MinusEvent\CityLevelDecreaseEvent.h" />
+    <ClInclude Include="source\Event\MinusEvent\AILevelDecreaseEvent.h" />
+    <ClInclude Include="source\Event\MinusEvent\MoveInverseEvent.h" />
+    <ClInclude Include="source\Event\MinusEvent\BanStockUseEvent.h" />
+    <ClInclude Include="source\Event\MinusEvent\CongestionUpEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -237,7 +247,6 @@
     <ClCompile Include="Library\json11\json11.cpp" />
     <ClCompile Include="source\Event\EventBase.cpp" />
     <ClCompile Include="source\Event\EventController.cpp" />
-    <ClCompile Include="source\Event\EventMessageContainer.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCamera.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCameraFar.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCameraQuater.cpp" />
@@ -297,6 +306,17 @@
     <ClCompile Include="source\FieldObject\Animation\ActorAnimation.cpp" />
     <ClCompile Include="source\Scene\GameState\GameFinish.cpp" />
     <ClCompile Include="source\Scene\GameState\GameLevelUp.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\CityLevelUpEvent.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\NewCityEvent.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\StockRecoveryEvent.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\FamousPeopleEvent.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\BonusEvent.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\AILevelUpEvent.cpp" />
+    <ClCompile Include="source\Event\MinusEvent\CityLevelDecreaseEvent.cpp" />
+    <ClCompile Include="source\Event\MinusEvent\AILevelDecreaseEvent.cpp" />
+    <ClCompile Include="source\Event\MinusEvent\MoveInverseEvent.cpp" />
+    <ClCompile Include="source\Event\MinusEvent\BanStockUseEvent.cpp" />
+    <ClCompile Include="source\Event\MinusEvent\CongestionUpEvent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

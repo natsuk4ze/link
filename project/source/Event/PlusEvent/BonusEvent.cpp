@@ -1,27 +1,34 @@
 //=============================================================================
 //
-// イベント基底クラス [EventBase.cpp]
+// 町発展度ボーナスイベントクラス [BonusEvent.cpp]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#include "EventBase.h"
+#include "../../../main.h"
+#include "BonusEvent.h"
+
+//*****************************************************************************
+// マクロ定義
+//*****************************************************************************
+
 
 //*****************************************************************************
 // スタティック変数宣言
 //*****************************************************************************
-Field::FieldController *EventBase::fieldController = nullptr;
+
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-EventBase::EventBase() : UseFlag(true)
+BonusEvent::BonusEvent()
 {
+
 }
 
 //=============================================================================
 // デストラクタ
 //=============================================================================
-EventBase::~EventBase()
+BonusEvent::~BonusEvent()
 {
 
 }
@@ -29,24 +36,48 @@ EventBase::~EventBase()
 //=============================================================================
 // 更新
 //=============================================================================
-void EventBase::Update()
+void BonusEvent::Update()
 {
-
+	//fieldController->SetDevelopSpeedBonus();
+	UseFlag = false;
 }
 
 //=============================================================================
 // 描画
 //=============================================================================
-void EventBase::Draw()
+void BonusEvent::Draw()
 {
 
 }
 
 //=============================================================================
-// FieldControllerのポインタを受け取る
+// イベントメッセージを取得
 //=============================================================================
-void EventBase::ReceiveFieldController(Field::FieldController *Ptr)
+string BonusEvent::GetEventMessage(int FieldLevel)
 {
-	fieldController = Ptr;
-}
+	vector<string> MessageContainer;
 
+	if (FieldLevel == Field::Model::City)
+	{
+		MessageContainer.push_back("ラッキーセブン！");
+	}
+	else if (FieldLevel == Field::Model::World)
+	{
+
+	}
+	else if (FieldLevel == Field::Model::Space)
+	{
+
+	}
+
+	if (!MessageContainer.empty())
+	{
+		int MessageNo = rand() % MessageContainer.size();
+		return MessageContainer.at(MessageNo);
+	}
+	else
+	{
+		string ErrMsg = "イベントメッセージがありません";
+		return ErrMsg;
+	}
+}

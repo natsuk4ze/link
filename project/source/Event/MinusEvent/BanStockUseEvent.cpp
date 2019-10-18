@@ -1,27 +1,35 @@
 //=============================================================================
 //
-// イベント基底クラス [EventBase.cpp]
+// ストック使用不可イベントクラス [BanStockUseEvent.cpp]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#include "EventBase.h"
+#include "../../../main.h"
+#include "BanStockUseEvent.h"
+
+//*****************************************************************************
+// マクロ定義
+//*****************************************************************************
+
 
 //*****************************************************************************
 // スタティック変数宣言
 //*****************************************************************************
-Field::FieldController *EventBase::fieldController = nullptr;
+
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-EventBase::EventBase() : UseFlag(true)
+BanStockUseEvent::BanStockUseEvent(int RemainTime) : RemainTime(RemainTime)
 {
+	// ストック使用封印
+	fieldController->SealUsingItem(true);
 }
 
 //=============================================================================
 // デストラクタ
 //=============================================================================
-EventBase::~EventBase()
+BanStockUseEvent::~BanStockUseEvent()
 {
 
 }
@@ -29,24 +37,53 @@ EventBase::~EventBase()
 //=============================================================================
 // 更新
 //=============================================================================
-void EventBase::Update()
+void BanStockUseEvent::Update()
 {
-
+	RemainTime--;
+	if (RemainTime <= 0)
+	{
+		// 封印解除
+		fieldController->SealUsingItem(false);
+		UseFlag = false;
+	}
 }
 
 //=============================================================================
 // 描画
 //=============================================================================
-void EventBase::Draw()
+void BanStockUseEvent::Draw()
 {
 
 }
 
 //=============================================================================
-// FieldControllerのポインタを受け取る
+// イベントメッセージを取得
 //=============================================================================
-void EventBase::ReceiveFieldController(Field::FieldController *Ptr)
+string BanStockUseEvent::GetEventMessage(int FieldLevel)
 {
-	fieldController = Ptr;
-}
+	vector<string> MessageContainer;
 
+	if (FieldLevel == Field::Model::City)
+	{
+		MessageContainer.push_back("ストック使用禁止イベント");
+	}
+	else if (FieldLevel == Field::Model::World)
+	{
+
+	}
+	else if (FieldLevel == Field::Model::Space)
+	{
+
+	}
+
+	if (!MessageContainer.empty())
+	{
+		int MessageNo = rand() % MessageContainer.size();
+		return MessageContainer.at(MessageNo);
+	}
+	else
+	{
+		string ErrMsg = "イベントメッセージがありません";
+		return ErrMsg;
+	}
+}

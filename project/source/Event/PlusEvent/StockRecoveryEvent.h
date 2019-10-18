@@ -1,26 +1,26 @@
 //=============================================================================
 //
-// イベントメッセージコンテナクラス [EventMessageContainer.h]
+// ストック回数回復イベントクラス [StockRecoveryEvent.h]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#ifndef _EventMessageContainer_H_
-#define _EventMessageContainer_H_
+#ifndef _StockRecoveryEvent_H_
+#define _StockRecoveryEvent_H_
 
-#include <vector>
+#include "../EventBase.h"
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class EventMessageContainer
+class StockRecoveryEvent : public EventBase
 {
 private:
-	//std::vector<const char*> MessageContainer;
-
 public:
-	EventMessageContainer();
-	~EventMessageContainer();
-	static void GetEventMessage(int FieldLevel, int EventType, const char** MessagePtr);
+	StockRecoveryEvent();
+	~StockRecoveryEvent();
+	void Update(void) override;
+	void Draw(void) override;
+	string GetEventMessage(int FieldLevel) override;
 };
 
 #endif

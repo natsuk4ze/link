@@ -41,15 +41,15 @@ D3DXVECTOR3 ViewFrustrum::GetNormal(Surface surfaceID)
 		break;
 
 	case ViewFrustrum::Right:
-		normal = _GetNormal(NearRightBottom, NearRightBottom, NearLeftTop);
+		normal = _GetNormal(NearRightBottom, FarRightBottom, NearRightTop);
 		break;
 
 	case ViewFrustrum::Top:
-		normal = _GetNormal(NearLeftTop, NearRightTop, FarRightTop);
+		normal = _GetNormal(NearLeftTop, NearRightTop, FarLeftTop);
 		break;
 
 	case ViewFrustrum::Bottom:
-		normal = _GetNormal(NearRightBottom, FarRightBottom, NearRightBottom);
+		normal = _GetNormal(NearLeftBottom, FarLeftBottom, NearRightBottom);
 		break;
 	}
 
@@ -78,4 +78,31 @@ void ViewFrustrum::SetVertex(const D3DXVECTOR3 & NearLeftTop, const D3DXVECTOR3 
 D3DXVECTOR3 ViewFrustrum::_GetNormal(int v1, int v2, int v3)
 {
 	return Vector3::Axis(vertexPos[v2] - vertexPos[v1], vertexPos[v3] - vertexPos[v1]);
+}
+
+/**************************************
+ñ è„ÇÃÇ†ÇÈàÍì_Çèäìæ
+***************************************/
+D3DXVECTOR3 ViewFrustrum::GetSurfacePoint(Surface surfaceID)
+{
+	D3DXVECTOR3 ret = Vector3::Zero;
+	switch (surfaceID)
+	{
+	case Left:
+		ret = vertexPos[NearLeftTop];
+		break;
+	case Right:
+		ret = vertexPos[NearRightTop];
+		break;
+	case Top:
+		ret = vertexPos[NearLeftTop];
+		break;
+	case Bottom:
+		ret = vertexPos[FarLeftBottom];
+		break;
+	default:
+		break;
+	}
+
+	return ret;
 }
