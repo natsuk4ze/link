@@ -9,6 +9,7 @@
 #define _EVENT_MESSAGE_H_
 
 #include "../../Framework/BaseViewer.h"
+#include <string>
 
 //*****************************************************************************
 // ‘O•ûéŒ¾
@@ -27,7 +28,7 @@ public:
 
 	void Update(void);
 	void Draw(void);
-	//void Set(const string message);
+	void SetEventMessage(const std::string Message);
 
 	bool isPlaying;
 

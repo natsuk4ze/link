@@ -42,14 +42,16 @@ void GameScene::Init()
 	text = new TextViewer("M+ 2c heavy", 50);
 	gameViewer = new GameViewer();
 	eventController = new EventController(Field::Model::City);
-
-	//※イベントコントローラーが出来たらそっち移動
-	eventViewer = new EventViewer();
+	eventController->ReceiveFieldController(field);
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
 	fsm[State::Initialize] = new GameInit();
 	fsm[State::Idle] = new GameIdle();
+
+	//デリゲートを作成して設定
+	onBuildRoad = Delegate<GameScene, Route&>::Create(this, &GameScene::OnBuildRoad);
+	field->SetCallbackOnBuildRoad(onBuildRoad);
 
 	//ステート初期化
 	ChangeState(State::Initialize);
@@ -74,13 +76,13 @@ void GameScene::Uninit()
 	SAFE_DELETE(text);
 	SAFE_DELETE(gameViewer);
 
-	//※イベントコントローラーが出来たらそっち移動
-	SAFE_DELETE(eventViewer);
-
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
 
 	//SAFE_DELETE(testActor);
+	//デリゲート削除
+	SAFE_DELETE(onBuildRoad);
+
 }
 
 /**************************************
@@ -138,9 +140,6 @@ void GameScene::Draw()
 	//ビュアー描画
 	gameViewer->Draw();
 
-	//※イベントコントローラーが出来たらそっち移動
-	eventViewer->Draw();
-
 	// イベント描画
 	eventController->Draw();
 }
@@ -158,4 +157,12 @@ void GameScene::ChangeState(State next)
 	{
 		fsm[currentState]->OnStart(*this);
 	}
+}
+
+/**************************************
+イベントコントローラへのPlace受け渡し処理
+***************************************/
+void GameScene::OnBuildRoad(Route& route)
+{
+	eventController->CheckEventHappen(route, Field::Model::FieldLevel::City);
 }

@@ -9,23 +9,28 @@
 
 #include "EventBase.h"
 #include <vector>
-#include "../Field/Place/FieldPlaceModel.h"
+#include "../Field/FieldController.h"
+//#include "../Field/Place/FieldPlaceModel.h"
+#include "../Viewer/GameScene/EventViewer/EventViewer.h"
+
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
 //*****************************************************************************
-struct EventInfo
-{
-	int x;
-	int z;
-	int EventType;
-};
-
 class EventController
 {
+	struct EventInfo
+	{
+		int x;
+		int z;
+		int EventType;
+	};
+
 private:
-	static std::vector<EventInfo> EventCSVData;
-	static std::vector<EventBase*> EventVec;
+	std::vector<EventInfo> EventCSVData;
+	std::vector<EventBase*> EventVec;
+	EventViewer *eventViewer;
+	Field::FieldController *fieldController;
 	//static std::vector<Field::Model::PlaceModel*> *route;
 	int FieldLevel;
 
@@ -41,8 +46,9 @@ public:
 	~EventController();
 	void Update(void);
 	void Draw(void);
-	static void CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& route, int FieldLevel);
-	//static void ReceiveRoute(std::vector<Field::Model::PlaceModel*>& route);
+	void CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& route, int FieldLevel);
+	void ReceiveFieldController(Field::FieldController* Ptr);
+	//void ReceiveRoute(std::vector<Field::Model::PlaceModel*>& route);
 };
 
 #endif

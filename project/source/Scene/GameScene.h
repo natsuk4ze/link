@@ -11,6 +11,8 @@
 #include "../../main.h"
 #include "../../Framework/Core/BaseScene.h"
 #include "../../Framework/Pattern/BaseState.h"
+#include "../../Framework/Pattern/Delegate.h"
+
 #include <vector>
 
 // モデル表示テスト用
@@ -24,14 +26,16 @@ namespace Field
 	class FieldController;
 }
 
+namespace Field::Model
+{
+	class PlaceModel;
+}
+
 class SkyBox;
 class FieldCamera;
 class TextViewer;
 class GameViewer;
 class EventController;
-
-//※イベントコントローラーが出来たらそっち移動
-class EventViewer;
 
 /**************************************
 クラス定義
@@ -39,6 +43,8 @@ class EventViewer;
 class GameScene : public BaseScene
 {
 public:
+	using Route = std::vector<Field::Model::PlaceModel*>;
+
 	void Init();
 	void Uninit();
 	void Update();
@@ -62,16 +68,18 @@ private:
 	Field::FieldController *field;				//フィールドコントローラ
 	TextViewer *text;							//テスト用テキストビューワ
 	GameViewer *gameViewer;						//ゲームビュアー
+	EventController *eventController;			//イベントコントローラー
 
-	//※イベントコントローラーが出来たらそっち移動
-	EventViewer *eventViewer;
-
-
-	EventController *eventController;			// イベントコントローラー
 	float remainTime;							//ステージの残り時間
+
+	//デリゲータ
+	DelegatePtr<Route&> onBuildRoad;	//道を生成したときのデリゲータ
 
 	//ステート遷移処理
 	void ChangeState(State next);
+
+	//イベントコントローラへのPlace受け渡し処理
+	void OnBuildRoad(Route& route);
 
 	//各ステートクラス
 	class GameInit;

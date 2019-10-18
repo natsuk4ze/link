@@ -8,7 +8,7 @@
 #include "EventController.h"
 #include "EventConfig.h"
 #include "MinusEvent/CityDestroyEvent.h"
-
+#include "../Field/Place/FieldPlaceModel.h"
 
 #include "../../Framework/Core/Utility.h"
 #include "../../Framework/String/String.h"
@@ -34,8 +34,8 @@ bool RemoveCondition(EventBase *Event) { return Event == nullptr ? true : false;
 // グローバル変数
 //*****************************************************************************
 //std::vector<Field::Model::PlaceModel*> *EventController::route = nullptr;
-std::vector<EventInfo> EventController::EventCSVData;
-std::vector<EventBase*> EventController::EventVec;
+//std::vector<EventInfo> EventController::EventCSVData;
+//std::vector<EventBase*> EventController::EventVec;
 
 
 //=============================================================================
@@ -44,6 +44,8 @@ std::vector<EventBase*> EventController::EventVec;
 EventController::EventController(int FieldLevel) : FieldLevel(FieldLevel)
 {
 	LoadCSV("data/FIELD/sample01_Event.csv");
+
+	eventViewer = new EventViewer();
 
 #if _DEBUG
 	ResourceManager::Instance()->MakePolygon("Event", "data/TEXTURE/PlaceTest/Event.png", { 4.5f, 4.5f }, { 12.0f,1.0f });
@@ -57,6 +59,8 @@ EventController::~EventController()
 {
 	// イベントベクトル削除
 	Utility::DeleteContainer(EventVec);
+
+	SAFE_DELETE(eventViewer);
 }
 
 //=============================================================================
@@ -76,6 +80,8 @@ void EventController::Update()
 		}
 	}
 
+	eventViewer->Update();
+
 	EventVec.erase(std::remove_if(std::begin(EventVec), std::end(EventVec), RemoveCondition), std::end(EventVec));
 }
 
@@ -88,6 +94,8 @@ void EventController::Draw()
 	{
 		Event->Draw();
 	}
+
+	eventViewer->Draw();
 
 #if _DEBUG
 	DrawDebug();
@@ -178,6 +186,8 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 		{
 			if (Pos.x == EventPlace->x && Pos.z == EventPlace->z)
 			{
+				EventBase* Ptr = nullptr;
+
 				switch (EventPlace->EventType)
 				{
 				case CityLevelUp:
@@ -195,7 +205,8 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 				case CityLevelDecrease:
 					break;
 				case CityDestroy:
-					EventVec.push_back(new CityDestroyEvent(FieldLevel, Vector3::Zero));
+					Ptr = new CityDestroyEvent(FieldLevel, Vector3::Zero);
+					//EventVec.push_back(new CityDestroyEvent(FieldLevel, Vector3::Zero));
 					break;
 				case AILevelDecrease:
 					break;
@@ -208,6 +219,8 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 				default:
 					break;
 				}
+				
+				eventViewer->SetEventMessage(Ptr->GetEventMessage(FieldLevel));
 
 				EventPlace = EventCSVData.erase(EventPlace);
 			}
@@ -215,4 +228,12 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 				++EventPlace;
 		}
 	}
+}
+
+//=============================================================================
+// フィールドコントローラを受け取る
+//=============================================================================
+void EventController::ReceiveFieldController(Field::FieldController* Ptr)
+{
+	fieldController = Ptr;
 }
