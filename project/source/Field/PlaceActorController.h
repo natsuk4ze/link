@@ -61,6 +61,7 @@ namespace Field::Actor
 			StarightRoad,
 			Mountain,
 			River,
+			Bridge,
 			Max
 		};
 

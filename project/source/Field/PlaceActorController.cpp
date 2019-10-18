@@ -257,7 +257,7 @@ namespace Field::Actor
 		// 生成アニメーション
 		ActorAnimation::FallAndExpantion(*actor);
 
-		AddContainer(ActorPattern::StarightRoad, place->ID(), actor);
+		AddContainer(ActorPattern::Bridge, place->ID(), actor);
 
 	}
 
