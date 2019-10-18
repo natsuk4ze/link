@@ -1,23 +1,23 @@
 //=============================================================================
 //
-// 新しい町イベントクラス [NewCityEvent.h]
+// ストック使用不可イベントクラス [BanStockUseEvent.h]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#ifndef _NewCityEvent_H_
-#define _NewCityEvent_H_
+#ifndef _BanStockUseEvent_H_
+#define _BanStockUseEvent_H_
 
 #include "../EventBase.h"
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class NewCityEvent : public EventBase
+class BanStockUseEvent : public EventBase
 {
 private:
 public:
-	NewCityEvent();
-	~NewCityEvent();
+	BanStockUseEvent();
+	~BanStockUseEvent();
 	void Update(void) override;
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;

@@ -19,14 +19,11 @@ using namespace std;
 class EventBase
 {
 protected:
-	//const char* Message = nullptr;
-	//int Type = 0;
-	//int FieldLevel = 0;
 	int RemainingTime = 0;
 	bool UseFlag = true;
 
 public:
-	EventBase(int FieldLevel, int Type);
+	EventBase();
 	~EventBase();
 	virtual void Update(void);
 	virtual void Draw(void);

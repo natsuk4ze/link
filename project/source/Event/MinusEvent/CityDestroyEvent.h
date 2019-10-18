@@ -27,7 +27,7 @@ public:
 	~CityDestroyEvent();
 	void Update(void) override;
 	void Draw(void) override;
-	std::string GetEventMessage(int FieldLevel) override;
+	string GetEventMessage(int FieldLevel) override;
 };
 
 #endif

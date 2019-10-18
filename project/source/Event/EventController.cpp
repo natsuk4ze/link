@@ -33,9 +33,6 @@ bool RemoveCondition(EventBase *Event) { return Event == nullptr ? true : false;
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-//std::vector<Field::Model::PlaceModel*> *EventController::route = nullptr;
-//std::vector<EventInfo> EventController::EventCSVData;
-//std::vector<EventBase*> EventController::EventVec;
 
 
 //=============================================================================
@@ -60,6 +57,7 @@ EventController::~EventController()
 	// イベントベクトル削除
 	Utility::DeleteContainer(EventVec);
 
+	EventCSVData.clear();
 	SAFE_DELETE(eventViewer);
 }
 
@@ -194,7 +192,7 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					break;
 				case NewCity:
 					break;
-				case ChipRecovery:
+				case StockRecovery:
 					break;
 				case FamousPeople:
 					break;
@@ -206,13 +204,12 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					break;
 				case CityDestroy:
 					Ptr = new CityDestroyEvent(FieldLevel, Vector3::Zero);
-					//EventVec.push_back(new CityDestroyEvent(FieldLevel, Vector3::Zero));
 					break;
 				case AILevelDecrease:
 					break;
 				case MoveInverse:
 					break;
-				case BanSpecialChip:
+				case BanStockUse:
 					break;
 				case CongestionUp:
 					break;
@@ -228,12 +225,4 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 				++EventPlace;
 		}
 	}
-}
-
-//=============================================================================
-// フィールドコントローラを受け取る
-//=============================================================================
-void EventController::ReceiveFieldController(Field::FieldController* Ptr)
-{
-	fieldController = Ptr;
 }

@@ -1,23 +1,23 @@
 //=============================================================================
 //
-// 新しい町イベントクラス [NewCityEvent.h]
+// AIレベル減少イベントクラス [AILevelDecreaseEvent.h]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#ifndef _NewCityEvent_H_
-#define _NewCityEvent_H_
+#ifndef _AILevelDecreaseEvent_H_
+#define _AILevelDecreaseEvent_H_
 
 #include "../EventBase.h"
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class NewCityEvent : public EventBase
+class AILevelDecreaseEvent : public EventBase
 {
 private:
 public:
-	NewCityEvent();
-	~NewCityEvent();
+	AILevelDecreaseEvent();
+	~AILevelDecreaseEvent();
 	void Update(void) override;
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;
