@@ -64,7 +64,6 @@ void TransitionController::Update()
 		if (callback != NULL)
 		{
 			callback();
-			callback = NULL;
 		}
 
 		if (res == MaskResult::FinishTransitionOut)

@@ -128,6 +128,7 @@ void GameScene::Update()
 	{
 		OnLevelUp();
 	}
+	Debug::Text("Level : %d", level);
 	Debug::End();
 }
 
