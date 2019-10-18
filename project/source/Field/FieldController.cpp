@@ -374,29 +374,36 @@ namespace Field
 	{
 		using namespace Field::Model;
 
-		auto itr = std::find_if(start, route.end(), [](auto& place)
+		auto head = std::find_if(start, route.end(), [](auto& place)
 		{
 			//川の開拓処理を入れていないので一旦コメントアウト
 			return place->IsType(PlaceType::Mountain) || place->IsType(PlaceType::River);
 		});
 
 		//開拓対象が見つからないのでリターン
-		if (itr == route.end())
+		if (head == route.end())
 			return;
 
 		//山を開拓
-		if ((*itr)->IsType(PlaceType::Mountain))
+		if ((*head)->IsType(PlaceType::Mountain))
 		{
-			itr = DevelopMountain(route, itr);
+			head = DevelopMountain(route, head);
 		}
 		//川を開拓
-		else if ((*itr)->IsType(PlaceType::River))
+		else if ((*head)->IsType(PlaceType::River))
 		{
-			itr = DevelopRiver(route, itr);
+			head = DevelopRiver(route, head);
 		}
 
 		//開拓が終了した位置から再帰的に開拓
-		DevelopPlace(route, itr);
+		auto nextHead = std::find_if(head, route.end(), [](auto&& place)
+		{
+			//川じゃない、かつ、橋じゃないタイプを探す
+			//NOTE:「山じゃない」も含めると、川と隣接した山を開拓できないので条件に含めない
+			return !place->IsType(PlaceType::River) && !place->IsType(PlaceType::Bridge);
+		});
+
+		DevelopPlace(route, nextHead);
 	}
 
 	/**************************************
@@ -406,14 +413,14 @@ namespace Field
 	{
 		using namespace Field::Model;
 
-		//対象のプレイスの前にある山,川以外のプレイスを探す
+		//対象のプレイスの前にある山以外のプレイスを探す
 		auto start = std::find_if(ReversePlaceIterator(mountain), route.rend(), [](auto& place)
 		{
 			return !place->IsType(PlaceType::Mountain);
 		});
 
-		//山以外が見つからなかったか、川の場合は早期リターン
-		if (start == route.rend() || (*(start + 1).base())->IsType(PlaceType::River))
+		//山以外が見つからなかった場合は早期リターン
+		if (start == route.rend())
 		{
 			return route.end();
 		}
@@ -425,7 +432,7 @@ namespace Field
 		});
 
 		//山以外が見つからなかったか、川の場合は早期リターン
-		if (end == route.end() || (*end)->IsType(PlaceType::River))
+		if (end == route.end())
 		{
 			return route.end();
 		}
@@ -470,12 +477,28 @@ namespace Field
 		{
 			PlaceModel* prev = *(itr - 1);
 			PlaceModel* place = *itr;
+			Adjacency adjacency = place->IsAdjacent(prev);
 
 			//隣接方向が直線になっていなければ早期リターン
-			if (place->IsAdjacent(prev) != startAdjacency)
+			if (adjacency != startAdjacency)
 				return itr;
 
-			//開拓可能以外のタイプであればbreak
+			//山が出てきたら早期リターン
+			if (place->IsType(PlaceType::Mountain))
+				return itr;
+
+			//橋の場合は、連結できない方向であれば早期リターン
+			if (place->IsType(PlaceType::Bridge))
+			{
+				std::vector<Adjacency> direction = place->GetConnectingAdjacency();
+
+				if (!Utility::IsContain(direction, adjacency))
+				{
+					return itr;
+				}
+			}
+
+			//橋を架けられるタイプであればブレーク
 			if (!place->IsDevelopableType())
 			{
 				end = itr;
