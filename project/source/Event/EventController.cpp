@@ -220,8 +220,10 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					break;
 				}
 				
-				eventViewer->SetEventMessage(Ptr->GetEventMessage(FieldLevel));
-
+				if (Ptr != nullptr)
+				{
+					eventViewer->SetEventMessage(Ptr->GetEventMessage(FieldLevel));
+				}
 				EventPlace = EventCSVData.erase(EventPlace);
 			}
 			else
