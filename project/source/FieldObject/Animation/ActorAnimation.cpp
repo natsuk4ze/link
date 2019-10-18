@@ -9,9 +9,9 @@
 #include "../../../Framework/Tween/Tween.h"
 
 //=====================================
-// óéâ∫
+// óéâ∫ÇµÇ»Ç™ÇÁägëÂ
 //=====================================
-void ActorAnimation::Fall(GameObject& ref, std::function<void(void)> callback)
+void ActorAnimation::FallAndExpantion(GameObject& ref, std::function<void(void)> callback)
 {
 	Tween::Move(ref, ref.GetPosition() + D3DXVECTOR3(0.0f, 50.0f, 0.0f), ref.GetPosition(), 30, InQuint);
 	Tween::Scale(ref, D3DXVECTOR3(0.0f, 0.0f, 0.0f), ref.GetScale(), 30, InQuint, callback);
@@ -32,6 +32,14 @@ void ActorAnimation::RotateAndExpantion(GameObject& ref, std::function<void(void
 void ActorAnimation::RotateAndShrink(GameObject& ref, std::function<void(void)> callback)
 {
 	Tween::Rotate(ref, ref.GetRotation() + D3DXVECTOR3(0.0f, 180.0f, 0.0f), ref.GetRotation(), 30, OutCirc);
+	Tween::Scale(ref, ref.GetScale(), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30, OutCirc, callback);
+}
+
+//=====================================
+// èkè¨
+//=====================================
+void ActorAnimation::Shrink(GameObject& ref, std::function<void(void)> callback)
+{
 	Tween::Scale(ref, ref.GetScale(), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30, OutCirc, callback);
 }
 

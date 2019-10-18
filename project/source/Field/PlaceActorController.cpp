@@ -190,7 +190,7 @@ namespace Field::Actor
 				actor->Rotate(90.0f);
 
 			// 生成アニメーション
-			ActorAnimation::Fall(*actor);
+			ActorAnimation::FallAndExpantion(*actor);
 
 			AddContainer(ActorPattern::StarightRoad, place->ID(), actor);
 		}
@@ -214,7 +214,7 @@ namespace Field::Actor
 			actor->Rotate(rotAngle);
 
 			// 生成アニメーション
-			ActorAnimation::Fall(*actor);
+			ActorAnimation::FallAndExpantion(*actor);
 
 			AddContainer(ActorPattern::Curve, place->ID(), actor);
 		}
