@@ -7,6 +7,9 @@
 //=====================================
 #include "GameScene.h"
 #include "../../Framework/Tool/DebugWindow.h"
+#include "../GameConfig.h"
+#include "../../Framework/Transition/TransitionController.h"
+#include "../../Framework/Core/SceneManager.h"
 
 #include "../../Framework/Renderer3D/SkyBox.h"
 #include "../FieldObject/Actor/PlaceActor.h"
@@ -15,6 +18,7 @@
 #include "../../Framework/Renderer2D/TextViewer.h"
 #include "../Viewer/GameScene/GameViewer/GameViewer.h"
 #include "../Event/EventController.h"
+#include "../Field/Place/PlaceConfig.h"
 
 #include "GameState/GameInit.h"
 #include "GameState/GameIdle.h"
@@ -22,6 +26,13 @@
 
 #include "../FieldObject/Actor/CrossJunctionActor.h"
 #include "../FieldObject/Actor/CityActor.h"
+
+#include "../../Framework/Tool/DebugWindow.h"
+
+/**************************************
+staticメンバ
+***************************************/
+int GameScene::level = 0;		//デバッグ用フィールドレベル（本番では非staticメンバにする
 
 /**************************************
 初期化処理
@@ -108,6 +119,13 @@ void GameScene::Update()
 	gameViewer->Update();
 
 	testActor->Update();
+
+	Debug::Begin("GameSene");
+	if (Debug::Button("LevelUp"))
+	{
+		OnLevelUp();
+	}
+	Debug::End();
 }
 
 /**************************************
@@ -162,4 +180,19 @@ void GameScene::ChangeState(State next)
 void GameScene::OnBuildRoad(Route& route)
 {
 	eventController->CheckEventHappen(route, Field::Model::FieldLevel::City);
+}
+
+/**************************************
+レベルアップ処理
+***************************************/
+void GameScene::OnLevelUp()
+{
+	//テストなのでインクリメントしてしまう
+	//本番ではちゃんと制限する
+	
+	TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
+	{
+		level++;
+		SceneManager::ChangeScene(GameConfig::SceneID::Game);
+	});
 }

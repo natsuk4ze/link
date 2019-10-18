@@ -1,14 +1,13 @@
 //=====================================
 //
-//GameFinish.h
-//機能:ゲームシーン終了処理
+//GameLevelUp.h
+//機能:ゲームシーンレベルアップステート
 //Author:GP12B332 21 立花雄太
 //
 //=====================================
-#ifndef _GAMEFINISH_H_
-#define _GAMEFINISH_H_
+#ifndef _GAMELEVELUP_H_
+#define _GAMELEVELUP_H_
 
-#include "../../../main.h"
 #include "../../../Framework/Pattern/BaseState.h"
 #include "../GameScene.h"
 
@@ -19,10 +18,10 @@
 /**************************************
 クラス定義
 ***************************************/
-class GameScene::GameFinish : public GameScene::SceneState
+class GameScene::GameLevelUp : public GameScene::SceneState
 {
 public:
-	State OnUpdate(GameScene& entity);
 	void OnStart(GameScene& entity);
+	State OnUpdate(GameScene& entity);
 };
 #endif

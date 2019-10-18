@@ -56,6 +56,7 @@ public:
 		Initialize,
 		Idle,
 		Finish,
+		LevelUp,
 		Max
 	};
 
@@ -84,11 +85,18 @@ private:
 	//イベントコントローラへのPlace受け渡し処理
 	void OnBuildRoad(Route& route);
 
+	//レベルアップ処理
+	void OnLevelUp();
+
 	//各ステートクラス
 	class GameInit;
 	class GameIdle;
 	class GameFinish;
+	class GameLevelUp;
 
 	PlaceActor* testActor;
+
+	//デバッグ用フィールドレベル
+	static int level;
 };
 #endif

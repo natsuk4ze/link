@@ -156,6 +156,7 @@
     <ClInclude Include="source\FieldObject\Actor\NoneActor.h" />
     <ClInclude Include="source\FieldObject\Animation\ActorAnimation.h" />
     <ClInclude Include="source\Scene\GameState\GameFinish.h" />
+    <ClInclude Include="source\Scene\GameState\GameLevelUp.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -295,6 +296,7 @@
     <ClCompile Include="source\FieldObject\Actor\NoneActor.cpp" />
     <ClCompile Include="source\FieldObject\Animation\ActorAnimation.cpp" />
     <ClCompile Include="source\Scene\GameState\GameFinish.cpp" />
+    <ClCompile Include="source\Scene\GameState\GameLevelUp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
