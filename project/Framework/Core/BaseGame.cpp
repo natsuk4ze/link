@@ -75,13 +75,20 @@ void BaseGame::Update()
 	Debug::Update();
 	Input::Update();
 
-	sceneManager->Update();
+	static bool pause = false;
+	if (Keyboard::GetTrigger(DIK_P))
+		pause = !pause;
 
-	PostEffectManager::Instance()->Update();
-	Tween::mInstance->Update();
-	ProfilerCPU::Instance()->Update();
-	TaskManager::Instance()->Update();
-	TransitionController::Instance()->Update();
+	if (!pause)
+	{
+		sceneManager->Update();
+
+		PostEffectManager::Instance()->Update();
+		Tween::mInstance->Update();
+		ProfilerCPU::Instance()->Update();
+		TaskManager::Instance()->Update();
+		TransitionController::Instance()->Update();
+	}
 }
 
 /**************************************

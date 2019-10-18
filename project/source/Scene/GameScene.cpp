@@ -109,6 +109,9 @@ void GameScene::Update()
 		ChangeState(next);
 	}
 
+	//カメラ更新
+	fieldCamera->Update();
+
 	//ビューワパラメータをビューワに渡す
 	GameViewerParam param;
 	param.remainTime = remainTime / 30.0f;

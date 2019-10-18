@@ -90,8 +90,8 @@ void TransitionController::DrawTransition()
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	pDevice->SetRenderState(D3DRS_STENCILREF, 0);
-	pDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
+	pDevice->SetRenderState(D3DRS_STENCILREF, 1);
+	pDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_GREATEREQUAL);
 
 	transitionBG->Draw();
 

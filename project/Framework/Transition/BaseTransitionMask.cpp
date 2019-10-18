@@ -35,11 +35,10 @@ BaseTransitionMask::~BaseTransitionMask()
 ***************************************/
 void BaseTransitionMask::BeginMask()
 {
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	if (!active)
 		return;
-
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
+	
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
 	pDevice->SetRenderState(D3DRS_STENCILENABLE, true);
 	pDevice->SetRenderState(D3DRS_STENCILMASK, 0xff);
@@ -65,8 +64,8 @@ void BaseTransitionMask::EndMask()
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	pDevice->SetRenderState(D3DRS_STENCILREF, 0x01);
-	pDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_GREATEREQUAL);
+	pDevice->SetRenderState(D3DRS_STENCILREF, 1);
+	pDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_LESS);
 	pDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
 	pDevice->SetRenderState(D3DRS_COLORWRITEENABLE,
 		D3DCOLORWRITEENABLE_RED |
@@ -74,4 +73,5 @@ void BaseTransitionMask::EndMask()
 		D3DCOLORWRITEENABLE_BLUE |
 		D3DCOLORWRITEENABLE_ALPHA);
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
 }

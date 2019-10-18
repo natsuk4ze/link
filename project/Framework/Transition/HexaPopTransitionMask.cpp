@@ -11,7 +11,7 @@ using namespace std;
 /**************************************
 staticメンバ
 ***************************************/
-const int HexaPopTransitionMask::DivineX = 18;
+const int HexaPopTransitionMask::DivineX = 10;
 const int HexaPopTransitionMask::DivineY = 10;
 const float HexaPopTransitionMask::Duration = 0.5f;
 const float HexaPopTransitionMask::Interval = 0.08f;
@@ -32,12 +32,12 @@ HexaPopTransitionMask::HexaPopTransitionMask()
 
 	//X方向1列で一つのベクターとして
 	//2次元配列のようにベクターのベクターを作る
-	for (int y = 0; y < DivineY; y++)
+	for (int y = 0; y < DivineY + 2; y++)
 	{
 		vector<Hexagon*> list;
-		for (int x = 0; x < DivineX + 1; x++)
+		for (int x = 0; x < DivineX + 3; x++)
 		{
-			D3DXVECTOR3 pos = D3DXVECTOR3(x * sizeX, y * sizeY * 1.5f, 0.0f);
+			D3DXVECTOR3 pos = D3DXVECTOR3(x * sizeX, (y - 1) * sizeY, 0.0f);
 
 			if (x % 2 != 0)
 				pos.y += sizeY * 0.5f;
@@ -150,7 +150,7 @@ void HexaPopTransitionMask::Set(bool isTransitionOut)
 	//イージング用のパラメータ初期化
 	startScale = isTransitionOut ? D3DXVECTOR3(0.0f, 0.0f, 0.0f) : D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	endScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f) - startScale;
-	type = isTransitionOut ? EaseType::OutSine : EaseType::OutSine;
+	type = isTransitionOut ? EaseType::OutSine : EaseType::InSine;
 	cntFrame = 0;
 
 	//ヘキサリスト初期化
