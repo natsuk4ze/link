@@ -362,9 +362,6 @@ namespace Field
 				place->SetType(PlaceType::Road);
 		}
 
-		//ルートベクトルを渡す
-		//EventController::CheckEventHappen(route, City);
-
 		//ルートモデル作成
 		RouteModelPtr ptr = RouteModel::Create(onConnectTown, onCreateJunction, route);
 
@@ -544,6 +541,8 @@ namespace Field
 				river->SetType(PlaceType::Bridge);
 				river->AddDirection(startAdjacency);
 				river->AddDirection(inverseStartAdjacency);
+
+				placeActController->SetActor(river);
 			}
 
 			stockDevelopRiver -= cntRiver;

@@ -254,6 +254,15 @@ namespace Field::Actor
 		//アクター生成
 		PlaceActor* actor = new BridgeActor(actorPos, Model::FieldLevel::City);
 
+		//回転角度を決定
+		std::vector<Adjacency> AdjacencyType = place->GetConnectingAdjacency();
+		StraightType straightType = IsStraight(AdjacencyType);
+
+		float rotateAngle = straightType == StraightType::BackAndForward ? 90.0f : 0.0f;
+
+		//回転
+		actor->Rotate(rotateAngle);
+
 		// 生成アニメーション
 		ActorAnimation::FallAndExpantion(*actor);
 
