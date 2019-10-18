@@ -77,7 +77,7 @@ private:
 	GameViewer *gameViewer;						//ゲームビュアー
 	EventController *eventController;			//イベントコントローラー
 
-	float remainTime;							//ステージの残り時間
+	int remainTime;								//ステージの残り時間
 
 	//デリゲータ
 	DelegatePtr<Route&> onBuildRoad;	//道を生成したときのデリゲータ

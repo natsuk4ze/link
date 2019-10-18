@@ -23,5 +23,5 @@ void GameScene::GameLevelUp::OnStart(GameScene & entity)
 ***************************************/
 GameScene::State GameScene::GameLevelUp::OnUpdate(GameScene & entity)
 {
-	return State();
+	return State::LevelUp;
 }
