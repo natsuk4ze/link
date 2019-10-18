@@ -77,6 +77,20 @@ namespace Field
 		//ビューワパラメータ埋め込み
 		void EmbedViewerParam(GameViewerParam& param);
 
+		//道作成時のデリゲータ設定処理
+		void SetCallbackOnBuildRoad(DelegatePtr<std::vector<Model::PlaceModel*>&> callback);
+
+		//イベント操作用のインターフェース
+		void AddLevelAI(float num);					//AI発展レベルを増やす
+		void AddLevelDevelopment(float num);		//街の発展レベルを増やす
+		void AddStockItem(int num);					//ストックアイテムの数を増やす
+		void SetDevelopSpeedBonus();				//発展スピードへのボーナス付与
+		void CreateNewTown();						//新しい街を出現させる
+		void DestroyTown();							//街を破壊する
+		void ReverseOperation(bool isReverse);		//操作の反転（引数 true:反転させる false:元に戻す)
+		void SealUsingItem(bool isSeal);			//ストック使用封印（引数 true:封印する false:封印を解除)
+		void RaiseTrafficJam(float bias);			//混雑度を上昇させる
+
 	private:
 		static const float PlaceOffset;					//Placeの1マス毎のオフセット値
 		static const int InitFieldBorder;				//フィールド範囲の初期値
@@ -95,7 +109,6 @@ namespace Field
 		Model::RouteProcessor *routeProcessor;				//ルートプロセッサ
 		Actor::PlaceActorController* placeActController;	//プレイスアクターコントローラ
 
-		
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int inputRepeatCnt;						//入力のリピートカウント
 		int cntFrame;							//フレームカウント
@@ -104,6 +117,7 @@ namespace Field
 		unsigned stockDevelopMountain;			//山開発アイテムストック
 		unsigned stockEDF;						//地球防衛軍のストック
 		unsigned stockInsurance;				//保険のストック
+		float developSpeedBonus;				//発展スピード増加ボーナス
 
 		State current;
 		ControllerState *state;					//現在のステート
@@ -113,6 +127,7 @@ namespace Field
 		DelegatePtr<const Model::PlaceModel*> onConnectTown;
 		DelegatePtr<const Model::PlaceModel*> onCreateJunction;
 		DelegatePtr<const Model::PlaceModel*> onChangePlaceType;
+		DelegatePtr<std::vector<Model::PlaceModel*>&> onBuildRoad;
 
 		//ステート切り替え
 		void ChangeState(State next);
@@ -128,7 +143,7 @@ namespace Field
 		PlaceIterator DevelopMountain(PlaceVector& route, PlaceIterator moutain);
 		PlaceIterator DevelopRiver(PlaceVector& route, PlaceIterator river);
 		
-		//AI発展レベルの計算
+		//AI発展レベルの計算、加算
 		void CalcDevelopmentLevelAI();
 
 		//各ステートクラスの前方宣言

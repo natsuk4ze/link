@@ -18,6 +18,8 @@
 #include "../FieldObject/Actor/StraightRoadActor.h"
 #include "../FieldObject/Actor/TJunctionActor.h"
 
+#include "../FieldObject/Animation/ActorAnimation.h"
+
 namespace Field::Actor
 {
 	/**************************************
@@ -113,6 +115,7 @@ namespace Field::Actor
 
 		case PlaceType::Road:
 			SetRoad(place);
+			break;
 
 		case PlaceType::Town:
 			SetTown(place);
@@ -186,6 +189,9 @@ namespace Field::Actor
 			if (straightType == StraightType::RightAndLeft)
 				actor->Rotate(90.0f);
 
+			// 生成アニメーション
+			ActorAnimation::Fall(*actor);
+
 			AddContainer(ActorPattern::StarightRoad, place->ID(), actor);
 		}
 		//カーブの場合
@@ -207,6 +213,9 @@ namespace Field::Actor
 
 			actor->Rotate(rotAngle);
 
+			// 生成アニメーション
+			ActorAnimation::Fall(*actor);
+
 			AddContainer(ActorPattern::Curve, place->ID(), actor);
 		}
 	}
@@ -216,7 +225,15 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::SetTown(const Model::PlaceModel * place)
 	{
+		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
+		//アクター生成
+		PlaceActor* actor = new CityActor(actorPos, Model::FieldLevel::City);
+
+		// 生成アニメーション
+		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
+
+		AddContainer(ActorPattern::StarightRoad, place->ID(), actor);
 	}
 
 	/**************************************
@@ -246,6 +263,9 @@ namespace Field::Actor
 		if (adjacencyTypeList.size() == 4)
 		{
 			PlaceActor *actor = new CrossJunctionActor(actorPos, Model::FieldLevel::City);
+
+			// 生成アニメーション
+			ActorAnimation::RotateAndExpantion(*actor);
 			AddContainer(ActorPattern::CrossJunction, place->ID(), actor);
 		}
 		//T字路のアクター生成
@@ -258,12 +278,15 @@ namespace Field::Actor
 
 			if (junctionType == TjunctionType::ExceptRight)
 				rotAngle = 90.0f;
-			else if (junctionType == TjunctionType::ExceptBack)
+			else if (junctionType == TjunctionType::ExceptForward)
 				rotAngle = 180.0f;
 			else if (junctionType == TjunctionType::ExceptLeft)
 				rotAngle = -90.0f;
 	
 			actor->Rotate(rotAngle);
+
+			// 生成アニメーション
+			ActorAnimation::RotateAndExpantion(*actor);
 
 			AddContainer(ActorPattern::TJunction, place->ID(), actor);
 		}

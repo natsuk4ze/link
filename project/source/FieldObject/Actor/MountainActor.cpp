@@ -7,6 +7,7 @@
 //=====================================
 #include "MountainActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
+#include "../Animation/ActorAnimation.h"
 
 //=====================================
 // コンストラクタ

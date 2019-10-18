@@ -40,7 +40,10 @@ namespace Field::Model
 		int LinkLevel();
 
 		//ƒŒƒxƒ‹‚ªã‚ª‚éÛ‚ÉŒÄ‚Î‚ê‚éˆ—
-		float OnGrowth(float trafficJamRate);
+		float OnGrowth(float trafficJamRate, float bonus);
+
+		//”­“W“x‰ÁZˆ—
+		void AddDevelopmentLevel(float num);
 
 	private:
 		static const float BaseDepatureNum;		//Šî€‚Æ‚È‚éo”­”

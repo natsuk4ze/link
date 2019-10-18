@@ -51,6 +51,7 @@ namespace Field
 		stockDevelopMountain(InitDevelopMountainStock),
 		stockEDF(0),
 		stockInsurance(0),
+		developSpeedBonus(1.0f),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
 		onChangePlaceType(nullptr)
@@ -222,12 +223,98 @@ namespace Field
 	***************************************/
 	void FieldController::EmbedViewerParam(GameViewerParam & param)
 	{
-		param.levelAI = developmentLevelAI;
+		param.levelAI = (int)developmentLevelAI;
 		param.ratioLevel = (float)developmentLevelAI / 9999.0f;
 		param.stockBreakItem = stockDevelopMountain;
 		param.stockBuildItem = stockDevelopRiver;
 		param.stockEDF = stockEDF;
 		param.stockInsurance = stockInsurance;
+	}
+
+	/**************************************
+	道作成時のデリゲータ設定処理
+	***************************************/
+	void FieldController::SetCallbackOnBuildRoad(DelegatePtr<std::vector<Model::PlaceModel*>&> callback)
+	{
+		onBuildRoad = callback;
+	}
+
+	/**************************************
+	AI発展レベルを増やす
+	***************************************/
+	void FieldController::AddLevelAI(float num)
+	{
+		float MaxLevel = 9999.0f;
+		developmentLevelAI = Math::Clamp(0.0f, MaxLevel, developmentLevelAI + num);
+	}
+
+	/**************************************
+	街の発展レベルを増やす
+	***************************************/
+	void FieldController::AddLevelDevelopment(float num)
+	{
+		placeContainer->AddDevelopmentLevel(num);
+	}
+
+	/**************************************
+	ストックアイテムの数を増やす
+	***************************************/
+	void FieldController::AddStockItem(int num)
+	{
+		unsigned StockMax = 50;
+		stockDevelopMountain = Math::Clamp((unsigned)0, StockMax, stockDevelopMountain + num);
+		stockDevelopRiver = Math::Clamp((unsigned)0, StockMax, stockDevelopRiver + num);
+	}
+
+	/**************************************
+	発展スピードへのボーナス付与
+	***************************************/
+	void FieldController::SetDevelopSpeedBonus()
+	{
+		//TODO ; 解除処理を実装する
+		//TODO : 公開倍率をちゃんと決める
+		developSpeedBonus = 1.5f;
+	}
+
+	/**************************************
+	新しい街を出現させる
+	***************************************/
+	void FieldController::CreateNewTown()
+	{
+		//NOTE:後で作る
+	}
+
+	/**************************************
+	街を破壊する
+	***************************************/
+	void FieldController::DestroyTown()
+	{
+		//NOTE：後で作る
+	}
+
+	/**************************************
+	操作を反転させる
+	***************************************/
+	void FieldController::ReverseOperation(bool isReverse)
+	{
+		//InputControllerを作ってから
+	}
+
+	/**************************************
+	ストックアイテム使用を封印する
+	***************************************/
+	void FieldController::SealUsingItem(bool isSeal)
+	{
+		//Developperを作ってから
+	}
+
+	/**************************************
+	混雑度を上昇させる
+	***************************************/
+	void FieldController::RaiseTrafficJam(float bias)
+	{
+		//TODO：解除処理を実装する
+		placeContainer->SetTrafficjamBias(bias);
 	}
 
 	/**************************************
@@ -286,6 +373,9 @@ namespace Field
 
 		//アクター生成
 		placeActController->SetActor(ptr);
+
+		//コールバック
+		(*onBuildRoad)(route);
 	}
 
 	/**************************************
@@ -295,29 +385,36 @@ namespace Field
 	{
 		using namespace Field::Model;
 
-		auto itr = std::find_if(start, route.end(), [](auto& place)
+		auto head = std::find_if(start, route.end(), [](auto& place)
 		{
 			//川の開拓処理を入れていないので一旦コメントアウト
 			return place->IsType(PlaceType::Mountain) || place->IsType(PlaceType::River);
 		});
 
 		//開拓対象が見つからないのでリターン
-		if (itr == route.end())
+		if (head == route.end())
 			return;
 
 		//山を開拓
-		if ((*itr)->IsType(PlaceType::Mountain))
+		if ((*head)->IsType(PlaceType::Mountain))
 		{
-			itr = DevelopMountain(route, itr);
+			head = DevelopMountain(route, head);
 		}
 		//川を開拓
-		else if ((*itr)->IsType(PlaceType::River))
+		else if ((*head)->IsType(PlaceType::River))
 		{
-			itr = DevelopRiver(route, itr);
+			head = DevelopRiver(route, head);
 		}
 
 		//開拓が終了した位置から再帰的に開拓
-		DevelopPlace(route, itr);
+		auto nextHead = std::find_if(head, route.end(), [](auto&& place)
+		{
+			//川じゃない、かつ、橋じゃないタイプを探す
+			//NOTE:「山じゃない」も含めると、川と隣接した山を開拓できないので条件に含めない
+			return !place->IsType(PlaceType::River) && !place->IsType(PlaceType::Bridge);
+		});
+
+		DevelopPlace(route, nextHead);
 	}
 
 	/**************************************
@@ -327,14 +424,14 @@ namespace Field
 	{
 		using namespace Field::Model;
 
-		//対象のプレイスの前にある山,川以外のプレイスを探す
+		//対象のプレイスの前にある山以外のプレイスを探す
 		auto start = std::find_if(ReversePlaceIterator(mountain), route.rend(), [](auto& place)
 		{
 			return !place->IsType(PlaceType::Mountain);
 		});
 
-		//山以外が見つからなかったか、川の場合は早期リターン
-		if (start == route.rend() || (*(start + 1).base())->IsType(PlaceType::River))
+		//山以外が見つからなかった場合は早期リターン
+		if (start == route.rend())
 		{
 			return route.end();
 		}
@@ -346,7 +443,7 @@ namespace Field
 		});
 
 		//山以外が見つからなかったか、川の場合は早期リターン
-		if (end == route.end() || (*end)->IsType(PlaceType::River))
+		if (end == route.end())
 		{
 			return route.end();
 		}
@@ -364,7 +461,7 @@ namespace Field
 				place->SetType(PlaceType::None);
 			}
 
-			stockDevelopRiver -= cntMountain;
+			stockDevelopMountain -= cntMountain;
 		}
 		else
 		{
@@ -391,12 +488,28 @@ namespace Field
 		{
 			PlaceModel* prev = *(itr - 1);
 			PlaceModel* place = *itr;
+			Adjacency adjacency = place->IsAdjacent(prev);
 
 			//隣接方向が直線になっていなければ早期リターン
-			if (place->IsAdjacent(prev) != startAdjacency)
+			if (adjacency != startAdjacency)
 				return itr;
 
-			//開拓可能以外のタイプであればbreak
+			//山が出てきたら早期リターン
+			if (place->IsType(PlaceType::Mountain))
+				return itr;
+
+			//橋の場合は、連結できない方向であれば早期リターン
+			if (place->IsType(PlaceType::Bridge))
+			{
+				std::vector<Adjacency> direction = place->GetConnectingAdjacency();
+
+				if (!Utility::IsContain(direction, adjacency))
+				{
+					return itr;
+				}
+			}
+
+			//橋を架けられるタイプであればブレーク
 			if (!place->IsDevelopableType())
 			{
 				end = itr;
@@ -445,6 +558,7 @@ namespace Field
 		if (cntFrame != 0)
 			return;
 
-		developmentLevelAI += placeContainer->CalcDevelopmentLevelAI();
+		float raiseValue = placeContainer->CalcDevelopmentLevelAI(developSpeedBonus);
+		AddLevelAI(raiseValue);
 	}
 }

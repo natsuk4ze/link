@@ -72,7 +72,7 @@ namespace Field::Model
 	/**************************************
 	¬’·‚·‚é‚ÉŒÄ‚Î‚ê‚éˆ—
 	***************************************/
-	float TownModel::OnGrowth(float trafficJamRate)
+	float TownModel::OnGrowth(float trafficJamRate, float bonus)
 	{
 		linkLevel = 0;
 
@@ -85,7 +85,15 @@ namespace Field::Model
 			linkLevel += route->FindLinkedTown(place, searchedRoute, searchedTown);
 		}
 
-		developmentLevel = linkLevel + linkLevel * trafficJamRate;
+		developmentLevel = (linkLevel + linkLevel * trafficJamRate) * bonus;
 		return developmentLevel;
+	}
+
+	/**************************************
+	”­“W“x‰ÁZˆ—
+	***************************************/
+	void TownModel::AddDevelopmentLevel(float num)
+	{
+		developmentLevel += num;
 	}
 }

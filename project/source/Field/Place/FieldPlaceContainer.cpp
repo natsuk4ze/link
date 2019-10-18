@@ -34,7 +34,8 @@ namespace Field::Model
 		placeRowMax(0),
 		placeColumMax(0),
 		initialized(false),
-		trafficJamRate(0.0f)
+		trafficJamRate(0.0f),
+		trafficJamBias(0.0f)
 	{
 		placeVector.reserve(PlaceMax);
 
@@ -266,15 +267,34 @@ namespace Field::Model
 	/**************************************
 	AI発展レベル計算
 	***************************************/
-	float Field::Model::PlaceContainer::CalcDevelopmentLevelAI()
+	float Field::Model::PlaceContainer::CalcDevelopmentLevelAI(float bonus)
 	{
 		float developLevel = 0.0f;
 		for (auto&& town : townContainer)
 		{
-			developLevel += town.second->OnGrowth(1.0f - trafficJamRate);
+			developLevel += town.second->OnGrowth(1.0f - trafficJamRate + trafficJamBias, bonus);
 		}
 
 		return developLevel;
+	}
+
+	/**************************************
+	街の発展度増加
+	***************************************/
+	void Field::Model::PlaceContainer::AddDevelopmentLevel(float num)
+	{
+		for (auto&& town : townContainer)
+		{
+			town.second->AddDevelopmentLevel(num);
+		}
+	}
+
+	/**************************************
+	混雑度増加バイアス設定処理
+	***************************************/
+	void Field::Model::PlaceContainer::SetTrafficjamBias(float bias)
+	{
+		trafficJamBias = bias;
 	}
 
 	/**************************************

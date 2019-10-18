@@ -21,7 +21,7 @@ public:
 	virtual ~DelegateBase() {}
 
 	//intŒ^ˆø”—L‚è–ß‚è’l–³‚µ‚ÌŠÖ”
-	virtual void operator()(T arg) = 0;
+	virtual void operator()(T arg = NULL) = 0;
 };
 
 template<>

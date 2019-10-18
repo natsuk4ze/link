@@ -11,6 +11,8 @@
 #include "../../main.h"
 #include "../../Framework/Core/BaseScene.h"
 #include "../../Framework/Pattern/BaseState.h"
+#include "../../Framework/Pattern/Delegate.h"
+
 #include <vector>
 
 // モデル表示テスト用
@@ -22,6 +24,11 @@
 namespace Field
 {
 	class FieldController;
+}
+
+namespace Field::Model
+{
+	class PlaceModel;
 }
 
 class SkyBox;
@@ -36,6 +43,8 @@ class EventController;
 class GameScene : public BaseScene
 {
 public:
+	using Route = std::vector<Field::Model::PlaceModel*>;
+
 	void Init();
 	void Uninit();
 	void Update();
@@ -60,10 +69,17 @@ private:
 	TextViewer *text;							//テスト用テキストビューワ
 	GameViewer *gameViewer;						//ゲームビュアー
 	EventController *eventController;			//イベントコントローラー
+
 	float remainTime;							//ステージの残り時間
+
+	//デリゲータ
+	DelegatePtr<Route&> onBuildRoad;	//道を生成したときのデリゲータ
 
 	//ステート遷移処理
 	void ChangeState(State next);
+
+	//イベントコントローラへのPlace受け渡し処理
+	void OnBuildRoad(Route& route);
 
 	//各ステートクラス
 	class GameInit;
