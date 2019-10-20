@@ -1,16 +1,16 @@
 //=============================================================================
 //
-// 町レベル減少イベントクラス [CityLevelDecreaseEvent.cpp]
+// リンクレベル上昇イベントクラス [LinkLevelUpEvent.cpp]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
 #include "../../../main.h"
-#include "CityLevelDecreaseEvent.h"
+#include "LinkLevelUpEvent.h"
 
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-const int CityLevelDecreaseNum = -1;
+const int LinkLevelUpNum = 1;
 
 //*****************************************************************************
 // スタティック変数宣言
@@ -20,7 +20,7 @@ const int CityLevelDecreaseNum = -1;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CityLevelDecreaseEvent::CityLevelDecreaseEvent()
+LinkLevelUpEvent::LinkLevelUpEvent()
 {
 
 }
@@ -28,7 +28,7 @@ CityLevelDecreaseEvent::CityLevelDecreaseEvent()
 //=============================================================================
 // デストラクタ
 //=============================================================================
-CityLevelDecreaseEvent::~CityLevelDecreaseEvent()
+LinkLevelUpEvent::~LinkLevelUpEvent()
 {
 
 }
@@ -36,16 +36,16 @@ CityLevelDecreaseEvent::~CityLevelDecreaseEvent()
 //=============================================================================
 // 更新
 //=============================================================================
-void CityLevelDecreaseEvent::Update()
+void LinkLevelUpEvent::Update()
 {
-	fieldController->AdjustLevelDevelopment(CityLevelDecreaseNum);
+	fieldController->AdjustLevelDevelopment(LinkLevelUpNum);
 	UseFlag = false;
 }
 
 //=============================================================================
 // 描画
 //=============================================================================
-void CityLevelDecreaseEvent::Draw()
+void LinkLevelUpEvent::Draw()
 {
 
 }
@@ -53,13 +53,13 @@ void CityLevelDecreaseEvent::Draw()
 //=============================================================================
 // イベントメッセージを取得
 //=============================================================================
-string CityLevelDecreaseEvent::GetEventMessage(int FieldLevel)
+string LinkLevelUpEvent::GetEventMessage(int FieldLevel)
 {
 	vector<string> MessageContainer;
 
 	if (FieldLevel == Field::Model::City)
 	{
-		MessageContainer.push_back("町レベル減らすイベント");
+		MessageContainer.push_back("リンクレベル上昇！");
 	}
 	else if (FieldLevel == Field::Model::World)
 	{

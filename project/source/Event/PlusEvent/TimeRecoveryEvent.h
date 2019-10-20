@@ -1,23 +1,23 @@
 //=============================================================================
 //
-// 町レベル上昇イベントクラス [CityLevelUpEvent.h]
+// 制限時間回復イベントクラス [TimeRecoveryEvent.h]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#ifndef _CityLevelUpEvent_H_
-#define _CityLevelUpEvent_H_
+#ifndef _TimeRecoveryEvent_H_
+#define _TimeRecoveryEvent_H_
 
 #include "../EventBase.h"
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class CityLevelUpEvent : public EventBase
+class TimeRecoveryEvent : public EventBase
 {
 private:
 public:
-	CityLevelUpEvent();
-	~CityLevelUpEvent();
+	TimeRecoveryEvent();
+	~TimeRecoveryEvent();
 	void Update(void) override;
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;

@@ -154,13 +154,10 @@
     <ClInclude Include="source\FieldObject\Animation\ActorAnimation.h" />
     <ClInclude Include="source\Scene\GameState\GameFinish.h" />
     <ClInclude Include="source\Scene\GameState\GameLevelUp.h" />
-    <ClInclude Include="source\Event\PlusEvent\CityLevelUpEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\NewCityEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\StockRecoveryEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\FamousPeopleEvent.h" />
-    <ClInclude Include="source\Event\PlusEvent\BonusEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\AILevelUpEvent.h" />
-    <ClInclude Include="source\Event\MinusEvent\CityLevelDecreaseEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\AILevelDecreaseEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\MoveInverseEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\BanStockUseEvent.h" />
@@ -174,6 +171,10 @@
     <ClInclude Include="source\Field\Camera\State\FieldCameraFar.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraQuater.h" />
     <ClInclude Include="Framework\Camera\CameraTranslationPlugin.h" />
+    <ClInclude Include="source\Event\MinusEvent\LinkLevelDecreaseEvent.h" />
+    <ClInclude Include="source\Event\PlusEvent\LinkLevelUpEvent.h" />
+    <ClInclude Include="source\Event\PlusEvent\AllLinkLevelUpEvent.h" />
+    <ClInclude Include="source\Event\PlusEvent\TimeRecoveryEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -311,13 +312,10 @@
     <ClCompile Include="source\FieldObject\Animation\ActorAnimation.cpp" />
     <ClCompile Include="source\Scene\GameState\GameFinish.cpp" />
     <ClCompile Include="source\Scene\GameState\GameLevelUp.cpp" />
-    <ClCompile Include="source\Event\PlusEvent\CityLevelUpEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\NewCityEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\StockRecoveryEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\FamousPeopleEvent.cpp" />
-    <ClCompile Include="source\Event\PlusEvent\BonusEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\AILevelUpEvent.cpp" />
-    <ClCompile Include="source\Event\MinusEvent\CityLevelDecreaseEvent.cpp" />
     <ClCompile Include="source\Event\MinusEvent\AILevelDecreaseEvent.cpp" />
     <ClCompile Include="source\Event\MinusEvent\MoveInverseEvent.cpp" />
     <ClCompile Include="source\Event\MinusEvent\BanStockUseEvent.cpp" />
@@ -331,6 +329,10 @@
     <ClCompile Include="source\Field\Camera\State\FieldCameraFar.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraQuater.cpp" />
     <ClCompile Include="Framework\Camera\CameraTranslationPlugin.cpp" />
+    <ClCompile Include="source\Event\MinusEvent\LinkLevelDecreaseEvent.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\LinkLevelUpEvent.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\AllLinkLevelUpEvent.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\TimeRecoveryEvent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

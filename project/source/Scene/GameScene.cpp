@@ -153,6 +153,9 @@ void GameScene::Draw()
 	//オブジェクト描画
 	field->Draw();
 
+	// イベント描画
+	eventController->Draw();
+
 	//パーティクル描画
 	particleManager->Draw();
 
@@ -166,9 +169,6 @@ void GameScene::Draw()
 
 	//ビュアー描画
 	gameViewer->Draw();
-
-	// イベント描画
-	eventController->Draw();
 }
 
 /**************************************

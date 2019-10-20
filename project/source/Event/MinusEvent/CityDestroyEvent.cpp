@@ -24,7 +24,7 @@ LPD3DXMESH CityDestroyEvent::SphereMesh = nullptr;
 D3DMATERIAL9 CityDestroyEvent::Material =
 {
 	D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),	// Diffuse color RGBA
-	D3DXCOLOR(1.0f, 0.65f, 0.0f, 0.0f),	// Ambient color RGB
+	D3DXCOLOR(1.0f, 0.65f, 0.0f, 1.0f),	// Ambient color RGB
 	D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f),	// Specular 'shininess'
 	D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f),	// Emissive color RGB
 	0.0f,								// Sharpness if specular highlight 
