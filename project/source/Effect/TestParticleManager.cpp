@@ -5,9 +5,10 @@
 //
 //=====================================
 #include "TestParticleManager.h"
-#include "Game/BlueSpark.h"
 #include "../../Framework/Tool/DebugWindow.h"
-#include "../../Library/cppLinq/cpplinq.hpp"
+
+#include "Game/BlueSpark.h"
+#include "Game/BlueDebris.h"
 
 /**************************************
 èâä˙âªèàóù
@@ -18,6 +19,7 @@ void TestParticleManager::Init()
 
 	controllers.resize(TestParticle::Max, NULL);
 	controllers[TestParticle::BlueSpark] = new Effect::Game::BlueSparkController();
+	controllers[TestParticle::BlueDebris] = new Effect::Game::BlueDebrisController();
 }
 
 /**************************************
@@ -29,6 +31,8 @@ void TestParticleManager::Update()
 
 	if (Debug::Button("BlueSpark"))
 		Generate(TestParticle::BlueSpark, Vector3::Up * 10.0f);
+	else if (Debug::Button("BlueDebris"))
+		Generate(TestParticle::BlueDebris, Vector3::Up * 10.0f);
 
 	Debug::End();
 
