@@ -7,6 +7,8 @@
 //=====================================
 #include "GameMain.h"
 #include "../Framework/Core/SceneManager.h"
+#include "../Framework/Tool/DebugWindow.h"
+
 #include "GameConfig.h"
 
 #include "Scene\GameScene.h"
@@ -25,4 +27,22 @@ GameMain::GameMain(HINSTANCE hInstance, HWND hWnd) :
 	//初期シーンに遷移
 	const int InitScene = GameConfig::SceneID::Game;
 	sceneManager->ChangeScene(InitScene);
+}
+
+/**************************************
+更新処理
+***************************************/
+void GameMain::Update()
+{
+	BaseGame::Update();
+
+	Debug::Begin("Scene");
+
+	if (Debug::Button("Game"))
+		sceneManager->ChangeScene(GameConfig::Game);
+	else if (Debug::Button("ParticleTest"))
+		sceneManager->ChangeScene(GameConfig::ParticleTest);
+
+	Debug::End();
+
 }
