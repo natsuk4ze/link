@@ -214,7 +214,7 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					Ptr = new StockRecoveryEvent();
 					break;
 				case FamousPeople:
-					//Ptr = new FamousPeopleEvent();
+					Ptr = new FamousPeopleEvent(1);
 					break;
 				case Bonus:
 					Ptr = new BonusEvent();
@@ -232,27 +232,28 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					Ptr = new AILevelDecreaseEvent();
 					break;
 				case MoveInverse:
-					//Ptr = new MoveInverseEvent();
+					Ptr = new MoveInverseEvent(1);
 					break;
 				case BanStockUse:
-					//Ptr = new BanStockUseEvent();
+					Ptr = new BanStockUseEvent(1);
 					break;
 				case CongestionUp:
-					//Ptr = new CongestionUpEvent();
+					Ptr = new CongestionUpEvent(1);
 					break;
 				default:
 					break;
 				}
+
 				if (Ptr != nullptr)
 				{
-				// イベントメッセージ設置
-				eventViewer->SetEventMessage(Ptr->GetEventMessage(FieldLevel));
+					// イベントメッセージ設置
+					eventViewer->SetEventMessage(Ptr->GetEventMessage(FieldLevel));
 
-				// イベントベクトルにプッシュ
-				EventVec.push_back(Ptr);
-          
-				// CSVデータから発生したイベントの資料を削除
-				EventPlace = EventCSVData.erase(EventPlace);
+					// イベントベクトルにプッシュ
+					EventVec.push_back(Ptr);
+
+					// CSVデータから発生したイベントの資料を削除
+					EventPlace = EventCSVData.erase(EventPlace);
 				}
 			}
 			else
