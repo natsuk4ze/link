@@ -12,6 +12,8 @@
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../../../Framework/Transition/TransitionController.h"
 #include "../../Effect/GameParticleManager.h"
+#include "../../../Framework/Camera/CameraTranslationPlugin.h"
+#include "../../../Framework/Camera/CameraShakePlugin.h"
 
 /**************************************
 入場処理
@@ -42,6 +44,11 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 
 	//パーティクル初期化
 	entity.particleManager->Init();
+
+	//カメラにプラグインを追加して初期化
+	entity.fieldCamera->AddPlugin(Camera::TranslationPlugin::Instance());
+	entity.fieldCamera->AddPlugin(Camera::ShakePlugin::Instance());
+	Camera::TranslationPlugin::Instance()->Init();
 
 	//カメラの追従目標にカーソルを設定してモード切替
 	entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());

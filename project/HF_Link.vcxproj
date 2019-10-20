@@ -23,6 +23,7 @@
     <ClInclude Include="Framework\Animation\AnimContainer.h" />
     <ClInclude Include="Framework\Animation\MyAllocateHierarchy.h" />
     <ClInclude Include="Framework\Camera\Camera.h" />
+    <ClInclude Include="Framework\Camera\CameraTranslationPlugin.h" />
     <ClInclude Include="Framework\Camera\CameraShakePlugin.h" />
     <ClInclude Include="Framework\Camera\ViewFrustrum.h" />
     <ClInclude Include="Framework\Collider\BaseCollider.h" />
@@ -150,8 +151,8 @@
     <ClInclude Include="source\FieldObject\Item\ItemModel.h" />
     <ClInclude Include="source\FieldObject\Passenger\PassengerActor.h" />
     <ClInclude Include="source\Field\Camera\FieldCamera.h" />
-    <ClInclude Include="source\Field\Camera\FieldCameraFar.h" />
-    <ClInclude Include="source\Field\Camera\FieldCameraQuater.h" />
+    <ClInclude Include="source\Field\Camera\State\FieldCameraFar.h" />
+    <ClInclude Include="source\Field\Camera\State\FieldCameraQuater.h" />
     <ClInclude Include="source\Field\FieldConfig.h" />
     <ClInclude Include="source\Field\FieldController.h" />
     <ClInclude Include="source\Field\FieldCursor.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="Framework\Animation\AnimContainer.cpp" />
     <ClCompile Include="Framework\Animation\MyAllocateHierarchy.cpp" />
     <ClCompile Include="Framework\Camera\Camera.cpp" />
+    <ClCompile Include="Framework\Camera\CameraTranslationPlugin.cpp" />
     <ClCompile Include="Framework\Camera\CameraShakePlugin.cpp" />
     <ClCompile Include="Framework\Camera\ViewFrustrum.cpp" />
     <ClCompile Include="Framework\Collider\BaseCollider.cpp" />
@@ -312,8 +314,8 @@
     <ClCompile Include="source\FieldObject\Item\ItemModel.cpp" />
     <ClCompile Include="source\FieldObject\Passenger\PassengerActor.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCamera.cpp" />
-    <ClCompile Include="source\Field\Camera\FieldCameraFar.cpp" />
-    <ClCompile Include="source\Field\Camera\FieldCameraQuater.cpp" />
+    <ClCompile Include="source\Field\Camera\State\FieldCameraFar.cpp" />
+    <ClCompile Include="source\Field\Camera\State\FieldCameraQuater.cpp" />
     <ClCompile Include="source\Field\FieldController.cpp" />
     <ClCompile Include="source\Field\FieldCursor.cpp" />
     <ClCompile Include="source\Field\FieldGround.cpp" />
@@ -357,7 +359,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{996B903E-F0F3-45AE-BEBF-C0FD8C48906F}</ProjectGuid>
     <RootNamespace>HFLink</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

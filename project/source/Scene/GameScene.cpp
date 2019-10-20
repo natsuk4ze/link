@@ -102,7 +102,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(onBuildRoad);
 
 }
-
+#include "../../Framework/Camera/CameraTranslationPlugin.h"
 /**************************************
 更新処理
 ***************************************/
@@ -115,6 +115,11 @@ void GameScene::Update()
 	{
 		ChangeState(next);
 	}
+
+	Debug::Begin("Camera");
+	if(Debug::Button("Translation")) Camera::TranslationPlugin::Instance()->Move(Vector3::Zero, 30);
+	if (Debug::Button("Restore")) Camera::TranslationPlugin::Instance()->Restore(30);
+	Debug::End();
 
 	//カメラ更新
 	fieldCamera->Update();

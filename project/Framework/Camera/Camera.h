@@ -90,8 +90,8 @@ protected:
 	void CalculateFrustrum();
 
 public:
-	//カメラを揺らすプラグイン
-	class ShakePlugin;
+	class ShakePlugin;				//カメラを揺らすプラグイン
+	class TranslationPlugin;		//カメラを指定した位置に平行移動させるプラグイン
 	
 };
 

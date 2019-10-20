@@ -93,8 +93,6 @@
     <ClInclude Include="source\Event\EventBase.h" />
     <ClInclude Include="source\Event\EventController.h" />
     <ClInclude Include="source\Field\Camera\FieldCamera.h" />
-    <ClInclude Include="source\Field\Camera\FieldCameraFar.h" />
-    <ClInclude Include="source\Field\Camera\FieldCameraQuater.h" />
     <ClInclude Include="source\Field\Place\FieldJunctionModel.h" />
     <ClInclude Include="source\Field\Place\FieldPlaceContainer.h" />
     <ClInclude Include="source\Field\Place\FieldPlaceModel.h" />
@@ -170,6 +168,9 @@
     <ClInclude Include="source\Effect\TestParticleCamera.h" />
     <ClInclude Include="source\Effect\TestParticleManager.h" />
     <ClInclude Include="source\Effect\Game\BlueDebris.h" />
+    <ClInclude Include="source\Field\Camera\State\FieldCameraFar.h" />
+    <ClInclude Include="source\Field\Camera\State\FieldCameraQuater.h" />
+    <ClInclude Include="Framework\Camera\CameraTranslationPlugin.h" />
     <ClInclude Include="source\Event\MinusEvent\LinkLevelDecreaseEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\LinkLevelUpEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\AllLinkLevelUpEvent.h" />
@@ -255,8 +256,6 @@
     <ClCompile Include="source\Event\EventBase.cpp" />
     <ClCompile Include="source\Event\EventController.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCamera.cpp" />
-    <ClCompile Include="source\Field\Camera\FieldCameraFar.cpp" />
-    <ClCompile Include="source\Field\Camera\FieldCameraQuater.cpp" />
     <ClCompile Include="source\Field\Place\FieldJunctionModel.cpp" />
     <ClCompile Include="source\Field\Place\FieldPlaceContainer.cpp" />
     <ClCompile Include="source\Field\Place\FieldPlaceModel.cpp" />
@@ -327,6 +326,9 @@
     <ClCompile Include="source\Effect\TestParticleCamera.cpp" />
     <ClCompile Include="source\Effect\TestParticleManager.cpp" />
     <ClCompile Include="source\Effect\Game\BlueDebris.cpp" />
+    <ClCompile Include="source\Field\Camera\State\FieldCameraFar.cpp" />
+    <ClCompile Include="source\Field\Camera\State\FieldCameraQuater.cpp" />
+    <ClCompile Include="Framework\Camera\CameraTranslationPlugin.cpp" />
     <ClCompile Include="source\Event\MinusEvent\LinkLevelDecreaseEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\LinkLevelUpEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\AllLinkLevelUpEvent.cpp" />

@@ -8,9 +8,9 @@
 #ifndef _FIELDCAMERAFAR_H_
 #define _FIELDCAMERAFAR_H_
 
-#include "../../../main.h"
-#include "FieldCamera.h"
-#include "../../../Framework/Pattern/BaseState.h"
+#include "../../../../main.h"
+#include "../FieldCamera.h"
+#include "../../../../Framework/Pattern/BaseState.h"
 
 /**************************************
 ‘O•ûéŒ¾
