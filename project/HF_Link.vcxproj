@@ -109,6 +109,7 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="source\Effect\GameParticleManager.h" />
     <ClInclude Include="source\Effect\Game\BlueSpark.h" />
+    <ClInclude Include="source\Effect\TestParticleCamera.h" />
     <ClInclude Include="source\Event\EventBase.h" />
     <ClInclude Include="source\Event\EventConfig.h" />
     <ClInclude Include="source\Event\EventController.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="source\Scene\GameState\GameIdle.h" />
     <ClInclude Include="source\Scene\GameState\GameInit.h" />
     <ClInclude Include="source\Scene\GameState\GameLevelUp.h" />
+    <ClInclude Include="source\Scene\ParticleTestScene.h" />
     <ClInclude Include="source\Scene\ResultScene.h" />
     <ClInclude Include="source\Scene\TitleScene.h" />
     <ClInclude Include="source\Viewer\Framework\BaseViewer.h" />
@@ -267,6 +269,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="source\Effect\GameParticleManager.cpp" />
     <ClCompile Include="source\Effect\Game\BlueSpark.cpp" />
+    <ClCompile Include="source\Effect\TestParticleCamera.cpp" />
     <ClCompile Include="source\Event\EventBase.cpp" />
     <ClCompile Include="source\Event\EventController.cpp" />
     <ClCompile Include="source\Event\MinusEvent\AILevelDecreaseEvent.cpp" />
@@ -326,6 +329,7 @@
     <ClCompile Include="source\Scene\GameState\GameIdle.cpp" />
     <ClCompile Include="source\Scene\GameState\GameInit.cpp" />
     <ClCompile Include="source\Scene\GameState\GameLevelUp.cpp" />
+    <ClCompile Include="source\Scene\ParticleTestScene.cpp" />
     <ClCompile Include="source\Scene\ResultScene.cpp" />
     <ClCompile Include="source\Scene\TitleScene.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp" />

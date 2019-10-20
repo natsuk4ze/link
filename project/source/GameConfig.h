@@ -15,6 +15,7 @@ namespace GameConfig
 		Title,
 		Game,
 		Result,
+		ParticleTest,
 		Max
 	};
 }

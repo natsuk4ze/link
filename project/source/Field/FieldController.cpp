@@ -138,11 +138,6 @@ namespace Field
 		Debug::Log("StockRiver:%d", stockDevelopRiver);
 		Debug::Log("StockMountain:%d", stockDevelopMountain);
 		Debug::Log("DevelopmentAILevel:%d", (int)developmentLevelAI);
-
-		Debug::Begin("pariticle");
-		if (Debug::Button("blueSpark"))
-			GameParticleManager::Instance()->Generate(GameParticle::BlueSpark, cursor->GetPosition());
-		Debug::End();
 	}
 
 	/**************************************
