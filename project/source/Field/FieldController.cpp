@@ -357,6 +357,14 @@ namespace Field
 	}
 
 	/**************************************
+	混雑度を上昇させる
+	***************************************/
+	void FieldController::RecoveryRemainTime(int frame)
+	{
+		remainTime += frame;
+	}
+
+	/**************************************
 	ステート切り替え処理
 	***************************************/
 	void FieldController::ChangeState(State next)

@@ -97,6 +97,7 @@ namespace Field
 		void ReverseOperation(bool isReverse);		//操作の反転（引数 true:反転させる false:元に戻す)
 		void SealUsingItem(bool isSeal);			//ストック使用封印（引数 true:封印する false:封印を解除)
 		void RaiseTrafficJam(float bias);			//混雑度を上昇させる
+		void RecoveryRemainTime(int frame);			//制限時間を回復させる（フレーム単位）
 
 	private:
 		static const float PlaceOffset;					//Placeの1マス毎のオフセット値
