@@ -15,7 +15,7 @@ namespace Effect::Game
 	BlueSparkController::BlueSparkController()
 	{
 		//単位頂点バッファ作成
-		const D3DXVECTOR2 ParticleSize{ 25.0f, 10.0f };
+		const D3DXVECTOR2 ParticleSize{ 18.0f, 10.0f };
 		MakeUnitBuffer(ParticleSize);
 
 		//テクスチャ読み込み
