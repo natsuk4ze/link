@@ -42,6 +42,7 @@ namespace Effect::Game
 		static const int MaxLife, MinLife;
 
 		float angleRotate;
+		float initScaleX;
 	};
 }
 

@@ -27,7 +27,7 @@ void TestParticleManager::Update()
 	Debug::Begin("ParticleTest");
 
 	if (Debug::Button("BlueSpark"))
-		Generate(TestParticle::BlueSpark, Vector3::Up * 5.0f);
+		Generate(TestParticle::BlueSpark, Vector3::Up * 10.0f);
 
 	Debug::End();
 

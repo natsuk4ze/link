@@ -15,7 +15,7 @@ namespace Effect::Game
 	BlueSparkController::BlueSparkController()
 	{
 		//単位頂点バッファ作成
-		const D3DXVECTOR2 ParticleSize{ 3.0f, 3.0f };
+		const D3DXVECTOR2 ParticleSize{ 25.0f, 15.0f };
 		MakeUnitBuffer(ParticleSize);
 
 		//テクスチャ読み込み
@@ -45,8 +45,8 @@ namespace Effect::Game
 	/**************************************
 	BlueSpark staticメンバ
 	***************************************/
-	const int BlueSpark::MaxLife = 45;
-	const int BlueSpark::MinLife = 20;
+	const int BlueSpark::MaxLife = 15;
+	const int BlueSpark::MinLife = 5;
 
 	/**************************************
 	BlueSparkコンストラクタ
@@ -70,11 +70,11 @@ namespace Effect::Game
 		transform->Rotate(angleRotate, Vector3::Back);
 
 		//移動
-		float radian = D3DXToRadian(angleRotate);
-		transform->Move({cosf(radian), sinf(radian), 0.0f});
-
+		float posY = Math::RandomRange(-5.0f, 5.0f);
+		transform->Move(Vector3::Up * posY);
 		//スケーリング
-		transform->SetScale({ 3.0f, 1.0f, 1.0f });
+		initScaleX = Math::RandomRange(1.0f, 3.0f);
+		transform->SetScale({ initScaleX, 1.0f, 1.0f });
 	}
 
 	/**************************************
@@ -86,5 +86,9 @@ namespace Effect::Game
 			return;
 
 		cntFrame++;
+
+		float t = (float)cntFrame / lifeFrame;
+		float scaleY = Easing::EaseValue(t, 1.0f, 0.0f, EaseType::InCubic);
+		transform->SetScale({ initScaleX, scaleY, 1.0f });
 	}
 }
