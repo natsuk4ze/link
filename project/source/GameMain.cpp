@@ -29,6 +29,7 @@ GameMain::GameMain(HINSTANCE hInstance, HWND hWnd) :
 	sceneManager->ChangeScene(InitScene);
 }
 
+#ifdef _DEBUG
 /**************************************
 XVˆ—
 ***************************************/
@@ -46,3 +47,4 @@ void GameMain::Update()
 	Debug::End();
 
 }
+#endif
