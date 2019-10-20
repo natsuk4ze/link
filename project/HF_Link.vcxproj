@@ -23,6 +23,7 @@
     <ClInclude Include="Framework\Animation\AnimContainer.h" />
     <ClInclude Include="Framework\Animation\MyAllocateHierarchy.h" />
     <ClInclude Include="Framework\Camera\Camera.h" />
+    <ClInclude Include="Framework\Camera\CameraTranslationPlugin.h" />
     <ClInclude Include="Framework\Camera\CameraShakePlugin.h" />
     <ClInclude Include="Framework\Camera\ViewFrustrum.h" />
     <ClInclude Include="Framework\Collider\BaseCollider.h" />
@@ -197,6 +198,7 @@
     <ClCompile Include="Framework\Animation\AnimContainer.cpp" />
     <ClCompile Include="Framework\Animation\MyAllocateHierarchy.cpp" />
     <ClCompile Include="Framework\Camera\Camera.cpp" />
+    <ClCompile Include="Framework\Camera\CameraTranslationPlugin.cpp" />
     <ClCompile Include="Framework\Camera\CameraShakePlugin.cpp" />
     <ClCompile Include="Framework\Camera\ViewFrustrum.cpp" />
     <ClCompile Include="Framework\Collider\BaseCollider.cpp" />

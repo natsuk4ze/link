@@ -173,6 +173,7 @@
     <ClInclude Include="source\Effect\Game\BlueDebris.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraFar.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraQuater.h" />
+    <ClInclude Include="Framework\Camera\CameraTranslationPlugin.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -329,6 +330,7 @@
     <ClCompile Include="source\Effect\Game\BlueDebris.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraFar.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraQuater.cpp" />
+    <ClCompile Include="Framework\Camera\CameraTranslationPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
