@@ -167,6 +167,11 @@
     <ClInclude Include="source\Event\MinusEvent\MoveInverseEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\BanStockUseEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\CongestionUpEvent.h" />
+    <ClInclude Include="source\Effect\GameParticleManager.h" />
+    <ClInclude Include="source\Effect\Game\BlueSpark.h" />
+    <ClInclude Include="source\Scene\ParticleTestScene.h" />
+    <ClInclude Include="source\Effect\TestParticleCamera.h" />
+    <ClInclude Include="source\Effect\TestParticleManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -317,6 +322,11 @@
     <ClCompile Include="source\Event\MinusEvent\MoveInverseEvent.cpp" />
     <ClCompile Include="source\Event\MinusEvent\BanStockUseEvent.cpp" />
     <ClCompile Include="source\Event\MinusEvent\CongestionUpEvent.cpp" />
+    <ClCompile Include="source\Effect\GameParticleManager.cpp" />
+    <ClCompile Include="source\Effect\Game\BlueSpark.cpp" />
+    <ClCompile Include="source\Scene\ParticleTestScene.cpp" />
+    <ClCompile Include="source\Effect\TestParticleCamera.cpp" />
+    <ClCompile Include="source\Effect\TestParticleManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

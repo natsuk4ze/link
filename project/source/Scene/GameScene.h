@@ -36,6 +36,7 @@ class FieldCamera;
 class TextViewer;
 class GameViewer;
 class EventController;
+class GameParticleManager;
 
 /**************************************
 クラス定義
@@ -76,6 +77,7 @@ private:
 	TextViewer *text;							//テスト用テキストビューワ
 	GameViewer *gameViewer;						//ゲームビュアー
 	EventController *eventController;			//イベントコントローラー
+	GameParticleManager *particleManager;		//パーティクルマネージャ
 
 	int remainTime;								//ステージの残り時間
 

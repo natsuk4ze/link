@@ -78,12 +78,17 @@ public:
 	static void BeginDraw();		
 	static void EndDraw();			
 
+	//描画パーティクル数取得処理
+	unsigned GetParticleCount() const;
+
 protected:
 	LPDIRECT3DVERTEXBUFFER9 unitBuff;				//単位頂点バッファ
 	LPDIRECT3DTEXTURE9 texture;						//テクスチャ
 	std::vector<BaseParticle*> particleContainer;	//パーティクルコンテナ
 	std::vector<BaseEmitter*> emitterContainer;		//エミッタコンテナ
 	std::shared_ptr<ParticleRenderer> renderer;		//レンダラー
+
+	unsigned particleCount;							//描画パーティクル数
 
 	//単位頂点バッファ作成処理
 	void MakeUnitBuffer(const D3DXVECTOR2& size, const D3DXVECTOR2& texDix = D3DXVECTOR2(1.0f, 1.0f));	

@@ -26,6 +26,8 @@
 
 #include <algorithm>
 
+#include "../Effect/GameParticleManager.h"
+
 namespace Field
 {
 	/**************************************
