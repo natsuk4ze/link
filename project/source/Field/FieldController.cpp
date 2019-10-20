@@ -40,7 +40,7 @@ namespace Field
 	const unsigned FieldController::InitDevelopRiverStock = 10;		//川開発ストックの初期数
 	const unsigned FieldController::InitDevelopMountainStock = 10;	//山開発ストックの初期数
 	const int FieldController::DevelopmentInterval = 30;			//発展レベル上昇のインターバル
-	const float FieldController::MaxDevelopmentLevelAI = 99.0f;	//AI発展レベルの最大値
+	const float FieldController::MaxDevelopmentLevelAI = 9999.0f;	//AI発展レベルの最大値
 	
 	/**************************************
 	コンストラクタ
