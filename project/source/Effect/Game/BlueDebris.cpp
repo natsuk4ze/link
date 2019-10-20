@@ -48,7 +48,7 @@ namespace Effect::Game
 	const int BlueDebris::MinLife = 10;
 	const int BlueDebris::MaxLife = 20;
 	const float BlueDebris::MinSpeed = 10.0f;
-	const float BlueDebris::MaxSpeed = 30.0f;
+	const float BlueDebris::MaxSpeed = 3.0f;
 	const int BlueDebris::TexDiv = 3;
 
 	/**************************************
@@ -80,6 +80,10 @@ namespace Effect::Game
 		int indexUV = Math::RandomRange(0, TexDiv * TexDiv);
 		uv.u = indexUV % TexDiv / (float)TexDiv;
 		uv.v = indexUV / TexDiv / (float)TexDiv;
+
+		//初期位置を移動方向へオフセット
+		const float InitOffset = 10.0f;
+		transform->Move(moveDirection * InitOffset);
 	}
 
 	/**************************************
@@ -94,8 +98,16 @@ namespace Effect::Game
 
 		//スピードをイージングで求めて移動計算
 		float t = (float)cntFrame / lifeFrame;
-		float speed = Easing::EaseValue(t, InitSpeed, 0.0f, EaseType::OutCirc);
+		float speed = Easing::EaseValue(t, InitSpeed, 0.5f, EaseType::OutCirc);
 		transform->Move(moveDirection * speed);
+
+		//スケール計算
+		float scale = Easing::EaseValue(t, 1.0f, 0.0f, EaseType::InCubic);
+		transform->SetScale(Vector3::One * scale);
+
+		//回転
+		const float angleRotate = 10.0f;
+		transform->Rotate(0.0f, 0.0f, angleRotate);
 	}
 
 }
