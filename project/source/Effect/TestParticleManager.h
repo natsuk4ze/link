@@ -20,6 +20,7 @@ namespace TestParticle
 	enum ID
 	{
 		BlueSpark,
+		BlueDebris,
 		Max
 	};
 }

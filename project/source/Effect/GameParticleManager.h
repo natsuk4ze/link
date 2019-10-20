@@ -19,7 +19,8 @@ namespace GameParticle
 {
 	enum ID
 	{
-		BlueSpark,
+		BlueSpark,		//ブルースパーク
+		BlueDebris,		//ブルースパークの破片
 		Max
 	};
 }
@@ -31,7 +32,11 @@ class GameParticleManager : public SceneParticleManager, public BaseSingleton<Ga
 {
 	using SceneParticleManager::SceneParticleManager;
 public:
+	//初期化処理
 	void Init() override;
+
+	//シンギュラリティイベントのエフェクトセット処理
+	void SetSingularityEffect(const D3DXVECTOR3& position);
 };
 
 #endif

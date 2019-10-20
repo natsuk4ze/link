@@ -172,6 +172,7 @@
     <ClInclude Include="source\Scene\ParticleTestScene.h" />
     <ClInclude Include="source\Effect\TestParticleCamera.h" />
     <ClInclude Include="source\Effect\TestParticleManager.h" />
+    <ClInclude Include="source\Effect\Game\BlueDebris.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -327,6 +328,7 @@
     <ClCompile Include="source\Scene\ParticleTestScene.cpp" />
     <ClCompile Include="source\Effect\TestParticleCamera.cpp" />
     <ClCompile Include="source\Effect\TestParticleManager.cpp" />
+    <ClCompile Include="source\Effect\Game\BlueDebris.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

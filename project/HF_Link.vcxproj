@@ -108,6 +108,7 @@
     <ClInclude Include="Library\json11\json11.hpp" />
     <ClInclude Include="main.h" />
     <ClInclude Include="source\Effect\GameParticleManager.h" />
+    <ClInclude Include="source\Effect\Game\BlueDebris.h" />
     <ClInclude Include="source\Effect\Game\BlueSpark.h" />
     <ClInclude Include="source\Effect\TestParticleCamera.h" />
     <ClInclude Include="source\Effect\TestParticleManager.h" />
@@ -269,6 +270,7 @@
     <ClCompile Include="Library\json11\json11.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="source\Effect\GameParticleManager.cpp" />
+    <ClCompile Include="source\Effect\Game\BlueDebris.cpp" />
     <ClCompile Include="source\Effect\Game\BlueSpark.cpp" />
     <ClCompile Include="source\Effect\TestParticleCamera.cpp" />
     <ClCompile Include="source\Effect\TestParticleManager.cpp" />
