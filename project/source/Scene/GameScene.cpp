@@ -19,13 +19,13 @@
 #include "../Viewer/GameScene/GameViewer/GameViewer.h"
 #include "../Event/EventController.h"
 #include "../Field/Place/PlaceConfig.h"
+#include "../Effect/GameParticleManager.h"
 
 #include "GameState/GameInit.h"
 #include "GameState/GameIdle.h"
 #include "GameState/GameFinish.h"
 #include "GameState/GameLevelUp.h"
 
-#include "../FieldObject/Actor/CrossJunctionActor.h"
 #include "../FieldObject/Actor/BridgeActor.h"
 
 #include "../../Framework/Tool/DebugWindow.h"
@@ -54,6 +54,7 @@ void GameScene::Init()
 	gameViewer = new GameViewer();
 	eventController = new EventController(Field::Model::City);
 	eventController->ReceiveFieldController(field);
+	particleManager = GameParticleManager::Instance();
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
@@ -90,6 +91,9 @@ void GameScene::Uninit()
 	SAFE_DELETE(gameViewer);
 	SAFE_DELETE(eventController);
 
+	//パーティクル終了
+	particleManager->Uninit();
+
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
 
@@ -123,6 +127,9 @@ void GameScene::Update()
 
 	//ビュアー更新
 	gameViewer->Update();
+
+	//パーティクル更新
+	particleManager->Update();
 }
 
 /**************************************
@@ -140,6 +147,9 @@ void GameScene::Draw()
 
 	//オブジェクト描画
 	field->Draw();
+
+	//パーティクル描画
+	particleManager->Draw();
 
 	//テキストビューワをテスト表示
 	static int x = 1650;

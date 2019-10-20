@@ -10,23 +10,27 @@
 
 #include "../../main.h"
 #include "../../Framework/Particle/SceneParticleManager.h"
+#include "../../Framework/Pattern/BaseSingleton.h"
 
 /**************************************
-前方宣言
+ゲームシーンのパーティクル通し番号
 ***************************************/
-
-/**************************************
-クラス定義
-***************************************/
-class GameParticleManager : public SceneParticleManager
+namespace GameParticle
 {
-public:
-	enum ParticleID
+	enum ID
 	{
 		BlueSpark,
 		Max
 	};
+}
 
+/**************************************
+クラス定義
+***************************************/
+class GameParticleManager : public SceneParticleManager, public BaseSingleton<GameParticleManager>
+{
+	using SceneParticleManager::SceneParticleManager;
+public:
 	void Init() override;
 };
 

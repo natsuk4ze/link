@@ -11,6 +11,7 @@
 #include "../../Field/FieldController.h"
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../../../Framework/Transition/TransitionController.h"
+#include "../../Effect/GameParticleManager.h"
 
 /**************************************
 入場処理
@@ -25,14 +26,6 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	entity.skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_left.png", SkyBox::Surface::Left);
 	entity.skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_right.png", SkyBox::Surface::Right);
 
-	//カメラの追従目標にカーソルを設定してモード切替
-	entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
-	entity.fieldCamera->ChangeMode();
-
-	//ゲームに必要なパラメータを初期化
-	//TODO : ステージの制限時間を引き継げるようにする
-	entity.remainTime = 30 * 180;
-
 	// 3Dオブジェクトのリソースをロード
 	ResourceManager::Instance()->LoadMesh("NoneActor", "data/MODEL/PlaceActor/ground.x");
 	// FieldLevel = City
@@ -46,6 +39,17 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	// FieldLevel = World
 
 	// FieldLevel = Space
+
+	//パーティクル初期化
+	entity.particleManager->Init();
+
+	//カメラの追従目標にカーソルを設定してモード切替
+	entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
+	entity.fieldCamera->ChangeMode();
+
+	//ゲームに必要なパラメータを初期化
+	//TODO : ステージの制限時間を引き継げるようにする
+	entity.remainTime = 30 * 180;
 
 	//CSVデータをロード
 	entity.field->Load();

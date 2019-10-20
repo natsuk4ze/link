@@ -12,6 +12,8 @@
 ***************************************/
 void GameParticleManager::Init()
 {
-	controllers.resize(ParticleID::Max, NULL);
-	controllers[BlueSpark] = new Effect::Game::BlueSparkController();
+	SceneParticleManager::Init();
+
+	controllers.resize(GameParticle::Max, NULL);
+	controllers[GameParticle::BlueSpark] = new Effect::Game::BlueSparkController();
 }
