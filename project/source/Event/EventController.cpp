@@ -8,15 +8,16 @@
 #include "EventController.h"
 #include "EventConfig.h"
 #include "PlusEvent/AILevelUpEvent.h"
-#include "PlusEvent/BonusEvent.h"
-#include "PlusEvent/CityLevelUpEvent.h"
+#include "PlusEvent/AllLinkLevelUpEvent.h"
+#include "PlusEvent/TimeRecoveryEvent.h"
+#include "PlusEvent/LinkLevelUpEvent.h"
 #include "PlusEvent/FamousPeopleEvent.h"
 #include "PlusEvent/NewCityEvent.h"
 #include "PlusEvent/StockRecoveryEvent.h"
 #include "MinusEvent/AILevelDecreaseEvent.h"
 #include "MinusEvent/BanStockUseEvent.h"
 #include "MinusEvent/CityDestroyEvent.h"
-#include "MinusEvent/CityLevelDecreaseEvent.h"
+#include "MinusEvent/LinkLevelDecreaseEvent.h"
 #include "MinusEvent/CongestionUpEvent.h"
 #include "MinusEvent/MoveInverseEvent.h"
 
@@ -53,7 +54,7 @@ EventController::EventController(int FieldLevel) : FieldLevel(FieldLevel)
 	eventViewer = new EventViewer();
 
 #if _DEBUG
-	ResourceManager::Instance()->MakePolygon("Event", "data/TEXTURE/PlaceTest/Event.png", { 4.5f, 4.5f }, { 12.0f,1.0f });
+	ResourceManager::Instance()->MakePolygon("Event", "data/TEXTURE/PlaceTest/Event.png", { 4.5f, 4.5f }, { 13.0f,1.0f });
 #endif
 }
 
@@ -129,7 +130,7 @@ void EventController::DrawDebug()
 	{
 		//テスト描画
 		Transform transform = Transform(
-			Object.Pos.ConvertToWorldPosition() + D3DXVECTOR3(0.0f, 1.0f, 0.0f),
+			Object.Pos.ConvertToWorldPosition() + Vector3::Up,
 			{ D3DXToRadian(90.0f), 0.0f, 0.0f },
 			Vector3::One);
 		transform.SetWorld();
@@ -204,8 +205,8 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 				// イベントインスタンス作成
 				switch (EventPlace->EventType)
 				{
-				case CityLevelUp:
-					Ptr = new CityLevelUpEvent();
+				case LinkLevelUp:
+					Ptr = new LinkLevelUpEvent();
 					break;
 				case NewCity:
 					Ptr = new NewCityEvent();
@@ -214,16 +215,19 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					Ptr = new StockRecoveryEvent();
 					break;
 				case FamousPeople:
-					Ptr = new FamousPeopleEvent(1);
+					Ptr = new FamousPeopleEvent(150);
 					break;
-				case Bonus:
-					Ptr = new BonusEvent();
+				case AllLinkLevelUp:
+					Ptr = new AllLinkLevelUpEvent();
 					break;
 				case AILevelUp:
 					Ptr = new AILevelUpEvent();
 					break;
-				case CityLevelDecrease:
-					Ptr = new CityLevelDecreaseEvent();
+				case TimeRecovery:
+					Ptr = new TimeRecoveryEvent();
+					break;
+				case LinkLevelDecrease:
+					Ptr = new LinkLevelDecreaseEvent();
 					break;
 				case CityDestroy:
 					Ptr = new CityDestroyEvent(D3DXVECTOR3(150.0f, 0.0f, -150.0f));
@@ -232,13 +236,13 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					Ptr = new AILevelDecreaseEvent();
 					break;
 				case MoveInverse:
-					Ptr = new MoveInverseEvent(1);
+					Ptr = new MoveInverseEvent(300);
 					break;
 				case BanStockUse:
-					Ptr = new BanStockUseEvent(1);
+					Ptr = new BanStockUseEvent(300);
 					break;
 				case CongestionUp:
-					Ptr = new CongestionUpEvent(1);
+					Ptr = new CongestionUpEvent(300);
 					break;
 				default:
 					break;

@@ -118,15 +118,16 @@
     <ClInclude Include="source\Event\MinusEvent\AILevelDecreaseEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\BanStockUseEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\CityDestroyEvent.h" />
-    <ClInclude Include="source\Event\MinusEvent\CityLevelDecreaseEvent.h" />
+    <ClInclude Include="source\Event\MinusEvent\LinkLevelDecreaseEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\CongestionUpEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\MoveInverseEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\AILevelUpEvent.h" />
-    <ClInclude Include="source\Event\PlusEvent\BonusEvent.h" />
-    <ClInclude Include="source\Event\PlusEvent\CityLevelUpEvent.h" />
+    <ClInclude Include="source\Event\PlusEvent\AllLinkLevelUpEvent.h" />
+    <ClInclude Include="source\Event\PlusEvent\LinkLevelUpEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\FamousPeopleEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\NewCityEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\StockRecoveryEvent.h" />
+    <ClInclude Include="source\Event\PlusEvent\TimeRecoveryEvent.h" />
     <ClInclude Include="source\FieldObject\Actor\BridgeActor.h" />
     <ClInclude Include="source\FieldObject\Actor\CityActor.h" />
     <ClInclude Include="source\FieldObject\Actor\CrossJunctionActor.h" />
@@ -282,12 +283,13 @@
     <ClCompile Include="source\Event\MinusEvent\CongestionUpEvent.cpp" />
     <ClCompile Include="source\Event\MinusEvent\MoveInverseEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\AILevelUpEvent.cpp" />
-    <ClCompile Include="source\Event\PlusEvent\BonusEvent.cpp" />
-    <ClCompile Include="source\Event\MinusEvent\CityLevelDecreaseEvent.cpp" />
-    <ClCompile Include="source\Event\PlusEvent\CityLevelUpEvent.cpp" />
+    <ClCompile Include="source\Event\MinusEvent\LinkLevelDecreaseEvent.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\LinkLevelUpEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\FamousPeopleEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\NewCityEvent.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\AllLinkLevelUpEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\StockRecoveryEvent.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\TimeRecoveryEvent.cpp" />
     <ClCompile Include="source\FieldObject\Actor\BridgeActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\CityActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\CrossJunctionActor.cpp" />
@@ -355,7 +357,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{996B903E-F0F3-45AE-BEBF-C0FD8C48906F}</ProjectGuid>
     <RootNamespace>HFLink</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
