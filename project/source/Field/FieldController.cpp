@@ -269,7 +269,7 @@ namespace Field
 	/**************************************
 	ŠX‚Ì”­“WƒŒƒxƒ‹‚ð‘‚â‚·
 	***************************************/
-	void FieldController::AdjustLevelDevelopment(float num)
+	void FieldController::AdjustAllLinkLevel(float num)
 	{
 		placeContainer->AddDevelopmentLevel(num);
 	}

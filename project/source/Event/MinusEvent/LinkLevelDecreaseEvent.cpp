@@ -38,7 +38,7 @@ LinkLevelDecreaseEvent::~LinkLevelDecreaseEvent()
 //=============================================================================
 void LinkLevelDecreaseEvent::Update()
 {
-	fieldController->AdjustLevelDevelopment(LinkLevelDecreaseNum);
+	fieldController->AdjustAllLinkLevel(LinkLevelDecreaseNum);
 	UseFlag = false;
 }
 
