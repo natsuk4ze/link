@@ -26,6 +26,8 @@
 
 #include <algorithm>
 
+#include "../Effect/GameParticleManager.h"
+
 namespace Field
 {
 	/**************************************
@@ -38,7 +40,7 @@ namespace Field
 	const unsigned FieldController::InitDevelopRiverStock = 10;		//川開発ストックの初期数
 	const unsigned FieldController::InitDevelopMountainStock = 10;	//山開発ストックの初期数
 	const int FieldController::DevelopmentInterval = 30;			//発展レベル上昇のインターバル
-	const float FieldController::MaxDevelopmentLevelAI = 99.0f;	//AI発展レベルの最大値
+	const float FieldController::MaxDevelopmentLevelAI = 9999.0f;	//AI発展レベルの最大値
 	
 	/**************************************
 	コンストラクタ
@@ -143,7 +145,7 @@ namespace Field
 	***************************************/
 	void FieldController::Draw()
 	{
-		ground->Draw();
+		//ground->Draw();
 
 		placeActController->Draw();
 
@@ -162,6 +164,13 @@ namespace Field
 	void FieldController::Load()
 	{
 		placeContainer->LoadCSV("data/FIELD/sample01.csv");
+
+		//アクター生成
+		auto places = placeContainer->GetAllPlaces();
+		for (auto&& place : places)
+		{
+			placeActController->SetActor(place);
+		}
 
 		//カーソルのフィールドの中央へ設定
 		FieldPosition border = placeContainer->GetPlaceBorder();
@@ -362,9 +371,6 @@ namespace Field
 				place->SetType(PlaceType::Road);
 		}
 
-		//ルートベクトルを渡す
-		//EventController::CheckEventHappen(route, City);
-
 		//ルートモデル作成
 		RouteModelPtr ptr = RouteModel::Create(onConnectTown, onCreateJunction, route);
 
@@ -544,6 +550,8 @@ namespace Field
 				river->SetType(PlaceType::Bridge);
 				river->AddDirection(startAdjacency);
 				river->AddDirection(inverseStartAdjacency);
+
+				placeActController->SetActor(river);
 			}
 
 			stockDevelopRiver -= cntRiver;

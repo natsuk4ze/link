@@ -130,6 +130,16 @@ namespace Field::Model
 	}
 
 	/**************************************
+	前プレイス取得処理
+	***************************************/
+	std::vector<const PlaceModel*> Field::Model::PlaceContainer::GetAllPlaces() const
+	{
+		std::vector<const PlaceModel*> out;
+		out.assign(placeVector.begin(), placeVector.end());
+		return out;
+	}
+
+	/**************************************
 	CSV読み込み処理
 	***************************************/
 	void PlaceContainer::LoadCSV(const char * filePath)

@@ -112,7 +112,7 @@ void SceneParticleManager::Draw()
 ***************************************/
 BaseEmitter* SceneParticleManager::Generate(UINT id, const D3DXVECTOR3& pos)
 {
-	assert(id > 0 && id < controllers.size());
+	assert(id >= 0 && id < controllers.size());
 
 	return controllers[id]->SetEmitter(pos);
 }
@@ -122,7 +122,7 @@ BaseEmitter* SceneParticleManager::Generate(UINT id, const D3DXVECTOR3& pos)
 ***************************************/
 BaseEmitter* SceneParticleManager::Generate(UINT id, const Transform& transform)
 {
-	assert(id > 0 && id < controllers.size());
+	assert(id >= 0 && id < controllers.size());
 
 	return controllers[id]->SetEmitter(transform);
 }

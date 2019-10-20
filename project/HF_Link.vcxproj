@@ -107,6 +107,11 @@
     <ClInclude Include="Library\imgui\imstb_truetype.h" />
     <ClInclude Include="Library\json11\json11.hpp" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="source\Effect\GameParticleManager.h" />
+    <ClInclude Include="source\Effect\Game\BlueDebris.h" />
+    <ClInclude Include="source\Effect\Game\BlueSpark.h" />
+    <ClInclude Include="source\Effect\TestParticleCamera.h" />
+    <ClInclude Include="source\Effect\TestParticleManager.h" />
     <ClInclude Include="source\Event\EventBase.h" />
     <ClInclude Include="source\Event\EventConfig.h" />
     <ClInclude Include="source\Event\EventController.h" />
@@ -170,6 +175,7 @@
     <ClInclude Include="source\Scene\GameState\GameIdle.h" />
     <ClInclude Include="source\Scene\GameState\GameInit.h" />
     <ClInclude Include="source\Scene\GameState\GameLevelUp.h" />
+    <ClInclude Include="source\Scene\ParticleTestScene.h" />
     <ClInclude Include="source\Scene\ResultScene.h" />
     <ClInclude Include="source\Scene\TitleScene.h" />
     <ClInclude Include="source\Viewer\Framework\BaseViewer.h" />
@@ -263,6 +269,11 @@
     <ClCompile Include="Library\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Library\json11\json11.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="source\Effect\GameParticleManager.cpp" />
+    <ClCompile Include="source\Effect\Game\BlueDebris.cpp" />
+    <ClCompile Include="source\Effect\Game\BlueSpark.cpp" />
+    <ClCompile Include="source\Effect\TestParticleCamera.cpp" />
+    <ClCompile Include="source\Effect\TestParticleManager.cpp" />
     <ClCompile Include="source\Event\EventBase.cpp" />
     <ClCompile Include="source\Event\EventController.cpp" />
     <ClCompile Include="source\Event\MinusEvent\AILevelDecreaseEvent.cpp" />
@@ -322,6 +333,7 @@
     <ClCompile Include="source\Scene\GameState\GameIdle.cpp" />
     <ClCompile Include="source\Scene\GameState\GameInit.cpp" />
     <ClCompile Include="source\Scene\GameState\GameLevelUp.cpp" />
+    <ClCompile Include="source\Scene\ParticleTestScene.cpp" />
     <ClCompile Include="source\Scene\ResultScene.cpp" />
     <ClCompile Include="source\Scene\TitleScene.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp" />
@@ -343,7 +355,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{996B903E-F0F3-45AE-BEBF-C0FD8C48906F}</ProjectGuid>
     <RootNamespace>HFLink</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
