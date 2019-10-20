@@ -6,8 +6,8 @@
 //
 //=====================================
 #include "FieldCamera.h"
-#include "FieldCameraQuater.h"
-#include "FieldCameraFar.h"
+#include "State/FieldCameraQuater.h"
+#include "State/FieldCameraFar.h"
 #include "../../../Framework/Input/input.h"
 
 /**************************************
