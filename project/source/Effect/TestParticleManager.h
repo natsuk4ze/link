@@ -33,6 +33,7 @@ class TestParticleManager : public SceneParticleManager, public BaseSingleton<Te
 public:
 	void Init() override;
 	void Update() override;
+	void Draw() override;
 };
 
 #endif

@@ -7,6 +7,7 @@
 #include "TestParticleManager.h"
 #include "Game/BlueSpark.h"
 #include "../../Framework/Tool/DebugWindow.h"
+#include "../../Library/cppLinq/cpplinq.hpp"
 
 /**************************************
 ‰Šú‰»ˆ—
@@ -32,4 +33,19 @@ void TestParticleManager::Update()
 	Debug::End();
 
 	SceneParticleManager::Update();
+}
+
+/**************************************
+•`‰æˆ—
+***************************************/
+void TestParticleManager::Draw()
+{
+	SceneParticleManager::Draw();
+
+	Debug::Begin("PartcileProfile");
+	for (unsigned i = 0; i < controllers.size(); i++)
+	{
+		Debug::Text("particle[%d] : %d", i, controllers[i]->GetParticleCount());
+	}
+	Debug::End();
 }
