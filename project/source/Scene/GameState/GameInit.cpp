@@ -54,10 +54,6 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
 	entity.fieldCamera->ChangeMode();
 
-	//ゲームに必要なパラメータを初期化
-	//TODO : ステージの制限時間を引き継げるようにする
-	entity.remainTime = 30 * 180;
-
 	//CSVデータをロード
 	entity.field->Load();
 

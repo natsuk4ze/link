@@ -83,6 +83,9 @@ namespace Field
 		//レベルアップするべきかどうか
 		bool ShouldLevelUp();
 
+		//制限時間が残っているか
+		bool IsTimeRemaining();
+
 		//イベント操作用のインターフェース
 		void AdjustLevelAI(float num);				//AI発展レベルを調整
 		void AdjustAllLinkLevel(int num);			//街全体のリンクレベルを調整
@@ -123,6 +126,7 @@ namespace Field
 		unsigned stockEDF;						//地球防衛軍のストック
 		unsigned stockInsurance;				//保険のストック
 		float developSpeedBonus;				//発展スピード増加ボーナス
+		int remainTime;						//制限時間
 
 		State current;
 		ControllerState *state;					//現在のステート

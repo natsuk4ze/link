@@ -55,6 +55,7 @@ namespace Field
 		stockEDF(0),
 		stockInsurance(0),
 		developSpeedBonus(1.0f),
+		remainTime(30 * 180),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
 		onChangePlaceType(nullptr)
@@ -79,6 +80,9 @@ namespace Field
 
 		//ルートプロセッサ作成
 		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
+
+		//制限時間初期化
+		//TODO:シーンを跨いで引き継げるようにする
 
 		//ステート初期化
 		ChangeState(State::Idle);
@@ -233,6 +237,7 @@ namespace Field
 	***************************************/
 	void FieldController::EmbedViewerParam(GameViewerParam & param)
 	{
+		param.remainTime = remainTime / 30.0f;
 		param.levelAI = (int)developmentLevelAI;
 		param.ratioLevel = (float)developmentLevelAI / MaxDevelopmentLevelAI;
 		param.stockBreakItem = stockDevelopMountain;
@@ -255,6 +260,14 @@ namespace Field
 	bool FieldController::ShouldLevelUp()
 	{
 		return developmentLevelAI >= MaxDevelopmentLevelAI;
+	}
+
+	/**************************************
+	レベルアップするかどうかの判定
+	***************************************/
+	bool FieldController::IsTimeRemaining()
+	{
+		return remainTime != 0;
 	}
 
 	/**************************************
