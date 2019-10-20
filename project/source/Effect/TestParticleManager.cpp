@@ -34,6 +34,14 @@ void TestParticleManager::Update()
 	else if (Debug::Button("BlueDebris"))
 		Generate(TestParticle::BlueDebris, Vector3::Up * 10.0f);
 
+	Debug::NewLine();
+
+	if (Debug::Button("BlueSparkDeblis"))
+	{
+		Generate(TestParticle::BlueSpark, Vector3::Up * 10.0f);
+		Generate(TestParticle::BlueDebris, Vector3::Up * 10.0f);
+	}
+
 	Debug::End();
 
 	SceneParticleManager::Update();
