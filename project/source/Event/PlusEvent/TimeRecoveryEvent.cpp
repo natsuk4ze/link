@@ -1,16 +1,16 @@
 //=============================================================================
 //
-// 町レベル上昇イベントクラス [CityLevelUpEvent.cpp]
+// 制限時間回復イベントクラス [TimeRecoveryEvent.cpp]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
 #include "../../../main.h"
-#include "CityLevelUpEvent.h"
+#include "TimeRecoveryEvent.h"
 
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-const int CityLevelUpNum = 1;
+const int RecoveryNum = 5;
 
 //*****************************************************************************
 // スタティック変数宣言
@@ -20,7 +20,7 @@ const int CityLevelUpNum = 1;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CityLevelUpEvent::CityLevelUpEvent()
+TimeRecoveryEvent::TimeRecoveryEvent()
 {
 
 }
@@ -28,7 +28,7 @@ CityLevelUpEvent::CityLevelUpEvent()
 //=============================================================================
 // デストラクタ
 //=============================================================================
-CityLevelUpEvent::~CityLevelUpEvent()
+TimeRecoveryEvent::~TimeRecoveryEvent()
 {
 
 }
@@ -36,16 +36,15 @@ CityLevelUpEvent::~CityLevelUpEvent()
 //=============================================================================
 // 更新
 //=============================================================================
-void CityLevelUpEvent::Update()
+void TimeRecoveryEvent::Update()
 {
-	fieldController->AdjustLevelDevelopment(CityLevelUpNum);
 	UseFlag = false;
 }
 
 //=============================================================================
 // 描画
 //=============================================================================
-void CityLevelUpEvent::Draw()
+void TimeRecoveryEvent::Draw()
 {
 
 }
@@ -53,13 +52,13 @@ void CityLevelUpEvent::Draw()
 //=============================================================================
 // イベントメッセージを取得
 //=============================================================================
-string CityLevelUpEvent::GetEventMessage(int FieldLevel)
+string TimeRecoveryEvent::GetEventMessage(int FieldLevel)
 {
 	vector<string> MessageContainer;
 
 	if (FieldLevel == Field::Model::City)
 	{
-		MessageContainer.push_back("発展は止まるじゃねぇぞ！");
+		MessageContainer.push_back("制限時間回復！");
 	}
 	else if (FieldLevel == Field::Model::World)
 	{
