@@ -87,7 +87,7 @@ namespace Field
 		bool IsTimeRemaining();
 
 		//イベント操作用のインターフェース
-		void AdjustLevelAI(float num);				//AI発展レベルを調整
+		void AdjustLevelAI(float percent);			//AI発展レベルを調整
 		void AdjustAllLinkLevel(int num);			//街全体のリンクレベルを調整
 		void AdjustLinlLevel(int num);				//街一つのリンクレベルを調整
 		void AddStockItem(int num);					//ストックアイテムの数を増やす

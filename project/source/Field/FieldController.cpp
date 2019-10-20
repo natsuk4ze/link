@@ -271,12 +271,13 @@ namespace Field
 	}
 
 	/**************************************
-	AI”­“WƒŒƒxƒ‹‚ğ‘‚â‚·
+	AI”­“WƒŒƒxƒ‹‚ğ’²®‚·‚é
 	***************************************/
-	void FieldController::AdjustLevelAI(float num)
+	void FieldController::AdjustLevelAI(float percent)
 	{
 		float MaxLevel = 9999.0f;
-		developmentLevelAI = Math::Clamp(0.0f, MaxLevel, developmentLevelAI + num);
+		float deltaValue = developmentLevelAI * percent;
+		developmentLevelAI = Math::Clamp(0.0f, MaxLevel, developmentLevelAI + deltaValue);
 	}
 
 	/**************************************
