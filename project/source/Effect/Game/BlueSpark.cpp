@@ -15,7 +15,7 @@ namespace Effect::Game
 	BlueSparkController::BlueSparkController()
 	{
 		//単位頂点バッファ作成
-		const D3DXVECTOR2 ParticleSize{ 25.0f, 15.0f };
+		const D3DXVECTOR2 ParticleSize{ 25.0f, 10.0f };
 		MakeUnitBuffer(ParticleSize);
 
 		//テクスチャ読み込み
@@ -23,7 +23,7 @@ namespace Effect::Game
 		LoadTexture(path);
 
 		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 512;
+		const unsigned MaxParticle = 256;
 		particleContainer.resize(MaxParticle, nullptr);
 		for (auto&& particle : particleContainer)
 		{
@@ -32,7 +32,7 @@ namespace Effect::Game
 
 		//エミッターコンテナ作成
 		const unsigned MaxEmitter = 4;
-		const int NumEmit = 5;
+		const int NumEmit = 22;
 		const int DurationEmit = 30 * 4;
 
 		emitterContainer.resize(MaxEmitter, nullptr);
@@ -72,9 +72,11 @@ namespace Effect::Game
 		//移動
 		float posY = Math::RandomRange(-5.0f, 5.0f);
 		transform->Move(Vector3::Up * posY);
+
 		//スケーリング
-		initScaleX = Math::RandomRange(1.0f, 3.0f);
-		transform->SetScale({ initScaleX, 1.0f, 1.0f });
+		initScaleX = Math::RandomRange(0.1f, 3.0f);
+		initScaleY = Math::RandomRange(0.5f, 1.5f);
+		transform->SetScale({ initScaleX, initScaleY, 1.0f });
 	}
 
 	/**************************************
@@ -88,7 +90,7 @@ namespace Effect::Game
 		cntFrame++;
 
 		float t = (float)cntFrame / lifeFrame;
-		float scaleY = Easing::EaseValue(t, 1.0f, 0.0f, EaseType::InCubic);
+		float scaleY = Easing::EaseValue(t, initScaleY, 0.0f, EaseType::InCubic);
 		transform->SetScale({ initScaleX, scaleY, 1.0f });
 	}
 }

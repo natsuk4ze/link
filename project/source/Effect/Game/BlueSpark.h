@@ -43,6 +43,7 @@ namespace Effect::Game
 
 		float angleRotate;
 		float initScaleX;
+		float initScaleY;
 	};
 }
 
