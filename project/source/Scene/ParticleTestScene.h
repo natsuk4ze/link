@@ -17,6 +17,7 @@
 class SkyBox;
 class TestParticleManager;
 class PlaceActor;
+class TestParticleManager;
 
 namespace Field
 {
@@ -38,6 +39,7 @@ private:
 	SkyBox *skybox;
 	Field::FieldGround *ground;
 	PlaceActor *actor;
+	TestParticleManager* particleManager;
 };
 
 #endif

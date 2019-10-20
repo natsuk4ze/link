@@ -110,6 +110,7 @@
     <ClInclude Include="source\Effect\GameParticleManager.h" />
     <ClInclude Include="source\Effect\Game\BlueSpark.h" />
     <ClInclude Include="source\Effect\TestParticleCamera.h" />
+    <ClInclude Include="source\Effect\TestParticleManager.h" />
     <ClInclude Include="source\Event\EventBase.h" />
     <ClInclude Include="source\Event\EventConfig.h" />
     <ClInclude Include="source\Event\EventController.h" />
@@ -270,6 +271,7 @@
     <ClCompile Include="source\Effect\GameParticleManager.cpp" />
     <ClCompile Include="source\Effect\Game\BlueSpark.cpp" />
     <ClCompile Include="source\Effect\TestParticleCamera.cpp" />
+    <ClCompile Include="source\Effect\TestParticleManager.cpp" />
     <ClCompile Include="source\Event\EventBase.cpp" />
     <ClCompile Include="source\Event\EventController.cpp" />
     <ClCompile Include="source\Event\MinusEvent\AILevelDecreaseEvent.cpp" />

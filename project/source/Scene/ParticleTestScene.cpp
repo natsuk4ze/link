@@ -11,6 +11,7 @@
 #include "../Effect/TestParticleCamera.h"
 #include "../FieldObject/Actor/CityActor.h"
 #include "../Field/Place/PlaceConfig.h"
+#include "../Effect/TestParticleManager.h"
 
 /**************************************
 初期化処理
@@ -21,6 +22,7 @@ void ParticleTestScene::Init()
 	skybox = new SkyBox(Vector3::One * 10000.0f);
 	ground = new Field::FieldGround();
 	sceneCamera = new TestParticleCamera();
+	particleManager = TestParticleManager::Instance();
 
 	//スカイボックスのテクスチャロード
 	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_up.png", SkyBox::Surface::Up);
@@ -36,6 +38,9 @@ void ParticleTestScene::Init()
 
 	//カメラ設定
 	Camera::SetMainCamera(sceneCamera);
+
+	//パーティクル初期化
+	particleManager->Init();
 }
 
 /**************************************
@@ -48,6 +53,9 @@ void ParticleTestScene::Uninit()
 	SAFE_DELETE(ground);
 	SAFE_DELETE(sceneCamera);
 	SAFE_DELETE(actor);
+
+	//パーティクル削除
+	particleManager->Uninit();
 }
 
 /**************************************
@@ -56,6 +64,8 @@ void ParticleTestScene::Uninit()
 void ParticleTestScene::Update()
 {
 	sceneCamera->Update();
+
+	particleManager->Update();
 }
 
 /**************************************
@@ -68,4 +78,6 @@ void ParticleTestScene::Draw()
 	skybox->Draw();
 	ground->Draw();
 	actor->Draw();
+
+	particleManager->Draw();
 }
