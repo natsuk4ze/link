@@ -267,11 +267,19 @@ namespace Field
 	}
 
 	/**************************************
-	ŠX‚Ì”­“WƒŒƒxƒ‹‚ð‘‚â‚·
+	Œq‚ª‚Á‚Ä‚¢‚éŠX‘S‘Ì‚ÌƒŠƒ“ƒNƒŒƒxƒ‹‚ð‘‚â‚·
 	***************************************/
-	void FieldController::AdjustAllLinkLevel(float num)
+	void FieldController::AdjustAllLinkLevel(int num)
 	{
-		placeContainer->AddDevelopmentLevel(num);
+		placeContainer->AddAllLinkLevel(num);
+	}
+
+	/**************************************
+	ŠXˆê‚Â‚ÌƒŠƒ“ƒNƒŒƒxƒ‹‚ð‘‚â‚·
+	***************************************/
+	void FieldController::AdjustLinlLevel(int num)
+	{
+		placeContainer->AddLinkLevel(num);
 	}
 
 	/**************************************

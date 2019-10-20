@@ -25,7 +25,8 @@ namespace Field::Model
 		place(place),
 		cntGate(0),
 		linkLevel(0),
-		developmentLevel(0)
+		developmentLevel(0),
+		biasLinkLevel(0)
 	{
 
 	}
@@ -85,15 +86,16 @@ namespace Field::Model
 			linkLevel += route->FindLinkedTown(place, searchedRoute, searchedTown);
 		}
 
-		developmentLevel = (linkLevel + linkLevel * trafficJamRate) * bonus;
+		int adjustLevel = Math::Max(1, linkLevel + biasLinkLevel);
+		developmentLevel = (adjustLevel + adjustLevel * trafficJamRate) * bonus;
 		return developmentLevel;
 	}
 
 	/**************************************
-	”­“W“x‰ÁZˆ—
+	ƒŠƒ“ƒNƒŒƒxƒ‹‰ÁZˆ—
 	***************************************/
-	void TownModel::AddDevelopmentLevel(float num)
+	void TownModel::AddLinkLevel(int num)
 	{
-		developmentLevel += num;
+		biasLinkLevel += num;
 	}
 }

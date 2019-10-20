@@ -85,7 +85,8 @@ namespace Field
 
 		//イベント操作用のインターフェース
 		void AdjustLevelAI(float num);				//AI発展レベルを調整
-		void AdjustAllLinkLevel(float num);			//街全体のリンクレベルを調整
+		void AdjustAllLinkLevel(int num);			//街全体のリンクレベルを調整
+		void AdjustLinlLevel(int num);				//街一つのリンクレベルを調整
 		void AddStockItem(int num);					//ストックアイテムの数を増やす
 		void SetDevelopSpeedBonus(float num);		//発展スピードへのボーナス付与
 		void CreateNewTown();						//新しい街を出現させる

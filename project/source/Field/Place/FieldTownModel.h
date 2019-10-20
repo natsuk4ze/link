@@ -42,8 +42,8 @@ namespace Field::Model
 		//レベルが上がる際に呼ばれる処理
 		float OnGrowth(float trafficJamRate, float bonus);
 
-		//発展度加算処理
-		void AddDevelopmentLevel(float num);
+		//リンクレベル加算処理
+		void AddLinkLevel(int num);
 
 	private:
 		static const float BaseDepatureNum;		//基準となる出発数
@@ -60,6 +60,9 @@ namespace Field::Model
 
 		//リンクレベル
 		int linkLevel;
+
+		//リンクレベルバイアス
+		int biasLinkLevel;
 
 		//発展度
 		float developmentLevel;

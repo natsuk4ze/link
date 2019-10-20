@@ -65,8 +65,11 @@ namespace Field::Model
 		//AI発展レベル計算
 		float CalcDevelopmentLevelAI(float bonus);
 
-		//街の発展度を加算
-		void AddDevelopmentLevel(float num);
+		//街全体のリンクレベルを加算
+		void AddAllLinkLevel(int num);
+		
+		//一つの街のリンクレベルを加算
+		void AddLinkLevel(int num);
 
 		//混雑度増加バイアスを設定
 		void SetTrafficjamBias(float bias);
