@@ -83,9 +83,13 @@ namespace Field
 		//レベルアップするべきかどうか
 		bool ShouldLevelUp();
 
+		//制限時間が残っているか
+		bool IsTimeRemaining();
+
 		//イベント操作用のインターフェース
-		void AdjustLevelAI(float num);				//AI発展レベルを調整
-		void AdjustLevelDevelopment(float num);		//街の発展レベルを調整
+		void AdjustLevelAI(float percent);			//AI発展レベルを調整
+		void AdjustAllLinkLevel(int num);			//街全体のリンクレベルを調整
+		void AdjustLinlLevel(int num);				//街一つのリンクレベルを調整
 		void AddStockItem(int num);					//ストックアイテムの数を増やす
 		void SetDevelopSpeedBonus(float num);		//発展スピードへのボーナス付与
 		void CreateNewTown();						//新しい街を出現させる
@@ -93,6 +97,7 @@ namespace Field
 		void ReverseOperation(bool isReverse);		//操作の反転（引数 true:反転させる false:元に戻す)
 		void SealUsingItem(bool isSeal);			//ストック使用封印（引数 true:封印する false:封印を解除)
 		void RaiseTrafficJam(float bias);			//混雑度を上昇させる
+		void RecoveryRemainTime(int frame);			//制限時間を回復させる（フレーム単位）
 
 	private:
 		static const float PlaceOffset;					//Placeの1マス毎のオフセット値
@@ -122,6 +127,7 @@ namespace Field
 		unsigned stockEDF;						//地球防衛軍のストック
 		unsigned stockInsurance;				//保険のストック
 		float developSpeedBonus;				//発展スピード増加ボーナス
+		int remainTime;						//制限時間
 
 		State current;
 		ControllerState *state;					//現在のステート

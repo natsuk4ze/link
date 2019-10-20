@@ -55,6 +55,7 @@ namespace Field
 		stockEDF(0),
 		stockInsurance(0),
 		developSpeedBonus(1.0f),
+		remainTime(30 * 180),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
 		onChangePlaceType(nullptr)
@@ -79,6 +80,9 @@ namespace Field
 
 		//ルートプロセッサ作成
 		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
+
+		//制限時間初期化
+		//TODO:シーンを跨いで引き継げるようにする
 
 		//ステート初期化
 		ChangeState(State::Idle);
@@ -233,6 +237,7 @@ namespace Field
 	***************************************/
 	void FieldController::EmbedViewerParam(GameViewerParam & param)
 	{
+		param.remainTime = remainTime / 30.0f;
 		param.levelAI = (int)developmentLevelAI;
 		param.ratioLevel = (float)developmentLevelAI / MaxDevelopmentLevelAI;
 		param.stockBreakItem = stockDevelopMountain;
@@ -258,20 +263,37 @@ namespace Field
 	}
 
 	/**************************************
-	AI発展レベルを増やす
+	レベルアップするかどうかの判定
 	***************************************/
-	void FieldController::AdjustLevelAI(float num)
+	bool FieldController::IsTimeRemaining()
 	{
-		float MaxLevel = 9999.0f;
-		developmentLevelAI = Math::Clamp(0.0f, MaxLevel, developmentLevelAI + num);
+		return remainTime != 0;
 	}
 
 	/**************************************
-	街の発展レベルを増やす
+	AI発展レベルを調整する
 	***************************************/
-	void FieldController::AdjustLevelDevelopment(float num)
+	void FieldController::AdjustLevelAI(float percent)
 	{
-		placeContainer->AddDevelopmentLevel(num);
+		float MaxLevel = 9999.0f;
+		float deltaValue = developmentLevelAI * percent;
+		developmentLevelAI = Math::Clamp(0.0f, MaxLevel, developmentLevelAI + deltaValue);
+	}
+
+	/**************************************
+	繋がっている街全体のリンクレベルを増やす
+	***************************************/
+	void FieldController::AdjustAllLinkLevel(int num)
+	{
+		placeContainer->AddAllLinkLevel(num);
+	}
+
+	/**************************************
+	街一つのリンクレベルを増やす
+	***************************************/
+	void FieldController::AdjustLinlLevel(int num)
+	{
+		placeContainer->AddLinkLevel(num);
 	}
 
 	/**************************************
@@ -333,6 +355,14 @@ namespace Field
 	{
 		//TODO：解除処理を実装する
 		placeContainer->SetTrafficjamBias(bias);
+	}
+
+	/**************************************
+	混雑度を上昇させる
+	***************************************/
+	void FieldController::RecoveryRemainTime(int frame)
+	{
+		remainTime += frame;
 	}
 
 	/**************************************

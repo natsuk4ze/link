@@ -289,13 +289,32 @@ namespace Field::Model
 	}
 
 	/**************************************
-	街の発展度増加
+	街全体のリンクレベル増加
 	***************************************/
-	void Field::Model::PlaceContainer::AddDevelopmentLevel(float num)
+	void Field::Model::PlaceContainer::AddAllLinkLevel(int num)
 	{
 		for (auto&& town : townContainer)
 		{
-			town.second->AddDevelopmentLevel(num);
+			town.second->AddLinkLevel(num);
+		}
+	}
+
+	/**************************************
+	街一つのリンクレベル増加
+	***************************************/
+	void Field::Model::PlaceContainer::AddLinkLevel(int num)
+	{
+		//ランダムに選択された街にリンクレベルを足す
+		//無作為に抽出するいい方法が思い浮かばなかった
+		int randomIndex = Math::RandomRange(0, (int)(townContainer.size()));
+		int index = 0;
+		for (auto&& town : townContainer)
+		{
+			if (index++ != randomIndex)
+				continue;
+
+			town.second->AddLinkLevel(num);
+			return;
 		}
 	}
 

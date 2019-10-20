@@ -79,8 +79,6 @@ private:
 	EventController *eventController;			//イベントコントローラー
 	GameParticleManager *particleManager;		//パーティクルマネージャ
 
-	int remainTime;								//ステージの残り時間
-
 	//デリゲータ
 	DelegatePtr<Route&> onBuildRoad;	//道を生成したときのデリゲータ
 

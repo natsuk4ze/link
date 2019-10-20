@@ -27,11 +27,8 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 	//イベント更新
 	entity.eventController->Update();
 
-	//制限時間の更新
-	entity.remainTime--;
-
 	//残り時間が0になったら終了
-	if (entity.remainTime == 0)
+	if (!entity.field->IsTimeRemaining())
 	{
 		next = State::Finish;
 	}
