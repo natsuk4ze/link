@@ -168,6 +168,7 @@
     <ClInclude Include="source\Event\MinusEvent\BanStockUseEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\CongestionUpEvent.h" />
     <ClInclude Include="source\Effect\GameParticleManager.h" />
+    <ClInclude Include="source\Effect\Game\BlueSpark.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -319,6 +320,7 @@
     <ClCompile Include="source\Event\MinusEvent\BanStockUseEvent.cpp" />
     <ClCompile Include="source\Event\MinusEvent\CongestionUpEvent.cpp" />
     <ClCompile Include="source\Effect\GameParticleManager.cpp" />
+    <ClCompile Include="source\Effect\Game\BlueSpark.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

@@ -5,6 +5,7 @@
 //
 //=====================================
 #include "GameParticleManager.h"
+#include "Game/BlueSpark.h"
 
 /**************************************
 ƒOƒ[ƒoƒ‹•Ï”
@@ -12,4 +13,5 @@
 void GameParticleManager::Init()
 {
 	controllers.resize(ParticleID::Max, NULL);
+	controllers[BlueSpark] = new Effect::Game::BlueSparkController();
 }
