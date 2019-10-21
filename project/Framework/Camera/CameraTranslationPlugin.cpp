@@ -16,6 +16,7 @@ void Camera::TranslationPlugin::Init()
 	durationMove = 0;
 	targetPosition = Vector3::Zero;
 	state = Idle;
+	callback = nullptr;
 }
 
 /**************************************
@@ -27,6 +28,9 @@ void Camera::TranslationPlugin::Update()
 		return;
 
 	cntFrame++;
+
+	if (cntFrame == durationMove && callback != nullptr)
+		callback();
 }
 
 /**************************************
@@ -59,20 +63,24 @@ void Camera::TranslationPlugin::Apply(Camera & camera)
 /**************************************
 平行移動セット処理
 ***************************************/
-void Camera::TranslationPlugin::Move(const D3DXVECTOR3 & position, int duration)
+void Camera::TranslationPlugin::Move(const D3DXVECTOR3 & position, int duration, std::function<void(void)> callback)
 {
 	targetPosition = position;
 	cntFrame = 0;
 	durationMove = duration;
 	state = MoveTowards;
+
+	this->callback = callback;
 }
 
 /**************************************
 平行移動復元処理
 ***************************************/
-void Camera::TranslationPlugin::Restore(int duration)
+void Camera::TranslationPlugin::Restore(int duration, std::function<void(void)> callback)
 {
 	cntFrame = 0;
 	durationMove = duration;
 	state = RestoreBase;
+	
+	this->callback = callback;
 }

@@ -12,6 +12,8 @@
 #include "Camera.h"
 #include "../Pattern/BaseSingleton.h"
 
+#include <functional>
+
 /**************************************
 クラス定義
 ***************************************/
@@ -30,11 +32,11 @@ public:
 	//移動開始処理
 	//引数 position : 移動先のカメラ注視点
 	//引数 duration : 移動にかけるフレーム数
-	void Move(const D3DXVECTOR3& position, int duration);
+	void Move(const D3DXVECTOR3& position, int duration, std::function<void(void)> callback = nullptr);
 
 	//移動前の位置へ戻す処理
 	//引数 duration : 移動にかけるフレーム数
-	void Restore(int duration);
+	void Restore(int duration, std::function<void(void)> callback = nullptr);
 
 private:
 	enum State
@@ -44,10 +46,11 @@ private:
 		Idle
 	};
 
-	int cntFrame;					//フレームカウント
-	int durationMove;				//移動時間
-	D3DXVECTOR3 targetPosition;		//移動先の目標座標
-	State state;					//現在のステート
+	int cntFrame;							//フレームカウント
+	int durationMove;						//移動時間
+	D3DXVECTOR3 targetPosition;				//移動先の目標座標
+	State state;							//現在のステート
+	std::function<void(void)> callback;		//コールバック
 };
 
 #endif
