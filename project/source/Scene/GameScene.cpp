@@ -20,6 +20,7 @@
 #include "../Event/EventController.h"
 #include "../Field/Place/PlaceConfig.h"
 #include "../Effect/GameParticleManager.h"
+#include "../Field/FieldEventHandler.h"
 
 #include "GameState/GameInit.h"
 #include "GameState/GameIdle.h"
@@ -55,6 +56,7 @@ void GameScene::Init()
 	eventController = new EventController(Field::Model::City);
 	eventController->ReceiveFieldController(field);
 	particleManager = GameParticleManager::Instance();
+	eventHandler = new FieldEventHandler();
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
@@ -201,4 +203,32 @@ void GameScene::OnLevelUp()
 		level++;
 		SceneManager::ChangeScene(GameConfig::SceneID::Game);
 	});
+}
+
+/**************************************
+イベントハンドラ設定処理
+***************************************/
+void GameScene::SetEventHandler()
+{
+	//中断ファンクタ作成
+	eventHandler->functerVoid[FieldEventHandler::FuncterID_void::Pause] = [&]()
+	{
+		ChangeState(State::Pause);
+	};
+
+	//再開ファンクタ作成
+	eventHandler->functerVoid[FieldEventHandler::FuncterID_void::Resume] = [&]()
+	{
+		//TODO:中断前のステートへ戻れるようにする
+		ChangeState(State::Idle);
+	};
+
+	//制限時間回復ファンクタ作成
+	eventHandler->functerInt[FieldEventHandler::FuncterID_int::AddTime] = [&](int frame)
+	{
+		this->remainTime += frame;
+	};
+
+	//フィールドコントローラの方でもハンドラ作成
+	field->SetEventHandler(*eventHandler);
 }

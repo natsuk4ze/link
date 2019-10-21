@@ -45,6 +45,8 @@ namespace Field::Model
 		//ƒŠƒ“ƒNƒŒƒxƒ‹‰ÁZˆ—
 		void AddLinkLevel(int num);
 
+		const PlaceModel* GetPlace();
+
 	private:
 		static const float BaseDepatureNum;		//Šî€‚Æ‚È‚éo”­”
 
