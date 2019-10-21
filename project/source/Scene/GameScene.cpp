@@ -26,6 +26,7 @@
 #include "GameState/GameIdle.h"
 #include "GameState/GameFinish.h"
 #include "GameState/GameLevelUp.h"
+#include "GameState\/GamePause.h"
 
 #include "../FieldObject/Actor/BridgeActor.h"
 
@@ -64,6 +65,7 @@ void GameScene::Init()
 	fsm[State::Idle] = new GameIdle();
 	fsm[State::Finish] = new GameFinish();
 	fsm[State::LevelUp] = new GameLevelUp();
+	fsm[State::Pause] = new GamePause();
 
 	//デリゲートを作成して設定
 	onBuildRoad = DelegateObject<GameScene, void(Route&)>::Create(this, &GameScene::OnBuildRoad);
@@ -123,6 +125,7 @@ void GameScene::Update()
 
 	//ビューワパラメータをビューワに渡す
 	GameViewerParam param;
+	param.remainTime = remainTime / 30.0f;
 	field->EmbedViewerParam(param);
 	gameViewer->ReceiveParam(param);
 
@@ -131,6 +134,15 @@ void GameScene::Update()
 
 	//パーティクル更新
 	particleManager->Update();
+
+	Debug::Begin("EventHandler");
+	if (Debug::Button("Pause"))
+		eventHandler->PauseGame();
+	if (Debug::Button("Resume"))
+		eventHandler->ResumeGame();
+	if (Debug::Button("GetTownPos"))
+		eventHandler->GetNewTownPosition();
+	Debug::End();
 }
 
 /**************************************
