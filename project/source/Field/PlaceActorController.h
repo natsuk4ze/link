@@ -18,6 +18,7 @@
 前方宣言
 ***************************************/
 class PlaceActor;
+class TaskHandle;
 namespace Field::Model
 {
 	class PlaceModel;
@@ -42,12 +43,16 @@ namespace Field::Actor
 		PlaceActorController();
 		~PlaceActorController();
 
+		//更新処理、描画処理
 		void Update();
 		void Draw();
 
-		void SetActor(const Model::PlaceModel* place);
+		//アクター生成処理
+		void SetActor(const Model::PlaceModel* place, int delay = 0);
 		void SetActor(const RouteModelPtr routeModel);
 
+		//アクター切り替え処理
+		//既にアクターを生成している場合はこっちを呼ぶ
 		void ChangeActor(const Model::PlaceModel* place);
 		
 	private:
@@ -70,7 +75,10 @@ namespace Field::Actor
 
 		ActorContainer actorContainer;
 
-		void SetRoad(const Model::PlaceModel* place);
+		//タスクハンドルコンテナ
+		std::vector<TaskHandle> taskHandleContainer;
+
+		void SetRoad(const Model::PlaceModel* place, int delay);
 		void SetTown(const Model::PlaceModel* place);
 		void SetRiver(const Model::PlaceModel* place);
 		void SetBridge(const Model::PlaceModel* place);
