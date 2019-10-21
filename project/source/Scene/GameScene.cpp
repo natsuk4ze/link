@@ -135,12 +135,13 @@ void GameScene::Update()
 	//パーティクル更新
 	particleManager->Update();
 
-	Debug::Begin("SceneState");
+	Debug::Begin("EventHandler");
 	if (Debug::Button("Pause"))
 		eventHandler->PauseGame();
 	if (Debug::Button("Resume"))
 		eventHandler->ResumeGame();
-
+	if (Debug::Button("GetTownPos"))
+		eventHandler->GetNewTownPosition();
 	Debug::End();
 }
 
