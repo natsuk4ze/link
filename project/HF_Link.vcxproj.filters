@@ -175,6 +175,7 @@
     <ClInclude Include="source\Event\PlusEvent\LinkLevelUpEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\AllLinkLevelUpEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\TimeRecoveryEvent.h" />
+    <ClInclude Include="source\Field\FieldEventHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -333,6 +334,7 @@
     <ClCompile Include="source\Event\PlusEvent\LinkLevelUpEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\AllLinkLevelUpEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\TimeRecoveryEvent.cpp" />
+    <ClCompile Include="source\Field\FieldEventHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

@@ -16,6 +16,8 @@
 
 #include <vector>
 
+class FieldEventHandler;
+
 namespace Field
 {
 	/**************************************
@@ -78,7 +80,7 @@ namespace Field
 		void EmbedViewerParam(GameViewerParam& param);
 
 		//道作成時のデリゲータ設定処理
-		void SetCallbackOnBuildRoad(DelegatePtr<std::vector<Model::PlaceModel*>&> callback);
+		void SetCallbackOnBuildRoad(Delegate<void(std::vector<Model::PlaceModel*>&)> *callback);
 
 		//レベルアップするべきかどうか
 		bool ShouldLevelUp();
@@ -86,6 +88,10 @@ namespace Field
 		//制限時間が残っているか
 		bool IsTimeRemaining();
 
+		//イベントハンドラ設定処理
+		void SetEventHandler(::FieldEventHandler& handler);
+
+		/** 削除予定 **/
 		//イベント操作用のインターフェース
 		void AdjustLevelAI(float percent);			//AI発展レベルを調整
 		void AdjustAllLinkLevel(int num);			//街全体のリンクレベルを調整
@@ -98,14 +104,15 @@ namespace Field
 		void SealUsingItem(bool isSeal);			//ストック使用封印（引数 true:封印する false:封印を解除)
 		void RaiseTrafficJam(float bias);			//混雑度を上昇させる
 		void RecoveryRemainTime(int frame);			//制限時間を回復させる（フレーム単位）
+		/** **/
 
 	private:
 		static const float PlaceOffset;					//Placeの1マス毎のオフセット値
 		static const int InitFieldBorder;				//フィールド範囲の初期値
 		static const int InputLongWait;					//入力リピートの待機フレーム
 		static const int InputShortWait;				//入力リピートの待機フレーム
-		static const unsigned InitDevelopRiverStock;	//川開発ストックの初期数
-		static const unsigned InitDevelopMountainStock;	//山開発ストックの初期数
+		static const int InitDevelopRiverStock;	//川開発ストックの初期数
+		static const int InitDevelopMountainStock;	//山開発ストックの初期数
 		static const int DevelopmentInterval;			//AI発展レベルが上がるインターバル
 		static const float MaxDevelopmentLevelAI;		//AI発展レベルの最大値
 
@@ -122,10 +129,10 @@ namespace Field
 		int inputRepeatCnt;						//入力のリピートカウント
 		int cntFrame;							//フレームカウント
 		float developmentLevelAI;				//AI発展レベル
-		unsigned stockDevelopRiver;				//川開発アイテムストック
-		unsigned stockDevelopMountain;			//山開発アイテムストック
-		unsigned stockEDF;						//地球防衛軍のストック
-		unsigned stockInsurance;				//保険のストック
+		int stockDevelopRiver;				//川開発アイテムストック
+		int stockDevelopMountain;			//山開発アイテムストック
+		int stockEDF;						//地球防衛軍のストック
+		int stockInsurance;				//保険のストック
 		float developSpeedBonus;				//発展スピード増加ボーナス
 		int remainTime;						//制限時間
 
@@ -134,10 +141,10 @@ namespace Field
 		std::vector<ControllerState*> fsm;		//ステートマシン
 
 		//デリゲータ
-		DelegatePtr<const Model::PlaceModel*> onConnectTown;
-		DelegatePtr<const Model::PlaceModel*> onCreateJunction;
-		DelegatePtr<const Model::PlaceModel*> onChangePlaceType;
-		DelegatePtr<std::vector<Model::PlaceModel*>&> onBuildRoad;
+		Delegate<void(const Model::PlaceModel*)> *onConnectTown;
+		Delegate<void(const Model::PlaceModel*)> *onCreateJunction;
+		Delegate<void(const Model::PlaceModel*)> *onChangePlaceType;
+		Delegate<void(std::vector<Model::PlaceModel*>&)> *onBuildRoad;
 
 		//ステート切り替え
 		void ChangeState(State next);

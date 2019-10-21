@@ -23,7 +23,7 @@ namespace Field::Model
 	{
 	public:
 		//コンストラクタ、デストラクタ
-		RouteProcessor(DelegatePtr<const PlaceModel*> onChangePlaceType);
+		RouteProcessor(Delegate<void(const PlaceModel*)> *onChangePlaceType);
 		RouteProcessor() {}
 
 		//新しく作ったルートに対して隣接しているルートと連結させて加工する
@@ -37,7 +37,7 @@ namespace Field::Model
 
 	private:
 		//プレイスタイプを変化させた際のデリゲート
-		DelegatePtr<const PlaceModel*> onChangePlaceType;
+		Delegate<void(const PlaceModel*)> *onChangePlaceType;
 
 		void _ConnectWithEdge(RouteModelPtr& model, PlaceModel *place, RouteContainer& routeContainer);
 	};

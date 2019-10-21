@@ -10,13 +10,13 @@
 
 #include "../../Framework/BaseViewer.h"
 #include "../../../../Framework/Pattern/Delegate.h"
+#include "../../../../Framework/Pattern/Delegate.h"
 #include <vector>
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
 class TelopDrawer;
-template<class T> class DelegateBase;
 
 //*****************************************************************************
 // クラス定義
@@ -41,14 +41,14 @@ public:
 
 	void Update();
 	void Draw(void);
-	void Set(TelopID id, DelegateBase<void>* onFinish);
+	void Set(TelopID id, Delegate<void(void)> *onFinish);
 
 private:
 	TelopDrawer *text;
 	TelopDrawer *bg;
 
 	//再生終了通知
-	DelegateBase<void>* onFinish;
+	Delegate<void(void)> *onFinish;
 
 	//テキストのテクスチャ情報コンテナ
 	std::vector <LPDIRECT3DTEXTURE9> textTexContainer;

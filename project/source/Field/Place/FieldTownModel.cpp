@@ -98,4 +98,9 @@ namespace Field::Model
 	{
 		biasLinkLevel += num;
 	}
+
+	const PlaceModel * TownModel::GetPlace()
+	{
+		return place;
+	}
 }

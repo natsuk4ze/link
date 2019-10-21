@@ -14,6 +14,7 @@
 #include "Route\RouteModel.h"
 #include "Route\RouteProcessor.h"
 #include "PlaceActorController.h"
+#include "FieldEventHandler.h"
 
 #include "State/BuildRoad.h"
 #include "State/FieldControllerIdle.h"
@@ -37,8 +38,8 @@ namespace Field
 	const int FieldController::InitFieldBorder = 30;				//フィールド範囲の初期値
 	const int FieldController::InputLongWait = 15;					//入力リピートの待機フレーム
 	const int FieldController::InputShortWait = 5;					//入力リピートの待機フレーム
-	const unsigned FieldController::InitDevelopRiverStock = 10;		//川開発ストックの初期数
-	const unsigned FieldController::InitDevelopMountainStock = 10;	//山開発ストックの初期数
+	const int FieldController::InitDevelopRiverStock = 10;		//川開発ストックの初期数
+	const int FieldController::InitDevelopMountainStock = 10;	//山開発ストックの初期数
 	const int FieldController::DevelopmentInterval = 30;			//発展レベル上昇のインターバル
 	const float FieldController::MaxDevelopmentLevelAI = 9999.0f;	//AI発展レベルの最大値
 	
@@ -60,6 +61,9 @@ namespace Field
 		onCreateJunction(nullptr),
 		onChangePlaceType(nullptr)
 	{
+		using Model::PlaceContainer;
+		using Model::PlaceModel;
+
 		//インスタンス作成
 		cursor = new FieldCursor(PlaceOffset);
 		ground = new FieldGround();
@@ -74,9 +78,9 @@ namespace Field
 		fsm[State::Develop] = new UseItemState();
 
 		//デリゲート作成
-		onConnectTown = Delegate<Model::PlaceContainer, const Model::PlaceModel*>::Create(placeContainer, &Model::PlaceContainer::OnConnectedTown);
-		onCreateJunction = Delegate<Model::PlaceContainer, const Model::PlaceModel*>::Create(placeContainer, &Model::PlaceContainer::OnCreateJunction);
-		onChangePlaceType = Delegate<Actor::PlaceActorController, const Model::PlaceModel*>::Create(placeActController, &Actor::PlaceActorController::ChangeActor);
+		onConnectTown = DelegateObject<PlaceContainer, void(const PlaceModel*)>::Create(placeContainer, &PlaceContainer::OnConnectedTown);
+		onCreateJunction = DelegateObject<PlaceContainer, void(const PlaceModel*)>::Create(placeContainer, &PlaceContainer::OnCreateJunction);
+		onChangePlaceType = DelegateObject<Actor::PlaceActorController, void(const PlaceModel*)>::Create(placeActController, &Actor::PlaceActorController::ChangeActor);
 
 		//ルートプロセッサ作成
 		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
@@ -249,7 +253,7 @@ namespace Field
 	/**************************************
 	道作成時のデリゲータ設定処理
 	***************************************/
-	void FieldController::SetCallbackOnBuildRoad(DelegatePtr<std::vector<Model::PlaceModel*>&> callback)
+	void FieldController::SetCallbackOnBuildRoad(Delegate<void(std::vector<Model::PlaceModel*>&)> *callback)
 	{
 		onBuildRoad = callback;
 	}
@@ -268,6 +272,108 @@ namespace Field
 	bool FieldController::IsTimeRemaining()
 	{
 		return remainTime != 0;
+	}
+
+	/**************************************
+	イベントハンドラ作成処理
+	***************************************/
+	void FieldController::SetEventHandler(::FieldEventHandler& handler)
+	{
+		using Handler = ::FieldEventHandler;
+
+		//AI発展レベル調整ファンクタ
+		handler.functerFloat[Handler::FuncterID_float::AdjustAI] = [&](float percent)
+		{
+			float delta = developmentLevelAI * percent;
+			developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + delta);
+		};
+
+		//AI発展レベル加算ファンクタ
+		handler.functerFloat[Handler::FuncterID_float::AddAI] = [&](float num)
+		{
+			developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + num);
+		};
+
+		//全体リンクレベル調整ファンクタ
+		handler.functerInt[Handler::FuncterID_int::AdjustLinkAll] = [&](int num)
+		{
+			placeContainer->AddAllLinkLevel(num);
+		};
+
+		//単体リンクレベル調整ファンクタ
+		handler.functerInt[Handler::FuncterID_int::AdjustLink] = [&](int num)
+		{
+			placeContainer->AddLinkLevel(num);
+		};
+
+		//アイテムストック加算ファンクタ
+		handler.functerInt[Handler::FuncterID_int::AddStock] = [&](int num)
+		{
+			stockDevelopMountain = Math::Clamp(0, 50, stockDevelopMountain + num);
+			stockDevelopRiver = Math::Clamp(0, 50, stockDevelopRiver + num);
+		};
+
+		//発展倍率付与ファンクタ
+		handler.functerFloat[Handler::FuncterID_float::SetDevBonus] = [&](float percent)
+		{
+			developSpeedBonus = percent;
+		};
+
+		//街作成ファンクタ
+		handler.functerPlace[Handler::FuncterID_Place::Create] = [&](auto place)
+		{
+			//後で作る
+		};
+
+		//操作反転処理
+		handler.functerBool[Handler::FuncterID_bool::ReverseOpe] = [&](bool isReverse)
+		{
+			//後で作る
+		};
+
+		//ストック封印処理
+		handler.functerBool[Handler::FuncterID_bool::SealItem] = [&](bool isSeal)
+		{
+			//後で作る
+		};
+
+		//混雑度調整処理
+		handler.functerFloat[Handler::FuncterID_float::AdjustTraffic] = [&](float bias)
+		{
+			placeContainer->SetTrafficjamBias(bias);
+		};
+
+		//EDFストック使用処理
+		handler.functerBoolReturn[Handler::FuncterID_boolReturn::TryEDF] = [&]()
+		{
+			if (stockEDF <= 0)
+				return false;
+
+			stockEDF--;
+			return true;
+		};
+
+		//保険ストック使用処理
+		handler.functerBoolReturn[Handler::FuncterID_boolReturn::TryInsurance] = [&]()
+		{
+			if (stockInsurance <= 0)
+				return false;
+
+			stockInsurance--;
+			return true;
+		};
+
+		//破壊対象の街取得処理
+		handler.functerPlaceReturn[Handler::FuncterID_PlaceReturn::DestroyTarget] = [&]()
+		{
+			return placeContainer->GetDestroyTarget();
+		};
+
+		//街作成予定地の取得処理
+		handler.functerPlaceReturn[Handler::FuncterID_PlaceReturn::PlacePosition] = [&]()
+		{
+			return placeContainer->GetNonePlace();
+		};
 	}
 
 	/**************************************
@@ -301,9 +407,9 @@ namespace Field
 	***************************************/
 	void FieldController::AddStockItem(int num)
 	{
-		unsigned StockMax = 50;
-		stockDevelopMountain = Math::Clamp((unsigned)0, StockMax, stockDevelopMountain + num);
-		stockDevelopRiver = Math::Clamp((unsigned)0, StockMax, stockDevelopRiver + num);
+		//unsigned StockMax = 50;
+		//stockDevelopMountain = Math::Clamp((unsigned)0, StockMax, stockDevelopMountain + num);
+		//stockDevelopRiver = Math::Clamp((unsigned)0, StockMax, stockDevelopRiver + num);
 	}
 
 	/**************************************
@@ -498,7 +604,7 @@ namespace Field
 		container.assign(start.base(), end);
 
 		//ストックが足りていれば開拓
-		unsigned cntMountain = container.size();
+		int cntMountain = container.size();
 		if (cntMountain <= stockDevelopMountain)
 		{
 			for (auto&& place : container)
@@ -571,7 +677,7 @@ namespace Field
 		riverVector.assign(river, end);
 
 		//ストックが足りていれば開拓
-		unsigned cntRiver = riverVector.size();
+		int cntRiver = riverVector.size();
 		if (cntRiver <= stockDevelopRiver)
 		{
 			Adjacency inverseStartAdjacency = GetInverseSide(startAdjacency);
