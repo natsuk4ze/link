@@ -327,6 +327,46 @@ namespace Field::Model
 	}
 
 	/**************************************
+	破壊対象プレイス取得処理
+	***************************************/
+	const PlaceModel * Field::Model::PlaceContainer::GetDestroyTarget()
+	{
+		//NOTE:取り急ぎ作った。あとできれいに治す
+		int randomIndex = Math::RandomRange(0, (int)(townContainer.size()));
+		int index = 0;
+		for (auto&& town : townContainer)
+		{
+			if (index++ != randomIndex)
+				continue;
+
+			return town.second->GetPlace();
+		}
+
+		return nullptr;
+	}
+
+	/**************************************
+	街を作れるプレイス取得処理
+	***************************************/
+	const PlaceModel * Field::Model::PlaceContainer::GetNonePlace()
+	{
+		//NOTE:取り急ぎ作った。あとできれいに治す
+		int randomIndex = Math::RandomRange(0, (int)(placeVector.size()));
+		int index = 0;
+		for (auto&& place : placeVector)
+		{
+			if (!place->IsType(PlaceType::None))
+				continue;
+
+			index++;
+			if (index == randomIndex)
+				return place;
+		}
+
+		return nullptr;
+	}
+
+	/**************************************
 	隣接情報作成
 	***************************************/
 	void PlaceContainer::MakeAdjacency()

@@ -13,14 +13,15 @@
 /**************************************
 コンストラクタ
 ***************************************/
-FieldEventHandler::FieldEventHandler() :
-	_DestroyTown(nullptr), _GetDestoryTarget(nullptr)
+FieldEventHandler::FieldEventHandler()
 {
 	functerInt.resize(FuncterID_int::FuncterIntMax, nullptr);
 	functerFloat.resize(FuncterID_float::FuncterFloatMax, nullptr);
 	functerBool.resize(FuncterID_bool::FuncterBoolMax, nullptr);
 	functerBoolReturn.resize(FuncterID_boolReturn::FuncterBoolReturnMax, nullptr);
 	functerVoid.resize(FuncterID_void::FuncterVoidMax, nullptr);
+	functerPlaceReturn.resize(FuncterID_PlaceReturn::FuncterPlaceReturnMax, nullptr);
+	functerPlace.resize(FuncterID_Place::FuncterPlaceMax, nullptr);
 }
 
 /**************************************
@@ -32,6 +33,7 @@ FieldEventHandler::~FieldEventHandler()
 	functerFloat.clear();
 	functerBool.clear();
 	functerBoolReturn.clear();
+	functerPlace.clear();
 }
 
 /**************************************
@@ -85,9 +87,9 @@ void FieldEventHandler::SetDevelopBonus(float percent)
 /**************************************
 新しい街生成
 ***************************************/
-void FieldEventHandler::CreateNewTown()
+void FieldEventHandler::CreateNewTown(const Field::Model::PlaceModel* place)
 {
-	functerVoid[FuncterID_void::Create]();
+	functerPlace[FuncterID_Place::Create](place);
 }
 
 /**************************************
@@ -95,7 +97,7 @@ void FieldEventHandler::CreateNewTown()
 ***************************************/
 void FieldEventHandler::DestroyTown(const Field::Model::PlaceModel * place)
 {
-	_DestroyTown(place);
+	functerPlace[FuncterID_Place::Destroy](place);
 }
 
 /**************************************
@@ -167,5 +169,13 @@ void FieldEventHandler::ResumeGame()
 ***************************************/
 const Field::Model::PlaceModel * FieldEventHandler::GetDestroyTarget()
 {
-	return _GetDestoryTarget();
+	return functerPlaceReturn[FuncterID_PlaceReturn::DestroyTarget]();
+}
+
+/**************************************
+新しく街を作るPlace取得処理
+***************************************/
+const Field::Model::PlaceModel * FieldEventHandler::GetNewTownPosition()
+{
+	return functerPlaceReturn[FuncterID_PlaceReturn::PlacePosition]();
 }

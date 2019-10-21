@@ -37,6 +37,7 @@ class TextViewer;
 class GameViewer;
 class EventController;
 class GameParticleManager;
+class FieldEventHandler;
 
 /**************************************
 クラス定義
@@ -58,6 +59,7 @@ public:
 		Idle,
 		Finish,
 		LevelUp,
+		Pause,
 		Max
 	};
 
@@ -78,9 +80,12 @@ private:
 	GameViewer *gameViewer;						//ゲームビュアー
 	EventController *eventController;			//イベントコントローラー
 	GameParticleManager *particleManager;		//パーティクルマネージャ
+	FieldEventHandler* eventHandler;			//イベントハンドラ
+
+	int remainTime;								//制限時間
 
 	//デリゲータ
-	Delegate<void(Route&)> *onBuildRoad;	//道を生成したときのデリゲータ
+	Delegate<void(Route&)> *onBuildRoad;		//道を生成したときのデリゲータ
 
 	//イベントコントローラへのPlace受け渡し処理
 	void OnBuildRoad(Route& route);
@@ -88,14 +93,14 @@ private:
 	//レベルアップ処理
 	void OnLevelUp();
 
+	//イベントハンドラ設定処理
+	void SetEventHandler();
+
 	//各ステートクラス
 	class GameInit;
 	class GameIdle;
 	class GameFinish;
 	class GameLevelUp;
-
-	//イベントハンドラクラス
-	class FieldEventHandler;
 
 	PlaceActor* testActor;
 

@@ -57,6 +57,9 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	//CSVデータをロード
 	entity.field->Load();
 
+	//イベントハンドラ設定
+	entity.SetEventHandler();
+
 	//トランジション画面をオフにして遷移
 	TransitionController::Instance()->SetTransition(true, TransitionType::HexaPop, [&]()
 	{

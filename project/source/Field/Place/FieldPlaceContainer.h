@@ -74,6 +74,12 @@ namespace Field::Model
 		//混雑度増加バイアスを設定
 		void SetTrafficjamBias(float bias);
 
+		//破壊対象のプレイス取得
+		const PlaceModel* GetDestroyTarget();
+
+		//街を作れるプレイス取得
+		const PlaceModel* GetNonePlace();
+
 #ifdef DEBUG_PLACEMODEL
 		void DrawDebug();
 #endif

@@ -41,7 +41,7 @@ public:
 	void AdjustLinkLevel(int num);								//街一つのリンクレベル調整処理
 	void AddStockNum(int num);									//アイテムストック加算処理
 	void SetDevelopBonus(float percent);						//発展度ボーナス設定処理
-	void CreateNewTown();										//新しい街作成処理
+	void CreateNewTown(const Field::Model::PlaceModel* place);	//新しい街作成処理
 	void DestroyTown(const Field::Model::PlaceModel* place);	//街破壊処理
 	void ReverseOperation(bool isReverse);						//操作反転処理
 	void SealUsingItem(bool isSeal);							//アイテムストック封印処理
@@ -52,6 +52,7 @@ public:
 	void PauseGame();											//ゲーム中断処理
 	void ResumeGame();											//ゲーム再開処理
 	const Field::Model::PlaceModel* GetDestroyTarget();			//破壊対象の街取得処理
+	const Field::Model::PlaceModel* GetNewTownPosition();		//新しく街を作る予定のPlace取得
 
 private:
 	//float型を引数にとるファンクタの通し番号
@@ -95,8 +96,23 @@ private:
 	{
 		Pause,
 		Resume,
-		Create,
 		FuncterVoidMax
+	};
+
+	//PlaceModelを返すファンクタの通し番号
+	enum FuncterID_PlaceReturn
+	{
+		DestroyTarget,
+		PlacePosition,
+		FuncterPlaceReturnMax
+	};
+
+	//PlaceModelを引数にとるファンクタの通し番号
+	enum FuncterID_Place
+	{
+		Destroy,
+		Create,
+		FuncterPlaceMax
 	};
 
 	std::vector<std::function<void(float)>> functerFloat;
@@ -104,9 +120,8 @@ private:
 	std::vector<std::function<void(bool)>> functerBool;
 	std::vector<std::function<bool(void)>> functerBoolReturn;
 	std::vector<std::function<void(void)>> functerVoid;
-
-	std::function<void(const Field::Model::PlaceModel*)> _DestroyTown;
-	std::function<const Field::Model::PlaceModel*(void)> _GetDestoryTarget;
+	std::vector<std::function<const Field::Model::PlaceModel*(void)>> functerPlaceReturn;
+	std::vector<std::function<void(const Field::Model::PlaceModel*)>> functerPlace;
 
 	friend class GameScene;
 	friend class Field::FieldController;
