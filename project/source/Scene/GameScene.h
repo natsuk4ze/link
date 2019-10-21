@@ -94,6 +94,9 @@ private:
 	class GameFinish;
 	class GameLevelUp;
 
+	//イベントハンドラクラス
+	class FieldEventHandler;
+
 	PlaceActor* testActor;
 
 	//デバッグ用フィールドレベル
