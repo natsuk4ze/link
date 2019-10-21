@@ -10,7 +10,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-const int AILevelUpNum = 1;
+const float UpPercent = 0.1f;
 
 //*****************************************************************************
 // スタティック変数宣言
@@ -38,7 +38,7 @@ AILevelUpEvent::~AILevelUpEvent()
 //=============================================================================
 void AILevelUpEvent::Update()
 {
-	fieldController->AdjustLevelAI(AILevelUpNum);
+	fieldEventHandler->AdjustLevelAI(UpPercent);
 	UseFlag = false;
 }
 

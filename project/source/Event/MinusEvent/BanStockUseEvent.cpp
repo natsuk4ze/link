@@ -23,7 +23,7 @@
 BanStockUseEvent::BanStockUseEvent(int RemainTime) : RemainTime(RemainTime)
 {
 	// ストック使用封印
-	fieldController->SealUsingItem(true);
+	fieldEventHandler->SealUsingItem(true);
 }
 
 //=============================================================================
@@ -43,7 +43,7 @@ void BanStockUseEvent::Update()
 	if (RemainTime <= 0)
 	{
 		// 封印解除
-		fieldController->SealUsingItem(false);
+		fieldEventHandler->SealUsingItem(false);
 		UseFlag = false;
 	}
 }

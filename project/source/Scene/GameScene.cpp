@@ -53,10 +53,10 @@ void GameScene::Init()
 	field = new Field::FieldController();
 	text = new TextViewer("M+ 2c heavy", 50);
 	gameViewer = new GameViewer();
-	eventController = new EventController(Field::Model::City);
-	eventController->ReceiveFieldController(field);
-	particleManager = GameParticleManager::Instance();
 	eventHandler = new FieldEventHandler();
+	eventController = new EventController(Field::Model::City);
+	eventController->ReceiveFieldEventHandler(eventHandler);
+	particleManager = GameParticleManager::Instance();
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);

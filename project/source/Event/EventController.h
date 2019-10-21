@@ -9,7 +9,8 @@
 
 #include "EventBase.h"
 #include "../Viewer/GameScene/EventViewer/EventViewer.h"
-#include "../Field/Place/FieldPlaceModel.h"
+#include "../Field/FieldConfig.h"
+#include "../Field/FieldEventHandler.h"
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -41,7 +42,7 @@ public:
 	void Update(void);
 	void Draw(void);
 	void CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& route, int FieldLevel);
-	void ReceiveFieldController(Field::FieldController *Ptr);
+	void ReceiveFieldEventHandler(FieldEventHandler *Ptr);
 };
 
 #endif

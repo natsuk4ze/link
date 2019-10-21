@@ -73,7 +73,7 @@ void CityDestroyEvent::Update()
 	}
 	else
 	{
-		fieldController->DestroyTown();
+		//fieldEventHandler->DestroyTown();
 		this->UseFlag = false;
 	}
 }

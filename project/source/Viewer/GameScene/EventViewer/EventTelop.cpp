@@ -202,13 +202,15 @@ void EventTelop::Play()
 			text->currentAnim = 0;
 			text->position = initPos;
 			text->isPlaying = false;
-		}
-		if (text->currentAnim > animMax)
-		{
 			bg->isPlaying = false;
 
 			//再生終了の通知
-			(*onFinish)();
+			//(*onFinish)();
+			FinishFunc();
+		}
+		if (text->currentAnim > animMax)
+		{
+
 		}
 	}
 }
@@ -236,5 +238,6 @@ void EventTelop::Set(TelopID id, std::function<void(void)> FinishFunc)
 	bg->isPlaying = true;
 
 	//テロップ再生終了通知
-	this->onFinish = onFinish;
+	//this->onFinish = onFinish;
+	this->FinishFunc = FinishFunc;
 }

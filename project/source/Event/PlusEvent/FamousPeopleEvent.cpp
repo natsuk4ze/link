@@ -10,7 +10,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-const float SpeedBonusNum = 1.5f;
+const float BonusNum = 1.5f;
 
 //*****************************************************************************
 // スタティック変数宣言
@@ -22,7 +22,7 @@ const float SpeedBonusNum = 1.5f;
 //=============================================================================
 FamousPeopleEvent::FamousPeopleEvent(int RemainTime) : RemainTime(RemainTime)
 {
-	fieldController->SetDevelopSpeedBonus(SpeedBonusNum);
+	fieldEventHandler->SetDevelopBonus(BonusNum);
 }
 
 //=============================================================================
@@ -42,7 +42,7 @@ void FamousPeopleEvent::Update()
 	if (RemainTime <= 0)
 	{
 		// ボーナス停止処理
-		fieldController->SetDevelopSpeedBonus(1.0f);
+		fieldEventHandler->SetDevelopBonus(1.0f);
 
 		UseFlag = false;
 	}

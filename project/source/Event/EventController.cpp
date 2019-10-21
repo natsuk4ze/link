@@ -26,6 +26,8 @@
 #include "../../Framework/Camera/CameraTranslationPlugin.h"
 #include "../../Framework/Camera/CameraShakePlugin.h"
 
+#include "../Field/Place/FieldPlaceModel.h"
+
 #include <fstream>
 
 #if _DEBUG
@@ -212,9 +214,7 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					Ptr = new LinkLevelUpEvent();
 					break;
 				case NewCity:
-					Ptr = new NewCityEvent();
-					eventViewer->SetEventTelop(PositiveEvent01,
-						[]() {Camera::TranslationPlugin::Instance()->Move(Vector3::Zero, 30); });
+					Ptr = new NewCityEvent(eventViewer);
 					break;
 				case StockRecovery:
 					Ptr = new StockRecoveryEvent();
@@ -274,7 +274,7 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 //=============================================================================
 // FieldController‚Ìƒ|ƒCƒ“ƒ^‚ðŽó‚¯Žæ‚é
 //=============================================================================
-void EventController::ReceiveFieldController(Field::FieldController *Ptr)
+void EventController::ReceiveFieldEventHandler(FieldEventHandler *Ptr)
 {
-	EventBase::ReceiveFieldController(Ptr);
+	EventBase::ReceiveFieldEventHandler(Ptr);
 }

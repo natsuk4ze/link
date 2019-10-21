@@ -50,6 +50,7 @@ private:
 
 	//再生終了通知
 	Delegate<void(void)> *onFinish;
+	std::function<void(void)> FinishFunc;
 
 	//テキストのテクスチャ情報コンテナ
 	std::vector <LPDIRECT3DTEXTURE9> textTexContainer;
