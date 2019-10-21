@@ -12,6 +12,7 @@
 #include "../FieldObject/Actor/CityActor.h"
 #include "../Field/Place/PlaceConfig.h"
 #include "../Effect/TestParticleManager.h"
+#include "../../Framework/Tool/DebugWindow.h"
 
 /**************************************
 ‰Šú‰»ˆ—
@@ -77,7 +78,16 @@ void ParticleTestScene::Draw()
 
 	skybox->Draw();
 	ground->Draw();
-	actor->Draw();
+
+	static bool drawableActor = true;
+	
+	Debug::Begin("DrawActor");
+	if (Debug::Button("Switch"))
+		drawableActor = !drawableActor;
+	Debug::End();
+
+	if(drawableActor)
+		actor->Draw();
 
 	particleManager->Draw();
 }

@@ -21,6 +21,7 @@ namespace TestParticle
 	{
 		BlueSpark,
 		BlueDebris,
+		WhiteSmog,
 		Max
 	};
 }

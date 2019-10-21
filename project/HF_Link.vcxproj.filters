@@ -177,6 +177,7 @@
     <ClInclude Include="source\Event\PlusEvent\TimeRecoveryEvent.h" />
     <ClInclude Include="source\Field\FieldEventHandler.h" />
     <ClInclude Include="source\Scene\GameState\GamePause.h" />
+    <ClInclude Include="source\Effect\Game\WhiteSmog.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -337,6 +338,7 @@
     <ClCompile Include="source\Event\PlusEvent\TimeRecoveryEvent.cpp" />
     <ClCompile Include="source\Field\FieldEventHandler.cpp" />
     <ClCompile Include="source\Scene\GameState\GamePause.cpp" />
+    <ClCompile Include="source\Effect\Game\WhiteSmog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
