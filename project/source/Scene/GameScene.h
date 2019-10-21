@@ -101,6 +101,7 @@ private:
 	class GameIdle;
 	class GameFinish;
 	class GameLevelUp;
+	class GamePause;
 
 	PlaceActor* testActor;
 
