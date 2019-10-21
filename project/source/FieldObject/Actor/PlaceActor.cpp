@@ -44,8 +44,8 @@ PlaceActor::~PlaceActor()
 //=====================================
 void PlaceActor::Update()
 {
-	if (!CheckOnCamera())
-		return;
+	// カリング判定
+	onCamera = Camera::MainCamera()->GetViewFrustrum().CheckOnCamera(transform->GetPosition());
 
 #if _DEBUG
 	Debug();
@@ -99,37 +99,6 @@ void PlaceActor::ResetTransform()
 	transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	transform->SetScale(ActorScale);
 	transform->SetRotation(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-}
-
-//=====================================
-// カメラ内判定
-//=====================================
-bool PlaceActor::CheckOnCamera()
-{
-	D3DXVECTOR3 obj = transform->GetPosition();
-
-	for (int i = 0; i < 4; i++)
-	{
-		D3DXVECTOR3 nor = Camera::MainCamera()->GetViewFrustrum().GetNormal(ViewFrustrum::Surface(i));
-		D3DXVECTOR3 vec = obj - Camera::MainCamera()->GetViewFrustrum().GetSurfacePoint(ViewFrustrum::Surface(i));
-
-		// 視錐台の法線と、視錐台からオブジェクトへのベクトルから内積計算
-		float dot = D3DXVec3Dot(&nor, &vec);
-
-		if (dot > 0)
-		{
-			onCamera = true;
-		}
-		else
-		{
-			// 1つでもfalseならリターン
-			onCamera = false;
-			break;
-		}
-
-	}
-
-	return onCamera;
 }
 
 //=====================================

@@ -41,6 +41,9 @@ public:
 	// 面上のある一点を取得
 	D3DXVECTOR3 GetSurfacePoint(Surface surfaceID);
 
+	// 視錐台カリング
+	bool CheckOnCamera(const D3DXVECTOR3 pos);
+
 	//頂点設定処理
 	void SetVertex(
 		const D3DXVECTOR3& NearLeftTop, const D3DXVECTOR3& NearRightTop,

@@ -106,3 +106,32 @@ D3DXVECTOR3 ViewFrustrum::GetSurfacePoint(Surface surfaceID)
 
 	return ret;
 }
+
+/**************************************
+視錐台カリング
+***************************************/
+bool ViewFrustrum::CheckOnCamera(const D3DXVECTOR3 pos)
+{
+	bool ret = false;
+
+	for (int i = 0; i < 4; i++)
+	{
+		D3DXVECTOR3 nor = GetNormal(Surface(i));
+		D3DXVECTOR3 vec = pos - GetSurfacePoint(Surface(i));
+
+		// 視錐台の法線と、視錐台からオブジェクトへのベクトルから内積計算
+		float dot = D3DXVec3Dot(&nor, &vec);
+
+		if (dot > 0)
+		{
+			ret = true;
+		}
+		else
+		{
+			ret = false;
+			break;
+		}
+	}
+
+	return ret;
+}
