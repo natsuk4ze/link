@@ -178,6 +178,7 @@
     <ClInclude Include="source\Scene\GameState\GameIdle.h" />
     <ClInclude Include="source\Scene\GameState\GameInit.h" />
     <ClInclude Include="source\Scene\GameState\GameLevelUp.h" />
+    <ClInclude Include="source\Scene\GameState\GamePause.h" />
     <ClInclude Include="source\Scene\ParticleTestScene.h" />
     <ClInclude Include="source\Scene\ResultScene.h" />
     <ClInclude Include="source\Scene\TitleScene.h" />
@@ -339,6 +340,7 @@
     <ClCompile Include="source\Scene\GameState\GameIdle.cpp" />
     <ClCompile Include="source\Scene\GameState\GameInit.cpp" />
     <ClCompile Include="source\Scene\GameState\GameLevelUp.cpp" />
+    <ClCompile Include="source\Scene\GameState\GamePause.cpp" />
     <ClCompile Include="source\Scene\ParticleTestScene.cpp" />
     <ClCompile Include="source\Scene\ResultScene.cpp" />
     <ClCompile Include="source\Scene\TitleScene.cpp" />
