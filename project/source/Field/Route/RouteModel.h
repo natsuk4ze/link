@@ -22,7 +22,7 @@ namespace Field::Model
 	class RouteModel;
 
 	using RouteModelPtr = std::shared_ptr<RouteModel>;
-	using DelegatePlace = DelegatePtr<const PlaceModel*>;
+	using DelegatePlace = Delegate<void(const PlaceModel*)>;
 	
 	/**************************************
 	隣接ルート情報
@@ -46,11 +46,11 @@ namespace Field::Model
 		friend class RouteProcessor;
 	public:
 		//コンストラクタ
-		RouteModel(DelegatePlace onConnectTown, DelegatePlace onCreateJunction);
+		RouteModel(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction);
 
 		//Create関数でこのクラスのshared_ptrを作成させる
-		static RouteModelPtr Create(DelegatePlace onConnectTown, DelegatePlace onCreateJunction);
-		static RouteModelPtr Create(DelegatePlace onConnectTown, DelegatePlace onCreateJunction, const std::vector<PlaceModel*>& placeVector);
+		static RouteModelPtr Create(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction);
+		static RouteModelPtr Create(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction, const std::vector<PlaceModel*>& placeVector);
 
 		//デストラクタ
 		~RouteModel();		//所属を離脱
@@ -98,8 +98,8 @@ namespace Field::Model
 
 		bool isUnused;								//使用判定
 
-		DelegatePtr<const PlaceModel*> onConnectedTown;	//街と道が繋がったときのデリゲータ
-		DelegatePtr<const PlaceModel*> onCreateJunction;	//交差点を作ったときのデリゲータ
+		Delegate<void(const PlaceModel*)> *onConnectedTown;	//街と道が繋がったときのデリゲータ
+		Delegate<void(const PlaceModel*)> *onCreateJunction;	//交差点を作ったときのデリゲータ
 
 		void _SetEdge(PlaceModel* place);			//端点設定内部処理
 	};

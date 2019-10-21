@@ -64,7 +64,7 @@ void GameScene::Init()
 	fsm[State::LevelUp] = new GameLevelUp();
 
 	//デリゲートを作成して設定
-	onBuildRoad = Delegate<GameScene, Route&>::Create(this, &GameScene::OnBuildRoad);
+	onBuildRoad = DelegateObject<GameScene, void(Route&)>::Create(this, &GameScene::OnBuildRoad);
 	field->SetCallbackOnBuildRoad(onBuildRoad);
 
 	//ステート初期化

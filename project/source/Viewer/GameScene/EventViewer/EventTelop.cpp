@@ -225,7 +225,7 @@ void EventTelop::PassTexture(TelopID id)
 //=============================================================================
 // テロップセット処理
 //=============================================================================
-void EventTelop::Set(TelopID id, DelegateBase<void>* onFinish)
+void EventTelop::Set(TelopID id, Delegate<void(void)>* onFinish)
 {
 	//テクスチャ情報受け渡し
 	PassTexture(id);

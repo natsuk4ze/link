@@ -29,7 +29,7 @@ namespace Field::Model
 	/**************************************
 	コンストラクタ
 	***************************************/
-	RouteModel::RouteModel(DelegatePlace onConnectTown, DelegatePlace onCreateJunction) :
+	RouteModel::RouteModel(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction) :
 		edgeStart(nullptr), edgeEnd(nullptr),
 		uniqueID(incrementID++),
 		isUnused(false),
@@ -42,7 +42,7 @@ namespace Field::Model
 	/**************************************
 	スマートポインタ作成処理
 	***************************************/
-	RouteModelPtr RouteModel::Create(DelegatePlace onConnectTown, DelegatePlace onCreateJunction)
+	RouteModelPtr RouteModel::Create(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction)
 	{
 		RouteModelPtr ptr = std::make_shared<RouteModel>(onConnectTown, onCreateJunction);
 		return ptr;
@@ -51,7 +51,7 @@ namespace Field::Model
 	/**************************************
 	スマートポインタ作成処理
 	***************************************/
-	RouteModelPtr RouteModel::Create(DelegatePlace onConnectTown, DelegatePlace onCreateJunction, const std::vector<PlaceModel*>& placeVector)
+	RouteModelPtr RouteModel::Create(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction, const std::vector<PlaceModel*>& placeVector)
 	{
 		RouteModelPtr ptr = std::make_shared<RouteModel>(onConnectTown, onCreateJunction);
 

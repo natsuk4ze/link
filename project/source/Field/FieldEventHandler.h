@@ -9,7 +9,6 @@
 #define _FIELDEVENTHANDLER_H_
 
 #include "../../main.h"
-#include <functional>
 
 /**************************************
 ‘O•ûéŒ¾

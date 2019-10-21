@@ -78,7 +78,7 @@ namespace Field
 		void EmbedViewerParam(GameViewerParam& param);
 
 		//道作成時のデリゲータ設定処理
-		void SetCallbackOnBuildRoad(DelegatePtr<std::vector<Model::PlaceModel*>&> callback);
+		void SetCallbackOnBuildRoad(Delegate<void(std::vector<Model::PlaceModel*>&)> *callback);
 
 		//レベルアップするべきかどうか
 		bool ShouldLevelUp();
@@ -134,10 +134,10 @@ namespace Field
 		std::vector<ControllerState*> fsm;		//ステートマシン
 
 		//デリゲータ
-		DelegatePtr<const Model::PlaceModel*> onConnectTown;
-		DelegatePtr<const Model::PlaceModel*> onCreateJunction;
-		DelegatePtr<const Model::PlaceModel*> onChangePlaceType;
-		DelegatePtr<std::vector<Model::PlaceModel*>&> onBuildRoad;
+		Delegate<void(const Model::PlaceModel*)> *onConnectTown;
+		Delegate<void(const Model::PlaceModel*)> *onCreateJunction;
+		Delegate<void(const Model::PlaceModel*)> *onChangePlaceType;
+		Delegate<void(std::vector<Model::PlaceModel*>&)> *onBuildRoad;
 
 		//ステート切り替え
 		void ChangeState(State next);

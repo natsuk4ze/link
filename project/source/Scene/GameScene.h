@@ -80,7 +80,7 @@ private:
 	GameParticleManager *particleManager;		//パーティクルマネージャ
 
 	//デリゲータ
-	DelegatePtr<Route&> onBuildRoad;	//道を生成したときのデリゲータ
+	Delegate<void(Route&)> *onBuildRoad;	//道を生成したときのデリゲータ
 
 	//イベントコントローラへのPlace受け渡し処理
 	void OnBuildRoad(Route& route);

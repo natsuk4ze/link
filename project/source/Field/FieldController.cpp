@@ -60,6 +60,9 @@ namespace Field
 		onCreateJunction(nullptr),
 		onChangePlaceType(nullptr)
 	{
+		using Model::PlaceContainer;
+		using Model::PlaceModel;
+
 		//インスタンス作成
 		cursor = new FieldCursor(PlaceOffset);
 		ground = new FieldGround();
@@ -74,9 +77,9 @@ namespace Field
 		fsm[State::Develop] = new UseItemState();
 
 		//デリゲート作成
-		onConnectTown = Delegate<Model::PlaceContainer, const Model::PlaceModel*>::Create(placeContainer, &Model::PlaceContainer::OnConnectedTown);
-		onCreateJunction = Delegate<Model::PlaceContainer, const Model::PlaceModel*>::Create(placeContainer, &Model::PlaceContainer::OnCreateJunction);
-		onChangePlaceType = Delegate<Actor::PlaceActorController, const Model::PlaceModel*>::Create(placeActController, &Actor::PlaceActorController::ChangeActor);
+		onConnectTown = DelegateObject<PlaceContainer, void(const PlaceModel*)>::Create(placeContainer, &PlaceContainer::OnConnectedTown);
+		onCreateJunction = DelegateObject<PlaceContainer, void(const PlaceModel*)>::Create(placeContainer, &PlaceContainer::OnCreateJunction);
+		onChangePlaceType = DelegateObject<Actor::PlaceActorController, void(const PlaceModel*)>::Create(placeActController, &Actor::PlaceActorController::ChangeActor);
 
 		//ルートプロセッサ作成
 		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
@@ -249,7 +252,7 @@ namespace Field
 	/**************************************
 	道作成時のデリゲータ設定処理
 	***************************************/
-	void FieldController::SetCallbackOnBuildRoad(DelegatePtr<std::vector<Model::PlaceModel*>&> callback)
+	void FieldController::SetCallbackOnBuildRoad(Delegate<void(std::vector<Model::PlaceModel*>&)> *callback)
 	{
 		onBuildRoad = callback;
 	}
