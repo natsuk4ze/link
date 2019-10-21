@@ -38,9 +38,6 @@ namespace Field
 		//次のステート
 		State next = State::Build;
 
-		//制限時間の更新
-		entity.remainTime = Math::Max(0, --entity.remainTime);
-
 		//カーソル位置のプレイスを操作対象として追加
 		Model::PlaceModel* place = entity.GetPlace();
 		entity.operateContainer->AddRoute(place);

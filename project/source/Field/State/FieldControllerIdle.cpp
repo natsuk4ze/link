@@ -24,9 +24,6 @@ namespace Field
 	{
 		State next = State::Idle;
 
-		//制限時間の更新
-		entity.remainTime = Math::Max(0, --entity.remainTime);
-
 		//Zキーが押されたらBuildへ遷移
 		if (GetBuildTrigger())
 		{

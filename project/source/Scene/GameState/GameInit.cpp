@@ -60,6 +60,10 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	//イベントハンドラ設定
 	entity.SetEventHandler();
 
+	//制限時間読み込み
+	//TODO:シーンを跨いで引き継ぐようにする
+	entity.remainTime = 30 * 180;
+
 	//トランジション画面をオフにして遷移
 	TransitionController::Instance()->SetTransition(true, TransitionType::HexaPop, [&]()
 	{

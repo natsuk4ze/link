@@ -56,7 +56,6 @@ namespace Field
 		stockEDF(0),
 		stockInsurance(0),
 		developSpeedBonus(1.0f),
-		remainTime(30 * 180),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
 		onChangePlaceType(nullptr)
@@ -241,7 +240,6 @@ namespace Field
 	***************************************/
 	void FieldController::EmbedViewerParam(GameViewerParam & param)
 	{
-		param.remainTime = remainTime / 30.0f;
 		param.levelAI = (int)developmentLevelAI;
 		param.ratioLevel = (float)developmentLevelAI / MaxDevelopmentLevelAI;
 		param.stockBreakItem = stockDevelopMountain;
@@ -264,14 +262,6 @@ namespace Field
 	bool FieldController::ShouldLevelUp()
 	{
 		return developmentLevelAI >= MaxDevelopmentLevelAI;
-	}
-
-	/**************************************
-	レベルアップするかどうかの判定
-	***************************************/
-	bool FieldController::IsTimeRemaining()
-	{
-		return remainTime != 0;
 	}
 
 	/**************************************
@@ -461,14 +451,6 @@ namespace Field
 	{
 		//TODO：解除処理を実装する
 		placeContainer->SetTrafficjamBias(bias);
-	}
-
-	/**************************************
-	混雑度を上昇させる
-	***************************************/
-	void FieldController::RecoveryRemainTime(int frame)
-	{
-		remainTime += frame;
 	}
 
 	/**************************************
