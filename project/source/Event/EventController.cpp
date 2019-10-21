@@ -23,6 +23,8 @@
 
 #include "../../Framework/Core/Utility.h"
 #include "../../Framework/String/String.h"
+#include "../../Framework/Camera/CameraTranslationPlugin.h"
+#include "../../Framework/Camera/CameraShakePlugin.h"
 
 #include <fstream>
 
@@ -200,6 +202,7 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 		{
 			if (PlacePos.x == EventPlace->Pos.x && PlacePos.z == EventPlace->Pos.z)
 			{
+				Camera::TranslationPlugin* Test = Camera::TranslationPlugin::Instance();
 				EventBase* Ptr = nullptr;
 
 				// イベントインスタンス作成
@@ -210,6 +213,8 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					break;
 				case NewCity:
 					Ptr = new NewCityEvent();
+					eventViewer->SetEventTelop(PositiveEvent01,
+						[]() {Camera::TranslationPlugin::Instance()->Move(Vector3::Zero, 30); });
 					break;
 				case StockRecovery:
 					Ptr = new StockRecoveryEvent();

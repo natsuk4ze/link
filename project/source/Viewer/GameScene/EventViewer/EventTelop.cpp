@@ -139,7 +139,7 @@ void EventTelop::Update()
 
 	if (Keyboard::GetTrigger(DIK_T))
 	{
-		Set(PositiveEvent01, onFinish);
+		//Set(PositiveEvent01, onFinish);
 	}
 
 #endif
@@ -225,7 +225,8 @@ void EventTelop::PassTexture(TelopID id)
 //=============================================================================
 // テロップセット処理
 //=============================================================================
-void EventTelop::Set(TelopID id, Delegate<void(void)>* onFinish)
+//void EventTelop::Set(TelopID id, Delegate<void(void)>* onFinish)
+void EventTelop::Set(TelopID id, std::function<void(void)> FinishFunc)
 {
 	//テクスチャ情報受け渡し
 	PassTexture(id);

@@ -9,6 +9,7 @@
 
 #include <vector>
 #include <string>
+#include <functional>
 #include "EventTelop.h"
 
 //*****************************************************************************
@@ -30,6 +31,8 @@ public:
 	void Update(void);
 	void Draw(void);
 	void SetEventMessage(const std::string Message);
+	//void SetEventTelop(TelopID id, Delegate<void(void)> *onFinish);
+	void SetEventTelop(TelopID id, std::function<void(void)> FinishFunc = NULL);
 
 	std::vector <BaseViewer*> eventViewer;
 
