@@ -373,7 +373,7 @@ namespace Field::Actor
 		if (delay == 0)
 			ActorAnimation::FallAndExpantion(*actor, [=]()
 		{
-			GameParticleManager::Instance()->Generate(GameParticle::WhiteSmog, actorPos + PositionEmitSmog);
+			GameParticleManager::Instance()->Generate(GameParticle::ColorfulDebis, actorPos + PositionEmitSmog);
 		});
 
 		else
@@ -382,7 +382,7 @@ namespace Field::Actor
 			{
 				ActorAnimation::FallAndExpantion(*actor, [=]()
 				{
-					GameParticleManager::Instance()->Generate(GameParticle::WhiteSmog, actorPos + PositionEmitSmog);
+					GameParticleManager::Instance()->Generate(GameParticle::ColorfulDebis, actorPos + PositionEmitSmog);
 				});
 			});
 		}

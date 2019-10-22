@@ -177,6 +177,7 @@
     <ClInclude Include="source\Scene\GameState\GamePause.h" />
     <ClInclude Include="source\Effect\Game\WhiteSmog.h" />
     <ClInclude Include="Framework\PostEffect\BaseEffectController.h" />
+    <ClInclude Include="source\Effect\Game\ColorfulDebris.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -338,6 +339,7 @@
     <ClCompile Include="source\Effect\Game\WhiteSmog.cpp" />
     <ClCompile Include="Framework\Core\BaseScene.cpp" />
     <ClCompile Include="Framework\PostEffect\BaseEffectController.cpp" />
+    <ClCompile Include="source\Effect\Game\ColorfulDebris.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

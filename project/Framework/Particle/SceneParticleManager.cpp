@@ -101,7 +101,7 @@ void SceneParticleManager::Draw()
 
 	//リリース版のみクロスフィルタを適用する
 #ifndef _DEBUG	
-	//if (isDrewd)
+	if (isDrewd)
 		crossFilter->Draw(renderTexture);
 #endif
 
@@ -111,10 +111,6 @@ void SceneParticleManager::Draw()
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
-
-	Debug::Begin("Particle");
-	Debug::DrawTexture(renderTexture, { 200.0f, 100.0f });
-	Debug::End();
 }
 
 /**************************************
