@@ -20,10 +20,9 @@
 class CrossBlurFilter : public ScreenObject
 {
 public:
-	CrossBlurFilter();
+	CrossBlurFilter(DWORD width, DWORD height);
 	~CrossBlurFilter();
 	void DrawEffect(UINT pass);
-	void SetSurfaceSize(float width, float height);
 
 private:
 	LPD3DXEFFECT effect;

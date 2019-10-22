@@ -23,7 +23,8 @@
 /**************************************
 コンストラクタ
 ***************************************/
-SpikeNoise::SpikeNoise()
+SpikeNoise::SpikeNoise(DWORD width, DWORD height) :
+	ScreenObject(width, height)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 

@@ -23,7 +23,8 @@
 /**************************************
 コンストラクタ
 ***************************************/
-SpeedBlur::SpeedBlur()
+SpeedBlur::SpeedBlur(DWORD width, DWORD height) :
+	ScreenObject(height, width)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 

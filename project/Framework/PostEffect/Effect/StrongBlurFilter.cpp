@@ -25,7 +25,8 @@
 /**************************************
 コンストラクタ
 ***************************************/
-StrongBlurFilter::StrongBlurFilter()
+StrongBlurFilter::StrongBlurFilter(DWORD width, DWORD height) :
+	ScreenObject(width, height)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 

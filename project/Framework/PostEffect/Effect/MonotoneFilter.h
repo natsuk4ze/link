@@ -32,7 +32,7 @@ private:
 	static MonotoneFilter* instance;
 
 	//ƒVƒ“ƒOƒ‹ƒgƒ“‰»
-	MonotoneFilter();
+	MonotoneFilter(DWORD width, DWORD height);
 	~MonotoneFilter();
 	MonotoneFilter(const MonotoneFilter &) = delete;
 	MonotoneFilter(MonotoneFilter &&) = delete;

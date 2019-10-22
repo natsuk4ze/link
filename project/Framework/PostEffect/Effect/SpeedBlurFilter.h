@@ -20,7 +20,7 @@
 class SpeedBlur : public ScreenObject
 {
 public:
-	SpeedBlur();
+	SpeedBlur(DWORD width, DWORD height);
 	~SpeedBlur();
 	void DrawEffect();
 	void SetPower(float power);

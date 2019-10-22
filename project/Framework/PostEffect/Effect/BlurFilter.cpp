@@ -24,7 +24,8 @@
 /**************************************
 コンストラクタ
 ***************************************/
-BlurFilter::BlurFilter()
+BlurFilter::BlurFilter(DWORD width, DWORD height) :
+	ScreenObject(width, height)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	HRESULT res = D3DXCreateEffectFromFile(pDevice, (LPSTR)PRECOMPILEEFFECT_BLUR_PATH, 0, 0, D3DXSHADER_SKIPVALIDATION, 0, &effect, 0);
@@ -35,6 +36,17 @@ BlurFilter::BlurFilter()
 	texelU = effect->GetParameterByName(0, "texelU");
 	texelV = effect->GetParameterByName(0, "texelV");
 	effect->SetTechnique("tech");
+
+	float u[BLURFILTER_ARRAY_SIZE], v[BLURFILTER_ARRAY_SIZE];
+	for (int i = 0; i < BLURFILTER_ARRAY_SIZE; i++)
+	{
+		u[i] = 1.0f / width * (i + 1);
+		v[i] = 1.0f / height * (i + 1);
+	}
+
+	effect->SetFloatArray(texelU, u, BLURFILTER_ARRAY_SIZE);
+	effect->SetFloatArray(texelV, v, BLURFILTER_ARRAY_SIZE);
+	effect->CommitChanges();
 }
 
 /**************************************
@@ -57,23 +69,4 @@ void BlurFilter::DrawEffect(UINT pass)
 
 	effect->EndPass();
 	effect->End();
-}
-
-/**************************************
-サーフェイスサイズセット処理
-***************************************/
-void BlurFilter::SetSurfaceSize(float width, float height)
-{
-	float u[BLURFILTER_ARRAY_SIZE], v[BLURFILTER_ARRAY_SIZE];
-	for (int i = 0; i < BLURFILTER_ARRAY_SIZE; i++)
-	{
-		u[i] = 1.0f / width * (i + 1);
-		v[i] = 1.0f / height * (i + 1);
-	}
-
-	effect->SetFloatArray(texelU, u, BLURFILTER_ARRAY_SIZE);
-	effect->SetFloatArray(texelV, v, BLURFILTER_ARRAY_SIZE);
-	effect->CommitChanges();
-
-	ScreenObject::Resize(width, height);
 }

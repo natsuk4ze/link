@@ -40,7 +40,8 @@ void MonotoneFilter::Destroy()
 /**************************************
 コンストラクタ
 ***************************************/
-MonotoneFilter::MonotoneFilter()
+MonotoneFilter::MonotoneFilter(DWORD width, DWORD height) :
+	ScreenObject(width, height)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 

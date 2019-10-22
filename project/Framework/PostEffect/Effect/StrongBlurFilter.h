@@ -20,7 +20,7 @@
 class StrongBlurFilter : public ScreenObject
 {
 public:	
-	StrongBlurFilter();									//コンストラクタ
+	StrongBlurFilter(DWORD width, DWORD height);		//コンストラクタ
 	~StrongBlurFilter();								//デストラクタ
 	void DrawEffect(UINT pass);							//描画処理
 	void SetSurfaceSize(float widht, float height);		//サーフェイスサイズ設定処理

@@ -20,7 +20,7 @@
 class ShockBlur : public ScreenObject
 {
 public:
-	ShockBlur();
+	ShockBlur(DWORD width, DWORD height);
 	~ShockBlur();
 	void DrawEffect();
 	void SetPower(float power);

@@ -19,10 +19,9 @@
 ***************************************/
 class BlurFilter : public ScreenObject {
 public:
-	BlurFilter();
+	BlurFilter(DWORD width, DWORD height);
 	~BlurFilter();
 	void DrawEffect(UINT pass);							//描画処理
-	void SetSurfaceSize(float width, float height);		//サーフェイスサイズ設定処理
 
 private:
 	LPD3DXEFFECT effect;								//シェーダ

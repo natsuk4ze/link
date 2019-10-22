@@ -24,7 +24,8 @@
 /**************************************
 コンストラクタ
 ***************************************/
-CrossBlurFilter::CrossBlurFilter()
+CrossBlurFilter::CrossBlurFilter(DWORD width, DWORD height) :
+	ScreenObject(width, height)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
@@ -36,6 +37,18 @@ CrossBlurFilter::CrossBlurFilter()
 	hTexelU = effect->GetParameterByName(0, "texelU");
 	hTexelV = effect->GetParameterByName(0, "texelV");
 	effect->SetTechnique("tech");
+
+	float u[CROSSBLUR_ARRAY_SIZE], v[CROSSBLUR_ARRAY_SIZE];
+
+	for (int i = 0; i < CROSSBLUR_ARRAY_SIZE; i++)
+	{
+		u[i] = 1.0f / width * (i + 1);
+		v[i] = 1.0f / height * (i + 1);
+	}
+
+	effect->SetFloatArray(hTexelU, u, CROSSBLUR_ARRAY_SIZE);
+	effect->SetFloatArray(hTexelV, v, CROSSBLUR_ARRAY_SIZE);
+	effect->CommitChanges();
 }
 
 /**************************************
@@ -58,24 +71,4 @@ void CrossBlurFilter::DrawEffect(UINT pass)
 
 	effect->EndPass();
 	effect->End();
-}
-
-/**************************************
-サーフェイスサイズ設定処理
-***************************************/
-void CrossBlurFilter::SetSurfaceSize(float width, float height)
-{
-	float u[CROSSBLUR_ARRAY_SIZE], v[CROSSBLUR_ARRAY_SIZE];
-	
-	for(int i = 0; i < CROSSBLUR_ARRAY_SIZE; i++)
-	{
-		u[i] = 1.0f / width * (i + 1);
-		v[i] = 1.0f / height * (i + 1);
-	}
-
-	effect->SetFloatArray(hTexelU, u, CROSSBLUR_ARRAY_SIZE);
-	effect->SetFloatArray(hTexelV, v, CROSSBLUR_ARRAY_SIZE);
-	effect->CommitChanges();
-
-	ScreenObject::Resize(width, height);
 }

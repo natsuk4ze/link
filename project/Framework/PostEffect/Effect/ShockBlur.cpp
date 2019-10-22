@@ -19,7 +19,8 @@
 /**************************************
 コンストラクタ
 ***************************************/
-ShockBlur::ShockBlur()
+ShockBlur::ShockBlur(DWORD width, DWORD height) :
+	ScreenObject(width, height)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
