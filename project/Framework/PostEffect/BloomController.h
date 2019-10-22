@@ -19,15 +19,20 @@
 /**************************************
 ƒNƒ‰ƒX’è‹`
 ***************************************/
-class BloomController : public BaseEffectController
+class BloomController
 {
 public:
-	void Draw(LPDIRECT3DTEXTURE9 targetTexture = NULL);
-
-private:
 	BloomController();
 	~BloomController();
 
+	void Draw(LPDIRECT3DTEXTURE9 targetTexture = NULL);
+	void SetPower(float power1, float power2, float power3);
+	void SetThrethold(float threthold1, float threthold2, float threthold3);
+
+	static const float DefaultPower;
+	static const float DefaultThrethold;
+
+private:
 	void SampleBrightness(LPDIRECT3DTEXTURE9 targetTexture);
 	void ProcessBlur();
 	void BlendBloom();
@@ -42,6 +47,8 @@ private:
 
 	int cntBlur;
 
+	float bloomPower[3];
+	float bloomThrethold[3];
 };
 
 #endif

@@ -5,12 +5,11 @@
 //
 //=====================================
 #include "BloomFilter.h"
+#include "../../Resource/ResourceManager.h"
 
 /**************************************
 マクロ定義
 ***************************************/
-#define EFFECTFILE_BLOOMFILTER_PATH		"PostEffect/BloomFilter.fx"
-#define PRECOMPILE_BLOOMFILTER_PATH		"data/EFFECT/BloomFilter.cfx"
 
 /**************************************
 クラス定義
@@ -27,10 +26,8 @@ BloomFilter::BloomFilter()
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	HRESULT res = D3DXCreateEffectFromFile(pDevice, (LPSTR)PRECOMPILE_BLOOMFILTER_PATH, 0, 0, D3DXSHADER_SKIPVALIDATION, 0, &effect, 0);
-
-	if(res != S_OK)
-		D3DXCreateEffectFromFile(pDevice, (LPSTR)EFFECTFILE_BLOOMFILTER_PATH, 0, 0, 0, 0, &effect, 0);
+	const char* Path = "data/EFFECT/BloomFilter.cfx";
+	ResourceManager::Instance()->GetEffect(Path, effect);
 
 	hThrethold = effect->GetParameterByName(0, "threthold");
 	hBloomPower = effect->GetParameterByName(0, "bloomPower");

@@ -198,7 +198,7 @@ bool ResourceManager::GetEffect(const char * path, LPD3DXEFFECT & pOut)
 
 	//“o˜^Šm”F
 	if (effectPool.count(tagStr) == 0)
-		return false;
+		LoadEffect(path);
 
 	pOut = effectPool[tagStr];
 	pOut->AddRef();

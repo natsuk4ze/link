@@ -7,15 +7,65 @@
 #include "BloomController.h"
 
 /**************************************
-マクロ定義
+staticメンバ
 ***************************************/
-//#define BLOOM_USE_DEBUG
+const float BloomController::DefaultPower = 0.3f;
+const float BloomController::DefaultThrethold = 0.4f;
 
-#ifdef BLOOM_USE_DEBUG
-#include "../debugWindow.h"
-#endif
+/**************************************
+コンストラクタ
+***************************************/
+BloomController::BloomController() :
+	bloomPower(),
+	bloomThrethold()
+{
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-#define BLOOM_THRETHOLD_DEFAULT (0.45f)
+	//パワーとしきい値の初期化
+	bloomPower[0] = bloomPower[1] = bloomPower[2] = DefaultPower;
+	bloomThrethold[0] = bloomThrethold[0] = bloomThrethold[0] = DefaultThrethold;
+
+	//ブルームフィルタのインスタンス、テクスチャ、サーフェイスを設定
+	bloomFilter = new BloomFilter();
+
+	//ブラーフィルタのインスタンス、テクスチャ、サーフェイスを設定
+	blurFilter = new BlurFilter();
+	for (int i = 0; i < 3; i++)
+	{
+		int reduction = (int)powf(2.0f, i + 2.0f);
+		for (int j = 0; j < 2; j++)
+		{
+			pDevice->CreateTexture(SCREEN_WIDTH / reduction, SCREEN_HEIGHT / reduction, 1, D3DUSAGE_RENDERTARGET, D3DFMT_X8R8G8B8, D3DPOOL_DEFAULT, &blurTexture[i][j], 0);
+			blurTexture[i][j]->GetSurfaceLevel(0, &blurSurface[i][j]);
+		}
+
+		//ブラーフィルタ用のビューポートを設定
+		blurViewPort[i].Width = SCREEN_WIDTH / reduction;
+		blurViewPort[i].Height = SCREEN_HEIGHT / reduction;
+		blurViewPort[i].X = 0;
+		blurViewPort[i].Y = 0;
+		blurViewPort[i].MinZ = 0.0f;
+		blurViewPort[i].MaxZ = 1.0f;
+	}
+}
+
+/**************************************
+デストラクタ
+***************************************/
+BloomController::~BloomController()
+{
+	delete blurFilter;
+	for (int i = 0; i < 2; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			SAFE_RELEASE(blurTexture[j][i]);
+			SAFE_RELEASE(blurSurface[j][i]);
+		}
+	}
+
+	delete bloomFilter;
+}
 
 /**************************************
 描画処理
@@ -60,54 +110,23 @@ void BloomController::Draw(LPDIRECT3DTEXTURE9 texture)
 }
 
 /**************************************
-コンストラクタ
+パワー設定処理
 ***************************************/
-BloomController::BloomController()
+void BloomController::SetPower(float power1, float power2, float power3)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-	//ブルームフィルタのインスタンス、テクスチャ、サーフェイスを設定
-	bloomFilter = new BloomFilter();
-	bloomFilter->SetThrethold(BLOOM_THRETHOLD_DEFAULT);
-
-	//ブラーフィルタのインスタンス、テクスチャ、サーフェイスを設定
-	blurFilter = new BlurFilter();
-	for (int i = 0; i < 3; i++)
-	{
-		int reduction = (int)powf(2.0f, i + 2.0f);
-		for (int j = 0; j < 2; j++)
-		{
-			pDevice->CreateTexture(SCREEN_WIDTH / reduction, SCREEN_HEIGHT / reduction, 1, D3DUSAGE_RENDERTARGET, D3DFMT_X8R8G8B8, D3DPOOL_DEFAULT, &blurTexture[i][j], 0);
-			blurTexture[i][j]->GetSurfaceLevel(0, &blurSurface[i][j]);
-		}
-
-		//ブラーフィルタ用のビューポートを設定
-		blurViewPort[i].Width = SCREEN_WIDTH / reduction;
-		blurViewPort[i].Height = SCREEN_HEIGHT / reduction;
-		blurViewPort[i].X = 0;
-		blurViewPort[i].Y = 0;
-		blurViewPort[i].MinZ = 0.0f;
-		blurViewPort[i].MaxZ = 1.0f;
-
-	}
+	bloomPower[0] = power1;
+	bloomPower[1] = power2;
+	bloomPower[2] = power3;
 }
 
 /**************************************
-デストラクタ
+しきい値設定処理
 ***************************************/
-BloomController::~BloomController()
+void BloomController::SetThrethold(float threthold1, float threthold2, float threthold3)
 {
-	delete blurFilter;
-	for (int i = 0; i < 2; i++)
-	{
-		for (int j = 0; j < 3; j++)
-		{
-			SAFE_RELEASE(blurTexture[j][i]);
-			SAFE_RELEASE(blurSurface[j][i]);
-		}
-	}
-
-	delete bloomFilter;
+	bloomThrethold[0] = threthold1;
+	bloomThrethold[1] = threthold2;
+	bloomThrethold[2] = threthold3;
 }
 
 /**************************************
@@ -115,8 +134,6 @@ BloomController::~BloomController()
 ***************************************/
 void BloomController::SampleBrightness(LPDIRECT3DTEXTURE9 targetTexture)
 {
-	static float BloomPower[3] = { 0.56f, 0.6f, 0.86f };
-
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	for (int i = 0; i < 3; i++)
@@ -128,17 +145,14 @@ void BloomController::SampleBrightness(LPDIRECT3DTEXTURE9 targetTexture)
 		//ビューポートを設定
 		pDevice->SetViewport(&blurViewPort[i]);
 
-		//ブルームのゲインを設定
-		bloomFilter->SetBloomPower(BloomPower[i]);
+		//ブルームのパラメータを設定
+		bloomFilter->SetBloomPower(bloomPower[i]);
+		bloomFilter->SetThrethold(bloomThrethold[i]);
 
 		float reduction = powf(2.0f, i + 2.0f);
 		bloomFilter->Resize(SCREEN_WIDTH / reduction, SCREEN_HEIGHT / reduction);
 
-		//現在の描画情報から輝度を抽出
-		if (targetTexture == NULL)
-			pDevice->SetTexture(0, defaultTarget);
-		else
-			pDevice->SetTexture(0, targetTexture);
+		pDevice->SetTexture(0, targetTexture);
 
 		bloomFilter->DrawEffect(0);
 	}
