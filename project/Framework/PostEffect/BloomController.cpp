@@ -5,6 +5,9 @@
 //
 //=====================================
 #include "BloomController.h"
+#include "Effect/BloomFilter.h"
+#include "Effect/BlurFilter.h"
+
 #include "../Tool/DebugWindow.h"
 
 #define DEBGU_BLOOM
@@ -27,23 +30,38 @@ BloomController::BloomController() :
 	bloomPower[0] = bloomPower[1] = bloomPower[2] = DefaultPower;
 	bloomThrethold[0] = bloomThrethold[1] = bloomThrethold[2] = DefaultThrethold;
 
-	//ブルームフィルタのインスタンス、テクスチャ、サーフェイスを設定
-	bloomFilter = new BloomFilter(SCREEN_WIDTH, SCREEN_HEIGHT);
+	//縮小バッファの幅と高さを計算
+	for (int i = 0; i < NumReduction; i++)
+	{
+		int reduction = (int)pow(2.0f, i + 2.0f);
+		reducedWidth[i] = SCREEN_WIDTH / reduction;
+		reducedHeight[i] = SCREEN_HEIGHT / reduction;
+	}
 
-	//ブラーフィルタのインスタンス、テクスチャ、サーフェイスを設定
-	blurFilter = new BlurFilter();
+	//ブルームフィルタ作成
 	for (int i = 0; i < 3; i++)
 	{
-		int reduction = (int)powf(2.0f, i + 2.0f);
+		bloomFilter[i] = new BloomFilter(reducedWidth[i], reducedHeight[i]);
+	}
+
+	//ブラーフィルタ作成
+	for (int i = 0; i < 3; i++)
+	{
+		blurFilter[i] = new BlurFilter(reducedWidth[i], reducedHeight[i]);
+	}
+
+	//テクスチャ、サーフェイスを設定
+	for (int i = 0; i < 3; i++)
+	{
 		for (int j = 0; j < 2; j++)
 		{
-			pDevice->CreateTexture(SCREEN_WIDTH / reduction, SCREEN_HEIGHT / reduction, 1, D3DUSAGE_RENDERTARGET, D3DFMT_X8R8G8B8, D3DPOOL_DEFAULT, &blurTexture[i][j], 0);
+			pDevice->CreateTexture(reducedWidth[i], reducedHeight[i], 1, D3DUSAGE_RENDERTARGET, D3DFMT_X8R8G8B8, D3DPOOL_DEFAULT, &blurTexture[i][j], 0);
 			blurTexture[i][j]->GetSurfaceLevel(0, &blurSurface[i][j]);
 		}
 
 		//ブラーフィルタ用のビューポートを設定
-		blurViewPort[i].Width = SCREEN_WIDTH / reduction;
-		blurViewPort[i].Height = SCREEN_HEIGHT / reduction;
+		blurViewPort[i].Width = reducedWidth[i];
+		blurViewPort[i].Height = reducedHeight[i];
 		blurViewPort[i].X = 0;
 		blurViewPort[i].Y = 0;
 		blurViewPort[i].MinZ = 0.0f;
@@ -56,17 +74,17 @@ BloomController::BloomController() :
 ***************************************/
 BloomController::~BloomController()
 {
-	delete blurFilter;
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < NumReduction; i++)
 	{
-		for (int j = 0; j < 3; j++)
+		for (int j = 0; j < NumBlur; j++)
 		{
-			SAFE_RELEASE(blurTexture[j][i]);
-			SAFE_RELEASE(blurSurface[j][i]);
+			SAFE_RELEASE(blurTexture[i][j]);
+			SAFE_RELEASE(blurSurface[i][j]);
 		}
-	}
 
-	delete bloomFilter;
+		SAFE_DELETE(bloomFilter[i]);
+		SAFE_DELETE(blurFilter[i]);
+	}
 }
 
 /**************************************
@@ -158,15 +176,12 @@ void BloomController::SampleBrightness(LPDIRECT3DTEXTURE9 targetTexture)
 		pDevice->SetViewport(&blurViewPort[i]);
 
 		//ブルームのパラメータを設定
-		bloomFilter->SetBloomPower(bloomPower[i]);
-		bloomFilter->SetThrethold(bloomThrethold[i]);
-
-		float reduction = powf(2.0f, i + 2.0f);
-		bloomFilter->Resize(SCREEN_WIDTH / reduction, SCREEN_HEIGHT / reduction);
+		bloomFilter[i]->SetBloomPower(bloomPower[i]);
+		bloomFilter[i]->SetThrethold(bloomThrethold[i]);
 
 		pDevice->SetTexture(0, targetTexture);
 
-		bloomFilter->DrawEffect(0);
+		bloomFilter[i]->DrawEffect(0);
 	}
 }
 
@@ -191,9 +206,6 @@ void BloomController::ProcessBlur()
 		//ビューポートを設定
 		pDevice->SetViewport(&blurViewPort[j]);
 
-		float reduction = powf(2.0f, j + 2.0f);
-		blurFilter->SetSurfaceSize(SCREEN_WIDTH / reduction, SCREEN_HEIGHT / reduction);
-
 		cntBlur = 1;
 
 		//ブラー処理
@@ -202,7 +214,7 @@ void BloomController::ProcessBlur()
 		{
 			pDevice->SetRenderTarget(0, blurSurface[j][cntBlur % TextureMax]);
 			pDevice->SetTexture(0, blurTexture[j][(cntBlur + 1) % TextureMax]);
-			blurFilter->DrawEffect(cntBlur % PassMax);
+			blurFilter[i]->DrawEffect(cntBlur % PassMax);
 		}
 	}
 
@@ -224,13 +236,11 @@ void BloomController::BlendBloom()
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 
-	bloomFilter->Resize(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-	pDevice->SetTexture(0, blurTexture[0][cntBlur % 2]);
-	pDevice->SetTexture(1, blurTexture[1][cntBlur % 2]);
-	pDevice->SetTexture(2, blurTexture[2][cntBlur % 2]);
-
-	bloomFilter->DrawEffect(1);
+	for (int i = 0; i < NumReduction; i++)
+	{
+		pDevice->SetTexture(0, blurTexture[i][cntBlur % 2]);
+		renderer->Draw();
+	}
 
 	//レンダーステートを元に戻す
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);

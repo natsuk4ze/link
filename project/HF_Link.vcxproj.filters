@@ -48,7 +48,6 @@
     <ClInclude Include="Framework\PostEffect\Effect\SpeedBlurFilter.h" />
     <ClInclude Include="Framework\PostEffect\Effect\SpikeNoise.h" />
     <ClInclude Include="Framework\PostEffect\Effect\StrongBlurFilter.h" />
-    <ClInclude Include="Framework\PostEffect\BaseEffectController.h" />
     <ClInclude Include="Framework\PostEffect\BloomController.h" />
     <ClInclude Include="Framework\PostEffect\CrossFilterController.h" />
     <ClInclude Include="Framework\PostEffect\ScreenObject.h" />
@@ -177,6 +176,7 @@
     <ClInclude Include="source\Field\FieldEventHandler.h" />
     <ClInclude Include="source\Scene\GameState\GamePause.h" />
     <ClInclude Include="source\Effect\Game\WhiteSmog.h" />
+    <ClInclude Include="Framework\PostEffect\BaseEffectController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -216,7 +216,6 @@
     <ClCompile Include="Framework\PostEffect\Effect\SpeedBlurFilter.cpp" />
     <ClCompile Include="Framework\PostEffect\Effect\SpikeNoise.cpp" />
     <ClCompile Include="Framework\PostEffect\Effect\StrongBlurFilter.cpp" />
-    <ClCompile Include="Framework\PostEffect\BaseEffectController.cpp" />
     <ClCompile Include="Framework\PostEffect\BloomController.cpp" />
     <ClCompile Include="Framework\PostEffect\CrossFilterController.cpp" />
     <ClCompile Include="Framework\PostEffect\ScreenObject.cpp" />
@@ -338,6 +337,7 @@
     <ClCompile Include="source\Scene\GameState\GamePause.cpp" />
     <ClCompile Include="source\Effect\Game\WhiteSmog.cpp" />
     <ClCompile Include="Framework\Core\BaseScene.cpp" />
+    <ClCompile Include="Framework\PostEffect\BaseEffectController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

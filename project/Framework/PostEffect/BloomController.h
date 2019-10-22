@@ -9,17 +9,17 @@
 
 #include "../../main.h"
 #include "BaseEffectController.h"
-#include "Effect/BloomFilter.h"
-#include "Effect/BlurFilter.h"
 
 /**************************************
-マクロ定義
-***************************************/
+前方宣言
+**************************************/
+class BloomFilter;
+class BlurFilter;
 
 /**************************************
 クラス定義
 ***************************************/
-class BloomController
+class BloomController : public BaseEffectController
 {
 public:
 	BloomController();
@@ -33,22 +33,32 @@ public:
 	static const float DefaultThrethold;
 
 private:
+	enum Const
+	{
+		NumReduction = 3,
+		NumBlur = 2
+	};
+
 	void SampleBrightness(LPDIRECT3DTEXTURE9 targetTexture);
 	void ProcessBlur();
 	void BlendBloom();
 
-	BloomFilter *bloomFilter;
-	BlurFilter *blurFilter;
+	BloomFilter *bloomFilter[NumReduction];
+	BlurFilter *blurFilter[NumReduction];
 
-	LPDIRECT3DTEXTURE9 blurTexture[3][2];
-	LPDIRECT3DSURFACE9 blurSurface[3][2];
-	D3DVIEWPORT9 blurViewPort[3];
+	LPDIRECT3DTEXTURE9 blurTexture[NumReduction][NumBlur];
+	LPDIRECT3DSURFACE9 blurSurface[NumReduction][NumBlur];
+
+	D3DVIEWPORT9 blurViewPort[NumReduction];
 	D3DVIEWPORT9 oldViewPort;
 
 	int cntBlur;
 
-	float bloomPower[3];
-	float bloomThrethold[3];
+	float bloomPower[NumReduction];
+	float bloomThrethold[NumReduction];
+
+	DWORD reducedWidth[NumReduction];
+	DWORD reducedHeight[NumReduction];
 };
 
 #endif
