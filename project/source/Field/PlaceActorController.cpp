@@ -9,6 +9,8 @@
 #include "Place\FieldPlaceModel.h"
 #include "Route\RouteModel.h"
 #include "FieldConfig.h"
+#include "../../Framework/Task/TaskManager.h"
+#include "../Effect/GameParticleManager.h"
 
 #include "../FieldObject/Actor/CityActor.h"
 #include "../FieldObject/Actor/CrossJunctionActor.h"
@@ -17,6 +19,10 @@
 #include "../FieldObject/Actor/RiverActor.h"
 #include "../FieldObject/Actor/StraightRoadActor.h"
 #include "../FieldObject/Actor/TJunctionActor.h"
+#include "../FieldObject/Actor/BridgeActor.h"
+#include "../FieldObject/Actor/NoneActor.h"
+
+#include "../FieldObject/Animation/ActorAnimation.h"
 
 namespace Field::Actor
 {
@@ -27,10 +33,10 @@ namespace Field::Actor
 	using Model::Adjacency;
 
 	/**************************************
-	using宣言
+	staticメンバ
 	***************************************/
 	const float PlaceActorController::PlacePositionOffset = 10.0f;
-
+	const D3DXVECTOR3 PlaceActorController::PositionEmitSmog = Vector3::Up;
 	/**************************************
 	コンストラクタ
 	***************************************/
@@ -62,13 +68,13 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::Update()
 	{
-		//for (auto&& map : actorMap)
-		//{
-		//	for (auto&& pair : *map)
-		//	{
-		//		pair.second->Update();
-		//	}
-		//}
+		for (auto&& map : actorContainer)
+		{
+			for (auto&& pair : *map)
+			{
+				pair.second->Update();
+			}
+		}
 	}
 
 	/**************************************
@@ -89,7 +95,7 @@ namespace Field::Actor
 	/**************************************
 	アクターセット処理
 	***************************************/
-	void PlaceActorController::SetActor(const Model::PlaceModel * place)
+	void PlaceActorController::SetActor(const Model::PlaceModel * place, int delay)
 	{
 		const Model::PlaceType Type = place->GetType();
 
@@ -112,10 +118,15 @@ namespace Field::Actor
 			break;
 
 		case PlaceType::Road:
-			SetRoad(place);
+			SetRoad(place, delay);
+			break;
 
 		case PlaceType::Town:
 			SetTown(place);
+			break;
+
+		case PlaceType::None:
+			SetNone(place);
 			break;
 		}
 	}
@@ -131,9 +142,9 @@ namespace Field::Actor
 		ChangeActor(places.back());
 
 		unsigned PlaceMax = places.size() - 1;
-		for(unsigned i = 1; i < PlaceMax; i++)
-		{ 
-			SetActor(places[i]);
+		for (unsigned i = 1; i < PlaceMax; i++)
+		{
+			SetActor(places[i], i * 2);
 		}
 	}
 
@@ -168,7 +179,7 @@ namespace Field::Actor
 	/**************************************
 	ロードセット処理
 	***************************************/
-	void PlaceActorController::SetRoad(const Model::PlaceModel * place)
+	void PlaceActorController::SetRoad(const Model::PlaceModel * place, int delay)
 	{
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
@@ -181,22 +192,27 @@ namespace Field::Actor
 		{
 			//アクター生成
 			PlaceActor* actor = new StraightRoadActor(actorPos, Model::FieldLevel::City);
+			actor->SetScale(Vector3::Zero);
+			AddContainer(ActorPattern::StarightRoad, place->ID(), actor);
 
 			//左右に繋がるタイプなら回転させる
 			if (straightType == StraightType::RightAndLeft)
 				actor->Rotate(90.0f);
 
-			AddContainer(ActorPattern::StarightRoad, place->ID(), actor);
+			// 生成アニメーション
+			SetRoadGenerateAnimation(actor, actorPos, delay);
 		}
 		//カーブの場合
 		else
 		{
 			//アクター生成
 			PlaceActor* actor = new CurveRoadActor(actorPos, Model::FieldLevel::City);
-			
+			actor->SetScale(Vector3::Zero);
+			AddContainer(ActorPattern::Curve, place->ID(), actor);
+
 			//回転角度を決定して回転
 			float rotAngle = 0.0f;
-			
+
 			CurveType curveType = IsCurve(AdjacencyType);
 			if (curveType == CurveType::LeftAndForward)
 				rotAngle = -90.0f;
@@ -207,7 +223,8 @@ namespace Field::Actor
 
 			actor->Rotate(rotAngle);
 
-			AddContainer(ActorPattern::Curve, place->ID(), actor);
+			// 生成アニメーション
+			SetRoadGenerateAnimation(actor, actorPos, delay);
 		}
 	}
 
@@ -216,7 +233,15 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::SetTown(const Model::PlaceModel * place)
 	{
+		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
+		//アクター生成
+		PlaceActor* actor = new CityActor(actorPos, Model::FieldLevel::City);
+
+		// 生成アニメーション
+		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
+
+		AddContainer(ActorPattern::City, place->ID(), actor);
 	}
 
 	/**************************************
@@ -231,6 +256,25 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::SetBridge(const Model::PlaceModel * place)
 	{
+		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
+
+		//アクター生成
+		PlaceActor* actor = new BridgeActor(actorPos, Model::FieldLevel::City);
+
+		//回転角度を決定
+		std::vector<Adjacency> AdjacencyType = place->GetConnectingAdjacency();
+		StraightType straightType = IsStraight(AdjacencyType);
+
+		float rotateAngle = straightType == StraightType::BackAndForward ? 90.0f : 0.0f;
+
+		//回転
+		actor->Rotate(rotateAngle);
+
+		// 生成アニメーション
+		ActorAnimation::FallAndExpantion(*actor);
+
+		AddContainer(ActorPattern::Bridge, place->ID(), actor);
+
 	}
 
 	/**************************************
@@ -246,24 +290,30 @@ namespace Field::Actor
 		if (adjacencyTypeList.size() == 4)
 		{
 			PlaceActor *actor = new CrossJunctionActor(actorPos, Model::FieldLevel::City);
+
+			// 生成アニメーション
+			ActorAnimation::RotateAndExpantion(*actor);
 			AddContainer(ActorPattern::CrossJunction, place->ID(), actor);
 		}
 		//T字路のアクター生成
 		else
 		{
 			PlaceActor* actor = new TJunctionActor(actorPos, Model::FieldLevel::City);
-			
+
 			TjunctionType junctionType = IsTjunction(adjacencyTypeList);
 			float rotAngle = 0.0f;
 
 			if (junctionType == TjunctionType::ExceptRight)
 				rotAngle = 90.0f;
-			else if (junctionType == TjunctionType::ExceptBack)
+			else if (junctionType == TjunctionType::ExceptForward)
 				rotAngle = 180.0f;
 			else if (junctionType == TjunctionType::ExceptLeft)
 				rotAngle = -90.0f;
-	
+
 			actor->Rotate(rotAngle);
+
+			// 生成アニメーション
+			ActorAnimation::RotateAndExpantion(*actor);
 
 			AddContainer(ActorPattern::TJunction, place->ID(), actor);
 		}
@@ -274,6 +324,25 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::SetMountain(const Model::PlaceModel * place)
 	{
+	}
+
+	/**************************************
+	Noneセット処理
+	***************************************/
+	void PlaceActorController::SetNone(const Model::PlaceModel * place)
+	{
+		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
+
+		//真っ平らだと不自然なので高さに少し凹凸をつける
+		const float HeightRange = -2.0f;
+		actorPos.y += Math::RandomRange(HeightRange, 0.0f);
+
+		PlaceActor* actor = new NoneActor(actorPos, Model::FieldLevel::City);
+
+		// 生成アニメーション
+		ActorAnimation::RotateAndExpantion(*actor);
+
+		AddContainer(ActorPattern::None, place->ID(), actor);
 	}
 
 	/**************************************
@@ -294,5 +363,28 @@ namespace Field::Actor
 
 		actorContainer[pattern]->erase(key);
 		return true;
+	}
+
+	/**************************************
+	道生成時のアニメーションセット処理
+	***************************************/
+	void Field::Actor::PlaceActorController::SetRoadGenerateAnimation(PlaceActor * actor, const D3DXVECTOR3 actorPos, int delay)
+	{
+		if (delay == 0)
+			ActorAnimation::FallAndExpantion(*actor, [=]()
+		{
+			GameParticleManager::Instance()->Generate(GameParticle::WhiteSmog, actorPos + PositionEmitSmog);
+		});
+
+		else
+		{
+			TaskManager::Instance()->CreateDelayedTask(delay, [=]()
+			{
+				ActorAnimation::FallAndExpantion(*actor, [=]()
+				{
+					GameParticleManager::Instance()->Generate(GameParticle::WhiteSmog, actorPos + PositionEmitSmog);
+				});
+			});
+		}
 	}
 }

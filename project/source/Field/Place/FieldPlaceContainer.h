@@ -44,6 +44,9 @@ namespace Field::Model
 		PlaceModel* GetPlace(int x, int z);
 		PlaceModel* GetPlace(const FieldPosition& position);
 
+		//全PlaceModel取得処理
+		std::vector<const PlaceModel*> GetAllPlaces() const;
+
 		//CSVデータ読み込み
 		void LoadCSV(const char* filePath);
 
@@ -60,7 +63,22 @@ namespace Field::Model
 		void CaclTrafficJamRate();
 
 		//AI発展レベル計算
-		float CalcDevelopmentLevelAI();
+		float CalcDevelopmentLevelAI(float bonus);
+
+		//街全体のリンクレベルを加算
+		void AddAllLinkLevel(int num);
+		
+		//一つの街のリンクレベルを加算
+		void AddLinkLevel(int num);
+
+		//混雑度増加バイアスを設定
+		void SetTrafficjamBias(float bias);
+
+		//破壊対象のプレイス取得
+		const PlaceModel* GetDestroyTarget();
+
+		//街を作れるプレイス取得
+		const PlaceModel* GetNonePlace();
 
 #ifdef DEBUG_PLACEMODEL
 		void DrawDebug();
@@ -78,7 +96,8 @@ namespace Field::Model
 
 		bool initialized;						//初期化フラグ
 
-		float trafficJamRate;						//混雑度
+		float trafficJamRate;					//混雑度
+		float trafficJamBias;					//混雑度バイアス
 
 		//隣接プレイス作成内部処理
 		void MakeAdjacency();

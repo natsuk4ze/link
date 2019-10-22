@@ -7,6 +7,7 @@
 //=====================================
 #include "BridgeActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
+#include "../Animation/ActorAnimation.h"
 
 //=====================================
 // コンストラクタ
@@ -18,7 +19,7 @@ BridgeActor::BridgeActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel
 	switch (currentLevel)
 	{
 	case FModel::City:
-		//ResourceManager::Instance()->GetMesh("Bridge-City", mesh);
+		ResourceManager::Instance()->GetMesh("Bridge-City", mesh);
 		break;
 	case FModel::World:
 		break;

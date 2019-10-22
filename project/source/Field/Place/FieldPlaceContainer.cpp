@@ -12,6 +12,7 @@
 #include "../../../Framework/String/String.h"
 #include "../../../Framework/Tool/DebugWindow.h"
 #include "../../../Framework/Tool/ProfilerCPU.h"
+#include "../../../Library/cppLinq/cpplinq.hpp"
 
 #include <fstream>
 #include <string>
@@ -34,7 +35,8 @@ namespace Field::Model
 		placeRowMax(0),
 		placeColumMax(0),
 		initialized(false),
-		trafficJamRate(0.0f)
+		trafficJamRate(0.0f),
+		trafficJamBias(0.0f)
 	{
 		placeVector.reserve(PlaceMax);
 
@@ -126,6 +128,16 @@ namespace Field::Model
 			return nullptr;
 
 		return placeVector[placeColumMax * position.z + position.x];
+	}
+
+	/**************************************
+	前プレイス取得処理
+	***************************************/
+	std::vector<const PlaceModel*> Field::Model::PlaceContainer::GetAllPlaces() const
+	{
+		std::vector<const PlaceModel*> out;
+		out.assign(placeVector.begin(), placeVector.end());
+		return out;
 	}
 
 	/**************************************
@@ -266,15 +278,93 @@ namespace Field::Model
 	/**************************************
 	AI発展レベル計算
 	***************************************/
-	float Field::Model::PlaceContainer::CalcDevelopmentLevelAI()
+	float Field::Model::PlaceContainer::CalcDevelopmentLevelAI(float bonus)
 	{
 		float developLevel = 0.0f;
 		for (auto&& town : townContainer)
 		{
-			developLevel += town.second->OnGrowth(1.0f - trafficJamRate);
+			developLevel += town.second->OnGrowth(1.0f - trafficJamRate + trafficJamBias, bonus);
 		}
 
 		return developLevel;
+	}
+
+	/**************************************
+	街全体のリンクレベル増加
+	***************************************/
+	void Field::Model::PlaceContainer::AddAllLinkLevel(int num)
+	{
+		for (auto&& town : townContainer)
+		{
+			town.second->AddLinkLevel(num);
+		}
+	}
+
+	/**************************************
+	街一つのリンクレベル増加
+	***************************************/
+	void Field::Model::PlaceContainer::AddLinkLevel(int num)
+	{
+		//ランダムに選択された街にリンクレベルを足す
+		//無作為に抽出するいい方法が思い浮かばなかった
+		int randomIndex = Math::RandomRange(0, (int)(townContainer.size()));
+		int index = 0;
+		for (auto&& town : townContainer)
+		{
+			if (index++ != randomIndex)
+				continue;
+
+			town.second->AddLinkLevel(num);
+			return;
+		}
+	}
+
+	/**************************************
+	混雑度増加バイアス設定処理
+	***************************************/
+	void Field::Model::PlaceContainer::SetTrafficjamBias(float bias)
+	{
+		trafficJamBias = bias;
+	}
+
+	/**************************************
+	破壊対象プレイス取得処理
+	***************************************/
+	const PlaceModel * Field::Model::PlaceContainer::GetDestroyTarget()
+	{
+		//NOTE:取り急ぎ作った。あとできれいに治す
+		int randomIndex = Math::RandomRange(0, (int)(townContainer.size()));
+		int index = 0;
+		for (auto&& town : townContainer)
+		{
+			if (index++ != randomIndex)
+				continue;
+
+			return town.second->GetPlace();
+		}
+
+		return nullptr;
+	}
+
+	/**************************************
+	街を作れるプレイス取得処理
+	***************************************/
+	const PlaceModel * Field::Model::PlaceContainer::GetNonePlace()
+	{
+		using cpplinq::from;
+		using cpplinq::where;
+		using cpplinq::to_vector;
+
+		//NOTE:取り急ぎ作った。あとできれいに治す
+		auto noneVector = from(placeVector)
+			>> where([](auto& place)
+		{
+			return place->IsType(PlaceType::None);
+		})
+			>> to_vector();
+
+		int randomIndex = Math::RandomRange(0, (int)(noneVector.size()));
+		return noneVector[randomIndex];
 	}
 
 	/**************************************

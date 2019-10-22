@@ -14,6 +14,7 @@
 #include "Route\RouteModel.h"
 #include "Route\RouteProcessor.h"
 #include "PlaceActorController.h"
+#include "FieldEventHandler.h"
 
 #include "State/BuildRoad.h"
 #include "State/FieldControllerIdle.h"
@@ -26,6 +27,8 @@
 
 #include <algorithm>
 
+#include "../Effect/GameParticleManager.h"
+
 namespace Field
 {
 	/**************************************
@@ -35,10 +38,11 @@ namespace Field
 	const int FieldController::InitFieldBorder = 30;				//フィールド範囲の初期値
 	const int FieldController::InputLongWait = 15;					//入力リピートの待機フレーム
 	const int FieldController::InputShortWait = 5;					//入力リピートの待機フレーム
-	const unsigned FieldController::InitDevelopRiverStock = 10;		//川開発ストックの初期数
-	const unsigned FieldController::InitDevelopMountainStock = 10;	//山開発ストックの初期数
+	const int FieldController::InitDevelopRiverStock = 10;		//川開発ストックの初期数
+	const int FieldController::InitDevelopMountainStock = 10;	//山開発ストックの初期数
 	const int FieldController::DevelopmentInterval = 30;			//発展レベル上昇のインターバル
-
+	const float FieldController::MaxDevelopmentLevelAI = 9999.0f;	//AI発展レベルの最大値
+	
 	/**************************************
 	コンストラクタ
 	***************************************/
@@ -51,10 +55,14 @@ namespace Field
 		stockDevelopMountain(InitDevelopMountainStock),
 		stockEDF(0),
 		stockInsurance(0),
+		developSpeedBonus(1.0f),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
 		onChangePlaceType(nullptr)
 	{
+		using Model::PlaceContainer;
+		using Model::PlaceModel;
+
 		//インスタンス作成
 		cursor = new FieldCursor(PlaceOffset);
 		ground = new FieldGround();
@@ -69,12 +77,15 @@ namespace Field
 		fsm[State::Develop] = new UseItemState();
 
 		//デリゲート作成
-		onConnectTown = Delegate<Model::PlaceContainer, const Model::PlaceModel*>::Create(placeContainer, &Model::PlaceContainer::OnConnectedTown);
-		onCreateJunction = Delegate<Model::PlaceContainer, const Model::PlaceModel*>::Create(placeContainer, &Model::PlaceContainer::OnCreateJunction);
-		onChangePlaceType = Delegate<Actor::PlaceActorController, const Model::PlaceModel*>::Create(placeActController, &Actor::PlaceActorController::ChangeActor);
+		onConnectTown = DelegateObject<PlaceContainer, void(const PlaceModel*)>::Create(placeContainer, &PlaceContainer::OnConnectedTown);
+		onCreateJunction = DelegateObject<PlaceContainer, void(const PlaceModel*)>::Create(placeContainer, &PlaceContainer::OnCreateJunction);
+		onChangePlaceType = DelegateObject<Actor::PlaceActorController, void(const PlaceModel*)>::Create(placeActController, &Actor::PlaceActorController::ChangeActor);
 
 		//ルートプロセッサ作成
 		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
+
+		//制限時間初期化
+		//TODO:シーンを跨いで引き継げるようにする
 
 		//ステート初期化
 		ChangeState(State::Idle);
@@ -141,7 +152,7 @@ namespace Field
 	***************************************/
 	void FieldController::Draw()
 	{
-		ground->Draw();
+		//ground->Draw();
 
 		placeActController->Draw();
 
@@ -160,6 +171,13 @@ namespace Field
 	void FieldController::Load()
 	{
 		placeContainer->LoadCSV("data/FIELD/sample01.csv");
+
+		//アクター生成
+		auto places = placeContainer->GetAllPlaces();
+		for (auto&& place : places)
+		{
+			placeActController->SetActor(place);
+		}
 
 		//カーソルのフィールドの中央へ設定
 		FieldPosition border = placeContainer->GetPlaceBorder();
@@ -222,12 +240,217 @@ namespace Field
 	***************************************/
 	void FieldController::EmbedViewerParam(GameViewerParam & param)
 	{
-		param.levelAI = developmentLevelAI;
-		param.ratioLevel = (float)developmentLevelAI / 9999.0f;
+		param.levelAI = (int)developmentLevelAI;
+		param.ratioLevel = (float)developmentLevelAI / MaxDevelopmentLevelAI;
 		param.stockBreakItem = stockDevelopMountain;
 		param.stockBuildItem = stockDevelopRiver;
 		param.stockEDF = stockEDF;
 		param.stockInsurance = stockInsurance;
+	}
+
+	/**************************************
+	道作成時のデリゲータ設定処理
+	***************************************/
+	void FieldController::SetCallbackOnBuildRoad(Delegate<void(std::vector<Model::PlaceModel*>&)> *callback)
+	{
+		onBuildRoad = callback;
+	}
+
+	/**************************************
+	レベルアップするかどうかの判定
+	***************************************/
+	bool FieldController::ShouldLevelUp()
+	{
+		return developmentLevelAI >= MaxDevelopmentLevelAI;
+	}
+
+	/**************************************
+	イベントハンドラ作成処理
+	***************************************/
+	void FieldController::SetEventHandler(::FieldEventHandler& handler)
+	{
+		using Handler = ::FieldEventHandler;
+
+		//AI発展レベル調整ファンクタ
+		handler.functerFloat[Handler::FuncterID_float::AdjustAI] = [&](float percent)
+		{
+			float delta = developmentLevelAI * percent;
+			developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + delta);
+		};
+
+		//AI発展レベル加算ファンクタ
+		handler.functerFloat[Handler::FuncterID_float::AddAI] = [&](float num)
+		{
+			developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + num);
+		};
+
+		//全体リンクレベル調整ファンクタ
+		handler.functerInt[Handler::FuncterID_int::AdjustLinkAll] = [&](int num)
+		{
+			placeContainer->AddAllLinkLevel(num);
+		};
+
+		//単体リンクレベル調整ファンクタ
+		handler.functerInt[Handler::FuncterID_int::AdjustLink] = [&](int num)
+		{
+			placeContainer->AddLinkLevel(num);
+		};
+
+		//アイテムストック加算ファンクタ
+		handler.functerInt[Handler::FuncterID_int::AddStock] = [&](int num)
+		{
+			stockDevelopMountain = Math::Clamp(0, 50, stockDevelopMountain + num);
+			stockDevelopRiver = Math::Clamp(0, 50, stockDevelopRiver + num);
+		};
+
+		//発展倍率付与ファンクタ
+		handler.functerFloat[Handler::FuncterID_float::SetDevBonus] = [&](float percent)
+		{
+			developSpeedBonus = percent;
+		};
+
+		//街作成ファンクタ
+		handler.functerPlace[Handler::FuncterID_Place::Create] = [&](auto place)
+		{
+			//後で作る
+		};
+
+		//操作反転処理
+		handler.functerBool[Handler::FuncterID_bool::ReverseOpe] = [&](bool isReverse)
+		{
+			//後で作る
+		};
+
+		//ストック封印処理
+		handler.functerBool[Handler::FuncterID_bool::SealItem] = [&](bool isSeal)
+		{
+			//後で作る
+		};
+
+		//混雑度調整処理
+		handler.functerFloat[Handler::FuncterID_float::AdjustTraffic] = [&](float bias)
+		{
+			placeContainer->SetTrafficjamBias(bias);
+		};
+
+		//EDFストック使用処理
+		handler.functerBoolReturn[Handler::FuncterID_boolReturn::TryEDF] = [&]()
+		{
+			if (stockEDF <= 0)
+				return false;
+
+			stockEDF--;
+			return true;
+		};
+
+		//保険ストック使用処理
+		handler.functerBoolReturn[Handler::FuncterID_boolReturn::TryInsurance] = [&]()
+		{
+			if (stockInsurance <= 0)
+				return false;
+
+			stockInsurance--;
+			return true;
+		};
+
+		//破壊対象の街取得処理
+		handler.functerPlaceReturn[Handler::FuncterID_PlaceReturn::DestroyTarget] = [&]()
+		{
+			return placeContainer->GetDestroyTarget();
+		};
+
+		//街作成予定地の取得処理
+		handler.functerPlaceReturn[Handler::FuncterID_PlaceReturn::PlacePosition] = [&]()
+		{
+			return placeContainer->GetNonePlace();
+		};
+	}
+
+	/**************************************
+	AI発展レベルを調整する
+	***************************************/
+	void FieldController::AdjustLevelAI(float percent)
+	{
+		float MaxLevel = 9999.0f;
+		float deltaValue = developmentLevelAI * percent;
+		developmentLevelAI = Math::Clamp(0.0f, MaxLevel, developmentLevelAI + deltaValue);
+	}
+
+	/**************************************
+	繋がっている街全体のリンクレベルを増やす
+	***************************************/
+	void FieldController::AdjustAllLinkLevel(int num)
+	{
+		placeContainer->AddAllLinkLevel(num);
+	}
+
+	/**************************************
+	街一つのリンクレベルを増やす
+	***************************************/
+	void FieldController::AdjustLinlLevel(int num)
+	{
+		placeContainer->AddLinkLevel(num);
+	}
+
+	/**************************************
+	ストックアイテムの数を増やす
+	***************************************/
+	void FieldController::AddStockItem(int num)
+	{
+		//unsigned StockMax = 50;
+		//stockDevelopMountain = Math::Clamp((unsigned)0, StockMax, stockDevelopMountain + num);
+		//stockDevelopRiver = Math::Clamp((unsigned)0, StockMax, stockDevelopRiver + num);
+	}
+
+	/**************************************
+	発展スピードへのボーナス付与
+	***************************************/
+	void FieldController::SetDevelopSpeedBonus(float num)
+	{
+		//TODO ; 解除処理を実装する
+		//TODO : 公開倍率をちゃんと決める
+		developSpeedBonus = num;
+	}
+
+	/**************************************
+	新しい街を出現させる
+	***************************************/
+	void FieldController::CreateNewTown()
+	{
+		//NOTE:後で作る
+	}
+
+	/**************************************
+	街を破壊する
+	***************************************/
+	void FieldController::DestroyTown()
+	{
+		//NOTE：後で作る
+	}
+
+	/**************************************
+	操作を反転させる
+	***************************************/
+	void FieldController::ReverseOperation(bool isReverse)
+	{
+		//InputControllerを作ってから
+	}
+
+	/**************************************
+	ストックアイテム使用を封印する
+	***************************************/
+	void FieldController::SealUsingItem(bool isSeal)
+	{
+		//Developperを作ってから
+	}
+
+	/**************************************
+	混雑度を上昇させる
+	***************************************/
+	void FieldController::RaiseTrafficJam(float bias)
+	{
+		//TODO：解除処理を実装する
+		placeContainer->SetTrafficjamBias(bias);
 	}
 
 	/**************************************
@@ -266,9 +489,6 @@ namespace Field
 				place->SetType(PlaceType::Road);
 		}
 
-		//ルートベクトルを渡す
-		EventController::CheckEventHappen(route, City);
-
 		//ルートモデル作成
 		RouteModelPtr ptr = RouteModel::Create(onConnectTown, onCreateJunction, route);
 
@@ -286,6 +506,9 @@ namespace Field
 
 		//アクター生成
 		placeActController->SetActor(ptr);
+
+		//コールバック
+		(*onBuildRoad)(route);
 	}
 
 	/**************************************
@@ -295,29 +518,36 @@ namespace Field
 	{
 		using namespace Field::Model;
 
-		auto itr = std::find_if(start, route.end(), [](auto& place)
+		auto head = std::find_if(start, route.end(), [](auto& place)
 		{
 			//川の開拓処理を入れていないので一旦コメントアウト
 			return place->IsType(PlaceType::Mountain) || place->IsType(PlaceType::River);
 		});
 
 		//開拓対象が見つからないのでリターン
-		if (itr == route.end())
+		if (head == route.end())
 			return;
 
 		//山を開拓
-		if ((*itr)->IsType(PlaceType::Mountain))
+		if ((*head)->IsType(PlaceType::Mountain))
 		{
-			itr = DevelopMountain(route, itr);
+			head = DevelopMountain(route, head);
 		}
 		//川を開拓
-		else if ((*itr)->IsType(PlaceType::River))
+		else if ((*head)->IsType(PlaceType::River))
 		{
-			itr = DevelopRiver(route, itr);
+			head = DevelopRiver(route, head);
 		}
 
 		//開拓が終了した位置から再帰的に開拓
-		DevelopPlace(route, itr);
+		auto nextHead = std::find_if(head, route.end(), [](auto&& place)
+		{
+			//川じゃない、かつ、橋じゃないタイプを探す
+			//NOTE:「山じゃない」も含めると、川と隣接した山を開拓できないので条件に含めない
+			return !place->IsType(PlaceType::River) && !place->IsType(PlaceType::Bridge);
+		});
+
+		DevelopPlace(route, nextHead);
 	}
 
 	/**************************************
@@ -327,14 +557,14 @@ namespace Field
 	{
 		using namespace Field::Model;
 
-		//対象のプレイスの前にある山,川以外のプレイスを探す
+		//対象のプレイスの前にある山以外のプレイスを探す
 		auto start = std::find_if(ReversePlaceIterator(mountain), route.rend(), [](auto& place)
 		{
 			return !place->IsType(PlaceType::Mountain);
 		});
 
-		//山以外が見つからなかったか、川の場合は早期リターン
-		if (start == route.rend() || (*(start + 1).base())->IsType(PlaceType::River))
+		//山以外が見つからなかった場合は早期リターン
+		if (start == route.rend())
 		{
 			return route.end();
 		}
@@ -346,7 +576,7 @@ namespace Field
 		});
 
 		//山以外が見つからなかったか、川の場合は早期リターン
-		if (end == route.end() || (*end)->IsType(PlaceType::River))
+		if (end == route.end())
 		{
 			return route.end();
 		}
@@ -356,7 +586,7 @@ namespace Field
 		container.assign(start.base(), end);
 
 		//ストックが足りていれば開拓
-		unsigned cntMountain = container.size();
+		int cntMountain = container.size();
 		if (cntMountain <= stockDevelopMountain)
 		{
 			for (auto&& place : container)
@@ -364,7 +594,7 @@ namespace Field
 				place->SetType(PlaceType::None);
 			}
 
-			stockDevelopRiver -= cntMountain;
+			stockDevelopMountain -= cntMountain;
 		}
 		else
 		{
@@ -391,12 +621,28 @@ namespace Field
 		{
 			PlaceModel* prev = *(itr - 1);
 			PlaceModel* place = *itr;
+			Adjacency adjacency = place->IsAdjacent(prev);
 
 			//隣接方向が直線になっていなければ早期リターン
-			if (place->IsAdjacent(prev) != startAdjacency)
+			if (adjacency != startAdjacency)
 				return itr;
 
-			//開拓可能以外のタイプであればbreak
+			//山が出てきたら早期リターン
+			if (place->IsType(PlaceType::Mountain))
+				return itr;
+
+			//橋の場合は、連結できない方向であれば早期リターン
+			if (place->IsType(PlaceType::Bridge))
+			{
+				std::vector<Adjacency> direction = place->GetConnectingAdjacency();
+
+				if (!Utility::IsContain(direction, adjacency))
+				{
+					return itr;
+				}
+			}
+
+			//橋を架けられるタイプであればブレーク
 			if (!place->IsDevelopableType())
 			{
 				end = itr;
@@ -413,7 +659,7 @@ namespace Field
 		riverVector.assign(river, end);
 
 		//ストックが足りていれば開拓
-		unsigned cntRiver = riverVector.size();
+		int cntRiver = riverVector.size();
 		if (cntRiver <= stockDevelopRiver)
 		{
 			Adjacency inverseStartAdjacency = GetInverseSide(startAdjacency);
@@ -422,6 +668,8 @@ namespace Field
 				river->SetType(PlaceType::Bridge);
 				river->AddDirection(startAdjacency);
 				river->AddDirection(inverseStartAdjacency);
+
+				placeActController->SetActor(river);
 			}
 
 			stockDevelopRiver -= cntRiver;
@@ -445,6 +693,7 @@ namespace Field
 		if (cntFrame != 0)
 			return;
 
-		developmentLevelAI += placeContainer->CalcDevelopmentLevelAI();
+		float raiseValue = placeContainer->CalcDevelopmentLevelAI(developSpeedBonus);
+		developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + raiseValue);
 	}
 }

@@ -8,6 +8,8 @@
 #define _EVENT_VIEWER_H_
 
 #include <vector>
+#include <string>
+#include "EventTelop.h"
 
 //*****************************************************************************
 // ‘O•ûéŒ¾
@@ -27,6 +29,7 @@ public:
 
 	void Update(void);
 	void Draw(void);
+	void SetEventMessage(const std::string Message);
 
 private:
 	int eventViewerMax;

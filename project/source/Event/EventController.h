@@ -8,7 +8,7 @@
 #define _EVENTCONTROLLER_H_
 
 #include "EventBase.h"
-#include <vector>
+#include "../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../Field/Place/FieldPlaceModel.h"
 
 //*****************************************************************************
@@ -19,27 +19,23 @@ class EventViewer;
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-struct EventInfo
-{
-	int x;
-	int z;
-	int EventType;
-};
-
 class EventController
 {
-private:
-	static std::vector<EventInfo> EventCSVData;
-	static std::vector<EventBase*> EventVec;
-	//static std::vector<Field::Model::PlaceModel*> *route;
+	struct EventInfo
+	{
+		Field::FieldPosition Pos;
+		int EventType;
+	};
 
-	//イベントビューア（おーはま追記）
+private:
+	std::vector<EventInfo> EventCSVData;
+	std::vector<EventBase*> EventVec;
 	EventViewer *eventViewer;
+	Field::FieldController *fieldController;
 
 	int FieldLevel;
 
 	void LoadCSV(const char* FilePath);
-	//void CheckEventHappen(void);
 
 #if _DEBUG
 	void DrawDebug(void);
@@ -50,8 +46,8 @@ public:
 	~EventController();
 	void Update(void);
 	void Draw(void);
-	static void CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& route, int FieldLevel);
-	//static void ReceiveRoute(std::vector<Field::Model::PlaceModel*>& route);
+	void CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& route, int FieldLevel);
+	void ReceiveFieldController(Field::FieldController *Ptr);
 };
 
 #endif

@@ -9,12 +9,12 @@
 
 using namespace std;
 /**************************************
-マクロ定義
+staticメンバ
 ***************************************/
-#define HEXAPOPTRANSITION_DIVINE_X		(18)	//スクリーンX方向を何個の六角形で埋めるか
-#define HEXAPOPTRANSITION_DIVINE_Y		(10)	//スクリーンY方向を何個の六角形で埋めるか
-#define HEXAPOPTRANSITION_DURATION		(30)	//六角形のイージングにかける時間
-#define HEXAPOPTRANSITION_ITR_INTERVAL	(5)		//Y方向のイテレータを動かす間隔
+const int HexaPopTransitionMask::DivineX = 10;
+const int HexaPopTransitionMask::DivineY = 10;
+const float HexaPopTransitionMask::Duration = 0.5f;
+const float HexaPopTransitionMask::Interval = 0.08f;
 
 typedef BaseTransitionMask Base;
 /**************************************
@@ -25,19 +25,19 @@ HexaPopTransitionMask::HexaPopTransitionMask()
 	polygon = new Polygon2D();
 
 	//ポリゴンの大きさを計算
-	float sizeX = (float)SCREEN_WIDTH / HEXAPOPTRANSITION_DIVINE_X;
-	float sizeY = (float)SCREEN_HEIGHT / HEXAPOPTRANSITION_DIVINE_Y;
+	float sizeX = (float)SCREEN_WIDTH / DivineX;
+	float sizeY = (float)SCREEN_HEIGHT / DivineY;
 	polygon->SetSize(sizeX, sizeY);
 	polygon->LoadTexture("data/TRANSITION/HexaMask.png");
 
 	//X方向1列で一つのベクターとして
 	//2次元配列のようにベクターのベクターを作る
-	for (int y = 0; y < HEXAPOPTRANSITION_DIVINE_Y; y++)
+	for (int y = 0; y < DivineY + 2; y++)
 	{
 		vector<Hexagon*> list;
-		for (int x = 0; x < HEXAPOPTRANSITION_DIVINE_X + 1; x++)
+		for (int x = 0; x < DivineX + 3; x++)
 		{
-			D3DXVECTOR3 pos = D3DXVECTOR3(x * sizeX, y * sizeY * 1.5f, 0.0f);
+			D3DXVECTOR3 pos = D3DXVECTOR3(x * sizeX, (y - 1) * sizeY, 0.0f);
 
 			if (x % 2 != 0)
 				pos.y += sizeY * 0.5f;
@@ -81,7 +81,8 @@ MaskResult HexaPopTransitionMask::Update()
 	MaskResult result = MaskResult::Continuous;
 
 	//初期化を開始する行を指すインデックスの更新
-	if (cntFrame++ % HEXAPOPTRANSITION_ITR_INTERVAL == 0)	
+	int interval = (int)(FramePerSecond * Interval);
+	if (cntFrame++ % interval == 0)	
 		rowIndex = Math::Clamp((UINT)0, (UINT)hexList.size(), ++rowIndex);
 
 	//六角形を初期化
@@ -149,7 +150,7 @@ void HexaPopTransitionMask::Set(bool isTransitionOut)
 	//イージング用のパラメータ初期化
 	startScale = isTransitionOut ? D3DXVECTOR3(0.0f, 0.0f, 0.0f) : D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	endScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f) - startScale;
-	type = isTransitionOut ? EaseType::OutSine : EaseType::OutSine;
+	type = isTransitionOut ? EaseType::OutSine : EaseType::InSine;
 	cntFrame = 0;
 
 	//ヘキサリスト初期化
@@ -207,11 +208,11 @@ void HexaPopTransitionMask::Hexagon::Update(HexaPopTransitionMask& parent)
 
 	//イージング
 	cntFrame++;
-	float t = (float)cntFrame / HEXAPOPTRANSITION_DURATION;
+	float t = ((float)cntFrame / FramePerSecond) / Duration;
 	transform.SetScale(Easing::EaseValue(t, parent.startScale, parent.endScale, parent.type));
 
 	//終了判定
-	if (cntFrame == HEXAPOPTRANSITION_DURATION && IsLastHexa(parent))
+	if (t >= Duration && IsLastHexa(parent))
 		parent.isFinished = true;
 }
 

@@ -24,7 +24,7 @@ LPD3DXMESH CityDestroyEvent::SphereMesh = nullptr;
 D3DMATERIAL9 CityDestroyEvent::Material =
 {
 	D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),	// Diffuse color RGBA
-	D3DXCOLOR(1.0f, 0.65f, 0.0f, 0.0f),	// Ambient color RGB
+	D3DXCOLOR(1.0f, 0.65f, 0.0f, 1.0f),	// Ambient color RGB
 	D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f),	// Specular 'shininess'
 	D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f),	// Emissive color RGB
 	0.0f,								// Sharpness if specular highlight 
@@ -33,8 +33,7 @@ D3DMATERIAL9 CityDestroyEvent::Material =
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CityDestroyEvent::CityDestroyEvent(int FieldLevel, D3DXVECTOR3 GoalPos) :
-	GoalPos(GoalPos), EventBase(FieldLevel, EventConfig::CityDestroy)
+CityDestroyEvent::CityDestroyEvent(D3DXVECTOR3 GoalPos) : GoalPos(GoalPos)
 {
 	Pos = GoalPos + D3DXVECTOR3(MeteoriteDistance, MeteoriteDistance, 0.0f);
 	FallDirection = GoalPos - Pos;
@@ -74,6 +73,7 @@ void CityDestroyEvent::Update()
 	}
 	else
 	{
+		fieldController->DestroyTown();
 		this->UseFlag = false;
 	}
 }
@@ -102,3 +102,34 @@ void CityDestroyEvent::Draw()
 	SphereMesh->DrawSubset(0);
 }
 
+//=============================================================================
+// イベントメッセージを取得
+//=============================================================================
+string CityDestroyEvent::GetEventMessage(int FieldLevel)
+{
+	vector<string> MessageContainer;
+
+	if (FieldLevel == Field::Model::City)
+	{
+		MessageContainer.push_back("この町は焚き火にしよう");
+	}
+	else if (FieldLevel == Field::Model::World)
+	{
+
+	}
+	else if (FieldLevel == Field::Model::Space)
+	{
+
+	}
+
+	if (!MessageContainer.empty())
+	{
+		int MessageNo = rand() % MessageContainer.size();
+		return MessageContainer.at(MessageNo);
+	}
+	else
+	{
+		string ErrMsg = "イベントメッセージがありません";
+		return ErrMsg;
+	}
+}

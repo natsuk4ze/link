@@ -12,7 +12,6 @@
 #include "../../../Framework/Math/Easing.h"
 #include "../../../Framework/Renderer3D/MeshContainer.h"
 #include "../../Field/Place/PlaceConfig.h"
-#include "../../../Framework/Pattern/BaseState.h"
 
 //**************************************
 // マクロ定義
@@ -30,38 +29,27 @@ class PlaceActor :
 	public GameObject
 {
 public:
-	/**************************************
-	アクターのステートを表す列挙子
-	***************************************/
-	enum State
-	{
-		Idle,	// 待機
-		Create,	// 作成
-		Remove,	// 削除
-		Link,	// リンクレベルが上がった
-		Max
-	};
-	using ActorState = BaseState<PlaceActor, State>;
-
 	PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
 	virtual ~PlaceActor();
 
-	virtual State Update();
+	virtual void Update();
 	virtual void Draw();
 
 	// インターフェース
-	void ChangeState(ActorState *next);					// ステートの変更
 	void Rotate(float y);								// Y軸回転
+	void SetPosition(const D3DXVECTOR3&pos);			// 座標セット
 	void SetColor(const D3DXCOLOR& color, UINT index);	// メッシュの色変更
+	void ResetTransform();								// 座標、回転、大きさをリセットする
 
 protected:
 	// ***継承先のクラスで読み込み***
-	MeshContainer* mesh;				// メッシュコンテナ
+	MeshContainer* mesh;								// メッシュコンテナ
+	FModel::PlaceType type;								// アクターの種類
 	// ******************************
 
-	ActorState *state;					// ステートマシンの受取先
-	State current;						// 現在のステート
-	FModel::PlaceType type;				// アクターの種類
+	bool onCamera;										// 描画範囲の可否判定
+
+	bool CheckOnCamera();								// カメラ内判定
 
 private:
 	static const D3DXVECTOR3 ActorScale;
@@ -69,12 +57,6 @@ private:
 #if _DEBUG
 	void Debug();
 #endif
-
-	// ステートの前方宣言
-	class IdleActorState;
-	class CreateActorState;
-	class RemoveActorState;
-	class LinkActorState;
 };
 
 #endif

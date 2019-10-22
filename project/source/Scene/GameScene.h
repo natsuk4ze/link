@@ -11,6 +11,8 @@
 #include "../../main.h"
 #include "../../Framework/Core/BaseScene.h"
 #include "../../Framework/Pattern/BaseState.h"
+#include "../../Framework/Pattern/Delegate.h"
+
 #include <vector>
 
 // モデル表示テスト用
@@ -24,11 +26,17 @@ namespace Field
 	class FieldController;
 }
 
+namespace Field::Model
+{
+	class PlaceModel;
+}
+
 class SkyBox;
 class FieldCamera;
-class TextViewer;
 class GameViewer;
 class EventController;
+class GameParticleManager;
+class FieldEventHandler;
 
 /**************************************
 クラス定義
@@ -36,6 +44,8 @@ class EventController;
 class GameScene : public BaseScene
 {
 public:
+	using Route = std::vector<Field::Model::PlaceModel*>;
+
 	void Init();
 	void Uninit();
 	void Update();
@@ -46,30 +56,54 @@ public:
 	{
 		Initialize,
 		Idle,
+		Finish,
+		LevelUp,
+		Pause,
 		Max
 	};
 
+	//ステート遷移処理
+	void ChangeState(State next);
+
 private:
+	using SceneState = BaseState<GameScene, State>;
+
 	//シーンステートマシン
-	std::vector<BaseState<GameScene, State>*> fsm;
+	std::vector<SceneState*> fsm;
 	State currentState, prevState;
 
 	SkyBox *skybox;								//背景スカイボックス
 	FieldCamera* fieldCamera;					//フィールドカメラ
 	Field::FieldController *field;				//フィールドコントローラ
-	TextViewer *text;							//テスト用テキストビューワ
 	GameViewer *gameViewer;						//ゲームビュアー
+	EventController *eventController;			//イベントコントローラー
+	GameParticleManager *particleManager;		//パーティクルマネージャ
+	FieldEventHandler* eventHandler;			//イベントハンドラ
 
-	EventController *eventController;			// イベントコントローラー
-	float remainTime;							//ステージの残り時間
+	int remainTime;								//制限時間
 
-	//ステート遷移処理
-	void ChangeState(State next);
+	//デリゲータ
+	Delegate<void(Route&)> *onBuildRoad;		//道を生成したときのデリゲータ
+
+	//イベントコントローラへのPlace受け渡し処理
+	void OnBuildRoad(Route& route);
+
+	//レベルアップ処理
+	void OnLevelUp();
+
+	//イベントハンドラ設定処理
+	void SetEventHandler();
 
 	//各ステートクラス
 	class GameInit;
 	class GameIdle;
+	class GameFinish;
+	class GameLevelUp;
+	class GamePause;
 
 	PlaceActor* testActor;
+
+	//デバッグ用フィールドレベル
+	static int level;
 };
 #endif

@@ -11,73 +11,63 @@
 #include <memory>
 
 /**************************************
-Delegater基底クラス
+Delegater基底クラス宣言
 ***************************************/
-template<class T>
-class DelegateBase
-{
-public:
-	DelegateBase() {}
-	virtual ~DelegateBase() {}
-
-	//int型引数有り戻り値無しの関数
-	virtual void operator()(T arg = NULL) = 0;
-};
-
-template<>
-class DelegateBase<void>
-{
-public:
-	DelegateBase() {}
-	virtual ~DelegateBase() {}
-
-	//int型引数有り戻り値無しの関数
-	virtual void operator()() = 0;
-};
+template<class TFunc>
+class Delegate;
 
 /**************************************
-型エイリアス
+Delegater基底クラス定義
 ***************************************/
-template<class T>
-using DelegatePtr = DelegateBase<T>*;
+template<class TResult, class ...TArgs>
+class Delegate<TResult(TArgs...)>
+{
+public:
+	Delegate() {}
+	virtual ~Delegate() {}
+
+	virtual TResult operator()(TArgs... args) = 0;
+};
 
 /**************************************
 Delegaterクラス
 ***************************************/
-template <class OBJ, class ARG>
-class Delegate : public DelegateBase<ARG>
+template<class TObject, class TFunc>
+class DelegateObject;
+
+template <class TObject, class TResult, class ...TArgs>
+class DelegateObject<TObject, TResult(TArgs...)> : public Delegate<TResult(TArgs...)>
 {
-	typedef void(OBJ::*EventFunc)(ARG);
+	typedef TResult(TObject::*EventFunc)(TArgs...);
 public:
-	Delegate() :
+	DelegateObject() :
 		object(NULL), func(NULL) {}
 
-	virtual ~Delegate() {}
+	virtual ~DelegateObject() {}
 
-	//引数なし戻り値なしの関数実行のオペレータ
-	virtual void operator()(ARG arg)
+	//関数実行のオペレータ
+	virtual TResult operator()(TArgs... args)
 	{
-		//if (object != NULL && func != NULL)
-			(object->*func)(arg);
+		return (object->*func)(args...);
 	}
 
 	//オブジェクトと関数の登録処理
-	void Set(OBJ* object, EventFunc func)
+	void Set(TObject* object, EventFunc func)
 	{
 		this->object = object;
 		this->func = func;
 	}
 
 	//デリゲータ作成処理
-	static DelegatePtr<ARG> Create(OBJ* object, void (OBJ::*func)(ARG))
+	static Delegate<TResult(TArgs...)>* Create(TObject* object, TResult(TObject::*func)(TArgs...))
 	{
-		Delegate<OBJ, ARG>* delegate = new Delegate<OBJ, ARG>;
+		DelegateObject<TObject, TResult(TArgs...)>* delegate = new DelegateObject<TObject, TResult(TArgs...)>;
 		delegate->Set(object, func);
 		return  delegate;
 	}
 
 protected:
-	OBJ* object;			//オブジェクト
+	TObject *object;			//オブジェクト
 	EventFunc func;			//関数ポインタ
 };
 

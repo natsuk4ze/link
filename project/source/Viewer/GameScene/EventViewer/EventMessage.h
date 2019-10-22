@@ -28,6 +28,7 @@ public:
 
 	void Update(void);
 	void Draw(void);
+
 	void Set(const std::string &message);
 
 private:

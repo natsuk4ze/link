@@ -79,7 +79,7 @@ namespace Field::Model
 	***************************************/
 	void PlaceModel::DrawDebug()
 	{
-		if (type == PlaceType::None || type == PlaceType::Road || type == PlaceType::Junction)
+		if (type != PlaceType::Mountain && type != PlaceType::River && type != PlaceType::Town)
 			return;
 
 		//テスト描画
@@ -191,7 +191,7 @@ namespace Field::Model
 	/**************************************
 	プレイスと隣接しているか
 	***************************************/
-	Adjacency PlaceModel::IsAdjacent(PlaceModel * place) const
+	Adjacency PlaceModel::IsAdjacent(const PlaceModel * place) const
 	{
 		//隣接プレイスの中から等しいものを検索
 		auto itr = std::find_if(adjacencies.begin(), adjacencies.end(), [&](auto adjacency)

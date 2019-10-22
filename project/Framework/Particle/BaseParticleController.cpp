@@ -31,7 +31,7 @@ shared_ptr<ParticleRenderer> BaseParticleController::mRenderer = NULL;
 コンストラクタ
 ***************************************/
 BaseParticleController::BaseParticleController() :
-	unitBuff(NULL), texture(NULL)
+	unitBuff(NULL), texture(NULL), particleCount(0)
 {
 	if (!mRenderer)
 	{
@@ -108,7 +108,6 @@ bool BaseParticleController::Draw()
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	//各パーティクルのパラメータを頂点バッファにセット
-	UINT particleCount = 0;
 	particleCount = renderer->EmbedUV(particleContainer);
 
 	if (particleCount == 0)
@@ -237,4 +236,12 @@ void BaseParticleController::BeginDraw()
 void BaseParticleController::EndDraw()
 {
 	mRenderer->EndDraw();
+}
+
+/**************************************
+描画パーティクル数取得処理
+***************************************/
+unsigned BaseParticleController::GetParticleCount() const
+{
+	return particleCount;
 }

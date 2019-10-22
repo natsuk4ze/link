@@ -24,7 +24,7 @@ namespace Field::Model
 	/**************************************
 	コンストラクタ
 	***************************************/
-	RouteProcessor::RouteProcessor(DelegatePtr<const PlaceModel*> onChangePlaceType)
+	RouteProcessor::RouteProcessor(Delegate<void(const PlaceModel*)> *onChangePlaceType)
 	{
 		this->onChangePlaceType = onChangePlaceType;
 	}
