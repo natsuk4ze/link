@@ -191,7 +191,7 @@ void CrossFilterController::SampleBrightness(LPDIRECT3DTEXTURE9 targetTexture)
 void CrossFilterController::ProcessBlur()
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	const int PassMax = 2;
+	const int PassMax = 4;
 	const int TextureMax = 2;
 
 	//ブラー用のサーフェイスをクリア
@@ -206,14 +206,12 @@ void CrossFilterController::ProcessBlur()
 		//ビューポートを設定
 		pDevice->SetViewport(&blurViewPort[j]);
 
-		cntBlur = 1;
-
 		//ブラー処理
-		const int BlurLoop = 4;
-		for (int i = 0; i < BlurLoop; i++, cntBlur++)
+		const int BlurLoop = 8;
+		for (cntBlur = 0; cntBlur < BlurLoop; cntBlur++)
 		{
-			pDevice->SetRenderTarget(0, blurSurface[j][cntBlur % TextureMax]);
-			pDevice->SetTexture(0, blurTexture[j][(cntBlur + 1) % TextureMax]);
+			pDevice->SetRenderTarget(0, blurSurface[j][(cntBlur + 1) % TextureMax]);
+			pDevice->SetTexture(0, blurTexture[j][cntBlur % TextureMax]);
 			blurFilter[j]->DrawEffect(cntBlur % PassMax);
 		}
 	}
