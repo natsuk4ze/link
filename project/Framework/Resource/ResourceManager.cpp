@@ -145,6 +145,35 @@ void ResourceManager::ReleasePolygon(const char* tag)
 }
 
 /**************************************
+エフェクト読み込み処理
+***************************************/
+void ResourceManager::LoadEffect(const char * path)
+{
+	std::string tagStr = std::string(path);
+
+	//重複確認
+	if (effectPool.count(tagStr) != 0)
+		return;
+
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	D3DXCreateEffectFromFile(pDevice, path, 0, 0, D3DXSHADER_SKIPVALIDATION, 0, &effectPool[tagStr], 0);
+}
+
+/**************************************
+エフェクト解放処理
+***************************************/
+void ResourceManager::ReleaseEffect(const char * path)
+{
+	std::string tagStr = std::string(path);
+
+	//登録確認
+	if (effectPool.count(tagStr) == 0)
+		return;
+
+	SAFE_RELEASE(effectPool[tagStr]);
+}
+
+/**************************************
 板ポリゴン参照処理
 ***************************************/
 bool ResourceManager::GetPolygon(const char* tag, BoardPolygon*& pOut)
@@ -156,6 +185,22 @@ bool ResourceManager::GetPolygon(const char* tag, BoardPolygon*& pOut)
 		return false;
 
 	pOut = polygonPool[tagStr];
+	pOut->AddRef();
+	return true;
+}
+
+/**************************************
+エフェクト取得処理
+***************************************/
+bool ResourceManager::GetEffect(const char * path, LPD3DXEFFECT & pOut)
+{
+	std::string tagStr = std::string(path);
+
+	//登録確認
+	if (effectPool.count(tagStr) == 0)
+		return false;
+
+	pOut = effectPool[tagStr];
 	pOut->AddRef();
 	return true;
 }
@@ -182,4 +227,10 @@ void ResourceManager::AllRelease()
 		SAFE_DELETE(pair.second);
 	}
 	polygonPool.clear();
+
+	for (auto&& pair : effectPool)
+	{
+		SAFE_RELEASE(pair.second);
+	}
+	effectPool.clear();
 }
