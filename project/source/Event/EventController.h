@@ -12,6 +12,11 @@
 #include "../Field/Place/FieldPlaceModel.h"
 
 //*****************************************************************************
+// 前方宣言(おーはま追記)
+//*****************************************************************************
+class EventViewer;
+
+//*****************************************************************************
 // クラス定義
 //*****************************************************************************
 class EventController
@@ -27,6 +32,7 @@ private:
 	std::vector<EventBase*> EventVec;
 	EventViewer *eventViewer;
 	Field::FieldController *fieldController;
+
 	int FieldLevel;
 
 	void LoadCSV(const char* FilePath);

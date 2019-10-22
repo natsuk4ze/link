@@ -31,10 +31,10 @@ public:
 	void Draw(void);
 	void SetEventMessage(const std::string Message);
 
-	std::vector <BaseViewer*> eventViewer;
-
 private:
 	int eventViewerMax;
+
+	std::vector <BaseViewer*> eventViewer;
 
 	EventTelop * eventTelop;
 	EventMessage *eventMessage;

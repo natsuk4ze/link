@@ -9,6 +9,10 @@
 #include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
 #include "StockViewer.h"
 
+#ifdef _DEBUG
+#include "../../../../Framework/Input/input.h"
+#endif
+
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
@@ -32,7 +36,7 @@ static const char *iconTexPath[StockViewer::typeMax]
 static const float hopNumValue = 30.0f;
 
 //数字の初期サイズ
-static const D3DXVECTOR3 initNumSize = D3DXVECTOR3(20.0f, 46.0f, 0.0f);
+static const D3DXVECTOR3 initNumSize = D3DXVECTOR3(42.0f, 42.0f, 0.0f);
 
 //*****************************************************************************
 // コンストラクタ
@@ -47,12 +51,11 @@ StockViewer::StockViewer()
 		num[i]->MakeVertex();
 		num[i]->size = initNumSize;
 		num[i]->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		num[i]->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.3f, SCREEN_HEIGHT / 10 * 2.50f + i*intervalViewerPos, 0.0f);
+		num[i]->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.21f, SCREEN_HEIGHT / 10 * 2.70f + i*intervalViewerPos, 0.0f);
 		num[i]->SetColor(SET_COLOR_NOT_COLORED);
-		parameterBox[i] = 0;
-		num[i]->intervalNumberScr = 120.0f;
+		num[i]->intervalNumberScr = 42.0f;
 		num[i]->intervalNumberTex = 0.10f;
-		num[i]->placeMax = 1;
+		num[i]->placeMax = 2;
 		num[i]->baseNumber = 10;
 		num[i]->isHopped = false;
 		num[i]->radian = 0;
@@ -63,7 +66,7 @@ StockViewer::StockViewer()
 		icon[i]->MakeVertex();
 		icon[i]->size = D3DXVECTOR3(180.0f, 135.0f, 0.0f);
 		icon[i]->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		icon[i]->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.7f, SCREEN_HEIGHT / 10 * 2.50f + i * intervalViewerPos, 0.0f);
+		icon[i]->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.7f, SCREEN_HEIGHT / 10 * 2.70f + i * intervalViewerPos, 0.0f);
 		icon[i]->SetColor(SET_COLOR_NOT_COLORED);
 	}
 }
@@ -110,6 +113,14 @@ void StockViewer::Animate(void)
 {
 	for (int i = 0; i < typeMax; i++)
 	{
+		//前フレームのパラメータとの差が0出ないときホッピング状態にする
+		currentParam[i] = parameterBox[i];
+		if (currentParam[i] - lastParam[i] != 0)
+		{
+			num[i]->isHopped = true;
+		}
+		lastParam[i] = parameterBox[i];
+
 		//ホッピング処理
 		num[i]->size.y = num[i]->HopNumber(num[i]->size.y, initNumSize.y, hopNumValue);
 	}

@@ -6,9 +6,12 @@
 //=============================================================================
 #include "../../../../main.h"
 #include "../../Framework/ViewerDrawer/TelopDrawer.h"
-#include "../../../../Framework/Input/input.h"
 #include"../../../../Framework/Math/Easing.h"
 #include "EventTelop.h"
+
+#ifdef _DEBUG
+#include "../../../../Framework/Input/input.h"
+#endif
 
 //*****************************************************************************
 // グローバル変数
@@ -67,11 +70,21 @@ static const EaseType textAnimType[animMax] = {
 
 //テキストアニメーション間隔
 static const float textAnimDuration[animMax] = {
-	10,
+	30,
 	120,
 	100,
 	120,
-	10
+	30
+};
+
+//アニメーションシーン
+enum TelopAnimScene
+{
+	WaitBG_Open,
+	InText,
+	StopText,
+	OutText,
+	WaitBG_Close
 };
 
 //*****************************************************************************
@@ -84,7 +97,7 @@ EventTelop::EventTelop()
 	text->MakeVertexText();
 	text->size = D3DXVECTOR3(512, 128.0f, 0.0f);
 	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	text->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 5), SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
+	text->position = D3DXVECTOR3(SCREEN_WIDTH*1.5, SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
 	text->SetColor(SET_COLOR_NOT_COLORED);
 
 	//背景
@@ -96,11 +109,11 @@ EventTelop::EventTelop()
 	bg->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 5), SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
 	bg->SetColor(SET_COLOR_NOT_COLORED);
 
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
 	//コンテナにテクスチャ情報をロードする
 	for (int i = 0; i < typeMax; i++)
 	{
+		LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
 		LPDIRECT3DTEXTURE9 tTex;
 		LPDIRECT3DTEXTURE9 bgTex;
 
@@ -132,7 +145,6 @@ EventTelop::~EventTelop()
 //=============================================================================
 void EventTelop::Update()
 {
-	bg->PlayBG();
 	Play();
 
 #ifdef _DEBUG
@@ -169,46 +181,52 @@ void EventTelop::Draw(void)
 //=============================================================================
 void EventTelop::Play()
 {
-	//画面外へ初期化
-	D3DXVECTOR3 initPos = D3DXVECTOR3(3000.0f, SCREEN_HEIGHT / 2, 0.0f);
-	text->position = initPos;
-
 	if (text->isPlaying&&bg->isPlaying)
 	{
-		if (text->currentAnim == text->WaitBG_Open && bg->isBG_Openinig == false)
+		//背景アニメーション開始
+		bg->PlayBG();
+
+		//アニメーションがWaitBG_Openの間背景をオープンする
+		if (text->currentAnim == WaitBG_Open && bg->isBG_Openinig == false)
 		{
 			bg->PlayBG_Open();
 		}
-		if (text->currentAnim == text->WaitBG_Close && bg->isBG_Closing == false)
+		//アニメーションがWaitBG_Closeの間背景をクローズする
+		if (text->currentAnim == WaitBG_Close && bg->isBG_Closing == false)
 		{
 			bg->PlayBG_Close();
 		}
 
+		//フレーム更新
 		text->countFrame++;
 
+		//ポジションを更新
 		text->position.x = Easing::EaseValue(text->GetCountObject(textAnimDuration[text->currentAnim]),
 			textStartPositionX[text->currentAnim],
 			textEndPositionX[text->currentAnim],
 			textAnimType[text->currentAnim]);
 
+		//アニメーション更新
 		if (text->countFrame == textAnimDuration[text->currentAnim])
 		{
 			text->countFrame = 0;
 			text->currentAnim++;
 		}
-		if (text->currentAnim == animMax)
+
+		//アニメーション終了
+		if (text->currentAnim >= animMax)
 		{
 			text->countFrame = 0;
 			text->currentAnim = 0;
-			text->position = initPos;
 			text->isPlaying = false;
-		}
-		if (text->currentAnim > animMax)
-		{
 			bg->isPlaying = false;
 
-			//再生終了の通知
-			(*onFinish)();
+			//ヌルチェックして通知
+			if (onFinish != NULL)
+			{
+				//再生終了の通知
+				(*onFinish)();
+			}
 		}
 	}
 }

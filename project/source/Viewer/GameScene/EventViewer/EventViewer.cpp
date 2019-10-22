@@ -67,5 +67,5 @@ void EventViewer::Draw(void)
 //=============================================================================
 void EventViewer::SetEventMessage(const std::string Message)
 {
-	eventMessage->SetEventMessage(Message);
+	eventMessage->Set(Message);
 }

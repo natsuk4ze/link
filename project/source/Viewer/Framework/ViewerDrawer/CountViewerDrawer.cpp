@@ -27,13 +27,13 @@ CountViewerDrawer::~CountViewerDrawer()
 void CountViewerDrawer::SetVertex(int placeCount, float placeInterval)
 {
 	// 頂点座標の設定
-	vertexWk[0].vtx = D3DXVECTOR3(position.x + placeCount * placeInterval, position.y, position.z)
+	vertexWk[0].vtx = D3DXVECTOR3(position.x + placeCount * placeInterval, position.y, 0.0f) 
 		+ D3DXVECTOR3(-size.x, -size.y, 0.0f);
-	vertexWk[1].vtx = D3DXVECTOR3(position.x + placeCount * placeInterval, position.y, position.z)
+	vertexWk[1].vtx = D3DXVECTOR3(position.x + placeCount * placeInterval, position.y, 0.0f) 
 		+ D3DXVECTOR3(size.x, -size.y, 0.0f);
-	vertexWk[2].vtx = D3DXVECTOR3(position.x + placeCount * placeInterval, position.y, position.z)
+	vertexWk[2].vtx = D3DXVECTOR3(position.x + placeCount * placeInterval, position.y, 0.0f) 
 		+ D3DXVECTOR3(-size.x, size.y, 0.0f);
-	vertexWk[3].vtx = D3DXVECTOR3(position.x + placeCount * placeInterval, position.y, position.z)
+	vertexWk[3].vtx = D3DXVECTOR3(position.x + placeCount * placeInterval, position.y, 0.0f) 
 		+ D3DXVECTOR3(size.x, size.y, 0.0f);
 }
 
@@ -43,10 +43,15 @@ void CountViewerDrawer::SetVertex(int placeCount, float placeInterval)
 void CountViewerDrawer::SetTexture(int number, float placeInterval)
 {
 	// 頂点座標の設定
-	vertexWk[0].tex = D3DXVECTOR2(number * placeInterval, 0.0f);
-	vertexWk[1].tex = D3DXVECTOR2(number * placeInterval + placeInterval, 0.0f);
-	vertexWk[2].tex = D3DXVECTOR2(number * placeInterval, 1.0f);
-	vertexWk[3].tex = D3DXVECTOR2(number * placeInterval + placeInterval, 1.0f);
+	float sizeX = 1.0f / texDivX;
+	float sizeY = 1.0f / texDivY;
+	int x = number % texDivX;
+	int y = number / texDivX;
+
+	vertexWk[0].tex = D3DXVECTOR2(x * sizeX, y * sizeY);
+	vertexWk[1].tex = D3DXVECTOR2((x + 1) * sizeX, y * sizeY);
+	vertexWk[2].tex = D3DXVECTOR2(x * sizeX, (y + 1) * sizeY);
+	vertexWk[3].tex = D3DXVECTOR2((x + 1) * sizeX, (y + 1) * sizeY);
 }
 
 //=============================================================================

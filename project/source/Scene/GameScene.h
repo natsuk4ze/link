@@ -33,7 +33,6 @@ namespace Field::Model
 
 class SkyBox;
 class FieldCamera;
-class TextViewer;
 class GameViewer;
 class EventController;
 class GameParticleManager;
@@ -76,7 +75,6 @@ private:
 	SkyBox *skybox;								//背景スカイボックス
 	FieldCamera* fieldCamera;					//フィールドカメラ
 	Field::FieldController *field;				//フィールドコントローラ
-	TextViewer *text;							//テスト用テキストビューワ
 	GameViewer *gameViewer;						//ゲームビュアー
 	EventController *eventController;			//イベントコントローラー
 	GameParticleManager *particleManager;		//パーティクルマネージャ

@@ -46,6 +46,12 @@ private:
 	BaseViewerDrawer *icon[typeMax];
 	CountViewerDrawer *num[typeMax];
 
+	//現在のパラメータ
+	int currentParam[typeMax] = {};
+
+	//１フレーム前のパラメータ
+	int lastParam[typeMax] = {};
+
 	//アニメーション
 	void Animate(void);
 };

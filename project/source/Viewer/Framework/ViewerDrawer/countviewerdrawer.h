@@ -43,6 +43,8 @@ private:
 	void SetVertex(int placeCount, float placeInterval);
 	void SetTexture(int number, float placeInterval);
 
+	int texDivX = 4;
+	int texDivY = 3;
 };
 
 #endif
