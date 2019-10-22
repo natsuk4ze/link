@@ -10,6 +10,7 @@
 #include "Game/BlueSpark.h"
 #include "Game/BlueDebris.h"
 #include "Game/WhiteSmog.h"
+#include "Game/ColorfulDebris.h"
 
 /**************************************
 staticƒƒ“ƒo
@@ -28,6 +29,7 @@ void GameParticleManager::Init()
 	controllers[GameParticle::BlueSpark] = new Effect::Game::BlueSparkController();
 	controllers[GameParticle::BlueDebris] = new Effect::Game::BlueDebrisController();
 	controllers[GameParticle::WhiteSmog] = new Effect::Game::WhiteSmogController();
+	controllers[GameParticle::ColorfulDebis] = new Effect::Game::ColorfulDebrisController();
 
 	crossFilter->SetPower(BloomPower[0], BloomPower[1], BloomPower[2]);
 	crossFilter->SetThrethold(BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]);
