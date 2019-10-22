@@ -99,6 +99,10 @@ private:
 	//イベントハンドラ設定処理
 	void SetEventHandler();
 
+	//static定数メンバ
+	static const float BloomPower[3];
+	static const float BloomThrethold[3];
+
 	//各ステートクラス
 	class GameInit;
 	class GameIdle;

@@ -14,6 +14,7 @@
 #include "../../Effect/GameParticleManager.h"
 #include "../../../Framework/Camera/CameraTranslationPlugin.h"
 #include "../../../Framework/Camera/CameraShakePlugin.h"
+#include "../../../Framework/PostEffect/BloomController.h"
 
 /**************************************
 入場処理
@@ -59,6 +60,10 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 
 	//イベントハンドラ設定
 	entity.SetEventHandler();
+
+	//ブルームエフェクトのパラメータ設定
+	entity.bloomController->SetPower(entity.BloomPower[0], entity.BloomPower[1], entity.BloomPower[2]);
+	entity.bloomController->SetThrethold(entity.BloomThrethold[0], entity.BloomThrethold[1], entity.BloomThrethold[2]);
 
 	//制限時間読み込み
 	//TODO:シーンを跨いで引き継ぐようにする
