@@ -64,6 +64,7 @@ void BaseTransitionMask::EndMask()
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
+	pDevice->SetRenderState(D3DRS_STENCILENABLE, false);
 	pDevice->SetRenderState(D3DRS_STENCILREF, 1);
 	pDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_LESS);
 	pDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
