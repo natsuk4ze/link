@@ -342,4 +342,19 @@
   <ItemGroup>
     <None Include="imgui.ini" />
   </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\BloomFilter.fx" />
+    <FxCompile Include="Shaders\BlurFilter.fx" />
+    <FxCompile Include="Shaders\CrossBlur.fx" />
+    <FxCompile Include="Shaders\DepthRenderer.fx" />
+    <FxCompile Include="Shaders\DepthShadow.fx" />
+    <FxCompile Include="Shaders\HexaCrossBlur.fx" />
+    <FxCompile Include="Shaders\ModelInstancing.fx" />
+    <FxCompile Include="Shaders\MonotoneFilter.fx" />
+    <FxCompile Include="Shaders\particle3D.fx" />
+    <FxCompile Include="Shaders\ShockBlur.fx" />
+    <FxCompile Include="Shaders\SpeedBlur.fx" />
+    <FxCompile Include="Shaders\SpikeNoise.fx" />
+    <FxCompile Include="Shaders\StrongBlurFilter.fx" />
+  </ItemGroup>
 </Project>

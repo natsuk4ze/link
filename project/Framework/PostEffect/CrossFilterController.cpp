@@ -7,12 +7,14 @@
 #include "CrossFilterController.h"
 #include "Effect/BloomFilter.h"
 #include "Effect/CrossBlurFilter.h"
+#include "../Tool/DebugWindow.h"
 
+#define DEBUG_CROSSFILTER
 /**************************************
 staticメンバ
 ***************************************/
-const float CrossFilterController::DefaultPower = 0.3f;
-const float CrossFilterController::DefaultThrethold = 0.4f;
+const float CrossFilterController::DefaultPower = 1.0f;
+const float CrossFilterController::DefaultThrethold = 0.0f;
 
 /**************************************
 コンストラクタ
@@ -125,6 +127,16 @@ void CrossFilterController::Draw(LPDIRECT3DTEXTURE9 targetTexture)
 	//サンプリングを元に戻す
 	pDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
 	pDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
+
+#ifdef DEBUG_CROSSFILTER
+	Debug::Begin("CrossFilter");
+	for (int i = 0; i < 3; i++)
+	{
+		Debug::DrawTexture(blurTexture[i][0], { 200.0f, 100.0f });
+		Debug::SameLine();
+	}
+	Debug::End();
+#endif
 }
 
 /**************************************
@@ -197,12 +209,12 @@ void CrossFilterController::ProcessBlur()
 		cntBlur = 1;
 
 		//ブラー処理
-		const int BlurLoop = 3;
+		const int BlurLoop = 4;
 		for (int i = 0; i < BlurLoop; i++, cntBlur++)
 		{
 			pDevice->SetRenderTarget(0, blurSurface[j][cntBlur % TextureMax]);
 			pDevice->SetTexture(0, blurTexture[j][(cntBlur + 1) % TextureMax]);
-			blurFilter[i]->DrawEffect(cntBlur % PassMax);
+			blurFilter[j]->DrawEffect(cntBlur % PassMax);
 		}
 	}
 

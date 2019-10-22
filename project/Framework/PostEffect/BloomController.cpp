@@ -10,12 +10,12 @@
 
 #include "../Tool/DebugWindow.h"
 
-#define DEBGU_BLOOM
+#define DEBUG_BLOOM
 /**************************************
 staticメンバ
 ***************************************/
-const float BloomController::DefaultPower = 0.3f;
-const float BloomController::DefaultThrethold = 0.4f;
+const float BloomController::DefaultPower = 0.8f;
+const float BloomController::DefaultThrethold = 0.1f;
 
 /**************************************
 コンストラクタ
@@ -128,7 +128,7 @@ void BloomController::Draw(LPDIRECT3DTEXTURE9 texture)
 	pDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
 	pDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
 
-#ifdef _DEBUG_BLOOM
+#ifdef DEBUG_BLOOM
 	Debug::Begin("Bloom");
 	for (int i = 0; i < 3; i++)
 	{
@@ -192,7 +192,6 @@ void BloomController::ProcessBlur()
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	const int PassMax = 2;
-	const int TextureMax = 2;
 
 	//ブラー用のサーフェイスをクリア
 	for (int i = 0; i < 3; i++)
@@ -201,20 +200,20 @@ void BloomController::ProcessBlur()
 		pDevice->Clear(0, 0, D3DCLEAR_TARGET, 0, 0, 0);
 	}
 
-	for (int j = 0; j < 3; j++)
+	for (int cntReduction = 0; cntReduction < 3; cntReduction++)
 	{
 		//ビューポートを設定
-		pDevice->SetViewport(&blurViewPort[j]);
+		pDevice->SetViewport(&blurViewPort[cntReduction]);
 
 		cntBlur = 1;
 
 		//ブラー処理
-		const int BlurLoop = 3;
-		for (int i = 0; i < BlurLoop; i++, cntBlur++)
+		const int BlurLoop = 4;
+		for (int cntBlur = 0; cntBlur < BlurLoop; cntBlur++)
 		{
-			pDevice->SetRenderTarget(0, blurSurface[j][cntBlur % TextureMax]);
-			pDevice->SetTexture(0, blurTexture[j][(cntBlur + 1) % TextureMax]);
-			blurFilter[i]->DrawEffect(cntBlur % PassMax);
+			pDevice->SetRenderTarget(0, blurSurface[cntReduction][(cntBlur + 1) % NumBlur]);
+			pDevice->SetTexture(0, blurTexture[cntReduction][cntBlur % NumBlur]);
+			blurFilter[cntReduction]->DrawEffect(cntBlur % PassMax);
 		}
 	}
 
