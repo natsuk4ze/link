@@ -9,7 +9,7 @@
 #include "Effect/CrossBlurFilter.h"
 #include "../Tool/DebugWindow.h"
 
-#define DEBUG_CROSSFILTER
+//#define DEBUG_CROSSFILTER
 /**************************************
 staticÉÅÉìÉo
 ***************************************/

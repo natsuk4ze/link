@@ -10,7 +10,7 @@
 
 #include "../Tool/DebugWindow.h"
 
-#define DEBUG_BLOOM
+//#define DEBUG_BLOOM
 /**************************************
 staticƒƒ“ƒo
 ***************************************/
