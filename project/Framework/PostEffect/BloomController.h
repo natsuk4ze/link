@@ -25,7 +25,7 @@ public:
 	BloomController();
 	~BloomController();
 
-	void Draw(LPDIRECT3DTEXTURE9 targetTexture = NULL);
+	void Draw(LPDIRECT3DTEXTURE9 targetTexture);
 	void SetPower(float power1, float power2, float power3);
 	void SetThrethold(float threthold1, float threthold2, float threthold3);
 

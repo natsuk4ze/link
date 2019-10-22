@@ -21,6 +21,8 @@
 #include "../Effect/GameParticleManager.h"
 #include "../Field/FieldEventHandler.h"
 
+#include "../../Framework/PostEffect/BloomController.h"
+
 #include "GameState/GameInit.h"
 #include "GameState/GameIdle.h"
 #include "GameState/GameFinish.h"
@@ -53,6 +55,7 @@ void GameScene::Init()
 	eventController->ReceiveFieldController(field);
 	particleManager = GameParticleManager::Instance();
 	eventHandler = new FieldEventHandler();
+	bloomController = new BloomController();
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
@@ -85,6 +88,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(field);
 	SAFE_DELETE(gameViewer);
 	SAFE_DELETE(eventController);
+	SAFE_DELETE(bloomController);
 
 	//パーティクル終了
 	particleManager->Uninit();
@@ -154,6 +158,9 @@ void GameScene::Draw()
 
 	// イベント描画
 	eventController->Draw();
+
+	//ポストエフェクト適用
+	bloomController->Draw(renderTexture);
 
 	//パーティクル描画
 	particleManager->Draw();

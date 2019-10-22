@@ -37,6 +37,7 @@ class GameViewer;
 class EventController;
 class GameParticleManager;
 class FieldEventHandler;
+class BloomController;
 
 /**************************************
 クラス定義
@@ -82,6 +83,9 @@ private:
 	FieldEventHandler* eventHandler;			//イベントハンドラ
 
 	int remainTime;								//制限時間
+
+	//ポストエフェクト関連
+	BloomController *bloomController;			//ブルームエフェクトのコントローラ
 
 	//デリゲータ
 	Delegate<void(Route&)> *onBuildRoad;		//道を生成したときのデリゲータ

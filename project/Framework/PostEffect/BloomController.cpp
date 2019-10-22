@@ -5,7 +5,9 @@
 //
 //=====================================
 #include "BloomController.h"
+#include "../Tool/DebugWindow.h"
 
+#define DEBGU_BLOOM
 /**************************************
 staticメンバ
 ***************************************/
@@ -23,7 +25,7 @@ BloomController::BloomController() :
 
 	//パワーとしきい値の初期化
 	bloomPower[0] = bloomPower[1] = bloomPower[2] = DefaultPower;
-	bloomThrethold[0] = bloomThrethold[0] = bloomThrethold[0] = DefaultThrethold;
+	bloomThrethold[0] = bloomThrethold[1] = bloomThrethold[2] = DefaultThrethold;
 
 	//ブルームフィルタのインスタンス、テクスチャ、サーフェイスを設定
 	bloomFilter = new BloomFilter();
@@ -107,6 +109,16 @@ void BloomController::Draw(LPDIRECT3DTEXTURE9 texture)
 	//サンプリングをもとに戻す
 	pDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
 	pDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
+
+#ifdef _DEBUG_BLOOM
+	Debug::Begin("Bloom");
+	for (int i = 0; i < 3; i++)
+	{
+		Debug::DrawTexture(blurTexture[i][0], { 200.0f, 100.0f });
+		Debug::SameLine();
+	}
+	Debug::End();
+#endif
 }
 
 /**************************************
@@ -210,6 +222,7 @@ void BloomController::BlendBloom()
 
 	//レンダーステートを加算合成に設定
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 
 	bloomFilter->Resize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -221,4 +234,5 @@ void BloomController::BlendBloom()
 
 	//レンダーステートを元に戻す
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 }
