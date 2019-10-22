@@ -68,7 +68,6 @@
     <ClInclude Include="Framework\PostEffect\Effect\SpeedBlurFilter.h" />
     <ClInclude Include="Framework\PostEffect\Effect\SpikeNoise.h" />
     <ClInclude Include="Framework\PostEffect\Effect\StrongBlurFilter.h" />
-    <ClInclude Include="Framework\PostEffect\PostEffectManager.h" />
     <ClInclude Include="Framework\PostEffect\ScreenObject.h" />
     <ClInclude Include="Framework\PostEffect\ShockBlurController.h" />
     <ClInclude Include="Framework\PostEffect\SpeedBlurController.h" />
@@ -238,7 +237,6 @@
     <ClCompile Include="Framework\PostEffect\Effect\SpeedBlurFilter.cpp" />
     <ClCompile Include="Framework\PostEffect\Effect\SpikeNoise.cpp" />
     <ClCompile Include="Framework\PostEffect\Effect\StrongBlurFilter.cpp" />
-    <ClCompile Include="Framework\PostEffect\PostEffectManager.cpp" />
     <ClCompile Include="Framework\PostEffect\ScreenObject.cpp" />
     <ClCompile Include="Framework\PostEffect\ShockBlurController.cpp" />
     <ClCompile Include="Framework\PostEffect\SpeedBlurController.cpp" />

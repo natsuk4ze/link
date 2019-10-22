@@ -8,7 +8,6 @@
 #define _BLOOMCONTROLLER_H_
 
 #include "../../main.h"
-#include "../Pattern/BaseSingleton.h"
 #include "BaseEffectController.h"
 #include "Effect/BloomFilter.h"
 #include "Effect/BlurFilter.h"
@@ -20,12 +19,9 @@
 /**************************************
 ƒNƒ‰ƒX’è‹`
 ***************************************/
-class BloomController : public BaseSingleton<BloomController>, public BaseEffectController
+class BloomController : public BaseEffectController
 {
 public:
-	friend class BaseSingleton<BloomController>;
-
-	void Update();
 	void Draw(LPDIRECT3DTEXTURE9 targetTexture = NULL);
 
 private:
