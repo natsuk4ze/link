@@ -161,9 +161,11 @@ void GameScene::Draw()
 	// イベント描画
 	eventController->Draw();
 
+	//ポストエフェクトは重いのでリリース版のみ適用する
+#ifndef _DEBUG
 	//ポストエフェクト適用
 	bloomController->Draw(renderTexture);
-
+#endif
 	//パーティクル描画
 	particleManager->Draw();
 
