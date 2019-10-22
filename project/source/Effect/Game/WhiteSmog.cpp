@@ -34,7 +34,7 @@ namespace Effect::Game
 
 		//エミッターコンテナ作成処理
 		const unsigned MaxEmitter = 32;
-		const int NumEmit = 6;
+		const int NumEmit = 8;
 		const int DurationEmit = 3;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
@@ -47,8 +47,8 @@ namespace Effect::Game
 	WhiteSmog staticメンバ
 	***************************************/
 	const int WhiteSmog::MaxLife = 30;
-	const int WhiteSmog::MinLife = 10;
-	const float WhiteSmog::MaxSpeed = 3.0f;
+	const int WhiteSmog::MinLife = 20;
+	const float WhiteSmog::MaxSpeed = 2.5f;
 	const float WhiteSmog::MinSpeed = 1.5f;
 
 	/**************************************
@@ -71,7 +71,11 @@ namespace Effect::Game
 		cntFrame = 0;
 		active = true;
 
+		//ランダムにZ軸回転
 		transform->SetRotation(Vector3::Forward * Math::RandomRange(0.0f, 360.0f));
+
+		//移動方向に初期座標をオフセット
+		transform->Move(directionMove * 2.5f);
 	}
 
 	/**************************************
@@ -84,9 +88,11 @@ namespace Effect::Game
 
 		cntFrame++;
 
+		//経過時間でアニメーション
 		float t = (float)cntFrame / lifeFrame;
 		Animation(t);
 
+		//イージングで移動
 		float speed = Easing::EaseValue(t, speedMove, 0.0f, EaseType::OutCubic);
 		transform->Move(speed * directionMove);
 	}
