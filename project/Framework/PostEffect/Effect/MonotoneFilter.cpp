@@ -6,36 +6,11 @@
 //=====================================
 #include "MonotoneFilter.h"
 #include "../../Math/TMath.h"
+#include "../../Resource/ResourceManager.h"
 
 /**************************************
 マクロ定義
 ***************************************/
-#define EFFECTFILE_MONOTONE_PATH	"PostEffect/MonotoneFilter.fx"
-#define PRECOMPILE_MONOTONE_PATH	"data/EFFECT/MonotoneFilter.cfx"
-
-/**************************************
-グローバル変数
-***************************************/
-MonotoneFilter* MonotoneFilter::instance = NULL;
-
-/**************************************
-インスタンス参照処理
-***************************************/
-MonotoneFilter* MonotoneFilter::Instance()
-{
-	if (MonotoneFilter::instance == NULL)
-		MonotoneFilter::instance = new MonotoneFilter();
-
-	return MonotoneFilter::instance;
-}
-
-/**************************************
-インスタンス解放処理
-***************************************/
-void MonotoneFilter::Destroy()
-{
-	delete MonotoneFilter::instance;
-}
 
 /**************************************
 コンストラクタ
@@ -43,12 +18,8 @@ void MonotoneFilter::Destroy()
 MonotoneFilter::MonotoneFilter(DWORD width, DWORD height) :
 	ScreenObject(width, height)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-	HRESULT res = D3DXCreateEffectFromFile(pDevice, (LPSTR)PRECOMPILE_MONOTONE_PATH, 0, 0, D3DXSHADER_SKIPVALIDATION, 0, &effect, 0);
-
-	if(!res)
-		D3DXCreateEffectFromFile(pDevice, (LPSTR)EFFECTFILE_MONOTONE_PATH, 0, 0, 0, 0, &effect, 0);
+	const char* Path = "data/Effect/MonotoneFilter.cfx";
+	ResourceManager::Instance()->GetEffect(Path, effect);
 
 	effect->SetTechnique("tech");
 	hndlPower = effect->GetParameterByName(0, "power");

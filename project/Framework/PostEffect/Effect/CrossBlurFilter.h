@@ -9,6 +9,7 @@
 
 #include "../../../main.h"
 #include "../ScreenObject.h"
+#include <vector>
 
 /**************************************
 É}ÉNÉçíËã`
@@ -25,8 +26,13 @@ public:
 	void DrawEffect(UINT pass);
 
 private:
+	static const int SizeTexelArray;
+
 	LPD3DXEFFECT effect;
 	D3DXHANDLE hTexelU, hTexelV;
+
+	std::vector<float> offsetTexelU;
+	std::vector<float> offsetTexelV;
 };
 
 #endif

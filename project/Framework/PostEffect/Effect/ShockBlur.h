@@ -24,13 +24,14 @@ public:
 	~ShockBlur();
 	void DrawEffect();
 	void SetPower(float power);
-	void SetCenterPos(D3DXVECTOR3 pos);
-	void SetSurfaceSize(float widht, float height);
+	void SetCenterPos(const D3DXVECTOR3& pos);
 
 private:
 	LPD3DXEFFECT effect;				//シェーダ
 	D3DXHANDLE hndlPower, hndlCenter;	//各ハンドル
 	D3DXHANDLE hndlTU, hndlTV;			//各ハンドル
+
+	float texelU, texelV;
 };
 
 #endif

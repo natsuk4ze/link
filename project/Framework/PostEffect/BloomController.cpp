@@ -28,7 +28,7 @@ BloomController::BloomController() :
 	bloomThrethold[0] = bloomThrethold[1] = bloomThrethold[2] = DefaultThrethold;
 
 	//ブルームフィルタのインスタンス、テクスチャ、サーフェイスを設定
-	bloomFilter = new BloomFilter();
+	bloomFilter = new BloomFilter(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	//ブラーフィルタのインスタンス、テクスチャ、サーフェイスを設定
 	blurFilter = new BlurFilter();

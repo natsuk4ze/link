@@ -153,7 +153,7 @@ void SceneParticleManager::CreateRenderTarget()
 	viewPort.Height = SCREEN_HEIGHT;
 
 	//描画用スクリーンオブジェクト作成
-	screenObj = new ScreenObject();
+	screenObj = new ScreenObject(SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 /**************************************
