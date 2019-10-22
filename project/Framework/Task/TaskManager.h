@@ -29,10 +29,10 @@ class TaskManager : public BaseSingleton<TaskManager>
 	friend class BaseGame;		//Update()の呼び出しをBaseGameのみに許可したいため
 public:
 	//遅延タスク作成処理
-	std::unique_ptr<TaskHandle> CreateDelayedTask(int delay, const std::function<void(void)>& task);
+	TaskHandle CreateDelayedTask(int delay, const std::function<void(void)>& task);
 
 	//定期タスク作成処理
-	std::unique_ptr<TaskHandle> CreatePeriodicTask(int interval, const std::function<void(void)>& task);
+	TaskHandle CreatePeriodicTask(int interval, const std::function<void(void)>& task);
 
 private:
 	//更新処理

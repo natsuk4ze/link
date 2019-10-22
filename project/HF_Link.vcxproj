@@ -111,6 +111,7 @@
     <ClInclude Include="source\Effect\GameParticleManager.h" />
     <ClInclude Include="source\Effect\Game\BlueDebris.h" />
     <ClInclude Include="source\Effect\Game\BlueSpark.h" />
+    <ClInclude Include="source\Effect\Game\WhiteSmog.h" />
     <ClInclude Include="source\Effect\TestParticleCamera.h" />
     <ClInclude Include="source\Effect\TestParticleManager.h" />
     <ClInclude Include="source\Event\EventBase.h" />
@@ -277,6 +278,7 @@
     <ClCompile Include="source\Effect\GameParticleManager.cpp" />
     <ClCompile Include="source\Effect\Game\BlueDebris.cpp" />
     <ClCompile Include="source\Effect\Game\BlueSpark.cpp" />
+    <ClCompile Include="source\Effect\Game\WhiteSmog.cpp" />
     <ClCompile Include="source\Effect\TestParticleCamera.cpp" />
     <ClCompile Include="source\Effect\TestParticleManager.cpp" />
     <ClCompile Include="source\Event\EventBase.cpp" />

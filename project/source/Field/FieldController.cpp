@@ -694,6 +694,6 @@ namespace Field
 			return;
 
 		float raiseValue = placeContainer->CalcDevelopmentLevelAI(developSpeedBonus);
-		AdjustLevelAI(raiseValue);
+		developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + raiseValue);
 	}
 }
