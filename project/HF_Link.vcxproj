@@ -208,6 +208,7 @@
     <ClCompile Include="Framework\Collider\BoxCollider3D.cpp" />
     <ClCompile Include="Framework\Collider\ColliderManager.cpp" />
     <ClCompile Include="Framework\Core\BaseGame.cpp" />
+    <ClCompile Include="Framework\Core\BaseScene.cpp" />
     <ClCompile Include="Framework\Core\GameObject.cpp" />
     <ClCompile Include="Framework\Core\SceneManager.cpp" />
     <ClCompile Include="Framework\Core\Transform.cpp" />

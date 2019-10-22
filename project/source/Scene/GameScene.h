@@ -43,6 +43,7 @@ class FieldEventHandler;
 ***************************************/
 class GameScene : public BaseScene
 {
+	using BaseScene::BaseScene;
 public:
 	using Route = std::vector<Field::Model::PlaceModel*>;
 

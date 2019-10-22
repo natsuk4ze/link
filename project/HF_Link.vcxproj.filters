@@ -337,6 +337,7 @@
     <ClCompile Include="source\Field\FieldEventHandler.cpp" />
     <ClCompile Include="source\Scene\GameState\GamePause.cpp" />
     <ClCompile Include="source\Effect\Game\WhiteSmog.cpp" />
+    <ClCompile Include="Framework\Core\BaseScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

@@ -29,6 +29,7 @@ namespace Field
 ***************************************/
 class ParticleTestScene : public BaseScene
 {
+	using BaseScene::BaseScene;
 public:
 	void Init();
 	void Uninit();
