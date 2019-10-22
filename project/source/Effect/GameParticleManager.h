@@ -38,6 +38,10 @@ public:
 
 	//シンギュラリティイベントのエフェクトセット処理
 	void SetSingularityEffect(const D3DXVECTOR3& position);
+
+private:
+	static const float BloomPower[3];
+	static const float BloomThrethold[3];
 };
 
 #endif
