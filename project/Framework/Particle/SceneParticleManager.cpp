@@ -6,6 +6,10 @@
 //=====================================
 #include "SceneParticleManager.h"
 #include "../PostEffect/CrossFilterController.h"
+#include "../PostEffect/ScreenObject.h"
+#include "BaseParticleController.h"
+#include "../PostEffect/CrossFilterController.h"
+#include "../Tool/DebugWindow.h"
 
 /**************************************
 マクロ定義
@@ -34,6 +38,7 @@ void SceneParticleManager::Init()
 	{
 		CreateRenderTarget();
 		initialized = true;
+		crossFilter = new CrossFilterController();
 	}
 }
 
@@ -51,6 +56,7 @@ void SceneParticleManager::Uninit()
 	SAFE_RELEASE(renderSurface);
 	SAFE_RELEASE(renderTexture);
 	SAFE_DELETE(screenObj);
+	SAFE_DELETE(crossFilter);
 
 	Utility::DeleteContainer(controllers);
 
@@ -89,22 +95,26 @@ void SceneParticleManager::Draw()
 	//インスタンシング描画終了
 	BaseParticleController::EndDraw();
 
-	//リリース版のみクロスフィルタを適用する
-#ifndef _DEBUG	
-	if (isDrewd)
-		CrossFilterController::Instance()->Draw(renderTexture);
-#endif
-
 	//すべての結果を元のレンダーターゲットに描画
 	RestoreRenderParameter();
 	screenObj->Draw();
+
+	//リリース版のみクロスフィルタを適用する
+#ifndef _DEBUG	
+	//if (isDrewd)
+		crossFilter->Draw(renderTexture);
+#endif
 
 	//レンダーステート復元
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	pDevice->SetRenderState(D3DRS_LIGHTING, true);
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
-	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+
+	Debug::Begin("Particle");
+	Debug::DrawTexture(renderTexture, { 200.0f, 100.0f });
+	Debug::End();
 }
 
 /**************************************
@@ -153,7 +163,7 @@ void SceneParticleManager::CreateRenderTarget()
 	viewPort.Height = SCREEN_HEIGHT;
 
 	//描画用スクリーンオブジェクト作成
-	screenObj = new ScreenObject();
+	screenObj = new ScreenObject(SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 /**************************************
@@ -174,6 +184,7 @@ void SceneParticleManager::ChangeRenderParameter()
 
 	//レンダーステート切り替え
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
 }
 
 /**************************************
@@ -185,8 +196,6 @@ void SceneParticleManager::RestoreRenderParameter()
 
 	pDevice->SetRenderTarget(0, oldSuf);
 	pDevice->SetTexture(0, renderTexture);
-	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_INVDESTCOLOR);
-	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 	pDevice->SetViewport(&oldViewport);
 	SAFE_RELEASE(oldSuf);
 }

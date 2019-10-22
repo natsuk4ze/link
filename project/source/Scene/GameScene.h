@@ -37,12 +37,14 @@ class GameViewer;
 class EventController;
 class GameParticleManager;
 class FieldEventHandler;
+class BloomController;
 
 /**************************************
 クラス定義
 ***************************************/
 class GameScene : public BaseScene
 {
+	using BaseScene::BaseScene;
 public:
 	using Route = std::vector<Field::Model::PlaceModel*>;
 
@@ -82,6 +84,9 @@ private:
 
 	int remainTime;								//制限時間
 
+	//ポストエフェクト関連
+	BloomController *bloomController;			//ブルームエフェクトのコントローラ
+
 	//デリゲータ
 	Delegate<void(Route&)> *onBuildRoad;		//道を生成したときのデリゲータ
 
@@ -93,6 +98,10 @@ private:
 
 	//イベントハンドラ設定処理
 	void SetEventHandler();
+
+	//static定数メンバ
+	static const float BloomPower[3];
+	static const float BloomThrethold[3];
 
 	//各ステートクラス
 	class GameInit;

@@ -9,6 +9,7 @@
 
 #include "../../../main.h"
 #include "../ScreenObject.h"
+#include <vector>
 
 /**************************************
 É}ÉNÉçíËã`
@@ -20,14 +21,18 @@
 class CrossBlurFilter : public ScreenObject
 {
 public:
-	CrossBlurFilter();
+	CrossBlurFilter(DWORD width, DWORD height);
 	~CrossBlurFilter();
 	void DrawEffect(UINT pass);
-	void SetSurfaceSize(float width, float height);
 
 private:
+	static const int SizeTexelArray;
+
 	LPD3DXEFFECT effect;
 	D3DXHANDLE hTexelU, hTexelV;
+
+	std::vector<float> offsetTexelU;
+	std::vector<float> offsetTexelV;
 };
 
 #endif

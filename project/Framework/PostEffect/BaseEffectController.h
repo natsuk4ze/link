@@ -10,8 +10,9 @@
 #include "../../main.h"
 
 /**************************************
-マクロ定義
+前方宣言
 ***************************************/
+class ScreenObject;
 
 /**************************************
 クラス定義
@@ -19,13 +20,11 @@
 class BaseEffectController
 {
 public:
-	virtual void Update() = 0;
-	virtual void Draw(LPDIRECT3DTEXTURE9 targetTexture = NULL) = 0;
-
-	virtual void SetDefaultTarget(LPDIRECT3DTEXTURE9 texture);
+	BaseEffectController();
+	~BaseEffectController();
 
 protected:
-	LPDIRECT3DTEXTURE9 defaultTarget;
+	ScreenObject *renderer;
 };
 
 #endif
