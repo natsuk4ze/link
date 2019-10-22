@@ -7,6 +7,7 @@
 #include "GameParticleManager.h"
 #include "Game/BlueSpark.h"
 #include "Game/BlueDebris.h"
+#include "Game/WhiteSmog.h"
 
 /**************************************
 èâä˙âªèàóù
@@ -18,6 +19,7 @@ void GameParticleManager::Init()
 	controllers.resize(GameParticle::Max, NULL);
 	controllers[GameParticle::BlueSpark] = new Effect::Game::BlueSparkController();
 	controllers[GameParticle::BlueDebris] = new Effect::Game::BlueDebrisController();
+	controllers[GameParticle::WhiteSmog] = new Effect::Game::WhiteSmogController();
 }
 
 /**************************************

@@ -10,6 +10,7 @@
 #include "Route\RouteModel.h"
 #include "FieldConfig.h"
 #include "../../Framework/Task/TaskManager.h"
+#include "../Effect/GameParticleManager.h"
 
 #include "../FieldObject/Actor/CityActor.h"
 #include "../FieldObject/Actor/CrossJunctionActor.h"
@@ -32,10 +33,10 @@ namespace Field::Actor
 	using Model::Adjacency;
 
 	/**************************************
-	using宣言
+	staticメンバ
 	***************************************/
 	const float PlaceActorController::PlacePositionOffset = 10.0f;
-
+	const D3DXVECTOR3 PlaceActorController::PositionEmitSmog = Vector3::Up;
 	/**************************************
 	コンストラクタ
 	***************************************/
@@ -199,17 +200,7 @@ namespace Field::Actor
 				actor->Rotate(90.0f);
 
 			// 生成アニメーション
-			if (delay == 0)
-				ActorAnimation::FallAndExpantion(*actor);
-			else
-			{
-				auto taskHandle = TaskManager::Instance()->CreateDelayedTask(delay, [=]()
-				{
-					ActorAnimation::FallAndExpantion(*actor);
-				});
-				taskHandleContainer.push_back(taskHandle);
-			}
-
+			SetRoadGenerateAnimation(actor, actorPos, delay);
 		}
 		//カーブの場合
 		else
@@ -233,16 +224,7 @@ namespace Field::Actor
 			actor->Rotate(rotAngle);
 
 			// 生成アニメーション
-			if (delay == 0)
-				ActorAnimation::FallAndExpantion(*actor);
-			else
-			{
-				auto taskHandle = TaskManager::Instance()->CreateDelayedTask(delay, [=]()
-				{
-					ActorAnimation::FallAndExpantion(*actor);
-				});
-				taskHandleContainer.push_back(taskHandle);
-			}
+			SetRoadGenerateAnimation(actor, actorPos, delay);
 		}
 	}
 
@@ -381,5 +363,28 @@ namespace Field::Actor
 
 		actorContainer[pattern]->erase(key);
 		return true;
+	}
+
+	/**************************************
+	道生成時のアニメーションセット処理
+	***************************************/
+	void Field::Actor::PlaceActorController::SetRoadGenerateAnimation(PlaceActor * actor, const D3DXVECTOR3 actorPos, int delay)
+	{
+		if (delay == 0)
+			ActorAnimation::FallAndExpantion(*actor, [=]()
+		{
+			GameParticleManager::Instance()->Generate(GameParticle::WhiteSmog, actorPos + PositionEmitSmog);
+		});
+
+		else
+		{
+			TaskManager::Instance()->CreateDelayedTask(delay, [=]()
+			{
+				ActorAnimation::FallAndExpantion(*actor, [=]()
+				{
+					GameParticleManager::Instance()->Generate(GameParticle::WhiteSmog, actorPos + PositionEmitSmog);
+				});
+			});
+		}
 	}
 }

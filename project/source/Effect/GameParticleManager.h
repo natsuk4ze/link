@@ -21,6 +21,7 @@ namespace GameParticle
 	{
 		BlueSpark,		//ブルースパーク
 		BlueDebris,		//ブルースパークの破片
+		WhiteSmog,		//白い煙
 		Max
 	};
 }

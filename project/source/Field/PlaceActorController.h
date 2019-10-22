@@ -54,6 +54,10 @@ namespace Field::Actor
 		//アクター切り替え処理
 		//既にアクターを生成している場合はこっちを呼ぶ
 		void ChangeActor(const Model::PlaceModel* place);
+
+		//定数メンバ
+		static const D3DXVECTOR3 PositionEmitSmog;		//道落下時の煙発生位置
+		static const float PlacePositionOffset;			//アクター同士の配置間隔
 		
 	private:
 		//アクターパターン列挙子
@@ -71,13 +75,10 @@ namespace Field::Actor
 			Max
 		};
 
-		static const float PlacePositionOffset;
-
+		//アクターコンテナ
 		ActorContainer actorContainer;
 
-		//タスクハンドルコンテナ
-		std::vector<TaskHandle> taskHandleContainer;
-
+		//各アクター生成処理
 		void SetRoad(const Model::PlaceModel* place, int delay);
 		void SetTown(const Model::PlaceModel* place);
 		void SetRiver(const Model::PlaceModel* place);
@@ -86,8 +87,12 @@ namespace Field::Actor
 		void SetMountain(const Model::PlaceModel* place);
 		void SetNone(const Model::PlaceModel* place);
 
+		//コンテナ追加、削除処理
 		void AddContainer(ActorPattern pattern, unsigned key, PlaceActor* actor);
 		bool EraseFromContainer(ActorPattern pattern, unsigned key);
+
+		//アニメーションセット処理
+		void SetRoadGenerateAnimation(PlaceActor* actor, const D3DXVECTOR3 actorPos, int delay = 0);
 	};
 }
 #endif
