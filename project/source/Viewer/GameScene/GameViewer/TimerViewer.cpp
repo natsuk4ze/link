@@ -18,7 +18,7 @@ TimerViewer::TimerViewer()
 	intNum = new CountViewerDrawer();
 	intNum->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Number.png");
 	intNum->MakeVertex();
-	intNum->size = D3DXVECTOR3(35.0f, 69.0f, 0.0f);
+	intNum->size = D3DXVECTOR3(60.0f, 60.0f, 0.0f);
 	intNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	intNum->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.3f, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
 	intNum->SetColor(SET_COLOR_NOT_COLORED);
@@ -31,7 +31,7 @@ TimerViewer::TimerViewer()
 	fewNum = new CountViewerDrawer();
 	fewNum->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Number.png");
 	fewNum->MakeVertex();
-	fewNum->size = D3DXVECTOR3(35.0f, 69.0f, 0.0f);
+	fewNum->size = D3DXVECTOR3(60.0f, 60.0f, 0.0f);
 	fewNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	fewNum->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.7f, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
 	fewNum->SetColor(SET_COLOR_NOT_COLORED);
@@ -57,9 +57,6 @@ TimerViewer::TimerViewer()
 	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	bg->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 1.25), SCREEN_HEIGHT / 10 * 0.920f, 0.0f);
 	bg->SetColor(SET_COLOR_NOT_COLORED);
-
-	//ƒpƒ‰ƒ[ƒ^‰Šú‰»
-	parameterBox = 0;
 }
 
 //*****************************************************************************

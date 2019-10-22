@@ -22,6 +22,8 @@
 //アニメーションの数
 static const int animMax = 3;
 
+static const float intervalViewerPos = 100.0f;
+
 //アニメーション開始位置
 static const D3DXVECTOR2 animStartPosition[animMax] = {
 	D3DXVECTOR2((float)(SCREEN_WIDTH / 10 * 8.6),(float)(SCREEN_HEIGHT*1.5)),
@@ -46,7 +48,7 @@ static const EaseType animType[animMax] = {
 //アニメーション間隔
 static const float animDuration[animMax] = {
 	50,
-	60,
+	50,
 	50,
 };
 
@@ -94,16 +96,11 @@ void EventMessage::Update(void)
 {
 	Animate();
 
-	if (currentAnim == Out)
-	{
-		FadeOut();
-	}
-
 #ifdef _DEBUG
 
 	if (Keyboard::GetTrigger(DIK_M))
 	{
-		Set("～メッセージテキストテスト中～");
+		Set("イベント発生！");
 	}
 
 #endif
@@ -158,6 +155,12 @@ void EventMessage::Animate(void)
 			currentAnim++;
 		}
 
+		//Outシーン中はフェードアウトを実行
+		if (currentAnim == Out)
+		{
+			FadeOut();
+		}
+
 		//アニメーション終了
 		if (currentAnim == animMax)
 		{
@@ -185,6 +188,10 @@ void EventMessage::FadeOut(void)
 	if (alpha > 0.0f)
 	{
 		alpha -= 0.05f;
+	}
+	if (alpha < 0.0f)
+	{
+		alpha = 0.0f;
 	}
 
 	text->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, alpha));

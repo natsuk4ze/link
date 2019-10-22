@@ -79,6 +79,6 @@ void GameViewer::ReceiveParam(GameViewerParam&param)
 	timerViewer->parameterBox = param.remainTime;
 
 	//AIレベルビュアー
-	levelViewer->levelAI_Box = param.levelAI;
-	levelViewer->ratioLevelBox = param.ratioLevel;
+	levelViewer->parameterBox[levelViewer->LevelAI] = param.levelAI;
+	levelViewer->parameterBox[levelViewer->RatioLevel] = param.ratioLevel;
 }
