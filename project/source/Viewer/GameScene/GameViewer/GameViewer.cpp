@@ -5,7 +5,7 @@
 //
 //=============================================================================
 #include "../../../../main.h"
-#include "StockViewer.h"
+#include "ItemStockViewer.h"
 #include "TimerViewer.h"
 #include "LevelViewer.h"
 #include "GameViewerParam.h"
@@ -16,7 +16,7 @@
 //*****************************************************************************
 GameViewer::GameViewer()
 {
-	gameViewer.push_back(stockViewer = new StockViewer());
+	gameViewer.push_back(stockViewer = new ItemStockViewer());
 	gameViewer.push_back(timerViewer = new TimerViewer());
 	gameViewer.push_back(levelViewer = new LevelViewer());
 
@@ -79,6 +79,6 @@ void GameViewer::ReceiveParam(GameViewerParam&param)
 	timerViewer->parameterBox = param.remainTime;
 
 	//AIレベルビュアー
-	levelViewer->parameterBox[levelViewer->LevelAI] = param.levelAI;
+	levelViewer->parameterBox[levelViewer->LevelAI] = (float)param.levelAI;
 	levelViewer->parameterBox[levelViewer->RatioLevel] = param.ratioLevel;
 }

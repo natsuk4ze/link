@@ -1,13 +1,13 @@
 //=============================================================================
 //
-// ストックビュアー処理 [StockViewer.cpp]
+// ストックビュアー処理 [ItemStockViewer.cpp]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
 #include "../../../../main.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
-#include "StockViewer.h"
+#include "ItemStockViewer.h"
 
 #ifdef _DEBUG
 #include "../../../../Framework/Input/input.h"
@@ -18,13 +18,13 @@
 //*****************************************************************************
 
 //ストックビュアーの種類数
-const int StockViewer::typeMax;
+const int ItemStockViewer::typeMax;
 
 //ビュアーの表示間隔
 static const float intervalViewerPos = 220.0f;
 
 //アイテムアイコンテクスチャパス
-static const char *iconTexPath[StockViewer::typeMax]
+static const char *iconTexPath[ItemStockViewer::typeMax]
 {
 	"data/TEXTURE/Viewer/GameViewer/StockViewer/Bridge.png",
 	"data/TEXTURE/Viewer/GameViewer/StockViewer/Drill.png",
@@ -41,7 +41,7 @@ static const D3DXVECTOR3 initNumSize = D3DXVECTOR3(42.0f, 42.0f, 0.0f);
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-StockViewer::StockViewer()
+ItemStockViewer::ItemStockViewer()
 {
 	for (int  i = 0; i < typeMax; i++)
 	{
@@ -74,7 +74,7 @@ StockViewer::StockViewer()
 //*****************************************************************************
 // デストラクタ
 //*****************************************************************************
-StockViewer::~StockViewer()
+ItemStockViewer::~ItemStockViewer()
 {
 	for (int i = 0; i < typeMax; i++)
 	{
@@ -86,7 +86,7 @@ StockViewer::~StockViewer()
 //=============================================================================
 // 更新処理
 //=============================================================================
-void StockViewer::Update(void)
+void ItemStockViewer::Update(void)
 {
 	Animate();
 }
@@ -94,7 +94,7 @@ void StockViewer::Update(void)
 //=============================================================================
 // 描画処理
 //=============================================================================
-void StockViewer::Draw(void)
+void ItemStockViewer::Draw(void)
 {
 	for (int i = 0; i < typeMax; i++)
 	{
@@ -109,7 +109,7 @@ void StockViewer::Draw(void)
 //=============================================================================
 // アニメーション処理
 //=============================================================================
-void StockViewer::Animate(void)
+void ItemStockViewer::Animate(void)
 {
 	for (int i = 0; i < typeMax; i++)
 	{
