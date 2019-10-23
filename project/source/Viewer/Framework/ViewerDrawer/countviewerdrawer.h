@@ -24,7 +24,7 @@ public:
 	//スクリーン上の表示間隔
 	float intervalNumberScr;
 
-	//テクスチャ素材のの表示間隔
+	//テクスチャ素材の表示間隔
 	float intervalNumberTex;
 
 	//桁数

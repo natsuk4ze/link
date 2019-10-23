@@ -158,8 +158,8 @@ void GameScene::Draw()
 	//オブジェクト描画
 	field->Draw();
 
-	// イベント描画
-	eventController->Draw();
+	// イベントオブジェクト描画
+	eventController->DrawEventObject();
 
 	//ポストエフェクトは重いのでリリース版のみ適用する
 #ifndef _DEBUG
@@ -168,6 +168,9 @@ void GameScene::Draw()
 #endif
 	//パーティクル描画
 	particleManager->Draw();
+
+	// イベントビューア描画
+	eventController->DrawEventViewer();
 
 	//ビュアー描画
 	gameViewer->Draw();

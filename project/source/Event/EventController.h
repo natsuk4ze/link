@@ -46,7 +46,8 @@ public:
 	EventController(int FieldLevel);
 	~EventController();
 	void Update(void);
-	void Draw(void);
+	void DrawEventObject(void);
+	void DrawEventViewer(void);
 	void CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& route, int FieldLevel);
 	void ReceiveFieldEventHandler(FieldEventHandler *Ptr);
 };

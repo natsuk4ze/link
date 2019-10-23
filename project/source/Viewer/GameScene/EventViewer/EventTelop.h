@@ -41,15 +41,13 @@ public:
 
 	void Update();
 	void Draw(void);
-	//void Set(TelopID id, Delegate<void(void)> *onFinish);
-	void Set(TelopID id, std::function<void(void)> FinishFunc = NULL);
+	void Set(TelopID id, std::function<void(void)> FinishFunc = nullptr);
 
 private:
 	TelopDrawer *text;
 	TelopDrawer *bg;
 
 	//再生終了通知
-	Delegate<void(void)> *onFinish;
 	std::function<void(void)> FinishFunc;
 
 	//テキストのテクスチャ情報コンテナ

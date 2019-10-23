@@ -21,21 +21,21 @@
 #include "MinusEvent/CongestionUpEvent.h"
 #include "MinusEvent/MoveInverseEvent.h"
 
-//イベントビューア（おーはま追記）
-#include "../Viewer/GameScene/EventViewer/EventViewer.h"
-
 #include "../../Framework/Core/Utility.h"
 #include "../../Framework/String/String.h"
 #include "../../Framework/Camera/CameraTranslationPlugin.h"
 #include "../../Framework/Camera/CameraShakePlugin.h"
 
 #include "../Field/Place/FieldPlaceModel.h"
+//イベントビューア（おーはま追記）
+#include "../Viewer/GameScene/EventViewer/EventViewer.h"
 
 #include <fstream>
 
 #if _DEBUG
 #include "../../Framework/Resource/ResourceManager.h"
 #include "../../Framework/Renderer3D/BoardPolygon.h"
+#include "../../Framework/Input/input.h"
 #endif
 
 using namespace EventConfig;
@@ -84,6 +84,13 @@ EventController::~EventController()
 //=============================================================================
 void EventController::Update()
 {
+#if _DEBUG
+	if (Keyboard::GetTrigger(DIK_Z))
+	{
+		EventVec.push_back(new CityDestroyEvent(eventViewer));
+	}
+#endif
+
 	for (auto &Event : EventVec)
 	{
 		if (Event->GetUse())
@@ -104,22 +111,29 @@ void EventController::Update()
 }
 
 //=============================================================================
-// 描画
+// イベントオブジェクト描画
 //=============================================================================
-void EventController::Draw()
+void EventController::DrawEventObject()
 {
+	// イベントオブジェクト描画
 	for (auto &Event : EventVec)
 	{
 		Event->Draw();
 	}
 
-	// イベントビューア描画
-	eventViewer->Draw();
-
 #if _DEBUG
 	// イベントマスの可視化描画
 	DrawDebug();
 #endif
+}
+
+//=============================================================================
+// イベントビューア描画
+//=============================================================================
+void EventController::DrawEventViewer()
+{
+	// イベントビューア描画
+	eventViewer->Draw();
 }
 
 #if _DEBUG
@@ -238,7 +252,7 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					Ptr = new LinkLevelDecreaseEvent();
 					break;
 				case CityDestroy:
-					Ptr = new CityDestroyEvent(D3DXVECTOR3(150.0f, 0.0f, -150.0f));
+					Ptr = new CityDestroyEvent(eventViewer);
 					break;
 				case AILevelDecrease:
 					Ptr = new AILevelDecreaseEvent();
