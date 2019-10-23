@@ -19,7 +19,7 @@ MountainActor::MountainActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentL
 	switch (currentLevel)
 	{
 	case FModel::City:
-		//ResourceManager::Instance()->GetMesh("Mountain-City", mesh);
+		ResourceManager::Instance()->GetMesh("Mountain-City", mesh);
 		break;
 	case FModel::World:
 		break;
