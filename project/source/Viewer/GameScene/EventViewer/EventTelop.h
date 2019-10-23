@@ -23,7 +23,7 @@ class TelopDrawer;
 class EventTelop :public BaseViewer
 {
 public:
-	//テロップの種類
+	//テロップの種類ID
 	enum TelopID
 	{
 		PositiveEvent01,

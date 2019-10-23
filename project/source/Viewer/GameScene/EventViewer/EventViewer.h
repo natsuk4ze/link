@@ -30,16 +30,28 @@ public:
 
 	void Update(void);
 	void Draw(void);
+
+	//メッセージセット
 	void SetEventMessage(const std::string Message);
+
+	//テロップセット
 	void SetEventTelop(EventTelop::TelopID id, Delegate<void(void)> *onFinish);
 
+	//メッセージがセットされるとカウントアップするカウンター
+	int messageSetCnt;
+
 private:
+	static const int messageMax = 5;
 	int eventViewerMax;
 
 	std::vector <BaseViewer*> eventViewer;
+	std::vector <int> messageContainer;
 
 	EventTelop * eventTelop;
-	EventMessage *eventMessage;
+	EventMessage *eventMessage[messageMax];
+
+	void CountMessage(void);
+
 };
 
 #endif
