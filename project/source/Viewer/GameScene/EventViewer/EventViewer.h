@@ -10,6 +10,7 @@
 #include <vector>
 #include <string>
 #include "EventTelop.h"
+#include "../../../../Framework/Pattern/Delegate.h"
 
 //*****************************************************************************
 // ‘O•ûéŒ¾
@@ -30,6 +31,7 @@ public:
 	void Update(void);
 	void Draw(void);
 	void SetEventMessage(const std::string Message);
+	void SetEventTelop(EventTelop::TelopID id, Delegate<void(void)> *onFinish);
 
 private:
 	int eventViewerMax;

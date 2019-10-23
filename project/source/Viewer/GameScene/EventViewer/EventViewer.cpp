@@ -69,3 +69,11 @@ void EventViewer::SetEventMessage(const std::string Message)
 {
 	eventMessage->Set(Message);
 }
+
+//=============================================================================
+// イベント発生テロップを設置
+//=============================================================================
+void EventViewer::SetEventTelop(EventTelop::TelopID id, Delegate<void(void)> *onFinish)
+{
+	eventTelop->Set(id, onFinish);
+}

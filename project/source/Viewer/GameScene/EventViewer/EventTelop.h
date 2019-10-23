@@ -10,7 +10,6 @@
 
 #include "../../Framework/BaseViewer.h"
 #include "../../../../Framework/Pattern/Delegate.h"
-#include "../../../../Framework/Pattern/Delegate.h"
 #include <vector>
 
 //*****************************************************************************
