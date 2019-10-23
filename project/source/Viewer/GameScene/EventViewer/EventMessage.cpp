@@ -100,7 +100,7 @@ void EventMessage::Update(void)
 
 	if (Keyboard::GetTrigger(DIK_M))
 	{
-		Set("イベント発生！");
+		SetEventMessage("イベント発生！");
 	}
 
 #endif
@@ -201,7 +201,7 @@ void EventMessage::FadeOut(void)
 //=============================================================================
 // メッセージセット処理
 //=============================================================================
-void EventMessage::Set(const std::string &message)
+void EventMessage::SetEventMessage(const std::string &message)
 {
 	//テキストにメッセージをセット
 	text->SetText(message);

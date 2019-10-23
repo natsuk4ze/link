@@ -15,12 +15,13 @@
 #include "../FieldObject/Actor/PlaceActor.h"
 #include "../Field/FieldController.h"
 #include "../Field/Camera/FieldCamera.h"
-#include "../../Framework/Renderer2D/TextViewer.h"
 #include "../Viewer/GameScene/GameViewer/GameViewer.h"
 #include "../Event/EventController.h"
 #include "../Field/Place/PlaceConfig.h"
 #include "../Effect/GameParticleManager.h"
 #include "../Field/FieldEventHandler.h"
+
+#include "../../Framework/PostEffect/BloomController.h"
 
 #include "GameState/GameInit.h"
 #include "GameState/GameIdle.h"
@@ -36,6 +37,8 @@
 staticメンバ
 ***************************************/
 int GameScene::level = 0;		//デバッグ用フィールドレベル（本番では非staticメンバにする
+const float GameScene::BloomPower[] = {0.25f, 0.25f, 0.15f};		//ブルームの強さ
+const float GameScene::BloomThrethold[] = {0.45f, 0.5f, 0.55f};		//ブルームをかける輝度の閾値
 
 /**************************************
 初期化処理
@@ -46,18 +49,15 @@ void GameScene::Init()
 	fieldCamera = new FieldCamera();
 	Camera::SetMainCamera(fieldCamera);
 
-	//テキスト用にフォントをロード
-	TextViewer::LoadFont("data/FONT/mplus-2c-heavy.ttf");
-
 	//各インスタンス作成
 	skybox = new SkyBox(D3DXVECTOR3(20000.0f, 20000.0f, 20000.0f));
 	field = new Field::FieldController();
-	text = new TextViewer("M+ 2c heavy", 50);
 	gameViewer = new GameViewer();
-	eventHandler = new FieldEventHandler();
 	eventController = new EventController(Field::Model::City);
+	eventHandler = new FieldEventHandler();
 	eventController->ReceiveFieldEventHandler(eventHandler);
 	particleManager = GameParticleManager::Instance();
+	bloomController = new BloomController();
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
@@ -85,15 +85,12 @@ void GameScene::Uninit()
 	//カメラ削除
 	SAFE_DELETE(fieldCamera);
 
-	//フォントをアンインストール
-	TextViewer::RemoveFont("data/FONT/mplus-2c-heavy.ttf");
-
 	//インスタンス削除
 	SAFE_DELETE(skybox);
 	SAFE_DELETE(field);
-	SAFE_DELETE(text);
 	SAFE_DELETE(gameViewer);
 	SAFE_DELETE(eventController);
+	SAFE_DELETE(bloomController);
 
 	//パーティクル終了
 	particleManager->Uninit();
@@ -164,16 +161,13 @@ void GameScene::Draw()
 	// イベント描画
 	eventController->Draw();
 
+	//ポストエフェクトは重いのでリリース版のみ適用する
+#ifndef _DEBUG
+	//ポストエフェクト適用
+	bloomController->Draw(renderTexture);
+#endif
 	//パーティクル描画
 	particleManager->Draw();
-
-	//テキストビューワをテスト表示
-	static int x = 1650;
-	static int y = 950;
-	static std::string str = "イベント発生！";
-	text->SetText(str);
-	text->SetPos(x, y);
-	text->Draw();
 
 	//ビュアー描画
 	gameViewer->Draw();
