@@ -10,6 +10,7 @@
 #include "../Field/FieldGround.h"
 #include "../Effect/TestParticleCamera.h"
 #include "../FieldObject/Actor/CityActor.h"
+#include "../FieldObject/Actor/MountainActor.h"
 #include "../Field/Place/PlaceConfig.h"
 #include "../Effect/TestParticleManager.h"
 #include "../../Framework/Tool/DebugWindow.h"
@@ -37,7 +38,9 @@ void ParticleTestScene::Init()
 
 	//アクターのモデルをロード
 	ResourceManager::Instance()->LoadMesh("Town-City", "data/MODEL/PlaceActor/Town.x");
-	actor = new CityActor(Vector3::Zero, Field::Model::FieldLevel::City);
+	ResourceManager::Instance()->LoadMesh("Mountain-City", "data/MODEL/PlaceActor/mountain.x");
+	//actor = new CityActor(Vector3::Zero, Field::Model::FieldLevel::City);
+	actor = new MountainActor(Vector3::Zero, Field::Model::FieldLevel::City);
 
 	//カメラ設定
 	Camera::SetMainCamera(sceneCamera);

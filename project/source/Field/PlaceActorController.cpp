@@ -324,6 +324,18 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::SetMountain(const Model::PlaceModel * place)
 	{
+		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
+
+		PlaceActor *actor = new MountainActor(actorPos, Model::FieldLevel::City);
+
+		//回転
+		float rotateAngle = Math::RandomRange(0, 4) * 90.0f;
+		actor->Rotate(rotateAngle);
+
+		//アニメーション
+		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
+
+		AddContainer(ActorPattern::Mountain, place->ID(), actor);
 	}
 
 	/**************************************
