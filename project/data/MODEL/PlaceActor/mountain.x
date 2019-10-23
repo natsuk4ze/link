@@ -11,7 +11,7 @@ Frame Root {
     FrameTransformMatrix {
        2.100000, 0.000000, 0.000000, 0.000000,
        0.000000, 2.100000, 0.000000, 0.000000,
-       0.000000, 0.000000, 3.650868, 0.000000,
+       0.000000, 0.000000, 2.920695, 0.000000,
        0.000000, 0.000000,-3.766754, 1.000000;;
     }
     Mesh { // Plane mesh
@@ -3000,7 +3000,7 @@ Frame Root {
          0.383314; 0.000000;;
       } // End of Plane UV coordinates
       MeshMaterialList { // Plane material list
-        1;
+        2;
         261;
         0,
         0,
@@ -3258,17 +3258,24 @@ Frame Root {
         0,
         0,
         0,
-        0,
-        0,
-        0,
-        0,
-        0;
+        1,
+        1,
+        1,
+        1,
+        1;
         Material Material_001 {
            0.640000; 0.640000; 0.640000; 1.000000;;
            96.078431;
            0.500000; 0.500000; 0.500000;;
            0.000000; 0.000000; 0.000000;;
           TextureFilename {"mountain.png";}
+        }
+        Material Material {
+           0.764084; 0.729126; 0.800000; 1.000000;;
+           96.078431;
+           0.500000; 0.500000; 0.500000;;
+           0.000000; 0.000000; 0.000000;;
+          TextureFilename {"mountain_ground.png";}
         }
       } // End of Plane material list
     } // End of Plane mesh
