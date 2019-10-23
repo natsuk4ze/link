@@ -5,6 +5,7 @@
 //
 //=====================================
 #include "ShockBlur.h"
+#include "../../Resource/ResourceManager.h"
 
 /**************************************
 マクロ定義
@@ -19,14 +20,13 @@
 /**************************************
 コンストラクタ
 ***************************************/
-ShockBlur::ShockBlur()
+ShockBlur::ShockBlur(DWORD width, DWORD height) :
+	ScreenObject(width, height),
+	texelU(1.0f / width),
+	texelV(1.0f / height)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-	HRESULT res = D3DXCreateEffectFromFile(pDevice, (LPSTR)PRECOMPILE_SHOCKBLUR_PATH, 0, 0, D3DXSHADER_SKIPVALIDATION, 0, &effect, 0);
-
-	if(res != S_OK)
-		D3DXCreateEffectFromFile(pDevice, (LPSTR)EFFECTFILE_SHOCKBLUR_PATH, 0, 0, 0, 0, &effect, 0);
+	const char* Path = "data/EFFECT/ShockBlur.cfx";
+	ResourceManager::Instance()->GetEffect(Path, effect);
 
 	hndlPower = effect->GetParameterByName(0, "blurPower");
 	hndlCenter = effect->GetParameterByName(0, "centerTexel");
@@ -47,6 +47,10 @@ ShockBlur::~ShockBlur()
 ***************************************/
 void ShockBlur::DrawEffect()
 {
+	effect->SetFloat(hndlTU, texelU);
+	effect->SetFloat(hndlTV, texelV);
+	effect->CommitChanges();
+
 	effect->Begin(0, 0);
 	effect->BeginPass(0);
 
@@ -68,7 +72,7 @@ void ShockBlur::SetPower(float power)
 /**************************************
 センターセット処理
 ***************************************/
-void ShockBlur::SetCenterPos(D3DXVECTOR3 pos)
+void ShockBlur::SetCenterPos(const D3DXVECTOR3& pos)
 {
 	D3DXMATRIX view, projection;
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
@@ -87,18 +91,4 @@ void ShockBlur::SetCenterPos(D3DXVECTOR3 pos)
 	effect->SetFloatArray(hndlCenter, (float*)&center, 2);
 	effect->CommitChanges();
 
-}
-
-/**************************************
-テクセルサイズ設定処理
-***************************************/
-void ShockBlur::SetSurfaceSize(float width, float height)
-{
-	float texelU = 1.0f / width;
-	float texelV = 1.0f / height;
-
-	effect->SetFloat(hndlTU, texelU);
-	effect->SetFloat(hndlTV, texelV);
-
-	effect->CommitChanges();
 }

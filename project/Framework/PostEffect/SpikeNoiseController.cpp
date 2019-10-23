@@ -16,12 +16,29 @@
 #define SPIKENOISE_SCROLL_SPEED	(0.001f)
 
 /**************************************
-構造体定義
+コンストラクタ
 ***************************************/
+SpikeNoiseController::SpikeNoiseController()
+{
+	//スパイクノイズのインスタンスを生成
+	spikeNoise = new SpikeNoise(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+	//テクスチャを作成しサーフェイスを取得
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	pDevice->CreateTexture(SCREEN_WIDTH, SCREEN_HEIGHT, 1, D3DUSAGE_RENDERTARGET, D3DFMT_X8R8G8B8, D3DPOOL_DEFAULT, &texture, 0);
+	texture->GetSurfaceLevel(0, &surface);
+}
 
 /**************************************
-グローバル変数
+デストラクタ
 ***************************************/
+SpikeNoiseController::~SpikeNoiseController()
+{
+	//解放
+	delete spikeNoise;
+	SAFE_RELEASE(texture);
+	SAFE_RELEASE(surface);
+}
 
 /**************************************
 セット処理
@@ -143,7 +160,7 @@ void SpikeNoiseController::Draw(LPDIRECT3DTEXTURE9 targetTexture)
 	pDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
 	pDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 
-	pDevice->SetTexture(0, defaultTarget);
+	pDevice->SetTexture(0, targetTexture);
 	spikeNoise->DrawEffect();
 
 	pDevice->SetRenderTarget(0, oldSuf);
@@ -154,29 +171,4 @@ void SpikeNoiseController::Draw(LPDIRECT3DTEXTURE9 targetTexture)
 
 	pDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
 	pDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
-}
-
-/**************************************
-コンストラクタ
-***************************************/
-SpikeNoiseController::SpikeNoiseController()
-{
-	//スパイクノイズのインスタンスを生成
-	spikeNoise = new SpikeNoise();
-
-	//テクスチャを作成しサーフェイスを取得
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	pDevice->CreateTexture(SCREEN_WIDTH, SCREEN_HEIGHT, 1, D3DUSAGE_RENDERTARGET, D3DFMT_X8R8G8B8, D3DPOOL_DEFAULT, &texture, 0);
-	texture->GetSurfaceLevel(0, &surface);
-}
-
-/**************************************
-デストラクタ
-***************************************/
-SpikeNoiseController::~SpikeNoiseController()
-{
-	//解放
-	delete spikeNoise;
-	SAFE_RELEASE(texture);
-	SAFE_RELEASE(surface);
 }

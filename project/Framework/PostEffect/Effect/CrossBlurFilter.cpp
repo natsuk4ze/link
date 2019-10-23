@@ -5,13 +5,12 @@
 //
 //=====================================
 #include "CrossBlurFilter.h"
+#include "../../Resource/ResourceManager.h"
 
 /**************************************
 マクロ定義
 ***************************************/
-#define EFFECTFILE_CROSSBLUR_PATH	"PostEffect/CrossBlur.fx"
-#define PRECOMPILE_CROSSBLUR_PATH	"data/EFFECT/CrossBlur.cfx"
-#define CROSSBLUR_ARRAY_SIZE		(2)
+const int CrossBlurFilter::SizeTexelArray = 2;
 
 /**************************************
 構造体定義
@@ -24,18 +23,24 @@
 /**************************************
 コンストラクタ
 ***************************************/
-CrossBlurFilter::CrossBlurFilter()
+CrossBlurFilter::CrossBlurFilter(DWORD width, DWORD height) :
+	ScreenObject(width, height)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-	HRESULT res = D3DXCreateEffectFromFile(pDevice, (LPSTR)PRECOMPILE_CROSSBLUR_PATH, 0, 0, D3DXSHADER_SKIPVALIDATION, 0, &effect, 0);
-
-	if(res != S_OK)
-		D3DXCreateEffectFromFile(pDevice, (LPSTR)EFFECTFILE_CROSSBLUR_PATH, 0, 0, 0, 0, &effect, 0);
+	const char* Path = "data/EFFECT/CrossBlur.cfx";
+	ResourceManager::Instance()->GetEffect(Path, effect);
 
 	hTexelU = effect->GetParameterByName(0, "texelU");
 	hTexelV = effect->GetParameterByName(0, "texelV");
 	effect->SetTechnique("tech");
+
+	offsetTexelU.resize(SizeTexelArray);
+	offsetTexelV.resize(SizeTexelArray);
+
+	for (int i = 0; i < SizeTexelArray; i++)
+	{
+		offsetTexelU[i] = 1.0f / width * (i + 1);
+		offsetTexelV[i] = 1.0f / height * (i + 1);
+	}
 }
 
 /**************************************
@@ -51,6 +56,10 @@ CrossBlurFilter::~CrossBlurFilter()
 ***************************************/
 void CrossBlurFilter::DrawEffect(UINT pass)
 {
+	effect->SetFloatArray(hTexelU, &offsetTexelU[0], SizeTexelArray);
+	effect->SetFloatArray(hTexelV, &offsetTexelV[0], SizeTexelArray);
+	effect->CommitChanges();
+
 	effect->Begin(0, 0);
 	effect->BeginPass(pass);
 
@@ -58,24 +67,4 @@ void CrossBlurFilter::DrawEffect(UINT pass)
 
 	effect->EndPass();
 	effect->End();
-}
-
-/**************************************
-サーフェイスサイズ設定処理
-***************************************/
-void CrossBlurFilter::SetSurfaceSize(float width, float height)
-{
-	float u[CROSSBLUR_ARRAY_SIZE], v[CROSSBLUR_ARRAY_SIZE];
-	
-	for(int i = 0; i < CROSSBLUR_ARRAY_SIZE; i++)
-	{
-		u[i] = 1.0f / width * (i + 1);
-		v[i] = 1.0f / height * (i + 1);
-	}
-
-	effect->SetFloatArray(hTexelU, u, CROSSBLUR_ARRAY_SIZE);
-	effect->SetFloatArray(hTexelV, v, CROSSBLUR_ARRAY_SIZE);
-	effect->CommitChanges();
-
-	ScreenObject::Resize(width, height);
 }

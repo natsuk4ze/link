@@ -18,15 +18,6 @@ public:
 	TelopDrawer();
 	~TelopDrawer();
 
-	enum TelopAnimScene
-	{
-		WaitBG_Open,
-		InText,
-		StopText,
-		OutText,
-		WaitBG_Close
-	};
-
 	void MakeVertexBG();
 	void MakeVertexText();
 

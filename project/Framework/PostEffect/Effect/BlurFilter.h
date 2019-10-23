@@ -9,6 +9,7 @@
 
 #include "../../../main.h"
 #include "../ScreenObject.h"
+#include <vector>
 
 /**************************************
 マクロ定義
@@ -19,14 +20,18 @@
 ***************************************/
 class BlurFilter : public ScreenObject {
 public:
-	BlurFilter();
+	BlurFilter(DWORD width, DWORD height);
 	~BlurFilter();
 	void DrawEffect(UINT pass);							//描画処理
-	void SetSurfaceSize(float width, float height);		//サーフェイスサイズ設定処理
 
 private:
+	static const int SizeTexelArray;
+
 	LPD3DXEFFECT effect;								//シェーダ
 	D3DXHANDLE texelU, texelV;							//各ハンドル
+
+	std::vector<float> offsetTexelU;
+	std::vector<float> offsetTexelV;
 };
 
 #endif

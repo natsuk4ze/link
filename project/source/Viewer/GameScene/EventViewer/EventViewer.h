@@ -34,10 +34,10 @@ public:
 	//void SetEventTelop(TelopID id, Delegate<void(void)> *onFinish);
 	void SetEventTelop(TelopID id, std::function<void(void)> FinishFunc = NULL);
 
-	std::vector <BaseViewer*> eventViewer;
-
 private:
 	int eventViewerMax;
+
+	std::vector <BaseViewer*> eventViewer;
 
 	EventTelop * eventTelop;
 	EventMessage *eventMessage;

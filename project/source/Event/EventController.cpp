@@ -21,6 +21,9 @@
 #include "MinusEvent/CongestionUpEvent.h"
 #include "MinusEvent/MoveInverseEvent.h"
 
+//イベントビューア（おーはま追記）
+#include "../Viewer/GameScene/EventViewer/EventViewer.h"
+
 #include "../../Framework/Core/Utility.h"
 #include "../../Framework/String/String.h"
 #include "../../Framework/Camera/CameraTranslationPlugin.h"

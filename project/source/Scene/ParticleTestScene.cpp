@@ -12,6 +12,8 @@
 #include "../FieldObject/Actor/CityActor.h"
 #include "../Field/Place/PlaceConfig.h"
 #include "../Effect/TestParticleManager.h"
+#include "../../Framework/Tool/DebugWindow.h"
+#include "../../Framework/PostEffect/BloomController.h"
 
 /**************************************
 初期化処理
@@ -23,6 +25,7 @@ void ParticleTestScene::Init()
 	ground = new Field::FieldGround();
 	sceneCamera = new TestParticleCamera();
 	particleManager = TestParticleManager::Instance();
+	bloom = new BloomController();
 
 	//スカイボックスのテクスチャロード
 	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_up.png", SkyBox::Surface::Up);
@@ -41,6 +44,10 @@ void ParticleTestScene::Init()
 
 	//パーティクル初期化
 	particleManager->Init();
+
+	//ブルーム初期化
+	bloom->SetPower(0.25f, 0.25f, 0.25f);
+	bloom->SetThrethold(0.45f, 0.5f, 0.55f);
 }
 
 /**************************************
@@ -53,6 +60,7 @@ void ParticleTestScene::Uninit()
 	SAFE_DELETE(ground);
 	SAFE_DELETE(sceneCamera);
 	SAFE_DELETE(actor);
+	SAFE_DELETE(bloom);
 
 	//パーティクル削除
 	particleManager->Uninit();
@@ -77,7 +85,18 @@ void ParticleTestScene::Draw()
 
 	skybox->Draw();
 	ground->Draw();
-	actor->Draw();
+
+	static bool drawableActor = true;
+	
+	Debug::Begin("DrawActor");
+	if (Debug::Button("Switch"))
+		drawableActor = !drawableActor;
+	Debug::End();
+
+	if(drawableActor)
+		actor->Draw();
+
+	bloom->Draw(renderTexture);
 
 	particleManager->Draw();
 }

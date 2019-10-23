@@ -48,10 +48,8 @@
     <ClInclude Include="Framework\PostEffect\Effect\SpeedBlurFilter.h" />
     <ClInclude Include="Framework\PostEffect\Effect\SpikeNoise.h" />
     <ClInclude Include="Framework\PostEffect\Effect\StrongBlurFilter.h" />
-    <ClInclude Include="Framework\PostEffect\BaseEffectController.h" />
     <ClInclude Include="Framework\PostEffect\BloomController.h" />
     <ClInclude Include="Framework\PostEffect\CrossFilterController.h" />
-    <ClInclude Include="Framework\PostEffect\PostEffectManager.h" />
     <ClInclude Include="Framework\PostEffect\ScreenObject.h" />
     <ClInclude Include="Framework\PostEffect\ShockBlurController.h" />
     <ClInclude Include="Framework\PostEffect\SpeedBlurController.h" />
@@ -177,6 +175,9 @@
     <ClInclude Include="source\Event\PlusEvent\TimeRecoveryEvent.h" />
     <ClInclude Include="source\Field\FieldEventHandler.h" />
     <ClInclude Include="source\Scene\GameState\GamePause.h" />
+    <ClInclude Include="source\Effect\Game\WhiteSmog.h" />
+    <ClInclude Include="Framework\PostEffect\BaseEffectController.h" />
+    <ClInclude Include="source\Effect\Game\ColorfulDebris.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -216,10 +217,8 @@
     <ClCompile Include="Framework\PostEffect\Effect\SpeedBlurFilter.cpp" />
     <ClCompile Include="Framework\PostEffect\Effect\SpikeNoise.cpp" />
     <ClCompile Include="Framework\PostEffect\Effect\StrongBlurFilter.cpp" />
-    <ClCompile Include="Framework\PostEffect\BaseEffectController.cpp" />
     <ClCompile Include="Framework\PostEffect\BloomController.cpp" />
     <ClCompile Include="Framework\PostEffect\CrossFilterController.cpp" />
-    <ClCompile Include="Framework\PostEffect\PostEffectManager.cpp" />
     <ClCompile Include="Framework\PostEffect\ScreenObject.cpp" />
     <ClCompile Include="Framework\PostEffect\ShockBlurController.cpp" />
     <ClCompile Include="Framework\PostEffect\SpeedBlurController.cpp" />
@@ -337,8 +336,27 @@
     <ClCompile Include="source\Event\PlusEvent\TimeRecoveryEvent.cpp" />
     <ClCompile Include="source\Field\FieldEventHandler.cpp" />
     <ClCompile Include="source\Scene\GameState\GamePause.cpp" />
+    <ClCompile Include="source\Effect\Game\WhiteSmog.cpp" />
+    <ClCompile Include="Framework\Core\BaseScene.cpp" />
+    <ClCompile Include="Framework\PostEffect\BaseEffectController.cpp" />
+    <ClCompile Include="source\Effect\Game\ColorfulDebris.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\BloomFilter.fx" />
+    <FxCompile Include="Shaders\BlurFilter.fx" />
+    <FxCompile Include="Shaders\CrossBlur.fx" />
+    <FxCompile Include="Shaders\DepthRenderer.fx" />
+    <FxCompile Include="Shaders\DepthShadow.fx" />
+    <FxCompile Include="Shaders\HexaCrossBlur.fx" />
+    <FxCompile Include="Shaders\ModelInstancing.fx" />
+    <FxCompile Include="Shaders\MonotoneFilter.fx" />
+    <FxCompile Include="Shaders\particle3D.fx" />
+    <FxCompile Include="Shaders\ShockBlur.fx" />
+    <FxCompile Include="Shaders\SpeedBlur.fx" />
+    <FxCompile Include="Shaders\SpikeNoise.fx" />
+    <FxCompile Include="Shaders\StrongBlurFilter.fx" />
   </ItemGroup>
 </Project>
