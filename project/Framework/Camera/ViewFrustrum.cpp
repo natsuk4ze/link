@@ -6,6 +6,7 @@
 //
 //=====================================
 #include "ViewFrustrum.h"
+#include "Camera.h"
 
 /**************************************
 staticメンバ
@@ -110,9 +111,12 @@ D3DXVECTOR3 ViewFrustrum::GetSurfacePoint(Surface surfaceID)
 /**************************************
 視錐台カリング
 ***************************************/
-bool ViewFrustrum::CheckOnCamera(const D3DXVECTOR3 pos)
+bool ViewFrustrum::CheckOnCamera(const D3DXVECTOR3 pos, const float size)
 {
 	bool ret = false;
+
+	// カメラの焦点からチェックする座標を算出
+	Camera::MainCamera()->GetMainTarget();
 
 	for (int i = 0; i < 4; i++)
 	{

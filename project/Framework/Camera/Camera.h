@@ -52,6 +52,9 @@ public:
 	//視錐台取得処理
 	ViewFrustrum GetViewFrustrum() const;
 
+	// メインカメラの焦点座標を取得
+	D3DXVECTOR3 GetTarget() const;
+
 protected:
 	//SRT情報
 	Transform transform;

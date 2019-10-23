@@ -42,7 +42,7 @@ public:
 	D3DXVECTOR3 GetSurfacePoint(Surface surfaceID);
 
 	// ‹‘äƒJƒŠƒ“ƒO
-	bool CheckOnCamera(const D3DXVECTOR3 pos);
+	bool CheckOnCamera(const D3DXVECTOR3 pos, const float size);
 
 	//’¸“_İ’èˆ—
 	void SetVertex(

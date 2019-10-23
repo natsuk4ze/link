@@ -220,3 +220,10 @@ void Camera::CalculateFrustrum()
 	);
 }
 
+/**************************************
+カメラの焦点座標を参照
+***************************************/
+D3DXVECTOR3 Camera::GetTarget()const
+{
+	return target;
+}
