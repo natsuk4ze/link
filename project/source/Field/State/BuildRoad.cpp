@@ -9,6 +9,7 @@
 #include "../Place/OperatePlaceContainer.h"
 #include "../Place/FieldPlaceContainer.h"
 #include "../FieldCursor.h"
+#include "../Controller/FieldDevelopper.h"
 
 namespace Field
 {
@@ -48,7 +49,7 @@ namespace Field
 		{
 			if (entity.operateContainer->EndRoute())
 			{
-				entity.BuildRoad();
+				entity.developper->BuildRoad();
 			}
 
 			entity.operateContainer->Clear();

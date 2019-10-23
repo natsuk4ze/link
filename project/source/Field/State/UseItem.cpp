@@ -9,6 +9,7 @@
 #include "../Place/OperatePlaceContainer.h"
 #include "../Place/FieldPlaceContainer.h"
 #include "../FieldCursor.h"
+#include "../Controller/FieldDevelopper.h"
 
 namespace Field
 {
@@ -49,7 +50,7 @@ namespace Field
 			if (entity.operateContainer->EndDevelop())
 			{
 				PlaceVector vector = entity.operateContainer->GetPlaces();
-				entity.DevelopPlace(vector, vector.begin());
+				entity.developper->DevelopPlace(vector, vector.begin());
 			}
 
 			entity.operateContainer->Clear();
