@@ -23,12 +23,14 @@ class CountViewerDrawer;
 class CityDestroyEvent : public EventBase
 {
 private:
-	D3DXVECTOR3 Pos;
-	D3DXVECTOR3 GoalPos;
-	D3DXVECTOR3 FallDirection;
+	D3DXVECTOR3 MeteoritePos;
+	D3DXVECTOR3 MissilePos;
+	D3DXVECTOR3 TownPos;
+	D3DXVECTOR3 MoveDirection;
 	int RemainFrame;
 	bool TelopOver;
 	bool CountOver;
+	bool UseEDF;
 	const Field::Model::PlaceModel* DestroyTown;
 
 	//小数点
@@ -39,8 +41,8 @@ private:
 	CountViewerDrawer *intNum;
 
 #if _DEBUG
-	static LPDIRECT3DDEVICE9 Device;
 	static LPD3DXMESH SphereMesh;
+	static LPD3DXMESH MissileMesh;
 	static D3DMATERIAL9 Material;
 #endif
 
@@ -51,7 +53,8 @@ public:
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;
 	// 隕石が来るまでのカウントダウン
-	void Countdown(void);
+	void CountdownStart(void);
+	void UseMissile(bool Flag);
 };
 
 #endif

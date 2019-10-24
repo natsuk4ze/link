@@ -85,7 +85,7 @@ EventController::~EventController()
 void EventController::Update()
 {
 #if _DEBUG
-	if (Keyboard::GetTrigger(DIK_Z))
+	if (Keyboard::GetTrigger(DIK_F))
 	{
 		EventVec.push_back(new CityDestroyEvent(eventViewer));
 	}
