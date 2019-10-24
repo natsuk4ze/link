@@ -10,7 +10,6 @@
 
 #include "../../Framework/BaseViewer.h"
 #include "../../../../Framework/Pattern/Delegate.h"
-#include "../../../../Framework/Pattern/Delegate.h"
 #include <vector>
 
 //*****************************************************************************
@@ -24,7 +23,7 @@ class TelopDrawer;
 class EventTelop :public BaseViewer
 {
 public:
-	//テロップの種類
+	//テロップの種類ID
 	enum TelopID
 	{
 		PositiveEvent01,

@@ -10,13 +10,24 @@
 #include "EventTelop.h"
 #include "EventViewer.h"
 
+#ifdef _DEBUG
+
+#include "../../../../Framework/Tool/DebugWindow.h"
+#include "../../../../Framework/Input/input.h"
+
+#endif
+
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
 EventViewer::EventViewer()
 {
 	eventViewer.push_back(eventTelop = new EventTelop());
-	eventViewer.push_back(eventMessage = new EventMessage());
+
+	for (int i = 0; i < messageMax; i++)
+	{
+		eventViewer.push_back(eventMessage[i] = new EventMessage());
+	}
 
 	eventViewerMax = eventViewer.size();
 }
@@ -38,7 +49,21 @@ void EventViewer::Update()
 	for (int i = 0; i < eventViewerMax; i++)
 	{
 		eventViewer[i]->Update();
+
 	}
+
+#ifdef _DEBUG
+
+	if (Keyboard::GetTrigger(DIK_M))
+	{
+		SetEventMessage("イベント発生！");
+	}
+
+	Debug::Begin("EventViewer");
+	Debug::Text("MessageSetCnt:%d", messageSetCnt);
+	Debug::End();
+
+#endif
 }
 
 //=============================================================================
@@ -63,9 +88,41 @@ void EventViewer::Draw(void)
 }
 
 //=============================================================================
-// イベント発生メッセージを設置
+// メッセージをカウント
+//=============================================================================
+void EventViewer::CountMessage(void)
+{
+	//セットカウントをカウントアップ
+	messageSetCnt++;
+
+	if (messageSetCnt != 1)
+	{
+		//ひとつ前のメッセージが再生終了してたならカウントリセット
+		if (!eventMessage[messageSetCnt - 2]->isPlaying)
+		{
+			messageSetCnt = 1;
+		}
+	}
+
+	if (messageSetCnt > messageMax)
+	{
+		messageSetCnt = 1;
+	}
+}
+
+//=============================================================================
+// イベント発生メッセージを設置(*仮実装)
 //=============================================================================
 void EventViewer::SetEventMessage(const std::string Message)
 {
-	eventMessage->Set(Message);
+	CountMessage();
+	eventMessage[messageSetCnt-1]->Set(Message,messageSetCnt);
+}
+
+//=============================================================================
+// イベント発生テロップを設置
+//=============================================================================
+void EventViewer::SetEventTelop(EventTelop::TelopID id, Delegate<void(void)> *onFinish)
+{
+	eventTelop->Set(id, onFinish);
 }

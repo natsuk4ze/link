@@ -12,7 +12,7 @@
 //*****************************************************************************
 // ëOï˚êÈåæ
 //*****************************************************************************
-class StockViewer;
+class ItemStockViewer;
 class TimerViewer;
 class LevelViewer;
 class GameViewerParam;
@@ -38,7 +38,7 @@ public:
 private:
 	int gameViewerMax;
 
-	StockViewer *stockViewer;
+	ItemStockViewer *stockViewer;
 	TimerViewer *timerViewer;
 	LevelViewer *levelViewer;
 	GameViewerParam *gameViewerParam;

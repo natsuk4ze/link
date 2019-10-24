@@ -39,7 +39,7 @@ public:
 	static const int typeMax = 4;
 
 	//ƒpƒ‰ƒ[ƒ^‚ğó‚¯‚Æ‚é” 
-	SIZE_T parameterBox[2];
+	float parameterBox[2];
 
 private:
 	CircleGauge *circleGuage;

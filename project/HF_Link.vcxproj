@@ -195,7 +195,7 @@
     <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\LevelViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\GameViewer\StockViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\ItemStockViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\TimerViewer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -358,7 +358,7 @@
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\GameViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\LevelViewer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\GameViewer\StockViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\ItemStockViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp" />
   </ItemGroup>
   <ItemGroup>

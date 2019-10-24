@@ -141,7 +141,6 @@
     <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\LevelViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\GameViewer\StockViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\TimerViewer.h" />
     <ClInclude Include="source\GameConfig.h" />
     <ClInclude Include="source\GameMain.h" />
@@ -175,6 +174,7 @@
     <ClInclude Include="source\Field\FieldEventHandler.h" />
     <ClInclude Include="source\Scene\GameState\GamePause.h" />
     <ClInclude Include="source\Effect\Game\WhiteSmog.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\ItemStockViewer.h" />
     <ClInclude Include="Framework\PostEffect\BaseEffectController.h" />
     <ClInclude Include="source\Effect\Game\ColorfulDebris.h" />
     <ClInclude Include="source\Field\Controller\FieldDevelopper.h" />
@@ -304,7 +304,6 @@
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\GameViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\LevelViewer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\GameViewer\StockViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp" />
     <ClCompile Include="source\GameMain.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\TelopDrawer.cpp" />
@@ -337,6 +336,7 @@
     <ClCompile Include="source\Field\FieldEventHandler.cpp" />
     <ClCompile Include="source\Scene\GameState\GamePause.cpp" />
     <ClCompile Include="source\Effect\Game\WhiteSmog.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\ItemStockViewer.cpp" />
     <ClCompile Include="Framework\Core\BaseScene.cpp" />
     <ClCompile Include="Framework\PostEffect\BaseEffectController.cpp" />
     <ClCompile Include="source\Effect\Game\ColorfulDebris.cpp" />

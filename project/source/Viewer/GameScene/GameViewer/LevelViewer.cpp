@@ -83,10 +83,10 @@ void LevelViewer::Draw(void)
 	bg->SetVertex();
 	bg->Draw();
 
-	circleGuage->SetPercent((float)parameterBox[RatioLevel]);
+	circleGuage->SetPercent(parameterBox[RatioLevel]);
 	circleGuage->Draw();
 
-	num->DrawCounter(num->baseNumber, parameterBox[LevelAI], num->placeMax,
+	num->DrawCounter(num->baseNumber, (int)parameterBox[LevelAI], num->placeMax,
 		num->intervalNumberScr, num->intervalNumberTex);
 }
 
@@ -96,12 +96,12 @@ void LevelViewer::Draw(void)
 void LevelViewer::Animate(void)
 {
 	//前フレームのパラメータより現在のパラメータが大きい場合ホッピング状態にする
-	currentParam = parameterBox[LevelAI];
+	currentParam = (int)parameterBox[LevelAI];
 	if (currentParam - lastParam > 0)
 	{
 		num->isHopped = true;
 	}
-	lastParam = parameterBox[LevelAI];
+	lastParam = (int)parameterBox[LevelAI];
 
 	//ホッピング処理
 	num->size.y = num->HopNumber(num->size.y, initNumSize.y, hopNumValue);
