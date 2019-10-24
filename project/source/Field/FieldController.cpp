@@ -387,6 +387,7 @@ namespace Field
 	***************************************/
 	void FieldController::CreateNewTown()
 	{
+
 		//NOTE:å„Ç≈çÏÇÈ
 	}
 

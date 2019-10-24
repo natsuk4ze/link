@@ -39,7 +39,11 @@ NewCityEvent::NewCityEvent(EventViewer *Ptr) : eventViewer(Ptr)
 			TownPosVec3,
 			30,
 			// V‚µ‚¢’¬‚ðì‚éŠÖ”‚Ìƒ‰ƒ€ƒ_Ž®
-			[&]() {fieldEventHandler->CreateNewTown(NewTown); });
+			[&]()
+		{
+			fieldEventHandler->CreateNewTown(NewTown);
+			Camera::TranslationPlugin::Instance()->Restore(30, nullptr);
+		});
 	});
 }
 
