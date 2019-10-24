@@ -176,7 +176,6 @@
     <ClInclude Include="source\Event\PlusEvent\TimeRecoveryEvent.h" />
     <ClInclude Include="source\Field\FieldEventHandler.h" />
     <ClInclude Include="source\Scene\GameState\GamePause.h" />
-    <ClInclude Include="source\FieldObject\ViewFrustumBox\ViewFrustumBox.h" />
     <ClInclude Include="Framework\Camera\ViewFrustum.h" />
   </ItemGroup>
   <ItemGroup>
@@ -337,7 +336,6 @@
     <ClCompile Include="source\Event\PlusEvent\TimeRecoveryEvent.cpp" />
     <ClCompile Include="source\Field\FieldEventHandler.cpp" />
     <ClCompile Include="source\Scene\GameState\GamePause.cpp" />
-    <ClCompile Include="source\FieldObject\ViewFrustumBox\ViewFrustumBox.cpp" />
     <ClCompile Include="Framework\Camera\ViewFrustum.cpp" />
   </ItemGroup>
   <ItemGroup>
