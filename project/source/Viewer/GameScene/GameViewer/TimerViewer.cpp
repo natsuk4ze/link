@@ -45,9 +45,9 @@ TimerViewer::TimerViewer()
 	point = new BaseViewerDrawer();
 	point->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Point.png");
 	point->MakeVertex();
-	point->size = D3DXVECTOR3(100.0f, 100.0f, 0.0f);
+	point->size = D3DXVECTOR3(60.0f, 60.0f, 0.0f);
 	point->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	point->position = D3DXVECTOR3(intNum->position.x + intNum->intervalNumberScr*2.8f, SCREEN_HEIGHT / 10 * 0.90f,0.0f);
+	point->position = D3DXVECTOR3(intNum->position.x + intNum->intervalNumberScr*2.8f, SCREEN_HEIGHT / 10 * 1.0f,0.0f);
 	point->SetColor(SET_COLOR_NOT_COLORED);
 
 	//îwåi

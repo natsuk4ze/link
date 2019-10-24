@@ -27,15 +27,15 @@ static const float intervalViewerPos = 100.0f;
 //アニメーション開始位置
 static const D3DXVECTOR2 animStartPosition[animMax] = {
 	D3DXVECTOR2((float)(SCREEN_WIDTH / 10 * 8.6),(float)(SCREEN_HEIGHT*1.5)),
-	D3DXVECTOR2((float)(SCREEN_WIDTH / 10 * 8.6),(float)(SCREEN_HEIGHT/10*7.0)),
-	D3DXVECTOR2((float)(SCREEN_WIDTH / 10 * 8.6),(float)(SCREEN_HEIGHT / 10 * 7.0)),
+	D3DXVECTOR2((float)(SCREEN_WIDTH / 10 * 8.6),(float)(SCREEN_HEIGHT/10*5.5)),
+	D3DXVECTOR2((float)(SCREEN_WIDTH / 10 * 8.6),(float)(SCREEN_HEIGHT / 10 * 5.5)),
 };
 
 //アニメーション終了位置
 static const D3DXVECTOR2 animEndPosition[animMax] = {
-	D3DXVECTOR2((float)(SCREEN_WIDTH / 10 * 8.6),(float)(SCREEN_HEIGHT / 10 * 7.0)),
-	D3DXVECTOR2((float)(SCREEN_WIDTH / 10 * 8.6),(float)(SCREEN_HEIGHT / 10 * 7.0)),
-	D3DXVECTOR2((float)(SCREEN_WIDTH*1.2),(float)(SCREEN_HEIGHT / 10 * 7.0)),
+	D3DXVECTOR2((float)(SCREEN_WIDTH / 10 * 8.6),(float)(SCREEN_HEIGHT / 10 * 5.5)),
+	D3DXVECTOR2((float)(SCREEN_WIDTH / 10 * 8.6),(float)(SCREEN_HEIGHT / 10 * 5.5)),
+	D3DXVECTOR2((float)(SCREEN_WIDTH*1.2),(float)(SCREEN_HEIGHT / 10 * 5.5)),
 };
 
 //アニメーション種類
@@ -49,7 +49,7 @@ static const EaseType animType[animMax] = {
 static const float animDuration[animMax] = {
 	50,
 	50,
-	50,
+	30,
 };
 
 //アニメーションシーン
@@ -94,17 +94,10 @@ EventMessage::~EventMessage()
 //=============================================================================
 void EventMessage::Update(void)
 {
-	Animate();
-
-#ifdef _DEBUG
-
-	if (Keyboard::GetTrigger(DIK_M))
+	if (isPlaying)
 	{
-		SetEventMessage("イベント発生！");
+		Animate();
 	}
-
-#endif
-
 }
 
 //=============================================================================
@@ -135,10 +128,7 @@ void EventMessage::Animate(void)
 
 		//ポジションを開始位置に初期化
 		position = animStartPosition[0];
-
-		//時間
-		float time;
-
+		
 		//時間更新
 		time = countFrame / animDuration[currentAnim];
 
@@ -174,8 +164,8 @@ void EventMessage::Animate(void)
 		}
 
 		//ポジションをセット(*後に変更予定)
-		text->SetPos((int)position.x,(int)position.y);
-		bg->position = D3DXVECTOR3(position.x, position.y, 0.0f);
+		text->SetPos((int)position.x,(int)position.y + int((messageSetCnt-1) * intervalViewerPos));
+		bg->position = D3DXVECTOR3(position.x, position.y + (messageSetCnt-1) * intervalViewerPos, 0.0f);
 	}
 }
 
@@ -199,10 +189,43 @@ void EventMessage::FadeOut(void)
 }
 
 //=============================================================================
+// メッセージリセット処理
+//=============================================================================
+void EventMessage::Reset(void)
+{
+	//再生状態をリセット
+	isPlaying = false;
+
+	//ポジション
+	D3DXVECTOR2 position;
+
+	//ポジションを開始位置に初期化
+	position = animStartPosition[0];
+
+	//ポジションをセット(*後に変更予定)
+	text->SetPos((int)position.x, (int)position.y);
+	bg->position = D3DXVECTOR3(position.x, position.y, 0.0f);
+
+	countFrame = 0;
+	currentAnim = 0;
+	time = 0;
+	alpha = 1.0f;
+	text->SetColor(SET_COLOR_NOT_COLORED);
+	bg->SetColor(SET_COLOR_NOT_COLORED);
+	isPlaying = false;
+}
+
+//=============================================================================
 // メッセージセット処理
 //=============================================================================
-void EventMessage::SetEventMessage(const std::string &message)
+void EventMessage::SetEventMessage(const std::string &message, int &cnt)
 {
+	//一度リセットする
+	Reset();
+
+	//メッセージカウントをセット
+	messageSetCnt = cnt;
+
 	//テキストにメッセージをセット
 	text->SetText(message);
 

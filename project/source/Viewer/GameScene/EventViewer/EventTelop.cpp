@@ -221,7 +221,7 @@ void EventTelop::Play()
 			text->isPlaying = false;
 			bg->isPlaying = false;
 
-			//ヌルチェックして通知
+			//ヌルチェック
 			if (FinishFunc != nullptr)
 			{
 				//再生終了の通知

@@ -33,6 +33,15 @@ class TelopDrawer;
 class EventTelop :public BaseViewer
 {
 public:
+	//ƒeƒƒbƒv‚Ìí—ŞID
+	//enum TelopID
+	//{
+	//	PositiveEvent01,
+	//	PositiveEvent02,
+	//	NegativeEvent01,
+	//	NegativeEvent02
+	//};
+
 	EventTelop();
 	~EventTelop();
 

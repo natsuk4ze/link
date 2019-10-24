@@ -75,7 +75,7 @@ void Debug::Uninit()
 void Debug::Update(void)
 {
 #ifdef USE_DEBUGFUNC
-	if (Keyboard::GetTrigger(DIK_D) && Keyboard::GetTrigger(DIK_LCONTROL))
+	if (Keyboard::GetTrigger(DIK_D) && Keyboard::GetPress(DIK_LCONTROL))
 	{
 		enableDraw = !enableDraw;
 	}

@@ -29,20 +29,27 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	void SetEventMessage(const std::string &message);
+	//メッセージセット
+	void SetEventMessage(const std::string &message, int &cnt);
+
+	//メッセージセットカウンター
+	int messageSetCnt;
+
+	//再生中かどうか
+	bool isPlaying;
 
 private:
 	BaseViewerDrawer *bg;
 	TextViewer *text;
+
+	//時間
+	float time;
 
 	//フレームカウント
 	int countFrame;
 
 	//現在再生中のアニメーション
 	int currentAnim;
-
-	//再生中かどうか
-	bool isPlaying;
 
 	//α値
 	float alpha = 1.0f;
@@ -52,6 +59,9 @@ private:
 
 	//フェードアウトさせる
 	void FadeOut(void);
+
+	//リセットする
+	void Reset(void);
 };
 
 #endif
