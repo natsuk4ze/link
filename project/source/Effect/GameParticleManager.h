@@ -22,6 +22,7 @@ namespace GameParticle
 		BlueSpark,		//ブルースパーク
 		BlueDebris,		//ブルースパークの破片
 		WhiteSmog,		//白い煙
+		ColorfulDebis,	//カラフルデブリ
 		Max
 	};
 }
@@ -38,6 +39,10 @@ public:
 
 	//シンギュラリティイベントのエフェクトセット処理
 	void SetSingularityEffect(const D3DXVECTOR3& position);
+
+private:
+	static const float BloomPower[3];
+	static const float BloomThrethold[3];
 };
 
 #endif

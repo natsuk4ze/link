@@ -18,12 +18,10 @@
 ***************************************/
 class ScreenObject {
 public:
-	ScreenObject();
+	ScreenObject(DWORD width, DWORD height);
 	virtual ~ScreenObject();
 
 	void Draw();
-	void Resize(float width, float height);
-
 private:
 	LPDIRECT3DVERTEXBUFFER9 vtxBuff;
 };

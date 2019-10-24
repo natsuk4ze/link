@@ -18,6 +18,7 @@ class SkyBox;
 class TestParticleManager;
 class PlaceActor;
 class TestParticleManager;
+class BloomController;
 
 namespace Field
 {
@@ -29,6 +30,7 @@ namespace Field
 ***************************************/
 class ParticleTestScene : public BaseScene
 {
+	using BaseScene::BaseScene;
 public:
 	void Init();
 	void Uninit();
@@ -40,6 +42,7 @@ private:
 	Field::FieldGround *ground;
 	PlaceActor *actor;
 	TestParticleManager* particleManager;
+	BloomController *bloom;
 };
 
 #endif

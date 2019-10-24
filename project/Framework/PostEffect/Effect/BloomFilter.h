@@ -20,7 +20,7 @@
 class BloomFilter : public ScreenObject
 {
 public:
-	BloomFilter();
+	BloomFilter(DWORD width, DWORD height);
 	~BloomFilter();
 	void DrawEffect(UINT pass);
 	void SetThrethold(float threthold);

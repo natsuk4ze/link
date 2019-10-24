@@ -25,7 +25,7 @@ namespace Effect::Game
 		LoadTexture(Path);
 
 		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 128;
+		const unsigned MaxParticle = 512;
 		particleContainer.resize(MaxParticle, nullptr);
 		for (auto&& particle : particleContainer)
 		{
@@ -33,7 +33,7 @@ namespace Effect::Game
 		}
 
 		//エミッターコンテナ作成処理
-		const unsigned MaxEmitter = 32;
+		const unsigned MaxEmitter = 64;
 		const int NumEmit = 8;
 		const int DurationEmit = 3;
 		emitterContainer.resize(MaxEmitter, nullptr);

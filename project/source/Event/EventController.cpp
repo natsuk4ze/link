@@ -56,9 +56,6 @@ EventController::EventController(int FieldLevel) : FieldLevel(FieldLevel)
 
 	eventViewer = new EventViewer();
 
-	//イベントビューア（おーはま追記）
-	eventViewer = new EventViewer();
-
 #if _DEBUG
 	ResourceManager::Instance()->MakePolygon("Event", "data/TEXTURE/PlaceTest/Event.png", { 4.5f, 4.5f }, { 13.0f,1.0f });
 #endif
@@ -75,7 +72,6 @@ EventController::~EventController()
 
 	fieldController = nullptr;
 
-	//イベントビューア（おーはま追記）
 	SAFE_DELETE(eventViewer);
 }
 

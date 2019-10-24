@@ -8,13 +8,16 @@
 #define _SCENEPARTICLEMANAGER_H_
 
 #include "../../main.h"
-#include "../PostEffect/ScreenObject.h"
-#include "BaseParticleController.h"
+
 #include <vector>
 
 /**************************************
-マクロ定義
+前方宣言
 ***************************************/
+class CrossFilterController;
+class ScreenObject;
+class BaseParticleController;
+class BaseEmitter;
 
 /**************************************
 クラス定義
@@ -47,6 +50,9 @@ protected:
 
 	//パーティクルコントローラコンテナ
 	std::vector<BaseParticleController*> controllers;
+
+	//クロスフィルタ
+	CrossFilterController *crossFilter;
 
 	//描画準備
 	void CreateRenderTarget(void);

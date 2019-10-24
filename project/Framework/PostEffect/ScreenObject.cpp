@@ -21,7 +21,7 @@
 /**************************************
 コンストラクタ
 ***************************************/
-ScreenObject::ScreenObject()
+ScreenObject::ScreenObject(DWORD width, DWORD height)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
@@ -46,9 +46,21 @@ ScreenObject::ScreenObject()
 		pVtx[2].rhw =
 		pVtx[3].rhw = 1.0f;
 
-	vtxBuff->Unlock();
+	//頂点座標の変換
+	pVtx[0].vtx = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	pVtx[1].vtx = D3DXVECTOR3((float)width, 0.0f, 0.0f);
+	pVtx[2].vtx = D3DXVECTOR3(0.0f, (float)height, 0.0f);
+	pVtx[3].vtx = D3DXVECTOR3((float)width, (float)height, 0.0f);
 
-	Resize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	//射影空間からUV座標空間への変換
+	float offsetU = 0.5f / width;
+	float offsetV = 0.5f / height;
+	pVtx[0].tex = D3DXVECTOR2(0.0f + offsetU, 0.0f + offsetV);
+	pVtx[1].tex = D3DXVECTOR2(1.0f + offsetU, 0.0f + offsetV);
+	pVtx[2].tex = D3DXVECTOR2(0.0f + offsetU, 1.0f + offsetV);
+	pVtx[3].tex = D3DXVECTOR2(1.0f + offsetU, 1.0f + offsetV);
+
+	vtxBuff->Unlock();
 }
 
 /**************************************
@@ -71,31 +83,8 @@ void ScreenObject::Draw()
 	pDevice->SetStreamSource(0, vtxBuff, 0, sizeof(VERTEX_2D));
 
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
-}
 
-/**************************************
-サイズ変更処理
-***************************************/
-void ScreenObject::Resize(float width, float height)
-{
-	VERTEX_2D *pVtx;
-
-	vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
-
-	//頂点座標の変換
-	pVtx[0].vtx = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	pVtx[1].vtx = D3DXVECTOR3(width, 0.0f, 0.0f);
-	pVtx[2].vtx = D3DXVECTOR3(0.0f, height, 0.0f);
-	pVtx[3].vtx = D3DXVECTOR3(width, height, 0.0f);
-
-	//射影空間からUV座標空間への変換
-	float offsetU = 0.5f / width;
-	float offsetV = 0.5f / height;
-	pVtx[0].tex = D3DXVECTOR2(0.0f + offsetU, 0.0f + offsetV);
-	pVtx[1].tex = D3DXVECTOR2(1.0f + offsetU, 0.0f + offsetV);
-	pVtx[2].tex = D3DXVECTOR2(0.0f + offsetU, 1.0f + offsetV);
-	pVtx[3].tex = D3DXVECTOR2(1.0f + offsetU, 1.0f + offsetV);
-
+	VERTEX_2D *p;
+	vtxBuff->Lock(0, 0, (void**)&p, 0);
 	vtxBuff->Unlock();
-
 }

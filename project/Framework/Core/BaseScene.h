@@ -26,6 +26,9 @@ void Draw()
 class BaseScene
 {
 public:
+	BaseScene(LPDIRECT3DTEXTURE9 renderTexture, LPDIRECT3DSURFACE9 renderSurface);
+	~BaseScene();
+
 	virtual void Init() = 0;
 	virtual void Uninit() = 0;
 	virtual void Update() = 0;
@@ -33,6 +36,8 @@ public:
 
 protected:
 	Camera * sceneCamera;
+	LPDIRECT3DTEXTURE9 renderTexture;
+	LPDIRECT3DSURFACE9 renderSurface;
 };
 
 #endif

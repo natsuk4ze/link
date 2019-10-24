@@ -324,6 +324,18 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::SetMountain(const Model::PlaceModel * place)
 	{
+		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
+
+		PlaceActor *actor = new MountainActor(actorPos, Model::FieldLevel::City);
+
+		//回転
+		float rotateAngle = Math::RandomRange(0, 4) * 90.0f;
+		actor->Rotate(rotateAngle);
+
+		//アニメーション
+		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
+
+		AddContainer(ActorPattern::Mountain, place->ID(), actor);
 	}
 
 	/**************************************
@@ -373,7 +385,7 @@ namespace Field::Actor
 		if (delay == 0)
 			ActorAnimation::FallAndExpantion(*actor, [=]()
 		{
-			GameParticleManager::Instance()->Generate(GameParticle::WhiteSmog, actorPos + PositionEmitSmog);
+			GameParticleManager::Instance()->Generate(GameParticle::ColorfulDebis, actorPos + PositionEmitSmog);
 		});
 
 		else
@@ -382,7 +394,7 @@ namespace Field::Actor
 			{
 				ActorAnimation::FallAndExpantion(*actor, [=]()
 				{
-					GameParticleManager::Instance()->Generate(GameParticle::WhiteSmog, actorPos + PositionEmitSmog);
+					GameParticleManager::Instance()->Generate(GameParticle::ColorfulDebis, actorPos + PositionEmitSmog);
 				});
 			});
 		}

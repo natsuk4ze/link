@@ -8,44 +8,57 @@
 #define _BLOOMCONTROLLER_H_
 
 #include "../../main.h"
-#include "../Pattern/BaseSingleton.h"
 #include "BaseEffectController.h"
-#include "Effect/BloomFilter.h"
-#include "Effect/BlurFilter.h"
 
 /**************************************
-マクロ定義
-***************************************/
+前方宣言
+**************************************/
+class BloomFilter;
+class BlurFilter;
 
 /**************************************
 クラス定義
 ***************************************/
-class BloomController : public BaseSingleton<BloomController>, public BaseEffectController
+class BloomController : public BaseEffectController
 {
 public:
-	friend class BaseSingleton<BloomController>;
-
-	void Update();
-	void Draw(LPDIRECT3DTEXTURE9 targetTexture = NULL);
-
-private:
 	BloomController();
 	~BloomController();
+
+	void Draw(LPDIRECT3DTEXTURE9 targetTexture);
+	void SetPower(float power1, float power2, float power3);
+	void SetThrethold(float threthold1, float threthold2, float threthold3);
+
+	static const float DefaultPower;
+	static const float DefaultThrethold;
+
+private:
+	enum Const
+	{
+		NumReduction = 3,
+		NumBlur = 2
+	};
 
 	void SampleBrightness(LPDIRECT3DTEXTURE9 targetTexture);
 	void ProcessBlur();
 	void BlendBloom();
 
-	BloomFilter *bloomFilter;
-	BlurFilter *blurFilter;
+	BloomFilter *bloomFilter[NumReduction];
+	BlurFilter *blurFilter[NumReduction];
 
-	LPDIRECT3DTEXTURE9 blurTexture[3][2];
-	LPDIRECT3DSURFACE9 blurSurface[3][2];
-	D3DVIEWPORT9 blurViewPort[3];
+	LPDIRECT3DTEXTURE9 blurTexture[NumReduction][NumBlur];
+	LPDIRECT3DSURFACE9 blurSurface[NumReduction][NumBlur];
+
+	D3DVIEWPORT9 blurViewPort[NumReduction];
 	D3DVIEWPORT9 oldViewPort;
 
 	int cntBlur;
 
+	float bloomPower[NumReduction];
+	float bloomThrethold[NumReduction];
+
+	DWORD reducedWidth[NumReduction];
+	DWORD reducedHeight[NumReduction];
 };
 
 #endif

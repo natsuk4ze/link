@@ -5,15 +5,20 @@
 //
 //=====================================
 #include "BaseEffectController.h"
+#include "ScreenObject.h"
 
 /**************************************
-マクロ定義
+コンストラクタ
 ***************************************/
-
-/**************************************
-デフォルトターゲット設定処理
-***************************************/
-void BaseEffectController::SetDefaultTarget(LPDIRECT3DTEXTURE9 texture)
+BaseEffectController::BaseEffectController()
 {
-	defaultTarget = texture;
+	renderer = new ScreenObject(SCREEN_WIDTH, SCREEN_HEIGHT);
+}
+
+/**************************************
+デストラクタ
+***************************************/
+BaseEffectController::~BaseEffectController()
+{
+	SAFE_DELETE(renderer);
 }
