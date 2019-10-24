@@ -20,12 +20,11 @@
 class SpeedBlur : public ScreenObject
 {
 public:
-	SpeedBlur();
+	SpeedBlur(DWORD width, DWORD height);
 	~SpeedBlur();
 	void DrawEffect();
 	void SetPower(float power);
-	void SetCenterPos(D3DXVECTOR3 pos);
-	void SetSurfaceSize(float width, float height);
+	void SetCenterPos(const D3DXVECTOR3& pos);
 	void SetStartLength(float length);
 	void SetAspectRatio(float width, float height);
 
@@ -35,6 +34,8 @@ private:
 	D3DXHANDLE hTU, hTV;
 	D3DXHANDLE hStartLength;
 	D3DXHANDLE hAspectRatio;
+
+	float texelU, texelV;
 };
 
 #endif

@@ -79,8 +79,7 @@ namespace Field::Model
 	***************************************/
 	void PlaceModel::DrawDebug()
 	{
-		if (type != PlaceType::Mountain && type != PlaceType::River && type != PlaceType::Town)
-			return;
+		return;
 
 		//ƒeƒXƒg•`‰æ
 		Transform transform = Transform(

@@ -12,6 +12,7 @@
 #include "../../../Framework/String/String.h"
 #include "../../../Framework/Tool/DebugWindow.h"
 #include "../../../Framework/Tool/ProfilerCPU.h"
+#include "../../../Library/cppLinq/cpplinq.hpp"
 
 #include <fstream>
 #include <string>
@@ -350,20 +351,38 @@ namespace Field::Model
 	***************************************/
 	const PlaceModel * Field::Model::PlaceContainer::GetNonePlace()
 	{
+		using cpplinq::from;
+		using cpplinq::where;
+		using cpplinq::to_vector;
+
 		//NOTE:Žæ‚è‹}‚¬ì‚Á‚½B‚ ‚Æ‚Å‚«‚ê‚¢‚ÉŽ¡‚·
-		int randomIndex = Math::RandomRange(0, (int)(placeVector.size()));
-		int index = 0;
-		for (auto&& place : placeVector)
+		auto noneVector = from(placeVector)
+			>> where([](auto& place)
 		{
-			if (!place->IsType(PlaceType::None))
-				continue;
+			return place->IsType(PlaceType::None);
+		})
+			>> to_vector();
 
-			index++;
-			if (index == randomIndex)
-				return place;
-		}
+		int randomIndex = Math::RandomRange(0, (int)(noneVector.size()));
+		return noneVector[randomIndex];
+	}
 
-		return nullptr;
+	/**************************************
+	ŠX”j‰óˆ—
+	***************************************/
+	void Field::Model::PlaceContainer::DestroyTown(const PlaceModel * target)
+	{
+		//PlaceModel‚ðNoneƒ^ƒCƒv‚É•Ï‰»
+		auto itrPlace = std::find(placeVector.begin(), placeVector.end(), target);
+
+		if (itrPlace == placeVector.end())
+			return;
+
+		(*itrPlace)->SetType(PlaceType::None);
+
+		//TownModelíœ
+		SAFE_DELETE(townContainer[target->ID()]);
+		townContainer.erase(target->ID());
 	}
 
 	/**************************************

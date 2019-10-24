@@ -7,6 +7,8 @@
 #include "../../../main.h"
 #include "NewCityEvent.h"
 
+#include "../../../Framework/Camera/CameraTranslationPlugin.h"
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -20,9 +22,29 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-NewCityEvent::NewCityEvent()
+NewCityEvent::NewCityEvent(EventViewer *Ptr) : eventViewer(Ptr)
 {
+	// 新しい町を作る予定地を取得
+	NewTown = fieldEventHandler->GetNewTownPosition();
+	const D3DXVECTOR3 TownPosVec3 = NewTown->GetPosition().ConvertToWorldPosition();
 
+	// ゲーム進行停止
+	fieldEventHandler->PauseGame();
+
+	// テロップ設置
+	eventViewer->SetEventTelop(PositiveEvent01, [=]()
+	{
+		// 予定地にカメラを移動させる
+		Camera::TranslationPlugin::Instance()->Move(
+			TownPosVec3,
+			30,
+			// 新しい町を作る関数のラムダ式
+			[&]()
+		{
+			fieldEventHandler->CreateNewTown(NewTown);
+			Camera::TranslationPlugin::Instance()->Restore(30, nullptr);
+		});
+	});
 }
 
 //=============================================================================
@@ -38,7 +60,6 @@ NewCityEvent::~NewCityEvent()
 //=============================================================================
 void NewCityEvent::Update()
 {
-	fieldController->CreateNewTown();
 	UseFlag = false;
 }
 

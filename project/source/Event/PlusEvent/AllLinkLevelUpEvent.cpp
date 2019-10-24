@@ -38,7 +38,7 @@ AllLinkLevelUpEvent::~AllLinkLevelUpEvent()
 //=============================================================================
 void AllLinkLevelUpEvent::Update()
 {
-	fieldController->AdjustAllLinkLevel(LinkLevelUpNum);
+	fieldEventHandler->AdjustAllLinkLevel(LinkLevelUpNum);
 	UseFlag = false;
 }
 

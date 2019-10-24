@@ -5,6 +5,7 @@
 //
 //=====================================
 #include "SpeedBlurFilter.h"
+#include "../../Resource/ResourceManager.h"
 
 /**************************************
 マクロ定義
@@ -23,14 +24,13 @@
 /**************************************
 コンストラクタ
 ***************************************/
-SpeedBlur::SpeedBlur()
+SpeedBlur::SpeedBlur(DWORD width, DWORD height) :
+	ScreenObject(height, width),
+	texelU(1.0f / width),
+	texelV(1.0f / height)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-	HRESULT res = D3DXCreateEffectFromFile(pDevice, (LPSTR)PRECOMPILE_SPEEDBLUR_PATH, 0, 0, D3DXSHADER_SKIPVALIDATION, 0, &effect, 0);
-
-	if (res != S_OK)
-		D3DXCreateEffectFromFile(pDevice, (LPSTR)EFEFCTFILE_SPEEDBLUR_PATH, 0, 0, 0, 0, &effect, 0);
+	const char* Path = "data/EFFECT/SpeedBlur.cfx";
+	ResourceManager::Instance()->GetEffect(Path, effect);
 
 	hPower = effect->GetParameterByName(0, "blurPower");
 	hCenter = effect->GetParameterByName(0, "centerTexel");
@@ -55,6 +55,10 @@ SpeedBlur::~SpeedBlur()
 ***************************************/
 void SpeedBlur::DrawEffect()
 {
+	effect->SetFloat(hTU, texelU);
+	effect->SetFloat(hTV, texelV);
+	effect->CommitChanges();
+
 	effect->Begin(0, 0);
 	effect->BeginPass(0);
 
@@ -76,7 +80,7 @@ void SpeedBlur::SetPower(float power)
 /**************************************
 センターセット処理
 ***************************************/
-void SpeedBlur::SetCenterPos(D3DXVECTOR3 pos)
+void SpeedBlur::SetCenterPos(const D3DXVECTOR3& pos)
 {
 	D3DXMATRIX view, proj;
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
@@ -93,19 +97,6 @@ void SpeedBlur::SetCenterPos(D3DXVECTOR3 pos)
 	center.y = (-center.y + 1.0f) / 2.0f;
 
 	effect->SetFloatArray(hCenter, (float*)&center, 2);
-	effect->CommitChanges();
-}
-
-/**************************************
-テクセルサイズ設定処理
-***************************************/
-void SpeedBlur::SetSurfaceSize(float width, float height)
-{
-	float texelU = 1.0f / width;
-	float texelV = 1.0f / height;
-
-	effect->SetFloat(hTU, texelU);
-	effect->SetFloat(hTV, texelV);
 	effect->CommitChanges();
 }
 

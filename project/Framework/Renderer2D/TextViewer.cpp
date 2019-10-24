@@ -81,7 +81,7 @@ void TextViewer::LoadFont(const char * fontFileName)
 }
 
 /**************************************
-フォントロード処理
+フォントリムーブ処理
 ***************************************/
 void TextViewer::RemoveFont(const char * fontFileName)
 {

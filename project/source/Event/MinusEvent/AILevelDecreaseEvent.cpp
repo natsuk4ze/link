@@ -10,7 +10,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-const int AILevelDecreaseNum = -1;
+const float DecreasePercent = -0.1f;
 
 //*****************************************************************************
 // スタティック変数宣言
@@ -38,7 +38,7 @@ AILevelDecreaseEvent::~AILevelDecreaseEvent()
 //=============================================================================
 void AILevelDecreaseEvent::Update()
 {
-	fieldController->AdjustLevelAI(AILevelDecreaseNum);
+	fieldEventHandler->AdjustLevelAI(DecreasePercent);
 	UseFlag = false;
 }
 

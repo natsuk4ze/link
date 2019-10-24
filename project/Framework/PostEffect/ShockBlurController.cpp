@@ -12,13 +12,27 @@
 ***************************************/
 #define SHOCKBLURCTRL_USE_DEBUG
 
-/**************************************
-構造体定義
+/*************************************
+コンストラクタ
 ***************************************/
+ShockBlurController::ShockBlurController()
+{
+	shockBlur = new ShockBlur(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	pDevice->CreateTexture(SCREEN_WIDTH, SCREEN_HEIGHT, 1, D3DUSAGE_RENDERTARGET, D3DFMT_X8R8G8B8, D3DPOOL_DEFAULT, &texture, 0);
+	texture->GetSurfaceLevel(0, &surface);
+}
 
 /**************************************
-グローバル変数
+デストラクタ
 ***************************************/
+ShockBlurController::~ShockBlurController()
+{
+	delete shockBlur;
+	SAFE_RELEASE(texture);
+	SAFE_RELEASE(surface);
+}
 
 /**************************************
 更新処理
@@ -119,7 +133,7 @@ void ShockBlurController::Draw(LPDIRECT3DTEXTURE9 targetTexture)
 	pDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
 
-	pDevice->SetTexture(0, defaultTarget);
+	pDevice->SetTexture(0, targetTexture);
 	shockBlur->DrawEffect();
 
 	pDevice->SetRenderTarget(0, oldSuf);
@@ -150,27 +164,4 @@ void ShockBlurController::SetBlur(D3DXVECTOR3 pos, float power, int duration)
 	effectTime = duration;
 
 	shockBlur->SetCenterPos(pos);
-}
-
-/*************************************
-コンストラクタ
-***************************************/
-ShockBlurController::ShockBlurController()
-{
-	shockBlur = new ShockBlur();
-	shockBlur->SetSurfaceSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	pDevice->CreateTexture(SCREEN_WIDTH, SCREEN_HEIGHT, 1, D3DUSAGE_RENDERTARGET, D3DFMT_X8R8G8B8, D3DPOOL_DEFAULT, &texture, 0);
-	texture->GetSurfaceLevel(0, &surface);
-}
-
-/**************************************
-デストラクタ
-***************************************/
-ShockBlurController::~ShockBlurController()
-{
-	delete shockBlur;
-	SAFE_RELEASE(texture);
-	SAFE_RELEASE(surface);
 }

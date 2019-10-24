@@ -18,8 +18,9 @@ TimerViewer::TimerViewer()
 	intNum = new CountViewerDrawer();
 	intNum->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Number.png");
 	intNum->MakeVertex();
-	intNum->size = D3DXVECTOR3(35.0f, 69.0f, 0.0f);
+	intNum->size = D3DXVECTOR3(60.0f, 60.0f, 0.0f);
 	intNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	//intNum->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.3f, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
 	intNum->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.3f, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
 	intNum->SetColor(SET_COLOR_NOT_COLORED);
 	intNum->intervalNumberScr = 80.0f;
@@ -31,7 +32,7 @@ TimerViewer::TimerViewer()
 	fewNum = new CountViewerDrawer();
 	fewNum->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Number.png");
 	fewNum->MakeVertex();
-	fewNum->size = D3DXVECTOR3(35.0f, 69.0f, 0.0f);
+	fewNum->size = D3DXVECTOR3(60.0f, 60.0f, 0.0f);
 	fewNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	fewNum->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.7f, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
 	fewNum->SetColor(SET_COLOR_NOT_COLORED);
@@ -44,9 +45,9 @@ TimerViewer::TimerViewer()
 	point = new BaseViewerDrawer();
 	point->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Point.png");
 	point->MakeVertex();
-	point->size = D3DXVECTOR3(100.0f, 100.0f, 0.0f);
+	point->size = D3DXVECTOR3(60.0f, 60.0f, 0.0f);
 	point->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	point->position = D3DXVECTOR3(intNum->position.x + intNum->intervalNumberScr*2.8f, SCREEN_HEIGHT / 10 * 0.90f,0.0f);
+	point->position = D3DXVECTOR3(intNum->position.x + intNum->intervalNumberScr*2.8f, SCREEN_HEIGHT / 10 * 1.0f,0.0f);
 	point->SetColor(SET_COLOR_NOT_COLORED);
 
 	//”wŒi
@@ -57,9 +58,6 @@ TimerViewer::TimerViewer()
 	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	bg->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 1.25), SCREEN_HEIGHT / 10 * 0.920f, 0.0f);
 	bg->SetColor(SET_COLOR_NOT_COLORED);
-
-	//ƒpƒ‰ƒ[ƒ^‰Šú‰»
-	parameterBox = 0;
 }
 
 //*****************************************************************************
@@ -98,6 +96,6 @@ void TimerViewer::Draw(void)
 		intNum->intervalNumberScr, intNum->intervalNumberTex);
 
 	//¬”•”
-	fewNum->DrawCounter(fewNum->baseNumber, (int)((parameterBox - (int)parameterBox)*100), fewNum->placeMax,
+	fewNum->DrawCounter(fewNum->baseNumber, (int)((parameterBox - (int)parameterBox)*pow(fewNum->baseNumber, fewNum->placeMax)), fewNum->placeMax,
 		fewNum->intervalNumberScr, fewNum->intervalNumberTex);
 }

@@ -24,7 +24,7 @@ public:
 	//スクリーン上の表示間隔
 	float intervalNumberScr;
 
-	//テクスチャ素材のの表示間隔
+	//テクスチャ素材の表示間隔
 	float intervalNumberTex;
 
 	//桁数
@@ -43,6 +43,8 @@ private:
 	void SetVertex(int placeCount, float placeInterval);
 	void SetTexture(int number, float placeInterval);
 
+	int texDivX = 4;
+	int texDivY = 3;
 };
 
 #endif

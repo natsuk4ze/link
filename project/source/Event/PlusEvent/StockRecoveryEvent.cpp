@@ -10,7 +10,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-const int AddStockNum = 10;
+const int AddNum = 3;
 
 //*****************************************************************************
 // スタティック変数宣言
@@ -38,7 +38,7 @@ StockRecoveryEvent::~StockRecoveryEvent()
 //=============================================================================
 void StockRecoveryEvent::Update()
 {
-	fieldController->AddStockItem(AddStockNum);
+	fieldEventHandler->AddStockNum(AddNum);
 	UseFlag = false;
 }
 

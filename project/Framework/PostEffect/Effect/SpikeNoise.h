@@ -20,7 +20,7 @@
 class SpikeNoise :public ScreenObject
 {
 public:
-	SpikeNoise();
+	SpikeNoise(DWORD width, DWORD height);
 	~SpikeNoise();
 	void DrawEffect();
 	void SetLength(float length);

@@ -23,7 +23,7 @@ const float CongestionBias = 1.0f;
 //=============================================================================
 CongestionUpEvent::CongestionUpEvent(int RemainTime) : RemainTime(RemainTime)
 {
-	fieldController->RaiseTrafficJam(CongestionBias);
+	fieldEventHandler->AdjustTrafficJam(CongestionBias);
 }
 
 //=============================================================================
@@ -42,7 +42,7 @@ void CongestionUpEvent::Update()
 	RemainTime--;
 	if (RemainTime <= 0)
 	{
-		fieldController->RaiseTrafficJam(0.0f);
+		fieldEventHandler->AdjustTrafficJam(0.0f);
 		UseFlag = false;
 	}
 }

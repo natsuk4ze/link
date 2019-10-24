@@ -10,8 +10,12 @@
 #include "../Field/FieldGround.h"
 #include "../Effect/TestParticleCamera.h"
 #include "../FieldObject/Actor/CityActor.h"
+#include "../FieldObject/Actor/MountainActor.h"
+#include "../FieldObject/Actor/RiverActor.h"
 #include "../Field/Place/PlaceConfig.h"
 #include "../Effect/TestParticleManager.h"
+#include "../../Framework/Tool/DebugWindow.h"
+#include "../../Framework/PostEffect/BloomController.h"
 
 /**************************************
 初期化処理
@@ -23,6 +27,7 @@ void ParticleTestScene::Init()
 	ground = new Field::FieldGround();
 	sceneCamera = new TestParticleCamera();
 	particleManager = TestParticleManager::Instance();
+	bloom = new BloomController();
 
 	//スカイボックスのテクスチャロード
 	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_up.png", SkyBox::Surface::Up);
@@ -34,13 +39,21 @@ void ParticleTestScene::Init()
 
 	//アクターのモデルをロード
 	ResourceManager::Instance()->LoadMesh("Town-City", "data/MODEL/PlaceActor/Town.x");
-	actor = new CityActor(Vector3::Zero, Field::Model::FieldLevel::City);
+	ResourceManager::Instance()->LoadMesh("Mountain-City", "data/MODEL/PlaceActor/mountain.x");
+	ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
+
+	actor = new RiverActor(Vector3::Zero, Field::Model::FieldLevel::City);
+	actor->SetScale(Vector3::One * 1.0f);
 
 	//カメラ設定
 	Camera::SetMainCamera(sceneCamera);
 
 	//パーティクル初期化
 	particleManager->Init();
+
+	//ブルーム初期化
+	bloom->SetPower(0.25f, 0.25f, 0.25f);
+	bloom->SetThrethold(0.45f, 0.5f, 0.55f);
 }
 
 /**************************************
@@ -53,6 +66,7 @@ void ParticleTestScene::Uninit()
 	SAFE_DELETE(ground);
 	SAFE_DELETE(sceneCamera);
 	SAFE_DELETE(actor);
+	SAFE_DELETE(bloom);
 
 	//パーティクル削除
 	particleManager->Uninit();
@@ -63,6 +77,12 @@ void ParticleTestScene::Uninit()
 ***************************************/
 void ParticleTestScene::Update()
 {
+	Debug::Begin("ActorRot");
+	static float angle = 0.0f;
+	Debug::Slider("Angle", angle, 0.0f, 360.0f);
+	actor->SetRotatition(Vector3::Up * angle);
+	Debug::End();
+
 	sceneCamera->Update();
 
 	particleManager->Update();
@@ -76,8 +96,21 @@ void ParticleTestScene::Draw()
 	sceneCamera->Set();
 
 	skybox->Draw();
-	ground->Draw();
-	actor->Draw();
+	//ground->Draw();
+
+	static bool drawableActor = true;
+	
+	Debug::Begin("DrawActor");
+	if (Debug::Button("Switch"))
+		drawableActor = !drawableActor;
+	Debug::End();
+
+	GetDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	if(drawableActor)
+		actor->Draw();
+	GetDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+	bloom->Draw(renderTexture);
 
 	particleManager->Draw();
 }

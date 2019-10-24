@@ -1,26 +1,30 @@
 //=============================================================================
 //
-// ストックビュアー処理 [StockViewer.cpp]
+// ストックビュアー処理 [ItemStockViewer.cpp]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
 #include "../../../../main.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
-#include "StockViewer.h"
+#include "ItemStockViewer.h"
+
+#ifdef _DEBUG
+#include "../../../../Framework/Input/input.h"
+#endif
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
 
 //ストックビュアーの種類数
-const int StockViewer::typeMax;
+const int ItemStockViewer::typeMax;
 
 //ビュアーの表示間隔
 static const float intervalViewerPos = 220.0f;
 
 //アイテムアイコンテクスチャパス
-static const char *iconTexPath[StockViewer::typeMax]
+static const char *iconTexPath[ItemStockViewer::typeMax]
 {
 	"data/TEXTURE/Viewer/GameViewer/StockViewer/Bridge.png",
 	"data/TEXTURE/Viewer/GameViewer/StockViewer/Drill.png",
@@ -32,12 +36,12 @@ static const char *iconTexPath[StockViewer::typeMax]
 static const float hopNumValue = 30.0f;
 
 //数字の初期サイズ
-static const D3DXVECTOR3 initNumSize = D3DXVECTOR3(20.0f, 46.0f, 0.0f);
+static const D3DXVECTOR3 initNumSize = D3DXVECTOR3(42.0f, 42.0f, 0.0f);
 
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-StockViewer::StockViewer()
+ItemStockViewer::ItemStockViewer()
 {
 	for (int  i = 0; i < typeMax; i++)
 	{
@@ -47,12 +51,11 @@ StockViewer::StockViewer()
 		num[i]->MakeVertex();
 		num[i]->size = initNumSize;
 		num[i]->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		num[i]->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.3f, SCREEN_HEIGHT / 10 * 2.50f + i*intervalViewerPos, 0.0f);
+		num[i]->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.21f, SCREEN_HEIGHT / 10 * 2.70f + i*intervalViewerPos, 0.0f);
 		num[i]->SetColor(SET_COLOR_NOT_COLORED);
-		parameterBox[i] = 0;
-		num[i]->intervalNumberScr = 120.0f;
+		num[i]->intervalNumberScr = 42.0f;
 		num[i]->intervalNumberTex = 0.10f;
-		num[i]->placeMax = 1;
+		num[i]->placeMax = 2;
 		num[i]->baseNumber = 10;
 		num[i]->isHopped = false;
 		num[i]->radian = 0;
@@ -63,7 +66,7 @@ StockViewer::StockViewer()
 		icon[i]->MakeVertex();
 		icon[i]->size = D3DXVECTOR3(180.0f, 135.0f, 0.0f);
 		icon[i]->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		icon[i]->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.7f, SCREEN_HEIGHT / 10 * 2.50f + i * intervalViewerPos, 0.0f);
+		icon[i]->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.7f, SCREEN_HEIGHT / 10 * 2.70f + i * intervalViewerPos, 0.0f);
 		icon[i]->SetColor(SET_COLOR_NOT_COLORED);
 	}
 }
@@ -71,7 +74,7 @@ StockViewer::StockViewer()
 //*****************************************************************************
 // デストラクタ
 //*****************************************************************************
-StockViewer::~StockViewer()
+ItemStockViewer::~ItemStockViewer()
 {
 	for (int i = 0; i < typeMax; i++)
 	{
@@ -83,7 +86,7 @@ StockViewer::~StockViewer()
 //=============================================================================
 // 更新処理
 //=============================================================================
-void StockViewer::Update(void)
+void ItemStockViewer::Update(void)
 {
 	Animate();
 }
@@ -91,7 +94,7 @@ void StockViewer::Update(void)
 //=============================================================================
 // 描画処理
 //=============================================================================
-void StockViewer::Draw(void)
+void ItemStockViewer::Draw(void)
 {
 	for (int i = 0; i < typeMax; i++)
 	{
@@ -106,10 +109,18 @@ void StockViewer::Draw(void)
 //=============================================================================
 // アニメーション処理
 //=============================================================================
-void StockViewer::Animate(void)
+void ItemStockViewer::Animate(void)
 {
 	for (int i = 0; i < typeMax; i++)
 	{
+		//前フレームのパラメータとの差が0出ないときホッピング状態にする
+		currentParam[i] = parameterBox[i];
+		if (currentParam[i] - lastParam[i] != 0)
+		{
+			num[i]->isHopped = true;
+		}
+		lastParam[i] = parameterBox[i];
+
 		//ホッピング処理
 		num[i]->size.y = num[i]->HopNumber(num[i]->size.y, initNumSize.y, hopNumValue);
 	}

@@ -10,8 +10,17 @@
 
 #include "../../Framework/BaseViewer.h"
 #include "../../../../Framework/Pattern/Delegate.h"
-#include "../../../../Framework/Pattern/Delegate.h"
 #include <vector>
+#include <functional>
+
+//テロップの種類
+enum TelopID
+{
+	PositiveEvent01,
+	PositiveEvent02,
+	NegativeEvent01,
+	NegativeEvent02
+};
 
 //*****************************************************************************
 // 前方宣言
@@ -24,14 +33,14 @@ class TelopDrawer;
 class EventTelop :public BaseViewer
 {
 public:
-	//テロップの種類
-	enum TelopID
-	{
-		PositiveEvent01,
-		PositiveEvent02,
-		NegativeEvent01,
-		NegativeEvent02
-	};
+	//テロップの種類ID
+	//enum TelopID
+	//{
+	//	PositiveEvent01,
+	//	PositiveEvent02,
+	//	NegativeEvent01,
+	//	NegativeEvent02
+	//};
 
 	EventTelop();
 	~EventTelop();
@@ -41,14 +50,14 @@ public:
 
 	void Update();
 	void Draw(void);
-	void Set(TelopID id, Delegate<void(void)> *onFinish);
+	void Set(TelopID id, std::function<void(void)> FinishFunc = nullptr);
 
 private:
 	TelopDrawer *text;
 	TelopDrawer *bg;
 
 	//再生終了通知
-	Delegate<void(void)> *onFinish;
+	std::function<void(void)> FinishFunc;
 
 	//テキストのテクスチャ情報コンテナ
 	std::vector <LPDIRECT3DTEXTURE9> textTexContainer;

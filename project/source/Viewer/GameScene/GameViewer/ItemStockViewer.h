@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// ストックビュアー処理 [StockViewer.h]
+// ストックビュアー処理 [ItemStockViewer.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
@@ -18,17 +18,17 @@ class CountViewerDrawer;
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class StockViewer :public BaseViewer
+class ItemStockViewer :public BaseViewer
 {
 public:
-	StockViewer();
-	~StockViewer();
+	ItemStockViewer();
+	~ItemStockViewer();
 
 	void Update(void);
 	void Draw(void);
 
 	//ストックビュアーの種類
-	enum StockViewerType
+	enum ItemStockViewerType
 	{
 		Bridge,
 		Drill,
@@ -45,6 +45,12 @@ public:
 private:
 	BaseViewerDrawer *icon[typeMax];
 	CountViewerDrawer *num[typeMax];
+
+	//現在のパラメータ
+	int currentParam[typeMax] = {};
+
+	//１フレーム前のパラメータ
+	int lastParam[typeMax] = {};
 
 	//アニメーション
 	void Animate(void);

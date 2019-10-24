@@ -8,47 +8,58 @@
 #define _CROSSFILTERCONTROLLER_H_
 
 #include "../../main.h"
-#include "../Pattern/BaseSingleton.h"
 #include "BaseEffectController.h"
-#include "Effect/BloomFilter.h"
-#include "Effect/CrossBlurFilter.h"
 
 /**************************************
-マクロ定義
+前方宣言
 ***************************************/
+class CrossBlurFilter;
+class BloomFilter;
 
 /**************************************
 クラス定義
 ***************************************/
-class CrossFilterController : public BaseSingleton<CrossFilterController>, public BaseEffectController
+class CrossFilterController : public BaseEffectController
 {
 public:
-	friend class BaseSingleton<CrossFilterController>;
-
-	void Update();
-	void Draw(LPDIRECT3DTEXTURE9 targetTexture = NULL);
-
-private:
 	CrossFilterController();
 	~CrossFilterController();
 
+	void Draw(LPDIRECT3DTEXTURE9 targetTexture);
+	void SetPower(float power1, float power2, float power3);
+	void SetThrethold(float threthold1, float threthold2, float threthold3);
+
+	static const float DefaultPower;
+	static const float DefaultThrethold;
+
+private:
+	enum Const
+	{
+		NumReduction = 3,
+		NumBlur = 2
+	};
+
 	void SampleBrightness(LPDIRECT3DTEXTURE9 targetTexture);
 	void ProcessBlur();
-	void Blend();
+	void BlendBloom();
 
-	BloomFilter *bloomFilter;
-	CrossBlurFilter *blurFilter;
+	BloomFilter *bloomFilter[NumReduction];
+	CrossBlurFilter *blurFilter[NumReduction];
 
-	LPDIRECT3DTEXTURE9 blurTexture[3][2];
-	LPDIRECT3DSURFACE9 blurSurface[3][2];
+	LPDIRECT3DTEXTURE9 blurTexture[NumReduction][NumBlur];
+	LPDIRECT3DSURFACE9 blurSurface[NumReduction][NumBlur];
 
-	LPDIRECT3DTEXTURE9 sampleTexture;
-	LPDIRECT3DSURFACE9 sampleSurface;
-
-	D3DVIEWPORT9 blurViewPort[3];
+	D3DVIEWPORT9 blurViewPort[NumReduction];
 	D3DVIEWPORT9 oldViewPort;
 
 	int cntBlur;
+
+	float bloomPower[NumReduction];
+	float bloomThrethold[NumReduction];
+
+	DWORD reducedWidth[NumReduction];
+	DWORD reducedHeight[NumReduction];
+
 };
 
 #endif

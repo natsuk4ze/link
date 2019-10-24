@@ -5,10 +5,11 @@
 //
 //=====================================
 #include "UseItem.h"
-#include "../FieldInputController.h"
+#include "../Controller/FieldInput.h"
 #include "../Place/OperatePlaceContainer.h"
 #include "../Place/FieldPlaceContainer.h"
 #include "../FieldCursor.h"
+#include "../Controller/FieldDevelopper.h"
 
 namespace Field
 {
@@ -44,12 +45,12 @@ namespace Field
 
 		//Xキーが押されたら操作対象のプレイスを道に変える
 		//TODO：キーボード以外の入力にも対応
-		if (GetDevelopTrigger())
+		if (entity.input->GetDevelopTrigger())
 		{
 			if (entity.operateContainer->EndDevelop())
 			{
 				PlaceVector vector = entity.operateContainer->GetPlaces();
-				entity.DevelopPlace(vector, vector.begin());
+				entity.developper->DevelopPlace(vector, vector.begin());
 			}
 
 			entity.operateContainer->Clear();
@@ -58,7 +59,7 @@ namespace Field
 		}
 
 		//Zキーが押されたらIdleステートへ遷移
-		if (GetDevelopCancel())
+		if (entity.input->GetDevelopCancel())
 		{
 			entity.operateContainer->Clear();
 			next = State::Idle;

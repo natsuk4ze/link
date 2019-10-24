@@ -9,7 +9,13 @@
 
 #include "EventBase.h"
 #include "../Viewer/GameScene/EventViewer/EventViewer.h"
-#include "../Field/Place/FieldPlaceModel.h"
+#include "../Field/FieldConfig.h"
+#include "../Field/FieldEventHandler.h"
+
+//*****************************************************************************
+// 前方宣言(おーはま追記)
+//*****************************************************************************
+class EventViewer;
 
 //*****************************************************************************
 // クラス定義
@@ -27,6 +33,7 @@ private:
 	std::vector<EventBase*> EventVec;
 	EventViewer *eventViewer;
 	Field::FieldController *fieldController;
+
 	int FieldLevel;
 
 	void LoadCSV(const char* FilePath);
@@ -39,9 +46,10 @@ public:
 	EventController(int FieldLevel);
 	~EventController();
 	void Update(void);
-	void Draw(void);
+	void DrawEventObject(void);
+	void DrawEventViewer(void);
 	void CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& route, int FieldLevel);
-	void ReceiveFieldController(Field::FieldController *Ptr);
+	void ReceiveFieldEventHandler(FieldEventHandler *Ptr);
 };
 
 #endif

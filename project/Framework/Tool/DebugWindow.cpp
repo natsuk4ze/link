@@ -75,7 +75,7 @@ void Debug::Uninit()
 void Debug::Update(void)
 {
 #ifdef USE_DEBUGFUNC
-	if (Keyboard::GetTrigger(DIK_D) && Keyboard::GetTrigger(DIK_LCONTROL))
+	if (Keyboard::GetTrigger(DIK_D) && Keyboard::GetPress(DIK_LCONTROL))
 	{
 		enableDraw = !enableDraw;
 	}
@@ -317,8 +317,8 @@ bool Debug::Slider(const char* label, D3DXVECTOR3& out, const D3DXVECTOR3& min, 
 #ifdef USE_DEBUGFUNC
 	bool res = false;
 	res |= ImGui::SliderFloat((std::string(label) + std::string(".x")).c_str(), &out.x, min.x, max.x);
-	res |= ImGui::SliderFloat((std::string(label) + std::string(".y")).c_str(), &out.y, min.x, max.y);
-	res |= ImGui::SliderFloat((std::string(label) + std::string(".z")).c_str(), &out.z, min.x, max.z);
+	res |= ImGui::SliderFloat((std::string(label) + std::string(".y")).c_str(), &out.y, min.y, max.y);
+	res |= ImGui::SliderFloat((std::string(label) + std::string(".z")).c_str(), &out.z, min.z, max.z);
 	return res;
 #else
 	return false;

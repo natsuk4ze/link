@@ -28,14 +28,32 @@ public:
 	void Update(void);
 	void Draw(void);
 
+	//AIレベルビュアーの種類
+	enum StockViewerType
+	{
+		LevelAI,
+		RatioLevel,
+	};
+
+	//AIレベルビュアーの種類数
+	static const int typeMax = 4;
+
 	//パラメータを受けとる箱
-	int levelAI_Box;
-	float ratioLevelBox;
+	float parameterBox[2];
 
 private:
 	CircleGauge *circleGuage;
 	CountViewerDrawer *num;
 	BaseViewerDrawer *bg;
+
+	//アニメーション処理
+	void Animate();
+
+	//現在のパラメータ
+	int currentParam = 0;
+
+	//１フレーム前のパラメータ
+	int lastParam = 0;
 };
 
 #endif

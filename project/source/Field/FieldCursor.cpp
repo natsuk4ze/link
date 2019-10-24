@@ -16,9 +16,9 @@ namespace Field
 	/**************************************
 	static変数
 	***************************************/
-	const D3DXVECTOR2 FieldCursorSquare::Size = { 5.0f, 5.0f };
-	const int FieldCursorSquare::FadeDuration = 30;
-	const float FieldCursorSquare::MoveSpeed = 0.3f;
+	const D3DXVECTOR2 FieldCursorSquare::Size = { 6.5f, 6.5f };
+	const int FieldCursorSquare::FadeDuration = 40;
+	const float FieldCursorSquare::MoveSpeed = 0.45f;
 
 	/**************************************
 	コンストラクタ

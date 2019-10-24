@@ -9,6 +9,7 @@
 
 #include "Game/BlueSpark.h"
 #include "Game/BlueDebris.h"
+#include "Game/WhiteSmog.h"
 
 /**************************************
 èâä˙âªèàóù
@@ -20,6 +21,7 @@ void TestParticleManager::Init()
 	controllers.resize(TestParticle::Max, NULL);
 	controllers[TestParticle::BlueSpark] = new Effect::Game::BlueSparkController();
 	controllers[TestParticle::BlueDebris] = new Effect::Game::BlueDebrisController();
+	controllers[TestParticle::WhiteSmog] = new Effect::Game::WhiteSmogController();
 }
 
 /**************************************
@@ -33,6 +35,8 @@ void TestParticleManager::Update()
 		Generate(TestParticle::BlueSpark, Vector3::Up * 10.0f);
 	else if (Debug::Button("BlueDebris"))
 		Generate(TestParticle::BlueDebris, Vector3::Up * 10.0f);
+	else if (Debug::Button("WhiteSmog"))
+		Generate(TestParticle::WhiteSmog, Vector3::Up * 10.0f);
 
 	Debug::NewLine();
 
