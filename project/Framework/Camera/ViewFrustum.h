@@ -43,7 +43,9 @@ public:
 	D3DXVECTOR3 GetSurfacePoint(Surface surfaceID);
 
 	// ‹‘äƒJƒŠƒ“ƒO
-	bool CheckOnCamera(ViewFrustumBox& entity);
+	bool CheckOnCamera(const D3DXVECTOR3 target, const float size);
+	D3DXVECTOR3 GetPositivePoint(D3DXVECTOR3 target, const float size, D3DXVECTOR3 normal);
+	D3DXVECTOR3 GetNegativePoint(D3DXVECTOR3 target, const float size, D3DXVECTOR3 normal);
 
 	//’¸“_İ’èˆ—
 	void SetVertex(

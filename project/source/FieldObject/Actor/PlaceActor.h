@@ -12,7 +12,6 @@
 #include "../../../Framework/Math/Easing.h"
 #include "../../../Framework/Renderer3D/MeshContainer.h"
 #include "../../Field/Place/PlaceConfig.h"
-//#include "../ViewFrustrumBox/ViewFrustrumBox.h"
 
 //**************************************
 // マクロ定義
@@ -48,11 +47,11 @@ protected:
 	FModel::PlaceType type;								// アクターの種類
 	// ******************************
 
-	bool onCamera;										// 描画範囲の可否判定
-	//ViewFrustrumBox* frustrum;							// 視錐台カリング用ボックス
+	bool onCamera;										// 描画の可否判定
 
 private:
-	static const D3DXVECTOR3 ActorScale;
+	static const D3DXVECTOR3 Scale;
+	static const float FrustumBoxSize;
 
 #if _DEBUG
 	void Debug();

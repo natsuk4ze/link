@@ -111,34 +111,80 @@ D3DXVECTOR3 ViewFrustum::GetSurfacePoint(Surface surfaceID)
 /**************************************
 視錐台カリング
 ***************************************/
-bool ViewFrustum::CheckOnCamera(ViewFrustumBox& entity)
+bool ViewFrustum::CheckOnCamera(const D3DXVECTOR3 target, const float size)
 {
 	bool ret = false;
 
 	for (int i = 0; i < Surface::Max; i++)
 	{
-		// 正負の頂点を取得
-		D3DXVECTOR3 positive = entity.SearchNearPoint(GetSurfacePoint(Surface(i)));
-		D3DXVECTOR3 negative = entity.SearchFarPoint(GetSurfacePoint(Surface(i)));
-
-		// 面の法線
 		D3DXVECTOR3 nor = GetNormal(Surface(i));
+		D3DXVECTOR3 surfacePoint = GetSurfacePoint(Surface(i));
 
-		// 視錐台の法線と、視錐台からオブジェクトへのベクトルから内積計算
-		float dot1 = D3DXVec3Dot(&nor, &positive);
-		float dot2 = D3DXVec3Dot(&nor, &negative);
+		D3DXVECTOR3 positiveDist = GetPositivePoint(target, size, nor) - surfacePoint;
+		D3DXVECTOR3 negativeDist = GetNegativePoint(target, size, nor) - surfacePoint;
 
-		if (dot1 > 0 || dot2 > 0)
+		// 交差判定
+		float dp = D3DXVec3Dot(&positiveDist, &nor);
+		float dn = D3DXVec3Dot(&negativeDist, &nor);
+
+		if (dp > 0 || dn > 0)
 		{
 			ret = true;
 		}
 		else
 		{
 			ret = false;
+			// 1つでもfalseになったら画面外
 			break;
 		}
 	}
 
 	return ret;
 
+}
+
+/**************************************
+法線から一番近い点を算出する
+***************************************/
+D3DXVECTOR3 ViewFrustum::GetPositivePoint(D3DXVECTOR3 target, const float size, D3DXVECTOR3 normal)
+{
+	D3DXVECTOR3 ret = target;
+
+	if (normal.x > 0)
+	{
+		ret.x += size;
+	}
+	if (normal.y > 0)
+	{
+		ret.y += size;
+	}
+	if (normal.z > 0)
+	{
+		ret.z += size;
+	}
+
+	return ret;
+}
+
+/**************************************
+法線から一番遠い点を算出する
+***************************************/
+D3DXVECTOR3 ViewFrustum::GetNegativePoint(D3DXVECTOR3 target, const float size, D3DXVECTOR3 normal)
+{
+	D3DXVECTOR3 ret = target;
+
+	if (normal.x < 0)
+	{
+		ret.x -= size;
+	}
+	if (normal.y < 0)
+	{
+		ret.y -= size;
+	}
+	if (normal.z < 0)
+	{
+		ret.z -= size;
+	}
+
+	return ret;
 }

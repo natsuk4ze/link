@@ -14,7 +14,8 @@
 //**************************************
 // クラスのメンバ変数初期化
 //**************************************
-const D3DXVECTOR3 PlaceActor::ActorScale = D3DXVECTOR3(0.25f, 0.25f, 0.25f);
+const D3DXVECTOR3 PlaceActor::Scale = D3DXVECTOR3(0.25f, 0.25f, 0.25f);
+const float PlaceActor::FrustumBoxSize = 10.0f;
 
 //=====================================
 // コンストラクタ
@@ -27,10 +28,8 @@ PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel) 
 
 	// ステータスセット
 	transform->SetPosition(pos);
-	transform->SetScale(ActorScale);
+	transform->SetScale(Scale);
 	this->SetActive(true);
-
-	//frustrum = new ViewFrustumBox(pos, ViewFrustumBox::PlaceActorSize);
 }
 
 //=====================================
@@ -39,7 +38,6 @@ PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel) 
 PlaceActor::~PlaceActor()
 {
 	SAFE_RELEASE(mesh);
-	//SAFE_DELETE(frustrum);
 }
 
 //=====================================
@@ -48,7 +46,7 @@ PlaceActor::~PlaceActor()
 void PlaceActor::Update()
 {
 	// カリング判定
-	//onCamera = Camera::MainCamera()->GetViewFrustrum().CheckOnCamera(*frustrum);
+	onCamera = Camera::MainCamera()->GetViewFrustrum().CheckOnCamera(transform->GetPosition(), FrustumBoxSize);
 
 #if _DEBUG
 	Debug();
@@ -100,7 +98,7 @@ void PlaceActor::SetColor(const D3DXCOLOR& color, UINT index)
 void PlaceActor::ResetTransform()
 {
 	transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	transform->SetScale(ActorScale);
+	transform->SetScale(Scale);
 	transform->SetRotation(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 }
 
@@ -135,7 +133,7 @@ void PlaceActor::Debug()
 	Debug::NewLine();
 	if (Debug::Button("ResetScale"))
 	{
-		transform->SetScale(ActorScale);
+		transform->SetScale(Scale);
 	}
 	Debug::NewLine();
 	Debug::Text("OnCamera = %s", onCamera ? "true" : "false");
