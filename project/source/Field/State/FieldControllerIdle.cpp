@@ -5,7 +5,7 @@
 //
 //=====================================
 #include "FieldControllerIdle.h"
-#include "../FieldInputController.h"
+#include "../Controller/FieldInput.h"
 
 namespace Field
 {
@@ -25,13 +25,13 @@ namespace Field
 		State next = State::Idle;
 
 		//ZƒL[‚ª‰Ÿ‚³‚ê‚½‚çBuild‚Ö‘JˆÚ
-		if (GetBuildTrigger())
+		if (entity.input->GetBuildTrigger())
 		{
 			next = State::Build;
 		}
 
 		//XƒL[‚ª‰Ÿ‚³‚ê‚½‚çDevelop‚Ö‘JˆÚ
-		if (GetDevelopTrigger())
+		if (entity.input->GetDevelopTrigger())
 		{
 			next = State::Develop;
 		}

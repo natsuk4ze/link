@@ -5,7 +5,7 @@
 //
 //=====================================
 #include "BuildRoad.h"
-#include "../FieldInputController.h"
+#include "../Controller/FieldInput.h"
 #include "../Place/OperatePlaceContainer.h"
 #include "../Place/FieldPlaceContainer.h"
 #include "../FieldCursor.h"
@@ -45,7 +45,7 @@ namespace Field
 
 		//Zキーが押されたら操作対象のプレイスを道に変える
 		//TODO：キーボード以外の入力にも対応
-		if (GetBuildTrigger())
+		if (entity.input->GetBuildTrigger())
 		{
 			if (entity.operateContainer->EndRoute())
 			{
@@ -58,7 +58,7 @@ namespace Field
 		}
 
 		//Xキーが押されたらIdleステートへ遷移
-		if (GetBuildCancel())
+		if (entity.input->GetBuildCancel())
 		{
 			entity.operateContainer->Clear();
 			next = State::Idle;

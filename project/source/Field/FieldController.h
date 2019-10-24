@@ -105,14 +105,13 @@ namespace Field
 	private:
 		//内部クラス前方宣言
 		class FieldDevelopper;
+		class FieldInput;
 
 		//static定数メンバ
 		static const float PlaceOffset;					//Placeの1マス毎のオフセット値
 		static const int InitFieldBorder;				//フィールド範囲の初期値
-		static const int InputLongWait;					//入力リピートの待機フレーム
-		static const int InputShortWait;				//入力リピートの待機フレーム
-		static const int InitDevelopRiverStock;	//川開発ストックの初期数
-		static const int InitDevelopMountainStock;	//山開発ストックの初期数
+		static const int InitDevelopRiverStock;			//川開発ストックの初期数
+		static const int InitDevelopMountainStock;		//山開発ストックの初期数
 		static const int DevelopmentInterval;			//AI発展レベルが上がるインターバル
 		static const float MaxDevelopmentLevelAI;		//AI発展レベルの最大値
 
@@ -126,9 +125,9 @@ namespace Field
 		Actor::PlaceActorController* placeActController;	//プレイスアクターコントローラ
 
 		FieldDevelopper *developper;
+		FieldInput *input;
 
 		int fieldBorder;						//フィールド範囲(マス単位)
-		int inputRepeatCnt;						//入力のリピートカウント
 		int cntFrame;							//フレームカウント
 		float developmentLevelAI;				//AI発展レベル
 		int stockDevelopRiver;					//川開発アイテムストック

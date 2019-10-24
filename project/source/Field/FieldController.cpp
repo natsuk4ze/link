@@ -15,13 +15,13 @@
 #include "Route\RouteProcessor.h"
 #include "PlaceActorController.h"
 #include "FieldEventHandler.h"
+
 #include "Controller\FieldDevelopper.h"
+#include "Controller\FieldInput.h"
 
 #include "State/BuildRoad.h"
 #include "State/FieldControllerIdle.h"
 #include "State/UseItem.h"
-
-#include "../Event/EventController.h"
 
 #include "../../Framework/Input/input.h"
 #include "../../Framework/Tool/DebugWindow.h"
@@ -37,8 +37,6 @@ namespace Field
 	***************************************/
 	const float FieldController::PlaceOffset = 10.0f;				//Placeの1マス毎のオフセット値
 	const int FieldController::InitFieldBorder = 30;				//フィールド範囲の初期値
-	const int FieldController::InputLongWait = 15;					//入力リピートの待機フレーム
-	const int FieldController::InputShortWait = 5;					//入力リピートの待機フレーム
 	const int FieldController::InitDevelopRiverStock = 10;		//川開発ストックの初期数
 	const int FieldController::InitDevelopMountainStock = 10;	//山開発ストックの初期数
 	const int FieldController::DevelopmentInterval = 30;			//発展レベル上昇のインターバル
@@ -49,7 +47,6 @@ namespace Field
 	***************************************/
 	FieldController::FieldController() :
 		fieldBorder(InitFieldBorder),
-		inputRepeatCnt(0),
 		cntFrame(0),
 		developmentLevelAI(0),
 		stockDevelopRiver(InitDevelopRiverStock),
@@ -71,6 +68,7 @@ namespace Field
 		operateContainer = new Model::OperatePlaceContainer();
 		placeActController = new Actor::PlaceActorController();
 		developper = new FieldDevelopper(this);
+		input = new FieldInput(this);
 
 		//ステートマシン作成
 		fsm.resize(State::Max, NULL);
@@ -108,6 +106,7 @@ namespace Field
 		SAFE_DELETE(routeProcessor);
 		SAFE_DELETE(placeActController);
 		SAFE_DELETE(developper);
+		SAFE_DELETE(input);
 
 		//デリゲート削除
 		SAFE_DELETE(onConnectTown);
@@ -168,7 +167,7 @@ namespace Field
 	}
 
 	/**************************************
-	入力確認処理
+	CSV読み込み処理
 	TODO：読み込むデータを選択できるようにする
 	***************************************/
 	void FieldController::Load()
@@ -195,39 +194,7 @@ namespace Field
 	***************************************/
 	void FieldController::CheckInput()
 	{
-		//トリガー確認
-		float triggerX = 0.0f, triggerZ = 0.0f;
-
-		triggerX = Input::GetTriggerHorizontal();
-		triggerZ = -Input::GetTriggerVertical();
-
-		//リピート確認
-		float repeatX = 0.0f, repeatZ = 0.0f;
-		if ((Input::GetPressHorizontail() != 0.0f || Input::GetPressVertical() != 0.0f))
-		{
-			inputRepeatCnt++;
-			if (inputRepeatCnt >= InputLongWait && inputRepeatCnt % InputShortWait == 0)
-			{
-				repeatX = Input::GetPressHorizontail();
-				repeatZ = -Input::GetPressVertical();
-			}
-		}
-		else
-		{
-			inputRepeatCnt = 0;
-		}
-
-		//カーソルを移動
-		float x = Math::Clamp(-1.0f, 1.0f, triggerX + repeatX);
-		float z = Math::Clamp(-1.0f, 1.0f, triggerZ + repeatZ);
-		cursor->Move((int)x, (int)z);
-
-		//現在のステートの更新処理を実行
-		State next = state->OnUpdate(*this);
-		if (next != current)
-		{
-			ChangeState(next);
-		}
+		input->CheckMoveInput();
 	}
 
 	/**************************************

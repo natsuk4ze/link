@@ -106,7 +106,6 @@
     <ClInclude Include="source\Field\FieldController.h" />
     <ClInclude Include="source\Field\FieldCursor.h" />
     <ClInclude Include="source\Field\FieldGround.h" />
-    <ClInclude Include="source\Field\FieldInputController.h" />
     <ClInclude Include="source\Field\PlaceActorController.h" />
     <ClInclude Include="source\FieldObject\Actor\BridgeActor.h" />
     <ClInclude Include="source\FieldObject\Actor\CityActor.h" />
@@ -179,6 +178,7 @@
     <ClInclude Include="Framework\PostEffect\BaseEffectController.h" />
     <ClInclude Include="source\Effect\Game\ColorfulDebris.h" />
     <ClInclude Include="source\Field\Controller\FieldDevelopper.h" />
+    <ClInclude Include="source\Field\Controller\FieldInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -271,7 +271,6 @@
     <ClCompile Include="source\Field\FieldController.cpp" />
     <ClCompile Include="source\Field\FieldCursor.cpp" />
     <ClCompile Include="source\Field\FieldGround.cpp" />
-    <ClCompile Include="source\Field\FieldInputController.cpp" />
     <ClCompile Include="source\Field\PlaceActorController.cpp" />
     <ClCompile Include="source\FieldObject\Actor\BridgeActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\CityActor.cpp" />
@@ -342,6 +341,7 @@
     <ClCompile Include="Framework\PostEffect\BaseEffectController.cpp" />
     <ClCompile Include="source\Effect\Game\ColorfulDebris.cpp" />
     <ClCompile Include="source\Field\Controller\FieldDevelopper.cpp" />
+    <ClCompile Include="source\Field\Controller\FieldInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
