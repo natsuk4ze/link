@@ -189,24 +189,6 @@ void EventMessage::FadeOut(void)
 }
 
 //=============================================================================
-// メッセージセット処理
-//=============================================================================
-void EventMessage::Set(const std::string &message,int &cnt)
-{
-	//一度リセットする
-	Reset();
-
-	//メッセージカウントをセット
-	messageSetCnt = cnt;
-
-	//テキストにメッセージをセット
-	text->SetText(message);
-
-	//再生状態に移行
-	isPlaying = true;
-}
-
-//=============================================================================
 // メッセージリセット処理
 //=============================================================================
 void EventMessage::Reset(void)
@@ -231,4 +213,22 @@ void EventMessage::Reset(void)
 	text->SetColor(SET_COLOR_NOT_COLORED);
 	bg->SetColor(SET_COLOR_NOT_COLORED);
 	isPlaying = false;
+}
+
+//=============================================================================
+// メッセージセット処理
+//=============================================================================
+void EventMessage::Set(const std::string &message, int &cnt)
+{
+	//一度リセットする
+	Reset();
+
+	//メッセージカウントをセット
+	messageSetCnt = cnt;
+
+	//テキストにメッセージをセット
+	text->SetText(message);
+
+	//再生状態に移行
+	isPlaying = true;
 }
