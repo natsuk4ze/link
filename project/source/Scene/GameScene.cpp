@@ -139,6 +139,8 @@ void GameScene::Update()
 		eventHandler->ResumeGame();
 	if (Debug::Button("GetTownPos"))
 		eventHandler->GetNewTownPosition();
+	if (Debug::Button("DestroyTown"))
+		eventHandler->DestroyTown(eventHandler->GetDestroyTarget());
 	Debug::End();
 }
 

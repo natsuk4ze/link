@@ -37,8 +37,8 @@ namespace Field
 	***************************************/
 	const float FieldController::PlaceOffset = 10.0f;				//Placeの1マス毎のオフセット値
 	const int FieldController::InitFieldBorder = 30;				//フィールド範囲の初期値
-	const int FieldController::InitDevelopRiverStock = 10;		//川開発ストックの初期数
-	const int FieldController::InitDevelopMountainStock = 10;	//山開発ストックの初期数
+	const int FieldController::InitDevelopRiverStock = 10;			//川開発ストックの初期数
+	const int FieldController::InitDevelopMountainStock = 10;		//山開発ストックの初期数
 	const int FieldController::DevelopmentInterval = 30;			//発展レベル上昇のインターバル
 	const float FieldController::MaxDevelopmentLevelAI = 9999.0f;	//AI発展レベルの最大値
 	
@@ -144,8 +144,6 @@ namespace Field
 		CalcDevelopmentLevelAI();
 
 		Debug::Log("ControllerState:%d", current);
-		Debug::Log("StockRiver:%d", stockDevelopRiver);
-		Debug::Log("StockMountain:%d", stockDevelopMountain);
 		Debug::Log("DevelopmentAILevel:%d", (int)developmentLevelAI);
 	}
 
@@ -283,6 +281,13 @@ namespace Field
 		handler.functerPlace[Handler::FuncterID_Place::Create] = [&](auto place)
 		{
 			//後で作る
+		};
+
+		//街破壊ファンクタ
+		handler.functerPlace[Handler::FuncterID_Place::Destroy] = [&](auto place)
+		{
+			placeContainer->DestroyTown(place);
+			placeActController->ChangeActor(place);
 		};
 
 		//操作反転処理

@@ -153,6 +153,9 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::ChangeActor(const Model::PlaceModel * place)
 	{
+		if (place == nullptr)
+			return;
+
 		PlaceType PrevType = place->GetPrevType();
 		unsigned PlaceID = place->ID();
 
@@ -168,6 +171,10 @@ namespace Field::Actor
 		{
 			resultErase |= EraseFromContainer(ActorPattern::TJunction, PlaceID);
 			resultErase |= EraseFromContainer(ActorPattern::CrossJunction, PlaceID);
+		}
+		else if (PrevType == PlaceType::Town)
+		{
+			resultErase |= EraseFromContainer(ActorPattern::City, PlaceID);
 		}
 
 		if (resultErase)

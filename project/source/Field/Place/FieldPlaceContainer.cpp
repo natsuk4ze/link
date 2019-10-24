@@ -368,6 +368,24 @@ namespace Field::Model
 	}
 
 	/**************************************
+	ŠX”j‰óˆ—
+	***************************************/
+	void Field::Model::PlaceContainer::DestroyTown(const PlaceModel * target)
+	{
+		//PlaceModel‚ğNoneƒ^ƒCƒv‚É•Ï‰»
+		auto itrPlace = std::find(placeVector.begin(), placeVector.end(), target);
+
+		if (itrPlace == placeVector.end())
+			return;
+
+		(*itrPlace)->SetType(PlaceType::None);
+
+		//TownModelíœ
+		SAFE_DELETE(townContainer[target->ID()]);
+		townContainer.erase(target->ID());
+	}
+
+	/**************************************
 	—×Úî•ñì¬
 	***************************************/
 	void PlaceContainer::MakeAdjacency()
