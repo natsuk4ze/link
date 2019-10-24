@@ -30,7 +30,7 @@ public:
 	void Draw(void);
 
 	//メッセージセット
-	void Set(const std::string &message, int &cnt);
+	void SetEventMessage(const std::string &message, int &cnt);
 
 	//メッセージセットカウンター
 	int messageSetCnt;

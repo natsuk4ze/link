@@ -9,13 +9,14 @@
 //*****************************************************************************
 // スタティック変数宣言
 //*****************************************************************************
-Field::FieldController *EventBase::fieldController = nullptr;
+FieldEventHandler *EventBase::fieldEventHandler = nullptr;
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 EventBase::EventBase() : UseFlag(true)
 {
+
 }
 
 //=============================================================================
@@ -45,8 +46,8 @@ void EventBase::Draw()
 //=============================================================================
 // FieldControllerのポインタを受け取る
 //=============================================================================
-void EventBase::ReceiveFieldController(Field::FieldController *Ptr)
+void EventBase::ReceiveFieldEventHandler(FieldEventHandler *Ptr)
 {
-	fieldController = Ptr;
+	fieldEventHandler = Ptr;
 }
 

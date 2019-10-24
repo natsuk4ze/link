@@ -22,7 +22,7 @@
 //=============================================================================
 MoveInverseEvent::MoveInverseEvent(int RemainTime) : RemainTime(RemainTime)
 {
-	fieldController->ReverseOperation(true);
+	fieldEventHandler->ReverseOperation(true);
 }
 
 //=============================================================================
@@ -41,7 +41,7 @@ void MoveInverseEvent::Update()
 	RemainTime--;
 	if (RemainTime <= 0)
 	{
-		fieldController->ReverseOperation(false);
+		fieldEventHandler->ReverseOperation(false);
 		UseFlag = false;
 	}
 }

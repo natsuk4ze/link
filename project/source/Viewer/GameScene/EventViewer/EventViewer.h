@@ -9,6 +9,7 @@
 
 #include <vector>
 #include <string>
+#include <functional>
 #include "EventTelop.h"
 #include "../../../../Framework/Pattern/Delegate.h"
 
@@ -33,9 +34,11 @@ public:
 
 	//メッセージセット
 	void SetEventMessage(const std::string Message);
+	//void SetEventTelop(TelopID id, Delegate<void(void)> *onFinish);
+	void SetEventTelop(TelopID id, std::function<void(void)> FinishFunc = NULL);
 
 	//テロップセット
-	void SetEventTelop(EventTelop::TelopID id, Delegate<void(void)> *onFinish);
+	//void SetEventTelop(EventTelop::TelopID id, Delegate<void(void)> *onFinish);
 
 	//メッセージがセットされるとカウントアップするカウンター
 	int messageSetCnt;

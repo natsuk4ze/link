@@ -20,6 +20,7 @@ TimerViewer::TimerViewer()
 	intNum->MakeVertex();
 	intNum->size = D3DXVECTOR3(60.0f, 60.0f, 0.0f);
 	intNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	//intNum->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.3f, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
 	intNum->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.3f, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
 	intNum->SetColor(SET_COLOR_NOT_COLORED);
 	intNum->intervalNumberScr = 80.0f;

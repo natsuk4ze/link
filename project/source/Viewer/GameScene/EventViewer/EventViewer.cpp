@@ -116,13 +116,13 @@ void EventViewer::CountMessage(void)
 void EventViewer::SetEventMessage(const std::string Message)
 {
 	CountMessage();
-	eventMessage[messageSetCnt-1]->Set(Message,messageSetCnt);
+	eventMessage[messageSetCnt - 1]->SetEventMessage(Message, messageSetCnt);
 }
 
 //=============================================================================
 // イベント発生テロップを設置
 //=============================================================================
-void EventViewer::SetEventTelop(EventTelop::TelopID id, Delegate<void(void)> *onFinish)
+void EventViewer::SetEventTelop(TelopID id, std::function<void(void)> FinishFunc)
 {
-	eventTelop->Set(id, onFinish);
+	eventTelop->Set(id, FinishFunc);
 }

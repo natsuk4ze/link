@@ -151,7 +151,7 @@ void EventTelop::Update()
 
 	if (Keyboard::GetTrigger(DIK_T))
 	{
-		Set(PositiveEvent01, onFinish);
+		Set(PositiveEvent01, nullptr);
 	}
 
 #endif
@@ -222,10 +222,10 @@ void EventTelop::Play()
 			bg->isPlaying = false;
 
 			//ヌルチェック
-			if (onFinish != NULL)
+			if (FinishFunc != nullptr)
 			{
 				//再生終了の通知
-				(*onFinish)();
+				FinishFunc();
 			}
 		}
 	}
@@ -243,7 +243,7 @@ void EventTelop::PassTexture(TelopID id)
 //=============================================================================
 // テロップセット処理
 //=============================================================================
-void EventTelop::Set(TelopID id, Delegate<void(void)>* onFinish)
+void EventTelop::Set(TelopID id, std::function<void(void)> FinishFunc)
 {
 	//テクスチャ情報受け渡し
 	PassTexture(id);
@@ -253,5 +253,5 @@ void EventTelop::Set(TelopID id, Delegate<void(void)>* onFinish)
 	bg->isPlaying = true;
 
 	//テロップ再生終了通知
-	this->onFinish = onFinish;
+	this->FinishFunc = FinishFunc;
 }

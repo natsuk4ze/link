@@ -54,9 +54,9 @@ void GameScene::Init()
 	field = new Field::FieldController();
 	gameViewer = new GameViewer();
 	eventController = new EventController(Field::Model::City);
-	eventController->ReceiveFieldController(field);
-	particleManager = GameParticleManager::Instance();
 	eventHandler = new FieldEventHandler();
+	eventController->ReceiveFieldEventHandler(eventHandler);
+	particleManager = GameParticleManager::Instance();
 	bloomController = new BloomController();
 
 	//ステートマシン作成
@@ -158,8 +158,8 @@ void GameScene::Draw()
 	//オブジェクト描画
 	field->Draw();
 
-	// イベント描画
-	eventController->Draw();
+	// イベントオブジェクト描画
+	eventController->DrawEventObject();
 
 	//ポストエフェクトは重いのでリリース版のみ適用する
 #ifndef _DEBUG
@@ -168,6 +168,9 @@ void GameScene::Draw()
 #endif
 	//パーティクル描画
 	particleManager->Draw();
+
+	// イベントビューア描画
+	eventController->DrawEventViewer();
 
 	//ビュアー描画
 	gameViewer->Draw();

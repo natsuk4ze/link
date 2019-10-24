@@ -218,7 +218,7 @@ void EventMessage::Reset(void)
 //=============================================================================
 // メッセージセット処理
 //=============================================================================
-void EventMessage::Set(const std::string &message, int &cnt)
+void EventMessage::SetEventMessage(const std::string &message, int &cnt)
 {
 	//一度リセットする
 	Reset();

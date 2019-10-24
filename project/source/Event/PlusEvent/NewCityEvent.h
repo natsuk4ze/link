@@ -8,6 +8,8 @@
 #define _NewCityEvent_H_
 
 #include "../EventBase.h"
+#include "../../Viewer/GameScene/EventViewer/EventViewer.h"
+#include "../../Field/Place/FieldPlaceModel.h"
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -15,8 +17,11 @@
 class NewCityEvent : public EventBase
 {
 private:
+	EventViewer *eventViewer;
+	const Field::Model::PlaceModel* NewTown;
+
 public:
-	NewCityEvent();
+	NewCityEvent(EventViewer *Ptr);
 	~NewCityEvent();
 	void Update(void) override;
 	void Draw(void) override;
