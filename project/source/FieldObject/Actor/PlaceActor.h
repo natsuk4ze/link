@@ -47,12 +47,11 @@ protected:
 	FModel::PlaceType type;								// アクターの種類
 	// ******************************
 
-	bool onCamera;										// 描画範囲の可否判定
-
-	bool CheckOnCamera();								// カメラ内判定
+	bool onCamera;										// 描画の可否判定
 
 private:
-	static const D3DXVECTOR3 ActorScale;
+	static const D3DXVECTOR3 Scale;
+	static const float FrustumBoxSize;
 
 #if _DEBUG
 	void Debug();

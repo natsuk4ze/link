@@ -29,7 +29,7 @@
 #include "GameState/GameLevelUp.h"
 #include "GameState\/GamePause.h"
 
-#include "../FieldObject/Actor/BridgeActor.h"
+#include "../FieldObject/Actor/CityActor.h"
 
 #include "../../Framework/Tool/DebugWindow.h"
 
@@ -74,7 +74,7 @@ void GameScene::Init()
 	//ステート初期化
 	ChangeState(State::Initialize);
 
-	//testActor = new BridgeActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), FModel::City);
+	//testActor = new CityActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), FModel::City);
 }
 
 /**************************************
@@ -119,6 +119,8 @@ void GameScene::Update()
 
 	//カメラ更新
 	fieldCamera->Update();
+
+	//testActor->Update();
 
 	//ビューワパラメータをビューワに渡す
 	GameViewerParam param;
