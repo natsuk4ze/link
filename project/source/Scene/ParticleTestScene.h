@@ -17,7 +17,6 @@
 class SkyBox;
 class TestParticleManager;
 class PlaceActor;
-class TestParticleManager;
 class BloomController;
 
 namespace Field

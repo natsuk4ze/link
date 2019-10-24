@@ -25,7 +25,7 @@ GameMain::GameMain(HINSTANCE hInstance, HWND hWnd) :
 	sceneManager->Add(GameConfig::SceneID::ParticleTest, new ParticleTestScene(renderTexture, renderSurface));
 
 	//‰ŠúƒV[ƒ“‚É‘JˆÚ
-	const int InitScene = GameConfig::SceneID::Game;
+	const int InitScene = GameConfig::SceneID::ParticleTest;
 	sceneManager->ChangeScene(InitScene);
 }
 

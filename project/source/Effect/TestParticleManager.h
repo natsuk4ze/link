@@ -22,6 +22,8 @@ namespace TestParticle
 		BlueSpark,
 		BlueDebris,
 		WhiteSmog,
+		Explosion,
+		ExplosionFlare,
 		Max
 	};
 }
