@@ -271,6 +271,15 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::SetRiver(const Model::PlaceModel * place)
 	{
+		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
+
+		//アクター生成
+		PlaceActor* actor = new RiverActor(actorPos, Model::FieldLevel::City);
+
+		//アニメーション
+		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
+
+		AddContainer(ActorPattern::River, place->ID(), actor);
 	}
 
 	/**************************************
