@@ -50,10 +50,6 @@
 //　マテリアルを使用する板ポリゴンフォーマット
 #define FVF_VERTEX_MATERIAL		(D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1)
 
-//おおはまがDebugWindow操作用に使ってます後で消します
-//#define SCREEN_WIDTH	(1500)
-//#define SCREEN_HEIGHT	(900)
-
 #define SCREEN_WIDTH	(1920)
 #define SCREEN_HEIGHT	(1080)
 
