@@ -12,6 +12,7 @@
 #include "../../../Framework/Math/Easing.h"
 #include "../../../Framework/Renderer3D/MeshContainer.h"
 #include "../../Field/Place/PlaceConfig.h"
+#include "../ViewFrustrumBox/ViewFrustrumBox.h"
 
 //**************************************
 // マクロ定義
@@ -48,8 +49,7 @@ protected:
 	// ******************************
 
 	bool onCamera;										// 描画範囲の可否判定
-
-	bool CheckOnCamera();								// カメラ内判定
+	ViewFrustrumBox* frustrum;							// 視錐台カリング用ボックス
 
 private:
 	static const D3DXVECTOR3 ActorScale;

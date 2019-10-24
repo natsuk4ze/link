@@ -45,7 +45,7 @@ PlaceActor::~PlaceActor()
 void PlaceActor::Update()
 {
 	// ƒJƒŠƒ“ƒO”»’è
-	onCamera = Camera::MainCamera()->GetViewFrustrum().CheckOnCamera(transform->GetPosition());
+	onCamera = Camera::MainCamera()->GetViewFrustrum().CheckOnCamera(transform->GetPosition(), 5.0f * sqrtf(2.0f));
 
 #if _DEBUG
 	Debug();

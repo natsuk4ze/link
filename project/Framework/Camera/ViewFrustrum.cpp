@@ -116,17 +116,50 @@ bool ViewFrustrum::CheckOnCamera(const D3DXVECTOR3 pos, const float size)
 	bool ret = false;
 
 	// カメラの焦点からチェックする座標を算出
-	Camera::MainCamera()->GetMainTarget();
+	D3DXVECTOR3 target = Camera::MainCamera()->GetTarget();
+	D3DXVECTOR3 obj = pos;
+	D3DXVECTOR3 side = pos;
+	// 焦点の左上
+	if (obj.x < target.x && obj.z < target.z)
+	{
+		obj.x += size;
+		obj.z += size;
+		side.x += size;
+	}
+	// 焦点の右上
+	else if (obj.x >= target.x && obj.z < target.z)
+	{
+		obj.x -= size;
+		obj.z += size;
+		side.x -= size;
+	}
+	// 焦点の左下
+	else if (obj.x < target.x && obj.z >= target.z)
+	{
+		obj.x += size;
+		obj.z -= size;
+		side.x += size;
+	}
+	// 焦点の右下
+	else if (obj.x >= target.x && obj.z >= target.z)
+	{
+		obj.x -= size;
+		obj.z -= size;
+		side.x -= size;
+	}
 
 	for (int i = 0; i < 4; i++)
 	{
 		D3DXVECTOR3 nor = GetNormal(Surface(i));
-		D3DXVECTOR3 vec = pos - GetSurfacePoint(Surface(i));
+		D3DXVECTOR3 vec1 = obj - GetSurfacePoint(Surface(i));
+		D3DXVECTOR3 vec2 = side - GetSurfacePoint(Surface(i));
 
 		// 視錐台の法線と、視錐台からオブジェクトへのベクトルから内積計算
-		float dot = D3DXVec3Dot(&nor, &vec);
+		float dot1 = D3DXVec3Dot(&nor, &vec1);
+		float dot2 = D3DXVec3Dot(&nor, &vec2);
 
-		if (dot > 0)
+		// どちらか片方が画面内にあればOK
+		if (dot1 > 0 || dot2 > 0)
 		{
 			ret = true;
 		}

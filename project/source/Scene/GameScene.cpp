@@ -74,7 +74,7 @@ void GameScene::Init()
 	//ステート初期化
 	ChangeState(State::Initialize);
 
-	//testActor = new BridgeActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), FModel::City);
+	testActor = new BridgeActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), FModel::City);
 }
 
 /**************************************
@@ -101,7 +101,7 @@ void GameScene::Uninit()
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
 
-	//SAFE_DELETE(testActor);
+	SAFE_DELETE(testActor);
 	//デリゲート削除
 	SAFE_DELETE(onBuildRoad);
 
@@ -122,6 +122,8 @@ void GameScene::Update()
 
 	//カメラ更新
 	fieldCamera->Update();
+
+	testActor->Update();
 
 	//ビューワパラメータをビューワに渡す
 	GameViewerParam param;
@@ -155,7 +157,7 @@ void GameScene::Draw()
 	//背景描画
 	skybox->Draw();
 
-	//testActor->Draw();
+	testActor->Draw();
 
 	//オブジェクト描画
 	field->Draw();
