@@ -19,7 +19,7 @@ RiverActor::RiverActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
 	switch (currentLevel)
 	{
 	case FModel::City:
-		//ResourceManager::Instance()->GetMesh("River-City", mesh);
+		ResourceManager::Instance()->GetMesh("River-City", mesh);
 		break;
 	case FModel::World:
 		break;

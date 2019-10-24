@@ -230,6 +230,7 @@ void CityDestroyEvent::Draw()
 	}
 	else
 	{
+#ifdef _DEBUG
 		D3DXMATRIX WorldMatrix, TransMatrix;
 
 		// ワールドマトリックスの初期化
@@ -260,6 +261,7 @@ void CityDestroyEvent::Draw()
 
 		// ミサイル描画
 		MissileMesh->DrawSubset(0);
+#endif
 	}
 }
 
