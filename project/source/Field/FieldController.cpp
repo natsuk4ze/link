@@ -287,7 +287,7 @@ namespace Field
 		handler.functerPlace[Handler::FuncterID_Place::Destroy] = [&](auto place)
 		{
 			placeContainer->DestroyTown(place);
-			placeActController->ChangeActor(place);
+			placeActController->DestroyActor(place);
 		};
 
 		//‘€ì”½“]ˆ—

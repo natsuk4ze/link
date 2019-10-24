@@ -55,6 +55,9 @@ namespace Field::Actor
 		//既にアクターを生成している場合はこっちを呼ぶ
 		void ChangeActor(const Model::PlaceModel* place);
 
+		//アクター消滅処理
+		bool DestroyActor(const Model::PlaceModel* place);
+
 		//定数メンバ
 		static const D3DXVECTOR3 PositionEmitSmog;		//道落下時の煙発生位置
 		static const float PlacePositionOffset;			//アクター同士の配置間隔
@@ -85,7 +88,7 @@ namespace Field::Actor
 		void SetBridge(const Model::PlaceModel* place);
 		void SetJunction(const Model::PlaceModel* place);
 		void SetMountain(const Model::PlaceModel* place);
-		void SetNone(const Model::PlaceModel* place);
+		void SetNone(const Model::PlaceModel* place, float randomRange = 0.0f);
 
 		//コンテナ追加、削除処理
 		void AddContainer(ActorPattern pattern, unsigned key, PlaceActor* actor);
