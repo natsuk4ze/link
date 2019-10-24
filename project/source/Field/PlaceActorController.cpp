@@ -37,6 +37,7 @@ namespace Field::Actor
 	***************************************/
 	const float PlaceActorController::PlacePositionOffset = 10.0f;
 	const D3DXVECTOR3 PlaceActorController::PositionEmitSmog = Vector3::Up;
+
 	/**************************************
 	コンストラクタ
 	***************************************/
@@ -111,6 +112,7 @@ namespace Field::Actor
 
 		case PlaceType::Mountain:
 			SetMountain(place);
+			SetNone(place);
 			break;
 
 		case PlaceType::River:
@@ -123,10 +125,11 @@ namespace Field::Actor
 
 		case PlaceType::Town:
 			SetTown(place);
+			SetNone(place);
 			break;
 
 		case PlaceType::None:
-			SetNone(place);
+			SetNone(place, 2.0f);
 			break;
 		}
 	}
@@ -153,6 +156,24 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::ChangeActor(const Model::PlaceModel * place)
 	{
+		if (place == nullptr)
+			return;
+
+		//アクター消滅
+		bool resultErase = DestroyActor(place);
+
+		//切り替え
+		if (resultErase)
+		{
+			SetActor(place);
+		}
+	}
+
+	/**************************************
+	アクター消滅処理
+	***************************************/
+	bool PlaceActorController::DestroyActor(const Model::PlaceModel * place)
+	{
 		PlaceType PrevType = place->GetPrevType();
 		unsigned PlaceID = place->ID();
 
@@ -169,11 +190,12 @@ namespace Field::Actor
 			resultErase |= EraseFromContainer(ActorPattern::TJunction, PlaceID);
 			resultErase |= EraseFromContainer(ActorPattern::CrossJunction, PlaceID);
 		}
-
-		if (resultErase)
+		else if (PrevType == PlaceType::Town)
 		{
-			SetActor(place);
+			resultErase |= EraseFromContainer(ActorPattern::City, PlaceID);
 		}
+
+		return resultErase;
 	}
 
 	/**************************************
@@ -341,13 +363,12 @@ namespace Field::Actor
 	/**************************************
 	Noneセット処理
 	***************************************/
-	void PlaceActorController::SetNone(const Model::PlaceModel * place)
+	void PlaceActorController::SetNone(const Model::PlaceModel * place, float randomRange)
 	{
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
 		//真っ平らだと不自然なので高さに少し凹凸をつける
-		const float HeightRange = -2.0f;
-		actorPos.y += Math::RandomRange(HeightRange, 0.0f);
+		actorPos.y += Math::RandomRange(-randomRange, 0.0f);
 
 		PlaceActor* actor = new NoneActor(actorPos, Model::FieldLevel::City);
 

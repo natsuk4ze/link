@@ -80,6 +80,11 @@ namespace Field::Model
 		//ŠX‚ğì‚ê‚éƒvƒŒƒCƒXæ“¾
 		const PlaceModel* GetNonePlace();
 
+		//ŠX”j‰óˆ—
+		void DestroyTown(const PlaceModel* target);
+
+		//ŠX¶¬ˆ—
+
 #ifdef DEBUG_PLACEMODEL
 		void DrawDebug();
 #endif
