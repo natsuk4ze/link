@@ -1,22 +1,22 @@
 //=====================================
 //
-//ViewFrustrum.cpp
+//ViewFrustum.cpp
 //機能:カメラの視錐台
 //Author:GP12B332 21 立花雄太
 //
 //=====================================
-#include "ViewFrustrum.h"
+#include "ViewFrustum.h"
 #include "Camera.h"
 
 /**************************************
 staticメンバ
 ***************************************/
-const unsigned ViewFrustrum::VertexMax = 8;
+const unsigned ViewFrustum::VertexMax = 8;
 
 /**************************************
 コンストラクタ
 ***************************************/
-ViewFrustrum::ViewFrustrum()
+ViewFrustum::ViewFrustum()
 {
 	vertexPos.resize(VertexMax, Vector3::Zero);
 }
@@ -24,7 +24,7 @@ ViewFrustrum::ViewFrustrum()
 /**************************************
 デストラクタ
 ***************************************/
-ViewFrustrum::~ViewFrustrum()
+ViewFrustum::~ViewFrustum()
 {
 	vertexPos.clear();
 }
@@ -32,24 +32,24 @@ ViewFrustrum::~ViewFrustrum()
 /**************************************
 視錐台の面の法線取得処理
 ***************************************/
-D3DXVECTOR3 ViewFrustrum::GetNormal(Surface surfaceID)
+D3DXVECTOR3 ViewFrustum::GetNormal(Surface surfaceID)
 {
 	D3DXVECTOR3 normal = Vector3::Up;
 	switch (surfaceID)
 	{
-	case ViewFrustrum::Left:
+	case ViewFrustum::Left:
 		normal = _GetNormal(NearLeftTop, FarLeftTop, NearLeftBottom);
 		break;
 
-	case ViewFrustrum::Right:
+	case ViewFrustum::Right:
 		normal = _GetNormal(NearRightBottom, FarRightBottom, NearRightTop);
 		break;
 
-	case ViewFrustrum::Top:
+	case ViewFrustum::Top:
 		normal = _GetNormal(NearLeftTop, NearRightTop, FarLeftTop);
 		break;
 
-	case ViewFrustrum::Bottom:
+	case ViewFrustum::Bottom:
 		normal = _GetNormal(NearLeftBottom, FarLeftBottom, NearRightBottom);
 		break;
 	}
@@ -60,7 +60,7 @@ D3DXVECTOR3 ViewFrustrum::GetNormal(Surface surfaceID)
 /**************************************
 頂点設定処理
 ***************************************/
-void ViewFrustrum::SetVertex(const D3DXVECTOR3 & NearLeftTop, const D3DXVECTOR3 & NearRightTop, const D3DXVECTOR3 & NearLeftBottom, const D3DXVECTOR3 & NearRightBottom, const D3DXVECTOR3 & FarLeftTop, const D3DXVECTOR3 & FarRightTop, const D3DXVECTOR3 & FarLeftBottom, const D3DXVECTOR3 & FarRightBottom)
+void ViewFrustum::SetVertex(const D3DXVECTOR3 & NearLeftTop, const D3DXVECTOR3 & NearRightTop, const D3DXVECTOR3 & NearLeftBottom, const D3DXVECTOR3 & NearRightBottom, const D3DXVECTOR3 & FarLeftTop, const D3DXVECTOR3 & FarRightTop, const D3DXVECTOR3 & FarLeftBottom, const D3DXVECTOR3 & FarRightBottom)
 {
 	vertexPos[Vertex::NearLeftTop] = NearLeftTop;
 	vertexPos[Vertex::NearRightTop] = NearRightTop;
@@ -76,7 +76,7 @@ void ViewFrustrum::SetVertex(const D3DXVECTOR3 & NearLeftTop, const D3DXVECTOR3 
 /**************************************
 法線取得処理（内部処理）
 ***************************************/
-D3DXVECTOR3 ViewFrustrum::_GetNormal(int v1, int v2, int v3)
+D3DXVECTOR3 ViewFrustum::_GetNormal(int v1, int v2, int v3)
 {
 	return Vector3::Axis(vertexPos[v2] - vertexPos[v1], vertexPos[v3] - vertexPos[v1]);
 }
@@ -84,7 +84,7 @@ D3DXVECTOR3 ViewFrustrum::_GetNormal(int v1, int v2, int v3)
 /**************************************
 面上のある一点を所得
 ***************************************/
-D3DXVECTOR3 ViewFrustrum::GetSurfacePoint(Surface surfaceID)
+D3DXVECTOR3 ViewFrustum::GetSurfacePoint(Surface surfaceID)
 {
 	D3DXVECTOR3 ret = Vector3::Zero;
 	switch (surfaceID)
@@ -111,54 +111,23 @@ D3DXVECTOR3 ViewFrustrum::GetSurfacePoint(Surface surfaceID)
 /**************************************
 視錐台カリング
 ***************************************/
-bool ViewFrustrum::CheckOnCamera(const D3DXVECTOR3 pos, const float size)
+bool ViewFrustum::CheckOnCamera(ViewFrustumBox& entity)
 {
 	bool ret = false;
 
-	// カメラの焦点からチェックする座標を算出
-	D3DXVECTOR3 target = Camera::MainCamera()->GetTarget();
-	D3DXVECTOR3 obj = pos;
-	D3DXVECTOR3 side = pos;
-	// 焦点の左上
-	if (obj.x < target.x && obj.z < target.z)
+	for (int i = 0; i < Surface::Max; i++)
 	{
-		obj.x += size;
-		obj.z += size;
-		side.x += size;
-	}
-	// 焦点の右上
-	else if (obj.x >= target.x && obj.z < target.z)
-	{
-		obj.x -= size;
-		obj.z += size;
-		side.x -= size;
-	}
-	// 焦点の左下
-	else if (obj.x < target.x && obj.z >= target.z)
-	{
-		obj.x += size;
-		obj.z -= size;
-		side.x += size;
-	}
-	// 焦点の右下
-	else if (obj.x >= target.x && obj.z >= target.z)
-	{
-		obj.x -= size;
-		obj.z -= size;
-		side.x -= size;
-	}
+		// 正負の頂点を取得
+		D3DXVECTOR3 positive = entity.SearchNearPoint(GetSurfacePoint(Surface(i)));
+		D3DXVECTOR3 negative = entity.SearchFarPoint(GetSurfacePoint(Surface(i)));
 
-	for (int i = 0; i < 4; i++)
-	{
+		// 面の法線
 		D3DXVECTOR3 nor = GetNormal(Surface(i));
-		D3DXVECTOR3 vec1 = obj - GetSurfacePoint(Surface(i));
-		D3DXVECTOR3 vec2 = side - GetSurfacePoint(Surface(i));
 
 		// 視錐台の法線と、視錐台からオブジェクトへのベクトルから内積計算
-		float dot1 = D3DXVec3Dot(&nor, &vec1);
-		float dot2 = D3DXVec3Dot(&nor, &vec2);
+		float dot1 = D3DXVec3Dot(&nor, &positive);
+		float dot2 = D3DXVec3Dot(&nor, &negative);
 
-		// どちらか片方が画面内にあればOK
 		if (dot1 > 0 || dot2 > 0)
 		{
 			ret = true;
@@ -171,4 +140,5 @@ bool ViewFrustrum::CheckOnCamera(const D3DXVECTOR3 pos, const float size)
 	}
 
 	return ret;
+
 }

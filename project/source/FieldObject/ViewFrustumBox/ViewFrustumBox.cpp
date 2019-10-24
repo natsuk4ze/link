@@ -5,20 +5,20 @@
 // Author:GP12B332 19 染谷武志
 //
 //=====================================
-#include "ViewFrustrumBox.h"
+#include "ViewFrustumBox.h"
 #include <vector>
 #include <algorithm>
 
 //**************************************
 // メンバ変数初期化
 //**************************************
-const float ViewFrustrumBox::PlaceActorSize = 5.0f;
-const float ViewFrustrumBox::PassengerActorSize = 3.0f;
+const float ViewFrustumBox::PlaceActorSize = 5.0f;
+const float ViewFrustumBox::PassengerActorSize = 3.0f;
 
 //=====================================
 // コンストラクタ
 //=====================================
-ViewFrustrumBox::ViewFrustrumBox(const D3DXVECTOR3 pos, float size) :
+ViewFrustumBox::ViewFrustumBox(const D3DXVECTOR3 pos, float size) :
 	pos(pos)
 {
 	this->point[UpLeftFar] = this->pos + D3DXVECTOR3(-size, size, -size);
@@ -34,21 +34,21 @@ ViewFrustrumBox::ViewFrustrumBox(const D3DXVECTOR3 pos, float size) :
 //=====================================
 // デストラクタ
 //=====================================
-ViewFrustrumBox::~ViewFrustrumBox()
+ViewFrustumBox::~ViewFrustumBox()
 {
 }
 
 //=====================================
 // 対象から最短距離の座標を取得する
 //=====================================
-D3DXVECTOR3 ViewFrustrumBox::SearchNearPoint(const D3DXVECTOR3 target)
+D3DXVECTOR3 ViewFrustumBox::SearchNearPoint(const D3DXVECTOR3 target)
 {
 	// 対象から座標への距離を計算
 	std::vector<float> dist;
 	dist.reserve(Point::Max);
 	for (int i = 0; i < Point::Max; i++)
 	{
-		dist.push_back(D3DXVec3Length(&(point[Point(i)] - target)));
+		dist.push_back(D3DXVec3LengthSq(&(point[Point(i)] - target)));
 	}
 
 	// 最小値の添字を取得
@@ -61,14 +61,14 @@ D3DXVECTOR3 ViewFrustrumBox::SearchNearPoint(const D3DXVECTOR3 target)
 //=====================================
 // 対象から最長距離の座標を取得する
 //=====================================
-D3DXVECTOR3 ViewFrustrumBox::SearchFarPoint(const D3DXVECTOR3 target)
+D3DXVECTOR3 ViewFrustumBox::SearchFarPoint(const D3DXVECTOR3 target)
 {
 	// 対象から座標への距離を計算
 	std::vector<float> dist;
 	dist.reserve(Point::Max);
 	for (int i = 0; i < Point::Max; i++)
 	{
-		dist.push_back(D3DXVec3Length(&(point[Point(i)] - target)));
+		dist.push_back(D3DXVec3LengthSq(&(point[Point(i)] - target)));
 	}
 
 	// 最大値の添字を取得

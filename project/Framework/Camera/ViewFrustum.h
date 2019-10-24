@@ -1,15 +1,16 @@
 //=====================================
 //
-//ViewFrustrum.h
+//ViewFrustum.h
 //機能:カメラの視錐台
 //Author:GP12B332 21 立花雄太
 //
 //=====================================
-#ifndef _VIEWFRUSTRUM_H_
-#define _VIEWFRUSTRUM_H_
+#ifndef _VIEWFRUSTUM_H_
+#define _VIEWFRUSTUM_H_
 
 #include "../../main.h"
 #include <vector>
+#include "../../source/FieldObject/ViewFrustumBox/ViewFrustumBox.h"
 
 /**************************************
 前方宣言
@@ -18,7 +19,7 @@
 /**************************************
 クラス定義
 ***************************************/
-class ViewFrustrum
+class ViewFrustum
 {
 public:
 	//視錐台の面を表す列挙子
@@ -32,8 +33,8 @@ public:
 	};
 
 	//コンストラクタ、デストラクタ
-	ViewFrustrum();
-	~ViewFrustrum();
+	ViewFrustum();
+	~ViewFrustum();
 
 	//面の法線取得処理 ※正規化済み
 	D3DXVECTOR3 GetNormal(Surface surfaceID);
@@ -42,7 +43,7 @@ public:
 	D3DXVECTOR3 GetSurfacePoint(Surface surfaceID);
 
 	// 視錐台カリング
-	bool CheckOnCamera(const D3DXVECTOR3 pos, const float size);
+	bool CheckOnCamera(ViewFrustumBox& entity);
 
 	//頂点設定処理
 	void SetVertex(

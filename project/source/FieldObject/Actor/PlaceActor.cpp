@@ -8,7 +8,7 @@
 #include "PlaceActor.h"
 #include "../../../Framework/Tool/DebugWindow.h"
 #include "../Animation/ActorAnimation.h"
-#include "../../../Framework/Camera/ViewFrustrum.h"
+#include "../../../Framework/Camera/ViewFrustum.h"
 #include "../../../Framework/Camera/Camera.h"
 
 //**************************************
@@ -29,6 +29,8 @@ PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel) 
 	transform->SetPosition(pos);
 	transform->SetScale(ActorScale);
 	this->SetActive(true);
+
+	//frustrum = new ViewFrustumBox(pos, ViewFrustumBox::PlaceActorSize);
 }
 
 //=====================================
@@ -37,6 +39,7 @@ PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel) 
 PlaceActor::~PlaceActor()
 {
 	SAFE_RELEASE(mesh);
+	//SAFE_DELETE(frustrum);
 }
 
 //=====================================
@@ -45,7 +48,7 @@ PlaceActor::~PlaceActor()
 void PlaceActor::Update()
 {
 	// ƒJƒŠƒ“ƒO”»’è
-	onCamera = Camera::MainCamera()->GetViewFrustrum().CheckOnCamera(transform->GetPosition(), 5.0f * sqrtf(2.0f));
+	//onCamera = Camera::MainCamera()->GetViewFrustrum().CheckOnCamera(*frustrum);
 
 #if _DEBUG
 	Debug();

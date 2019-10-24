@@ -1,19 +1,19 @@
 //=====================================
 //
-// ビューフラストラムボックス[ViewFrustrumBox.h]
+// ビューフラスタムボックス[ViewFrustumBox.h]
 // 機能：視錐台カリング用ボックス
 // Author:GP12B332 19 染谷武志
 //
 //=====================================
-#ifndef _VIEWFRUSTRUMBOX_H_
-#define _VIEWFRUSTRUMBOX_H_
+#ifndef _VIEWFRUSTUMBOX_H_
+#define _VIEWFRUSTUMBOX_H_
 
 #include "../../../main.h"
 
 //**************************************
 // クラス定義
 //**************************************
-class ViewFrustrumBox
+class ViewFrustumBox
 {
 public:
 	enum Point
@@ -29,8 +29,8 @@ public:
 		Max
 	};
 
-	ViewFrustrumBox(const D3DXVECTOR3 pos, float size);
-	~ViewFrustrumBox();
+	ViewFrustumBox(const D3DXVECTOR3 pos, float size);
+	~ViewFrustumBox();
 
 	// 対象に最も近い、遠い座標を取得する
 	D3DXVECTOR3 SearchNearPoint(const D3DXVECTOR3 target);

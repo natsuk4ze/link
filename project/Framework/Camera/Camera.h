@@ -8,7 +8,7 @@
 #define _CAMERA_H_
 
 #include "../../main.h"
-#include "ViewFrustrum.h"
+#include "ViewFrustum.h"
 
 #include <vector>
 
@@ -50,7 +50,7 @@ public:
 	D3DXMATRIX GetProjectionMtx() const;
 
 	//視錐台取得処理
-	ViewFrustrum GetViewFrustrum() const;
+	ViewFrustum GetViewFrustrum() const;
 
 	// メインカメラの焦点座標を取得
 	D3DXVECTOR3 GetTarget() const;
@@ -74,7 +74,7 @@ protected:
 	float viewFar;
 
 	//視錐台
-	ViewFrustrum viewFrustrum;
+	ViewFrustum viewFrustrum;
 
 	//ビュー、プロジェクション行列、ビューポート行列
 	D3DXMATRIX view, projection, viewport;
