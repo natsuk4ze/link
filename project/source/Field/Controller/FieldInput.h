@@ -37,6 +37,9 @@ namespace Field
 		//ˆÚ“®“ü—ÍŠm”F
 		void CheckMoveInput();
 
+		//‘€ì”½“]ˆ—
+		void ReverseOperate(bool isReverse);
+
 	private:
 		FieldController * entity;
 
@@ -44,6 +47,8 @@ namespace Field
 		static const int InputShortWait;
 		
 		int cntInputRepeat;
+
+		int directionInput;
 	};
 }
 

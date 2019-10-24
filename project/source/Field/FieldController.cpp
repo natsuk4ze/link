@@ -288,7 +288,7 @@ namespace Field
 		//操作反転処理
 		handler.functerBool[Handler::FuncterID_bool::ReverseOpe] = [&](bool isReverse)
 		{
-			//後で作る
+			input->ReverseOperate(isReverse);
 		};
 
 		//ストック封印処理

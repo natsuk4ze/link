@@ -14,14 +14,15 @@ namespace Field
 	staticメンバ
 	***************************************/
 	const int FieldController::FieldInput::InputLongWait = 15;
-	const int FieldController::FieldInput::InputShortWait = 5;
+	const int FieldController::FieldInput::InputShortWait = 3;
 
 	/**************************************
 	コンストラクタ
 	***************************************/
 	FieldController::FieldInput::FieldInput(FieldController * controller) :
 		entity(controller),
-		cntInputRepeat(0)
+		cntInputRepeat(0),
+		directionInput(1)
 	{
 
 	}
@@ -87,8 +88,8 @@ namespace Field
 		//トリガー確認
 		float triggerX = 0.0f, triggerZ = 0.0f;
 
-		triggerX = Input::GetTriggerHorizontal();
-		triggerZ = -Input::GetTriggerVertical();
+		triggerX = Input::GetTriggerHorizontal() * directionInput;
+		triggerZ = -Input::GetTriggerVertical() * directionInput;
 
 		//リピート確認
 		float repeatX = 0.0f, repeatZ = 0.0f;
@@ -97,8 +98,8 @@ namespace Field
 			cntInputRepeat++;
 			if (cntInputRepeat >= InputLongWait && cntInputRepeat % InputShortWait == 0)
 			{
-				repeatX = Input::GetPressHorizontail();
-				repeatZ = -Input::GetPressVertical();
+				repeatX = Input::GetPressHorizontail() * directionInput;
+				repeatZ = -Input::GetPressVertical() * directionInput;
 			}
 		}
 		else
@@ -117,6 +118,14 @@ namespace Field
 		{
 			entity->ChangeState(next);
 		}
+	}
+
+	/**************************************
+	操作反転処理
+	***************************************/
+	void FieldController::FieldInput::ReverseOperate(bool isReverse)
+	{
+		directionInput = isReverse ? -1 : 1;
 	}
 }
 
