@@ -219,11 +219,3 @@ void Camera::CalculateFrustrum()
 		UnProjection(RightBottom, 1.0f)
 	);
 }
-
-/**************************************
-カメラの焦点座標を参照
-***************************************/
-D3DXVECTOR3 Camera::GetTarget()const
-{
-	return target;
-}
