@@ -12,7 +12,8 @@ namespace Effect::Game
 	/**************************************
 	BlueSparkControllerコンストラクタ
 	***************************************/
-	BlueSparkController::BlueSparkController()
+	BlueSparkController::BlueSparkController() :
+		BaseParticleController(Particle_3D)
 	{
 		//単位頂点バッファ作成
 		const D3DXVECTOR2 ParticleSize{ 18.0f, 10.0f };

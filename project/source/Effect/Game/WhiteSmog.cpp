@@ -13,7 +13,8 @@ namespace Effect::Game
 	/**************************************
 	WhiteSmogControllerコンストラクタ
 	***************************************/
-	WhiteSmogController::WhiteSmogController()
+	WhiteSmogController::WhiteSmogController() :
+		BaseParticleController(Particle_3D)
 	{
 		//単位頂点バッファ作成
 		const D3DXVECTOR2 SizeParticle{ 5.0f, 5.0f };

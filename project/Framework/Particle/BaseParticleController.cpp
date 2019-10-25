@@ -30,8 +30,8 @@ shared_ptr<ParticleRenderer> BaseParticleController::mRenderer = NULL;
 /**************************************
 コンストラクタ
 ***************************************/
-BaseParticleController::BaseParticleController() :
-	unitBuff(NULL), texture(NULL), particleCount(0)
+BaseParticleController::BaseParticleController(ParticleType type) :
+	unitBuff(NULL), texture(NULL), particleCount(0), useType(type)
 {
 	if (!mRenderer)
 	{
@@ -123,7 +123,9 @@ bool BaseParticleController::Draw()
 	pDevice->SetTexture(0, texture);
 
 	//描画
+	renderer->BeginPass(useType);
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, NUM_VERTEX, 0, NUM_POLYGON);
+	renderer->EndPass();
 
 	return true;
 }

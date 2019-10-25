@@ -12,7 +12,8 @@ namespace Effect::Game
 	/**************************************
 	BlueDebrisControllerコンストラクタ
 	***************************************/
-	BlueDebrisController::BlueDebrisController()
+	BlueDebrisController::BlueDebrisController() :
+		BaseParticleController(Particle_3D)
 	{
 		//テクスチャ読み込み
 		LoadTexture("data/TEXTURE/Particle/blueDebris.png");

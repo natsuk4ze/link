@@ -12,7 +12,8 @@ namespace Effect::Game
 	/**************************************
 	ColorfulDebrisControllerコンストラクタ
 	***************************************/
-	ColorfulDebrisController::ColorfulDebrisController()
+	ColorfulDebrisController::ColorfulDebrisController() :
+		BaseParticleController(Particle_3D)
 	{
 		//単位頂点バッファ作成
 		const D3DXVECTOR2 SizeParticle{0.6f, 0.6f};

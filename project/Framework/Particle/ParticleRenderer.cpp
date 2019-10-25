@@ -72,7 +72,6 @@ void ParticleRenderer::BeginDraw()
 
 	//シェーダによる描画開始
 	effect->Begin(0, 0);
-	effect->BeginPass(0);
 }
 
 /**************************************
@@ -84,7 +83,6 @@ void ParticleRenderer::EndDraw()
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	//シェーダによる描画終了
-	effect->EndPass();
 	effect->End();
 
 	//レンダーステート復元
@@ -95,6 +93,22 @@ void ParticleRenderer::EndDraw()
 	pDevice->SetStreamSourceFreq(0, 1);
 	pDevice->SetStreamSourceFreq(1, 1);
 	pDevice->SetStreamSourceFreq(2, 1);
+}
+
+/**************************************
+Transform情報埋め込み処理
+***************************************/
+void ParticleRenderer::BeginPass(DWORD pass)
+{
+	effect->BeginPass(pass);
+}
+
+/**************************************
+Transform情報埋め込み処理
+***************************************/
+void ParticleRenderer::EndPass()
+{
+	effect->EndPass();
 }
 
 /**************************************

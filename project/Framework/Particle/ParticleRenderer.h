@@ -32,6 +32,9 @@ public:
 	void BeginDraw();
 	void EndDraw();
 
+	void BeginPass(DWORD pass);
+	void EndPass();
+
 	UINT EmbedTransform(const std::vector<BaseParticle*> container);
 	UINT EmbedUV(const std::vector<BaseParticle*> container);
 
