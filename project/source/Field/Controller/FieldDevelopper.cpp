@@ -68,9 +68,6 @@ namespace Field
 		entity->routeProcessor->ConnectWithEdge(ptr, entity->routeContainer);
 		entity->routeProcessor->Process(ptr, entity->routeContainer);
 
-		//道を新しく作ったので混雑度を再計算
-		entity->placeContainer->CaclTrafficJamRate();
-
 		//アクター生成
 		entity->placeActController->SetActor(ptr);
 

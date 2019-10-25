@@ -59,9 +59,6 @@ namespace Field::Model
 		//交差点が作られた際に呼ばれる処理
 		void OnCreateJunction(const PlaceModel* place);
 
-		//混雑度計算
-		void CaclTrafficJamRate();
-
 		//AI発展レベル計算
 		float CalcDevelopmentLevelAI(float bonus);
 
