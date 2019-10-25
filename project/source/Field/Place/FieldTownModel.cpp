@@ -86,12 +86,7 @@ namespace Field::Model
 			linkLevel += route->FindLinkedTown(place, searchedRoute, searchedTown);
 		}
 
-		//Œq‚ª‚Á‚Ä‚¢‚éŠX‚ª‚È‚©‚Á‚½‚ç•â³ŒvZ‚ğs‚í‚È‚¢
-		if (linkLevel == 0)
-			return 0.0f;
-
-		int adjustLevel = Math::Max(1, linkLevel + biasLinkLevel);
-		developmentLevel = (adjustLevel + adjustLevel * trafficJamRate) * bonus;
+		developmentLevel = (float)linkLevel * linkLevel;
 		return developmentLevel;
 	}
 
