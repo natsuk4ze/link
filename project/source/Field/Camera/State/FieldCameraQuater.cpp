@@ -7,6 +7,7 @@
 //=====================================
 #include "FieldCameraQuater.h"
 #include "../../../../Framework/Math/Easing.h"
+#include "../../../../Framework/Tool/DebugWindow.h"
 
 /**************************************
 “üêˆ—
@@ -20,8 +21,8 @@ void FieldCamera::FieldCameraQuater::OnStart(FieldCamera & entity)
 
 	//ˆÚ“®æ‚ÌÀ•W‚ğİ’è
 	const float CameraAngleXZ = D3DXToRadian(45.0f);
-	const float CameraAngleY = D3DXToRadian(60.0f);
-	const float CameraLength = 50.0f;
+	const float CameraAngleY = D3DXToRadian(45.0f);
+	const float CameraLength = 70.0f;
 
 	entity.goalPosition = D3DXVECTOR3(
 		cosf(CameraAngleY) * cosf(CameraAngleXZ),

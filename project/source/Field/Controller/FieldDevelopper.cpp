@@ -18,10 +18,18 @@
 namespace Field
 {
 	/**************************************
+	staticメンバ
+	***************************************/
+	const int FieldController::FieldDevelopper::MaxStock = 50;
+	const int FieldController::FieldDevelopper::InitStock = 10;
+
+	/**************************************
 	コンストラクタ
 	***************************************/
 	FieldController::FieldDevelopper::FieldDevelopper(FieldController * controller) :
-		entity(controller)
+		entity(controller),
+		stockDevelopRiver(InitStock),
+		stockDevelopMountain(InitStock)
 	{
 
 	}
@@ -145,14 +153,14 @@ namespace Field
 
 		//ストックが足りていれば開拓
 		int cntMountain = container.size();
-		if (cntMountain <= entity->stockDevelopMountain)
+		if (cntMountain <= stockDevelopMountain)
 		{
 			for (auto&& place : container)
 			{
 				place->SetType(PlaceType::None);
 			}
 
-			entity->stockDevelopMountain -= cntMountain;
+			stockDevelopMountain -= cntMountain;
 		}
 		else
 		{
@@ -218,7 +226,7 @@ namespace Field
 
 		//ストックが足りていれば開拓
 		int cntRiver = riverVector.size();
-		if (cntRiver <= entity->stockDevelopRiver)
+		if (cntRiver <= stockDevelopRiver)
 		{
 			Adjacency inverseStartAdjacency = GetInverseSide(startAdjacency);
 			for (auto&& river : riverVector)
@@ -230,7 +238,7 @@ namespace Field
 				entity->placeActController->SetActor(river);
 			}
 
-			entity->stockDevelopRiver -= cntRiver;
+			stockDevelopRiver -= cntRiver;
 		}
 		else
 		{
@@ -240,4 +248,15 @@ namespace Field
 		return end;
 	}
 
+	/**************************************
+	ストック加算処理
+	***************************************/
+	void FieldController::FieldDevelopper::AddStock(int num)
+	{
+		stockDevelopMountain = Math::Min(MaxStock, stockDevelopMountain + num);
+		stockDevelopRiver = Math::Min(MaxStock, stockDevelopRiver + num);
+	}
+	void FieldController::FieldDevelopper::EmbedViewerParam(GameViewerParam & param)
+	{
+	}
 }

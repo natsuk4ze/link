@@ -14,6 +14,7 @@
 /**************************************
 ëOï˚êÈåæ
 ***************************************/
+class GameViewerParam;
 
 namespace Field
 { 
@@ -32,8 +33,18 @@ namespace Field
 		PlaceIterator DevelopMountain(PlaceVector& route, PlaceIterator mountain);
 		PlaceIterator DevelopRiver(PlaceVector& route, PlaceIterator river);
 
+		void AddStock(int num);
+
+		void EmbedViewerParam(GameViewerParam& param);
+
+		static const int MaxStock;
+		static const int InitStock;
+
 	private:
 		FieldController *entity;
+
+		int stockDevelopRiver;
+		int stockDevelopMountain;
 	};
 }
 
