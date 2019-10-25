@@ -10,7 +10,7 @@
 
 #include "../../../main.h"
 #include "../../../Framework/Particle/BaseParticleController.h"
-#include "../../../Framework/Particle/Particle3D.h"
+#include "../../../Framework/Particle/3D/Particle3D.h"
 
 /**************************************
 ‘O•ûéŒ¾

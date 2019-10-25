@@ -7,7 +7,7 @@
 #ifndef _ANIMATIONPARTICLE_H_
 #define _ANIMATIONPARTICLE_H_
 
-#include "../../main.h"
+#include "../../../main.h"
 #include "Particle3D.h"
 
 /**************************************

@@ -10,7 +10,7 @@
 
 #include "../../../main.h"
 #include "../../../Framework/Particle/BaseParticleController.h"
-#include "../../../Framework/Particle/AnimationParticle3D.h"
+#include "../../../Framework/Particle/3D/AnimationParticle3D.h"
 
 namespace Effect::Game
 {

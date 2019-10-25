@@ -180,8 +180,8 @@
     <ClInclude Include="source\Field\Controller\FieldInput.h" />
     <ClInclude Include="source\Effect\Game\Explosion.h" />
     <ClInclude Include="source\Effect\Game\ExplosionFlare.h" />
-    <ClInclude Include="Framework\Particle\Particle3D.h" />
-    <ClInclude Include="Framework\Particle\AnimationParticle3D.h" />
+    <ClInclude Include="Framework\Particle\3D\AnimationParticle3D.h" />
+    <ClInclude Include="Framework\Particle\3D\Particle3D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -346,8 +346,8 @@
     <ClCompile Include="source\Field\Controller\FieldInput.cpp" />
     <ClCompile Include="source\Effect\Game\Explosion.cpp" />
     <ClCompile Include="source\Effect\Game\ExplosionFlare.cpp" />
-    <ClCompile Include="Framework\Particle\Particle3D.cpp" />
-    <ClCompile Include="Framework\Particle\AnimationParticle3D.cpp" />
+    <ClCompile Include="Framework\Particle\3D\AnimationParticle3D.cpp" />
+    <ClCompile Include="Framework\Particle\3D\Particle3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

@@ -8,9 +8,9 @@
 #ifndef _PARTICLE3D_H_
 #define _PARTICLE3D_H_
 
-#include "../../main.h"
-#include "BaseParticle.h"
-#include "../Renderer3D/BillboardObject.h"
+#include "../../../main.h"
+#include "../BaseParticle.h"
+#include "../../Renderer3D/BillboardObject.h"
 
 /**************************************
 ‘O•ûéŒ¾
