@@ -1,10 +1,10 @@
 //=====================================
 //
-//アニメーションパーティクル処理[AnimationParticle.cpp]
+//アニメーションパーティクル処理[AnimationParticle3D.cpp]
 //Author:GP12B332 21 立花雄太
 //
 //=====================================
-#include "AnimationParticle.h"
+#include "AnimationParticle3D.h"
 
 /**************************************
 マクロ定義
@@ -13,8 +13,8 @@
 /**************************************
 コンストラクタ
 ***************************************/
-AnimationParticle::AnimationParticle(float divX, float divY) :
-	BaseParticle()
+AnimationParticle3D::AnimationParticle3D(float divX, float divY) :
+	Particle3D()
 {
 	SetAnimParameter(divX, divY);
 }
@@ -22,8 +22,8 @@ AnimationParticle::AnimationParticle(float divX, float divY) :
 /**************************************
 コンストラクタ
 ***************************************/
-AnimationParticle::AnimationParticle(float divX, float divY, int life) :
-	BaseParticle(life)
+AnimationParticle3D::AnimationParticle3D(float divX, float divY, int life) :
+	Particle3D(life)
 {
 	SetAnimParameter(divX, divY);
 };
@@ -31,8 +31,8 @@ AnimationParticle::AnimationParticle(float divX, float divY, int life) :
 /**************************************
 コンストラクタ
 ***************************************/
-AnimationParticle::AnimationParticle(float divX, float divY, int lifeMin, int lifeMax) :
-	BaseParticle(lifeMin, lifeMax)
+AnimationParticle3D::AnimationParticle3D(float divX, float divY, int lifeMin, int lifeMax) :
+	Particle3D(lifeMin, lifeMax)
 {
 	SetAnimParameter(divX, divY);
 }
@@ -40,7 +40,7 @@ AnimationParticle::AnimationParticle(float divX, float divY, int lifeMin, int li
 /**************************************
 アニメーション処理
 ***************************************/
-void AnimationParticle::Animation(float t)
+void AnimationParticle3D::Animation(float t)
 {
 	int animIndex = (int)(t * animIndexMax);
 
@@ -54,7 +54,7 @@ void AnimationParticle::Animation(float t)
 /**************************************
 アニメーションパラメータセット処理
 ***************************************/
-void AnimationParticle::SetAnimParameter(float divX, float divY)
+void AnimationParticle3D::SetAnimParameter(float divX, float divY)
 {
 	texDiv = D3DXVECTOR2(divX, divY);
 	texSize.x = 1.0f / divX;
@@ -66,7 +66,7 @@ void AnimationParticle::SetAnimParameter(float divX, float divY)
 /**************************************
 アニメーションパラメータセット処理
 ***************************************/
-void AnimationParticle::SetAnimParameter(const D3DXVECTOR2& texDiv)
+void AnimationParticle3D::SetAnimParameter(const D3DXVECTOR2& texDiv)
 {
 	this->texDiv = texDiv;
 	texSize.x = 1.0f / texDiv.x;

@@ -57,7 +57,7 @@ namespace Effect::Game
 	ColorfulDebrisコンストラクタ
 	***************************************/
 	ColorfulDebris::ColorfulDebris() :
-		BaseParticle(MinLife, MaxLife),
+		Particle3D(MinLife, MaxLife),
 		initSpeed(Math::RandomRange(MinSpeed, MaxSpeed)),
 		initScale(Math::RandomRange(MinScale, MaxScale)),
 		directionMove(Vector3::Random())

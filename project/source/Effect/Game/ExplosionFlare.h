@@ -9,7 +9,7 @@
 
 #include "../../../main.h"
 #include "../../../Framework/Particle/BaseParticleController.h"
-#include "../../../Framework/Particle/AnimationParticle.h"
+#include "../../../Framework/Particle/AnimationParticle3D.h"
 
 namespace Effect::Game
 {
@@ -25,7 +25,7 @@ namespace Effect::Game
 	/**************************************
 	ExplosionFlareƒNƒ‰ƒX
 	***************************************/
-	class ExplosionFlare : public AnimationParticle
+	class ExplosionFlare : public AnimationParticle3D
 	{
 	public:
 		ExplosionFlare();

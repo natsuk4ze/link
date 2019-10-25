@@ -54,7 +54,7 @@ namespace Effect::Game
 	ExplosionFlareコンストラクタ
 	***************************************/
 	ExplosionFlare::ExplosionFlare() :
-		AnimationParticle(2.0f, 2.0f, MinLife, MaxLife),
+		AnimationParticle3D(2.0f, 2.0f, MinLife, MaxLife),
 		directionMove(Vector3::Random()),
 		speedMove(Math::RandomRange(MinSpeed, MaxSpeed))
 	{

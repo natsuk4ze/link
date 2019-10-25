@@ -55,7 +55,7 @@ namespace Effect::Game
 	BlueDebrisコンストラクタ
 	***************************************/
 	BlueDebris::BlueDebris() :
-		BaseParticle(MinLife, MaxLife),
+		Particle3D(MinLife, MaxLife),
 		InitSpeed(Math::RandomRange(MinSpeed, MaxSpeed)),
 		moveDirection(Vector3::Zero)
 	{

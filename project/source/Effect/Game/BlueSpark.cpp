@@ -52,7 +52,7 @@ namespace Effect::Game
 	BlueSparkコンストラクタ
 	***************************************/
 	BlueSpark::BlueSpark() :
-		BaseParticle(MinLife, MaxLife),
+		Particle3D(MinLife, MaxLife),
 		angleRotate(Math::RandomRange(0.0f, 360.0f))
 	{
 

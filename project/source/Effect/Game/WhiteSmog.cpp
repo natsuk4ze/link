@@ -55,7 +55,7 @@ namespace Effect::Game
 	WhiteSmogコンストラクタ
 	***************************************/
 	WhiteSmog::WhiteSmog() :
-		AnimationParticle(8.0f, 8.0f, MinLife, MaxLife),
+		AnimationParticle3D(8.0f, 8.0f, MinLife, MaxLife),
 		directionMove(Vector3::Random()),
 		speedMove(Math::RandomRange(MinSpeed, MaxSpeed))
 	{

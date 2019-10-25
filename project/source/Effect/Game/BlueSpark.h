@@ -10,7 +10,7 @@
 
 #include "../../../main.h"
 #include "../../../Framework/Particle/BaseParticleController.h"
-#include "../../../Framework/Particle/BaseParticle.h"
+#include "../../../Framework/Particle/Particle3D.h"
 
 /**************************************
 ‘O•ûéŒ¾
@@ -30,7 +30,7 @@ namespace Effect::Game
 	/**************************************
 	BlueSparkƒNƒ‰ƒX
 	***************************************/
-	class BlueSpark : public BaseParticle
+	class BlueSpark : public Particle3D
 	{
 	public:
 		BlueSpark();

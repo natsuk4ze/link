@@ -45,10 +45,11 @@
     <ClInclude Include="Framework\Math\Quaternion.h" />
     <ClInclude Include="Framework\Math\TMath.h" />
     <ClInclude Include="Framework\Math\Vector3.h" />
-    <ClInclude Include="Framework\Particle\AnimationParticle.h" />
+    <ClInclude Include="Framework\Particle\AnimationParticle3D.h" />
     <ClInclude Include="Framework\Particle\BaseEmitter.h" />
     <ClInclude Include="Framework\Particle\BaseParticle.h" />
     <ClInclude Include="Framework\Particle\BaseParticleController.h" />
+    <ClInclude Include="Framework\Particle\Particle3D.h" />
     <ClInclude Include="Framework\Particle\ParticleJsonParser.h" />
     <ClInclude Include="Framework\Particle\ParticleRenderer.h" />
     <ClInclude Include="Framework\Particle\SceneParticleManager.h" />
@@ -223,10 +224,11 @@
     <ClCompile Include="Framework\Light\Light.cpp" />
     <ClCompile Include="Framework\Math\Quaternion.cpp" />
     <ClCompile Include="Framework\Math\Vector3.cpp" />
-    <ClCompile Include="Framework\Particle\AnimationParticle.cpp" />
+    <ClCompile Include="Framework\Particle\AnimationParticle3D.cpp" />
     <ClCompile Include="Framework\Particle\BaseEmitter.cpp" />
     <ClCompile Include="Framework\Particle\BaseParticle.cpp" />
     <ClCompile Include="Framework\Particle\BaseParticleController.cpp" />
+    <ClCompile Include="Framework\Particle\Particle3D.cpp" />
     <ClCompile Include="Framework\Particle\ParticleJsonParser.cpp" />
     <ClCompile Include="Framework\Particle\ParticleRenderer.cpp" />
     <ClCompile Include="Framework\Particle\SceneParticleManager.cpp" />

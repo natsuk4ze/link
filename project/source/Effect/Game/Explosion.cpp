@@ -52,7 +52,7 @@ namespace Effect::Game
 	Explosionコンストラクタ
 	***************************************/
 	Explosion::Explosion() :
-		AnimationParticle(4.0f, 2.0f, Life),
+		AnimationParticle3D(4.0f, 2.0f, Life),
 		speedMove(Speed)
 	{
 	}
