@@ -39,11 +39,8 @@ void ParticleTestScene::Init()
 	//アクターのモデルをロード
 	ResourceManager::Instance()->LoadMesh("Town-City", "data/MODEL/PlaceActor/Town.x");
 	ResourceManager::Instance()->LoadMesh("Mountain-City", "data/MODEL/PlaceActor/mountain.x");
-	ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
-	//actor = new CityActor(Vector3::Zero, Field::Model::FieldLevel::City);
+	actor = new CityActor(Vector3::Zero, Field::Model::FieldLevel::City);
 	//actor = new MountainActor(Vector3::Zero, Field::Model::FieldLevel::City);
-	actor = new RiverActor(Vector3::Zero, Field::Model::FieldLevel::City);
-	actor->SetScale(Vector3::One * 1.0f);
 
 	//カメラ設定
 	Camera::SetMainCamera(sceneCamera);
