@@ -20,16 +20,15 @@ namespace Field
 	/**************************************
 	staticメンバ
 	***************************************/
-	const int FieldController::FieldDevelopper::MaxStock = 50;
-	const int FieldController::FieldDevelopper::InitStock = 10;
+	const int FieldController::FieldDevelopper::MaxStock = 99;
+	const int FieldController::FieldDevelopper::InitStock = 20;
 
 	/**************************************
 	コンストラクタ
 	***************************************/
 	FieldController::FieldDevelopper::FieldDevelopper(FieldController * controller) :
 		entity(controller),
-		stockDevelopRiver(InitStock),
-		stockDevelopMountain(InitStock)
+		stockNum(InitStock)
 	{
 
 	}
@@ -67,9 +66,6 @@ namespace Field
 		//隣接するルートと連結させる
 		entity->routeProcessor->ConnectWithEdge(ptr, entity->routeContainer);
 		entity->routeProcessor->Process(ptr, entity->routeContainer);
-
-		//道を新しく作ったので混雑度を再計算
-		entity->placeContainer->CaclTrafficJamRate();
 
 		//アクター生成
 		entity->placeActController->SetActor(ptr);
@@ -153,14 +149,14 @@ namespace Field
 
 		//ストックが足りていれば開拓
 		int cntMountain = container.size();
-		if (cntMountain <= stockDevelopMountain)
+		if (cntMountain <= stockNum)
 		{
 			for (auto&& place : container)
 			{
 				place->SetType(PlaceType::None);
 			}
 
-			stockDevelopMountain -= cntMountain;
+			stockNum -= cntMountain;
 		}
 		else
 		{
@@ -226,7 +222,7 @@ namespace Field
 
 		//ストックが足りていれば開拓
 		int cntRiver = riverVector.size();
-		if (cntRiver <= stockDevelopRiver)
+		if (cntRiver <= stockNum)
 		{
 			Adjacency inverseStartAdjacency = GetInverseSide(startAdjacency);
 			for (auto&& river : riverVector)
@@ -238,7 +234,7 @@ namespace Field
 				entity->placeActController->SetActor(river);
 			}
 
-			stockDevelopRiver -= cntRiver;
+			stockNum -= cntRiver;
 		}
 		else
 		{
@@ -253,10 +249,14 @@ namespace Field
 	***************************************/
 	void FieldController::FieldDevelopper::AddStock(int num)
 	{
-		stockDevelopMountain = Math::Min(MaxStock, stockDevelopMountain + num);
-		stockDevelopRiver = Math::Min(MaxStock, stockDevelopRiver + num);
+		stockNum = Math::Min(MaxStock, stockNum + num);
 	}
+
+	/**************************************
+	ストック数埋め込み処理
+	***************************************/
 	void FieldController::FieldDevelopper::EmbedViewerParam(GameViewerParam & param)
 	{
+		param.stockNum = stockNum;
 	}
 }

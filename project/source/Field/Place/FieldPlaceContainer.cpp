@@ -229,53 +229,6 @@ namespace Field::Model
 	}
 
 	/**************************************
-	¬ŽG“xŒvŽZ
-	***************************************/
-	void Field::Model::PlaceContainer::CaclTrafficJamRate()
-	{
-		//oŒû‚ª‚ ‚éŠX‚ª‚È‚¯‚ê‚ÎŒvŽZ‚ª¬—§‚µ‚È‚¢‚Ì‚Å‘ŠúƒŠƒ^[ƒ“
-		if (townContainer.empty())
-			return;
-
-		int sumGate = 0;
-		for (auto&& town : townContainer)
-		{
-			sumGate += town.second->GateNum();
-		}
-
-		//Œð·“_‚ª–³‚¢ê‡‚ÌŒvŽZŽ®
-		if (junctionContainer.empty())
-		{
-			trafficJamRate = ((float)townContainer.size() / sumGate);
-		}
-		//Œð·“_‚ª‚ ‚éê‡‚ÌŒvŽZŽ®
-		else
-		{
-			//Œð·“_‚²‚Æ‚Ì¬ŽG“x‚ðŒvŽZ
-			for (auto&& junction : junctionContainer)
-			{
-				junction.second->Calculate(townContainer);
-			}
-
-			float sumTrafficJam = 0.0f;
-			int validJunctionNum = 0;
-
-			for (auto&& junction : junctionContainer)
-			{
-				float trafficJam = junction.second->TrafficJam(townContainer);
-
-				if (trafficJam == 0.0f)
-					continue;
-
-				sumTrafficJam += trafficJam;
-				validJunctionNum++;
-			}
-
-			trafficJamRate = Math::Min(sumTrafficJam * 0.01f * 1.5f / (validJunctionNum * sumGate), 1.0f);
-		}
-	}
-
-	/**************************************
 	AI”­“WƒŒƒxƒ‹ŒvŽZ
 	***************************************/
 	float Field::Model::PlaceContainer::CalcDevelopmentLevelAI(float bonus)
