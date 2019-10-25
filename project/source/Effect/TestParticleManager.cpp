@@ -10,6 +10,8 @@
 #include "Game/BlueSpark.h"
 #include "Game/BlueDebris.h"
 #include "Game/WhiteSmog.h"
+#include "Game/Explosion.h"
+#include "Game/ExplosionFlare.h"
 
 /**************************************
 èâä˙âªèàóù
@@ -22,6 +24,8 @@ void TestParticleManager::Init()
 	controllers[TestParticle::BlueSpark] = new Effect::Game::BlueSparkController();
 	controllers[TestParticle::BlueDebris] = new Effect::Game::BlueDebrisController();
 	controllers[TestParticle::WhiteSmog] = new Effect::Game::WhiteSmogController();
+	controllers[TestParticle::Explosion] = new Effect::Game::ExplosionController();
+	controllers[TestParticle::ExplosionFlare] = new Effect::Game::ExplosionFlareController();
 }
 
 /**************************************
@@ -37,6 +41,10 @@ void TestParticleManager::Update()
 		Generate(TestParticle::BlueDebris, Vector3::Up * 10.0f);
 	else if (Debug::Button("WhiteSmog"))
 		Generate(TestParticle::WhiteSmog, Vector3::Up * 10.0f);
+	else if (Debug::Button("Explosion"))
+		Generate(TestParticle::Explosion, Vector3::Up * 20.0f);
+	else if (Debug::Button("ExplosionFlare"))
+		Generate(TestParticle::ExplosionFlare, Vector3::Up);
 
 	Debug::NewLine();
 
@@ -44,6 +52,11 @@ void TestParticleManager::Update()
 	{
 		Generate(TestParticle::BlueSpark, Vector3::Up * 10.0f);
 		Generate(TestParticle::BlueDebris, Vector3::Up * 10.0f);
+	}
+	else if (Debug::Button("MeteorExplosion"))
+	{
+		Generate(TestParticle::Explosion, Vector3::Up * 20.0f);
+		Generate(TestParticle::ExplosionFlare, Vector3::Up);
 	}
 
 	Debug::End();
