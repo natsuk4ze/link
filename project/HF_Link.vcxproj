@@ -117,6 +117,8 @@
     <ClInclude Include="source\Effect\Game\ColorfulDebris.h" />
     <ClInclude Include="source\Effect\Game\Explosion.h" />
     <ClInclude Include="source\Effect\Game\ExplosionFlare.h" />
+    <ClInclude Include="source\Effect\Game\RedSpark.h" />
+    <ClInclude Include="source\Effect\Game\MissileHit.h" />
     <ClInclude Include="source\Effect\Game\WhiteSmog.h" />
     <ClInclude Include="source\Effect\TestParticleCamera.h" />
     <ClInclude Include="source\Effect\TestParticleManager.h" />
@@ -292,6 +294,8 @@
     <ClCompile Include="source\Effect\Game\ColorfulDebris.cpp" />
     <ClCompile Include="source\Effect\Game\Explosion.cpp" />
     <ClCompile Include="source\Effect\Game\ExplosionFlare.cpp" />
+    <ClCompile Include="source\Effect\Game\MissileHit.cpp" />
+    <ClCompile Include="source\Effect\Game\RedSpark.cpp" />
     <ClCompile Include="source\Effect\Game\WhiteSmog.cpp" />
     <ClCompile Include="source\Effect\TestParticleCamera.cpp" />
     <ClCompile Include="source\Effect\TestParticleManager.cpp" />

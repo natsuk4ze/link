@@ -21,7 +21,7 @@ namespace Effect::Game
 		MakeUnitBuffer(SizeParticle, DivineTex);
 
 		//テクスチャ読み込み
-		const char* Path = "data/TEXTURE/Particle/ExplosionFlare.png";
+		const char* Path = "data/TEXTURE/Particle/MeteorFlare.png";
 		LoadTexture(Path);
 
 		//パーティクルコンテナ作成

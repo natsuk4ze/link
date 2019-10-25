@@ -22,9 +22,10 @@ namespace TestParticle
 		BlueSpark,
 		BlueDebris,
 		WhiteSmog,
-		Explosion,
 		ExplosionFlare,
 		AngryFace,
+		Explosion,
+		MissileHit,
 		Max
 	};
 }
