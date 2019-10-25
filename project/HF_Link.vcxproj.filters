@@ -145,7 +145,6 @@
     <ClInclude Include="source\GameConfig.h" />
     <ClInclude Include="source\GameMain.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\TelopDrawer.h" />
-    <ClInclude Include="Framework\Camera\ViewFrustrum.h" />
     <ClInclude Include="source\FieldObject\Actor\NoneActor.h" />
     <ClInclude Include="source\FieldObject\Animation\ActorAnimation.h" />
     <ClInclude Include="source\Scene\GameState\GameFinish.h" />
@@ -173,6 +172,7 @@
     <ClInclude Include="source\Event\PlusEvent\TimeRecoveryEvent.h" />
     <ClInclude Include="source\Field\FieldEventHandler.h" />
     <ClInclude Include="source\Scene\GameState\GamePause.h" />
+    <ClInclude Include="Framework\Camera\ViewFrustum.h" />
     <ClInclude Include="source\Effect\Game\WhiteSmog.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\ItemStockViewer.h" />
     <ClInclude Include="Framework\PostEffect\BaseEffectController.h" />
@@ -309,7 +309,6 @@
     <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp" />
     <ClCompile Include="source\GameMain.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\TelopDrawer.cpp" />
-    <ClCompile Include="Framework\Camera\ViewFrustrum.cpp" />
     <ClCompile Include="source\FieldObject\Actor\NoneActor.cpp" />
     <ClCompile Include="source\FieldObject\Animation\ActorAnimation.cpp" />
     <ClCompile Include="source\Scene\GameState\GameFinish.cpp" />
@@ -337,6 +336,7 @@
     <ClCompile Include="source\Event\PlusEvent\TimeRecoveryEvent.cpp" />
     <ClCompile Include="source\Field\FieldEventHandler.cpp" />
     <ClCompile Include="source\Scene\GameState\GamePause.cpp" />
+    <ClCompile Include="Framework\Camera\ViewFrustum.cpp" />
     <ClCompile Include="source\Effect\Game\WhiteSmog.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\ItemStockViewer.cpp" />
     <ClCompile Include="Framework\Core\BaseScene.cpp" />

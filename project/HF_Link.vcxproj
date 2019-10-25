@@ -25,7 +25,7 @@
     <ClInclude Include="Framework\Camera\Camera.h" />
     <ClInclude Include="Framework\Camera\CameraTranslationPlugin.h" />
     <ClInclude Include="Framework\Camera\CameraShakePlugin.h" />
-    <ClInclude Include="Framework\Camera\ViewFrustrum.h" />
+    <ClInclude Include="Framework\Camera\ViewFrustum.h" />
     <ClInclude Include="Framework\Collider\BaseCollider.h" />
     <ClInclude Include="Framework\Collider\BoxCollider3D.h" />
     <ClInclude Include="Framework\Collider\ColliderManager.h" />
@@ -207,7 +207,7 @@
     <ClCompile Include="Framework\Camera\Camera.cpp" />
     <ClCompile Include="Framework\Camera\CameraTranslationPlugin.cpp" />
     <ClCompile Include="Framework\Camera\CameraShakePlugin.cpp" />
-    <ClCompile Include="Framework\Camera\ViewFrustrum.cpp" />
+    <ClCompile Include="Framework\Camera\ViewFrustum.cpp" />
     <ClCompile Include="Framework\Collider\BaseCollider.cpp" />
     <ClCompile Include="Framework\Collider\BoxCollider3D.cpp" />
     <ClCompile Include="Framework\Collider\ColliderManager.cpp" />

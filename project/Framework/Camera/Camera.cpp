@@ -193,7 +193,7 @@ D3DXMATRIX Camera::GetProjectionMtx() const
 /**************************************
 ‹‘äæ“¾ˆ—
 ***************************************/
-ViewFrustrum Camera::GetViewFrustrum() const
+ViewFrustum Camera::GetViewFrustrum() const
 {
 	return viewFrustrum;
 }
@@ -219,4 +219,3 @@ void Camera::CalculateFrustrum()
 		UnProjection(RightBottom, 1.0f)
 	);
 }
-

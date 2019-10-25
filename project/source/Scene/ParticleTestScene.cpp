@@ -11,6 +11,7 @@
 #include "../Effect/TestParticleCamera.h"
 #include "../FieldObject/Actor/CityActor.h"
 #include "../FieldObject/Actor/MountainActor.h"
+#include "../FieldObject/Actor/RiverActor.h"
 #include "../Field/Place/PlaceConfig.h"
 #include "../Effect/TestParticleManager.h"
 #include "../../Framework/Tool/DebugWindow.h"
@@ -39,8 +40,11 @@ void ParticleTestScene::Init()
 	//アクターのモデルをロード
 	ResourceManager::Instance()->LoadMesh("Town-City", "data/MODEL/PlaceActor/Town.x");
 	ResourceManager::Instance()->LoadMesh("Mountain-City", "data/MODEL/PlaceActor/mountain.x");
-	actor = new CityActor(Vector3::Zero, Field::Model::FieldLevel::City);
+	ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
+	//actor = new CityActor(Vector3::Zero, Field::Model::FieldLevel::City);
 	//actor = new MountainActor(Vector3::Zero, Field::Model::FieldLevel::City);
+	actor = new RiverActor(Vector3::Zero, Field::Model::FieldLevel::City);
+	actor->SetScale(Vector3::One * 1.0f);
 
 	//カメラ設定
 	Camera::SetMainCamera(sceneCamera);
@@ -74,6 +78,12 @@ void ParticleTestScene::Uninit()
 ***************************************/
 void ParticleTestScene::Update()
 {
+	Debug::Begin("ActorRot");
+	static float angle = 0.0f;
+	Debug::Slider("Angle", angle, 0.0f, 360.0f);
+	actor->SetRotatition(Vector3::Up * angle);
+	Debug::End();
+
 	sceneCamera->Update();
 
 	particleManager->Update();
@@ -87,7 +97,7 @@ void ParticleTestScene::Draw()
 	sceneCamera->Set();
 
 	skybox->Draw();
-	ground->Draw();
+	//ground->Draw();
 
 	static bool drawableActor = true;
 	
@@ -96,8 +106,10 @@ void ParticleTestScene::Draw()
 		drawableActor = !drawableActor;
 	Debug::End();
 
+	GetDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	if(drawableActor)
 		actor->Draw();
+	GetDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 	bloom->Draw(renderTexture);
 

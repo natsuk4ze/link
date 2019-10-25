@@ -8,13 +8,14 @@
 #include "PlaceActor.h"
 #include "../../../Framework/Tool/DebugWindow.h"
 #include "../Animation/ActorAnimation.h"
-#include "../../../Framework/Camera/ViewFrustrum.h"
+#include "../../../Framework/Camera/ViewFrustum.h"
 #include "../../../Framework/Camera/Camera.h"
 
 //**************************************
 // クラスのメンバ変数初期化
 //**************************************
-const D3DXVECTOR3 PlaceActor::ActorScale = D3DXVECTOR3(0.25f, 0.25f, 0.25f);
+const D3DXVECTOR3 PlaceActor::Scale = D3DXVECTOR3(0.25f, 0.25f, 0.25f);
+const float PlaceActor::FrustumBoxSize = 10.0f;
 
 //=====================================
 // コンストラクタ
@@ -27,7 +28,7 @@ PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel) 
 
 	// ステータスセット
 	transform->SetPosition(pos);
-	transform->SetScale(ActorScale);
+	transform->SetScale(Scale);
 	this->SetActive(true);
 }
 
@@ -44,8 +45,8 @@ PlaceActor::~PlaceActor()
 //=====================================
 void PlaceActor::Update()
 {
-	if (!CheckOnCamera())
-		return;
+	// カリング判定
+	onCamera = Camera::MainCamera()->GetViewFrustrum().CheckOnCamera(transform->GetPosition(), FrustumBoxSize);
 
 #if _DEBUG
 	Debug();
@@ -97,39 +98,8 @@ void PlaceActor::SetColor(const D3DXCOLOR& color, UINT index)
 void PlaceActor::ResetTransform()
 {
 	transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	transform->SetScale(ActorScale);
+	transform->SetScale(Scale);
 	transform->SetRotation(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-}
-
-//=====================================
-// カメラ内判定
-//=====================================
-bool PlaceActor::CheckOnCamera()
-{
-	D3DXVECTOR3 obj = transform->GetPosition();
-
-	for (int i = 0; i < 4; i++)
-	{
-		D3DXVECTOR3 nor = Camera::MainCamera()->GetViewFrustrum().GetNormal(ViewFrustrum::Surface(i));
-		D3DXVECTOR3 vec = obj - Camera::MainCamera()->GetViewFrustrum().GetSurfacePoint(ViewFrustrum::Surface(i));
-
-		// 視錐台の法線と、視錐台からオブジェクトへのベクトルから内積計算
-		float dot = D3DXVec3Dot(&nor, &vec);
-
-		if (dot > 0)
-		{
-			onCamera = true;
-		}
-		else
-		{
-			// 1つでもfalseならリターン
-			onCamera = false;
-			break;
-		}
-
-	}
-
-	return onCamera;
 }
 
 //=====================================
@@ -163,7 +133,7 @@ void PlaceActor::Debug()
 	Debug::NewLine();
 	if (Debug::Button("ResetScale"))
 	{
-		transform->SetScale(ActorScale);
+		transform->SetScale(Scale);
 	}
 	Debug::NewLine();
 	Debug::Text("OnCamera = %s", onCamera ? "true" : "false");
