@@ -7,6 +7,7 @@
 //=====================================
 #include "PassengerActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
+#include "../../Field/PlaceActorController.h"
 
 //**************************************
 // クラスのメンバ変数初期化
@@ -80,9 +81,12 @@ void PassengerActor::ChangeMesh(const char* nextTag)
 }
 
 //=====================================
-// 移動
+// 目的地への移動
 //=====================================
-void PassengerActor::Move()
+void PassengerActor::MoveDest(const D3DXVECTOR3 dest, std::function<void(void)> callback)
 {
-
+	this->dest = dest;
+	D3DXVECTOR3 pos = transform->GetPosition();
+	int frame = int(D3DXVec3Length(&(this->dest - pos)) / Field::Actor::PlaceActorController::PlacePositionOffset) * 30;
+	Tween::Move(*this, pos, this->dest, frame, Linear, callback);
 }

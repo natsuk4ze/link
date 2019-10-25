@@ -10,12 +10,12 @@
 #include "../Animation/ActorAnimation.h"
 #include "../../../Framework/Camera/ViewFrustum.h"
 #include "../../../Framework/Camera/Camera.h"
+#include "../../Field/PlaceActorController.h"
 
 //**************************************
 // クラスのメンバ変数初期化
 //**************************************
 const D3DXVECTOR3 PlaceActor::Scale = D3DXVECTOR3(0.25f, 0.25f, 0.25f);
-const float PlaceActor::FrustumBoxSize = 10.0f;
 
 //=====================================
 // コンストラクタ
@@ -46,7 +46,7 @@ PlaceActor::~PlaceActor()
 void PlaceActor::Update()
 {
 	// カリング判定
-	onCamera = Camera::MainCamera()->GetViewFrustrum().CheckOnCamera(transform->GetPosition(), FrustumBoxSize);
+	onCamera = Camera::MainCamera()->GetViewFrustrum().CheckOnCamera(transform->GetPosition(), Field::Actor::PlaceActorController::PlacePositionOffset);
 
 #if _DEBUG
 	Debug();

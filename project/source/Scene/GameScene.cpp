@@ -75,6 +75,8 @@ void GameScene::Init()
 	ChangeState(State::Initialize);
 
 	//testActor = new CityActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), FModel::City);
+	testPassenger = new PassengerActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), FModel::City);
+	testPassenger->MoveDest(D3DXVECTOR3(250.0, 0.0f, -150.0f));
 }
 
 /**************************************
@@ -99,6 +101,8 @@ void GameScene::Uninit()
 	Utility::DeleteContainer(fsm);
 
 	//SAFE_DELETE(testActor);
+	SAFE_DELETE(testPassenger);
+
 	//デリゲート削除
 	SAFE_DELETE(onBuildRoad);
 
@@ -121,6 +125,7 @@ void GameScene::Update()
 	fieldCamera->Update();
 
 	//testActor->Update();
+	testPassenger->Update();
 
 	//ビューワパラメータをビューワに渡す
 	GameViewerParam param;
@@ -158,6 +163,7 @@ void GameScene::Draw()
 	skybox->Draw();
 
 	//testActor->Draw();
+	testPassenger->Draw();
 
 	//オブジェクト描画
 	field->Draw();

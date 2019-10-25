@@ -11,6 +11,8 @@
 #include "../../../Framework/Core/GameObject.h"
 #include "../../../Framework/Renderer3D/MeshContainer.h"
 #include "../../Field/Place/PlaceConfig.h"
+#include "../../../Framework/Tween/Tween.h"
+#include <functional>
 
 //**************************************
 // 列挙子設定
@@ -23,8 +25,10 @@ namespace FModel = Field::Model;
 class PassengerActor :
 	public GameObject
 {
+	friend class Tween;
 private:
 	MeshContainer* mesh;
+	D3DXVECTOR3 dest;		// 目的地
 
 	// 定数定義
 	static const D3DXVECTOR3 ActorScale;
@@ -37,7 +41,7 @@ public:
 	void Draw();
 
 	void ChangeMesh(const char* nextTag);	// メッシュ切り替え
-	void Move();							// 移動
+	void MoveDest(const D3DXVECTOR3 dest, std::function<void(void)> callback = nullptr);	// 目的地までの移動
 };
 
 #endif
