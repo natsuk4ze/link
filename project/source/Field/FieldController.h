@@ -88,20 +88,6 @@ namespace Field
 		//イベントハンドラ設定処理
 		void SetEventHandler(::FieldEventHandler& handler);
 
-		/** 削除予定 **/
-		//イベント操作用のインターフェース
-		void AdjustLevelAI(float percent);			//AI発展レベルを調整
-		void AdjustAllLinkLevel(int num);			//街全体のリンクレベルを調整
-		void AdjustLinlLevel(int num);				//街一つのリンクレベルを調整
-		void AddStockItem(int num);					//ストックアイテムの数を増やす
-		void SetDevelopSpeedBonus(float num);		//発展スピードへのボーナス付与
-		void CreateNewTown();						//新しい街を出現させる
-		void DestroyTown();							//街を破壊する
-		void ReverseOperation(bool isReverse);		//操作の反転（引数 true:反転させる false:元に戻す)
-		void SealUsingItem(bool isSeal);			//ストック使用封印（引数 true:封印する false:封印を解除)
-		void RaiseTrafficJam(float bias);			//混雑度を上昇させる
-		/** **/
-
 	private:
 		//内部クラス前方宣言
 		class FieldDevelopper;
@@ -110,8 +96,6 @@ namespace Field
 		//static定数メンバ
 		static const float PlaceOffset;					//Placeの1マス毎のオフセット値
 		static const int InitFieldBorder;				//フィールド範囲の初期値
-		static const int InitDevelopRiverStock;			//川開発ストックの初期数
-		static const int InitDevelopMountainStock;		//山開発ストックの初期数
 		static const int DevelopmentInterval;			//AI発展レベルが上がるインターバル
 		static const float MaxDevelopmentLevelAI;		//AI発展レベルの最大値
 
@@ -130,8 +114,6 @@ namespace Field
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int cntFrame;							//フレームカウント
 		float developmentLevelAI;				//AI発展レベル
-		int stockDevelopRiver;					//川開発アイテムストック
-		int stockDevelopMountain;				//山開発アイテムストック
 		int stockEDF;							//地球防衛軍のストック
 		int stockInsurance;						//保険のストック
 		float developSpeedBonus;				//発展スピード増加ボーナス
