@@ -43,7 +43,7 @@ private:
 	LPD3DXEFFECT effect;
 	LPDIRECT3DINDEXBUFFER9 indexBuff;
 	LPDIRECT3DVERTEXBUFFER9 transformBuff, uvBuff;
-	D3DXHANDLE hMtxView, hMtxProjection, hMtxInvView;
+	D3DXHANDLE hMtxView, hMtxProjection, hMtxInvView, hScreenProj;
 
 	void LoadEffect();
 	void MakeDeclaration();

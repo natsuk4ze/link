@@ -11,6 +11,7 @@
 float4x4 mtxView;		//ビュー行列
 float4x4 mtxProj;		//プロジェクション行列
 float4x4 mtxInvView;	//ビュー逆行列
+float4x4 mtxScreenProj;	//2D用のプロジェクション行列
 
 /**************************************************************
 テクスチャサンプラー（0番にSetTextureしたテクスチャを使用する
@@ -90,7 +91,7 @@ VS_OUTPUT VS_2D(
 	Out.pos = mul(Out.pos, mtxWorld);
 
 	//projection
-	Out.pos = mul(Out.pos, mtxProj);
+	Out.pos = mul(Out.pos, mtxScreenProj);
 
 	//texUV
 	Out.uv = localUV + texUV;

@@ -55,7 +55,10 @@ Particle2D::~Particle2D()
 ***************************************/
 bool Particle2D::IsActive() const
 {
-	return false;
+	if (!active)
+		return false;
+
+	return _IsActive();
 }
 
 /**************************************

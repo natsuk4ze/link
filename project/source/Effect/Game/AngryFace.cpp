@@ -17,7 +17,8 @@ namespace Effect::Game
 		BaseParticleController(Particle_2D)
 	{
 		//単位頂点バッファ作成
-		const D3DXVECTOR2 SizeParticle{ 20.0f, 20.0f };
+		//スクリーン座標で扱うのでYサイズをマイナスにすることに注意
+		const D3DXVECTOR2 SizeParticle{ 100.0f, -100.0f };
 		MakeUnitBuffer(SizeParticle);
 
 		//テクスチャ読み込み
@@ -25,7 +26,7 @@ namespace Effect::Game
 		LoadTexture(Path);
 
 		//パーティクルコンテナ作成
-		const int MaxParticle = 128;
+		const int MaxParticle = 1024;
 		particleContainer.resize(MaxParticle, nullptr);
 		for (auto&& particle : particleContainer)
 		{
@@ -34,8 +35,8 @@ namespace Effect::Game
 
 		//エミッタコンテナ作成
 		const int MaxEmitter = 4;
-		const int DurationEmit = 60;
-		const int NumEmit = 5;
+		const int DurationEmit = 120;
+		const int NumEmit = 15;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
@@ -46,7 +47,7 @@ namespace Effect::Game
 	/**************************************
 	AngryFaceコンストラクタ
 	***************************************/
-	const int AngryFace::Life = 30;
+	const int AngryFace::Life = 45;
 
 	/**************************************
 	AngryFaceコンストラクタ
@@ -79,7 +80,6 @@ namespace Effect::Game
 			(float)Math::RandomRange(0, SCREEN_HEIGHT),
 			0.0f
 		};
-
 		transform->SetPosition(position);
 	}
 
@@ -93,7 +93,7 @@ namespace Effect::Game
 
 		cntFrame++;
 
-		float t = (float)cntFrame / lifeFrame;
+		float t = (float)cntFrame / lifeFrame * 2.0f;
 
 		float scale = Easing::EaseValue(t, 0.0f, targetScale, EaseType::InExpo);
 		transform->SetScale(scale * Vector3::One);
