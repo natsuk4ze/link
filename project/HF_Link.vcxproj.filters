@@ -184,6 +184,7 @@
     <ClInclude Include="Framework\Particle\3D\Particle3D.h" />
     <ClInclude Include="Framework\Particle\2D\Particle2D.h" />
     <ClInclude Include="Framework\Particle\2D\AnimationParticle2D.h" />
+    <ClInclude Include="source\Effect\Game\AngryFace.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -352,6 +353,7 @@
     <ClCompile Include="Framework\Particle\3D\Particle3D.cpp" />
     <ClCompile Include="Framework\Particle\2D\Particle2D.cpp" />
     <ClCompile Include="Framework\Particle\2D\AnimationParticle2D.cpp" />
+    <ClCompile Include="source\Effect\Game\AngryFace.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
