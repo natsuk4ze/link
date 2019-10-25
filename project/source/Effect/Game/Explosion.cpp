@@ -12,7 +12,8 @@ namespace Effect::Game
 	/**************************************
 	ExplosionControllerコンストラクタ
 	***************************************/
-	ExplosionController::ExplosionController()
+	ExplosionController::ExplosionController() :
+		BaseParticleController(Particle_3D)
 	{
 		//単位頂点バッファ作成
 		const D3DXVECTOR2 SizeParticle{ 30.0f, 30.0f };
@@ -50,7 +51,7 @@ namespace Effect::Game
 	/**************************************
 	Explosionコンストラクタ
 	***************************************/
-	Explosion::Explosion() : AnimationParticle(4.0f, 2.0f, Life)
+	Explosion::Explosion() : AnimationParticle3D(4.0f, 2.0f, Life)
 	{
 
 	}

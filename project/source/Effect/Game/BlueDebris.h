@@ -10,7 +10,7 @@
 
 #include "../../../main.h"
 #include "../../../Framework/Particle/BaseParticleController.h"
-#include "../../../Framework/Particle/BaseParticle.h"
+#include "../../../Framework/Particle/3D/Particle3D.h"
 
 namespace Effect::Game
 {
@@ -26,7 +26,7 @@ namespace Effect::Game
 	/**************************************
 	BlueDebrisƒNƒ‰ƒX
 	***************************************/
-	class BlueDebris : public BaseParticle
+	class BlueDebris : public Particle3D
 	{
 	public:
 		static const int MinLife, MaxLife;

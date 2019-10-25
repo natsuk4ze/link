@@ -12,6 +12,7 @@
 #include "Game/WhiteSmog.h"
 #include "Game/Explosion.h"
 #include "Game/ExplosionFlare.h"
+#include "Game/AngryFace.h"
 #include "Game/MissileHit.h"
 
 /**************************************
@@ -26,6 +27,7 @@ void TestParticleManager::Init()
 	controllers[TestParticle::BlueDebris] = new Effect::Game::BlueDebrisController();
 	controllers[TestParticle::WhiteSmog] = new Effect::Game::WhiteSmogController();
 	controllers[TestParticle::ExplosionFlare] = new Effect::Game::ExplosionFlareController();
+	controllers[TestParticle::AngryFace] = new Effect::Game::AngryFaceController();
 	controllers[TestParticle::Explosion] = new Effect::Game::ExplosionController();
 	controllers[TestParticle::MissileHit] = new Effect::Game::MissileHitController();
 }
@@ -47,6 +49,8 @@ void TestParticleManager::Update()
 		Generate(TestParticle::Explosion, Vector3::Up * 20.0f);
 	else if (Debug::Button("ExplosionFlare"))
 		Generate(TestParticle::ExplosionFlare, Vector3::Up);
+	else if (Debug::Button("AngryFace"))
+		Generate(TestParticle::AngryFace, Vector3::Zero);
 	else if (Debug::Button("MissileHit"))
 		Generate(TestParticle::MissileHit, Vector3::Up * 10.0f);
 

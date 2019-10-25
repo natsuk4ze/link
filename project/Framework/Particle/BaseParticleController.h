@@ -34,8 +34,15 @@ BasePartlceControllerクラス
 class BaseParticleController
 {
 public:
+	enum ParticleType
+	{
+		Particle_3D = 0,
+		Particle_2D,
+		Max
+	};
+
 	//コンストラクタ、デストラクタ
-	BaseParticleController();
+	BaseParticleController(ParticleType type);
 	virtual ~BaseParticleController();
 
 	template<class T>
@@ -96,6 +103,9 @@ protected:
 
 	//コンテナ作成
 	virtual void MakeEmitterContainer(const ParticleJsonParser& data);
+
+	//使用するパーティクルのタイプ
+	ParticleType useType;
 
 private:
 	//インスタンシングに必要な静的メンバ
