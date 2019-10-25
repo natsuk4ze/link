@@ -88,20 +88,6 @@ namespace Field
 		//イベントハンドラ設定処理
 		void SetEventHandler(::FieldEventHandler& handler);
 
-		/** 削除予定 **/
-		//イベント操作用のインターフェース
-		void AdjustLevelAI(float percent);			//AI発展レベルを調整
-		void AdjustAllLinkLevel(int num);			//街全体のリンクレベルを調整
-		void AdjustLinlLevel(int num);				//街一つのリンクレベルを調整
-		void AddStockItem(int num);					//ストックアイテムの数を増やす
-		void SetDevelopSpeedBonus(float num);		//発展スピードへのボーナス付与
-		void CreateNewTown();						//新しい街を出現させる
-		void DestroyTown();							//街を破壊する
-		void ReverseOperation(bool isReverse);		//操作の反転（引数 true:反転させる false:元に戻す)
-		void SealUsingItem(bool isSeal);			//ストック使用封印（引数 true:封印する false:封印を解除)
-		void RaiseTrafficJam(float bias);			//混雑度を上昇させる
-		/** **/
-
 	private:
 		//内部クラス前方宣言
 		class FieldDevelopper;
