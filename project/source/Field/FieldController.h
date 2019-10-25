@@ -96,8 +96,6 @@ namespace Field
 		//static定数メンバ
 		static const float PlaceOffset;					//Placeの1マス毎のオフセット値
 		static const int InitFieldBorder;				//フィールド範囲の初期値
-		static const int InitDevelopRiverStock;			//川開発ストックの初期数
-		static const int InitDevelopMountainStock;		//山開発ストックの初期数
 		static const int DevelopmentInterval;			//AI発展レベルが上がるインターバル
 		static const float MaxDevelopmentLevelAI;		//AI発展レベルの最大値
 
@@ -116,8 +114,6 @@ namespace Field
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int cntFrame;							//フレームカウント
 		float developmentLevelAI;				//AI発展レベル
-		int stockDevelopRiver;					//川開発アイテムストック
-		int stockDevelopMountain;				//山開発アイテムストック
 		int stockEDF;							//地球防衛軍のストック
 		int stockInsurance;						//保険のストック
 		float developSpeedBonus;				//発展スピード増加ボーナス
