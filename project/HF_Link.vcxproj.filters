@@ -181,6 +181,8 @@
     <ClInclude Include="source\Field\Controller\FieldInput.h" />
     <ClInclude Include="source\Effect\Game\Explosion.h" />
     <ClInclude Include="source\Effect\Game\ExplosionFlare.h" />
+    <ClInclude Include="source\Effect\Game\MissileHit.h" />
+    <ClInclude Include="source\Effect\Game\RedSpark.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -346,6 +348,8 @@
     <ClCompile Include="source\Field\Controller\FieldInput.cpp" />
     <ClCompile Include="source\Effect\Game\Explosion.cpp" />
     <ClCompile Include="source\Effect\Game\ExplosionFlare.cpp" />
+    <ClCompile Include="source\Effect\Game\MissileHit.cpp" />
+    <ClCompile Include="source\Effect\Game\RedSpark.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
