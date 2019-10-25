@@ -42,9 +42,9 @@ void TestParticleManager::Update()
 	else if (Debug::Button("WhiteSmog"))
 		Generate(TestParticle::WhiteSmog, Vector3::Up * 10.0f);
 	else if (Debug::Button("Explosion"))
-		Generate(TestParticle::Explosion, D3DXVECTOR3(0.0f, 10.0f, -0.0f));
+		Generate(TestParticle::Explosion, Vector3::Up * 20.0f);
 	else if (Debug::Button("ExplosionFlare"))
-		Generate(TestParticle::ExplosionFlare, D3DXVECTOR3(0.0f, 10.0f, -10.0f));
+		Generate(TestParticle::ExplosionFlare, Vector3::Up);
 
 	Debug::NewLine();
 
@@ -52,6 +52,11 @@ void TestParticleManager::Update()
 	{
 		Generate(TestParticle::BlueSpark, Vector3::Up * 10.0f);
 		Generate(TestParticle::BlueDebris, Vector3::Up * 10.0f);
+	}
+	else if (Debug::Button("MeteorExplosion"))
+	{
+		Generate(TestParticle::Explosion, Vector3::Up * 20.0f);
+		Generate(TestParticle::ExplosionFlare, Vector3::Up);
 	}
 
 	Debug::End();

@@ -15,8 +15,8 @@ namespace Effect::Game
 	ExplosionFlareController::ExplosionFlareController()
 	{
 		//単位頂点バッファ作成
-		const D3DXVECTOR2 SizeParticle{ 5.0f, 5.0f };
-		const D3DXVECTOR2 DivineTex{ 8.0f, 8.0f };
+		const D3DXVECTOR2 SizeParticle{ 1.0f, 1.0f };
+		const D3DXVECTOR2 DivineTex{ 2.0f, 2.0f };
 		MakeUnitBuffer(SizeParticle, DivineTex);
 
 		//テクスチャ読み込み
@@ -24,7 +24,7 @@ namespace Effect::Game
 		LoadTexture(Path);
 
 		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 512;
+		const unsigned MaxParticle = 128;
 		particleContainer.resize(MaxParticle, nullptr);
 		for (auto&& particle : particleContainer)
 		{
@@ -32,8 +32,8 @@ namespace Effect::Game
 		}
 
 		//エミッターコンテナ作成処理
-		const unsigned MaxEmitter = 64;
-		const int NumEmit = 8;
+		const unsigned MaxEmitter = 3;
+		const int NumEmit = 24;
 		const int DurationEmit = 3;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
@@ -54,7 +54,7 @@ namespace Effect::Game
 	ExplosionFlareコンストラクタ
 	***************************************/
 	ExplosionFlare::ExplosionFlare() :
-		AnimationParticle(8.0f, 8.0f, MinLife, MaxLife),
+		AnimationParticle(2.0f, 2.0f, MinLife, MaxLife),
 		directionMove(Vector3::Random()),
 		speedMove(Math::RandomRange(MinSpeed, MaxSpeed))
 	{
@@ -92,7 +92,7 @@ namespace Effect::Game
 		Animation(t);
 
 		//イージングで移動
-		float speed = Easing::EaseValue(t, speedMove, 0.0f, EaseType::OutCubic);
+		float speed = Easing::EaseValue(t, speedMove, 0.0f, EaseType::InOutExpo);
 		transform->Move(speed * directionMove);
 	}
 }

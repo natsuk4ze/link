@@ -37,7 +37,6 @@ namespace Effect::Game
 		static const int Life;
 		static const float Speed;
 
-		D3DXVECTOR3 directionMove;
 		float speedMove;
 	};
 }
