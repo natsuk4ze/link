@@ -325,12 +325,21 @@ namespace Field::Model
 	***************************************/
 	void Field::Model::PlaceContainer::DestroyTown(const PlaceModel * target)
 	{
-		//PlaceModelをNoneタイプに変化
 		auto itrPlace = std::find(placeVector.begin(), placeVector.end(), target);
 
 		if (itrPlace == placeVector.end())
 			return;
 
+		PlaceModel *place = *itrPlace;
+
+		//所属をリセット
+		RouteContainer belongRoute = place->GetConnectingRoutes();
+		for (auto&& route : belongRoute)
+		{
+			place->ExitRoute(route);
+		}
+
+		//PlaceModelをNoneタイプに変化
 		(*itrPlace)->SetType(PlaceType::None);
 
 		//TownModel削除
