@@ -43,7 +43,7 @@ void ActorAnimation::RotateAndShrink(GameObject& ref, std::function<void(void)> 
 //=====================================
 void ActorAnimation::Shrink(GameObject& ref, std::function<void(void)> callback)
 {
-	Tween::Scale(ref, ref.GetScale(), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 30, OutCirc, callback);
+	Tween::Scale(ref, ref.GetScale(), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 60, OutCirc, callback);
 }
 
 //=====================================

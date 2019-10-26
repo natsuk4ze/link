@@ -201,6 +201,20 @@ namespace Field::Actor
 	}
 
 	/**************************************
+	山破壊処理
+	***************************************/
+	void PlaceActorController::DestroyMountain(const Model::PlaceModel * place)
+	{
+		unsigned uniqueID = place->ID();
+		PlaceActor* actor = (*actorContainer[ActorPattern::Mountain])[place->ID()].get();
+
+		ActorAnimation::Shrink(*actor, [=]()
+		{
+			EraseFromContainer(ActorPattern::Mountain, uniqueID);
+		});
+	}
+
+	/**************************************
 	ロードセット処理
 	***************************************/
 	void PlaceActorController::SetRoad(const Model::PlaceModel * place, int delay)
@@ -405,6 +419,7 @@ namespace Field::Actor
 		if (actorContainer[pattern]->count(key) == 0)
 			return false;
 
+		ActorAnimation::Shrink(*(*actorContainer[pattern])[key]);
 		actorContainer[pattern]->erase(key);
 		return true;
 	}
