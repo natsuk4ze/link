@@ -42,14 +42,14 @@ public:
 
 	void Update();
 	void Draw(void);
-	void Set(TelopID id, std::function<void(void)> FinishFunc = nullptr);
+	void Set(TelopID id, std::function<void(void)> Callback = nullptr);
 
 private:
 	TelopDrawer *text;
 	TelopDrawer *bg;
 
 	//再生終了通知
-	std::function<void(void)> FinishFunc;
+	std::function<void(void)> Callback;
 
 	//テキストのテクスチャ情報コンテナ
 	std::vector <LPDIRECT3DTEXTURE9> textTexContainer;

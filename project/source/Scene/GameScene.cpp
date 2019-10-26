@@ -27,7 +27,7 @@
 #include "GameState/GameIdle.h"
 #include "GameState/GameFinish.h"
 #include "GameState/GameLevelUp.h"
-#include "GameState\/GamePause.h"
+#include "GameState/GamePause.h"
 
 #include "../FieldObject/Actor/CityActor.h"
 

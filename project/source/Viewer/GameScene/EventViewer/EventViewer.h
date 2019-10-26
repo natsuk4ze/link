@@ -34,11 +34,7 @@ public:
 
 	//メッセージセット
 	void SetEventMessage(const std::string Message);
-	//void SetEventTelop(TelopID id, Delegate<void(void)> *onFinish);
-	void SetEventTelop(TelopID id, std::function<void(void)> FinishFunc = NULL);
-
-	//テロップセット
-	//void SetEventTelop(EventTelop::TelopID id, Delegate<void(void)> *onFinish);
+	void SetEventTelop(TelopID id, std::function<void(void)> Callback = nullptr);
 
 	//メッセージがセットされるとカウントアップするカウンター
 	int messageSetCnt;

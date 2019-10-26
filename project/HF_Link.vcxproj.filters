@@ -187,6 +187,7 @@
     <ClInclude Include="source\Effect\Game\AngryFace.h" />
     <ClInclude Include="source\Effect\Game\MissileHit.h" />
     <ClInclude Include="source\Effect\Game\RedSpark.h" />
+    <ClInclude Include="source\Event\MinusEvent\BeatGame.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -358,6 +359,7 @@
     <ClCompile Include="source\Effect\Game\AngryFace.cpp" />
     <ClCompile Include="source\Effect\Game\MissileHit.cpp" />
     <ClCompile Include="source\Effect\Game\RedSpark.cpp" />
+    <ClCompile Include="source\Event\MinusEvent\BeatGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

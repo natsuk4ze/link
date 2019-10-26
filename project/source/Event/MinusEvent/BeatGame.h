@@ -1,41 +1,37 @@
 //=============================================================================
 //
-// 町消滅イベントクラス [CityDestroyEvent.h]
+// 連打ゲームイベントクラス [BeatGame.h]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#ifndef _CityDestroyEvent_H_
-#define _CityDestroyEvent_H_
+#ifndef _BeatGame_H_
+#define _BeatGame_H_
 
 #include "../EventBase.h"
-#include "../../Field/Place/FieldPlaceModel.h"
+#include <functional>
+#include <string>
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
-class BeatGame;
 class EventViewer;
 class BaseViewerDrawer;
 class CountViewerDrawer;
+class TextViewer;
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class CityDestroyEvent : public EventBase
+class BeatGame : public EventBase
 {
 private:
-	D3DXVECTOR3 MeteoritePos;
-	D3DXVECTOR3 MissilePos;
-	D3DXVECTOR3 TownPos;
-	D3DXVECTOR3 MoveDirection;
-	//int RemainFrame;
-	//bool TelopOver;
-	bool BeatGameOver;
-	bool EventAvoid;
-	const Field::Model::PlaceModel* Target;
+	int RemainFrame;
+	int InputCount;
+	bool TelopOver;
+	std::function<void(bool)> Callback;
 
-	// 連打ゲーム
-	BeatGame *beatGame;
+	// テキスト
+	TextViewer *Text;
 	// 小数点
 	BaseViewerDrawer *point;
 	// 少数部
@@ -43,20 +39,13 @@ private:
 	// 整数部
 	CountViewerDrawer *intNum;
 
-#if _DEBUG
-	static LPD3DXMESH SphereMesh;
-	static LPD3DXMESH MissileMesh;
-	static D3DMATERIAL9 Material;
-#endif
-
 public:
-	CityDestroyEvent(EventViewer* eventViewer);
-	~CityDestroyEvent();
+	BeatGame(EventViewer* eventViewer, std::function<void(bool)> CallBack = nullptr);
+	~BeatGame();
 	void Update(void) override;
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;
 	void CountdownStart(void);
-	void UseMissile(bool Flag);
 };
 
 #endif
