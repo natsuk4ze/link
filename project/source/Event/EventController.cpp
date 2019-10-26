@@ -20,6 +20,7 @@
 #include "MinusEvent/LinkLevelDecreaseEvent.h"
 #include "MinusEvent/CongestionUpEvent.h"
 #include "MinusEvent/MoveInverseEvent.h"
+#include "MinusEvent/BeatGame.h"
 
 #include "../../Framework/Core/Utility.h"
 #include "../../Framework/String/String.h"
@@ -87,7 +88,7 @@ void EventController::Update()
 #if _DEBUG
 	if (Keyboard::GetTrigger(DIK_F))
 	{
-		EventVec.push_back(new CityDestroyEvent(eventViewer));
+		EventVec.push_back(new BeatGame(eventViewer));
 	}
 #endif
 

@@ -222,10 +222,10 @@ void EventTelop::Play()
 			bg->isPlaying = false;
 
 			//ヌルチェック
-			if (FinishFunc != nullptr)
+			if (Callback != nullptr)
 			{
 				//再生終了の通知
-				FinishFunc();
+				Callback();
 			}
 		}
 	}
@@ -243,7 +243,7 @@ void EventTelop::PassTexture(TelopID id)
 //=============================================================================
 // テロップセット処理
 //=============================================================================
-void EventTelop::Set(TelopID id, std::function<void(void)> FinishFunc)
+void EventTelop::Set(TelopID id, std::function<void(void)> Callback)
 {
 	//テクスチャ情報受け渡し
 	PassTexture(id);
@@ -253,5 +253,5 @@ void EventTelop::Set(TelopID id, std::function<void(void)> FinishFunc)
 	bg->isPlaying = true;
 
 	//テロップ再生終了通知
-	this->FinishFunc = FinishFunc;
+	this->Callback = Callback;
 }

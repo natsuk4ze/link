@@ -123,6 +123,7 @@
     <ClInclude Include="source\Event\EventController.h" />
     <ClInclude Include="source\Event\MinusEvent\AILevelDecreaseEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\BanStockUseEvent.h" />
+    <ClInclude Include="source\Event\MinusEvent\BeatGame.h" />
     <ClInclude Include="source\Event\MinusEvent\CityDestroyEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\LinkLevelDecreaseEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\CongestionUpEvent.h" />
@@ -295,6 +296,7 @@
     <ClCompile Include="source\Event\EventController.cpp" />
     <ClCompile Include="source\Event\MinusEvent\AILevelDecreaseEvent.cpp" />
     <ClCompile Include="source\Event\MinusEvent\BanStockUseEvent.cpp" />
+    <ClCompile Include="source\Event\MinusEvent\BeatGame.cpp" />
     <ClCompile Include="source\Event\MinusEvent\CityDestroyEvent.cpp" />
     <ClCompile Include="source\Event\MinusEvent\CongestionUpEvent.cpp" />
     <ClCompile Include="source\Event\MinusEvent\MoveInverseEvent.cpp" />

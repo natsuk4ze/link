@@ -6,6 +6,7 @@
 //=============================================================================
 #include "../../../main.h"
 #include "CityDestroyEvent.h"
+#include "BeatGame.h"
 #include "../../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../../Viewer/Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Viewer/Framework/ViewerDrawer/countviewerdrawer.h"
@@ -42,11 +43,13 @@ D3DMATERIAL9 CityDestroyEvent::Material =
 // コンストラクタ
 //=============================================================================
 CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer) :
-	TelopOver(false),
-	CountOver(false),
-	UseEDF(false),
-	RemainFrame(EscapeTime * 30)
+	EventAvoid(false),
+	BeatGameOver(false)
+	//CountOver(false),
+	//TelopOver(false),
+	//RemainFrame(EscapeTime * 30)
 {
+#if 0
 	//整数部
 	intNum = new CountViewerDrawer();
 	intNum->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Number.png");
@@ -82,9 +85,14 @@ CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer) :
 	point->position = D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 10 * 2.0f, 0.0f);
 	point->SetColor(SET_COLOR_NOT_COLORED);
 
+#endif
+
+	// 連打ゲームインスタンス
+	beatGame = new BeatGame(eventViewer, [&](bool EventAvoid) { UseMissile(EventAvoid); });
+
 	// 破壊する町の予定地を取得
-	DestroyTown = fieldEventHandler->GetDestroyTarget();
-	TownPos = DestroyTown->GetPosition().ConvertToWorldPosition();
+	Target = fieldEventHandler->GetDestroyTarget();
+	TownPos = Target->GetPosition().ConvertToWorldPosition();
 	MissilePos = TownPos;
 
 	// ゲーム進行停止
@@ -93,8 +101,10 @@ CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer) :
 	// テロップ設置
 	eventViewer->SetEventTelop(NegativeEvent01, [&]()
 	{
-		fieldEventHandler->ResumeGame();
-		CountdownStart();
+		Camera::TranslationPlugin::Instance()->Move(TownPos, 30, [&]()
+		{
+			CountdownStart();
+		});
 	});
 
 	MeteoritePos = TownPos + D3DXVECTOR3(MeteoriteDistance, MeteoriteDistance, 0.0f);
@@ -117,6 +127,7 @@ CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer) :
 //=============================================================================
 CityDestroyEvent::~CityDestroyEvent()
 {
+	SAFE_DELETE(beatGame);
 	SAFE_DELETE(point);
 	SAFE_DELETE(fewNum);
 	SAFE_DELETE(intNum);
@@ -127,11 +138,56 @@ CityDestroyEvent::~CityDestroyEvent()
 //=============================================================================
 void CityDestroyEvent::Update()
 {
-	if (!TelopOver)
+	if (!BeatGameOver)
 	{
-		return;
+		beatGame->Update();
+	}
+	else
+	{
+		if (EventAvoid)
+		{
+			// =================
+			// ミサイル発射
+			// =================
+			float Distance = D3DXVec3LengthSq(&D3DXVECTOR3(MeteoritePos - MissilePos));
+
+			if (Distance > pow(3.0f, 2))
+			{
+				MissilePos += MoveDirection * FallSpeed;
+				MeteoritePos += -MoveDirection * FallSpeed;
+				Camera::TranslationPlugin::Instance()->Move(MissilePos, 1, nullptr);
+			}
+			else
+			{
+				// 隕石爆発エフェクト
+				Camera::TranslationPlugin::Instance()->Restore(60, nullptr);
+				this->UseFlag = false;
+			}
+		}
+		else
+		{
+			// =================
+			// 隕石落下
+			// =================
+			float Distance = D3DXVec3LengthSq(&D3DXVECTOR3(MeteoritePos - TownPos));
+
+			if (Distance > pow(3.0f, 2))
+			{
+				MeteoritePos += MoveDirection * FallSpeed;
+			}
+			else
+			{
+				// 町消滅エフェクト
+				Camera::TranslationPlugin::Instance()->Restore(60, nullptr);
+				// 町消滅処理
+				fieldEventHandler->DestroyTown(Target);
+
+				this->UseFlag = false;
+			}
+		}
 	}
 
+#if 0
 	if (!CountOver)
 	{
 		RemainFrame--;
@@ -156,7 +212,7 @@ void CityDestroyEvent::Update()
 	}
 	else
 	{
-		if (UseEDF)
+		if (EventAvoid)
 		{
 			float Distance = D3DXVec3LengthSq(&D3DXVECTOR3(MeteoritePos - MissilePos));
 
@@ -188,7 +244,8 @@ void CityDestroyEvent::Update()
 				this->UseFlag = false;
 			}
 		}
-	}
+}
+#endif
 
 	if (!UseFlag)
 	{
@@ -204,6 +261,42 @@ void CityDestroyEvent::Draw()
 {
 	LPDIRECT3DDEVICE9 Device = GetDevice();
 
+	beatGame->Draw();
+
+#if _DEBUG
+	D3DXMATRIX WorldMatrix, TransMatrix;
+
+	// ワールドマトリックスの初期化
+	D3DXMatrixIdentity(&WorldMatrix);
+
+	// 移動を反映
+	D3DXMatrixTranslation(&TransMatrix, MeteoritePos.x, MeteoritePos.y, MeteoritePos.z);
+	D3DXMatrixMultiply(&WorldMatrix, &WorldMatrix, &TransMatrix);
+
+	// ワールドマトリックスの設定
+	Device->SetTransform(D3DTS_WORLD, &WorldMatrix);
+
+	// マテリアルの設定
+	Device->SetMaterial(&Material);
+
+	// 球体描画
+	SphereMesh->DrawSubset(0);
+
+	// ワールドマトリックスの初期化
+	D3DXMatrixIdentity(&WorldMatrix);
+
+	// 移動を反映
+	D3DXMatrixTranslation(&TransMatrix, MissilePos.x, MissilePos.y, MissilePos.z);
+	D3DXMatrixMultiply(&WorldMatrix, &WorldMatrix, &TransMatrix);
+
+	// ワールドマトリックスの設定
+	Device->SetTransform(D3DTS_WORLD, &WorldMatrix);
+
+	// ミサイル描画
+	MissileMesh->DrawSubset(0);
+#endif
+
+#if 0
 	if (!CountOver)
 	{
 		Device->SetRenderState(D3DRS_ALPHATESTENABLE, true);
@@ -230,7 +323,7 @@ void CityDestroyEvent::Draw()
 	}
 	else
 	{
-#ifdef _DEBUG
+#if _DEBUG
 		D3DXMATRIX WorldMatrix, TransMatrix;
 
 		// ワールドマトリックスの初期化
@@ -262,7 +355,8 @@ void CityDestroyEvent::Draw()
 		// ミサイル描画
 		MissileMesh->DrawSubset(0);
 #endif
-	}
+}
+#endif
 }
 
 //=============================================================================
@@ -270,6 +364,7 @@ void CityDestroyEvent::Draw()
 //=============================================================================
 string CityDestroyEvent::GetEventMessage(int FieldLevel)
 {
+#if 0
 	vector<string> MessageContainer;
 
 	if (FieldLevel == Field::Model::City)
@@ -295,6 +390,9 @@ string CityDestroyEvent::GetEventMessage(int FieldLevel)
 		string ErrMsg = "イベントメッセージがありません";
 		return ErrMsg;
 	}
+#endif
+	// ヌル
+	return "";
 }
 
 
@@ -303,7 +401,7 @@ string CityDestroyEvent::GetEventMessage(int FieldLevel)
 //=============================================================================
 void CityDestroyEvent::CountdownStart(void)
 {
-	this->TelopOver = true;
+	beatGame->CountdownStart();
 }
 
 //=============================================================================
@@ -311,14 +409,16 @@ void CityDestroyEvent::CountdownStart(void)
 //=============================================================================
 void CityDestroyEvent::UseMissile(bool Flag)
 {
+	BeatGameOver = true;
+
 	if (!Flag)
 	{
-		UseEDF = false;
+		EventAvoid = false;
 		return;
 	}
 	else
 	{
-		UseEDF = true;
+		EventAvoid = true;
 		MoveDirection = D3DXVECTOR3(MeteoritePos - MissilePos);
 		D3DXVec3Normalize(&MoveDirection, &MoveDirection);
 	}
