@@ -87,9 +87,14 @@ void PlaceActor::SetPosition(const D3DXVECTOR3& pos)
 //=====================================
 // メッシュデータのカラー変更
 //=====================================
-void PlaceActor::SetColor(const D3DXCOLOR& color, UINT index)
+void PlaceActor::SetColor(const D3DXCOLOR& color)
 {
-	mesh->SetMaterialColor(color, index);
+	unsigned numMaterial = mesh->GetMaterialNum();
+
+	for (unsigned i = 0; i < numMaterial; i++)
+	{
+		mesh->SetMaterialColor(color, i);
+	}
 }
 
 //=====================================
