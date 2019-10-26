@@ -91,6 +91,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(gameViewer);
 	SAFE_DELETE(eventController);
 	SAFE_DELETE(bloomController);
+	SAFE_DELETE(eventHandler);
 
 	//パーティクル終了
 	particleManager->Uninit();
@@ -111,11 +112,6 @@ void GameScene::Update()
 {
 	//ステートを更新
 	State next = fsm[currentState]->OnUpdate(*this);
-
-	if (next != currentState)
-	{
-		ChangeState(next);
-	}
 
 	//カメラ更新
 	fieldCamera->Update();
