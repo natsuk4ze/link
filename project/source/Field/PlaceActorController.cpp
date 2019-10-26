@@ -69,6 +69,8 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::Update()
 	{
+		RiverActor::UpdateHeight();
+
 		for (auto&& map : actorContainer)
 		{
 			for (auto&& pair : *map)
