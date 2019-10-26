@@ -285,18 +285,19 @@ namespace Field::Model
 	***************************************/
 	const PlaceModel * Field::Model::PlaceContainer::GetDestroyTarget()
 	{
-		//NOTE:Žæ‚è‹}‚¬ì‚Á‚½B‚ ‚Æ‚Å‚«‚ê‚¢‚ÉŽ¡‚·
-		int randomIndex = Math::RandomRange(0, (int)(townContainer.size()));
-		int index = 0;
-		for (auto&& town : townContainer)
+		using cpplinq::from;
+		using cpplinq::where;
+		using cpplinq::to_vector;
+
+		auto townVector = from(placeVector)
+			>> where([](auto& place)
 		{
-			if (index++ != randomIndex)
-				continue;
+			return place->IsType(PlaceType::Town);
+		})
+			>> to_vector();
 
-			return town.second->GetPlace();
-		}
-
-		return nullptr;
+		int randomIndex = Math::RandomRange(0, (int)townVector.size() - 1);
+		return townVector[randomIndex];
 	}
 
 	/**************************************
@@ -316,7 +317,7 @@ namespace Field::Model
 		})
 			>> to_vector();
 
-		int randomIndex = Math::RandomRange(0, (int)(noneVector.size()));
+		int randomIndex = Math::RandomRange(0, (int)(noneVector.size() - 1));
 		return noneVector[randomIndex];
 	}
 
