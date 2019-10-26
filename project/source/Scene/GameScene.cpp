@@ -76,7 +76,7 @@ void GameScene::Init()
 
 	//testActor = new CityActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), FModel::City);
 	testPassenger = new PassengerActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), FModel::City);
-	testPassenger->MoveDest(D3DXVECTOR3(250.0, 0.0f, -150.0f));
+	testPassenger->MoveDest(D3DXVECTOR3(300.0, 0.0f, -150.0f));
 }
 
 /**************************************

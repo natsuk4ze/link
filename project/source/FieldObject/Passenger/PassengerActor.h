@@ -41,7 +41,7 @@ public:
 	void Draw();
 
 	void ChangeMesh(const char* nextTag);	// メッシュ切り替え
-	void MoveDest(const D3DXVECTOR3 dest, std::function<void(void)> callback = nullptr);	// 目的地までの移動
+	void MoveDest(const D3DXVECTOR3 dest, std::function<void(void)> callback = nullptr);	// 目的地までの移動(到達したらcallbackを返す)
 };
 
 #endif
