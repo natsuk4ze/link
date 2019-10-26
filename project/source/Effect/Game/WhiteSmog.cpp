@@ -60,7 +60,7 @@ namespace Effect::Game
 		directionMove(Vector3::Random()),
 		speedMove(Math::RandomRange(MinSpeed, MaxSpeed))
 	{
-		directionMove.y = 0.0f;
+		directionMove.y = fabsf(directionMove.y);
 		D3DXVec3Normalize(&directionMove, &directionMove);
 	}
 

@@ -207,6 +207,7 @@ namespace Field::Actor
 	{
 		unsigned uniqueID = place->ID();
 		PlaceActor* actor = (*actorContainer[ActorPattern::Mountain])[place->ID()].get();
+		GameParticleManager::Instance()->Generate(GameParticle::WhiteSmog, actor->GetPosition());
 
 		ActorAnimation::Shrink(*actor, [=]()
 		{
