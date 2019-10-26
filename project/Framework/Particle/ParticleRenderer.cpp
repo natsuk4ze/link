@@ -49,16 +49,23 @@ void ParticleRenderer::BeginDraw()
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
 
 	//ビュー行列、プロジェクション行列、ビュー逆行列を取得
-	D3DXMATRIX view, proj, invView;
+	D3DXMATRIX view, proj, invView, screenProj;
 	pDevice->GetTransform(D3DTS_VIEW, &view);
 	pDevice->GetTransform(D3DTS_PROJECTION, &proj);
 	D3DXMatrixInverse(&invView, NULL, &view);
 	invView._41 = invView._42 = invView._43 = 0.0f;
 
+	D3DXMatrixIdentity(&screenProj);
+	screenProj._11 = 2.0f / SCREEN_WIDTH;
+	screenProj._22 = -2.0f / SCREEN_HEIGHT;
+	screenProj._41 = -1;
+	screenProj._42 = 1;
+
 	//シェーダに各行列を設定
 	effect->SetMatrix(hMtxView, &view);
 	effect->SetMatrix(hMtxProjection, &proj);
 	effect->SetMatrix(hMtxInvView, &invView);
+	effect->SetMatrix(hScreenProj, &screenProj);
 
 	//各頂点バッファを設定
 	pDevice->SetStreamSource(1, transformBuff, 0, sizeof(D3DXMATRIX));
@@ -72,7 +79,6 @@ void ParticleRenderer::BeginDraw()
 
 	//シェーダによる描画開始
 	effect->Begin(0, 0);
-	effect->BeginPass(0);
 }
 
 /**************************************
@@ -84,7 +90,6 @@ void ParticleRenderer::EndDraw()
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	//シェーダによる描画終了
-	effect->EndPass();
 	effect->End();
 
 	//レンダーステート復元
@@ -95,6 +100,22 @@ void ParticleRenderer::EndDraw()
 	pDevice->SetStreamSourceFreq(0, 1);
 	pDevice->SetStreamSourceFreq(1, 1);
 	pDevice->SetStreamSourceFreq(2, 1);
+}
+
+/**************************************
+Transform情報埋め込み処理
+***************************************/
+void ParticleRenderer::BeginPass(DWORD pass)
+{
+	effect->BeginPass(pass);
+}
+
+/**************************************
+Transform情報埋め込み処理
+***************************************/
+void ParticleRenderer::EndPass()
+{
+	effect->EndPass();
 }
 
 /**************************************
@@ -159,6 +180,7 @@ void ParticleRenderer::LoadEffect()
 	hMtxView = effect->GetParameterByName(NULL, "mtxView");
 	hMtxProjection = effect->GetParameterByName(NULL, "mtxProj");
 	hMtxInvView = effect->GetParameterByName(NULL, "mtxInvView");
+	hScreenProj = effect->GetParameterByName(NULL, "mtxScreenProj");
 }
 
 /**************************************

@@ -39,7 +39,7 @@ namespace Field
 	const int FieldController::InitFieldBorder = 30;				//フィールド範囲の初期値
 	const int FieldController::DevelopmentInterval = 30;			//発展レベル上昇のインターバル
 	const float FieldController::MaxDevelopmentLevelAI = 9999.0f;	//AI発展レベルの最大値
-	
+
 	/**************************************
 	コンストラクタ
 	***************************************/
@@ -47,8 +47,6 @@ namespace Field
 		fieldBorder(InitFieldBorder),
 		cntFrame(0),
 		developmentLevelAI(0),
-		stockEDF(0),
-		stockInsurance(0),
 		developSpeedBonus(1.0f),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
@@ -206,8 +204,6 @@ namespace Field
 	{
 		param.levelAI = (int)developmentLevelAI;
 		param.ratioLevel = (float)developmentLevelAI / MaxDevelopmentLevelAI;
-		param.stockEDF = stockEDF;
-		param.stockInsurance = stockInsurance;
 		developper->EmbedViewerParam(param);
 	}
 
@@ -305,21 +301,13 @@ namespace Field
 		//EDFストック使用処理
 		handler.functerBoolReturn[Handler::FuncterID_boolReturn::TryEDF] = [&]()
 		{
-			if (stockEDF <= 0)
-				return false;
-
-			stockEDF--;
-			return true;
+			return false;
 		};
 
 		//保険ストック使用処理
 		handler.functerBoolReturn[Handler::FuncterID_boolReturn::TryInsurance] = [&]()
 		{
-			if (stockInsurance <= 0)
-				return false;
-
-			stockInsurance--;
-			return true;
+			return false;
 		};
 
 		//破壊対象の街取得処理

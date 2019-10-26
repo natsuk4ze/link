@@ -45,10 +45,13 @@
     <ClInclude Include="Framework\Math\Quaternion.h" />
     <ClInclude Include="Framework\Math\TMath.h" />
     <ClInclude Include="Framework\Math\Vector3.h" />
-    <ClInclude Include="Framework\Particle\AnimationParticle.h" />
+    <ClInclude Include="Framework\Particle\2D\AnimationParticle2D.h" />
+    <ClInclude Include="Framework\Particle\2D\Particle2D.h" />
+    <ClInclude Include="Framework\Particle\3D\AnimationParticle3D.h" />
     <ClInclude Include="Framework\Particle\BaseEmitter.h" />
     <ClInclude Include="Framework\Particle\BaseParticle.h" />
     <ClInclude Include="Framework\Particle\BaseParticleController.h" />
+    <ClInclude Include="Framework\Particle\3D\Particle3D.h" />
     <ClInclude Include="Framework\Particle\ParticleJsonParser.h" />
     <ClInclude Include="Framework\Particle\ParticleRenderer.h" />
     <ClInclude Include="Framework\Particle\SceneParticleManager.h" />
@@ -108,6 +111,7 @@
     <ClInclude Include="Library\json11\json11.hpp" />
     <ClInclude Include="main.h" />
     <ClInclude Include="source\Effect\GameParticleManager.h" />
+    <ClInclude Include="source\Effect\Game\AngryFace.h" />
     <ClInclude Include="source\Effect\Game\BlueDebris.h" />
     <ClInclude Include="source\Effect\Game\BlueSpark.h" />
     <ClInclude Include="source\Effect\Game\ColorfulDebris.h" />
@@ -226,10 +230,13 @@
     <ClCompile Include="Framework\Light\Light.cpp" />
     <ClCompile Include="Framework\Math\Quaternion.cpp" />
     <ClCompile Include="Framework\Math\Vector3.cpp" />
-    <ClCompile Include="Framework\Particle\AnimationParticle.cpp" />
+    <ClCompile Include="Framework\Particle\2D\AnimationParticle2D.cpp" />
+    <ClCompile Include="Framework\Particle\2D\Particle2D.cpp" />
+    <ClCompile Include="Framework\Particle\3D\AnimationParticle3D.cpp" />
     <ClCompile Include="Framework\Particle\BaseEmitter.cpp" />
     <ClCompile Include="Framework\Particle\BaseParticle.cpp" />
     <ClCompile Include="Framework\Particle\BaseParticleController.cpp" />
+    <ClCompile Include="Framework\Particle\3D\Particle3D.cpp" />
     <ClCompile Include="Framework\Particle\ParticleJsonParser.cpp" />
     <ClCompile Include="Framework\Particle\ParticleRenderer.cpp" />
     <ClCompile Include="Framework\Particle\SceneParticleManager.cpp" />
@@ -282,6 +289,7 @@
     <ClCompile Include="Library\json11\json11.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="source\Effect\GameParticleManager.cpp" />
+    <ClCompile Include="source\Effect\Game\AngryFace.cpp" />
     <ClCompile Include="source\Effect\Game\BlueDebris.cpp" />
     <ClCompile Include="source\Effect\Game\BlueSpark.cpp" />
     <ClCompile Include="source\Effect\Game\ColorfulDebris.cpp" />

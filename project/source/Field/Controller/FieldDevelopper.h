@@ -43,8 +43,7 @@ namespace Field
 	private:
 		FieldController *entity;
 
-		int stockDevelopRiver;
-		int stockDevelopMountain;
+		int stockNum;
 	};
 }
 

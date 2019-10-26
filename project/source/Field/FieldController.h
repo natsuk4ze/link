@@ -114,8 +114,6 @@ namespace Field
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int cntFrame;							//フレームカウント
 		float developmentLevelAI;				//AI発展レベル
-		int stockEDF;							//地球防衛軍のストック
-		int stockInsurance;						//保険のストック
 		float developSpeedBonus;				//発展スピード増加ボーナス
 
 		State current;

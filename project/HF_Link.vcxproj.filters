@@ -28,7 +28,6 @@
     <ClInclude Include="Framework\Math\Quaternion.h" />
     <ClInclude Include="Framework\Math\TMath.h" />
     <ClInclude Include="Framework\Math\Vector3.h" />
-    <ClInclude Include="Framework\Particle\AnimationParticle.h" />
     <ClInclude Include="Framework\Particle\BaseEmitter.h" />
     <ClInclude Include="Framework\Particle\BaseParticle.h" />
     <ClInclude Include="Framework\Particle\BaseParticleController.h" />
@@ -181,6 +180,11 @@
     <ClInclude Include="source\Field\Controller\FieldInput.h" />
     <ClInclude Include="source\Effect\Game\Explosion.h" />
     <ClInclude Include="source\Effect\Game\ExplosionFlare.h" />
+    <ClInclude Include="Framework\Particle\3D\AnimationParticle3D.h" />
+    <ClInclude Include="Framework\Particle\3D\Particle3D.h" />
+    <ClInclude Include="Framework\Particle\2D\Particle2D.h" />
+    <ClInclude Include="Framework\Particle\2D\AnimationParticle2D.h" />
+    <ClInclude Include="source\Effect\Game\AngryFace.h" />
     <ClInclude Include="source\Effect\Game\MissileHit.h" />
     <ClInclude Include="source\Effect\Game\RedSpark.h" />
     <ClInclude Include="source\Event\MinusEvent\BeatGame.h" />
@@ -207,7 +211,6 @@
     <ClCompile Include="Framework\Light\Light.cpp" />
     <ClCompile Include="Framework\Math\Quaternion.cpp" />
     <ClCompile Include="Framework\Math\Vector3.cpp" />
-    <ClCompile Include="Framework\Particle\AnimationParticle.cpp" />
     <ClCompile Include="Framework\Particle\BaseEmitter.cpp" />
     <ClCompile Include="Framework\Particle\BaseParticle.cpp" />
     <ClCompile Include="Framework\Particle\BaseParticleController.cpp" />
@@ -349,6 +352,11 @@
     <ClCompile Include="source\Field\Controller\FieldInput.cpp" />
     <ClCompile Include="source\Effect\Game\Explosion.cpp" />
     <ClCompile Include="source\Effect\Game\ExplosionFlare.cpp" />
+    <ClCompile Include="Framework\Particle\3D\AnimationParticle3D.cpp" />
+    <ClCompile Include="Framework\Particle\3D\Particle3D.cpp" />
+    <ClCompile Include="Framework\Particle\2D\Particle2D.cpp" />
+    <ClCompile Include="Framework\Particle\2D\AnimationParticle2D.cpp" />
+    <ClCompile Include="source\Effect\Game\AngryFace.cpp" />
     <ClCompile Include="source\Effect\Game\MissileHit.cpp" />
     <ClCompile Include="source\Effect\Game\RedSpark.cpp" />
     <ClCompile Include="source\Event\MinusEvent\BeatGame.cpp" />

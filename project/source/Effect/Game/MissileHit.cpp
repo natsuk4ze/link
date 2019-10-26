@@ -12,7 +12,8 @@ namespace Effect::Game
 	/**************************************
 	MissileHitControllerコンストラクタ
 	***************************************/
-	MissileHitController::MissileHitController()
+	MissileHitController::MissileHitController() :
+		BaseParticleController(Particle_3D)
 	{
 		//単位頂点バッファ作成
 		const D3DXVECTOR2 SizeParticle{ 15.0f, 15.0f };
@@ -50,7 +51,7 @@ namespace Effect::Game
 	/**************************************
 	MissileHitコンストラクタ
 	***************************************/
-	MissileHit::MissileHit() : AnimationParticle(8.0f, 8.0f, Life)
+	MissileHit::MissileHit() : AnimationParticle3D(8.0f, 8.0f, Life)
 	{
 	}
 
