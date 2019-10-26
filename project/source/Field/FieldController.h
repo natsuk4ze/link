@@ -62,8 +62,13 @@ namespace Field
 		FieldController();
 		~FieldController();
 
-		//更新、描画処理
-		void Update();
+		//オブジェクトの更新処理
+		void UpdateObject();
+
+		//ロジックの更新処理
+		void UpdateLogic();
+
+		//描画処理
 		void Draw();
 
 		//データ読み込み処理

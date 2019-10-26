@@ -112,9 +112,21 @@ namespace Field
 	}
 
 	/**************************************
-	更新処理
+	オブジェクト更新処理
 	***************************************/
-	void FieldController::Update()
+	void FieldController::UpdateObject()
+	{
+		//各更新処理
+		cursor->Update();
+		placeContainer->Update();
+
+		placeActController->Update();
+	}
+
+	/**************************************
+	ロジック更新処理
+	***************************************/
+	void FieldController::UpdateLogic()
 	{
 		//使わなくなったルートコンテナを削除
 		auto itr = std::remove_if(routeContainer.begin(), routeContainer.end(), [](auto& ptr)
@@ -123,22 +135,13 @@ namespace Field
 		});
 		routeContainer.erase(itr, routeContainer.end());
 
-		//各更新処理
-		cursor->Update();
-		placeContainer->Update();
-
 		for (auto&& route : routeContainer)
 		{
 			route->Update();
 		}
 
-		placeActController->Update();
-
 		//AI発展レベルを計算
 		CalcDevelopmentLevelAI();
-
-		Debug::Log("ControllerState:%d", current);
-		Debug::Log("DevelopmentAILevel:%d", (int)developmentLevelAI);
 	}
 
 	/**************************************

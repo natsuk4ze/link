@@ -135,7 +135,7 @@ namespace Field::Model
 		PlaceModel* start = model->edgeStart;
 		if (start->IsType(PlaceType::Road) || start->IsType(PlaceType::Junction))
 		{
-			_ConnectWithEdge(model, start, routeContainer);
+			_ConnectWithEdge(model, start, routeContainer, start);
 			start->AddDirection(model->route.front());
 		}
 
@@ -143,7 +143,7 @@ namespace Field::Model
 		PlaceModel* end = model->edgeEnd;
 		if (end->IsType(PlaceType::Road) || end->IsType(PlaceType::Junction))
 		{
-			_ConnectWithEdge(model, end, routeContainer);
+			_ConnectWithEdge(model, end, routeContainer, end);
 			end->AddDirection(model->route.back());
 		}
 	}
@@ -209,36 +209,36 @@ namespace Field::Model
 	/**************************************
 	連結処理（内部）
 	***************************************/
-	void RouteProcessor::_ConnectWithEdge(RouteModelPtr& model, PlaceModel *place, RouteContainer& routeContainer)
+	void RouteProcessor::_ConnectWithEdge(RouteModelPtr& model, PlaceModel *place, RouteContainer& routeContainer, PlaceModel *edge)
 	{
-		//連結対象が道なら交差点にしてルートを分割
-		place->SetType(PlaceType::Junction);
-		if (place->GetPrevType() == PlaceType::Road)
+		//相手を交差点に変える必要があるか確認
+		Adjacency adjacency = edge->IsAdjacent(place);
+		std::vector<Adjacency> direction = place->GetConnectingAdjacency();
+		bool shouldChangeJunction = Utility::IsContain(direction, adjacency);
+
+		if (shouldChangeJunction)
 		{
-			(*model->onCreateJunction)(place);
+			place->SetType(PlaceType::Junction);
+			if (place->GetPrevType() == PlaceType::Road)
+			{
+				(*model->onCreateJunction)(place);
 
-			RouteContainer targetList = place->GetConnectingRoutes();
+				RouteContainer targetList = place->GetConnectingRoutes();
 
-			//取得した所属リストに新しく作ったルートが含まれるので削除
-			targetList.erase(std::remove(targetList.begin(), targetList.end(), model));
+				//取得した所属リストに新しく作ったルートが含まれるので削除
+				targetList.erase(std::remove(targetList.begin(), targetList.end(), model));
 
-			//相手を分割
-			RouteContainer divList = Divide(*targetList.begin(), place, routeContainer);
+				//相手を分割
+				RouteContainer divList = Divide(*targetList.begin(), place, routeContainer);
+			}
 		}
 
 		//連結相手と作ったルートの隣接情報を作成
 		RouteContainer routeList = place->GetConnectingRoutes();
 		for (auto&& route : routeList)
 		{
-			//NOTE:隣接の端点が同じなのはまずい
 			model->AddAdjacency(place, place, route);
 			route->AddAdjacency(place, place, model);
 		}
-
-		//所属を更新(内部で重複確認をしているので雑に突っ込む)
-		//よく考えたらいらない気がするのでコメントアウト
-		//place->BelongRoute(place->GetConnectingRoutes());
-
-		//オブジェクト設定			
 	}
 }

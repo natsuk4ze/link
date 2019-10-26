@@ -7,6 +7,7 @@
 //=====================================
 #include "GamePause.h"
 #include "../../Event/EventController.h"
+#include "../../Field/FieldController.h"
 
 /**************************************
 入場処理
@@ -21,7 +22,8 @@ void GameScene::GamePause::OnStart(GameScene & entity)
 ***************************************/
 GameScene::State GameScene::GamePause::OnUpdate(GameScene & entity)
 {
-	//イベントのみ更新
+	//ロジック以外を更新
+	entity.field->UpdateObject();
 	entity.eventController->Update();
 
 	//中断解除はイベントハンドラ側に任せる

@@ -15,14 +15,13 @@
 ***************************************/
 GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 {
-	State next = State::Idle;
-
 	//入力確認
 	entity.field->CheckInput();
 	entity.fieldCamera->CheckInput();
 
 	//各オブジェクト更新
-	entity.field->Update();
+	entity.field->UpdateLogic();
+	entity.field->UpdateObject();
 
 	//イベント更新
 	entity.eventController->Update();
@@ -33,15 +32,15 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 	//残り時間が0になったら終了
 	if (entity.remainTime == 0)
 	{
-		next = State::Finish;
+		entity.ChangeState(State::Finish);
 	}
 	//AI発展レベルが最大に到達していたらレベルアップ
 	else if (entity.field->ShouldLevelUp())
 	{
-		next = State::LevelUp;
+		entity.ChangeState(State::LevelUp);
 	}
 
-	return next;
+	return State::Idle;
 }
 
 /**************************************

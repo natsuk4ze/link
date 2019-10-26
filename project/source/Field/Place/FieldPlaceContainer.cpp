@@ -285,18 +285,19 @@ namespace Field::Model
 	***************************************/
 	const PlaceModel * Field::Model::PlaceContainer::GetDestroyTarget()
 	{
-		//NOTE:取り急ぎ作った。あとできれいに治す
-		int randomIndex = Math::RandomRange(0, (int)(townContainer.size()));
-		int index = 0;
-		for (auto&& town : townContainer)
+		using cpplinq::from;
+		using cpplinq::where;
+		using cpplinq::to_vector;
+
+		auto townVector = from(placeVector)
+			>> where([](auto& place)
 		{
-			if (index++ != randomIndex)
-				continue;
+			return place->IsType(PlaceType::Town);
+		})
+			>> to_vector();
 
-			return town.second->GetPlace();
-		}
-
-		return nullptr;
+		int randomIndex = Math::RandomRange(0, (int)townVector.size() - 1);
+		return townVector[randomIndex];
 	}
 
 	/**************************************
@@ -316,7 +317,7 @@ namespace Field::Model
 		})
 			>> to_vector();
 
-		int randomIndex = Math::RandomRange(0, (int)(noneVector.size()));
+		int randomIndex = Math::RandomRange(0, (int)(noneVector.size() - 1));
 		return noneVector[randomIndex];
 	}
 
@@ -325,12 +326,21 @@ namespace Field::Model
 	***************************************/
 	void Field::Model::PlaceContainer::DestroyTown(const PlaceModel * target)
 	{
-		//PlaceModelをNoneタイプに変化
 		auto itrPlace = std::find(placeVector.begin(), placeVector.end(), target);
 
 		if (itrPlace == placeVector.end())
 			return;
 
+		PlaceModel *place = *itrPlace;
+
+		//所属をリセット
+		RouteContainer belongRoute = place->GetConnectingRoutes();
+		for (auto&& route : belongRoute)
+		{
+			place->ExitRoute(route);
+		}
+
+		//PlaceModelをNoneタイプに変化
 		(*itrPlace)->SetType(PlaceType::None);
 
 		//TownModel削除
