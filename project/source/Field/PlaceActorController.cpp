@@ -69,6 +69,8 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::Update()
 	{
+		RiverActor::UpdateHeight();
+
 		for (auto&& map : actorContainer)
 		{
 			for (auto&& pair : *map)
@@ -196,6 +198,21 @@ namespace Field::Actor
 		}
 
 		return resultErase;
+	}
+
+	/**************************************
+	R”j‰óˆ—
+	***************************************/
+	void PlaceActorController::DestroyMountain(const Model::PlaceModel * place)
+	{
+		unsigned uniqueID = place->ID();
+		PlaceActor* actor = (*actorContainer[ActorPattern::Mountain])[place->ID()].get();
+		GameParticleManager::Instance()->Generate(GameParticle::WhiteSmog, actor->GetPosition());
+
+		ActorAnimation::Shrink(*actor, [=]()
+		{
+			EraseFromContainer(ActorPattern::Mountain, uniqueID);
+		});
 	}
 
 	/**************************************
@@ -403,6 +420,7 @@ namespace Field::Actor
 		if (actorContainer[pattern]->count(key) == 0)
 			return false;
 
+		ActorAnimation::Shrink(*(*actorContainer[pattern])[key]);
 		actorContainer[pattern]->erase(key);
 		return true;
 	}

@@ -154,6 +154,7 @@ namespace Field
 			for (auto&& place : container)
 			{
 				place->SetType(PlaceType::None);
+				entity->placeActController->DestroyMountain(place);
 			}
 
 			stockNum -= cntMountain;

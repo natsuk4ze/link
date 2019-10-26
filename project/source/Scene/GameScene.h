@@ -15,9 +15,6 @@
 
 #include <vector>
 
-// モデル表示テスト用
-#include "../FieldObject/Actor/PlaceActor.h"
-
 /**************************************
 前方宣言
 ***************************************/
@@ -38,6 +35,7 @@ class EventController;
 class GameParticleManager;
 class FieldEventHandler;
 class BloomController;
+class PlaceActor;
 
 /**************************************
 クラス定義

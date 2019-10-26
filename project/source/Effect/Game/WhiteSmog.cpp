@@ -35,8 +35,8 @@ namespace Effect::Game
 
 		//エミッターコンテナ作成処理
 		const unsigned MaxEmitter = 64;
-		const int NumEmit = 8;
-		const int DurationEmit = 3;
+		const int NumEmit = 10;
+		const int DurationEmit = 5;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
@@ -47,10 +47,10 @@ namespace Effect::Game
 	/**************************************
 	WhiteSmog staticメンバ
 	***************************************/
-	const int WhiteSmog::MaxLife = 30;
-	const int WhiteSmog::MinLife = 20;
-	const float WhiteSmog::MaxSpeed = 2.5f;
-	const float WhiteSmog::MinSpeed = 1.5f;
+	const int WhiteSmog::MaxLife = 60;
+	const int WhiteSmog::MinLife = 40;
+	const float WhiteSmog::MaxSpeed = 1.0f;
+	const float WhiteSmog::MinSpeed = 0.25f;
 
 	/**************************************
 	WhiteSmogコンストラクタ
@@ -60,7 +60,7 @@ namespace Effect::Game
 		directionMove(Vector3::Random()),
 		speedMove(Math::RandomRange(MinSpeed, MaxSpeed))
 	{
-		directionMove.y = 0.0f;
+		directionMove.y = fabsf(directionMove.y);
 		D3DXVec3Normalize(&directionMove, &directionMove);
 	}
 
@@ -76,7 +76,12 @@ namespace Effect::Game
 		transform->SetRotation(Vector3::Forward * Math::RandomRange(0.0f, 360.0f));
 
 		//移動方向に初期座標をオフセット
-		transform->Move(directionMove * 2.5f);
+		float offset = Math::RandomRange(0.5f, 2.5f);
+		transform->Move(directionMove * offset);
+
+		//スケールをランダムに変更
+		float scale = Math::RandomRange(0.2f, 1.1f);
+		transform->SetScale(scale * Vector3::One);
 	}
 
 	/**************************************

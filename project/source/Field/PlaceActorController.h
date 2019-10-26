@@ -57,6 +57,9 @@ namespace Field::Actor
 
 		//アクター消滅処理
 		bool DestroyActor(const Model::PlaceModel* place);
+		
+		//山破壊処理
+		void DestroyMountain(const Model::PlaceModel* place);
 
 		//定数メンバ
 		static const D3DXVECTOR3 PositionEmitSmog;		//道落下時の煙発生位置

@@ -22,6 +22,16 @@ class RiverActor :
 public:
 	RiverActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
 	~RiverActor();
+
+	void Update() override;
+
+	static void UpdateHeight();
+
+private:
+	static const int AnimationPeriod;
+	static const float MaxWaveHeight;
+	static float heightWave;
+	static int cntWaveAnimation;
 };
 
 #endif
