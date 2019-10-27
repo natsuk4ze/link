@@ -189,6 +189,7 @@
     <ClInclude Include="source\Effect\Game\RedSpark.h" />
     <ClInclude Include="source\Event\MinusEvent\BeatGame.h" />
     <ClInclude Include="Framework\Resource\PolygonResource.h" />
+    <ClInclude Include="Framework\Effect\SpriteEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -362,6 +363,7 @@
     <ClCompile Include="source\Effect\Game\RedSpark.cpp" />
     <ClCompile Include="source\Event\MinusEvent\BeatGame.cpp" />
     <ClCompile Include="Framework\Resource\PolygonResource.cpp" />
+    <ClCompile Include="Framework\Effect\SpriteEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
@@ -380,5 +382,6 @@
     <FxCompile Include="Shaders\SpeedBlur.fx" />
     <FxCompile Include="Shaders\SpikeNoise.fx" />
     <FxCompile Include="Shaders\StrongBlurFilter.fx" />
+    <FxCompile Include="Shaders\Sprite.fx" />
   </ItemGroup>
 </Project>
