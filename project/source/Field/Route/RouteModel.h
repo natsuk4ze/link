@@ -88,6 +88,10 @@ namespace Field::Model
 		//全プレイス取得
 		const std::vector<const PlaceModel*> GetAllPlaces() const;
 
+		//始点、終点取得処理
+		PlaceModel* GetFirst() const;
+		PlaceModel* GetLast() const;
+
 	private:
 		PlaceModel *edgeStart, *edgeEnd;			//端点のPlace
 		std::vector<PlaceModel*> route;				//道となるPlace

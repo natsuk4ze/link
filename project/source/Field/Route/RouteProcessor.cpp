@@ -45,10 +45,12 @@ namespace Field::Model
 
 		//対象のルートのPlaceに対して1個ずつ隣接ルートを確認する
 		std::vector<PlaceModel*> route = model->route;
-		int cnt = 0;
 		for (auto&& place : route)
 		{
-			cnt++;
+			//橋の場合は判定しない
+			if (place->IsType(PlaceType::Bridge))
+				continue;
+
 			PlaceModel* connectTarget = place->GetConnectTarget();
 
 			//連結対象な見つからなかったのでコンティニュー
@@ -135,7 +137,7 @@ namespace Field::Model
 		PlaceModel* start = model->edgeStart;
 		if (start->IsType(PlaceType::Road) || start->IsType(PlaceType::Junction))
 		{
-			_ConnectWithEdge(model, start, routeContainer, start);
+			_ConnectWithEdge(model, start, routeContainer, model->GetFirst());
 			start->AddDirection(model->route.front());
 		}
 
@@ -143,7 +145,7 @@ namespace Field::Model
 		PlaceModel* end = model->edgeEnd;
 		if (end->IsType(PlaceType::Road) || end->IsType(PlaceType::Junction))
 		{
-			_ConnectWithEdge(model, end, routeContainer, end);
+			_ConnectWithEdge(model, end, routeContainer, model->GetLast());
 			end->AddDirection(model->route.back());
 		}
 	}
@@ -214,7 +216,7 @@ namespace Field::Model
 		//相手を交差点に変える必要があるか確認
 		Adjacency adjacency = edge->IsAdjacent(place);
 		std::vector<Adjacency> direction = place->GetConnectingAdjacency();
-		bool shouldChangeJunction = Utility::IsContain(direction, adjacency);
+		bool shouldChangeJunction = !Utility::IsContain(direction, adjacency);
 
 		if (shouldChangeJunction)
 		{
