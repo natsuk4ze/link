@@ -94,11 +94,10 @@ namespace Field
 		//比較関数
 		static bool Compare(const FieldCursorSquare* lhs, const FieldCursorSquare* rhs);
 
-	private:
 		static const D3DXVECTOR2 Size;				//サイズ
 		static const int FadeDuration;				//フェード時間
 		static const float MoveSpeed;				//移動スピード
-
+	private:
 		int cntFrame;								//フレームカウント
 		Transform *transform;						//SRT情報
 	};

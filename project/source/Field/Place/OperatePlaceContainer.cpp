@@ -10,6 +10,8 @@
 
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../../../Framework/Renderer3D/BoardPolygon.h"
+#include "../../../Framework/Tween/Tween.h"
+
 #include "../../../Library/cppLinq/cpplinq.hpp"
 
 #include <algorithm>
@@ -181,24 +183,50 @@ namespace Field::Model
 	***************************************/
 	void OperatePlaceContainer::DrawDebug()
 	{
-#ifdef DEBUG_PLACEMODEL
-		BoardPolygon *polygon;
-		ResourceManager::Instance()->GetPolygon("Operate", polygon);
+//#ifdef DEBUG_PLACEMODEL
+//		BoardPolygon *polygon;
+//		ResourceManager::Instance()->GetPolygon("Operate", polygon);
+//
+//		for (auto&& place : container)
+//		{
+//			FieldPosition position = place->GetPosition();
+//
+//			Transform transform{
+//				position.ConvertToWorldPosition() + Vector3::Up * 5.0f,
+//				{ D3DXToRadian(90.0f), 0.0f, 0.0f },
+//				Vector3::One
+//			};
+//
+//			transform.SetWorld();
+//
+//			polygon->Draw();
+//		}
+//#endif
+	}
 
-		for (auto&& place : container)
-		{
-			FieldPosition position = place->GetPosition();
+	/**************************************
+	PinActorコンストラクタ
+	***************************************/
+	PinActor::PinActor(const D3DXVECTOR3& position)
+	{
+		ResourceManager::Instance()->GetPolygon("PinActor", polygon);
+		Tween::Move(*this, position + Vector3::Up * 2.0f, position, 10, EaseType::OutCubic);
+	}
 
-			Transform transform{
-				position.ConvertToWorldPosition() + Vector3::Up * 5.0f,
-				{ D3DXToRadian(90.0f), 0.0f, 0.0f },
-				Vector3::One
-			};
+	/**************************************
+	PinActorデストラクタ
+	***************************************/
+	PinActor::~PinActor()
+	{
+		SAFE_DELETE(polygon);
+	}
 
-			transform.SetWorld();
-
-			polygon->Draw();
-		}
-#endif
+	/**************************************
+	PinActor描画処理
+	***************************************/
+	void PinActor::Draw()
+	{
+		transform->SetWorld();
+		polygon->Draw();
 	}
 }

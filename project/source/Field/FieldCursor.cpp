@@ -8,6 +8,7 @@
 #include "FieldCursor.h"
 #include "../../Framework/Math/Easing.h"
 #include "../../Framework/Tool/DebugWindow.h"
+#include "../../Framework/Resource/ResourceManager.h"
 
 #include <algorithm>
 
@@ -29,11 +30,15 @@ namespace Field
 		position(0, 0),
 		cntMove(MoveDuration)
 	{
+		//リソース作成
+		ResourceManager::Instance()->MakePolygon("CursorSquare", "data/TEXTURE/Field/CursorSquare.png", FieldCursorSquare::Size);
+
 		//四角形生成
 		squareContainer.resize(SquareMax);
 		for (auto&& square : squareContainer)
 		{
 			square = new FieldCursorSquare();
+			ResourceManager::Instance()->GetPolygon("CursorSquare", square);
 		}
 	}
 
@@ -187,12 +192,6 @@ namespace Field
 
 		//XZ平面に対して平行になるように回転
 		transform->Rotate(90.0f, 0.0f, 0.0f);
-
-		//テクスチャ読み込み
-		LoadTexture("data/TEXTURE/Field/CursorSquare.png");
-
-		//サイズ設定
-		SetSize(Size);
 	}
 
 	/**************************************

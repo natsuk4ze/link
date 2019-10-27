@@ -14,14 +14,14 @@ namespace Field
 	***************************************/
 	FieldGround::FieldGround()
 	{
-		LoadTexture("data/TEXTURE/Field/Ground.jpg");
+		//LoadTexture("data/TEXTURE/Field/Ground.jpg");
 
-		const D3DXVECTOR2 FieldSize{ 10000.0f, 10000.0f };
-		const D3DXVECTOR2 TextureLoop{ 500.0f, 500.0f };
-		SetSize(FieldSize);
-		SetUV(TextureLoop);
+		//const D3DXVECTOR2 FieldSize{ 10000.0f, 10000.0f };
+		//const D3DXVECTOR2 TextureLoop{ 500.0f, 500.0f };
+		//SetSize(FieldSize);
+		//SetUV(TextureLoop);
 
-		transform->Rotate(90.0f, 0.0f, 0.0f);
+		//transform->Rotate(90.0f, 0.0f, 0.0f);
 	}
 
 	/**************************************

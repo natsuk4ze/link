@@ -16,6 +16,7 @@
 // 前方宣言(おーはま追記)
 //*****************************************************************************
 class EventViewer;
+class BoardPolygon;
 
 //*****************************************************************************
 // クラス定義
@@ -39,6 +40,7 @@ private:
 	void LoadCSV(const char* FilePath);
 
 #if _DEBUG
+	BoardPolygon *polygon;
 	void DrawDebug(void);
 #endif
 

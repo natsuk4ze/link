@@ -11,48 +11,32 @@
 #include "../../../Framework/Renderer3D/BoardPolygon.h"
 
 //**************************************
-// マクロ定義
+// 前方宣言
 //**************************************
+class BoardPolygon;
 
 //**************************************
 // クラス定義
 //**************************************
-class ReverseItemActor;
 class ItemActor :
-	public BoardPolygon
+	public GameObject
 {
 private:
-	Transform* transform;
-	ReverseItemActor* reverse;				// 裏側用
-
 	// 定数定義
 	static const D3DXVECTOR2 ActorSize;		// サイズ
 	static const float RotValue;			// 回転速度
+
+	BoardPolygon *polygon;
 
 public:
 	ItemActor(const D3DXVECTOR3& pos);
 	~ItemActor();
 
+	//板ポリゴン用のリソース作成などの初期化処理
+	static void Init();
+
 	void Update();
 	void Draw();
 	void Rotate(float y);
 };
-
-//**************************************
-// 裏側用クラス定義
-//**************************************
-class ReverseItemActor :
-	public BoardPolygon
-{
-private:
-	Transform* transform;
-
-public:
-	ReverseItemActor(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const D3DXVECTOR2& size);
-	~ReverseItemActor();
-	void Update();
-	void Draw();
-	void Rotate(float y);
-};
-
 #endif

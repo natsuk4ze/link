@@ -11,12 +11,18 @@
 #include "../../../main.h"
 #include <vector>
 
+/**************************************
+前方宣言
+***************************************/
+class BoardPolygon;
+
 namespace Field::Model
 {
 	/**************************************
 	前方宣言
 	***************************************/
 	class PlaceModel;
+	class PinActor;
 
 	/**************************************
 	クラス定義
@@ -51,6 +57,21 @@ namespace Field::Model
 
 	private:
 		std::vector<PlaceModel*> container;		//PlaceModelコンテナ
+	};
+
+	/**************************************
+	ピンアクタークラス
+	***************************************/
+	class PinActor : GameObject
+	{
+	public:
+		PinActor(const D3DXVECTOR3& position);
+		~PinActor();
+
+		void Draw();
+
+	private:
+		BoardPolygon *polygon;
 	};
 }
 #endif

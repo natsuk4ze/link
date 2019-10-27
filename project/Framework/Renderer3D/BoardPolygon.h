@@ -12,13 +12,14 @@
 /**************************************
 マクロ定義
 ***************************************/
+class PolygonResource;
 
 /**************************************
 クラス定義
 ***************************************/
 class BoardPolygon
 {
-	friend class ResourceManager;
+	friend class PolygonResource;
 public:
 	//コンストラクタ、デストラクタ
 	BoardPolygon();
@@ -26,12 +27,6 @@ public:
 
 	//描画処理
 	void Draw();
-
-	//テクスチャ読み込み処理
-	void LoadTexture(const char* path);
-
-	//サイズ設定処理
-	void SetSize(const D3DXVECTOR2& size);
 
 	//UV分割設定処理
 	void SetTexDiv(const D3DXVECTOR2& div);
@@ -41,8 +36,6 @@ public:
 
 	//UV座標設定処理
 	void SetUV(const D3DXVECTOR2& uv);
-
-	void AddRef();
 
 protected:
 	LPDIRECT3DDEVICE9 pDevice;
@@ -55,7 +48,7 @@ protected:
 	D3DXVECTOR2 texDiv;
 	D3DXVECTOR2 texSize;
 
-	UINT cntReference;
+	PolygonResource *resource;
 };
 
 #endif
