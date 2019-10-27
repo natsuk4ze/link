@@ -28,10 +28,11 @@ namespace Field
 		PositionOffset(positionOffset),
 		fieldBorder(0, 0, 0, 0),
 		position(0, 0),
-		cntMove(MoveDuration)
+		cntMove(MoveDuration),
+		currentMode(Mode::BuildRoad)
 	{
 		//リソース作成
-		ResourceManager::Instance()->MakePolygon("CursorSquare", "data/TEXTURE/Field/CursorSquare.png", FieldCursorSquare::Size);
+		ResourceManager::Instance()->MakePolygon("CursorSquare", "data/TEXTURE/Field/CursorSquare.png", FieldCursorSquare::Size, { 2.0f, 1.0f });
 
 		//四角形生成
 		squareContainer.resize(SquareMax);
@@ -89,6 +90,7 @@ namespace Field
 
 		for (auto&& square : squareContainer)
 		{
+			square->SetTextureIndex(currentMode);
 			square->Draw(mtxWorld);
 		}
 
@@ -131,6 +133,14 @@ namespace Field
 		position.z = z;
 
 		SetPosition(position.ConvertToWorldPosition());
+	}
+
+	/**************************************
+	モード切り替え処理
+	***************************************/
+	void Field::FieldCursor::SetMode(Mode mode)
+	{
+		currentMode = mode;
 	}
 
 	/**************************************
@@ -187,6 +197,9 @@ namespace Field
 		cntFrame(FadeDuration)
 	{
 		transform = new Transform();
+
+		//テクスチャはX方向に2分割
+		SetTexDiv({ 2.0f, 1.0f });
 
 		//XZ平面に対して平行になるように回転
 		transform->Rotate(90.0f, 0.0f, 0.0f);
