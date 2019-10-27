@@ -30,6 +30,12 @@ namespace Field::Model
 	class OperatePlaceContainer
 	{
 	public:
+		enum Mode
+		{
+			BuildRoad,
+			Develop
+		};
+
 		//コンストラクタ、デストラクタ
 		OperatePlaceContainer();
 		~OperatePlaceContainer();
@@ -62,7 +68,7 @@ namespace Field::Model
 		std::vector<PlaceModel*> container;		//PlaceModelコンテナ
 		std::vector<std::unique_ptr<PinActor>> actorContainer;	//PinActorコンテナ
 
-		void CreatePin(const PlaceModel* place);
+		void CreatePin(const PlaceModel* place, Mode mode);
 	};
 
 	/**************************************
@@ -71,7 +77,7 @@ namespace Field::Model
 	class PinActor : GameObject
 	{
 	public:
-		PinActor(const D3DXVECTOR3& position);
+		PinActor(const D3DXVECTOR3& position, OperatePlaceContainer::Mode mode);
 		~PinActor();
 
 		void Update();

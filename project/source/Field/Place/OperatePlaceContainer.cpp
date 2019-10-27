@@ -53,7 +53,7 @@ namespace Field::Model
 
 		//コンテナに追加してreturn true
 		container.push_back(place);
-		CreatePin(place);
+		CreatePin(place, BuildRoad);
 		return true;
 	}
 
@@ -68,7 +68,7 @@ namespace Field::Model
 
 		//コンテナに追加してreturn true
 		container.push_back(place);
-		CreatePin(place);
+		CreatePin(place, Develop);
 
 		return true;
 	}
@@ -94,7 +94,7 @@ namespace Field::Model
 
 		//追加してreturn true
 		container.push_back(place);
-		CreatePin(place);
+		CreatePin(place, BuildRoad);
 
 		return true;
 	}
@@ -115,7 +115,7 @@ namespace Field::Model
 
 		//追加してreturn true
 		container.push_back(place);
-		CreatePin(place);
+		CreatePin(place, Develop);
 
 		return true;
 	}
@@ -216,19 +216,20 @@ namespace Field::Model
 	/**************************************
 	ピンアクター作成処理
 	***************************************/
-	void Field::Model::OperatePlaceContainer::CreatePin(const PlaceModel * place)
+	void Field::Model::OperatePlaceContainer::CreatePin(const PlaceModel * place, Mode mode)
 	{
-		PinActor *actor = new PinActor(place->GetPosition().ConvertToWorldPosition() + Vector3::Up * 5.0f);
+		PinActor *actor = new PinActor(place->GetPosition().ConvertToWorldPosition() + Vector3::Up * 5.0f, mode);
 		actorContainer.push_back(std::unique_ptr<PinActor>(actor));
 	}
 
 	/**************************************
 	PinActorコンストラクタ
 	***************************************/
-	PinActor::PinActor(const D3DXVECTOR3& position)
+	PinActor::PinActor(const D3DXVECTOR3& position, OperatePlaceContainer::Mode mode)
 	{
 		polygon = new BoardPolygon();
 		polygon->SetTexDiv({ 2.0f, 1.0f });
+		polygon->SetTextureIndex(mode);
 		ResourceManager::Instance()->GetPolygon("PinActor", polygon);
 		Tween::Move(*this, position + Vector3::Up * 10.0f, position, 30, EaseType::OutCubic);
 	}
