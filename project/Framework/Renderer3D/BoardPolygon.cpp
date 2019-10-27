@@ -7,6 +7,7 @@
 #include "BoardPolygon.h"
 #include "../Resource/ResourceManager.h"
 #include "../Resource/PolygonResource.h"
+#include "../Effect/SpriteEffect.h"
 
 /**************************************
 マクロ定義
@@ -18,18 +19,10 @@
 BoardPolygon::BoardPolygon() :
 	vtxBuff(nullptr),
 	texture(nullptr),
-	texDiv(1.0f, 1.0f),
-	texSize(1.0f, 1.0f)
+	effect(nullptr)
 {
 	pDevice = GetDevice();
-
-	//マテリアル初期化
-	ZeroMemory(&material, sizeof(D3DMATERIAL9));
-	material.Diffuse.r = material.Diffuse.g = material.Diffuse.b = material.Diffuse.a = 1.0f;
-	material.Ambient.r = material.Ambient.g = material.Ambient.b = material.Ambient.a = 1.0f;
-	material.Emissive.r = material.Emissive.g = material.Emissive.b = material.Emissive.a = 1.0f;
-	material.Specular.r = material.Specular.g = material.Specular.b = material.Specular.a = 1.0f;
-	material.Power = 0.0f;
+	effect = new SpriteEffect();
 }
 
 /**************************************
@@ -47,12 +40,10 @@ BoardPolygon::~BoardPolygon()
 /**************************************
 描画処理
 ***************************************/
-void BoardPolygon::Draw()
+void BoardPolygon::Draw(const D3DXMATRIX& mtxWorld)
 {
-	D3DMATERIAL9 matDef;
-	pDevice->GetMaterial(&matDef);
-
-	pDevice->SetMaterial(&material);
+	effect->SetWorld(mtxWorld);
+	effect->Commit();
 
 	pDevice->SetTexture(0, texture);
 
@@ -60,9 +51,11 @@ void BoardPolygon::Draw()
 
 	pDevice->SetFVF(FVF_VERTEX_MATERIAL);
 
+	effect->Begin();
+	effect->BeginPass(0);
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
-
-	pDevice->SetMaterial(&matDef);
+	effect->EndPass();
+	effect->End();
 }
 
 /**************************************
@@ -70,9 +63,7 @@ UV分割設定処理
 ***************************************/
 void BoardPolygon::SetTexDiv(const D3DXVECTOR2& div)
 {
-	texDiv = div;
-	texSize.x = 1.0f / div.x;
-	texSize.y = 1.0f / div.y;
+	effect->SetTextureDivine(div);
 }
 
 /**************************************
@@ -80,22 +71,13 @@ UVインデックス設定処理
 ***************************************/
 void BoardPolygon::SetTextureIndex(int index)
 {
-	int x = index % (int)texDiv.x;
-	int y = index / (int)texDiv.x;
+	effect->SetTextureIndex(index);
 }
 
 /**************************************
-UV設定処理
+ディフューズ設定処理
 ***************************************/
-void BoardPolygon::SetUV(const D3DXVECTOR2 & uv)
+void BoardPolygon::SetDiffuse(const D3DXCOLOR & color)
 {
-	VERTEX_MATERIAL *pVtx;
-	vtxBuff->Lock(0, 0, (void**)&pVtx, 0);
-
-	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-	pVtx[1].tex = D3DXVECTOR2(uv.x, 0.0f);
-	pVtx[2].tex = D3DXVECTOR2(0.0f, uv.y);
-	pVtx[3].tex = D3DXVECTOR2(uv.x, uv.y);
-
-	vtxBuff->Unlock();
+	effect->SetDiffuse(color);
 }

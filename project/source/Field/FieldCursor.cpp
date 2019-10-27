@@ -83,7 +83,6 @@ namespace Field
 		D3DXMATRIX mtxWorld = transform->GetMatrix();
 
 		//四角形をソートして描画
-		pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 		pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
 
 		std::sort(squareContainer.begin(), squareContainer.end(), &FieldCursorSquare::Compare);
@@ -93,7 +92,6 @@ namespace Field
 			square->Draw(mtxWorld);
 		}
 
-		pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
 		pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 	}
 
@@ -217,7 +215,8 @@ namespace Field
 
 		//マテリアルの透過率を設定
 		float t = (float)cntFrame / FadeDuration;
-		material.Diffuse.a = Easing::EaseValue(t, 1.0f, 0.0f, EaseType::InExpo);
+		float alpha = Easing::EaseValue(t, 1.0f, 0.0f, EaseType::InExpo);
+		SetDiffuse({ 1.0f, 1.0f, 1.0f, alpha });
 	}
 
 	/**************************************
@@ -230,11 +229,12 @@ namespace Field
 
 		LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-		//ワールド変換設定
-		transform->SetWorld(&parentMtx);
+		//ワールド変換行列を計算
+		D3DXMATRIX world = transform->GetMatrix();
+		D3DXMatrixMultiply(&world, &world, &parentMtx);
 
 		//描画
-		BoardPolygon::Draw();
+		BoardPolygon::Draw(world);
 	}
 
 	/**************************************

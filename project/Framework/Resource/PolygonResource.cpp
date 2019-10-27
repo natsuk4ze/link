@@ -36,9 +36,9 @@ PolygonResource::PolygonResource(const D3DXVECTOR2 & size, const D3DXVECTOR2 & u
 	pVtx[3].vtx = D3DXVECTOR3(size.x, -size.y, 0.0f);
 
 	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-	pVtx[1].tex = D3DXVECTOR2(uv.x, 0.0f);
-	pVtx[2].tex = D3DXVECTOR2(0.0f, uv.y);
-	pVtx[3].tex = D3DXVECTOR2(uv.x, uv.y);
+	pVtx[1].tex = D3DXVECTOR2(1.0f / uv.x, 0.0f);
+	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f / uv.y);
+	pVtx[3].tex = D3DXVECTOR2(1.0f / uv.x, 1.0f / uv.y);
 
 	pVtx[0].nor =
 		pVtx[1].nor =

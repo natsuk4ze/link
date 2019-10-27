@@ -22,7 +22,8 @@ SpriteEffect::SpriteEffect(const D3DXVECTOR2 & texDiv) :
 	effect(nullptr),
 	diffuse(1.0f, 1.0f, 1.0f, 1.0f),
 	texDiv(texDiv),
-	texSize(1.0f / texDiv.x, 1.0f / texDiv.y)
+	texSize(1.0f / texDiv.x, 1.0f / texDiv.y),
+	uv(0.0f, 0.0f)
 {
 	//エフェクト読み込み
 	ResourceManager::Instance()->GetEffect("data/EFFECT/Sprite.cfx", effect);
@@ -84,6 +85,8 @@ void SpriteEffect::Commit()
 	effect->SetMatrix(hMtxView, &mtxView);
 	effect->SetMatrix(hMtxProj, &mtxProjection);
 	effect->SetMatrix(hMtxScreenProj, &mtxScreenProj);
+	effect->SetFloatArray(hDiffuse, (float*)&diffuse, 4);
+	effect->SetFloatArray(hTexUV, (float*)&uv, 2);
 	effect->CommitChanges();
 }
 
@@ -100,7 +103,17 @@ void SpriteEffect::SetWorld(const D3DXMATRIX & mtxWorld)
 ***************************************/
 void SpriteEffect::SetDiffuse(const D3DXCOLOR & color)
 {
-	effect->SetFloatArray(hDiffuse, (float*)&color, 4);
+	diffuse = color;
+}
+
+/**************************************
+テクスチャ分割数設定処理
+***************************************/
+void SpriteEffect::SetTextureDivine(const D3DXVECTOR2 & divine)
+{
+	texDiv = divine;
+	texSize.x = 1.0f / texDiv.x;
+	texSize.y = 1.0f / texDiv.y;
 }
 
 /**************************************
@@ -111,8 +124,8 @@ void SpriteEffect::SetTextureIndex(int index)
 	int u = index % (int)texDiv.x;
 	int v = index / (int)texDiv.x;
 
-	float uv[2] = { u * texSize.x, v * texSize.y };
-	effect->SetFloatArray(hTexUV, uv, 2);
+	uv.x = u * texSize.x;
+	uv.y = v * texSize.y;
 }
 
 /**************************************

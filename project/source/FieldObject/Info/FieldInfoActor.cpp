@@ -91,8 +91,7 @@ void FieldInfoActor::Draw()
 	if (!this->IsActive())
 		return;
 
-	transform->SetWorld();
-	polygon->Draw();
+	polygon->Draw(transform->GetMatrix());
 
 }
 

@@ -39,7 +39,7 @@ VS_OUTPUT VS_3D(
 {
 	VS_OUTPUT Out = (VS_OUTPUT)0;
 
-	Out.pos = mul(float4(pos, 0.0f), mtxWorld);
+	Out.pos = mul(float4(pos, 1.0f), mtxWorld);
 	Out.pos = mul(Out.pos, mtxView);
 	Out.pos = mul(Out.pos, mtxProj);
 
@@ -79,11 +79,13 @@ float4 PS(VS_OUTPUT In) : COLOR0
 technique tech
 {
 	pass P0 {
+		ALPHABLENDENABLE = true;
 		VertexShader = compile vs_2_0 VS_3D();
 		PixelShader = compile ps_2_0 PS();
 	}
 
 	pass P1 {
+		ALPHABLENDENABLE = true;
 		VertexShader = compile vs_2_0 VS_2D();
 		PixelShader = compile ps_2_0 PS();
 	}

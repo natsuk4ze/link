@@ -22,6 +22,7 @@
 #include "../Field/FieldEventHandler.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
+#include "../../Framework/Effect/SpriteEffect.h"
 
 #include "GameState/GameInit.h"
 #include "GameState/GameIdle.h"
@@ -115,6 +116,10 @@ void GameScene::Update()
 
 	//カメラ更新
 	fieldCamera->Update();
+
+	//カメラの情報をエフェクトに渡す
+	SpriteEffect::SetView(fieldCamera->GetViewMtx());
+	SpriteEffect::SetProjection(fieldCamera->GetProjectionMtx());
 
 	//testActor->Update();
 

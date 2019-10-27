@@ -39,6 +39,9 @@ public:
 	//ディフューズ設定処理
 	void SetDiffuse(const D3DXCOLOR& color);
 
+	//テクスチャ分割数設定処理
+	void SetTextureDivine(const D3DXVECTOR2& divine);
+
 	//テクスチャ通し番号設定処理
 	void SetTextureIndex(int index);
 
@@ -57,6 +60,7 @@ private:
 	D3DXCOLOR diffuse;					//ディフューズ
 	D3DXVECTOR2 texDiv;					//テクスチャ分割数
 	D3DXVECTOR2 texSize;				//分割したテクスチャのサイズ
+	D3DXVECTOR2 uv;						//UV座標
 
 	static D3DXMATRIX mtxView;			//ビュー行列
 	static D3DXMATRIX mtxProjection;	//プロジェクション行列

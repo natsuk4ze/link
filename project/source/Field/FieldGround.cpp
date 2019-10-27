@@ -36,7 +36,6 @@ namespace Field
 	***************************************/
 	void FieldGround::Draw()
 	{
-		transform->SetWorld();
-		BoardPolygon::Draw();
+		BoardPolygon::Draw(transform->GetMatrix());
 	}
 }

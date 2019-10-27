@@ -226,7 +226,6 @@ namespace Field::Model
 	***************************************/
 	void PinActor::Draw()
 	{
-		transform->SetWorld();
-		polygon->Draw();
+		polygon->Draw(transform->GetMatrix());
 	}
 }

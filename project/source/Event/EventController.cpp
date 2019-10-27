@@ -64,6 +64,7 @@ EventController::EventController(int FieldLevel) : FieldLevel(FieldLevel)
 #if _DEBUG
 	ResourceManager::Instance()->MakePolygon("Event", "data/TEXTURE/PlaceTest/Event.png", { 4.5f, 4.5f }, { 13.0f,1.0f });
 	polygon = new BoardPolygon();
+	polygon->SetTexDiv({ 13.0f, 1.0f });
 	ResourceManager::Instance()->GetPolygon("Event", polygon);
 #endif
 }
@@ -161,9 +162,9 @@ void EventController::DrawDebug()
 			Object.Pos.ConvertToWorldPosition() + Vector3::Up,
 			{ D3DXToRadian(90.0f), 0.0f, 0.0f },
 			Vector3::One);
-		transform.SetWorld();
+
 		polygon->SetTextureIndex(Object.EventType);
-		polygon->Draw();
+		polygon->Draw(transform.GetMatrix());
 	}
 
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, true);
