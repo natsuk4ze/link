@@ -264,6 +264,22 @@ namespace Field::Model
 	}
 
 	/**************************************
+	始点取得処理
+	***************************************/
+	PlaceModel * RouteModel::GetFirst() const
+	{
+		return route.front();
+	}
+
+	/**************************************
+	終点取得処理
+	***************************************/
+	PlaceModel * RouteModel::GetLast() const
+	{
+		return route.back();
+	}
+
+	/**************************************
 	端点設定（内部処理）
 	***************************************/
 	void RouteModel::_SetEdge(PlaceModel* place)
