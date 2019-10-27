@@ -20,6 +20,7 @@ namespace Field::Model
 	***************************************/
 	class PlaceModel;
 	class RouteModel;
+	class TownModel;
 
 	using RouteModelPtr = std::shared_ptr<RouteModel>;
 	using DelegatePlace = Delegate<void(const PlaceModel*)>;
@@ -79,7 +80,7 @@ namespace Field::Model
 		PlaceModel* GetConnectedTown(const PlaceModel* self);
 
 		//ƒ‹[ƒg‚ÉŒq‚ª‚Á‚Ä‚¢‚éŠX‚Ì’Tõ
-		int FindLinkedTown(const PlaceModel* root, std::vector<RouteModelPtr>& searchedRoute, std::vector<PlaceModel*> searchedTown);
+		int FindLinkedTown(TownModel* root, std::vector<RouteModelPtr>& searchedRoute, std::vector<PlaceModel*> searchedTown, std::vector<D3DXVECTOR3>& stack);
 
 		//g—p”»’è
 		void SetUnused(bool use);

@@ -89,6 +89,7 @@ void CircleGauge::Draw()
 	pDevice->SetFVF(FVF_VERTEX_3D);
 	pDevice->SetStreamSource(0, vtxBuff, 0, sizeof(VERTEX_3D));
 	pDevice->SetTexture(0, texture);
+	effect->SetFloat(hPercent, percent);
 
 	//’¸“_•ÏŠ·À•W‚ðÝ’è
 	D3DXMATRIX mtxTrans = transform->GetMatrix();

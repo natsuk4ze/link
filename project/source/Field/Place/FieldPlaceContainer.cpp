@@ -229,6 +229,17 @@ namespace Field::Model
 	}
 
 	/**************************************
+	ƒŠƒ“ƒNƒŒƒxƒ‹‚ÌŒvŽZ
+	***************************************/
+	void Field::Model::PlaceContainer::CalcLinkLevel()
+	{
+		for (auto&& town : townContainer)
+		{
+			town.second->FindLinkedTown();
+		}
+	}
+
+	/**************************************
 	AI”­“WƒŒƒxƒ‹ŒvŽZ
 	***************************************/
 	float Field::Model::PlaceContainer::CalcDevelopmentLevelAI(float bonus)
@@ -236,7 +247,7 @@ namespace Field::Model
 		float developLevel = 0.0f;
 		for (auto&& town : townContainer)
 		{
-			developLevel += town.second->OnGrowth(1.0f - trafficJamRate + trafficJamBias, bonus);
+			developLevel += town.second->DevelopmentLevel();
 		}
 
 		return developLevel;

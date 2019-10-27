@@ -9,6 +9,7 @@
 #include "../Place/FieldPlaceModel.h"
 #include "../../../Library/cppLinq/cpplinq.hpp"
 #include "../../../Framework/Pattern/Delegate.h"
+#include "../Place/FieldTownModel.h"
 
 #include <algorithm>
 
@@ -198,7 +199,7 @@ namespace Field::Model
 	/**************************************
 	Œq‚ª‚Á‚Ä‚¢‚éŠX‚ðŽæ“¾
 	***************************************/
-	int RouteModel::FindLinkedTown(const PlaceModel * root, std::vector<RouteModelPtr> & searchedRoute, std::vector<PlaceModel*> searchedTown)
+	int RouteModel::FindLinkedTown(TownModel * root, std::vector<RouteModelPtr> & searchedRoute, std::vector<PlaceModel*> searchedTown, std::vector<D3DXVECTOR3>& stackRoute)
 	{
 		int cntTown = 0;
 
@@ -207,11 +208,16 @@ namespace Field::Model
 		{
 			searchedRoute.push_back(shared_from_this());
 
-			PlaceModel* town = this->GetConnectedTown(root);
+			PlaceModel* town = this->GetConnectedTown(root->GetPlace());
 			if (town != nullptr && !(from(searchedTown) >> contains(town)))
 			{
 				cntTown++;
 				searchedTown.push_back(town);
+
+				//Œo˜H‚ð•Û‘¶
+				stackRoute.push_back(town->GetPosition().ConvertToWorldPosition());
+				root->AddLinkedRoute(stackRoute);
+				stackRoute.pop_back();
 			}
 		}
 
@@ -226,7 +232,13 @@ namespace Field::Model
 			if (from(searchedRoute) >> contains(ptr))
 				continue;
 
-			cntTown += ptr->FindLinkedTown(root, searchedRoute, searchedTown);
+			stackRoute.push_back(adjacency.start->GetPosition().ConvertToWorldPosition());
+			stackRoute.push_back(adjacency.end->GetPosition().ConvertToWorldPosition());
+
+			cntTown += ptr->FindLinkedTown(root, searchedRoute, searchedTown, stackRoute);
+			
+			stackRoute.pop_back();
+			stackRoute.pop_back();
 		}
 
 		return cntTown;

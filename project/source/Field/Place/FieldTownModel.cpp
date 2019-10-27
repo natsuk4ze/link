@@ -71,23 +71,34 @@ namespace Field::Model
 	}
 
 	/**************************************
+	発展度取得処理
+	***************************************/
+	float TownModel::DevelopmentLevel()
+	{
+		return developmentLevel;
+	}
+
+	/**************************************
 	成長する時に呼ばれる処理
 	***************************************/
-	float TownModel::OnGrowth(float trafficJamRate, float bonus)
+	void TownModel::FindLinkedTown()
 	{
-		linkLevel = 0;
+		linkLevel = biasLinkLevel;
 
 		RouteContainer searchedRoute;
 		std::vector<PlaceModel*> searchedTown;
 
 		RouteContainer belongRoute = place->GetConnectingRoutes();
+		
+		std::vector<D3DXVECTOR3> routeStack;
+		routeStack.push_back(place->GetPosition().ConvertToWorldPosition());
+
 		for (auto&& route : belongRoute)
 		{
-			linkLevel += route->FindLinkedTown(place, searchedRoute, searchedTown);
+			linkLevel += route->FindLinkedTown(this, searchedRoute, searchedTown, routeStack);
 		}
 
 		developmentLevel = (float)linkLevel * linkLevel;
-		return developmentLevel;
 	}
 
 	/**************************************
@@ -98,8 +109,24 @@ namespace Field::Model
 		biasLinkLevel += num;
 	}
 
+	/**************************************
+	PlaceModel取得処理
+	***************************************/
 	const PlaceModel * TownModel::GetPlace()
 	{
 		return place;
+	}
+
+	/**************************************
+	経路追加処理
+	***************************************/
+	void TownModel::AddLinkedRoute(std::vector<D3DXVECTOR3>& route)
+	{
+		//コピーして重複を削除
+		std::vector<D3DXVECTOR3> container(route);
+		auto itr = std::unique(container.begin(), container.end());
+		container.erase(itr, container.end());
+
+		routeContainer.push_back(container);
 	}
 }
