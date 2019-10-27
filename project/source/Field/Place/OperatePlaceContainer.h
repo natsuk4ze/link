@@ -52,11 +52,17 @@ namespace Field::Model
 		//コンテナ取得処理
 		std::vector<PlaceModel*> GetPlaces();
 
+		//更新処理
+		void Update();
+
 		//デバッグ表示
-		void DrawDebug();
+		void Draw();
 
 	private:
 		std::vector<PlaceModel*> container;		//PlaceModelコンテナ
+		std::vector<std::unique_ptr<PinActor>> actorContainer;	//PinActorコンテナ
+
+		void CreatePin(const PlaceModel* place);
 	};
 
 	/**************************************
@@ -68,6 +74,7 @@ namespace Field::Model
 		PinActor(const D3DXVECTOR3& position);
 		~PinActor();
 
+		void Update();
 		void Draw();
 
 	private:

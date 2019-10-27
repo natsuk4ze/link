@@ -120,6 +120,8 @@ namespace Field
 		cursor->Update();
 		placeContainer->Update();
 
+		operateContainer->Update();
+
 		placeActController->Update();
 	}
 
@@ -154,11 +156,13 @@ namespace Field
 		placeActController->Draw();
 
 #ifdef DEBUG_PLACEMODEL
-		operateContainer->DrawDebug();
 		placeContainer->DrawDebug();
 #endif
+
+
 		//カーソルには透過オブジェクトが含まれるので最後に描画
 		cursor->Draw();
+		operateContainer->Draw();
 	}
 
 	/**************************************
