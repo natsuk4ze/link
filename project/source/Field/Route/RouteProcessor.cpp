@@ -45,10 +45,12 @@ namespace Field::Model
 
 		//対象のルートのPlaceに対して1個ずつ隣接ルートを確認する
 		std::vector<PlaceModel*> route = model->route;
-		int cnt = 0;
 		for (auto&& place : route)
 		{
-			cnt++;
+			//橋の場合は判定しない
+			if (place->IsType(PlaceType::Bridge))
+				continue;
+
 			PlaceModel* connectTarget = place->GetConnectTarget();
 
 			//連結対象な見つからなかったのでコンティニュー
