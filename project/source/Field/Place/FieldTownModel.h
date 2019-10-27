@@ -36,15 +36,19 @@ namespace Field::Model
 		//出口数取得処理
 		int GateNum();
 
-		//リンクレベル計算処理
+		//リンクレベル取得処理
 		int LinkLevel();
 
+		//発展度取得処理
+		float DevelopmentLevel();
+
 		//レベルが上がる際に呼ばれる処理
-		float OnGrowth(float trafficJamRate, float bonus);
+		void FindLinkedTown();
 
 		//リンクレベル加算処理
 		void AddLinkLevel(int num);
 
+		//プレイス取得処理
 		const PlaceModel* GetPlace();
 
 	private:

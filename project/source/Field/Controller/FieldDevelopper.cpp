@@ -12,6 +12,7 @@
 #include "../Route/RouteModel.h"
 #include "../Route/RouteProcessor.h"
 #include "../Place/FieldPlaceContainer.h"
+#include "../Place/FieldPlaceContainer.h"
 
 #include <algorithm>
 
@@ -61,14 +62,15 @@ namespace Field
 		//端点設定
 		ptr->SetEdge();
 
-		//オブジェクト設定
-
 		//隣接するルートと連結させる
 		entity->routeProcessor->ConnectWithEdge(ptr, entity->routeContainer);
 		entity->routeProcessor->Process(ptr, entity->routeContainer);
 
 		//アクター生成
 		entity->placeActController->SetActor(ptr);
+
+		//リンクレベルを計算
+		entity->placeContainer->CalcLinkLevel();
 
 		//コールバック
 		(*entity->onBuildRoad)(route);

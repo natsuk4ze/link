@@ -59,6 +59,9 @@ namespace Field::Model
 		//交差点が作られた際に呼ばれる処理
 		void OnCreateJunction(const PlaceModel* place);
 
+		//リンクレベルを計算
+		void CalcLinkLevel();
+
 		//AI発展レベル計算
 		float CalcDevelopmentLevelAI(float bonus);
 

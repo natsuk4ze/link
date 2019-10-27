@@ -71,11 +71,19 @@ namespace Field::Model
 	}
 
 	/**************************************
+	”­“W“xæ“¾ˆ—
+	***************************************/
+	float TownModel::DevelopmentLevel()
+	{
+		return developmentLevel;
+	}
+
+	/**************************************
 	¬’·‚·‚é‚ÉŒÄ‚Î‚ê‚éˆ—
 	***************************************/
-	float TownModel::OnGrowth(float trafficJamRate, float bonus)
+	void TownModel::FindLinkedTown()
 	{
-		linkLevel = 0;
+		linkLevel = biasLinkLevel;
 
 		RouteContainer searchedRoute;
 		std::vector<PlaceModel*> searchedTown;
@@ -87,7 +95,6 @@ namespace Field::Model
 		}
 
 		developmentLevel = (float)linkLevel * linkLevel;
-		return developmentLevel;
 	}
 
 	/**************************************
@@ -98,6 +105,9 @@ namespace Field::Model
 		biasLinkLevel += num;
 	}
 
+	/**************************************
+	PlaceModelæ“¾ˆ—
+	***************************************/
 	const PlaceModel * TownModel::GetPlace()
 	{
 		return place;
