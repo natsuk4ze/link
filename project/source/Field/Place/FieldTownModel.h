@@ -10,6 +10,9 @@
 
 #include "../../../main.h"
 
+#include <list>
+#include <vector>
+
 namespace Field::Model
 {
 	/**************************************
@@ -50,6 +53,9 @@ namespace Field::Model
 
 		//ƒvƒŒƒCƒXæ“¾ˆ—
 		const PlaceModel* GetPlace();
+		
+		//Œo˜H’Ç‰Áˆ—
+		void AddLinkedRoute(std::vector<D3DXVECTOR3>& route);
 
 	private:
 		static const float BaseDepatureNum;		//Šî€‚Æ‚È‚éo”­”
@@ -72,6 +78,9 @@ namespace Field::Model
 
 		//”­“W“x
 		float developmentLevel;
+
+		//Œq‚ª‚Á‚Ä‚éŠX‚Ö‚ÌŒo˜H
+		std::list<std::vector<D3DXVECTOR3>> routeContainer;
 	};
 }
 #endif
