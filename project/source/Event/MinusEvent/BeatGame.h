@@ -14,7 +14,6 @@
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
-class EventViewer;
 class BaseViewerDrawer;
 class CountViewerDrawer;
 class TextViewer;
@@ -31,19 +30,21 @@ private:
 	std::function<void(bool)> Callback;
 
 	// テキスト
-	TextViewer *Text;
+	static TextViewer *Text;
 	// 小数点
-	BaseViewerDrawer *point;
+	static BaseViewerDrawer *point;
 	// 少数部
-	CountViewerDrawer *fewNum;
+	static CountViewerDrawer *fewNum;
 	// 整数部
-	CountViewerDrawer *intNum;
+	static CountViewerDrawer *intNum;
 
 public:
-	BeatGame(EventViewer* eventViewer, std::function<void(bool)> CallBack = nullptr);
+	BeatGame(std::function<void(bool)> CallBack = nullptr);
 	~BeatGame();
 	void Update(void) override;
 	void Draw(void) override;
+	static void Init(void);
+	static void Uninit(void);
 	string GetEventMessage(int FieldLevel) override;
 	void CountdownStart(void);
 };

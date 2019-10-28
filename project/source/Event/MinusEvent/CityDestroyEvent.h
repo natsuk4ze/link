@@ -15,8 +15,6 @@
 //*****************************************************************************
 class BeatGame;
 class EventViewer;
-class BaseViewerDrawer;
-class CountViewerDrawer;
 
 //*****************************************************************************
 // クラス定義
@@ -28,20 +26,12 @@ private:
 	D3DXVECTOR3 MissilePos;
 	D3DXVECTOR3 TownPos;
 	D3DXVECTOR3 MoveDirection;
-	//int RemainFrame;
-	//bool TelopOver;
 	bool BeatGameOver;
 	bool EventAvoid;
 	const Field::Model::PlaceModel* Target;
 
 	// 連打ゲーム
 	BeatGame *beatGame;
-	// 小数点
-	BaseViewerDrawer *point;
-	// 少数部
-	CountViewerDrawer *fewNum;
-	// 整数部
-	CountViewerDrawer *intNum;
 
 #if _DEBUG
 	static LPD3DXMESH SphereMesh;
@@ -56,7 +46,7 @@ public:
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;
 	void CountdownStart(void);
-	void UseMissile(bool Flag);
+	void ReceiveBeatResult(bool IsSuccess);
 };
 
 #endif

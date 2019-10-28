@@ -6,11 +6,9 @@
 //=============================================================================
 #include "../../../main.h"
 #include "BeatGame.h"
-#include "../../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../../Viewer/Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Viewer/Framework/ViewerDrawer/countviewerdrawer.h"
 #include "../../../Framework/Renderer2D/TextViewer.h"
-
 #include "../../../Framework/Input/input.h"
 
 
@@ -25,22 +23,40 @@ const int InputGoal = 20;
 //*****************************************************************************
 // スタティック変数宣言
 //*****************************************************************************
-
+TextViewer *BeatGame::Text = nullptr;
+BaseViewerDrawer *BeatGame::point = nullptr;
+CountViewerDrawer *BeatGame::fewNum = nullptr;
+CountViewerDrawer *BeatGame::intNum = nullptr;
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-BeatGame::BeatGame(EventViewer* eventViewer, std::function<void(bool)> Callback) :
+BeatGame::BeatGame(std::function<void(bool)> Callback) :
 	RemainFrame(InputTime * 30),
 	TelopOver(false),
 	InputCount(0),
 	Callback(Callback)
 {
+	Text->SetText("Cボタン連打！　残り 20 回");
+}
+
+//=============================================================================
+// デストラクタ
+//=============================================================================
+BeatGame::~BeatGame()
+{
+
+}
+
+//=============================================================================
+// 初期化
+//=============================================================================
+void BeatGame::Init()
+{
 	// テキスト
 	Text = new TextViewer("data/TEXTURE/Viewer/EventViewer/EventMessage/Text_cinecaption226.ttf", 80);
 	Text->SetColor(SET_COLOR_NOT_COLORED);
 	Text->SetPos((int)(SCREEN_WIDTH / 2), (int)(SCREEN_HEIGHT / 10 * 2.0f + 120.0f));
-	Text->SetText("Cボタン連打！　残り 20 回");
 
 	// 整数部
 	intNum = new CountViewerDrawer();
@@ -79,9 +95,9 @@ BeatGame::BeatGame(EventViewer* eventViewer, std::function<void(bool)> Callback)
 }
 
 //=============================================================================
-// デストラクタ
+// リリース
 //=============================================================================
-BeatGame::~BeatGame()
+void BeatGame::Uninit()
 {
 	SAFE_DELETE(Text);
 	SAFE_DELETE(point);
