@@ -214,13 +214,16 @@ namespace Field::Model
 	void RouteProcessor::_ConnectWithEdge(RouteModelPtr& model, PlaceModel *place, RouteContainer& routeContainer, PlaceModel *edge)
 	{
 		//相手を交差点に変える必要があるか確認
-		Adjacency adjacency = edge->IsAdjacent(place);
+		Adjacency adjacency = place->IsAdjacent(edge);
 		std::vector<Adjacency> direction = place->GetConnectingAdjacency();
 		bool shouldChangeJunction = !Utility::IsContain(direction, adjacency);
 
 		if (shouldChangeJunction)
 		{
 			place->SetType(PlaceType::Junction);
+			place->AddDirection(adjacency);
+			(*onChangePlaceType)(place);
+
 			if (place->GetPrevType() == PlaceType::Road)
 			{
 				(*model->onCreateJunction)(place);
