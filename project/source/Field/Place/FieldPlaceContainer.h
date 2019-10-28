@@ -83,7 +83,8 @@ namespace Field::Model
 		//ŠX”j‰óˆ—
 		void DestroyTown(const PlaceModel* target);
 
-		//ŠX¶¬ˆ—
+		//ŠXì¬ˆ—
+		void CreateTown(const PlaceModel* target);
 
 #ifdef DEBUG_PLACEMODEL
 		void DrawDebug();
