@@ -33,8 +33,11 @@ namespace Effect::Game
 		}
 
 		//エミッターコンテナ作成処理
+		// 1つのコントローラーが同時に生成できるエフェクトの数
 		const unsigned MaxEmitter = 3;
+		// 一回の放出のパーティクル数
 		const int NumEmit = 24;
+		// エミッターの生存フレーム
 		const int DurationEmit = 3;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)

@@ -56,20 +56,19 @@ void GameParticleManager::SetSingularityEffect(const D3DXVECTOR3 & position, std
 /**************************************
 隕石落下イベントのエフェクトセット処理
 ***************************************/
-void GameParticleManager::SetMeteorExplosionEffect(const D3DXVECTOR3 & position)
+void GameParticleManager::SetMeteorExplosionEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback)
 {
 	const D3DXVECTOR3 OffsetPosition = Vector3::Up * 10.0f;
 
-	controllers[GameParticle::ExplosionFlare]->SetEmitter(position + OffsetPosition);
+	controllers[GameParticle::ExplosionFlare]->SetEmitter(position + OffsetPosition, callback);
 	controllers[GameParticle::MeteorExplosion]->SetEmitter(position + OffsetPosition);
 }
 
 /**************************************
 ミサイル命中イベントのエフェクトセット処理
 ***************************************/
-void GameParticleManager::SetMissileHitEffect(const D3DXVECTOR3 & position)
+void GameParticleManager::SetMissileHitEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback)
 {
-
-	controllers[GameParticle::ExplosionFlare]->SetEmitter(position);
+	controllers[GameParticle::ExplosionFlare]->SetEmitter(position, callback);
 	controllers[GameParticle::MissileHit]->SetEmitter(position);
 }

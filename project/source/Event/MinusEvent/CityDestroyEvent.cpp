@@ -10,6 +10,8 @@
 #include "../../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../../../Framework/Camera/CameraTranslationPlugin.h"
 #include "../../Effect/GameParticleManager.h"
+#include "../../../Framework/Task/TaskManager.h"
+
 
 //*****************************************************************************
 // マクロ定義
@@ -42,7 +44,8 @@ D3DMATERIAL9 CityDestroyEvent::Material =
 //=============================================================================
 CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer) :
 	EventAvoid(false),
-	BeatGameOver(false)
+	BeatGameOver(false),
+	EffectHappened(false)
 {
 	// 連打ゲームインスタンス
 	beatGame = new BeatGame([&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
@@ -98,6 +101,11 @@ void CityDestroyEvent::Update()
 	}
 	else
 	{
+		if (EffectHappened)
+		{
+			return;
+		}
+
 		if (EventAvoid)
 		{
 			// =================
@@ -114,8 +122,13 @@ void CityDestroyEvent::Update()
 			else
 			{
 				// ミサイル命中エフェクト
-				Camera::TranslationPlugin::Instance()->Restore(60, nullptr);
-				this->UseFlag = false;
+				GameParticleManager::Instance()->SetMissileHitEffect(MeteoritePos);
+				// 30フレームの遅延を設置
+				TaskManager::Instance()->CreateDelayedTask(30, [&]()
+				{
+					Camera::TranslationPlugin::Instance()->Restore(60, [&]() { EventOver(); });
+				});
+				EffectHappened = true;
 			}
 		}
 		else
@@ -132,18 +145,17 @@ void CityDestroyEvent::Update()
 			else
 			{
 				// 隕石落下エフェクト
-				Camera::TranslationPlugin::Instance()->Restore(60, nullptr);
+				GameParticleManager::Instance()->SetMeteorExplosionEffect(TownPos);
+				// 30フレームの遅延を設置
+				TaskManager::Instance()->CreateDelayedTask(30, [&]()
+				{
+					Camera::TranslationPlugin::Instance()->Restore(60, [&]() { EventOver(); });
+				});
 				// 町消滅処理
 				fieldEventHandler->DestroyTown(Target);
-				this->UseFlag = false;
+				EffectHappened = true;
 			}
 		}
-	}
-
-	if (!UseFlag)
-	{
-		// イベント終了、ゲーム続行
-		fieldEventHandler->ResumeGame();
 	}
 }
 
@@ -157,36 +169,39 @@ void CityDestroyEvent::Draw()
 	beatGame->Draw();
 
 #if _DEBUG
-	D3DXMATRIX WorldMatrix, TransMatrix;
+	if (!EffectHappened)
+	{
+		D3DXMATRIX WorldMatrix, TransMatrix;
 
-	// ワールドマトリックスの初期化
-	D3DXMatrixIdentity(&WorldMatrix);
+		// ワールドマトリックスの初期化
+		D3DXMatrixIdentity(&WorldMatrix);
 
-	// 移動を反映
-	D3DXMatrixTranslation(&TransMatrix, MeteoritePos.x, MeteoritePos.y, MeteoritePos.z);
-	D3DXMatrixMultiply(&WorldMatrix, &WorldMatrix, &TransMatrix);
+		// 移動を反映
+		D3DXMatrixTranslation(&TransMatrix, MeteoritePos.x, MeteoritePos.y, MeteoritePos.z);
+		D3DXMatrixMultiply(&WorldMatrix, &WorldMatrix, &TransMatrix);
 
-	// ワールドマトリックスの設定
-	Device->SetTransform(D3DTS_WORLD, &WorldMatrix);
+		// ワールドマトリックスの設定
+		Device->SetTransform(D3DTS_WORLD, &WorldMatrix);
 
-	// マテリアルの設定
-	Device->SetMaterial(&Material);
+		// マテリアルの設定
+		Device->SetMaterial(&Material);
 
-	// 球体描画
-	SphereMesh->DrawSubset(0);
+		// 球体描画
+		SphereMesh->DrawSubset(0);
 
-	// ワールドマトリックスの初期化
-	D3DXMatrixIdentity(&WorldMatrix);
+		// ワールドマトリックスの初期化
+		D3DXMatrixIdentity(&WorldMatrix);
 
-	// 移動を反映
-	D3DXMatrixTranslation(&TransMatrix, MissilePos.x, MissilePos.y, MissilePos.z);
-	D3DXMatrixMultiply(&WorldMatrix, &WorldMatrix, &TransMatrix);
+		// 移動を反映
+		D3DXMatrixTranslation(&TransMatrix, MissilePos.x, MissilePos.y, MissilePos.z);
+		D3DXMatrixMultiply(&WorldMatrix, &WorldMatrix, &TransMatrix);
 
-	// ワールドマトリックスの設定
-	Device->SetTransform(D3DTS_WORLD, &WorldMatrix);
+		// ワールドマトリックスの設定
+		Device->SetTransform(D3DTS_WORLD, &WorldMatrix);
 
-	// ミサイル描画
-	MissileMesh->DrawSubset(0);
+		// ミサイル描画
+		MissileMesh->DrawSubset(0);
+	}
 #endif
 }
 
@@ -199,9 +214,18 @@ string CityDestroyEvent::GetEventMessage(int FieldLevel)
 	return "";
 }
 
+//=============================================================================
+// イベント終了処理
+//=============================================================================
+void CityDestroyEvent::EventOver(void)
+{
+	// イベント終了、ゲーム続行
+	fieldEventHandler->ResumeGame();
+	UseFlag = false;
+}
 
 //=============================================================================
-// 隕石が来るまでのカウントダウン
+// 連打ゲームのカウントダウン開始
 //=============================================================================
 void CityDestroyEvent::CountdownStart(void)
 {

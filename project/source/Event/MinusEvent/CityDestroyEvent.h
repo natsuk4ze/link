@@ -28,6 +28,7 @@ private:
 	D3DXVECTOR3 MoveDirection;
 	bool BeatGameOver;
 	bool EventAvoid;
+	bool EffectHappened;
 	const Field::Model::PlaceModel* Target;
 
 	// òAë≈ÉQÅ[ÉÄ
@@ -45,6 +46,7 @@ public:
 	void Update(void) override;
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;
+	void EventOver(void);
 	void CountdownStart(void);
 	void ReceiveBeatResult(bool IsSuccess);
 };
