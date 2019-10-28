@@ -6,6 +6,7 @@
 //=====================================
 #include "FieldControllerIdle.h"
 #include "../Controller/FieldInput.h"
+#include "../FieldCursor.h"
 
 namespace Field
 {
@@ -27,12 +28,14 @@ namespace Field
 		//ZƒL[‚ª‰Ÿ‚³‚ê‚½‚çBuild‚Ö‘JˆÚ
 		if (entity.input->GetBuildTrigger())
 		{
+			entity.cursor->SetMode(FieldCursor::Mode::BuildRoad);
 			next = State::Build;
 		}
 
 		//XƒL[‚ª‰Ÿ‚³‚ê‚½‚çDevelop‚Ö‘JˆÚ
 		if (entity.input->GetDevelopTrigger())
 		{
+			entity.cursor->SetMode(FieldCursor::Mode::Develop);
 			next = State::Develop;
 		}
 

@@ -7,6 +7,7 @@
 //=====================================
 #include "FieldCameraFar.h"
 #include "../../../../Framework/Math/Easing.h"
+#include "../../../../Framework/Input/input.h"
 
 /**************************************
 入場処理
@@ -35,13 +36,32 @@ FieldCamera::Mode FieldCamera::FieldCameraFar::OnUpdate(FieldCamera & entity)
 {
 	entity.cntFrame++;
 
-	//イージングで移動
 	const float MoveDuration = 30;
-	float t = entity.cntFrame / MoveDuration;
-	D3DXVECTOR3 position = Easing::EaseValue(t, entity.startPosition, entity.goalPosition, EaseType::OutCubic);
+	if (entity.cntFrame <= MoveDuration)
+	{
+		//イージングで移動
+		float t = entity.cntFrame / MoveDuration;
+		D3DXVECTOR3 position = Easing::EaseValue(t, entity.startPosition, entity.goalPosition, EaseType::OutCubic);
 
-	//追従目標に合わせて視点を設定
-	entity.transform.SetPosition(position + entity.targetObject->GetPosition());
+		//追従目標に合わせて視点を設定
+		entity.transform.SetPosition(position + entity.targetObject->GetPosition());
+	}
+	else
+	{
+		//操作で移動
+		const float MoveSpeed = 2.0f;
+
+		D3DXVECTOR3 directionMove = {
+			Input::GetPressHorizontail(),
+			0.0f,
+			Input::GetPressVertical()
+		};
+
+		D3DXVec3Normalize(&directionMove, &directionMove);
+
+		entity.transform.Move(directionMove * MoveSpeed);
+		entity.target += directionMove * MoveSpeed;
+	}
 
 	return FieldCamera::FarView;
 }

@@ -37,11 +37,8 @@ public:
 	//更新処理
 	void Update();
 
-	//入力確認
-	void CheckInput();
-
 	//モード切替処理
-	void ChangeMode();
+	void ChangeMode(Mode next);
 
 	//追従目標設定処理
 	void SetFollowTarget(GameObject* object);
@@ -49,6 +46,7 @@ public:
 private:
 	GameObject *targetObject;						//追従目標
 	D3DXVECTOR3 startPosition, goalPosition;		//イージング用座標
+	D3DXVECTOR3 startTarget;						//イージング用注視点
 
 	int cntFrame;									//フレームカウント
 

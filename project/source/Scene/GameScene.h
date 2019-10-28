@@ -59,6 +59,7 @@ public:
 		Finish,
 		LevelUp,
 		Pause,
+		FarView,
 		Max
 	};
 
@@ -107,6 +108,7 @@ private:
 	class GameFinish;
 	class GameLevelUp;
 	class GamePause;
+	class GameFarView;
 
 	PlaceActor* testActor;
 

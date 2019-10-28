@@ -22,12 +22,14 @@
 #include "../Field/FieldEventHandler.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
+#include "../../Framework/Effect/SpriteEffect.h"
 
 #include "GameState/GameInit.h"
 #include "GameState/GameIdle.h"
 #include "GameState/GameFinish.h"
 #include "GameState/GameLevelUp.h"
 #include "GameState/GamePause.h"
+#include "GameState\GameFarView.h"
 
 #include "../FieldObject/Actor/CityActor.h"
 
@@ -66,6 +68,7 @@ void GameScene::Init()
 	fsm[State::Finish] = new GameFinish();
 	fsm[State::LevelUp] = new GameLevelUp();
 	fsm[State::Pause] = new GamePause();
+	fsm[State::FarView] = new GameFarView();
 
 	//デリゲートを作成して設定
 	onBuildRoad = DelegateObject<GameScene, void(Route&)>::Create(this, &GameScene::OnBuildRoad);
@@ -115,6 +118,10 @@ void GameScene::Update()
 
 	//カメラ更新
 	fieldCamera->Update();
+
+	//カメラの情報をエフェクトに渡す
+	SpriteEffect::SetView(fieldCamera->GetViewMtx());
+	SpriteEffect::SetProjection(fieldCamera->GetProjectionMtx());
 
 	//testActor->Update();
 

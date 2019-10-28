@@ -13,6 +13,9 @@
 #include "LinkFieldInfoState.h"
 #include "CongestionFieldInfoState.h"
 
+#include "../../../Framework/Renderer3D/BoardPolygon.h"
+#include "../../../Framework/Resource/ResourceManager.h"
+
 //**************************************
 // クラスのメンバ変数初期化
 //**************************************
@@ -30,8 +33,7 @@ FieldInfoActor::FieldInfoActor(const D3DXVECTOR3& pos, State state)
 
 	// ビルボード作成
 	polygon = new BoardPolygon();
-	polygon->LoadTexture("data/TEXTURE/Info/Info.png");
-	polygon->SetSize(ActorSize);
+	ResourceManager::Instance()->GetPolygon("Info", polygon);
 
 	// ステートマシン作成
 	fsm.resize(State::Max, NULL);
@@ -58,6 +60,14 @@ FieldInfoActor::~FieldInfoActor()
 }
 
 //=====================================
+// 初期化処理
+//=====================================
+void FieldInfoActor::Init()
+{
+	ResourceManager::Instance()->MakePolygon("Info", "data/TEXTURE/Info/Info.png", ActorSize);
+}
+
+//=====================================
 // 更新
 //=====================================
 void FieldInfoActor::Update()
@@ -81,8 +91,7 @@ void FieldInfoActor::Draw()
 	if (!this->IsActive())
 		return;
 
-	transform->SetWorld();
-	polygon->Draw();
+	polygon->Draw(transform->GetMatrix());
 
 }
 

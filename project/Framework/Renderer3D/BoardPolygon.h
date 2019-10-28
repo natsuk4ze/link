@@ -10,28 +10,24 @@
 #include "../../main.h"
 
 /**************************************
-マクロ定義
+前方宣言
 ***************************************/
+class PolygonResource;
+class SpriteEffect;
 
 /**************************************
 クラス定義
 ***************************************/
 class BoardPolygon
 {
-	friend class ResourceManager;
+	friend class PolygonResource;
 public:
 	//コンストラクタ、デストラクタ
 	BoardPolygon();
 	~BoardPolygon();
 
 	//描画処理
-	void Draw();
-
-	//テクスチャ読み込み処理
-	void LoadTexture(const char* path);
-
-	//サイズ設定処理
-	void SetSize(const D3DXVECTOR2& size);
+	void Draw(const D3DXMATRIX& mtxWorld);
 
 	//UV分割設定処理
 	void SetTexDiv(const D3DXVECTOR2& div);
@@ -39,10 +35,8 @@ public:
 	//テクスチャ通し番号設定処理
 	void SetTextureIndex(int index);
 
-	//UV座標設定処理
-	void SetUV(const D3DXVECTOR2& uv);
-
-	void AddRef();
+	//ディフューズ設定処理
+	void SetDiffuse(const D3DXCOLOR& color);
 
 protected:
 	LPDIRECT3DDEVICE9 pDevice;
@@ -50,12 +44,9 @@ protected:
 	LPDIRECT3DVERTEXBUFFER9 vtxBuff;
 	LPDIRECT3DTEXTURE9 texture;
 
-	D3DMATERIAL9 material;
+	PolygonResource *resource;
 
-	D3DXVECTOR2 texDiv;
-	D3DXVECTOR2 texSize;
-
-	UINT cntReference;
+	SpriteEffect *effect;
 };
 
 #endif

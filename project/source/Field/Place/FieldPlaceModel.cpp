@@ -81,15 +81,15 @@ namespace Field::Model
 	{
 		return;
 
-		//テスト描画
-		Transform transform = Transform(
-			Position.ConvertToWorldPosition() + Vector3::Up,
-			{ D3DXToRadian(90.0f), 0.0f, 0.0f },
-			Vector3::One);
-		transform.SetWorld();
-		BoardPolygon *polygon;
-		ResourceManager::Instance()->GetPolygon(PolygonName[type], polygon);
-		polygon->Draw();
+		////テスト描画
+		//Transform transform = Transform(
+		//	Position.ConvertToWorldPosition() + Vector3::Up,
+		//	{ D3DXToRadian(90.0f), 0.0f, 0.0f },
+		//	Vector3::One);
+		//transform.SetWorld();
+
+		//ResourceManager::Instance()->GetPolygon(PolygonName[type], polygon);
+		//polygon->Draw(tra);
 	}
 #endif
 
