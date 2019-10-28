@@ -47,5 +47,8 @@ FieldCamera::Mode FieldCamera::FieldCameraQuater::OnUpdate(FieldCamera & entity)
 	//追従目標に合わせて視点を設定
 	entity.transform.SetPosition(position + entity.targetObject->GetPosition());
 
+	//追従目標の座標を視点に設定
+	entity.target = entity.targetObject->GetPosition();
+
 	return FieldCamera::QuaterView;
 }

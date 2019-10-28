@@ -1,24 +1,30 @@
 //=====================================
 //
-//Template.cpp
-//機能:
+//GameFarView.cpp
+//機能:ゲームを遠くから眺めるステート
 //Author:GP12B332 21 立花雄太
 //
 //=====================================
-#include "GameIdle.h"
+#include "GameFarView.h"
+#include "../../Field/Camera/FieldCamera.h"
+#include "../../../Framework/Input/input.h"
 #include "../../Field/FieldController.h"
 #include "../../Field/Camera/FieldCamera.h"
 #include "../../Event/EventController.h"
-#include "../../../Framework/Input/input.h"
+
+/**************************************
+入場処理
+***************************************/
+void GameScene::GameFarView::OnStart(GameScene & entity)
+{
+	entity.fieldCamera->ChangeMode(FieldCamera::Mode::FarView);
+}
 
 /**************************************
 更新処理
 ***************************************/
-GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
+GameScene::State GameScene::GameFarView::OnUpdate(GameScene & entity)
 {
-	//入力確認
-	entity.field->CheckInput();
-
 	//各オブジェクト更新
 	entity.field->UpdateLogic();
 	entity.field->UpdateObject();
@@ -39,19 +45,12 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 	{
 		entity.ChangeState(State::LevelUp);
 	}
-	//遠景モードへの遷移確認
+	//視点変更ボタンが押されたらIdleモードへ遷移
 	else if (Keyboard::GetTrigger(DIK_SPACE))
 	{
-		entity.ChangeState(State::FarView);
+		entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
+		entity.ChangeState(State::Idle);
 	}
 
-	return State::Idle;
-}
-
-/**************************************
-入場処理
-***************************************/
-void GameScene::GameIdle::OnStart(GameScene & entity)
-{
-
+	return State::FarView;
 }

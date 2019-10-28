@@ -37,11 +37,8 @@ public:
 	//更新処理
 	void Update();
 
-	//入力確認
-	void CheckInput();
-
 	//モード切替処理
-	void ChangeMode();
+	void ChangeMode(Mode next);
 
 	//追従目標設定処理
 	void SetFollowTarget(GameObject* object);

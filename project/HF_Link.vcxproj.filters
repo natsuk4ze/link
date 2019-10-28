@@ -190,6 +190,7 @@
     <ClInclude Include="source\Event\MinusEvent\BeatGame.h" />
     <ClInclude Include="Framework\Resource\PolygonResource.h" />
     <ClInclude Include="Framework\Effect\SpriteEffect.h" />
+    <ClInclude Include="source\Scene\GameState\GameFarView.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -364,6 +365,7 @@
     <ClCompile Include="source\Event\MinusEvent\BeatGame.cpp" />
     <ClCompile Include="Framework\Resource\PolygonResource.cpp" />
     <ClCompile Include="Framework\Effect\SpriteEffect.cpp" />
+    <ClCompile Include="source\Scene\GameState\GameFarView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

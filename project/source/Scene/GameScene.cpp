@@ -29,6 +29,7 @@
 #include "GameState/GameFinish.h"
 #include "GameState/GameLevelUp.h"
 #include "GameState/GamePause.h"
+#include "GameState\GameFarView.h"
 
 #include "../FieldObject/Actor/CityActor.h"
 
@@ -67,6 +68,7 @@ void GameScene::Init()
 	fsm[State::Finish] = new GameFinish();
 	fsm[State::LevelUp] = new GameLevelUp();
 	fsm[State::Pause] = new GamePause();
+	fsm[State::FarView] = new GameFarView();
 
 	//ƒfƒŠƒQ[ƒg‚ğì¬‚µ‚Äİ’è
 	onBuildRoad = DelegateObject<GameScene, void(Route&)>::Create(this, &GameScene::OnBuildRoad);

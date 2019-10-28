@@ -49,9 +49,6 @@ FieldCamera::~FieldCamera()
 ***************************************/
 void FieldCamera::Update()
 {
-	//追従目標の座標を視点に設定
-	target = targetObject->GetPosition();
-
 	//ステートの更新
 	fsm[currentMode]->OnUpdate(*this);
 
@@ -59,21 +56,11 @@ void FieldCamera::Update()
 }
 
 /**************************************
-入力確認
-***************************************/
-void FieldCamera::CheckInput()
-{
-	//TODO：ゲームパッドからの入力に対応する
-	if (Keyboard::GetTrigger(DIK_SPACE))
-		ChangeMode();
-}
-
-/**************************************
 モード切替処理
 ***************************************/
-void FieldCamera::ChangeMode()
+void FieldCamera::ChangeMode(Mode next)
 {
-	currentMode = (Mode)Math::WrapAround(Mode::QuaterView, Mode::Max, currentMode + 1);
+	currentMode = next;
 
 	fsm[currentMode]->OnStart(*this);
 }
