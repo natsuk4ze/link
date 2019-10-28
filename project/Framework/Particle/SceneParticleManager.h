@@ -10,6 +10,7 @@
 #include "../../main.h"
 
 #include <vector>
+#include <functional>
 
 /**************************************
 前方宣言
@@ -34,8 +35,8 @@ public:
 	virtual void Draw();
 
 	//パーティクル発生処理
-	virtual BaseEmitter* Generate(UINT id, const D3DXVECTOR3& pos);
-	virtual BaseEmitter* Generate(UINT id, const Transform& transform);
+	virtual BaseEmitter* Generate(UINT id, const D3DXVECTOR3& pos, std::function<void(void)> callback = nullptr);
+	virtual BaseEmitter* Generate(UINT id, const Transform& transform, std::function<void(void)> callback = nullptr);
 
 protected:
 	//レンダーターゲット関連
