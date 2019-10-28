@@ -5,7 +5,6 @@
 //
 //=============================================================================
 #include "../../../../main.h"
-#include <vector>
 #include "EventMessage.h"
 #include "EventTelop.h"
 #include "EventViewer.h"
