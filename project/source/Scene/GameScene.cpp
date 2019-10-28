@@ -10,6 +10,7 @@
 #include "../GameConfig.h"
 #include "../../Framework/Transition/TransitionController.h"
 #include "../../Framework/Core/SceneManager.h"
+#include "../../Framework/Tool/ProfilerCPU.h"
 
 #include "../../Framework/Renderer3D/SkyBox.h"
 #include "../FieldObject/Actor/PlaceActor.h"
@@ -113,11 +114,15 @@ void GameScene::Uninit()
 ***************************************/
 void GameScene::Update()
 {
+	ProfilerCPU::Instance()->BeginLabel("GameScene");
+
 	//ステートを更新
 	State next = fsm[currentState]->OnUpdate(*this);
 
 	//カメラ更新
+	ProfilerCPU::Instance()->Begin("Update Camera");
 	fieldCamera->Update();
+	ProfilerCPU::Instance()->End("Update Camera");
 
 	//カメラの情報をエフェクトに渡す
 	SpriteEffect::SetView(fieldCamera->GetViewMtx());
@@ -135,7 +140,9 @@ void GameScene::Update()
 	gameViewer->Update();
 
 	//パーティクル更新
+	ProfilerCPU::Instance()->Begin("Update Particle");
 	particleManager->Update();
+	ProfilerCPU::Instance()->End("Update Particle");
 
 	Debug::Begin("EventHandler");
 	if (Debug::Button("Pause"))
@@ -165,24 +172,35 @@ void GameScene::Draw()
 	//testActor->Draw();
 
 	//オブジェクト描画
+	ProfilerCPU::Instance()->Begin("Draw Object");
 	field->Draw();
+	ProfilerCPU::Instance()->End("Draw Object");
 
 	// イベントオブジェクト描画
+	ProfilerCPU::Instance()->Begin("Draw Event");
 	eventController->DrawEventObject();
+	ProfilerCPU::Instance()->End("Draw Event");
 
 	//ポストエフェクトは重いのでリリース版のみ適用する
 #ifndef _DEBUG
 	//ポストエフェクト適用
+	ProfilerCPU::Instance()->Begin("Draw PostEffect");
 	bloomController->Draw(renderTexture);
+	ProfilerCPU::Instance()->End("Draw PostEffect");
 #endif
+
 	//パーティクル描画
+	ProfilerCPU::Instance()->Begin("Draw Particle");
 	particleManager->Draw();
+	ProfilerCPU::Instance()->End("Draw Particle");
 
 	// イベントビューア描画
 	eventController->DrawEventViewer();
 
 	//ビュアー描画
 	gameViewer->Draw();
+
+	ProfilerCPU::Instance()->EndLabel();
 }
 
 /**************************************
