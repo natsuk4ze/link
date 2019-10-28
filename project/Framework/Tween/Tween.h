@@ -85,6 +85,17 @@ public:
 	***************************************/
 	static void Rotate(GameObject& ref, const D3DXVECTOR3& endEulaerAngle, int duration, EaseType type, std::function<void(void)> callback = nullptr);
 
+	/**************************************
+	方向トゥイーン
+	引数 ref：トゥイーン対象のゲームオブジェクト
+	引数 endDirection : 回転終了時の前方向
+	引数 duration : 回転にかける時間
+	引数 type : イージングタイプ
+	引数 dummyAxis : 始点の向きと終点の向きが平行だった場合に使用する回転軸
+	引数 callback : 終了時のコールバック関数
+	***************************************/
+	static void Turn(GameObject& ref, const D3DXVECTOR3& endDirection, int duration, EaseType type, const D3DXVECTOR3& dummyAxis, std::function<void()> callback = nullptr);
+
 private:
 	void Update();
 	void ClearContainer();
@@ -140,6 +151,7 @@ private:
 	{
 	public:
 		RotateTweener(std::shared_ptr<Transform>& ref, const D3DXVECTOR3& start, const D3DXVECTOR3& end, int duration, EaseType type, Callback callback);
+		RotateTweener(std::shared_ptr<Transform>& ref, const D3DXQUATERNION& start, const D3DXQUATERNION& end, int duration, EaseType type, Callback callback);
 		void Update();
 
 	private:
