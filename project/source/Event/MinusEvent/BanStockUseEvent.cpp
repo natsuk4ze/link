@@ -61,29 +61,6 @@ void BanStockUseEvent::Draw()
 //=============================================================================
 string BanStockUseEvent::GetEventMessage(int FieldLevel)
 {
-	vector<string> MessageContainer;
-
-	if (FieldLevel == Field::Model::City)
-	{
-		MessageContainer.push_back("ストック使用禁止イベント");
-	}
-	else if (FieldLevel == Field::Model::World)
-	{
-
-	}
-	else if (FieldLevel == Field::Model::Space)
-	{
-
-	}
-
-	if (!MessageContainer.empty())
-	{
-		int MessageNo = rand() % MessageContainer.size();
-		return MessageContainer.at(MessageNo);
-	}
-	else
-	{
-		string ErrMsg = "イベントメッセージがありません";
-		return ErrMsg;
-	}
+	// ヌル
+	return "";
 }
