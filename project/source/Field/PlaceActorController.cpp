@@ -37,18 +37,14 @@ namespace Field::Actor
 	***************************************/
 	const float PlaceActorController::PlacePositionOffset = 10.0f;
 	const D3DXVECTOR3 PlaceActorController::PositionEmitSmog = Vector3::Up;
+	const unsigned PlaceActorController::ReserveGround = 2500;
 
 	/**************************************
 	コンストラクタ
 	***************************************/
 	PlaceActorController::PlaceActorController()
 	{
-		actorContainer.resize(ActorPattern::Max, NULL);
-
-		for (auto&& actorMap : actorContainer)
-		{
-			actorMap = new ActorMap();
-		}
+		bgContainer.reserve(ReserveGround);
 	}
 
 	/**************************************
@@ -56,11 +52,7 @@ namespace Field::Actor
 	***************************************/
 	PlaceActorController::~PlaceActorController()
 	{
-		for (auto&& actorMap : actorContainer)
-		{
-			actorMap->clear();
-			SAFE_DELETE(actorMap);
-		}
+		bgContainer.clear();
 		actorContainer.clear();
 	}
 
@@ -71,12 +63,19 @@ namespace Field::Actor
 	{
 		RiverActor::UpdateHeight();
 
-		for (auto&& map : actorContainer)
+		for (auto&& ground : bgContainer)
 		{
-			for (auto&& pair : *map)
-			{
-				pair.second->Update();
-			}
+			ground->Update();
+		}
+
+		for (auto&& actor : actorContainer)
+		{
+			actor.second->Update();
+		}
+
+		for (auto&& actor : poolDestroy)
+		{
+			actor.second->Update();
 		}
 	}
 
@@ -86,12 +85,19 @@ namespace Field::Actor
 	void PlaceActorController::Draw()
 	{
 		//NOTE:インスタンシングで描画するために結構いじるかも
-		for (auto&& map : actorContainer)
+		for (auto&& ground : bgContainer)
 		{
-			for (auto&& pair : *map)
-			{
-				pair.second->Draw();
-			}
+			ground->Draw();
+		}
+
+		for (auto&& actor : actorContainer)
+		{
+			actor.second->Draw();
+		}
+
+		for (auto&& actor : poolDestroy)
+		{
+			actor.second->Draw();
 		}
 	}
 
@@ -161,14 +167,13 @@ namespace Field::Actor
 		if (place == nullptr)
 			return;
 
-		//アクター消滅
-		bool resultErase = DestroyActor(place);
+		if (place->IsType(PlaceType::Town))
+			return;
 
-		//切り替え
-		if (resultErase)
-		{
-			SetActor(place);
-		}
+		//アクター破棄
+		EraseFromContainer(place->ID());
+
+		SetActor(place);
 	}
 
 	/**************************************
@@ -176,43 +181,24 @@ namespace Field::Actor
 	***************************************/
 	bool PlaceActorController::DestroyActor(const Model::PlaceModel * place)
 	{
-		PlaceType PrevType = place->GetPrevType();
-		unsigned PlaceID = place->ID();
+		unsigned placeID = place->ID();
 
-		bool resultErase = false;
+		if (actorContainer.count(placeID) == 0)
+			return false;
 
-		//コンテナから使用中のアクターを削除
-		if (PrevType == PlaceType::Road)
+		GameParticleManager::Instance()->Generate(GameParticle::WhiteSmog, place->GetPosition().ConvertToWorldPosition());
+
+		//破棄プールへ移動してアクターコンテナから削除
+		poolDestroy[placeID] = std::move(actorContainer[placeID]);
+		actorContainer.erase(placeID);
+
+		//アニメーションさせて終了時に解放
+		ActorAnimation::Shrink(*poolDestroy[placeID], [&, placeID]()
 		{
-			resultErase |= EraseFromContainer(ActorPattern::StarightRoad, PlaceID);
-			resultErase |= EraseFromContainer(ActorPattern::Curve, PlaceID);
-		}
-		else if (PrevType == PlaceType::Junction)
-		{
-			resultErase |= EraseFromContainer(ActorPattern::TJunction, PlaceID);
-			resultErase |= EraseFromContainer(ActorPattern::CrossJunction, PlaceID);
-		}
-		else if (PrevType == PlaceType::Town)
-		{
-			resultErase |= EraseFromContainer(ActorPattern::City, PlaceID);
-		}
-
-		return resultErase;
-	}
-
-	/**************************************
-	山破壊処理
-	***************************************/
-	void PlaceActorController::DestroyMountain(const Model::PlaceModel * place)
-	{
-		unsigned uniqueID = place->ID();
-		PlaceActor* actor = (*actorContainer[ActorPattern::Mountain])[place->ID()].get();
-		GameParticleManager::Instance()->Generate(GameParticle::WhiteSmog, actor->GetPosition());
-
-		ActorAnimation::Shrink(*actor, [=]()
-		{
-			EraseFromContainer(ActorPattern::Mountain, uniqueID);
+			poolDestroy.erase(placeID);
 		});
+
+		return true;
 	}
 
 	/**************************************
@@ -232,7 +218,7 @@ namespace Field::Actor
 			//アクター生成
 			PlaceActor* actor = new StraightRoadActor(actorPos, Model::FieldLevel::City);
 			actor->SetScale(Vector3::Zero);
-			AddContainer(ActorPattern::StarightRoad, place->ID(), actor);
+			AddContainer(place->ID(), actor);
 
 			//左右に繋がるタイプなら回転させる
 			if (straightType == StraightType::RightAndLeft)
@@ -247,7 +233,7 @@ namespace Field::Actor
 			//アクター生成
 			PlaceActor* actor = new CurveRoadActor(actorPos, Model::FieldLevel::City);
 			actor->SetScale(Vector3::Zero);
-			AddContainer(ActorPattern::Curve, place->ID(), actor);
+			AddContainer(place->ID(), actor);
 
 			//回転角度を決定して回転
 			float rotAngle = 0.0f;
@@ -280,7 +266,7 @@ namespace Field::Actor
 		// 生成アニメーション
 		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
 
-		AddContainer(ActorPattern::City, place->ID(), actor);
+		AddContainer(place->ID(), actor);
 	}
 
 	/**************************************
@@ -296,7 +282,7 @@ namespace Field::Actor
 		//アニメーション
 		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
 
-		AddContainer(ActorPattern::River, place->ID(), actor);
+		bgContainer.push_back(std::unique_ptr<PlaceActor>(actor));
 	}
 
 	/**************************************
@@ -321,7 +307,7 @@ namespace Field::Actor
 		// 生成アニメーション
 		ActorAnimation::FallAndExpantion(*actor);
 
-		AddContainer(ActorPattern::Bridge, place->ID(), actor);
+		AddContainer(place->ID(), actor);
 
 	}
 
@@ -341,7 +327,7 @@ namespace Field::Actor
 
 			// 生成アニメーション
 			ActorAnimation::RotateAndExpantion(*actor);
-			AddContainer(ActorPattern::CrossJunction, place->ID(), actor);
+			AddContainer(place->ID(), actor);
 		}
 		//T字路のアクター生成
 		else
@@ -363,7 +349,7 @@ namespace Field::Actor
 			// 生成アニメーション
 			ActorAnimation::RotateAndExpantion(*actor);
 
-			AddContainer(ActorPattern::TJunction, place->ID(), actor);
+			AddContainer(place->ID(), actor);
 		}
 	}
 
@@ -383,7 +369,7 @@ namespace Field::Actor
 		//アニメーション
 		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
 
-		AddContainer(ActorPattern::Mountain, place->ID(), actor);
+		AddContainer(place->ID(), actor);
 	}
 
 	/**************************************
@@ -401,27 +387,31 @@ namespace Field::Actor
 		// 生成アニメーション
 		ActorAnimation::RotateAndExpantion(*actor);
 
-		AddContainer(ActorPattern::None, place->ID(), actor);
+		bgContainer.push_back(std::unique_ptr<PlaceActor>(actor));
 	}
 
 	/**************************************
 	コンテナ追加処理
 	***************************************/
-	void PlaceActorController::AddContainer(ActorPattern pattern, unsigned key, PlaceActor * actor)
+	void PlaceActorController::AddContainer(unsigned key, PlaceActor * actor)
 	{
-		actorContainer[pattern]->emplace(key, actor);
+		//重複確認
+		assert(actorContainer.count(key) == 0);
+
+		actorContainer.emplace(key, std::unique_ptr<PlaceActor>(actor));
 	}
 
 	/**************************************
 	コンテナからの削除処理
 	***************************************/
-	bool PlaceActorController::EraseFromContainer(ActorPattern pattern, unsigned key)
+	bool PlaceActorController::EraseFromContainer(unsigned key)
 	{
-		if (actorContainer[pattern]->count(key) == 0)
+		if (actorContainer.count(key) == 0)
 			return false;
 
-		ActorAnimation::Shrink(*(*actorContainer[pattern])[key]);
-		actorContainer[pattern]->erase(key);
+		//アクターコンテナから
+		actorContainer.erase(key);
+
 		return true;
 	}
 
