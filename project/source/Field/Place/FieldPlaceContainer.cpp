@@ -360,6 +360,20 @@ namespace Field::Model
 	}
 
 	/**************************************
+	ŠXì¬
+	***************************************/
+	void Field::Model::PlaceContainer::CreateTown(const PlaceModel * target)
+	{
+		auto itrPlace = std::find(placeVector.begin(), placeVector.end(), target);
+
+		if (itrPlace == placeVector.end())
+			return;
+
+		PlaceModel* place = *itrPlace;
+		place->SetType(PlaceType::Town);
+	}
+
+	/**************************************
 	—×Úî•ñì¬
 	***************************************/
 	void PlaceContainer::MakeAdjacency()
