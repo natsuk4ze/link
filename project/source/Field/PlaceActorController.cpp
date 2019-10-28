@@ -155,6 +155,9 @@ namespace Field::Actor
 		unsigned PlaceMax = places.size() - 1;
 		for (unsigned i = 1; i < PlaceMax; i++)
 		{
+			if (places[i]->IsType(PlaceType::Bridge))
+				continue;
+
 			SetActor(places[i], i * 2);
 		}
 	}
