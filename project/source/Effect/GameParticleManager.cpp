@@ -38,10 +38,11 @@ void GameParticleManager::Init()
 /**************************************
 シンギュラリティエフェクトセット処理
 ***************************************/
-void GameParticleManager::SetSingularityEffect(const D3DXVECTOR3 & position)
+void GameParticleManager::SetSingularityEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback)
 {
 	const D3DXVECTOR3 OffsetPosition = Vector3::Up * 10.0f;
 
+	//BlueDebrisの方の放出時間を少し長めにしているので、BlueDebrisにコールバックを設定する
 	controllers[GameParticle::BlueSpark]->SetEmitter(position + OffsetPosition);
-	controllers[GameParticle::BlueDebris]->SetEmitter(position + OffsetPosition);
+	controllers[GameParticle::BlueDebris]->SetEmitter(position + OffsetPosition, callback);
 }

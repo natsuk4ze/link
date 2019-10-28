@@ -38,7 +38,7 @@ public:
 	void Init() override;
 
 	//シンギュラリティイベントのエフェクトセット処理
-	void SetSingularityEffect(const D3DXVECTOR3& position);
+	void SetSingularityEffect(const D3DXVECTOR3& position, std::function<void(void)> callback = nullptr);
 
 private:
 	static const float BloomPower[3];

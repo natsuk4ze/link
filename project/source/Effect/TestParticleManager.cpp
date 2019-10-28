@@ -72,6 +72,16 @@ void TestParticleManager::Update()
 		Generate(TestParticle::ExplosionFlare, Vector3::Up* 10.0f);
 	}
 
+	Debug::NewLine();
+
+	if (Debug::Button("Callback Test"))
+	{
+		Generate(TestParticle::WhiteSmog, Vector3::Up * 10.0f, [&]()
+		{
+			this->Generate(TestParticle::BlueSpark, Vector3::Up * 10.0f);
+		});
+	}
+
 	Debug::End();
 
 	SceneParticleManager::Update();

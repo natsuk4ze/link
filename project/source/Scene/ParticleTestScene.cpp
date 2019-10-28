@@ -16,6 +16,7 @@
 #include "../Effect/TestParticleManager.h"
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/PostEffect/BloomController.h"
+#include "../../Framework/Effect/SpriteEffect.h"
 
 /**************************************
 ‰Šú‰»ˆ—
@@ -96,6 +97,9 @@ void ParticleTestScene::Draw()
 {
 	sceneCamera->Set();
 
+	SpriteEffect::SetView(sceneCamera->GetViewMtx());
+	SpriteEffect::SetProjection(sceneCamera->GetProjectionMtx());
+
 	skybox->Draw();
 	ground->Draw();
 
@@ -106,10 +110,8 @@ void ParticleTestScene::Draw()
 		drawableActor = !drawableActor;
 	Debug::End();
 
-	GetDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	if(drawableActor)
 		actor->Draw();
-	GetDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 	bloom->Draw(renderTexture);
 

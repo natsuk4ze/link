@@ -121,8 +121,8 @@ void ResourceManager::MakePolygon(const char* tag, const char* path, const D3DXV
 	std::string tagStr = std::string(tag);
 
 	//“o˜^Šm”F
-	if (polygonPool.count(tagStr) == 0)
-		SAFE_DELETE(polygonPool[tagStr]);
+	if (polygonPool.count(tagStr) != 0)
+		return;
 
 	//BoardPolygonƒNƒ‰ƒX‚ğ¶¬‚µ‚Ä“o˜^
 	PolygonResource *ptr = new PolygonResource(size, uv, path);
