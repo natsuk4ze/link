@@ -9,7 +9,8 @@
 #define _FIELDGROUND_H_
 
 #include "../../main.h"
-#include "../../Framework/Renderer3D/BoardPolygon.h"
+
+class BoardPolygon;
 
 namespace Field
 {
@@ -20,13 +21,16 @@ namespace Field
 	/**************************************
 	ƒNƒ‰ƒX’è‹`
 	***************************************/
-	class FieldGround : public BoardPolygon, public GameObject
+	class FieldGround : public GameObject
 	{
 	public:
 		FieldGround();
 		~FieldGround();
 
 		void Draw();
+
+	private:
+		BoardPolygon * polygon;
 	};
 }
 #endif
