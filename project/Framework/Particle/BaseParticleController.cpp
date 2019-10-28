@@ -186,7 +186,7 @@ void BaseParticleController::MakeEmitterContainer(const ParticleJsonParser & dat
 /**************************************
 エミッタセット処理
 ***************************************/
-BaseEmitter* BaseParticleController::SetEmitter(const D3DXVECTOR3& pos)
+BaseEmitter* BaseParticleController::SetEmitter(const D3DXVECTOR3& pos, std::function<void(void)> callback)
 {
 	auto emitter = find_if(emitterContainer.begin(), emitterContainer.end(), [](BaseEmitter* emitter)
 	{
@@ -198,7 +198,7 @@ BaseEmitter* BaseParticleController::SetEmitter(const D3DXVECTOR3& pos)
 
 	BaseEmitter* ptr = (*emitter);
 	ptr->SetPosition(pos);
-	ptr->Init();
+	ptr->Init(callback);
 
 	return ptr;
 
@@ -207,7 +207,7 @@ BaseEmitter* BaseParticleController::SetEmitter(const D3DXVECTOR3& pos)
 /**************************************
 エミッタセット処理
 ***************************************/
-BaseEmitter* BaseParticleController::SetEmitter(const Transform& transform)
+BaseEmitter* BaseParticleController::SetEmitter(const Transform& transform, std::function<void(void)> callback)
 {
 	auto emitter = find_if(emitterContainer.begin(), emitterContainer.end(), [](BaseEmitter *emitter)
 	{
@@ -219,7 +219,7 @@ BaseEmitter* BaseParticleController::SetEmitter(const Transform& transform)
 
 	BaseEmitter* ptr = *emitter;
 	ptr->SetTransform(transform);
-	ptr->Init();
+	ptr->Init(callback);
 
 	return ptr;
 }

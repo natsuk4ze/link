@@ -277,7 +277,8 @@ namespace Field
 		//街作成ファンクタ
 		handler.functerPlace[Handler::FuncterID_Place::Create] = [&](auto place)
 		{
-			//後で作る
+			placeContainer->CreateTown(place);
+			placeActController->SetActor(place);
 		};
 
 		//街破壊ファンクタ

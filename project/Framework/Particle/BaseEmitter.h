@@ -9,7 +9,9 @@
 
 #include "../../main.h"
 #include "BaseParticle.h"
+
 #include <vector>
+#include <functional>
 
 /**************************************
 BaseEmitterƒNƒ‰ƒX
@@ -27,7 +29,7 @@ public:
 
 	virtual ~BaseEmitter();
 
-	virtual void Init();
+	virtual void Init(std::function<void(void)>& callback);
 	virtual void Update();
 	virtual bool Emit(std::vector<BaseParticle*>& container);
 
@@ -37,6 +39,8 @@ protected:
 	int cntFrame;
 	int duration;
 	int emitNum;
+
+	std::function<void(void)> callback;
 };
 
 #endif

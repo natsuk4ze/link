@@ -41,7 +41,7 @@ public:
 	void Init() override;
 
 	//シンギュラリティイベントのエフェクトセット処理
-	void SetSingularityEffect(const D3DXVECTOR3& position);
+	void SetSingularityEffect(const D3DXVECTOR3& position, std::function<void(void)> callback = nullptr);
 	//隕石落下イベントのエフェクトセット処理
 	void SetMeteorExplosionEffect(const D3DXVECTOR3& position);
 	//ミサイル命中イベントのエフェクトセット処理

@@ -85,10 +85,11 @@ BaseEmitter::~BaseEmitter()
 /**************************************
 ‰Šú‰»ˆ—
 ***************************************/
-void BaseEmitter::Init()
+void BaseEmitter::Init(std::function<void(void)>& callback)
 {
 	cntFrame = 0;
 	active = true;
+	this->callback = callback;
 }
 
 /**************************************
@@ -100,6 +101,11 @@ void BaseEmitter::Update()
 		return;
 
 	cntFrame++;
+
+	if (cntFrame == duration && callback != nullptr)
+	{
+		callback();
+	}
 }
 
 /**************************************
