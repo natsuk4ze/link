@@ -12,7 +12,8 @@
 //**************************************
 // クラスのメンバ変数初期化
 //**************************************
-const D3DXVECTOR3 PassengerActor::ActorScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+const D3DXVECTOR3 PassengerActor::ActorScale = Vector3::One;
+const D3DXVECTOR3 PassengerActor::InitForward = Vector3::Back;
 
 //=====================================
 // コンストラクタ
@@ -89,24 +90,22 @@ void PassengerActor::MoveDest(const D3DXVECTOR3 dest, std::function<void(void)> 
 	D3DXVECTOR3 pos = transform->GetPosition();
 	// 向かいたい場所へのベクトル
 	D3DXVECTOR3 vec = this->dest - pos;
+	// 移動フレーム
 	int frame = int(D3DXVec3Length(&vec) / Field::Actor::PlaceActorController::PlacePositionOffset) * 30;
-
-	// 向きを合わせてから移動
-	D3DXVECTOR3 rot = Vector3::Zero;
-	// 現在の向き算出
-	if (vec.x > 0) rot.y = -90.0f;
-	else if (vec.x < 0) rot.y = 90.0f;
-	if (vec.z > 0) rot.y = 180.0f;
-
-	if (rot.y != 0.0f)
-	{
-		Tween::Rotate(*this, GetRotation(), rot, 30, Linear, [=]
-		{
-			Tween::Move(*this, pos, this->dest, frame, InOutSine, callback);
-		});
-	}
-	else
-	{
+	
+	//// 向きを合わせてから移動
+	//float angle = Vector3::Angle(InitForward, this->dest - pos);
+	//D3DXVECTOR3 direction = Vector3::Axis(InitForward, this->dest - pos);
+	//D3DXVECTOR3 = rot = GetRotation();
+	//if (angle != 0.0f)
+	//{
+	//	Tween::Rotate(*this, rot, direction, 30, Linear, [=]
+	//	{
+	//		Tween::Move(*this, pos, this->dest, frame, InOutSine, callback);
+	//	});
+	//}
+	//else
+	//{
 		Tween::Move(*this, pos, this->dest, frame, InOutSine, callback);
-	}
+	//}
 }

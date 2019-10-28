@@ -32,6 +32,7 @@ private:
 
 	// ’è”’è‹`
 	static const D3DXVECTOR3 ActorScale;
+	static const D3DXVECTOR3 InitForward;
 
 public:
 	PassengerActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);

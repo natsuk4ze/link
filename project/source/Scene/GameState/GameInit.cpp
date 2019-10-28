@@ -40,7 +40,7 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	ResourceManager::Instance()->LoadMesh("Bridge-City", "data/MODEL/PlaceActor/bridge.x");
 	ResourceManager::Instance()->LoadMesh("Mountain-City", "data/MODEL/PlaceActor/mountain.x");
 	ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
-	ResourceManager::Instance()->LoadMesh("Car", "data/MODEL/PassengerActor/car.x");
+	ResourceManager::Instance()->LoadMesh("Car", "data/MODEL/PassengerActor/Rocket.x");
 
 	// FieldLevel = World
 
