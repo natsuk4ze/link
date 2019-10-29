@@ -82,7 +82,8 @@ void GameScene::Init()
 	root.push_back(push);
 	push = D3DXVECTOR3(150.0f, 0.0f, -50.0f);
 	root.push_back(push);
-	testPassenger = new PassengerModel(root);
+	passengerController = new PassengerController();
+	passengerController->SetPassenger(root);
 }
 
 /**************************************
@@ -107,7 +108,7 @@ void GameScene::Uninit()
 	Utility::DeleteContainer(fsm);
 
 	//SAFE_DELETE(testActor);
-	SAFE_DELETE(testPassenger);
+	SAFE_DELETE(passengerController);
 
 	//デリゲート削除
 	SAFE_DELETE(onBuildRoad);
@@ -131,7 +132,7 @@ void GameScene::Update()
 	fieldCamera->Update();
 
 	//testActor->Update();
-	testPassenger->Update();
+	passengerController->Update();
 
 	//ビューワパラメータをビューワに渡す
 	GameViewerParam param;
@@ -169,7 +170,7 @@ void GameScene::Draw()
 	skybox->Draw();
 
 	//testActor->Draw();
-	testPassenger->Draw();
+	passengerController->Draw();
 
 	//オブジェクト描画
 	field->Draw();

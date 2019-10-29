@@ -17,7 +17,7 @@
 
 // モデル表示テスト用
 #include "../FieldObject/Actor/PlaceActor.h"
-#include "../FieldObject/Passenger/PassengerModel.h"
+#include "../FieldObject/PassengerController.h"
 
 /**************************************
 前方宣言
@@ -112,7 +112,7 @@ private:
 	class GamePause;
 
 	PlaceActor* testActor;
-	PassengerModel* testPassenger;
+	PassengerController* passengerController;
 
 	//デバッグ用フィールドレベル
 	static int level;

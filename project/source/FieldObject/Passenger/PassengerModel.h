@@ -30,6 +30,12 @@ public:
 	// 更新、描画
 	void Update();
 	void Draw();
+
+	// 使用中確認
+	bool IsActive();
+
+	// アクターのセット
+	void SetActor(const std::vector<D3DXVECTOR3>& root);
 };
 
 #endif

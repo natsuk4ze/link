@@ -66,3 +66,27 @@ void PassengerModel::CheckCallback()
 		CheckCallback();
 	});
 }
+
+//=====================================
+// 使用中確認
+//=====================================
+bool PassengerModel::IsActive()
+{
+	return actor->IsActive();
+}
+
+//=====================================
+// アクターのセット
+//=====================================
+void PassengerModel::SetActor(const std::vector<D3DXVECTOR3>& root)
+{
+	this->root = root;
+	// あとでフォールドレベルを反映させる
+	actor->SetActive(true);
+	actor->SetPosition(this->root[0]);
+	nextDest = 1;
+	actor->MoveDest(this->root[nextDest], [=]
+	{
+		CheckCallback();
+	});
+}

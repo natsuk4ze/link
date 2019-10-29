@@ -60,20 +60,26 @@ void PassengerController::Draw()
 //=====================================
 void PassengerController::SetPassenger(std::vector<D3DXVECTOR3>& root)
 {
-	//bool check = false;
-	//// vectorの内部に未使用のものがあるか確認
-	//std::any_of(modelVector.begin(), modelVector.end(), [=] 
-	//{
-	//	modelVector->IsActive();
-	//});
+	bool check = false;
+	int sub = 0;
+	// vectorの内部に未使用のものがあるか確認
+	for (auto& vec : modelVector)
+	{
+		if (vec->IsActive())
+		{
+			check = true;
+			break;
+		}
+		sub++;
+	}
 
-	//if (check)
-	//{
-
-	//}
-	//else
-	//{
+	if (check)
+	{
+		modelVector[sub]->SetActor(root);
+	}
+	else
+	{
 		PassengerModel *model = new PassengerModel(root);
 		modelVector.push_back(model);
-	//}
+	}
 }
