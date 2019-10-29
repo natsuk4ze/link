@@ -29,6 +29,8 @@ namespace Field::Along
 		void Update();
 		void Draw(const D3DXMATRIX& parent);
 
+		void PlayAnimation();
+
 	protected:
 		MeshContainer * mesh;
 	};

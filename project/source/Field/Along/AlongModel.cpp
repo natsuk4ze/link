@@ -34,13 +34,13 @@ namespace Field::Along
 
 	//T字路のアクター座標
 	const D3DXVECTOR3 AlongModel::T_JunctionActorPosition[] = {
-		{ -15.0f, 0.0f, 15.0f },
+		{  -15.0f, 0.0f, 15.0f },
 		{ -7.5f, 0.0f, 15.0f },
 		{ 0.0f, 0.0f, 15.0f },
 		{ 7.5f, 0.0f, 15.0f },
 		{ 15.0f, 0.0f, 15.0f },
-		{ -7.5f, 0.0f, -7.5f },
-		{ 15.0f, 0.0f, -7.5f },
+		{ -15.0f, 0.0f, -15.0f },
+		{ 15.0f, 0.0f, -15.0f },
 	};
 	
 	//カーブのアクター座標
@@ -68,11 +68,10 @@ namespace Field::Along
 	/**************************************
 	コンストラクタ
 	***************************************/
-	AlongModel::AlongModel(const Transform& transform)
+	AlongModel::AlongModel()
 	{
 		actorContainer.reserve(10);
-
-		this->transform = new Transform(transform);
+		transform = new Transform();
 	}
 
 	/**************************************
@@ -144,8 +143,17 @@ namespace Field::Along
 		//アクターを生成して追加
 		AlongActor *actor = new AlongActor();
 		actor->SetPosition(position);
+		actor->PlayAnimation();
 
 		actorContainer.push_back(std::unique_ptr<AlongActor>(actor));
+	}
+
+	/**************************************
+	Transform設定処理
+	***************************************/
+	void AlongModel::SetTransform(const Transform & transform)
+	{
+		*this->transform = transform;
 	}
 
 	/**************************************

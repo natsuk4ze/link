@@ -8,6 +8,7 @@
 #include "AlongActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../../../Framework/Renderer3D/MeshContainer.h"
+#include "../../../Framework/Tween/Tween.h"
 
 namespace Field::Along
 {
@@ -42,5 +43,13 @@ namespace Field::Along
 	{
 		transform->SetWorld(&parent);
 		mesh->Draw();
+	}
+
+	/**************************************
+	アニメーション再生
+	***************************************/
+	void AlongActor::PlayAnimation()
+	{
+		Tween::Scale(*this, Vector3::Zero, Vector3::One, 15, InCubic);
 	}
 }

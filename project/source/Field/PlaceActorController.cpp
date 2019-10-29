@@ -359,7 +359,7 @@ namespace Field::Actor
 			else if (junctionType == TjunctionType::ExceptForward)
 				rotAngle = 180.0f;
 			else if (junctionType == TjunctionType::ExceptLeft)
-				rotAngle = -90.0f;
+				rotAngle = 270.0f;
 
 			actor->Rotate(rotAngle);
 
@@ -415,7 +415,7 @@ namespace Field::Actor
 	void PlaceActorController::AddContainer(unsigned key, PlaceActor * actor)
 	{
 		//èdï°ämîF
-		assert(actorContainer.count(key) == 0);
+		EraseFromContainer(key);
 
 		actorContainer.emplace(key, std::unique_ptr<PlaceActor>(actor));
 	}

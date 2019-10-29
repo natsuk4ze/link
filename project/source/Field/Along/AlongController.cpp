@@ -9,6 +9,7 @@
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "AlongModel.h"
 #include "../../../Framework/Tool/DebugWindow.h"
+#include "../../../Framework/Tween/Tween.h"
 
 namespace Field::Along
 {
@@ -79,11 +80,12 @@ namespace Field::Along
 
 		if (modelMap.count(key) == 0)
 		{
-			AlongModel *model = new AlongModel(transform);
+			AlongModel *model = new AlongModel();
 			modelMap.emplace(key, std::unique_ptr<AlongModel>(model));
 		}
 
 		modelMap[key]->SetType((AlongModel::Type)type);
+		modelMap[key]->SetTransform(transform);
 	}
 
 	/**************************************

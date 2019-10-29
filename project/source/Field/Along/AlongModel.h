@@ -36,7 +36,7 @@ namespace Field::Along
 		};
 
 		//コンストラクタ、デストラクタ
-		AlongModel(const Transform& transform);
+		AlongModel();
 		~AlongModel();
 
 		//更新処理、描画処理
@@ -48,6 +48,9 @@ namespace Field::Along
 
 		//アクター作成処理
 		void CreateActor();
+
+		//Transform設定処理
+		void SetTransform(const Transform& transform);
 	
 	private:
 		static const unsigned MaxActor[];							//アクター最大数
