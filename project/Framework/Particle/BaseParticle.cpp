@@ -22,7 +22,6 @@
 コンストラクタ
 ***************************************/
 BaseParticle::BaseParticle() :
-	BillboardObject(false),
 	uv(ParticleUV())
 {
 
@@ -32,7 +31,6 @@ BaseParticle::BaseParticle() :
 コンストラクタ
 ***************************************/
 BaseParticle::BaseParticle(int life) :
-	BillboardObject(false),
 	uv(ParticleUV()),
 	lifeFrame(life)
 {
@@ -43,7 +41,6 @@ BaseParticle::BaseParticle(int life) :
 コンストラクタ
 ***************************************/
 BaseParticle::BaseParticle(int lifeMin, int lifeMax) :
-	BillboardObject(false),
 	uv(ParticleUV()),
 	lifeFrame(Math::RandomRange(lifeMin, lifeMax))
 {
@@ -54,7 +51,6 @@ BaseParticle::BaseParticle(int lifeMin, int lifeMax) :
 コンストラクタ
 ***************************************/
 BaseParticle::BaseParticle(float u, float v, int lifeMin, int lifeMax) :
-	BillboardObject(false),
 	uv(ParticleUV(u, v)),
 	lifeFrame(Math::RandomRange(lifeMin, lifeMax))
 {
@@ -70,18 +66,7 @@ BaseParticle::~BaseParticle()
 /**************************************
 アクティブ判定
 ***************************************/
-bool BaseParticle::IsActive() const
+bool BaseParticle::_IsActive() const
 {
-	if (!active)
-		return false;
-
 	return cntFrame <= lifeFrame;
-}
-
-/**************************************
-ワールド行列行列取得処理
-***************************************/
-D3DXMATRIX BaseParticle::GetWorldMtx()
-{
-	return transform->GetMatrix();
 }

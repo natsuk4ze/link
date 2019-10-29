@@ -20,6 +20,7 @@ namespace Field::Model
 	***************************************/
 	class PlaceModel;
 	class RouteModel;
+	class TownModel;
 
 	using RouteModelPtr = std::shared_ptr<RouteModel>;
 	using DelegatePlace = Delegate<void(const PlaceModel*)>;
@@ -79,7 +80,7 @@ namespace Field::Model
 		PlaceModel* GetConnectedTown(const PlaceModel* self);
 
 		//ルートに繋がっている街の探索
-		int FindLinkedTown(const PlaceModel* root, std::vector<RouteModelPtr>& searchedRoute, std::vector<PlaceModel*> searchedTown);
+		int FindLinkedTown(TownModel* root, std::vector<RouteModelPtr>& searchedRoute, std::vector<PlaceModel*> searchedTown, std::vector<D3DXVECTOR3>& stack);
 
 		//使用判定
 		void SetUnused(bool use);
@@ -87,6 +88,10 @@ namespace Field::Model
 
 		//全プレイス取得
 		const std::vector<const PlaceModel*> GetAllPlaces() const;
+
+		//始点、終点取得処理
+		PlaceModel* GetFirst() const;
+		PlaceModel* GetLast() const;
 
 	private:
 		PlaceModel *edgeStart, *edgeEnd;			//端点のPlace

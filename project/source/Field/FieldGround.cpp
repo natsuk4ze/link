@@ -6,6 +6,8 @@
 //
 //=====================================
 #include "FieldGround.h"
+#include "../../Framework/Renderer3D/BoardPolygon.h"
+#include "../../Framework/Resource/ResourceManager.h"
 
 namespace Field
 {
@@ -14,12 +16,10 @@ namespace Field
 	***************************************/
 	FieldGround::FieldGround()
 	{
-		LoadTexture("data/TEXTURE/Field/Ground.jpg");
-
-		const D3DXVECTOR2 FieldSize{ 10000.0f, 10000.0f };
-		const D3DXVECTOR2 TextureLoop{ 500.0f, 500.0f };
-		SetSize(FieldSize);
-		SetUV(TextureLoop);
+		ResourceManager::Instance()->MakePolygon("FieldGround", "data/TEXTURE/Field/ground.jpg", { 1000.0f, 1000.0f }, { 500.0f, 500.0f });
+		polygon = new BoardPolygon();
+		
+		ResourceManager::Instance()->GetPolygon("FieldGround", polygon);
 
 		transform->Rotate(90.0f, 0.0f, 0.0f);
 	}
@@ -29,6 +29,7 @@ namespace Field
 	***************************************/
 	FieldGround::~FieldGround()
 	{
+		SAFE_DELETE(polygon);
 	}
 
 	/**************************************
@@ -36,7 +37,6 @@ namespace Field
 	***************************************/
 	void FieldGround::Draw()
 	{
-		transform->SetWorld();
-		BoardPolygon::Draw();
+		polygon->Draw(transform->GetMatrix());
 	}
 }

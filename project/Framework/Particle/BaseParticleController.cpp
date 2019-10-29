@@ -30,8 +30,8 @@ shared_ptr<ParticleRenderer> BaseParticleController::mRenderer = NULL;
 /**************************************
 コンストラクタ
 ***************************************/
-BaseParticleController::BaseParticleController() :
-	unitBuff(NULL), texture(NULL), particleCount(0)
+BaseParticleController::BaseParticleController(ParticleType type) :
+	unitBuff(NULL), texture(NULL), particleCount(0), useType(type)
 {
 	if (!mRenderer)
 	{
@@ -123,7 +123,9 @@ bool BaseParticleController::Draw()
 	pDevice->SetTexture(0, texture);
 
 	//描画
+	renderer->BeginPass(useType);
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, NUM_VERTEX, 0, NUM_POLYGON);
+	renderer->EndPass();
 
 	return true;
 }
@@ -184,7 +186,7 @@ void BaseParticleController::MakeEmitterContainer(const ParticleJsonParser & dat
 /**************************************
 エミッタセット処理
 ***************************************/
-BaseEmitter* BaseParticleController::SetEmitter(const D3DXVECTOR3& pos)
+BaseEmitter* BaseParticleController::SetEmitter(const D3DXVECTOR3& pos, std::function<void(void)> callback)
 {
 	auto emitter = find_if(emitterContainer.begin(), emitterContainer.end(), [](BaseEmitter* emitter)
 	{
@@ -196,7 +198,7 @@ BaseEmitter* BaseParticleController::SetEmitter(const D3DXVECTOR3& pos)
 
 	BaseEmitter* ptr = (*emitter);
 	ptr->SetPosition(pos);
-	ptr->Init();
+	ptr->Init(callback);
 
 	return ptr;
 
@@ -205,7 +207,7 @@ BaseEmitter* BaseParticleController::SetEmitter(const D3DXVECTOR3& pos)
 /**************************************
 エミッタセット処理
 ***************************************/
-BaseEmitter* BaseParticleController::SetEmitter(const Transform& transform)
+BaseEmitter* BaseParticleController::SetEmitter(const Transform& transform, std::function<void(void)> callback)
 {
 	auto emitter = find_if(emitterContainer.begin(), emitterContainer.end(), [](BaseEmitter *emitter)
 	{
@@ -217,7 +219,7 @@ BaseEmitter* BaseParticleController::SetEmitter(const Transform& transform)
 
 	BaseEmitter* ptr = *emitter;
 	ptr->SetTransform(transform);
-	ptr->Init();
+	ptr->Init(callback);
 
 	return ptr;
 }

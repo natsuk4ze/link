@@ -39,6 +39,7 @@ class EventController;
 class GameParticleManager;
 class FieldEventHandler;
 class BloomController;
+class PlaceActor;
 
 /**************************************
 ƒNƒ‰ƒX’è‹`
@@ -62,6 +63,7 @@ public:
 		Finish,
 		LevelUp,
 		Pause,
+		FarView,
 		Max
 	};
 
@@ -110,6 +112,7 @@ private:
 	class GameFinish;
 	class GameLevelUp;
 	class GamePause;
+	class GameFarView;
 
 	PlaceActor* testActor;
 	PassengerController* passengerController;

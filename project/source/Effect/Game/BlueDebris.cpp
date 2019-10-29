@@ -12,7 +12,8 @@ namespace Effect::Game
 	/**************************************
 	BlueDebrisControllerコンストラクタ
 	***************************************/
-	BlueDebrisController::BlueDebrisController()
+	BlueDebrisController::BlueDebrisController() :
+		BaseParticleController(Particle_3D)
 	{
 		//テクスチャ読み込み
 		LoadTexture("data/TEXTURE/Particle/blueDebris.png");
@@ -32,7 +33,7 @@ namespace Effect::Game
 
 		//エミッターコンテナ作成
 		const unsigned MaxEmitter = 4;
-		const int DurationEmit = (int)(30 * 2.0f);
+		const int DurationEmit = (int)(30 * 2.3f);
 		const int NumEmit = 25;
 
 		emitterContainer.resize(MaxEmitter, nullptr);
@@ -55,7 +56,7 @@ namespace Effect::Game
 	BlueDebrisコンストラクタ
 	***************************************/
 	BlueDebris::BlueDebris() :
-		BaseParticle(MinLife, MaxLife),
+		Particle3D(MinLife, MaxLife),
 		InitSpeed(Math::RandomRange(MinSpeed, MaxSpeed)),
 		moveDirection(Vector3::Zero)
 	{

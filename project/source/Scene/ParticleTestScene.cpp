@@ -16,6 +16,7 @@
 #include "../Effect/TestParticleManager.h"
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/PostEffect/BloomController.h"
+#include "../../Framework/Effect/SpriteEffect.h"
 
 /**************************************
 ‰Šú‰»ˆ—
@@ -41,9 +42,10 @@ void ParticleTestScene::Init()
 	ResourceManager::Instance()->LoadMesh("Town-City", "data/MODEL/PlaceActor/Town.x");
 	ResourceManager::Instance()->LoadMesh("Mountain-City", "data/MODEL/PlaceActor/mountain.x");
 	ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
-
-	actor = new RiverActor(Vector3::Zero, Field::Model::FieldLevel::City);
-	actor->SetScale(Vector3::One * 1.0f);
+	actor = new CityActor(Vector3::Zero, Field::Model::FieldLevel::City);
+	//actor = new MountainActor(Vector3::Zero, Field::Model::FieldLevel::City);
+	//actor = new RiverActor(Vector3::Zero, Field::Model::FieldLevel::City);
+	//actor->SetScale(Vector3::One * 1.0f);
 
 	//ƒJƒƒ‰Ý’è
 	Camera::SetMainCamera(sceneCamera);
@@ -95,8 +97,11 @@ void ParticleTestScene::Draw()
 {
 	sceneCamera->Set();
 
+	SpriteEffect::SetView(sceneCamera->GetViewMtx());
+	SpriteEffect::SetProjection(sceneCamera->GetProjectionMtx());
+
 	skybox->Draw();
-	//ground->Draw();
+	ground->Draw();
 
 	static bool drawableActor = true;
 	
@@ -105,10 +110,8 @@ void ParticleTestScene::Draw()
 		drawableActor = !drawableActor;
 	Debug::End();
 
-	GetDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	if(drawableActor)
 		actor->Draw();
-	GetDevice()->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 	bloom->Draw(renderTexture);
 

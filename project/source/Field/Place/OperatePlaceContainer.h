@@ -11,12 +11,18 @@
 #include "../../../main.h"
 #include <vector>
 
+/**************************************
+前方宣言
+***************************************/
+class BoardPolygon;
+
 namespace Field::Model
 {
 	/**************************************
 	前方宣言
 	***************************************/
 	class PlaceModel;
+	class PinActor;
 
 	/**************************************
 	クラス定義
@@ -24,6 +30,12 @@ namespace Field::Model
 	class OperatePlaceContainer
 	{
 	public:
+		enum Mode
+		{
+			BuildRoad,
+			Develop
+		};
+
 		//コンストラクタ、デストラクタ
 		OperatePlaceContainer();
 		~OperatePlaceContainer();
@@ -46,11 +58,33 @@ namespace Field::Model
 		//コンテナ取得処理
 		std::vector<PlaceModel*> GetPlaces();
 
+		//更新処理
+		void Update();
+
 		//デバッグ表示
-		void DrawDebug();
+		void Draw();
 
 	private:
 		std::vector<PlaceModel*> container;		//PlaceModelコンテナ
+		std::vector<std::unique_ptr<PinActor>> actorContainer;	//PinActorコンテナ
+
+		void CreatePin(const PlaceModel* place, Mode mode);
+	};
+
+	/**************************************
+	ピンアクタークラス
+	***************************************/
+	class PinActor : GameObject
+	{
+	public:
+		PinActor(const D3DXVECTOR3& position, OperatePlaceContainer::Mode mode);
+		~PinActor();
+
+		void Update();
+		void Draw();
+
+	private:
+		BoardPolygon *polygon;
 	};
 }
 #endif

@@ -7,6 +7,7 @@
 //=====================================
 #include "FieldCameraQuater.h"
 #include "../../../../Framework/Math/Easing.h"
+#include "../../../../Framework/Tool/DebugWindow.h"
 
 /**************************************
 入場処理
@@ -14,14 +15,14 @@
 void FieldCamera::FieldCameraQuater::OnStart(FieldCamera & entity)
 {
 	//パラメータ初期化
-	entity.startPosition = entity.transform.GetPosition() - entity.targetObject->GetPosition();
+	entity.startPosition = entity.transform.GetPosition() - entity.target;
 	entity.cntFrame = 0;
-
+	entity.startTarget = entity.target;
 
 	//移動先の座標を設定
 	const float CameraAngleXZ = D3DXToRadian(45.0f);
-	const float CameraAngleY = D3DXToRadian(60.0f);
-	const float CameraLength = 50.0f;
+	const float CameraAngleY = D3DXToRadian(45.0f);
+	const float CameraLength = 70.0f;
 
 	entity.goalPosition = D3DXVECTOR3(
 		cosf(CameraAngleY) * cosf(CameraAngleXZ),
@@ -43,8 +44,12 @@ FieldCamera::Mode FieldCamera::FieldCameraQuater::OnUpdate(FieldCamera & entity)
 	float t = entity.cntFrame / MoveDuration;
 	D3DXVECTOR3 position = Easing::EaseValue(t, entity.startPosition, entity.goalPosition, EaseType::OutCubic);
 
+	//追従目標の座標を注視点に設定
+	D3DXVECTOR3 target = Easing::EaseValue(t, entity.startTarget, entity.targetObject->GetPosition(), EaseType::OutCubic);
+	entity.target = target;
+
 	//追従目標に合わせて視点を設定
-	entity.transform.SetPosition(position + entity.targetObject->GetPosition());
+	entity.transform.SetPosition(position + target);
 
 	return FieldCamera::QuaterView;
 }

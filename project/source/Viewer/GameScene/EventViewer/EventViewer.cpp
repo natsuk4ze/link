@@ -5,7 +5,6 @@
 //
 //=============================================================================
 #include "../../../../main.h"
-#include <vector>
 #include "EventMessage.h"
 #include "EventTelop.h"
 #include "EventViewer.h"
@@ -115,6 +114,12 @@ void EventViewer::CountMessage(void)
 //=============================================================================
 void EventViewer::SetEventMessage(const std::string Message)
 {
+	// イベントメッセージがない
+	if (Message.empty())
+	{
+		return;
+	}
+
 	CountMessage();
 	eventMessage[messageSetCnt - 1]->SetEventMessage(Message, messageSetCnt);
 }
@@ -122,7 +127,7 @@ void EventViewer::SetEventMessage(const std::string Message)
 //=============================================================================
 // イベント発生テロップを設置
 //=============================================================================
-void EventViewer::SetEventTelop(TelopID id, std::function<void(void)> FinishFunc)
+void EventViewer::SetEventTelop(TelopID id, std::function<void(void)> Callback)
 {
-	eventTelop->Set(id, FinishFunc);
+	eventTelop->Set(id, Callback);
 }

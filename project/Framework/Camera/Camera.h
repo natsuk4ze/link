@@ -12,7 +12,12 @@
 
 #include <vector>
 
+/**************************************
+前方宣言
+***************************************/
 class BaseCameraPlugin;
+class SpriteEffect;
+
 /**************************************
 Cameraクラス
 ***************************************/
@@ -87,6 +92,7 @@ protected:
 	//ゲームにセットされるカメラのインスタンス
 	static Camera* mainCamera;
 
+	//視錐台計算処理
 	void CalculateFrustrum();
 
 public:

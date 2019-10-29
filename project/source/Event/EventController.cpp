@@ -20,6 +20,7 @@
 #include "MinusEvent/LinkLevelDecreaseEvent.h"
 #include "MinusEvent/CongestionUpEvent.h"
 #include "MinusEvent/MoveInverseEvent.h"
+#include "MinusEvent/BeatGame.h"
 
 #include "../../Framework/Core/Utility.h"
 #include "../../Framework/String/String.h"
@@ -27,7 +28,6 @@
 #include "../../Framework/Camera/CameraShakePlugin.h"
 
 #include "../Field/Place/FieldPlaceModel.h"
-//イベントビューア（おーはま追記）
 #include "../Viewer/GameScene/EventViewer/EventViewer.h"
 
 #include <fstream>
@@ -60,8 +60,13 @@ EventController::EventController(int FieldLevel) : FieldLevel(FieldLevel)
 
 	eventViewer = new EventViewer();
 
+	BeatGame::Init();
+
 #if _DEBUG
 	ResourceManager::Instance()->MakePolygon("Event", "data/TEXTURE/PlaceTest/Event.png", { 4.5f, 4.5f }, { 13.0f,1.0f });
+	polygon = new BoardPolygon();
+	polygon->SetTexDiv({ 13.0f, 1.0f });
+	ResourceManager::Instance()->GetPolygon("Event", polygon);
 #endif
 }
 
@@ -77,6 +82,11 @@ EventController::~EventController()
 	fieldController = nullptr;
 
 	SAFE_DELETE(eventViewer);
+	BeatGame::Uninit();
+
+#if _DEBUG
+	SAFE_DELETE(polygon);
+#endif
 }
 
 //=============================================================================
@@ -87,7 +97,6 @@ void EventController::Update()
 #if _DEBUG
 	if (Keyboard::GetTrigger(DIK_F))
 	{
-		EventVec.push_back(new CityDestroyEvent(eventViewer));
 	}
 #endif
 
@@ -149,16 +158,14 @@ void EventController::DrawDebug()
 
 	for (auto& Object : EventCSVData)
 	{
-		//テスト描画
+		////テスト描画
 		Transform transform = Transform(
 			Object.Pos.ConvertToWorldPosition() + Vector3::Up,
 			{ D3DXToRadian(90.0f), 0.0f, 0.0f },
 			Vector3::One);
-		transform.SetWorld();
-		BoardPolygon *polygon;
-		ResourceManager::Instance()->GetPolygon("Event", polygon);
+
 		polygon->SetTextureIndex(Object.EventType);
-		polygon->Draw();
+		polygon->Draw(transform.GetMatrix());
 	}
 
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, true);

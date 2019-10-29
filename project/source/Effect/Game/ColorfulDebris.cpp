@@ -12,7 +12,8 @@ namespace Effect::Game
 	/**************************************
 	ColorfulDebrisControllerコンストラクタ
 	***************************************/
-	ColorfulDebrisController::ColorfulDebrisController()
+	ColorfulDebrisController::ColorfulDebrisController() :
+		BaseParticleController(Particle_3D)
 	{
 		//単位頂点バッファ作成
 		const D3DXVECTOR2 SizeParticle{0.6f, 0.6f};
@@ -57,7 +58,7 @@ namespace Effect::Game
 	ColorfulDebrisコンストラクタ
 	***************************************/
 	ColorfulDebris::ColorfulDebris() :
-		BaseParticle(MinLife, MaxLife),
+		Particle3D(MinLife, MaxLife),
 		initSpeed(Math::RandomRange(MinSpeed, MaxSpeed)),
 		initScale(Math::RandomRange(MinScale, MaxScale)),
 		directionMove(Vector3::Random())

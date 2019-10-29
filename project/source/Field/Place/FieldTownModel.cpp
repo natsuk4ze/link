@@ -71,28 +71,34 @@ namespace Field::Model
 	}
 
 	/**************************************
+	”­“W“xæ“¾ˆ—
+	***************************************/
+	float TownModel::DevelopmentLevel()
+	{
+		return developmentLevel;
+	}
+
+	/**************************************
 	¬’·‚·‚é‚ÉŒÄ‚Î‚ê‚éˆ—
 	***************************************/
-	float TownModel::OnGrowth(float trafficJamRate, float bonus)
+	void TownModel::FindLinkedTown()
 	{
-		linkLevel = 0;
+		linkLevel = biasLinkLevel;
 
 		RouteContainer searchedRoute;
 		std::vector<PlaceModel*> searchedTown;
 
 		RouteContainer belongRoute = place->GetConnectingRoutes();
+		
+		std::vector<D3DXVECTOR3> routeStack;
+		routeStack.push_back(place->GetPosition().ConvertToWorldPosition());
+
 		for (auto&& route : belongRoute)
 		{
-			linkLevel += route->FindLinkedTown(place, searchedRoute, searchedTown);
+			linkLevel += route->FindLinkedTown(this, searchedRoute, searchedTown, routeStack);
 		}
 
-		//Œq‚ª‚Á‚Ä‚¢‚éŠX‚ª‚È‚©‚Á‚½‚ç•â³ŒvZ‚ğs‚í‚È‚¢
-		if (linkLevel == 0)
-			return 0.0f;
-
-		int adjustLevel = Math::Max(1, linkLevel + biasLinkLevel);
-		developmentLevel = (adjustLevel + adjustLevel * trafficJamRate) * bonus;
-		return developmentLevel;
+		developmentLevel = (float)linkLevel * linkLevel;
 	}
 
 	/**************************************
@@ -103,8 +109,24 @@ namespace Field::Model
 		biasLinkLevel += num;
 	}
 
+	/**************************************
+	PlaceModelæ“¾ˆ—
+	***************************************/
 	const PlaceModel * TownModel::GetPlace()
 	{
 		return place;
+	}
+
+	/**************************************
+	Œo˜H’Ç‰Áˆ—
+	***************************************/
+	void TownModel::AddLinkedRoute(std::vector<D3DXVECTOR3>& route)
+	{
+		//ƒRƒs[‚µ‚Äd•¡‚ğíœ
+		std::vector<D3DXVECTOR3> container(route);
+		auto itr = std::unique(container.begin(), container.end());
+		container.erase(itr, container.end());
+
+		routeContainer.push_back(container);
 	}
 }

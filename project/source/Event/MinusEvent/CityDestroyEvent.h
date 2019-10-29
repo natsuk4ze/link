@@ -13,9 +13,8 @@
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
+class BeatGame;
 class EventViewer;
-class BaseViewerDrawer;
-class CountViewerDrawer;
 
 //*****************************************************************************
 // クラス定義
@@ -27,18 +26,12 @@ private:
 	D3DXVECTOR3 MissilePos;
 	D3DXVECTOR3 TownPos;
 	D3DXVECTOR3 MoveDirection;
-	int RemainFrame;
-	bool TelopOver;
-	bool CountOver;
-	bool UseEDF;
-	const Field::Model::PlaceModel* DestroyTown;
+	bool BeatGameOver;
+	bool EventAvoid;
+	const Field::Model::PlaceModel* Target;
 
-	//小数点
-	BaseViewerDrawer *point;
-	//少数部
-	CountViewerDrawer *fewNum;
-	//整数部
-	CountViewerDrawer *intNum;
+	// 連打ゲーム
+	BeatGame *beatGame;
 
 #if _DEBUG
 	static LPD3DXMESH SphereMesh;
@@ -52,9 +45,8 @@ public:
 	void Update(void) override;
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;
-	// 隕石が来るまでのカウントダウン
 	void CountdownStart(void);
-	void UseMissile(bool Flag);
+	void ReceiveBeatResult(bool IsSuccess);
 };
 
 #endif

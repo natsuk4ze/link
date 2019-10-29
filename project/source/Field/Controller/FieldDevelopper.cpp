@@ -12,16 +12,24 @@
 #include "../Route/RouteModel.h"
 #include "../Route/RouteProcessor.h"
 #include "../Place/FieldPlaceContainer.h"
+#include "../Place/FieldPlaceContainer.h"
 
 #include <algorithm>
 
 namespace Field
 {
 	/**************************************
+	staticメンバ
+	***************************************/
+	const int FieldController::FieldDevelopper::MaxStock = 99;
+	const int FieldController::FieldDevelopper::InitStock = 20;
+
+	/**************************************
 	コンストラクタ
 	***************************************/
 	FieldController::FieldDevelopper::FieldDevelopper(FieldController * controller) :
-		entity(controller)
+		entity(controller),
+		stockNum(InitStock)
 	{
 
 	}
@@ -54,17 +62,15 @@ namespace Field
 		//端点設定
 		ptr->SetEdge();
 
-		//オブジェクト設定
-
 		//隣接するルートと連結させる
 		entity->routeProcessor->ConnectWithEdge(ptr, entity->routeContainer);
 		entity->routeProcessor->Process(ptr, entity->routeContainer);
 
-		//道を新しく作ったので混雑度を再計算
-		entity->placeContainer->CaclTrafficJamRate();
-
 		//アクター生成
 		entity->placeActController->SetActor(ptr);
+
+		//リンクレベルを計算
+		entity->placeContainer->CalcLinkLevel();
 
 		//コールバック
 		(*entity->onBuildRoad)(route);
@@ -145,14 +151,15 @@ namespace Field
 
 		//ストックが足りていれば開拓
 		int cntMountain = container.size();
-		if (cntMountain <= entity->stockDevelopMountain)
+		if (cntMountain <= stockNum)
 		{
 			for (auto&& place : container)
 			{
 				place->SetType(PlaceType::None);
+				entity->placeActController->DestroyActor(place);
 			}
 
-			entity->stockDevelopMountain -= cntMountain;
+			stockNum -= cntMountain;
 		}
 		else
 		{
@@ -218,7 +225,7 @@ namespace Field
 
 		//ストックが足りていれば開拓
 		int cntRiver = riverVector.size();
-		if (cntRiver <= entity->stockDevelopRiver)
+		if (cntRiver <= stockNum)
 		{
 			Adjacency inverseStartAdjacency = GetInverseSide(startAdjacency);
 			for (auto&& river : riverVector)
@@ -230,7 +237,7 @@ namespace Field
 				entity->placeActController->SetActor(river);
 			}
 
-			entity->stockDevelopRiver -= cntRiver;
+			stockNum -= cntRiver;
 		}
 		else
 		{
@@ -240,4 +247,19 @@ namespace Field
 		return end;
 	}
 
+	/**************************************
+	ストック加算処理
+	***************************************/
+	void FieldController::FieldDevelopper::AddStock(int num)
+	{
+		stockNum = Math::Min(MaxStock, stockNum + num);
+	}
+
+	/**************************************
+	ストック数埋め込み処理
+	***************************************/
+	void FieldController::FieldDevelopper::EmbedViewerParam(GameViewerParam & param)
+	{
+		param.stockNum = stockNum;
+	}
 }

@@ -38,7 +38,7 @@ public:
 	// インターフェース
 	void Rotate(float y);								// Y軸回転
 	void SetPosition(const D3DXVECTOR3&pos);			// 座標セット
-	void SetColor(const D3DXCOLOR& color, UINT index);	// メッシュの色変更
+	void SetColor(const D3DXCOLOR& color);	// メッシュの色変更
 	void ResetTransform();								// 座標、回転、大きさをリセットする
 
 protected:

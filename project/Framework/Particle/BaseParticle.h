@@ -41,7 +41,7 @@ public:
 BaseParticleÉNÉâÉX
 Å¶åpè≥êÊÇ≈Init(), Update()Çé¿ëïÇ∑ÇÈ
 ***************************************/
-class BaseParticle : public BillboardObject
+class BaseParticle
 {
 public:
 	BaseParticle();
@@ -53,8 +53,13 @@ public:
 	virtual void Init() = 0;
 	virtual void Update() = 0;
 
-	virtual bool IsActive() const override;
-	virtual D3DXMATRIX GetWorldMtx();
+	virtual bool IsActive() const = 0;
+
+	virtual void SetTransform(const Transform& transform) = 0;
+
+	virtual void SetActive(bool state) = 0;
+
+	virtual D3DXMATRIX GetWorldMtx() = 0;
 
 	ParticleUV uv;
 
@@ -62,6 +67,7 @@ protected:
 	int cntFrame;
 	int lifeFrame;
 
+	bool _IsActive() const;
 };
 
 #endif

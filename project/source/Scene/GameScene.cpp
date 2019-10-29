@@ -10,6 +10,7 @@
 #include "../GameConfig.h"
 #include "../../Framework/Transition/TransitionController.h"
 #include "../../Framework/Core/SceneManager.h"
+#include "../../Framework/Tool/ProfilerCPU.h"
 
 #include "../../Framework/Renderer3D/SkyBox.h"
 #include "../FieldObject/Actor/PlaceActor.h"
@@ -22,12 +23,14 @@
 #include "../Field/FieldEventHandler.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
+#include "../../Framework/Effect/SpriteEffect.h"
 
 #include "GameState/GameInit.h"
 #include "GameState/GameIdle.h"
 #include "GameState/GameFinish.h"
 #include "GameState/GameLevelUp.h"
-#include "GameState\/GamePause.h"
+#include "GameState/GamePause.h"
+#include "GameState\GameFarView.h"
 
 #include "../../Framework/Tool/DebugWindow.h"
 
@@ -64,6 +67,7 @@ void GameScene::Init()
 	fsm[State::Finish] = new GameFinish();
 	fsm[State::LevelUp] = new GameLevelUp();
 	fsm[State::Pause] = new GamePause();
+	fsm[State::FarView] = new GameFarView();
 
 	//デリゲートを作成して設定
 	onBuildRoad = DelegateObject<GameScene, void(Route&)>::Create(this, &GameScene::OnBuildRoad);
@@ -100,6 +104,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(gameViewer);
 	SAFE_DELETE(eventController);
 	SAFE_DELETE(bloomController);
+	SAFE_DELETE(eventHandler);
 
 	//パーティクル終了
 	particleManager->Uninit();
@@ -120,16 +125,19 @@ void GameScene::Uninit()
 ***************************************/
 void GameScene::Update()
 {
+	ProfilerCPU::Instance()->BeginLabel("GameScene");
+
 	//ステートを更新
 	State next = fsm[currentState]->OnUpdate(*this);
 
-	if (next != currentState)
-	{
-		ChangeState(next);
-	}
-
 	//カメラ更新
+	ProfilerCPU::Instance()->Begin("Update Camera");
 	fieldCamera->Update();
+	ProfilerCPU::Instance()->End("Update Camera");
+
+	//カメラの情報をエフェクトに渡す
+	SpriteEffect::SetView(fieldCamera->GetViewMtx());
+	SpriteEffect::SetProjection(fieldCamera->GetProjectionMtx());
 
 	//testActor->Update();
 	passengerController->Update();
@@ -144,7 +152,9 @@ void GameScene::Update()
 	gameViewer->Update();
 
 	//パーティクル更新
+	ProfilerCPU::Instance()->Begin("Update Particle");
 	particleManager->Update();
+	ProfilerCPU::Instance()->End("Update Particle");
 
 	Debug::Begin("EventHandler");
 	if (Debug::Button("Pause"))
@@ -155,6 +165,8 @@ void GameScene::Update()
 		eventHandler->GetNewTownPosition();
 	if (Debug::Button("DestroyTown"))
 		eventHandler->DestroyTown(eventHandler->GetDestroyTarget());
+	if (Debug::Button("CreateTown"))
+		eventHandler->CreateNewTown(eventHandler->GetNewTownPosition());
 	Debug::End();
 }
 
@@ -173,24 +185,35 @@ void GameScene::Draw()
 	passengerController->Draw();
 
 	//オブジェクト描画
+	ProfilerCPU::Instance()->Begin("Draw Object");
 	field->Draw();
+	ProfilerCPU::Instance()->End("Draw Object");
 
 	// イベントオブジェクト描画
+	ProfilerCPU::Instance()->Begin("Draw Event");
 	eventController->DrawEventObject();
+	ProfilerCPU::Instance()->End("Draw Event");
 
 	//ポストエフェクトは重いのでリリース版のみ適用する
 #ifndef _DEBUG
 	//ポストエフェクト適用
+	ProfilerCPU::Instance()->Begin("Draw PostEffect");
 	bloomController->Draw(renderTexture);
+	ProfilerCPU::Instance()->End("Draw PostEffect");
 #endif
+
 	//パーティクル描画
+	ProfilerCPU::Instance()->Begin("Draw Particle");
 	particleManager->Draw();
+	ProfilerCPU::Instance()->End("Draw Particle");
 
 	// イベントビューア描画
 	eventController->DrawEventViewer();
 
 	//ビュアー描画
 	gameViewer->Draw();
+
+	ProfilerCPU::Instance()->EndLabel();
 }
 
 /**************************************

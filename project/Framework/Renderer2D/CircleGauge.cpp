@@ -83,17 +83,13 @@ CircleGauge::~CircleGauge()
 ***************************************/
 void CircleGauge::Draw()
 {
-	Debug::Begin("Circle");
-	Debug::Slider("per", percent, 0.0f, 1.0f);
-	effect->SetFloat(hPercent, percent);
-	Debug::End();
-
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	//•`‰æ‘O‚Ì‰º€”õ
 	pDevice->SetFVF(FVF_VERTEX_3D);
 	pDevice->SetStreamSource(0, vtxBuff, 0, sizeof(VERTEX_3D));
 	pDevice->SetTexture(0, texture);
+	effect->SetFloat(hPercent, percent);
 
 	//’¸“_•ÏŠ·À•W‚ðÝ’è
 	D3DXMATRIX mtxTrans = transform->GetMatrix();

@@ -229,49 +229,13 @@ namespace Field::Model
 	}
 
 	/**************************************
-	混雑度計算
+	リンクレベルの計算
 	***************************************/
-	void Field::Model::PlaceContainer::CaclTrafficJamRate()
+	void Field::Model::PlaceContainer::CalcLinkLevel()
 	{
-		//出口がある街がなければ計算が成立しないので早期リターン
-		if (townContainer.empty())
-			return;
-
-		int sumGate = 0;
 		for (auto&& town : townContainer)
 		{
-			sumGate += town.second->GateNum();
-		}
-
-		//交差点が無い場合の計算式
-		if (junctionContainer.empty())
-		{
-			trafficJamRate = ((float)townContainer.size() / sumGate);
-		}
-		//交差点がある場合の計算式
-		else
-		{
-			//交差点ごとの混雑度を計算
-			for (auto&& junction : junctionContainer)
-			{
-				junction.second->Calculate(townContainer);
-			}
-
-			float sumTrafficJam = 0.0f;
-			int validJunctionNum = 0;
-
-			for (auto&& junction : junctionContainer)
-			{
-				float trafficJam = junction.second->TrafficJam(townContainer);
-
-				if (trafficJam == 0.0f)
-					continue;
-
-				sumTrafficJam += trafficJam;
-				validJunctionNum++;
-			}
-
-			trafficJamRate = Math::Min(sumTrafficJam * 0.01f * 1.5f / (validJunctionNum * sumGate), 1.0f);
+			town.second->FindLinkedTown();
 		}
 	}
 
@@ -283,7 +247,7 @@ namespace Field::Model
 		float developLevel = 0.0f;
 		for (auto&& town : townContainer)
 		{
-			developLevel += town.second->OnGrowth(1.0f - trafficJamRate + trafficJamBias, bonus);
+			developLevel += town.second->DevelopmentLevel();
 		}
 
 		return developLevel;
@@ -332,18 +296,19 @@ namespace Field::Model
 	***************************************/
 	const PlaceModel * Field::Model::PlaceContainer::GetDestroyTarget()
 	{
-		//NOTE:取り急ぎ作った。あとできれいに治す
-		int randomIndex = Math::RandomRange(0, (int)(townContainer.size()));
-		int index = 0;
-		for (auto&& town : townContainer)
+		using cpplinq::from;
+		using cpplinq::where;
+		using cpplinq::to_vector;
+
+		auto townVector = from(placeVector)
+			>> where([](auto& place)
 		{
-			if (index++ != randomIndex)
-				continue;
+			return place->IsType(PlaceType::Town);
+		})
+			>> to_vector();
 
-			return town.second->GetPlace();
-		}
-
-		return nullptr;
+		int randomIndex = Math::RandomRange(0, (int)townVector.size() - 1);
+		return townVector[randomIndex];
 	}
 
 	/**************************************
@@ -363,7 +328,7 @@ namespace Field::Model
 		})
 			>> to_vector();
 
-		int randomIndex = Math::RandomRange(0, (int)(noneVector.size()));
+		int randomIndex = Math::RandomRange(0, (int)(noneVector.size() - 1));
 		return noneVector[randomIndex];
 	}
 
@@ -372,17 +337,40 @@ namespace Field::Model
 	***************************************/
 	void Field::Model::PlaceContainer::DestroyTown(const PlaceModel * target)
 	{
-		//PlaceModelをNoneタイプに変化
 		auto itrPlace = std::find(placeVector.begin(), placeVector.end(), target);
 
 		if (itrPlace == placeVector.end())
 			return;
 
+		PlaceModel *place = *itrPlace;
+
+		//所属をリセット
+		RouteContainer belongRoute = place->GetConnectingRoutes();
+		for (auto&& route : belongRoute)
+		{
+			place->ExitRoute(route);
+		}
+
+		//PlaceModelをNoneタイプに変化
 		(*itrPlace)->SetType(PlaceType::None);
 
 		//TownModel削除
 		SAFE_DELETE(townContainer[target->ID()]);
 		townContainer.erase(target->ID());
+	}
+
+	/**************************************
+	街作成
+	***************************************/
+	void Field::Model::PlaceContainer::CreateTown(const PlaceModel * target)
+	{
+		auto itrPlace = std::find(placeVector.begin(), placeVector.end(), target);
+
+		if (itrPlace == placeVector.end())
+			return;
+
+		PlaceModel* place = *itrPlace;
+		place->SetType(PlaceType::Town);
 	}
 
 	/**************************************

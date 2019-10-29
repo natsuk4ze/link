@@ -9,6 +9,7 @@
 #include "../Renderer3D/BoardPolygon.h"
 
 #include "MeshResource.h"
+#include "PolygonResource.h"
 
 /**************************************
 マクロ定義
@@ -48,7 +49,7 @@ void ResourceManager::ReleaseMesh(const char* tag)
 /**************************************
 メッシュ取得処理
 ***************************************/
-bool ResourceManager::GetMesh(const char* tag, MeshContainer*& pOut)
+bool ResourceManager::GetMesh(const char* tag, MeshContainer* pOut)
 {
 	std::string tagStr = std::string(tag);
 
@@ -120,14 +121,12 @@ void ResourceManager::MakePolygon(const char* tag, const char* path, const D3DXV
 	std::string tagStr = std::string(tag);
 
 	//登録確認
-	if (polygonPool.count(tagStr) == 0)
-		SAFE_DELETE(polygonPool[tagStr]);
+	if (polygonPool.count(tagStr) != 0)
+		return;
 
 	//BoardPolygonクラスを生成して登録
-	polygonPool[tagStr] = new BoardPolygon();;
-	polygonPool[tagStr]->SetSize(size);
-	polygonPool[tagStr]->SetTexDiv(uv);
-	polygonPool[tagStr]->LoadTexture(path);
+	PolygonResource *ptr = new PolygonResource(size, uv, path);
+	polygonPool[tagStr] = ptr;
 }
 
 /**************************************
@@ -176,7 +175,7 @@ void ResourceManager::ReleaseEffect(const char * path)
 /**************************************
 板ポリゴン参照処理
 ***************************************/
-bool ResourceManager::GetPolygon(const char* tag, BoardPolygon*& pOut)
+bool ResourceManager::GetPolygon(const char* tag, BoardPolygon* pOut)
 {
 	std::string tagStr = std::string(tag);
 
@@ -184,8 +183,7 @@ bool ResourceManager::GetPolygon(const char* tag, BoardPolygon*& pOut)
 	if (polygonPool.count(tagStr) == 0)
 		return false;
 
-	pOut = polygonPool[tagStr];
-	pOut->AddRef();
+	polygonPool[tagStr]->Clone(pOut);
 	return true;
 }
 

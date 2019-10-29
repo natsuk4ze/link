@@ -9,10 +9,11 @@
 #define _FIELDINFOACTOR_H_
 
 #include "../../../Framework/Renderer3D/BillboardObject.h"
-#include "../../../Framework/Renderer3D/BoardPolygon.h"
 #include "../../../Framework/Pattern/BaseState.h"
 
 #include <vector>
+
+class BoardPolygon;
 
 //**************************************
 // クラス定義
@@ -37,6 +38,9 @@ public:
 
 	FieldInfoActor(const D3DXVECTOR3& pos, State state);
 	~FieldInfoActor();
+
+	//リソース作成などの初期化処理
+	static void Init();
 
 	void Update();
 	void Draw();

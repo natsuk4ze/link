@@ -6,11 +6,10 @@
 //=============================================================================
 #include "../../../main.h"
 #include "CityDestroyEvent.h"
+#include "BeatGame.h"
 #include "../../Viewer/GameScene/EventViewer/EventViewer.h"
-#include "../../Viewer/Framework/ViewerDrawer/BaseViewerDrawer.h"
-#include "../../Viewer/Framework/ViewerDrawer/countviewerdrawer.h"
-
 #include "../../../Framework/Camera/CameraTranslationPlugin.h"
+#include "../../Effect/GameParticleManager.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -42,49 +41,15 @@ D3DMATERIAL9 CityDestroyEvent::Material =
 // コンストラクタ
 //=============================================================================
 CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer) :
-	TelopOver(false),
-	CountOver(false),
-	UseEDF(false),
-	RemainFrame(EscapeTime * 30)
+	EventAvoid(false),
+	BeatGameOver(false)
 {
-	//整数部
-	intNum = new CountViewerDrawer();
-	intNum->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Number.png");
-	intNum->MakeVertex();
-	intNum->size = D3DXVECTOR3(60.0f, 60.0f, 0.0f);
-	intNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	intNum->position = D3DXVECTOR3(SCREEN_WIDTH / 2 - 140.0f, SCREEN_HEIGHT / 10 * 2.0f + 20.0f, 0.0f);
-	intNum->SetColor(SET_COLOR_NOT_COLORED);
-	intNum->intervalNumberScr = 80.0f;
-	intNum->intervalNumberTex = 0.1f;
-	intNum->placeMax = 2;
-	intNum->baseNumber = 10;
-
-	//小数部
-	fewNum = new CountViewerDrawer();
-	fewNum->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Number.png");
-	fewNum->MakeVertex();
-	fewNum->size = D3DXVECTOR3(30.0f, 30.0f, 0.0f);
-	fewNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	fewNum->position = D3DXVECTOR3(SCREEN_WIDTH / 2 + 40.0f, SCREEN_HEIGHT / 10 * 2.0f + 30.0f, 0.0f);
-	fewNum->SetColor(SET_COLOR_NOT_COLORED);
-	fewNum->intervalNumberScr = 40.0f;
-	fewNum->intervalNumberTex = 0.1f;
-	fewNum->placeMax = 2;
-	fewNum->baseNumber = 10;
-
-	//小数点
-	point = new BaseViewerDrawer();
-	point->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Point.png");
-	point->MakeVertex();
-	point->size = D3DXVECTOR3(100.0f, 100.0f, 0.0f);
-	point->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	point->position = D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 10 * 2.0f, 0.0f);
-	point->SetColor(SET_COLOR_NOT_COLORED);
+	// 連打ゲームインスタンス
+	beatGame = new BeatGame([&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
 
 	// 破壊する町の予定地を取得
-	DestroyTown = fieldEventHandler->GetDestroyTarget();
-	TownPos = DestroyTown->GetPosition().ConvertToWorldPosition();
+	Target = fieldEventHandler->GetDestroyTarget();
+	TownPos = Target->GetPosition().ConvertToWorldPosition();
 	MissilePos = TownPos;
 
 	// ゲーム進行停止
@@ -93,8 +58,10 @@ CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer) :
 	// テロップ設置
 	eventViewer->SetEventTelop(NegativeEvent01, [&]()
 	{
-		fieldEventHandler->ResumeGame();
-		CountdownStart();
+		Camera::TranslationPlugin::Instance()->Move(TownPos, 30, [&]()
+		{
+			CountdownStart();
+		});
 	});
 
 	MeteoritePos = TownPos + D3DXVECTOR3(MeteoriteDistance, MeteoriteDistance, 0.0f);
@@ -117,9 +84,7 @@ CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer) :
 //=============================================================================
 CityDestroyEvent::~CityDestroyEvent()
 {
-	SAFE_DELETE(point);
-	SAFE_DELETE(fewNum);
-	SAFE_DELETE(intNum);
+	SAFE_DELETE(beatGame);
 }
 
 //=============================================================================
@@ -127,37 +92,17 @@ CityDestroyEvent::~CityDestroyEvent()
 //=============================================================================
 void CityDestroyEvent::Update()
 {
-	if (!TelopOver)
+	if (!BeatGameOver)
 	{
-		return;
-	}
-
-	if (!CountOver)
-	{
-		RemainFrame--;
-		if (RemainFrame <= 0)
-		{
-			CountOver = true;
-			fieldEventHandler->PauseGame();
-			Camera::TranslationPlugin::Instance()->Move(TownPos, 30, [&]()
-			{
-				// 地球防衛軍使用
-				if (fieldEventHandler->TryUsingEDF())
-				{
-					// ミサイル使用
-					UseMissile(true);
-				}
-				else
-				{
-					UseMissile(false);
-				}
-			});
-		}
+		beatGame->Update();
 	}
 	else
 	{
-		if (UseEDF)
+		if (EventAvoid)
 		{
+			// =================
+			// ミサイル発射
+			// =================
 			float Distance = D3DXVec3LengthSq(&D3DXVECTOR3(MeteoritePos - MissilePos));
 
 			if (Distance > pow(3.0f, 2))
@@ -168,13 +113,16 @@ void CityDestroyEvent::Update()
 			}
 			else
 			{
-				// 隕石爆発エフェクト
+				// ミサイル命中エフェクト
 				Camera::TranslationPlugin::Instance()->Restore(60, nullptr);
 				this->UseFlag = false;
 			}
 		}
 		else
 		{
+			// =================
+			// 隕石落下
+			// =================
 			float Distance = D3DXVec3LengthSq(&D3DXVECTOR3(MeteoritePos - TownPos));
 
 			if (Distance > pow(3.0f, 2))
@@ -183,8 +131,10 @@ void CityDestroyEvent::Update()
 			}
 			else
 			{
-				// 町消滅エフェクト
+				// 隕石落下エフェクト
 				Camera::TranslationPlugin::Instance()->Restore(60, nullptr);
+				// 町消滅処理
+				fieldEventHandler->DestroyTown(Target);
 				this->UseFlag = false;
 			}
 		}
@@ -204,65 +154,40 @@ void CityDestroyEvent::Draw()
 {
 	LPDIRECT3DDEVICE9 Device = GetDevice();
 
-	if (!CountOver)
-	{
-		Device->SetRenderState(D3DRS_ALPHATESTENABLE, true);
-		Device->SetRenderState(D3DRS_ALPHAREF, 0);
-		Device->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-		Device->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	beatGame->Draw();
 
-		//小数点
-		point->Draw();
-		point->SetVertex();
+#if _DEBUG
+	D3DXMATRIX WorldMatrix, TransMatrix;
 
-		float RemainTime = RemainFrame / 30.0f;
+	// ワールドマトリックスの初期化
+	D3DXMatrixIdentity(&WorldMatrix);
 
-		//整数部
-		intNum->DrawCounter(intNum->baseNumber, (int)RemainTime, intNum->placeMax,
-			intNum->intervalNumberScr, intNum->intervalNumberTex);
+	// 移動を反映
+	D3DXMatrixTranslation(&TransMatrix, MeteoritePos.x, MeteoritePos.y, MeteoritePos.z);
+	D3DXMatrixMultiply(&WorldMatrix, &WorldMatrix, &TransMatrix);
 
-		//小数部
-		fewNum->DrawCounter(fewNum->baseNumber, (int)((RemainTime - (int)RemainTime)*pow(fewNum->baseNumber, fewNum->placeMax)), fewNum->placeMax,
-			fewNum->intervalNumberScr, fewNum->intervalNumberTex);
+	// ワールドマトリックスの設定
+	Device->SetTransform(D3DTS_WORLD, &WorldMatrix);
 
-		Device->SetRenderState(D3DRS_ALPHATESTENABLE, false);
-		Device->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
-	}
-	else
-	{
-#ifdef _DEBUG
-		D3DXMATRIX WorldMatrix, TransMatrix;
+	// マテリアルの設定
+	Device->SetMaterial(&Material);
 
-		// ワールドマトリックスの初期化
-		D3DXMatrixIdentity(&WorldMatrix);
+	// 球体描画
+	SphereMesh->DrawSubset(0);
 
-		// 移動を反映
-		D3DXMatrixTranslation(&TransMatrix, MeteoritePos.x, MeteoritePos.y, MeteoritePos.z);
-		D3DXMatrixMultiply(&WorldMatrix, &WorldMatrix, &TransMatrix);
+	// ワールドマトリックスの初期化
+	D3DXMatrixIdentity(&WorldMatrix);
 
-		// ワールドマトリックスの設定
-		Device->SetTransform(D3DTS_WORLD, &WorldMatrix);
+	// 移動を反映
+	D3DXMatrixTranslation(&TransMatrix, MissilePos.x, MissilePos.y, MissilePos.z);
+	D3DXMatrixMultiply(&WorldMatrix, &WorldMatrix, &TransMatrix);
 
-		// マテリアルの設定
-		Device->SetMaterial(&Material);
+	// ワールドマトリックスの設定
+	Device->SetTransform(D3DTS_WORLD, &WorldMatrix);
 
-		// 球体描画
-		SphereMesh->DrawSubset(0);
-
-		// ワールドマトリックスの初期化
-		D3DXMatrixIdentity(&WorldMatrix);
-
-		// 移動を反映
-		D3DXMatrixTranslation(&TransMatrix, MissilePos.x, MissilePos.y, MissilePos.z);
-		D3DXMatrixMultiply(&WorldMatrix, &WorldMatrix, &TransMatrix);
-
-		// ワールドマトリックスの設定
-		Device->SetTransform(D3DTS_WORLD, &WorldMatrix);
-
-		// ミサイル描画
-		MissileMesh->DrawSubset(0);
+	// ミサイル描画
+	MissileMesh->DrawSubset(0);
 #endif
-	}
 }
 
 //=============================================================================
@@ -270,31 +195,8 @@ void CityDestroyEvent::Draw()
 //=============================================================================
 string CityDestroyEvent::GetEventMessage(int FieldLevel)
 {
-	vector<string> MessageContainer;
-
-	if (FieldLevel == Field::Model::City)
-	{
-		MessageContainer.push_back("この町は焚き火にしよう");
-	}
-	else if (FieldLevel == Field::Model::World)
-	{
-
-	}
-	else if (FieldLevel == Field::Model::Space)
-	{
-
-	}
-
-	if (!MessageContainer.empty())
-	{
-		int MessageNo = rand() % MessageContainer.size();
-		return MessageContainer.at(MessageNo);
-	}
-	else
-	{
-		string ErrMsg = "イベントメッセージがありません";
-		return ErrMsg;
-	}
+	// ヌル
+	return "";
 }
 
 
@@ -303,23 +205,26 @@ string CityDestroyEvent::GetEventMessage(int FieldLevel)
 //=============================================================================
 void CityDestroyEvent::CountdownStart(void)
 {
-	this->TelopOver = true;
+	beatGame->CountdownStart();
 }
 
 //=============================================================================
-// ミサイル発射
+// 連打ゲームの結果による処理
 //=============================================================================
-void CityDestroyEvent::UseMissile(bool Flag)
+void CityDestroyEvent::ReceiveBeatResult(bool IsSuccess)
 {
-	if (!Flag)
+	BeatGameOver = true;
+
+	if (IsSuccess)
 	{
-		UseEDF = false;
-		return;
+		// 成功、ミサイル発射
+		EventAvoid = true;
+		MoveDirection = D3DXVECTOR3(MeteoritePos - MissilePos);
+		D3DXVec3Normalize(&MoveDirection, &MoveDirection);
 	}
 	else
 	{
-		UseEDF = true;
-		MoveDirection = D3DXVECTOR3(MeteoritePos - MissilePos);
-		D3DXVec3Normalize(&MoveDirection, &MoveDirection);
+		// 失敗、隕石落下
+		EventAvoid = false;
 	}
 }

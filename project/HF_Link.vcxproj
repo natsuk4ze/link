@@ -36,6 +36,7 @@
     <ClInclude Include="Framework\Core\SceneManager.h" />
     <ClInclude Include="Framework\Core\Transform.h" />
     <ClInclude Include="Framework\Core\Utility.h" />
+    <ClInclude Include="Framework\Effect\SpriteEffect.h" />
     <ClInclude Include="Framework\Input\Gamepad.h" />
     <ClInclude Include="Framework\Input\input.h" />
     <ClInclude Include="Framework\Input\Keyboard.h" />
@@ -45,10 +46,13 @@
     <ClInclude Include="Framework\Math\Quaternion.h" />
     <ClInclude Include="Framework\Math\TMath.h" />
     <ClInclude Include="Framework\Math\Vector3.h" />
-    <ClInclude Include="Framework\Particle\AnimationParticle.h" />
+    <ClInclude Include="Framework\Particle\2D\AnimationParticle2D.h" />
+    <ClInclude Include="Framework\Particle\2D\Particle2D.h" />
+    <ClInclude Include="Framework\Particle\3D\AnimationParticle3D.h" />
     <ClInclude Include="Framework\Particle\BaseEmitter.h" />
     <ClInclude Include="Framework\Particle\BaseParticle.h" />
     <ClInclude Include="Framework\Particle\BaseParticleController.h" />
+    <ClInclude Include="Framework\Particle\3D\Particle3D.h" />
     <ClInclude Include="Framework\Particle\ParticleJsonParser.h" />
     <ClInclude Include="Framework\Particle\ParticleRenderer.h" />
     <ClInclude Include="Framework\Particle\SceneParticleManager.h" />
@@ -82,6 +86,7 @@
     <ClInclude Include="Framework\Renderer3D\SkyBox.h" />
     <ClInclude Include="Framework\Renderer3D\TransformObject.h" />
     <ClInclude Include="Framework\Resource\MeshResource.h" />
+    <ClInclude Include="Framework\Resource\PolygonResource.h" />
     <ClInclude Include="Framework\Resource\ResourceManager.h" />
     <ClInclude Include="Framework\String\String.h" />
     <ClInclude Include="Framework\Task\DelayedTask.h" />
@@ -108,9 +113,14 @@
     <ClInclude Include="Library\json11\json11.hpp" />
     <ClInclude Include="main.h" />
     <ClInclude Include="source\Effect\GameParticleManager.h" />
+    <ClInclude Include="source\Effect\Game\AngryFace.h" />
     <ClInclude Include="source\Effect\Game\BlueDebris.h" />
     <ClInclude Include="source\Effect\Game\BlueSpark.h" />
     <ClInclude Include="source\Effect\Game\ColorfulDebris.h" />
+    <ClInclude Include="source\Effect\Game\Explosion.h" />
+    <ClInclude Include="source\Effect\Game\ExplosionFlare.h" />
+    <ClInclude Include="source\Effect\Game\RedSpark.h" />
+    <ClInclude Include="source\Effect\Game\MissileHit.h" />
     <ClInclude Include="source\Effect\Game\WhiteSmog.h" />
     <ClInclude Include="source\Effect\TestParticleCamera.h" />
     <ClInclude Include="source\Effect\TestParticleManager.h" />
@@ -119,6 +129,7 @@
     <ClInclude Include="source\Event\EventController.h" />
     <ClInclude Include="source\Event\MinusEvent\AILevelDecreaseEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\BanStockUseEvent.h" />
+    <ClInclude Include="source\Event\MinusEvent\BeatGame.h" />
     <ClInclude Include="source\Event\MinusEvent\CityDestroyEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\LinkLevelDecreaseEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\CongestionUpEvent.h" />
@@ -178,6 +189,7 @@
     <ClInclude Include="source\GameConfig.h" />
     <ClInclude Include="source\GameMain.h" />
     <ClInclude Include="source\Scene\GameScene.h" />
+    <ClInclude Include="source\Scene\GameState\GameFarView.h" />
     <ClInclude Include="source\Scene\GameState\GameFinish.h" />
     <ClInclude Include="source\Scene\GameState\GameIdle.h" />
     <ClInclude Include="source\Scene\GameState\GameInit.h" />
@@ -216,6 +228,7 @@
     <ClCompile Include="Framework\Core\GameObject.cpp" />
     <ClCompile Include="Framework\Core\SceneManager.cpp" />
     <ClCompile Include="Framework\Core\Transform.cpp" />
+    <ClCompile Include="Framework\Effect\SpriteEffect.cpp" />
     <ClCompile Include="Framework\Input\Gamepad.cpp" />
     <ClCompile Include="Framework\Input\input.cpp" />
     <ClCompile Include="Framework\Input\Keyboard.cpp" />
@@ -223,10 +236,13 @@
     <ClCompile Include="Framework\Light\Light.cpp" />
     <ClCompile Include="Framework\Math\Quaternion.cpp" />
     <ClCompile Include="Framework\Math\Vector3.cpp" />
-    <ClCompile Include="Framework\Particle\AnimationParticle.cpp" />
+    <ClCompile Include="Framework\Particle\2D\AnimationParticle2D.cpp" />
+    <ClCompile Include="Framework\Particle\2D\Particle2D.cpp" />
+    <ClCompile Include="Framework\Particle\3D\AnimationParticle3D.cpp" />
     <ClCompile Include="Framework\Particle\BaseEmitter.cpp" />
     <ClCompile Include="Framework\Particle\BaseParticle.cpp" />
     <ClCompile Include="Framework\Particle\BaseParticleController.cpp" />
+    <ClCompile Include="Framework\Particle\3D\Particle3D.cpp" />
     <ClCompile Include="Framework\Particle\ParticleJsonParser.cpp" />
     <ClCompile Include="Framework\Particle\ParticleRenderer.cpp" />
     <ClCompile Include="Framework\Particle\SceneParticleManager.cpp" />
@@ -256,6 +272,7 @@
     <ClCompile Include="Framework\Renderer3D\SkyBox.cpp" />
     <ClCompile Include="Framework\Renderer3D\TransformObject.cpp" />
     <ClCompile Include="Framework\Resource\MeshResource.cpp" />
+    <ClCompile Include="Framework\Resource\PolygonResource.cpp" />
     <ClCompile Include="Framework\Resource\ResourceManager.cpp" />
     <ClCompile Include="Framework\String\String.cpp" />
     <ClCompile Include="Framework\Task\DelayedTask.cpp" />
@@ -279,9 +296,14 @@
     <ClCompile Include="Library\json11\json11.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="source\Effect\GameParticleManager.cpp" />
+    <ClCompile Include="source\Effect\Game\AngryFace.cpp" />
     <ClCompile Include="source\Effect\Game\BlueDebris.cpp" />
     <ClCompile Include="source\Effect\Game\BlueSpark.cpp" />
     <ClCompile Include="source\Effect\Game\ColorfulDebris.cpp" />
+    <ClCompile Include="source\Effect\Game\Explosion.cpp" />
+    <ClCompile Include="source\Effect\Game\ExplosionFlare.cpp" />
+    <ClCompile Include="source\Effect\Game\MissileHit.cpp" />
+    <ClCompile Include="source\Effect\Game\RedSpark.cpp" />
     <ClCompile Include="source\Effect\Game\WhiteSmog.cpp" />
     <ClCompile Include="source\Effect\TestParticleCamera.cpp" />
     <ClCompile Include="source\Effect\TestParticleManager.cpp" />
@@ -289,6 +311,7 @@
     <ClCompile Include="source\Event\EventController.cpp" />
     <ClCompile Include="source\Event\MinusEvent\AILevelDecreaseEvent.cpp" />
     <ClCompile Include="source\Event\MinusEvent\BanStockUseEvent.cpp" />
+    <ClCompile Include="source\Event\MinusEvent\BeatGame.cpp" />
     <ClCompile Include="source\Event\MinusEvent\CityDestroyEvent.cpp" />
     <ClCompile Include="source\Event\MinusEvent\CongestionUpEvent.cpp" />
     <ClCompile Include="source\Event\MinusEvent\MoveInverseEvent.cpp" />
@@ -345,6 +368,7 @@
     <ClCompile Include="source\Field\State\UseItem.cpp" />
     <ClCompile Include="source\GameMain.cpp" />
     <ClCompile Include="source\Scene\GameScene.cpp" />
+    <ClCompile Include="source\Scene\GameState\GameFarView.cpp" />
     <ClCompile Include="source\Scene\GameState\GameFinish.cpp" />
     <ClCompile Include="source\Scene\GameState\GameIdle.cpp" />
     <ClCompile Include="source\Scene\GameState\GameInit.cpp" />
@@ -436,6 +460,12 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">2.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Shaders\SpikeNoise.fx">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">2.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">2.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Shaders\Sprite.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">2.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Effect</ShaderType>

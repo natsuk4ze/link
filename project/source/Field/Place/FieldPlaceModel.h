@@ -91,7 +91,6 @@ namespace Field::Model
 		//•ûŒüŒˆ’èˆ—Aæ“¾ˆ—
 		void AddDirection(Adjacency direction);
 		void AddDirection(PlaceModel* place);
-
 		std::vector<Adjacency> GetConnectingAdjacency() const;
 
 #ifdef DEBUG_PLACEMODEL

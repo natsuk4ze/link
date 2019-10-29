@@ -59,8 +59,8 @@ namespace Field::Model
 		//Œğ·“_‚ªì‚ç‚ê‚½Û‚ÉŒÄ‚Î‚ê‚éˆ—
 		void OnCreateJunction(const PlaceModel* place);
 
-		//¬G“xŒvZ
-		void CaclTrafficJamRate();
+		//ƒŠƒ“ƒNƒŒƒxƒ‹‚ğŒvZ
+		void CalcLinkLevel();
 
 		//AI”­“WƒŒƒxƒ‹ŒvZ
 		float CalcDevelopmentLevelAI(float bonus);
@@ -83,7 +83,8 @@ namespace Field::Model
 		//ŠX”j‰óˆ—
 		void DestroyTown(const PlaceModel* target);
 
-		//ŠX¶¬ˆ—
+		//ŠXì¬ˆ—
+		void CreateTown(const PlaceModel* target);
 
 #ifdef DEBUG_PLACEMODEL
 		void DrawDebug();

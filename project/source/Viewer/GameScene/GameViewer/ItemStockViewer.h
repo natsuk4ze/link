@@ -27,30 +27,18 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	//ストックビュアーの種類
-	enum ItemStockViewerType
-	{
-		Bridge,
-		Drill,
-		Insurance,
-		EDF
-	};
-
-	//ストックビュアーの種類数
-	static const int typeMax = 4;
-
 	//パラメータを受けとる箱
-	int parameterBox[typeMax];
+	int parameterBox;
 
 private:
-	BaseViewerDrawer *icon[typeMax];
-	CountViewerDrawer *num[typeMax];
+	BaseViewerDrawer *icon;
+	CountViewerDrawer *num;
 
 	//現在のパラメータ
-	int currentParam[typeMax] = {};
+	int currentParam;
 
 	//１フレーム前のパラメータ
-	int lastParam[typeMax] = {};
+	int lastParam;
 
 	//アニメーション
 	void Animate(void);

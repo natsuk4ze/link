@@ -9,6 +9,7 @@
 #include "../Place/FieldPlaceModel.h"
 #include "../../../Library/cppLinq/cpplinq.hpp"
 #include "../../../Framework/Pattern/Delegate.h"
+#include "../Place/FieldTownModel.h"
 
 #include <algorithm>
 
@@ -198,7 +199,7 @@ namespace Field::Model
 	/**************************************
 	繋がっている街を取得
 	***************************************/
-	int RouteModel::FindLinkedTown(const PlaceModel * root, std::vector<RouteModelPtr> & searchedRoute, std::vector<PlaceModel*> searchedTown)
+	int RouteModel::FindLinkedTown(TownModel * root, std::vector<RouteModelPtr> & searchedRoute, std::vector<PlaceModel*> searchedTown, std::vector<D3DXVECTOR3>& stackRoute)
 	{
 		int cntTown = 0;
 
@@ -207,11 +208,16 @@ namespace Field::Model
 		{
 			searchedRoute.push_back(shared_from_this());
 
-			PlaceModel* town = this->GetConnectedTown(root);
+			PlaceModel* town = this->GetConnectedTown(root->GetPlace());
 			if (town != nullptr && !(from(searchedTown) >> contains(town)))
 			{
 				cntTown++;
 				searchedTown.push_back(town);
+
+				//経路を保存
+				stackRoute.push_back(town->GetPosition().ConvertToWorldPosition());
+				root->AddLinkedRoute(stackRoute);
+				stackRoute.pop_back();
 			}
 		}
 
@@ -226,7 +232,13 @@ namespace Field::Model
 			if (from(searchedRoute) >> contains(ptr))
 				continue;
 
-			cntTown += ptr->FindLinkedTown(root, searchedRoute, searchedTown);
+			stackRoute.push_back(adjacency.start->GetPosition().ConvertToWorldPosition());
+			stackRoute.push_back(adjacency.end->GetPosition().ConvertToWorldPosition());
+
+			cntTown += ptr->FindLinkedTown(root, searchedRoute, searchedTown, stackRoute);
+			
+			stackRoute.pop_back();
+			stackRoute.pop_back();
 		}
 
 		return cntTown;
@@ -261,6 +273,22 @@ namespace Field::Model
 		out.push_back(edgeEnd);
 
 		return out;
+	}
+
+	/**************************************
+	始点取得処理
+	***************************************/
+	PlaceModel * RouteModel::GetFirst() const
+	{
+		return route.front();
+	}
+
+	/**************************************
+	終点取得処理
+	***************************************/
+	PlaceModel * RouteModel::GetLast() const
+	{
+		return route.back();
 	}
 
 	/**************************************

@@ -37,11 +37,9 @@ namespace Field
 	***************************************/
 	const float FieldController::PlaceOffset = 10.0f;				//Placeの1マス毎のオフセット値
 	const int FieldController::InitFieldBorder = 30;				//フィールド範囲の初期値
-	const int FieldController::InitDevelopRiverStock = 10;			//川開発ストックの初期数
-	const int FieldController::InitDevelopMountainStock = 10;		//山開発ストックの初期数
 	const int FieldController::DevelopmentInterval = 30;			//発展レベル上昇のインターバル
 	const float FieldController::MaxDevelopmentLevelAI = 9999.0f;	//AI発展レベルの最大値
-	
+
 	/**************************************
 	コンストラクタ
 	***************************************/
@@ -49,10 +47,6 @@ namespace Field
 		fieldBorder(InitFieldBorder),
 		cntFrame(0),
 		developmentLevelAI(0),
-		stockDevelopRiver(InitDevelopRiverStock),
-		stockDevelopMountain(InitDevelopMountainStock),
-		stockEDF(0),
-		stockInsurance(0),
 		developSpeedBonus(1.0f),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
@@ -118,9 +112,23 @@ namespace Field
 	}
 
 	/**************************************
-	更新処理
+	オブジェクト更新処理
 	***************************************/
-	void FieldController::Update()
+	void FieldController::UpdateObject()
+	{
+		//各更新処理
+		cursor->Update();
+		placeContainer->Update();
+
+		operateContainer->Update();
+
+		placeActController->Update();
+	}
+
+	/**************************************
+	ロジック更新処理
+	***************************************/
+	void FieldController::UpdateLogic()
 	{
 		//使わなくなったルートコンテナを削除
 		auto itr = std::remove_if(routeContainer.begin(), routeContainer.end(), [](auto& ptr)
@@ -129,22 +137,13 @@ namespace Field
 		});
 		routeContainer.erase(itr, routeContainer.end());
 
-		//各更新処理
-		cursor->Update();
-		placeContainer->Update();
-
 		for (auto&& route : routeContainer)
 		{
 			route->Update();
 		}
 
-		placeActController->Update();
-
 		//AI発展レベルを計算
 		CalcDevelopmentLevelAI();
-
-		Debug::Log("ControllerState:%d", current);
-		Debug::Log("DevelopmentAILevel:%d", (int)developmentLevelAI);
 	}
 
 	/**************************************
@@ -157,11 +156,13 @@ namespace Field
 		placeActController->Draw();
 
 #ifdef DEBUG_PLACEMODEL
-		operateContainer->DrawDebug();
 		placeContainer->DrawDebug();
 #endif
+
+
 		//カーソルには透過オブジェクトが含まれるので最後に描画
 		cursor->Draw();
+		operateContainer->Draw();
 	}
 
 	/**************************************
@@ -210,10 +211,7 @@ namespace Field
 	{
 		param.levelAI = (int)developmentLevelAI;
 		param.ratioLevel = (float)developmentLevelAI / MaxDevelopmentLevelAI;
-		param.stockBreakItem = stockDevelopMountain;
-		param.stockBuildItem = stockDevelopRiver;
-		param.stockEDF = stockEDF;
-		param.stockInsurance = stockInsurance;
+		developper->EmbedViewerParam(param);
 	}
 
 	/**************************************
@@ -267,8 +265,7 @@ namespace Field
 		//アイテムストック加算ファンクタ
 		handler.functerInt[Handler::FuncterID_int::AddStock] = [&](int num)
 		{
-			stockDevelopMountain = Math::Clamp(0, 50, stockDevelopMountain + num);
-			stockDevelopRiver = Math::Clamp(0, 50, stockDevelopRiver + num);
+			developper->AddStock(num);
 		};
 
 		//発展倍率付与ファンクタ
@@ -280,7 +277,8 @@ namespace Field
 		//街作成ファンクタ
 		handler.functerPlace[Handler::FuncterID_Place::Create] = [&](auto place)
 		{
-			//後で作る
+			placeContainer->CreateTown(place);
+			placeActController->SetActor(place);
 		};
 
 		//街破壊ファンクタ
@@ -311,21 +309,13 @@ namespace Field
 		//EDFストック使用処理
 		handler.functerBoolReturn[Handler::FuncterID_boolReturn::TryEDF] = [&]()
 		{
-			if (stockEDF <= 0)
-				return false;
-
-			stockEDF--;
-			return true;
+			return false;
 		};
 
 		//保険ストック使用処理
 		handler.functerBoolReturn[Handler::FuncterID_boolReturn::TryInsurance] = [&]()
 		{
-			if (stockInsurance <= 0)
-				return false;
-
-			stockInsurance--;
-			return true;
+			return false;
 		};
 
 		//破壊対象の街取得処理
@@ -339,94 +329,6 @@ namespace Field
 		{
 			return placeContainer->GetNonePlace();
 		};
-	}
-
-	/**************************************
-	AI発展レベルを調整する
-	***************************************/
-	void FieldController::AdjustLevelAI(float percent)
-	{
-		float MaxLevel = 9999.0f;
-		float deltaValue = developmentLevelAI * percent;
-		developmentLevelAI = Math::Clamp(0.0f, MaxLevel, developmentLevelAI + deltaValue);
-	}
-
-	/**************************************
-	繋がっている街全体のリンクレベルを増やす
-	***************************************/
-	void FieldController::AdjustAllLinkLevel(int num)
-	{
-		placeContainer->AddAllLinkLevel(num);
-	}
-
-	/**************************************
-	街一つのリンクレベルを増やす
-	***************************************/
-	void FieldController::AdjustLinlLevel(int num)
-	{
-		placeContainer->AddLinkLevel(num);
-	}
-
-	/**************************************
-	ストックアイテムの数を増やす
-	***************************************/
-	void FieldController::AddStockItem(int num)
-	{
-		//unsigned StockMax = 50;
-		//stockDevelopMountain = Math::Clamp((unsigned)0, StockMax, stockDevelopMountain + num);
-		//stockDevelopRiver = Math::Clamp((unsigned)0, StockMax, stockDevelopRiver + num);
-	}
-
-	/**************************************
-	発展スピードへのボーナス付与
-	***************************************/
-	void FieldController::SetDevelopSpeedBonus(float num)
-	{
-		//TODO ; 解除処理を実装する
-		//TODO : 公開倍率をちゃんと決める
-		developSpeedBonus = num;
-	}
-
-	/**************************************
-	新しい街を出現させる
-	***************************************/
-	void FieldController::CreateNewTown()
-	{
-
-		//NOTE:後で作る
-	}
-
-	/**************************************
-	街を破壊する
-	***************************************/
-	void FieldController::DestroyTown()
-	{
-		//NOTE：後で作る
-	}
-
-	/**************************************
-	操作を反転させる
-	***************************************/
-	void FieldController::ReverseOperation(bool isReverse)
-	{
-		//InputControllerを作ってから
-	}
-
-	/**************************************
-	ストックアイテム使用を封印する
-	***************************************/
-	void FieldController::SealUsingItem(bool isSeal)
-	{
-		//Developperを作ってから
-	}
-
-	/**************************************
-	混雑度を上昇させる
-	***************************************/
-	void FieldController::RaiseTrafficJam(float bias)
-	{
-		//TODO：解除処理を実装する
-		placeContainer->SetTrafficjamBias(bias);
 	}
 
 	/**************************************

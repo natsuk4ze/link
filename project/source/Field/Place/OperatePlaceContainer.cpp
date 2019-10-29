@@ -10,6 +10,8 @@
 
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../../../Framework/Renderer3D/BoardPolygon.h"
+#include "../../../Framework/Tween/Tween.h"
+
 #include "../../../Library/cppLinq/cpplinq.hpp"
 
 #include <algorithm>
@@ -28,6 +30,8 @@ namespace Field::Model
 	***************************************/
 	OperatePlaceContainer::OperatePlaceContainer()
 	{
+		const D3DXVECTOR2 SizePin{ 4.5f, 4.5f };
+		ResourceManager::Instance()->MakePolygon("PinActor", "data/TEXTURE/Field/fieldpin.png", SizePin, { 2.0f, 1.0f });
 	}
 
 	/**************************************
@@ -49,7 +53,7 @@ namespace Field::Model
 
 		//コンテナに追加してreturn true
 		container.push_back(place);
-
+		CreatePin(place, BuildRoad);
 		return true;
 	}
 
@@ -64,6 +68,7 @@ namespace Field::Model
 
 		//コンテナに追加してreturn true
 		container.push_back(place);
+		CreatePin(place, Develop);
 
 		return true;
 	}
@@ -89,6 +94,7 @@ namespace Field::Model
 
 		//追加してreturn true
 		container.push_back(place);
+		CreatePin(place, BuildRoad);
 
 		return true;
 	}
@@ -109,6 +115,7 @@ namespace Field::Model
 
 		//追加してreturn true
 		container.push_back(place);
+		CreatePin(place, Develop);
 
 		return true;
 	}
@@ -125,6 +132,7 @@ namespace Field::Model
 		if (container.size() < validContainerSize)
 		{
 			container.clear();
+			actorContainer.clear();
 			return false;
 		}
 
@@ -133,6 +141,7 @@ namespace Field::Model
 		if (!last->CanStartRoute())
 		{
 			container.clear();
+			actorContainer.clear();
 			return false;
 		}
 
@@ -153,6 +162,7 @@ namespace Field::Model
 		if (cntNonDevelopable < 2)
 		{
 			container.clear();
+			actorContainer.clear();
 			return false;
 		}
 
@@ -166,6 +176,7 @@ namespace Field::Model
 	{
 		container.clear();
 		std::vector<PlaceModel*>().swap(container);
+		actorContainer.clear();
 	}
 
 	/**************************************
@@ -177,28 +188,74 @@ namespace Field::Model
 	}
 
 	/**************************************
-	デバッグ表示
+	更新処理
 	***************************************/
-	void OperatePlaceContainer::DrawDebug()
+	void Field::Model::OperatePlaceContainer::Update()
 	{
-#ifdef DEBUG_PLACEMODEL
-		BoardPolygon *polygon;
-		ResourceManager::Instance()->GetPolygon("Operate", polygon);
-
-		for (auto&& place : container)
+		for (auto&& actor : actorContainer)
 		{
-			FieldPosition position = place->GetPosition();
-
-			Transform transform{
-				position.ConvertToWorldPosition() + Vector3::Up * 5.0f,
-				{ D3DXToRadian(90.0f), 0.0f, 0.0f },
-				Vector3::One
-			};
-
-			transform.SetWorld();
-
-			polygon->Draw();
+			actor->Update();
 		}
-#endif
+	}
+
+	/**************************************
+	描画処理
+	***************************************/
+	void OperatePlaceContainer::Draw()
+	{
+		LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+		for (auto&& actor : actorContainer)
+		{
+			actor->Draw();
+		}
+		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	}
+
+	/**************************************
+	ピンアクター作成処理
+	***************************************/
+	void Field::Model::OperatePlaceContainer::CreatePin(const PlaceModel * place, Mode mode)
+	{
+		D3DXVECTOR3 offset = place->IsType(PlaceType::Mountain) ? Vector3::Up * 15.0f : Vector3::Up * 5.0f;
+		PinActor *actor = new PinActor(place->GetPosition().ConvertToWorldPosition() + offset, mode);
+		actorContainer.push_back(std::unique_ptr<PinActor>(actor));
+	}
+
+	/**************************************
+	PinActorコンストラクタ
+	***************************************/
+	PinActor::PinActor(const D3DXVECTOR3& position, OperatePlaceContainer::Mode mode)
+	{
+		polygon = new BoardPolygon();
+		polygon->SetTexDiv({ 2.0f, 1.0f });
+		polygon->SetTextureIndex(mode);
+		ResourceManager::Instance()->GetPolygon("PinActor", polygon);
+		Tween::Move(*this, position + Vector3::Up * 10.0f, position, 30, EaseType::OutCubic);
+	}
+
+	/**************************************
+	PinActorデストラクタ
+	***************************************/
+	PinActor::~PinActor()
+	{
+		SAFE_DELETE(polygon);
+	}
+
+	/**************************************
+	PinActor更新処理
+	***************************************/
+	void Field::Model::PinActor::Update()
+	{
+		transform->Rotate(10.0f, Vector3::Up);
+	}
+
+	/**************************************
+	PinActor描画処理
+	***************************************/
+	void PinActor::Draw()
+	{
+		polygon->Draw(transform->GetMatrix());
 	}
 }

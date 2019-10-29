@@ -39,10 +39,9 @@ NewCityEvent::NewCityEvent(EventViewer *Ptr) : eventViewer(Ptr)
 			TownPosVec3,
 			30,
 			// 新しい町を作る関数のラムダ式
-			[&]()
+			[=]()
 		{
 			fieldEventHandler->CreateNewTown(NewTown);
-			Camera::TranslationPlugin::Instance()->Restore(30, nullptr);
 		});
 	});
 }
@@ -76,29 +75,6 @@ void NewCityEvent::Draw()
 //=============================================================================
 string NewCityEvent::GetEventMessage(int FieldLevel)
 {
-	vector<string> MessageContainer;
-
-	if (FieldLevel == Field::Model::City)
-	{
-		MessageContainer.push_back("ようこそジャパリパークへ");
-	}
-	else if (FieldLevel == Field::Model::World)
-	{
-
-	}
-	else if (FieldLevel == Field::Model::Space)
-	{
-
-	}
-
-	if (!MessageContainer.empty())
-	{
-		int MessageNo = rand() % MessageContainer.size();
-		return MessageContainer.at(MessageNo);
-	}
-	else
-	{
-		string ErrMsg = "イベントメッセージがありません";
-		return ErrMsg;
-	}
+	// ヌル
+	return "";
 }

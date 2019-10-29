@@ -9,23 +9,30 @@
 #include "../../Field/FieldController.h"
 #include "../../Field/Camera/FieldCamera.h"
 #include "../../Event/EventController.h"
+#include "../../../Framework/Input/input.h"
+#include "../../../Framework/Tool/ProfilerCPU.h"
 
 /**************************************
 更新処理
 ***************************************/
 GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 {
-	State next = State::Idle;
-
 	//入力確認
 	entity.field->CheckInput();
-	entity.fieldCamera->CheckInput();
 
-	//各オブジェクト更新
-	entity.field->Update();
+	//フィールド更新
+	ProfilerCPU::Instance()->Begin("Update Logic");
+	entity.field->UpdateLogic();
+	ProfilerCPU::Instance()->End("Update Logic");
+
+	ProfilerCPU::Instance()->Begin("Update FieldObject");
+	entity.field->UpdateObject();
+	ProfilerCPU::Instance()->End("Update FieldObject");
 
 	//イベント更新
+	ProfilerCPU::Instance()->Begin("Update Event");
 	entity.eventController->Update();
+	ProfilerCPU::Instance()->End("Update Event");
 
 	//制限時間カウント
 	entity.remainTime = Math::Max(0, --entity.remainTime);
@@ -33,15 +40,20 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 	//残り時間が0になったら終了
 	if (entity.remainTime == 0)
 	{
-		next = State::Finish;
+		entity.ChangeState(State::Finish);
 	}
 	//AI発展レベルが最大に到達していたらレベルアップ
 	else if (entity.field->ShouldLevelUp())
 	{
-		next = State::LevelUp;
+		entity.ChangeState(State::LevelUp);
+	}
+	//遠景モードへの遷移確認
+	else if (Keyboard::GetTrigger(DIK_SPACE))
+	{
+		entity.ChangeState(State::FarView);
 	}
 
-	return next;
+	return State::Idle;
 }
 
 /**************************************

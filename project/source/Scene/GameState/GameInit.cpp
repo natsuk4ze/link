@@ -56,7 +56,7 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 
 	//カメラの追従目標にカーソルを設定してモード切替
 	entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
-	entity.fieldCamera->ChangeMode();
+	entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
 
 	//CSVデータをロード
 	entity.field->Load();

@@ -27,6 +27,12 @@ namespace Field
 	class FieldCursor : public GameObject
 	{
 	public:
+		enum Mode
+		{
+			BuildRoad,
+			Develop
+		};
+
 		//コンストラクタ、デストラクタ
 		FieldCursor(float positionOffset);
 		~FieldCursor();
@@ -47,6 +53,9 @@ namespace Field
 		//座標設定処理
 		void SetModelPosition(int x, int z);
 
+		//モード切り替え処理
+		void SetMode(Mode mode);
+
 	private:
 		const int SquareMax = 5;			//四角形最大数
 		const int EmitInterval = 10;		//四角形生成インターバル
@@ -55,6 +64,8 @@ namespace Field
 
 		int cntFrame;						//フレームカウント
 		int cntMove;						//移動カウント
+
+		Mode currentMode;					//現在のモード
 
 		FieldPosition position;				//座標
 		FieldBorder fieldBorder;			//移動可能な範囲
@@ -94,11 +105,10 @@ namespace Field
 		//比較関数
 		static bool Compare(const FieldCursorSquare* lhs, const FieldCursorSquare* rhs);
 
-	private:
 		static const D3DXVECTOR2 Size;				//サイズ
 		static const int FadeDuration;				//フェード時間
 		static const float MoveSpeed;				//移動スピード
-
+	private:
 		int cntFrame;								//フレームカウント
 		Transform *transform;						//SRT情報
 	};

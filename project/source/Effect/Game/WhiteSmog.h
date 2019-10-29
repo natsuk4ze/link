@@ -10,7 +10,7 @@
 
 #include "../../../main.h"
 #include "../../../Framework/Particle/BaseParticleController.h"
-#include "../../../Framework/Particle/AnimationParticle.h"
+#include "../../../Framework/Particle/3D/AnimationParticle3D.h"
 
 namespace Effect::Game
 {
@@ -26,7 +26,7 @@ namespace Effect::Game
 	/**************************************
 	WhiteSmogƒNƒ‰ƒX
 	***************************************/
-	class WhiteSmog : public AnimationParticle
+	class WhiteSmog : public AnimationParticle3D
 	{
 	public:
 		WhiteSmog();

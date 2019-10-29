@@ -12,7 +12,9 @@
 #include "BaseEmitter.h"
 #include "ParticleJsonParser.h"
 #include "ParticleRenderer.h"
+
 #include <vector>
+#include <functional>
 
 /**************************************
 マクロ定義
@@ -34,8 +36,15 @@ BasePartlceControllerクラス
 class BaseParticleController
 {
 public:
+	enum ParticleType
+	{
+		Particle_3D = 0,
+		Particle_2D,
+		Max
+	};
+
 	//コンストラクタ、デストラクタ
-	BaseParticleController();
+	BaseParticleController(ParticleType type);
 	virtual ~BaseParticleController();
 
 	template<class T>
@@ -67,8 +76,8 @@ public:
 	};
 
 	//エミッタセット処理
-	virtual BaseEmitter* SetEmitter(const D3DXVECTOR3& pos);	
-	virtual BaseEmitter* SetEmitter(const Transform& transform);
+	virtual BaseEmitter* SetEmitter(const D3DXVECTOR3& pos, std::function<void(void)> callback = nullptr);
+	virtual BaseEmitter* SetEmitter(const Transform& transform, std::function<void(void)> callback = nullptr);
 
 	virtual void Uninit();				//終了処理
 	void Update();						//更新処理
@@ -96,6 +105,9 @@ protected:
 
 	//コンテナ作成
 	virtual void MakeEmitterContainer(const ParticleJsonParser& data);
+
+	//使用するパーティクルのタイプ
+	ParticleType useType;
 
 private:
 	//インスタンシングに必要な静的メンバ
