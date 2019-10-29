@@ -193,6 +193,7 @@
     <ClInclude Include="source\Scene\GameState\GameFarView.h" />
     <ClInclude Include="source\Field\Along\AlongModel.h" />
     <ClInclude Include="source\Field\Along\AlongActor.h" />
+    <ClInclude Include="source\Field\Along\AlongController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -370,6 +371,7 @@
     <ClCompile Include="source\Scene\GameState\GameFarView.cpp" />
     <ClCompile Include="source\Field\Along\AlongModel.cpp" />
     <ClCompile Include="source\Field\Along\AlongActor.cpp" />
+    <ClCompile Include="source\Field\Along\AlongController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
