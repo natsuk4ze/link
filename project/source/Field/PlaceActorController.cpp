@@ -11,6 +11,7 @@
 #include "FieldConfig.h"
 #include "../../Framework/Task/TaskManager.h"
 #include "../Effect/GameParticleManager.h"
+#include "Along\AlongController.h"
 
 #include "../FieldObject/Actor/CityActor.h"
 #include "../FieldObject/Actor/CrossJunctionActor.h"
@@ -45,6 +46,7 @@ namespace Field::Actor
 	PlaceActorController::PlaceActorController()
 	{
 		bgContainer.reserve(ReserveGround);
+		alongController = new Along::AlongController();
 	}
 
 	/**************************************
@@ -52,6 +54,7 @@ namespace Field::Actor
 	***************************************/
 	PlaceActorController::~PlaceActorController()
 	{
+		SAFE_DELETE(alongController);
 		bgContainer.clear();
 		actorContainer.clear();
 	}
@@ -61,6 +64,8 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::Update()
 	{
+		alongController->Update();
+
 		RiverActor::UpdateHeight();
 
 		for (auto&& ground : bgContainer)
@@ -99,6 +104,8 @@ namespace Field::Actor
 		{
 			actor.second->Draw();
 		}
+
+		alongController->Draw();
 	}
 
 	/**************************************
@@ -220,14 +227,16 @@ namespace Field::Actor
 		{
 			//アクター生成
 			PlaceActor* actor = new StraightRoadActor(actorPos, Model::FieldLevel::City);
-			actor->SetScale(Vector3::Zero);
 			AddContainer(place->ID(), actor);
 
 			//左右に繋がるタイプなら回転させる
 			if (straightType == StraightType::RightAndLeft)
 				actor->Rotate(90.0f);
 
+			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::Straight);
+
 			// 生成アニメーション
+			actor->SetScale(Vector3::Zero);
 			SetRoadGenerateAnimation(actor, actorPos, delay);
 		}
 		//カーブの場合
@@ -235,7 +244,6 @@ namespace Field::Actor
 		{
 			//アクター生成
 			PlaceActor* actor = new CurveRoadActor(actorPos, Model::FieldLevel::City);
-			actor->SetScale(Vector3::Zero);
 			AddContainer(place->ID(), actor);
 
 			//回転角度を決定して回転
@@ -251,7 +259,10 @@ namespace Field::Actor
 
 			actor->Rotate(rotAngle);
 
+			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::Curve);
+
 			// 生成アニメーション
+			actor->SetScale(Vector3::Zero);
 			SetRoadGenerateAnimation(actor, actorPos, delay);
 		}
 	}
@@ -328,9 +339,12 @@ namespace Field::Actor
 		{
 			PlaceActor *actor = new CrossJunctionActor(actorPos, Model::FieldLevel::City);
 
+			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::CrossJunction);
+
 			// 生成アニメーション
 			ActorAnimation::RotateAndExpantion(*actor);
 			AddContainer(place->ID(), actor);
+
 		}
 		//T字路のアクター生成
 		else
@@ -345,14 +359,16 @@ namespace Field::Actor
 			else if (junctionType == TjunctionType::ExceptForward)
 				rotAngle = 180.0f;
 			else if (junctionType == TjunctionType::ExceptLeft)
-				rotAngle = -90.0f;
+				rotAngle = 270.0f;
 
 			actor->Rotate(rotAngle);
 
+			AddContainer(place->ID(), actor);
+			
+			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::T_Junction);
+
 			// 生成アニメーション
 			ActorAnimation::RotateAndExpantion(*actor);
-
-			AddContainer(place->ID(), actor);
 		}
 	}
 
@@ -399,7 +415,7 @@ namespace Field::Actor
 	void PlaceActorController::AddContainer(unsigned key, PlaceActor * actor)
 	{
 		//重複確認
-		assert(actorContainer.count(key) == 0);
+		EraseFromContainer(key);
 
 		actorContainer.emplace(key, std::unique_ptr<PlaceActor>(actor));
 	}
