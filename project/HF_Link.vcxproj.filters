@@ -143,7 +143,6 @@
     <ClInclude Include="source\Viewer\GameScene\GameViewer\TimerViewer.h" />
     <ClInclude Include="source\GameConfig.h" />
     <ClInclude Include="source\GameMain.h" />
-    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\TelopDrawer.h" />
     <ClInclude Include="source\FieldObject\Actor\NoneActor.h" />
     <ClInclude Include="source\FieldObject\Animation\ActorAnimation.h" />
     <ClInclude Include="source\Scene\GameState\GameFinish.h" />
@@ -319,7 +318,6 @@
     <ClCompile Include="source\Viewer\GameScene\GameViewer\LevelViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp" />
     <ClCompile Include="source\GameMain.cpp" />
-    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\TelopDrawer.cpp" />
     <ClCompile Include="source\FieldObject\Actor\NoneActor.cpp" />
     <ClCompile Include="source\FieldObject\Animation\ActorAnimation.cpp" />
     <ClCompile Include="source\Scene\GameState\GameFinish.cpp" />

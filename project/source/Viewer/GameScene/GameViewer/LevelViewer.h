@@ -36,10 +36,10 @@ public:
 	};
 
 	//AIレベルビュアーの種類数
-	static const int typeMax = 4;
+	static const int typeMax = 2;
 
 	//パラメータを受けとる箱
-	float parameterBox[2];
+	float parameterBox[typeMax];
 
 private:
 	CircleGauge *circleGuage;
@@ -48,12 +48,6 @@ private:
 
 	//アニメーション処理
 	void Animate();
-
-	//現在のパラメータ
-	int currentParam = 0;
-
-	//１フレーム前のパラメータ
-	int lastParam = 0;
 };
 
 #endif
