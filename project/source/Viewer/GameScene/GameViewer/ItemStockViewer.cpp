@@ -67,6 +67,7 @@ ItemStockViewer::~ItemStockViewer()
 //=============================================================================
 void ItemStockViewer::Update(void)
 {
+	//アニメーション
 	Animate();
 }
 
@@ -75,9 +76,11 @@ void ItemStockViewer::Update(void)
 //=============================================================================
 void ItemStockViewer::Draw(void)
 {
+	//アイコン
 	icon->Draw();
 	icon->SetVertex();
 
+	//数字
 	num->DrawCounter(num->baseNumber, parameterBox, num->placeMax,
 		num->intervalNumberScr, num->intervalNumberTex);
 }
@@ -87,6 +90,12 @@ void ItemStockViewer::Draw(void)
 //=============================================================================
 void ItemStockViewer::Animate(void)
 {
+	//現在のパラメータ
+	static int currentParam;
+
+	//１フレーム前のパラメータ
+	static int lastParam;
+
 	//前フレームのパラメータとの差が0でないときホッピング状態にする
 	currentParam = parameterBox;
 	if (currentParam - lastParam != 0)

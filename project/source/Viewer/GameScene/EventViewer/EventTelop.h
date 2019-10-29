@@ -25,7 +25,7 @@ enum TelopID
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
-class TelopDrawer;
+class BaseViewerDrawer;
 
 //*****************************************************************************
 // クラス定義
@@ -45,14 +45,15 @@ public:
 	void Set(TelopID id, std::function<void(void)> Callback = nullptr);
 
 private:
-	TelopDrawer *text;
-	TelopDrawer *bg;
+	BaseViewerDrawer *text;
+	BaseViewerDrawer *bg;
 
 	//再生終了通知
 	std::function<void(void)> Callback;
 
 	//テキストのテクスチャ情報コンテナ
 	std::vector <LPDIRECT3DTEXTURE9> textTexContainer;
+
 	//背景のテクスチャ情報コンテナ
 	std::vector <LPDIRECT3DTEXTURE9> bgTexContainer;
 
@@ -61,6 +62,33 @@ private:
 
 	//テクスチャ情報受け渡し
 	void PassTexture(TelopID id);
+
+	//背景頂点セット
+	void SetVertexBG(float percentage);
+
+	//背景頂点作成
+	void MakeVertexBG(void);
+
+	//背景をオープン
+	void OpenBG(void);
+
+	//背景をクローズ
+	void CloseBG(void);
+
+	//背景のアクティブパーセンテージ
+	float percentageBG;
+
+	//再生中かどうか
+	bool isPlaying;
+
+	//フレームカウント
+	int countFrame;
+
+	//現在のアニメーション
+	int currentAnim;
+
+	//アニメーション時間
+	float animTime;
 };
 
 #endif

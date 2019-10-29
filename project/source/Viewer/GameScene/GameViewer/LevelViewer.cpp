@@ -10,12 +10,13 @@
 #include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
 #include "LevelViewer.h"
 
+#ifdef _DEBUG
+#include "../../../../Framework/Input/input.h"
+#endif
+
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-
-//数字のホップ量
-static const float hopNumValue = 50.0f;
 
 //数字の初期サイズ
 static const D3DXVECTOR3 initNumSize = D3DXVECTOR3(70.0f, 70.0f, 0.0f);
@@ -83,9 +84,38 @@ void LevelViewer::Draw(void)
 	bg->SetVertex();
 	bg->Draw();
 
-	circleGuage->SetPercent(parameterBox[RatioLevel]);
+	//描画用ratioAI
+	static float drawingRatio;
+
+	//ratioAiの増加スピード
+	static const float ratioIncreaseSpeed = 0.005f;
+
+	//*後からEasingで実装？
+	if (drawingRatio < parameterBox[RatioLevel])
+	{
+		drawingRatio += ratioIncreaseSpeed;
+		if (drawingRatio >= parameterBox[RatioLevel])
+		{
+			drawingRatio = parameterBox[RatioLevel];
+		}
+	}
+	if (drawingRatio > parameterBox[RatioLevel])
+	{
+		if(drawingRatio < 1.0f)
+		{
+			drawingRatio += ratioIncreaseSpeed;
+		}
+		if (drawingRatio >= 1.0f)
+		{
+			drawingRatio = 0.0f;
+		}
+	}
+
+	//円ゲージ
+	circleGuage->SetPercent(drawingRatio);
 	circleGuage->Draw();
 
+	//数宇
 	num->DrawCounter(num->baseNumber, (int)parameterBox[LevelAI], num->placeMax,
 		num->intervalNumberScr, num->intervalNumberTex);
 }
@@ -95,6 +125,15 @@ void LevelViewer::Draw(void)
 //=============================================================================
 void LevelViewer::Animate(void)
 {
+	//現在のパラメータ
+	static int currentParam;
+
+	//１フレーム前のパラメータ
+	static int lastParam;
+
+	//数字のホップ量
+	static const float hopNumValue = 50.0f;
+
 	//前フレームのパラメータより現在のパラメータが大きい場合ホッピング状態にする
 	currentParam = (int)parameterBox[LevelAI];
 	if (currentParam - lastParam > 0)
