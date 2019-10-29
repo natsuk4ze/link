@@ -191,6 +191,7 @@
     <ClInclude Include="Framework\Resource\PolygonResource.h" />
     <ClInclude Include="Framework\Effect\SpriteEffect.h" />
     <ClInclude Include="source\Scene\GameState\GameFarView.h" />
+    <ClInclude Include="source\Field\Along\AlongModel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -366,6 +367,7 @@
     <ClCompile Include="Framework\Resource\PolygonResource.cpp" />
     <ClCompile Include="Framework\Effect\SpriteEffect.cpp" />
     <ClCompile Include="source\Scene\GameState\GameFarView.cpp" />
+    <ClCompile Include="source\Field\Along\AlongModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
