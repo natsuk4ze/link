@@ -31,7 +31,13 @@ namespace Field::Along
 
 		void PlayAnimation();
 
+		void SetPosition(const D3DXVECTOR3& position) override;
+
 	protected:
+		static const float RangePositionOffset;
+		static const float MinScale;
+		static const float MaxScale;
+
 		MeshContainer * mesh;
 	};
 }

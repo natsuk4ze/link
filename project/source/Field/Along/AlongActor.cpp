@@ -13,6 +13,13 @@
 namespace Field::Along
 {
 	/**************************************
+	staticメンバ
+	***************************************/
+	const float AlongActor::RangePositionOffset = 1.5f;
+	const float AlongActor::MinScale = 0.9f;
+	const float AlongActor::MaxScale = 1.2f;
+
+	/**************************************
 	コンストラクタ
 	***************************************/
 	AlongActor::AlongActor()
@@ -50,6 +57,19 @@ namespace Field::Along
 	***************************************/
 	void AlongActor::PlayAnimation()
 	{
-		Tween::Scale(*this, Vector3::Zero, Vector3::One, 15, InCubic);
+		float scale = Math::RandomRange(MinScale, MaxScale);
+		Tween::Scale(*this, Vector3::Zero, Vector3::One * scale, 15, InCubic);
+	}
+
+	/**************************************
+	座標設定処理
+	***************************************/
+	void AlongActor::SetPosition(const D3DXVECTOR3 & position)
+	{
+		float offsetX = Math::RandomRange(-RangePositionOffset, RangePositionOffset);
+		float offsetY = Math::RandomRange(-RangePositionOffset, RangePositionOffset);
+		float offsetZ = Math::RandomRange(-RangePositionOffset, RangePositionOffset);
+
+		transform->SetPosition(position + D3DXVECTOR3(offsetX, offsetY, offsetZ));
 	}
 }
