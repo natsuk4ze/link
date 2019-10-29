@@ -34,12 +34,6 @@ private:
 	BaseViewerDrawer *icon;
 	CountViewerDrawer *num;
 
-	//現在のパラメータ
-	int currentParam;
-
-	//１フレーム前のパラメータ
-	int lastParam;
-
 	//アニメーション
 	void Animate(void);
 };

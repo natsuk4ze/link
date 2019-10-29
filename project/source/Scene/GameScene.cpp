@@ -32,8 +32,6 @@
 #include "GameState/GamePause.h"
 #include "GameState\GameFarView.h"
 
-#include "../FieldObject/Actor/CityActor.h"
-
 #include "../../Framework/Tool/DebugWindow.h"
 
 /**************************************
@@ -78,7 +76,19 @@ void GameScene::Init()
 	//ステート初期化
 	ChangeState(State::Initialize);
 
+	// テスト用
 	//testActor = new CityActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), FModel::City);
+	//std::vector<D3DXVECTOR3> root;
+	//D3DXVECTOR3 push = D3DXVECTOR3(150.0f, 0.0f, -150.0f);
+	//root.push_back(push);
+	//push = D3DXVECTOR3(250.0f, 0.0f, -150.0f);
+	//root.push_back(push);
+	//push = D3DXVECTOR3(250.0f, 0.0f, -50.0f);
+	//root.push_back(push);
+	//push = D3DXVECTOR3(150.0f, 0.0f, -50.0f);
+	//root.push_back(push);
+	//passengerController = new PassengerController();
+	//passengerController->SetPassenger(root);
 }
 
 /**************************************
@@ -103,7 +113,10 @@ void GameScene::Uninit()
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
 
+	// テスト用
 	//SAFE_DELETE(testActor);
+	//SAFE_DELETE(passengerController);
+
 	//デリゲート削除
 	SAFE_DELETE(onBuildRoad);
 
@@ -128,7 +141,9 @@ void GameScene::Update()
 	SpriteEffect::SetView(fieldCamera->GetViewMtx());
 	SpriteEffect::SetProjection(fieldCamera->GetProjectionMtx());
 
+	// テスト用
 	//testActor->Update();
+	//passengerController->Update();
 
 	//ビューワパラメータをビューワに渡す
 	GameViewerParam param;
@@ -169,7 +184,9 @@ void GameScene::Draw()
 	//背景描画
 	skybox->Draw();
 
+	// テスト用
 	//testActor->Draw();
+	//passengerController->Draw();
 
 	//オブジェクト描画
 	ProfilerCPU::Instance()->Begin("Draw Object");

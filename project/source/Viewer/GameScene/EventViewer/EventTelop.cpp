@@ -5,12 +5,14 @@
 //
 //=============================================================================
 #include "../../../../main.h"
-#include "../../Framework/ViewerDrawer/TelopDrawer.h"
 #include"../../../../Framework/Math/Easing.h"
+#include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "EventTelop.h"
 
 #ifdef _DEBUG
+
 #include "../../../../Framework/Input/input.h"
+
 #endif
 
 //*****************************************************************************
@@ -43,48 +45,49 @@ static const int animMax = 5;
 
 //テキストアニメーション開始位置
 static const float textStartPositionX[animMax] = {
-	SCREEN_WIDTH*1.5,
-	SCREEN_WIDTH*1.5,
+	SCREEN_WIDTH*1.2,
+	SCREEN_WIDTH*1.2,
 	SCREEN_CENTER_X,
 	SCREEN_CENTER_X,
-	-SCREEN_WIDTH * 1.5
+	-SCREEN_WIDTH * 1.2
 };
 
 //テキストアニメーション終了位置
 static const float textEndPositionX[animMax] = {
-	SCREEN_WIDTH*1.5,
+	SCREEN_WIDTH*1.2,
 	SCREEN_CENTER_X,
 	SCREEN_CENTER_X,
-	-SCREEN_WIDTH * 1.5,
-	-SCREEN_WIDTH * 1.5
+	-SCREEN_WIDTH * 1.2,
+	-SCREEN_WIDTH * 1.2
 };
 
 //テキストアニメーション種類
-static const EaseType textAnimType[animMax] = {
+static const EaseType animType[animMax] = {
+	OutCirc,
+	OutCirc,
 	InOutCubic,
-	InOutCubic,
-	InOutCubic,
-	InOutCubic,
-	InOutCubic
+	InCirc,
+	OutCirc
 };
 
-//テキストアニメーション間隔
-static const float textAnimDuration[animMax] = {
+//テキストアニメーション間隔(ここを変更するとアニメーションの速さを調整できる)
+//*注意(0を入れると無限になるからアニメーションそのものを削除すること)
+static const float animDuration[animMax] = {
+	15,
+	50,
+	5,
 	30,
-	120,
-	100,
-	120,
-	30
+	15
 };
 
 //アニメーションシーン
 enum TelopAnimScene
 {
-	WaitBG_Open,
+	BG_Open,
 	InText,
 	StopText,
 	OutText,
-	WaitBG_Close
+	BG_Close
 };
 
 //*****************************************************************************
@@ -93,17 +96,16 @@ enum TelopAnimScene
 EventTelop::EventTelop()
 {
 	//テキスト
-	text = new TelopDrawer();
-	text->MakeVertexText();
+	text = new BaseViewerDrawer();
+	text->MakeVertex();
 	text->size = D3DXVECTOR3(512, 128.0f, 0.0f);
 	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	text->position = D3DXVECTOR3(SCREEN_WIDTH*1.5, SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
+	text->position = D3DXVECTOR3(SCREEN_WIDTH*1.2, SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
 	text->SetColor(SET_COLOR_NOT_COLORED);
 
 	//背景
-	bg = new TelopDrawer();
-	bg->percentage = 0.0f;
-	bg->MakeVertexBG();
+	bg = new BaseViewerDrawer();
+	MakeVertexBG();
 	bg->size = D3DXVECTOR3(SCREEN_WIDTH / 2, 60.0f, 0.0f);
 	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	bg->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 5), SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
@@ -162,15 +164,13 @@ void EventTelop::Update()
 //=============================================================================
 void EventTelop::Draw(void)
 {
-	//背景を先に描画
-	if (bg->isPlaying)
+	//再生中なら描画
+	if (isPlaying)
 	{
+		//背景を先に描画
 		bg->Draw();
-		bg->SetVertexBG(bg->percentage);
-	}
+		SetVertexBG(percentageBG);
 
-	if (text->isPlaying)
-	{
 		text->Draw();
 		text->SetVertex();
 	}
@@ -181,45 +181,45 @@ void EventTelop::Draw(void)
 //=============================================================================
 void EventTelop::Play()
 {
-	if (text->isPlaying&&bg->isPlaying)
+	if (isPlaying)
 	{
-		//背景アニメーション開始
-		bg->PlayBG();
+		//フレーム更新
+		countFrame++;
+
+		//時間更新
+		animTime = countFrame / animDuration[currentAnim];
 
 		//アニメーションがWaitBG_Openの間背景をオープンする
-		if (text->currentAnim == WaitBG_Open && bg->isBG_Openinig == false)
+		if (currentAnim == BG_Open)
 		{
-			bg->PlayBG_Open();
+			OpenBG();
 		}
-		//アニメーションがWaitBG_Closeの間背景をクローズする
-		if (text->currentAnim == WaitBG_Close && bg->isBG_Closing == false)
-		{
-			bg->PlayBG_Close();
-		}
-
-		//フレーム更新
-		text->countFrame++;
 
 		//ポジションを更新
-		text->position.x = Easing::EaseValue(text->GetCountObject(textAnimDuration[text->currentAnim]),
-			textStartPositionX[text->currentAnim],
-			textEndPositionX[text->currentAnim],
-			textAnimType[text->currentAnim]);
+		text->position.x = Easing::EaseValue(animTime,
+			textStartPositionX[currentAnim],
+			textEndPositionX[currentAnim],
+			animType[currentAnim]);
+
+		//アニメーションがWaitBG_Closeの間背景をクローズする
+		if (currentAnim == BG_Close)
+		{
+			CloseBG();
+		}
 
 		//アニメーション更新
-		if (text->countFrame == textAnimDuration[text->currentAnim])
+		if (countFrame == animDuration[currentAnim])
 		{
-			text->countFrame = 0;
-			text->currentAnim++;
+			countFrame = 0;
+			currentAnim++;
 		}
 
 		//アニメーション終了
-		if (text->currentAnim >= animMax)
+		if (currentAnim >= animMax)
 		{
-			text->countFrame = 0;
-			text->currentAnim = 0;
-			text->isPlaying = false;
-			bg->isPlaying = false;
+			countFrame = 0;
+			currentAnim = 0;
+			isPlaying = false;
 
 			//ヌルチェック
 			if (Callback != nullptr)
@@ -228,6 +228,81 @@ void EventTelop::Play()
 				Callback();
 			}
 		}
+	}
+}
+
+//=============================================================================
+// 背景テクスチャの頂点の作成
+//=============================================================================
+void EventTelop::MakeVertexBG()
+{
+	//最初はアクティブパーセンテージを0に設定
+	percentageBG = 0.0f;
+
+	// 頂点座標の設定
+	bg->vertexWk[0].vtx = D3DXVECTOR3(0, bg->position.y - bg->size.y*percentageBG, bg->position.z);
+	bg->vertexWk[1].vtx = D3DXVECTOR3(SCREEN_WIDTH, bg->position.y - bg->size.y*percentageBG, bg->position.z);
+	bg->vertexWk[2].vtx = D3DXVECTOR3(0, bg->position.y + bg->size.y*percentageBG, bg->position.z);
+	bg->vertexWk[3].vtx = D3DXVECTOR3(SCREEN_WIDTH, bg->position.y + bg->size.y*percentageBG, bg->position.z);
+
+	// テクスチャのパースペクティブコレクト用
+	bg->vertexWk[0].rhw =
+		bg->vertexWk[1].rhw =
+		bg->vertexWk[2].rhw =
+		bg->vertexWk[3].rhw = 1.0f;
+
+	// テクスチャ座標の設定
+	bg->vertexWk[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+	bg->vertexWk[1].tex = D3DXVECTOR2(3.0, 0.0f);
+	bg->vertexWk[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	bg->vertexWk[3].tex = D3DXVECTOR2(3.0f, 1.0f);
+}
+
+//=============================================================================
+// 背景の頂点座標の設定
+//=============================================================================
+void EventTelop::SetVertexBG(float percentageBG)
+{
+	// 頂点座標の設定
+	bg->vertexWk[0].vtx = D3DXVECTOR3(0, bg->position.y - bg->size.y*percentageBG, bg->position.z);
+	bg->vertexWk[1].vtx = D3DXVECTOR3(SCREEN_WIDTH, bg->position.y - bg->size.y*percentageBG, bg->position.z);
+	bg->vertexWk[2].vtx = D3DXVECTOR3(0, bg->position.y + bg->size.y*percentageBG, bg->position.z);
+	bg->vertexWk[3].vtx = D3DXVECTOR3(SCREEN_WIDTH, bg->position.y + bg->size.y*percentageBG, bg->position.z);
+}
+
+//=============================================================================
+// 背景を開く処理
+//=============================================================================
+void EventTelop::OpenBG(void)
+{
+	//イージングのスタートとゴールを設定
+	float bgEasingStart = 0.0f;
+	float bgEasingGoal = 1.0f;
+
+	//背景アクティブパーセンテージを更新
+	percentageBG = Easing::EaseValue(animTime, bgEasingStart, bgEasingGoal, animType[BG_Open]);
+
+	if (percentageBG >= bgEasingGoal)
+	{
+		percentageBG = 1.0f;
+	}
+}
+
+//=============================================================================
+// 背景を閉じる処理
+//=============================================================================
+void EventTelop::CloseBG(void)
+{
+	//イージングのスタートとゴールを設定
+	float bgEasingStart = 1.0f;
+	float bgEasingGoal = 0.0f;
+
+	//背景アクティブパーセンテージを更新
+	percentageBG = Easing::EaseValue(animTime, bgEasingStart, bgEasingGoal, animType[BG_Close]);
+
+	if (percentageBG <= bgEasingGoal)
+	{
+		percentageBG = 0.0f;
 	}
 }
 
@@ -249,8 +324,7 @@ void EventTelop::Set(TelopID id, std::function<void(void)> Callback)
 	PassTexture(id);
 
 	//再生状態にする
-	text->isPlaying = true;
-	bg->isPlaying = true;
+	isPlaying = true;
 
 	//テロップ再生終了通知
 	this->Callback = Callback;

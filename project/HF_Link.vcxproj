@@ -161,10 +161,12 @@
     <ClInclude Include="source\FieldObject\Info\RemoveFieldInfoState.h" />
     <ClInclude Include="source\FieldObject\Item\ItemActor.h" />
     <ClInclude Include="source\FieldObject\Item\ItemModel.h" />
+    <ClInclude Include="source\FieldObject\PassengerController.h" />
     <ClInclude Include="source\FieldObject\Passenger\PassengerActor.h" />
     <ClInclude Include="source\Field\Along\AlongActor.h" />
     <ClInclude Include="source\Field\Along\AlongController.h" />
     <ClInclude Include="source\Field\Along\AlongModel.h" />
+    <ClInclude Include="source\FieldObject\Passenger\PassengerModel.h" />
     <ClInclude Include="source\Field\Camera\FieldCamera.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraFar.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraQuater.h" />
@@ -203,7 +205,6 @@
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\countviewerdrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.h" />
-    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\TelopDrawer.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventViewer.h" />
@@ -344,10 +345,12 @@
     <ClCompile Include="source\FieldObject\Info\RemoveFieldInfoState.cpp" />
     <ClCompile Include="source\FieldObject\Item\ItemActor.cpp" />
     <ClCompile Include="source\FieldObject\Item\ItemModel.cpp" />
+    <ClCompile Include="source\FieldObject\PassengerController.cpp" />
     <ClCompile Include="source\FieldObject\Passenger\PassengerActor.cpp" />
     <ClCompile Include="source\Field\Along\AlongActor.cpp" />
     <ClCompile Include="source\Field\Along\AlongController.cpp" />
     <ClCompile Include="source\Field\Along\AlongModel.cpp" />
+    <ClCompile Include="source\FieldObject\Passenger\PassengerModel.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCamera.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraFar.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraQuater.cpp" />
@@ -382,7 +385,6 @@
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.cpp" />
-    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\TelopDrawer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventMessage.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventTelop.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventViewer.cpp" />
