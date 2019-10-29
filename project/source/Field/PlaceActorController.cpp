@@ -11,6 +11,7 @@
 #include "FieldConfig.h"
 #include "../../Framework/Task/TaskManager.h"
 #include "../Effect/GameParticleManager.h"
+#include "Along\AlongController.h"
 
 #include "../FieldObject/Actor/CityActor.h"
 #include "../FieldObject/Actor/CrossJunctionActor.h"
@@ -45,6 +46,7 @@ namespace Field::Actor
 	PlaceActorController::PlaceActorController()
 	{
 		bgContainer.reserve(ReserveGround);
+		alongController = new Along::AlongController();
 	}
 
 	/**************************************
@@ -52,6 +54,7 @@ namespace Field::Actor
 	***************************************/
 	PlaceActorController::~PlaceActorController()
 	{
+		SAFE_DELETE(alongController);
 		bgContainer.clear();
 		actorContainer.clear();
 	}
@@ -229,6 +232,8 @@ namespace Field::Actor
 
 			// 生成アニメーション
 			SetRoadGenerateAnimation(actor, actorPos, delay);
+
+			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::Straight);
 		}
 		//カーブの場合
 		else
@@ -253,6 +258,8 @@ namespace Field::Actor
 
 			// 生成アニメーション
 			SetRoadGenerateAnimation(actor, actorPos, delay);
+
+			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::Curve);
 		}
 	}
 
@@ -331,6 +338,8 @@ namespace Field::Actor
 			// 生成アニメーション
 			ActorAnimation::RotateAndExpantion(*actor);
 			AddContainer(place->ID(), actor);
+
+			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::CrossJunction);
 		}
 		//T字路のアクター生成
 		else
@@ -353,6 +362,8 @@ namespace Field::Actor
 			ActorAnimation::RotateAndExpantion(*actor);
 
 			AddContainer(place->ID(), actor);
+
+			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::T_Junction);
 		}
 	}
 

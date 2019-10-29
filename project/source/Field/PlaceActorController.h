@@ -19,16 +19,22 @@
 ***************************************/
 class PlaceActor;
 class TaskHandle;
+
 namespace Field::Model
 {
 	class PlaceModel;
 	class RouteModel;
 }
 
+namespace Field::Along
+{
+	class AlongController;
+}
+
 namespace Field::Actor
 {
 	/**************************************
-	前方宣言
+	型エイリアス
 	***************************************/
 	using RouteModelPtr = std::shared_ptr<Field::Model::RouteModel>;
 	using ActorContainer = std::unordered_map<unsigned, std::unique_ptr<PlaceActor>>;
@@ -83,6 +89,9 @@ namespace Field::Actor
 		ActorContainer actorContainer;
 		BackGroundContainer bgContainer;
 		ActorContainer poolDestroy;
+
+		//道沿いの情報コンテナ
+		Along::AlongController *alongController;
 
 		//各アクター生成処理
 		void SetRoad(const Model::PlaceModel* place, int delay);
