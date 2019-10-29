@@ -32,8 +32,6 @@
 #include "GameState/GamePause.h"
 #include "GameState\GameFarView.h"
 
-#include "../FieldObject/Actor/CityActor.h"
-
 #include "../../Framework/Tool/DebugWindow.h"
 
 /**************************************
@@ -79,6 +77,17 @@ void GameScene::Init()
 	ChangeState(State::Initialize);
 
 	//testActor = new CityActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), FModel::City);
+	std::vector<D3DXVECTOR3> root;
+	D3DXVECTOR3 push = D3DXVECTOR3(150.0f, 0.0f, -150.0f);
+	root.push_back(push);
+	push = D3DXVECTOR3(250.0f, 0.0f, -150.0f);
+	root.push_back(push);
+	push = D3DXVECTOR3(250.0f, 0.0f, -50.0f);
+	root.push_back(push);
+	push = D3DXVECTOR3(150.0f, 0.0f, -50.0f);
+	root.push_back(push);
+	passengerController = new PassengerController();
+	passengerController->SetPassenger(root);
 }
 
 /**************************************
@@ -104,6 +113,8 @@ void GameScene::Uninit()
 	Utility::DeleteContainer(fsm);
 
 	//SAFE_DELETE(testActor);
+	SAFE_DELETE(passengerController);
+
 	//デリゲート削除
 	SAFE_DELETE(onBuildRoad);
 
@@ -129,6 +140,7 @@ void GameScene::Update()
 	SpriteEffect::SetProjection(fieldCamera->GetProjectionMtx());
 
 	//testActor->Update();
+	passengerController->Update();
 
 	//ビューワパラメータをビューワに渡す
 	GameViewerParam param;
@@ -170,6 +182,7 @@ void GameScene::Draw()
 	skybox->Draw();
 
 	//testActor->Draw();
+	passengerController->Draw();
 
 	//オブジェクト描画
 	ProfilerCPU::Instance()->Begin("Draw Object");

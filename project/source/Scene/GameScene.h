@@ -15,6 +15,10 @@
 
 #include <vector>
 
+// モデル表示テスト用
+#include "../FieldObject/Actor/PlaceActor.h"
+#include "../FieldObject/PassengerController.h"
+
 /**************************************
 前方宣言
 ***************************************/
@@ -111,6 +115,7 @@ private:
 	class GameFarView;
 
 	PlaceActor* testActor;
+	PassengerController* passengerController;
 
 	//デバッグ用フィールドレベル
 	static int level;
