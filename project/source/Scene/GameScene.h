@@ -114,8 +114,8 @@ private:
 	class GamePause;
 	class GameFarView;
 
-	PlaceActor* testActor;
-	PassengerController* passengerController;
+	//PlaceActor* testActor;
+	//PassengerController* passengerController;
 
 	//デバッグ用フィールドレベル
 	static int level;
