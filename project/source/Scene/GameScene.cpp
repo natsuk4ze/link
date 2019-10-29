@@ -29,8 +29,6 @@
 #include "GameState/GameLevelUp.h"
 #include "GameState\/GamePause.h"
 
-#include "../FieldObject/Actor/CityActor.h"
-
 #include "../../Framework/Tool/DebugWindow.h"
 
 /**************************************
@@ -75,8 +73,16 @@ void GameScene::Init()
 	ChangeState(State::Initialize);
 
 	//testActor = new CityActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), FModel::City);
-	testPassenger = new PassengerActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), FModel::City);
-	testPassenger->MoveDest(D3DXVECTOR3(300.0, 0.0f, -150.0f));
+	std::vector<D3DXVECTOR3> root;
+	D3DXVECTOR3 push = D3DXVECTOR3(150.0f, 0.0f, -150.0f);
+	root.push_back(push);
+	push = D3DXVECTOR3(250.0f, 0.0f, -150.0f);
+	root.push_back(push);
+	push = D3DXVECTOR3(250.0f, 0.0f, -50.0f);
+	root.push_back(push);
+	push = D3DXVECTOR3(150.0f, 0.0f, -50.0f);
+	root.push_back(push);
+	testPassenger = new PassengerModel(root);
 }
 
 /**************************************
