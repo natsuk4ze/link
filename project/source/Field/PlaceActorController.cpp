@@ -64,6 +64,8 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::Update()
 	{
+		alongController->Update();
+
 		RiverActor::UpdateHeight();
 
 		for (auto&& ground : bgContainer)
@@ -102,6 +104,8 @@ namespace Field::Actor
 		{
 			actor.second->Draw();
 		}
+
+		alongController->Draw();
 	}
 
 	/**************************************
@@ -223,24 +227,23 @@ namespace Field::Actor
 		{
 			//アクター生成
 			PlaceActor* actor = new StraightRoadActor(actorPos, Model::FieldLevel::City);
-			actor->SetScale(Vector3::Zero);
 			AddContainer(place->ID(), actor);
 
 			//左右に繋がるタイプなら回転させる
 			if (straightType == StraightType::RightAndLeft)
 				actor->Rotate(90.0f);
 
-			// 生成アニメーション
-			SetRoadGenerateAnimation(actor, actorPos, delay);
-
 			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::Straight);
+
+			// 生成アニメーション
+			actor->SetScale(Vector3::Zero);
+			SetRoadGenerateAnimation(actor, actorPos, delay);
 		}
 		//カーブの場合
 		else
 		{
 			//アクター生成
 			PlaceActor* actor = new CurveRoadActor(actorPos, Model::FieldLevel::City);
-			actor->SetScale(Vector3::Zero);
 			AddContainer(place->ID(), actor);
 
 			//回転角度を決定して回転
@@ -256,10 +259,11 @@ namespace Field::Actor
 
 			actor->Rotate(rotAngle);
 
-			// 生成アニメーション
-			SetRoadGenerateAnimation(actor, actorPos, delay);
-
 			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::Curve);
+
+			// 生成アニメーション
+			actor->SetScale(Vector3::Zero);
+			SetRoadGenerateAnimation(actor, actorPos, delay);
 		}
 	}
 
@@ -335,11 +339,12 @@ namespace Field::Actor
 		{
 			PlaceActor *actor = new CrossJunctionActor(actorPos, Model::FieldLevel::City);
 
+			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::CrossJunction);
+
 			// 生成アニメーション
 			ActorAnimation::RotateAndExpantion(*actor);
 			AddContainer(place->ID(), actor);
 
-			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::CrossJunction);
 		}
 		//T字路のアクター生成
 		else
@@ -358,12 +363,12 @@ namespace Field::Actor
 
 			actor->Rotate(rotAngle);
 
+			AddContainer(place->ID(), actor);
+			
+			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::T_Junction);
+
 			// 生成アニメーション
 			ActorAnimation::RotateAndExpantion(*actor);
-
-			AddContainer(place->ID(), actor);
-
-			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::T_Junction);
 		}
 	}
 

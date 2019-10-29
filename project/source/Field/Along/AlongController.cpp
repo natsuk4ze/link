@@ -8,6 +8,7 @@
 #include "AlongController.h"
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "AlongModel.h"
+#include "../../../Framework/Tool/DebugWindow.h"
 
 namespace Field::Along
 {
@@ -32,6 +33,16 @@ namespace Field::Along
 	***************************************/
 	void AlongController::Update()
 	{
+		Debug::Begin("Along");
+		if (Debug::Button("Growth"))
+		{
+			for (auto&& pair : modelMap)
+			{
+				pair.second->CreateActor();
+			}
+		}
+		Debug::End();
+
 		for (auto&& pair : modelMap)
 		{
 			pair.second->Update();
