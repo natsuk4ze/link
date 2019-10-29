@@ -89,23 +89,13 @@ void PassengerActor::MoveDest(const D3DXVECTOR3 dest, std::function<void(void)> 
 	this->dest = dest;
 	D3DXVECTOR3 pos = transform->GetPosition();
 	// 向かいたい場所へのベクトル
-	D3DXVECTOR3 vec = this->dest - pos;
+	D3DXVECTOR3 vec = pos - this->dest;
 	// 移動フレーム
 	int frame = int(D3DXVec3Length(&vec) / Field::Actor::PlaceActorController::PlacePositionOffset) * 30;
 	
-	//// 向きを合わせてから移動
-	//float angle = Vector3::Angle(InitForward, this->dest - pos);
-	//D3DXVECTOR3 direction = Vector3::Axis(InitForward, this->dest - pos);
-	//D3DXVECTOR3 = rot = GetRotation();
-	//if (angle != 0.0f)
-	//{
-	//	Tween::Rotate(*this, rot, direction, 30, Linear, [=]
-	//	{
-	//		Tween::Move(*this, pos, this->dest, frame, InOutSine, callback);
-	//	});
-	//}
-	//else
-	//{
+	// 向きを合わせてから移動
+	Tween::Turn(*this, vec, 30, Linear, Vector3::Up, [=] 
+	{
 		Tween::Move(*this, pos, this->dest, frame, InOutSine, callback);
-	//}
+	});
 }
