@@ -6,6 +6,7 @@
 //
 //=====================================
 #include "AlongModel.h"
+#include "AlongActor.h"
 
 namespace Field::Along
 {
@@ -57,7 +58,7 @@ namespace Field::Along
 	};
 
 	//十字路のアクター座標
-	const D3DXVECTOR3 AlongModel::CurveActorPosition[] = {
+	const D3DXVECTOR3 AlongModel::CrossJunctionActorPosition[] = {
 		{ -4.0f, 0.0f, -4.0f },
 		{ -4.0f, 0.0f, 4.0f },
 		{ 4.0f, 0.0f, -4.0f },
@@ -91,7 +92,7 @@ namespace Field::Along
 		//アクターの更新処理
 		for (auto&& actor : actorContainer)
 		{
-			
+			actor->Update();
 		}
 	}
 
@@ -105,7 +106,7 @@ namespace Field::Along
 		//自身のTransformを反映させてアクターを描画
 		for (auto&& actor : actorContainer)
 		{
-
+			actor->Draw(mtxWorld);
 		}
 	}
 
@@ -123,9 +124,9 @@ namespace Field::Along
 		}
 
 		//位置を調整
-		for (auto&& actor : actorContainer)
+		for (unsigned i = 0; i < actorContainer.size(); i++)
 		{
-
+			actorContainer[i]->SetPosition(CalcActorPosition(i));
 		}
 	}
 
@@ -141,6 +142,10 @@ namespace Field::Along
 		D3DXVECTOR3 position = CalcActorPosition(actorContainer.size());
 
 		//アクターを生成して追加
+		AlongActor *actor = new AlongActor();
+		actor->SetPosition(position);
+
+		actorContainer.push_back(std::unique_ptr<AlongActor>(actor));
 	}
 
 	/**************************************
@@ -159,6 +164,8 @@ namespace Field::Along
 
 		if (type == CrossJunction)
 			return CrossJunctionActorPosition[index];
+
+		return Vector3::Zero;
 	}
 
 }

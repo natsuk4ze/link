@@ -162,6 +162,7 @@
     <ClInclude Include="source\FieldObject\Item\ItemActor.h" />
     <ClInclude Include="source\FieldObject\Item\ItemModel.h" />
     <ClInclude Include="source\FieldObject\Passenger\PassengerActor.h" />
+    <ClInclude Include="source\Field\Along\AlongActor.h" />
     <ClInclude Include="source\Field\Along\AlongModel.h" />
     <ClInclude Include="source\Field\Camera\FieldCamera.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraFar.h" />
@@ -343,6 +344,7 @@
     <ClCompile Include="source\FieldObject\Item\ItemActor.cpp" />
     <ClCompile Include="source\FieldObject\Item\ItemModel.cpp" />
     <ClCompile Include="source\FieldObject\Passenger\PassengerActor.cpp" />
+    <ClCompile Include="source\Field\Along\AlongActor.cpp" />
     <ClCompile Include="source\Field\Along\AlongModel.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCamera.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraFar.cpp" />
