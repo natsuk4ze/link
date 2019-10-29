@@ -12,15 +12,23 @@
 
 #include <map>
 
-namespace Field
+namespace Field::Along
 {
 	/**************************************
 	前方宣言
 	***************************************/
-	namespace Along
+	class AlongModel;
+
+	/**************************************
+	AlongPosition構造体
+	***************************************/
+	struct AlongPosition
 	{
-		class AlongModel;
-	}
+		AlongPosition(const D3DXVECTOR3& position);
+		bool operator<(const AlongPosition& rhs) const;
+
+		float x, z;
+	};
 
 	/**************************************
 	クラス定義
@@ -46,7 +54,7 @@ namespace Field
 		void OnBuildRoad(const Transform& transform, RoadType type);
 
 	private:
-		using AlongModelMap = std::map<D3DXVECTOR3, std::unique_ptr<Along::AlongModel>>;
+		using AlongModelMap = std::map<AlongPosition, std::unique_ptr<Along::AlongModel>>;
 
 		AlongModelMap modelMap;
 	};

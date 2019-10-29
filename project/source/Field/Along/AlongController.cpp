@@ -9,7 +9,7 @@
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "AlongModel.h"
 
-namespace Field
+namespace Field::Along
 {
 	/**************************************
 	コンストラクタ
@@ -64,14 +64,31 @@ namespace Field
 	***************************************/
 	void AlongController::OnBuildRoad(const Transform & transform, RoadType type)
 	{
-		D3DXVECTOR3 position = transform.GetPosition();
+		AlongPosition key = AlongPosition(transform.GetPosition());
 
-		if (modelMap.count(position) == 0)
+		if (modelMap.count(key) == 0)
 		{
-			Along::AlongModel *model = new Along::AlongModel(transform);
-			modelMap.emplace(position, std::unique_ptr<Along::AlongModel>(model));
+			AlongModel *model = new AlongModel(transform);
+			modelMap.emplace(key, std::unique_ptr<AlongModel>(model));
 		}
 
-		modelMap[position]->SetType((Along::AlongModel::Type)type);
+		modelMap[key]->SetType((AlongModel::Type)type);
+	}
+
+	/**************************************
+	AlongPositionコンストラクタ
+	***************************************/
+	AlongPosition::AlongPosition(const D3DXVECTOR3 & position) :
+		x(position.x), z(position.z)
+	{
+		
+	}
+
+	/**************************************
+	AlongPosition < 演算子
+	***************************************/
+	bool AlongPosition::operator<(const AlongPosition & rhs) const
+	{
+		return std::tie(x, z) < std::tie(rhs.x, rhs.z);
 	}
 }
