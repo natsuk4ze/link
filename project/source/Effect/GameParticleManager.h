@@ -23,6 +23,9 @@ namespace GameParticle
 		BlueDebris,		//ブルースパークの破片
 		WhiteSmog,		//白い煙
 		ColorfulDebis,	//カラフルデブリ
+		ExplosionFlare,	//火の粉
+		MeteorExplosion,//隕石爆発
+		MissileHit,		//ミサイル命中
 		Max
 	};
 }
@@ -39,6 +42,10 @@ public:
 
 	//シンギュラリティイベントのエフェクトセット処理
 	void SetSingularityEffect(const D3DXVECTOR3& position, std::function<void(void)> callback = nullptr);
+	//隕石落下イベントのエフェクトセット処理
+	void SetMeteorExplosionEffect(const D3DXVECTOR3& position);
+	//ミサイル命中イベントのエフェクトセット処理
+	void SetMissileHitEffect(const D3DXVECTOR3& position);
 
 private:
 	static const float BloomPower[3];

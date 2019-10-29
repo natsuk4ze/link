@@ -177,6 +177,8 @@
     <ClInclude Include="source\Effect\Game\ColorfulDebris.h" />
     <ClInclude Include="source\Field\Controller\FieldDevelopper.h" />
     <ClInclude Include="source\Field\Controller\FieldInput.h" />
+    <ClInclude Include="source\FieldObject\PassengerController.h" />
+    <ClInclude Include="source\FieldObject\Passenger\PassengerModel.h" />
     <ClInclude Include="source\Effect\Game\Explosion.h" />
     <ClInclude Include="source\Effect\Game\ExplosionFlare.h" />
     <ClInclude Include="Framework\Particle\3D\AnimationParticle3D.h" />
@@ -351,6 +353,8 @@
     <ClCompile Include="source\Effect\Game\ColorfulDebris.cpp" />
     <ClCompile Include="source\Field\Controller\FieldDevelopper.cpp" />
     <ClCompile Include="source\Field\Controller\FieldInput.cpp" />
+    <ClCompile Include="source\FieldObject\PassengerController.cpp" />
+    <ClCompile Include="source\FieldObject\Passenger\PassengerModel.cpp" />
     <ClCompile Include="source\Effect\Game\Explosion.cpp" />
     <ClCompile Include="source\Effect\Game\ExplosionFlare.cpp" />
     <ClCompile Include="Framework\Particle\3D\AnimationParticle3D.cpp" />

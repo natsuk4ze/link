@@ -7,11 +7,13 @@
 //=====================================
 #include "PassengerActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
+#include "../../Field/PlaceActorController.h"
 
 //**************************************
 // クラスのメンバ変数初期化
 //**************************************
-const D3DXVECTOR3 PassengerActor::ActorScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+const D3DXVECTOR3 PassengerActor::ActorScale = Vector3::One;
+const D3DXVECTOR3 PassengerActor::InitForward = Vector3::Back;
 
 //=====================================
 // コンストラクタ
@@ -80,9 +82,20 @@ void PassengerActor::ChangeMesh(const char* nextTag)
 }
 
 //=====================================
-// 移動
+// 目的地への移動
 //=====================================
-void PassengerActor::Move()
+void PassengerActor::MoveDest(const D3DXVECTOR3 dest, std::function<void(void)> callback)
 {
-
+	this->dest = dest;
+	D3DXVECTOR3 pos = transform->GetPosition();
+	// 向かいたい場所へのベクトル
+	D3DXVECTOR3 vec = pos - this->dest;
+	// 移動フレーム
+	int frame = int(D3DXVec3Length(&vec) / Field::Actor::PlaceActorController::PlacePositionOffset) * 30;
+	
+	// 向きを合わせてから移動
+	Tween::Turn(*this, vec, 30, Linear, Vector3::Up, [=] 
+	{
+		Tween::Move(*this, pos, this->dest, frame, InOutSine, callback);
+	});
 }
