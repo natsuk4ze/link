@@ -24,8 +24,8 @@ namespace TestParticle
 		WhiteSmog,
 		ExplosionFlare,
 		AngryFace,
-		Explosion,
-		MissileHit,
+		TownExplosion,
+		MeteorExplosion,
 		Max
 	};
 }

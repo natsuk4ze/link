@@ -8,8 +8,9 @@
 #define _NewCityEvent_H_
 
 #include "../EventBase.h"
-#include "../../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../../Field/Place/FieldPlaceModel.h"
+
+class EventViewer;
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -26,6 +27,8 @@ public:
 	void Update(void) override;
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;
+	void CreateNewCity(void);
+	void EventOver(void);
 };
 
 #endif

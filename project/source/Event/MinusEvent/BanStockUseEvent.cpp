@@ -11,6 +11,7 @@
 #include "../../Effect/GameParticleManager.h"
 #include "../../../Framework/Task/TaskManager.h"
 
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -36,6 +37,11 @@ BanStockUseEvent::BanStockUseEvent(EventViewer* eventViewer) :
 
 	// テロップ設置
 	eventViewer->SetEventTelop(NegativeEvent01, nullptr);
+
+	// 怒り顔エフェクト設置
+	GameParticleManager::Instance()->SetAngryFaceEffect();
+
+	TaskManager::Instance()->CreateDelayedTask(90, [&]() {CountdownStart(); });
 }
 
 //=============================================================================
@@ -103,7 +109,7 @@ void BanStockUseEvent::ReceiveBeatResult(bool IsSuccess)
 	if (IsSuccess)
 	{
 		// 成功
-		//EventState = State::BeatGameSuccess;
+		EventOver();
 	}
 	else
 	{

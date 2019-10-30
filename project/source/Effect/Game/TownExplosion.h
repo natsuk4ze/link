@@ -1,11 +1,11 @@
 //=============================================================================
 //
-// 爆発エフェクトクラス [Explosion.cpp]
+// 町消滅エフェクトクラス [TownExplosion.cpp]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#ifndef _Explosion_H_
-#define _Explosion_H_
+#ifndef _TownExplosion_H_
+#define _TownExplosion_H_
 
 #include "../../../main.h"
 #include "../../../Framework/Particle/BaseParticleController.h"
@@ -14,21 +14,21 @@
 namespace Effect::Game
 {
 	/**************************************
-	ExplosionControllerクラス
+	TownExplosionControllerクラス
 	***************************************/
-	class ExplosionController : public BaseParticleController
+	class TownExplosionController : public BaseParticleController
 	{
 	public:
-		ExplosionController();
+		TownExplosionController();
 	};
 
 	/**************************************
-	Explosionクラス
+	TownExplosionクラス
 	***************************************/
-	class Explosion : public AnimationParticle3D
+	class TownExplosion : public AnimationParticle3D
 	{
 	public:
-		Explosion();
+		TownExplosion();
 
 		void Init() override;
 		void Update() override;

@@ -24,8 +24,9 @@ namespace GameParticle
 		WhiteSmog,		//白い煙
 		ColorfulDebis,	//カラフルデブリ
 		ExplosionFlare,	//火の粉
-		MeteorExplosion,//隕石爆発
-		MissileHit,		//ミサイル命中
+		AngryFace,		//怒り顔
+		TownExplosion,	//隕石爆発
+		MeteorExplosion,//ミサイル命中
 		Max
 	};
 }
@@ -42,10 +43,12 @@ public:
 
 	//シンギュラリティイベントのエフェクトセット処理
 	void SetSingularityEffect(const D3DXVECTOR3& position, std::function<void(void)> callback = nullptr);
-	//隕石落下イベントのエフェクトセット処理
+	//町消滅のエフェクトセット処理
+	void SetTownExplosionEffect(const D3DXVECTOR3& position, std::function<void(void)> callback = nullptr);
+	//隕石爆発のエフェクトセット処理
 	void SetMeteorExplosionEffect(const D3DXVECTOR3& position, std::function<void(void)> callback = nullptr);
-	//ミサイル命中イベントのエフェクトセット処理
-	void SetMissileHitEffect(const D3DXVECTOR3& position, std::function<void(void)> callback = nullptr);
+	//怒り顔のエフェクトセット処理
+	void SetAngryFaceEffect(std::function<void(void)> callback = nullptr);
 
 private:
 	static const float BloomPower[3];

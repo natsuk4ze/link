@@ -12,8 +12,9 @@
 #include "Game/WhiteSmog.h"
 #include "Game/ColorfulDebris.h"
 #include "Game/ExplosionFlare.h"
-#include "Game/Explosion.h"
-#include "Game/MissileHit.h"
+#include "Game/TownExplosion.h"
+#include "Game/MeteorExplosion.h"
+#include "Game/AngryFace.h"
 
 /**************************************
 staticメンバ
@@ -33,9 +34,10 @@ void GameParticleManager::Init()
 	controllers[GameParticle::BlueDebris] = new Effect::Game::BlueDebrisController();
 	controllers[GameParticle::WhiteSmog] = new Effect::Game::WhiteSmogController();
 	controllers[GameParticle::ColorfulDebis] = new Effect::Game::ColorfulDebrisController();
+	controllers[GameParticle::AngryFace] = new Effect::Game::AngryFaceController();
 	controllers[GameParticle::ExplosionFlare] = new Effect::Game::ExplosionFlareController();
-	controllers[GameParticle::MeteorExplosion] = new Effect::Game::ExplosionController();
-	controllers[GameParticle::MissileHit] = new Effect::Game::MissileHitController();
+	controllers[GameParticle::TownExplosion] = new Effect::Game::TownExplosionController();
+	controllers[GameParticle::MeteorExplosion] = new Effect::Game::MeteorExplosionController();
 
 	crossFilter->SetPower(BloomPower[0], BloomPower[1], BloomPower[2]);
 	crossFilter->SetThrethold(BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]);
@@ -54,21 +56,29 @@ void GameParticleManager::SetSingularityEffect(const D3DXVECTOR3 & position, std
 }
 
 /**************************************
-隕石落下イベントのエフェクトセット処理
+町消滅のエフェクトセット処理
 ***************************************/
-void GameParticleManager::SetMeteorExplosionEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback)
+void GameParticleManager::SetTownExplosionEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback)
 {
 	const D3DXVECTOR3 OffsetPosition = Vector3::Up * 10.0f;
 
 	controllers[GameParticle::ExplosionFlare]->SetEmitter(position + OffsetPosition, callback);
-	controllers[GameParticle::MeteorExplosion]->SetEmitter(position + OffsetPosition);
+	controllers[GameParticle::TownExplosion]->SetEmitter(position + OffsetPosition);
 }
 
 /**************************************
-ミサイル命中イベントのエフェクトセット処理
+隕石爆発のエフェクトセット処理
 ***************************************/
-void GameParticleManager::SetMissileHitEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback)
+void GameParticleManager::SetMeteorExplosionEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback)
 {
 	controllers[GameParticle::ExplosionFlare]->SetEmitter(position, callback);
-	controllers[GameParticle::MissileHit]->SetEmitter(position);
+	controllers[GameParticle::MeteorExplosion]->SetEmitter(position);
+}
+
+/**************************************
+怒り顔のエフェクトセット処理
+***************************************/
+void GameParticleManager::SetAngryFaceEffect(std::function<void(void)> callback)
+{
+	controllers[GameParticle::AngryFace]->SetEmitter(Vector3::Zero);
 }
