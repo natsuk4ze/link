@@ -10,6 +10,7 @@
 #include "../GameConfig.h"
 #include "../../Framework/Transition/TransitionController.h"
 #include "../../Framework/Core/SceneManager.h"
+#include "../../Framework/Tool/ProfilerCPU.h"
 
 #include "../../Framework/Renderer3D/SkyBox.h"
 #include "../FieldObject/Actor/PlaceActor.h"
@@ -30,8 +31,6 @@
 #include "GameState/GameLevelUp.h"
 #include "GameState/GamePause.h"
 #include "GameState\GameFarView.h"
-
-#include "../FieldObject/Actor/CityActor.h"
 
 #include "../../Framework/Tool/DebugWindow.h"
 
@@ -77,7 +76,19 @@ void GameScene::Init()
 	//ステート初期化
 	ChangeState(State::Initialize);
 
+	// テスト用
 	//testActor = new CityActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), FModel::City);
+	//std::vector<D3DXVECTOR3> root;
+	//D3DXVECTOR3 push = D3DXVECTOR3(150.0f, 0.0f, -150.0f);
+	//root.push_back(push);
+	//push = D3DXVECTOR3(250.0f, 0.0f, -150.0f);
+	//root.push_back(push);
+	//push = D3DXVECTOR3(250.0f, 0.0f, -50.0f);
+	//root.push_back(push);
+	//push = D3DXVECTOR3(150.0f, 0.0f, -50.0f);
+	//root.push_back(push);
+	//passengerController = new PassengerController();
+	//passengerController->SetPassenger(root);
 }
 
 /**************************************
@@ -102,7 +113,10 @@ void GameScene::Uninit()
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
 
+	// テスト用
 	//SAFE_DELETE(testActor);
+	//SAFE_DELETE(passengerController);
+
 	//デリゲート削除
 	SAFE_DELETE(onBuildRoad);
 
@@ -113,17 +127,23 @@ void GameScene::Uninit()
 ***************************************/
 void GameScene::Update()
 {
+	ProfilerCPU::Instance()->BeginLabel("GameScene");
+
 	//ステートを更新
 	State next = fsm[currentState]->OnUpdate(*this);
 
 	//カメラ更新
+	ProfilerCPU::Instance()->Begin("Update Camera");
 	fieldCamera->Update();
+	ProfilerCPU::Instance()->End("Update Camera");
 
 	//カメラの情報をエフェクトに渡す
 	SpriteEffect::SetView(fieldCamera->GetViewMtx());
 	SpriteEffect::SetProjection(fieldCamera->GetProjectionMtx());
 
+	// テスト用
 	//testActor->Update();
+	//passengerController->Update();
 
 	//ビューワパラメータをビューワに渡す
 	GameViewerParam param;
@@ -135,7 +155,9 @@ void GameScene::Update()
 	gameViewer->Update();
 
 	//パーティクル更新
+	ProfilerCPU::Instance()->Begin("Update Particle");
 	particleManager->Update();
+	ProfilerCPU::Instance()->End("Update Particle");
 
 	Debug::Begin("EventHandler");
 	if (Debug::Button("Pause"))
@@ -162,27 +184,40 @@ void GameScene::Draw()
 	//背景描画
 	skybox->Draw();
 
+	// テスト用
 	//testActor->Draw();
+	//passengerController->Draw();
 
 	//オブジェクト描画
+	ProfilerCPU::Instance()->Begin("Draw Object");
 	field->Draw();
+	ProfilerCPU::Instance()->End("Draw Object");
 
 	// イベントオブジェクト描画
+	ProfilerCPU::Instance()->Begin("Draw Event");
 	eventController->DrawEventObject();
+	ProfilerCPU::Instance()->End("Draw Event");
 
 	//ポストエフェクトは重いのでリリース版のみ適用する
 #ifndef _DEBUG
 	//ポストエフェクト適用
+	ProfilerCPU::Instance()->Begin("Draw PostEffect");
 	bloomController->Draw(renderTexture);
+	ProfilerCPU::Instance()->End("Draw PostEffect");
 #endif
+
 	//パーティクル描画
+	ProfilerCPU::Instance()->Begin("Draw Particle");
 	particleManager->Draw();
+	ProfilerCPU::Instance()->End("Draw Particle");
 
 	// イベントビューア描画
 	eventController->DrawEventViewer();
 
 	//ビュアー描画
 	gameViewer->Draw();
+
+	ProfilerCPU::Instance()->EndLabel();
 }
 
 /**************************************

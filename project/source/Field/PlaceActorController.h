@@ -19,20 +19,26 @@
 ***************************************/
 class PlaceActor;
 class TaskHandle;
+
 namespace Field::Model
 {
 	class PlaceModel;
 	class RouteModel;
 }
 
+namespace Field::Along
+{
+	class AlongController;
+}
+
 namespace Field::Actor
 {
 	/**************************************
-	前方宣言
+	型エイリアス
 	***************************************/
 	using RouteModelPtr = std::shared_ptr<Field::Model::RouteModel>;
-	using ActorMap = std::unordered_map<unsigned, std::unique_ptr<PlaceActor>>;
-	using ActorContainer = std::vector<ActorMap*>;
+	using ActorContainer = std::unordered_map<unsigned, std::unique_ptr<PlaceActor>>;
+	using BackGroundContainer = std::vector<std::unique_ptr<PlaceActor>>;
 
 	/**************************************
 	クラス定義
@@ -58,13 +64,11 @@ namespace Field::Actor
 		//アクター消滅処理
 		bool DestroyActor(const Model::PlaceModel* place);
 		
-		//山破壊処理
-		void DestroyMountain(const Model::PlaceModel* place);
-
 		//定数メンバ
 		static const D3DXVECTOR3 PositionEmitSmog;		//道落下時の煙発生位置
 		static const float PlacePositionOffset;			//アクター同士の配置間隔
-		
+		static const unsigned ReserveGround;			//地面アクター用に予約するコンテナサイズ
+
 	private:
 		//アクターパターン列挙子
 		enum ActorPattern
@@ -83,6 +87,11 @@ namespace Field::Actor
 
 		//アクターコンテナ
 		ActorContainer actorContainer;
+		BackGroundContainer bgContainer;
+		ActorContainer poolDestroy;
+
+		//道沿いの情報コンテナ
+		Along::AlongController *alongController;
 
 		//各アクター生成処理
 		void SetRoad(const Model::PlaceModel* place, int delay);
@@ -94,8 +103,8 @@ namespace Field::Actor
 		void SetNone(const Model::PlaceModel* place, float randomRange = 0.0f);
 
 		//コンテナ追加、削除処理
-		void AddContainer(ActorPattern pattern, unsigned key, PlaceActor* actor);
-		bool EraseFromContainer(ActorPattern pattern, unsigned key);
+		void AddContainer(unsigned key, PlaceActor* actor);
+		bool EraseFromContainer(unsigned key);
 
 		//アニメーションセット処理
 		void SetRoadGenerateAnimation(PlaceActor* actor, const D3DXVECTOR3 actorPos, int delay = 0);

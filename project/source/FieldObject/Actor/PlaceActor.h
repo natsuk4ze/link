@@ -51,7 +51,6 @@ protected:
 
 private:
 	static const D3DXVECTOR3 Scale;
-	static const float FrustumBoxSize;
 
 #if _DEBUG
 	void Debug();

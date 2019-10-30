@@ -70,10 +70,7 @@ void GameViewer::Draw(void)
 void GameViewer::ReceiveParam(GameViewerParam&param)
 {
 	//ストックビュアー
-	stockViewer->parameterBox[stockViewer->Bridge] = param.stockNum;
-	stockViewer->parameterBox[stockViewer->Drill] = 0;
-	stockViewer->parameterBox[stockViewer->EDF] = 0;
-	stockViewer->parameterBox[stockViewer->Insurance] = 0;
+	stockViewer->parameterBox = param.stockNum;
 
 	//タイマービュアー
 	timerViewer->parameterBox = param.remainTime;

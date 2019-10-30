@@ -68,10 +68,11 @@ void BaseGame::Update()
 
 	if (!pause)
 	{
+		ProfilerCPU::Instance()->Update();
+
 		sceneManager->Update();
 
 		Tween::mInstance->Update();
-		ProfilerCPU::Instance()->Update();
 		TaskManager::Instance()->Update();
 		TransitionController::Instance()->Update();
 	}

@@ -94,10 +94,8 @@ EventMessage::~EventMessage()
 //=============================================================================
 void EventMessage::Update(void)
 {
-	if (isPlaying)
-	{
-		Animate();
-	}
+	//アニメーション
+	Animate();
 }
 
 //=============================================================================
@@ -109,6 +107,7 @@ void EventMessage::Draw(void)
 	bg->Draw();
 	bg->SetVertex();
 
+	//テキスト
 	text->Draw();
 }
 
@@ -133,7 +132,7 @@ void EventMessage::Animate(void)
 		time = countFrame / animDuration[currentAnim];
 
 		//ポジションを更新
-		position = Easing::EaseValue((time),
+		position = Easing::EaseValue(time,
 		animStartPosition[currentAnim],
 		animEndPosition[currentAnim],
 		animType[currentAnim]);

@@ -143,7 +143,6 @@
     <ClInclude Include="source\Viewer\GameScene\GameViewer\TimerViewer.h" />
     <ClInclude Include="source\GameConfig.h" />
     <ClInclude Include="source\GameMain.h" />
-    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\TelopDrawer.h" />
     <ClInclude Include="source\FieldObject\Actor\NoneActor.h" />
     <ClInclude Include="source\FieldObject\Animation\ActorAnimation.h" />
     <ClInclude Include="source\Scene\GameState\GameFinish.h" />
@@ -178,6 +177,8 @@
     <ClInclude Include="source\Effect\Game\ColorfulDebris.h" />
     <ClInclude Include="source\Field\Controller\FieldDevelopper.h" />
     <ClInclude Include="source\Field\Controller\FieldInput.h" />
+    <ClInclude Include="source\FieldObject\PassengerController.h" />
+    <ClInclude Include="source\FieldObject\Passenger\PassengerModel.h" />
     <ClInclude Include="source\Effect\Game\Explosion.h" />
     <ClInclude Include="source\Effect\Game\ExplosionFlare.h" />
     <ClInclude Include="Framework\Particle\3D\AnimationParticle3D.h" />
@@ -192,6 +193,9 @@
     <ClInclude Include="Framework\Effect\SpriteEffect.h" />
     <ClInclude Include="source\Scene\GameState\GameFarView.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\BeatGameViewer.h" />
+    <ClInclude Include="source\Field\Along\AlongModel.h" />
+    <ClInclude Include="source\Field\Along\AlongActor.h" />
+    <ClInclude Include="source\Field\Along\AlongController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -318,7 +322,6 @@
     <ClCompile Include="source\Viewer\GameScene\GameViewer\LevelViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp" />
     <ClCompile Include="source\GameMain.cpp" />
-    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\TelopDrawer.cpp" />
     <ClCompile Include="source\FieldObject\Actor\NoneActor.cpp" />
     <ClCompile Include="source\FieldObject\Animation\ActorAnimation.cpp" />
     <ClCompile Include="source\Scene\GameState\GameFinish.cpp" />
@@ -354,6 +357,8 @@
     <ClCompile Include="source\Effect\Game\ColorfulDebris.cpp" />
     <ClCompile Include="source\Field\Controller\FieldDevelopper.cpp" />
     <ClCompile Include="source\Field\Controller\FieldInput.cpp" />
+    <ClCompile Include="source\FieldObject\PassengerController.cpp" />
+    <ClCompile Include="source\FieldObject\Passenger\PassengerModel.cpp" />
     <ClCompile Include="source\Effect\Game\Explosion.cpp" />
     <ClCompile Include="source\Effect\Game\ExplosionFlare.cpp" />
     <ClCompile Include="Framework\Particle\3D\AnimationParticle3D.cpp" />
@@ -368,6 +373,9 @@
     <ClCompile Include="Framework\Effect\SpriteEffect.cpp" />
     <ClCompile Include="source\Scene\GameState\GameFarView.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\BeatGameViewer.cpp" />
+    <ClCompile Include="source\Field\Along\AlongModel.cpp" />
+    <ClCompile Include="source\Field\Along\AlongActor.cpp" />
+    <ClCompile Include="source\Field\Along\AlongController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

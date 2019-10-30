@@ -218,7 +218,8 @@ namespace Field::Model
 	***************************************/
 	void Field::Model::OperatePlaceContainer::CreatePin(const PlaceModel * place, Mode mode)
 	{
-		PinActor *actor = new PinActor(place->GetPosition().ConvertToWorldPosition() + Vector3::Up * 5.0f, mode);
+		D3DXVECTOR3 offset = place->IsType(PlaceType::Mountain) ? Vector3::Up * 15.0f : Vector3::Up * 5.0f;
+		PinActor *actor = new PinActor(place->GetPosition().ConvertToWorldPosition() + offset, mode);
 		actorContainer.push_back(std::unique_ptr<PinActor>(actor));
 	}
 

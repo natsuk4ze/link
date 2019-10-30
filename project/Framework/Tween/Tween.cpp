@@ -141,6 +141,34 @@ void Tween::Rotate(GameObject& ref, const D3DXVECTOR3& end, int duration, EaseTy
 }
 
 /**************************************
+方向処理
+***************************************/
+void Tween::Turn(GameObject & ref, const D3DXVECTOR3 & end, int duration, EaseType type, const D3DXVECTOR3& dummyAxis, std::function<void()> callback)
+{
+	//始点となるクォータニオンを求める
+	D3DXQUATERNION start = ref.transform->GetRotation();
+
+	//終点となるクォータニオンを求める
+	D3DXVECTOR3 axis = Vector3::Axis(ref.transform->Forward(), end);
+	float angle = Vector3::Angle(ref.transform->Forward(), end);
+
+	//axisがゼロベクトル（始点の向きと終点の向きが並行）の場合はダミーアクシスを使用
+	if (Vector3::Equal(axis, Vector3::Zero))
+	{
+		axis = dummyAxis;
+	}
+
+	D3DXQUATERNION rotQ;
+	D3DXQuaternionRotationAxis(&rotQ, &axis, D3DXToRadian(angle));
+
+	D3DXQUATERNION endQuaternion = start * rotQ;
+
+	//回転Tweener作成
+	RotateTweener *tweener = new RotateTweener(ref.transform, start, endQuaternion, duration, type, callback);
+	mInstance->tweenerContainer.push_back(tweener);
+}
+
+/**************************************
 Tweenerコンストラクタ
 ***************************************/
 Tween::Tweener::Tweener(std::shared_ptr<Transform>& ref, int duration, EaseType type, Callback callback) :
@@ -247,6 +275,17 @@ Tween::RotateTweener::RotateTweener(std::shared_ptr<Transform>& ref, const D3DXV
 	Tweener(ref, duration, type, callback),
 	start(Quaternion::ToQuaternion(start)),
 	end(Quaternion::ToQuaternion(end))
+{
+
+}
+
+/**************************************
+RotateTweenerコンストラクタ
+***************************************/
+Tween::RotateTweener::RotateTweener(std::shared_ptr<Transform>& ref, const D3DXQUATERNION & start, const D3DXQUATERNION & end, int duration, EaseType type, Callback callback) :
+	Tweener(ref, duration, type, callback),
+	start(start),
+	end(end)
 {
 
 }
