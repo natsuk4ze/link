@@ -65,8 +65,13 @@ namespace Field
 		developper = new FieldDevelopper(this);
 		input = new FieldInput(this);
 
+		//引数が必要なインスタンスの作成
 		auto departPassenger = std::bind(&PassengerController::SetPassenger, passengerController, std::placeholders::_1);
 		placeContainer = new Model::PlaceContainer(departPassenger);
+
+		//パッセンジャーコントローラにコールバックを設定する
+		auto onReachPassenger = std::bind(&Actor::PlaceActorController::GrowthAlongObject, placeActController, std::placeholders::_1);
+		passengerController->SetCallbackOnReach(onReachPassenger);
 
 		//ステートマシン作成
 		fsm.resize(State::Max, NULL);

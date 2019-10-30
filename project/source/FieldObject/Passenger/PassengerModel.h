@@ -23,8 +23,10 @@ private:
 
 	void CheckCallback();							// コールバックの確認
 
+	std::function<void(const D3DXVECTOR3&)> *callbackToAlong;
+
 public:
-	PassengerModel(const std::vector<D3DXVECTOR3>& root);
+	PassengerModel(const std::vector<D3DXVECTOR3>& root, std::function<void(const D3DXVECTOR3&)> *callback);
 	~PassengerModel();
 
 	// 更新、描画

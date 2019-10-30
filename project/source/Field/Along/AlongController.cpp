@@ -66,7 +66,11 @@ namespace Field::Along
 	***************************************/
 	void AlongController::OnReachPassenger(const D3DXVECTOR3 & position)
 	{
-		assert(modelMap.count(position) != 0);
+		//一旦コメントアウト
+		//assert(modelMap.count(position) != 0);
+
+		if (modelMap.count(position) == 0)
+			return;
 
 		modelMap[position]->CreateActor();
 	}

@@ -212,6 +212,14 @@ namespace Field::Actor
 	}
 
 	/**************************************
+	道沿いのオブジェクト成長処理
+	***************************************/
+	void PlaceActorController::GrowthAlongObject(const D3DXVECTOR3 & position)
+	{
+		alongController->OnReachPassenger(position);
+	}
+
+	/**************************************
 	ロードセット処理
 	***************************************/
 	void PlaceActorController::SetRoad(const Model::PlaceModel * place, int delay)
