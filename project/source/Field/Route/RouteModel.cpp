@@ -156,7 +156,7 @@ namespace Field::Model
 
 		//各プレイスの方向を決定
 		unsigned routeSize = route.size();
-		
+
 		first->AddDirection(first->IsAdjacent(edgeStart));
 		first->AddDirection(first->IsAdjacent(route[1]));
 
@@ -189,7 +189,7 @@ namespace Field::Model
 	{
 		if (edgeStart->IsType(PlaceType::Town) && edgeStart != self)
 			return edgeStart;
-		
+
 		if (edgeEnd->IsType(PlaceType::Town) && edgeEnd != self)
 			return edgeEnd;
 
@@ -199,9 +199,12 @@ namespace Field::Model
 	/**************************************
 	繋がっている街を取得
 	***************************************/
-	int RouteModel::FindLinkedTown(TownModel * root, std::vector<RouteModelPtr> & searchedRoute, std::vector<PlaceModel*> searchedTown, std::vector<D3DXVECTOR3>& stackRoute)
+	int RouteModel::FindLinkedTown(TownModel * root, std::vector<RouteModelPtr> & searchedRoute, std::vector<PlaceModel*> searchedTown, RoutePlaceStack& stackRoute, const PlaceModel* start)
 	{
 		int cntTown = 0;
+
+		//ルートスタックに自身を積む
+		stackRoute.Push(GetAllPlaces(start));
 
 		//対象に繋がっている街を確認
 		if (!(from(searchedRoute) >> contains(shared_from_this())))
@@ -215,9 +218,7 @@ namespace Field::Model
 				searchedTown.push_back(town);
 
 				//経路を保存
-				stackRoute.push_back(town->GetPosition().ConvertToWorldPosition());
-				root->AddLinkedRoute(stackRoute);
-				stackRoute.pop_back();
+				root->AddLinkedRoute(stackRoute.route);
 			}
 		}
 
@@ -232,14 +233,11 @@ namespace Field::Model
 			if (from(searchedRoute) >> contains(ptr))
 				continue;
 
-			stackRoute.push_back(adjacency.start->GetPosition().ConvertToWorldPosition());
-			stackRoute.push_back(adjacency.end->GetPosition().ConvertToWorldPosition());
-
-			cntTown += ptr->FindLinkedTown(root, searchedRoute, searchedTown, stackRoute);
-			
-			stackRoute.pop_back();
-			stackRoute.pop_back();
+			cntTown += ptr->FindLinkedTown(root, searchedRoute, searchedTown, stackRoute, adjacency.end);
 		}
+
+		//スタックから自身を取り除く
+		stackRoute.Pop(route.size() + 2);
 
 		return cntTown;
 	}
@@ -263,14 +261,23 @@ namespace Field::Model
 	/**************************************
 	全プレイス取得
 	***************************************/
-	const std::vector<const PlaceModel*> RouteModel::GetAllPlaces() const
+	const std::vector<const PlaceModel*> RouteModel::GetAllPlaces(const PlaceModel* start) const
 	{
 		std::vector<const PlaceModel*> out;
 		out.reserve(route.size() + 2);
 
-		out.push_back(edgeStart);
-		std::copy(route.begin(), route.end(), std::back_inserter(out));
-		out.push_back(edgeEnd);
+		if (start == edgeEnd)
+		{
+			out.push_back(edgeEnd);
+			std::copy(route.rbegin(), route.rend(), std::back_inserter(out));
+			out.push_back(edgeStart);
+		}
+		else
+		{
+			out.push_back(edgeStart);
+			std::copy(route.begin(), route.end(), std::back_inserter(out));
+			out.push_back(edgeEnd);
+		}
 
 		return out;
 	}
@@ -306,5 +313,48 @@ namespace Field::Model
 			(*onConnectedTown)(opponent);
 
 		//交差点なら所属ルートを追加
+	}
+
+	/**************************************
+	Placeプッシュ処理
+	***************************************/
+	void RoutePlaceStack::Push(const PlaceModel * place)
+	{
+		route.push_back(place->GetPosition().ConvertToWorldPosition());
+	}
+
+	/**************************************
+	Placeプッシュ処理
+	***************************************/
+	void RoutePlaceStack::Push(const std::vector<const PlaceModel*>& route)
+	{
+		for (auto&& place : route)
+		{
+			this->route.push_back(place->GetPosition().ConvertToWorldPosition());
+		}
+	}
+
+	/**************************************
+	Placeポップ処理
+	***************************************/
+	void RoutePlaceStack::Pop()
+	{
+		route.pop_back();
+	}
+
+	/**************************************
+	Placeポップ処理
+	***************************************/
+	void RoutePlaceStack::Pop(unsigned num)
+	{
+		route.resize(route.size() - num);
+	}
+
+	/**************************************
+	サイズ取得処理
+	***************************************/
+	unsigned RoutePlaceStack::Size() const
+	{
+		return route.size();
 	}
 }

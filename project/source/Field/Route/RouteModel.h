@@ -10,6 +10,7 @@
 
 #include "../../../main.h"
 #include "../../../Framework/Pattern/Delegate.h"
+#include "../Place/PlaceConfig.h"
 
 #include <vector>
 
@@ -38,6 +39,20 @@ namespace Field::Model
 			start(start), end(end), route(route) {};
 
 	}AdjacentRoute;
+
+	/**************************************
+	経路となるプレイスのスタック
+	***************************************/
+	struct RoutePlaceStack
+	{
+		std::vector<D3DXVECTOR3> route;
+
+		void Push(const PlaceModel* place);
+		void Push(const std::vector<const PlaceModel*>& route);
+		void Pop();
+		void Pop(unsigned num);
+		unsigned Size() const;
+	};
 
 	/**************************************
 	クラス定義
@@ -80,14 +95,14 @@ namespace Field::Model
 		PlaceModel* GetConnectedTown(const PlaceModel* self);
 
 		//ルートに繋がっている街の探索
-		int FindLinkedTown(TownModel* root, std::vector<RouteModelPtr>& searchedRoute, std::vector<PlaceModel*> searchedTown, std::vector<D3DXVECTOR3>& stack);
+		int FindLinkedTown(TownModel* root, std::vector<RouteModelPtr>& searchedRoute, std::vector<PlaceModel*> searchedTown, RoutePlaceStack& stack, const PlaceModel* start);
 
 		//使用判定
 		void SetUnused(bool use);
 		bool IsUnused();
 
 		//全プレイス取得
-		const std::vector<const PlaceModel*> GetAllPlaces() const;
+		const std::vector<const PlaceModel*> GetAllPlaces(const PlaceModel* start = nullptr) const;
 
 		//始点、終点取得処理
 		PlaceModel* GetFirst() const;

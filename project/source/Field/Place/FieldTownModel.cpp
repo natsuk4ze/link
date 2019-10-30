@@ -109,12 +109,11 @@ namespace Field::Model
 
 		RouteContainer belongRoute = place->GetConnectingRoutes();
 		
-		std::vector<D3DXVECTOR3> routeStack;
-		routeStack.push_back(place->GetPosition().ConvertToWorldPosition());
+		RoutePlaceStack routeStack;
 
 		for (auto&& route : belongRoute)
 		{
-			linkLevel += route->FindLinkedTown(this, searchedRoute, searchedTown, routeStack);
+			linkLevel += route->FindLinkedTown(this, searchedRoute, searchedTown, routeStack, place);
 		}
 
 		developmentLevel = (float)linkLevel * linkLevel;
