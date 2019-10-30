@@ -66,7 +66,7 @@ void PassengerController::SetPassenger(std::vector<D3DXVECTOR3>& root)
 	// vectorの内部に未使用のものがあるか確認
 	for (auto& vec : modelVector)
 	{
-		if (vec->IsActive())
+		if (!vec->IsActive())
 		{
 			check = true;
 			break;

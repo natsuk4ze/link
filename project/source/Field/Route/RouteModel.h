@@ -47,10 +47,10 @@ namespace Field::Model
 	{
 		std::vector<D3DXVECTOR3> route;
 
-		void Push(const PlaceModel* place);
-		void Push(const std::vector<const PlaceModel*>& route);
+		bool Push(const PlaceModel* place);
+		int Push(const std::vector<const PlaceModel*>& route);
 		void Pop();
-		void Pop(unsigned num);
+		void Pop(int num);
 		unsigned Size() const;
 	};
 

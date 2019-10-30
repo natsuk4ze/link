@@ -204,7 +204,7 @@ namespace Field::Model
 		int cntTown = 0;
 
 		//ルートスタックに自身を積む
-		stackRoute.Push(GetAllPlaces(start));
+		int cntPush = stackRoute.Push(GetAllPlaces(start));
 
 		//対象に繋がっている街を確認
 		if (!(from(searchedRoute) >> contains(shared_from_this())))
@@ -237,7 +237,7 @@ namespace Field::Model
 		}
 
 		//スタックから自身を取り除く
-		stackRoute.Pop(route.size() + 2);
+		stackRoute.Pop(cntPush);
 
 		return cntTown;
 	}
@@ -318,20 +318,35 @@ namespace Field::Model
 	/**************************************
 	Placeプッシュ処理
 	***************************************/
-	void RoutePlaceStack::Push(const PlaceModel * place)
+	bool RoutePlaceStack::Push(const PlaceModel * place)
 	{
+		if (place->IsType(PlaceType::Road))
+		{
+			std::vector<Adjacency> AdjacencyType = place->GetConnectingAdjacency();
+			StraightType straightType = IsStraight(AdjacencyType);
+
+			//直線道なら追加しない
+			if (straightType != StraightType::NotStraight)
+				return false;
+		}
+
 		route.push_back(place->GetPosition().ConvertToWorldPosition());
+		return true;
 	}
 
 	/**************************************
 	Placeプッシュ処理
 	***************************************/
-	void RoutePlaceStack::Push(const std::vector<const PlaceModel*>& route)
+	int RoutePlaceStack::Push(const std::vector<const PlaceModel*>& route)
 	{
+		int cntPush = 0;
 		for (auto&& place : route)
 		{
-			this->route.push_back(place->GetPosition().ConvertToWorldPosition());
+			if (Push(place))
+				cntPush++;
 		}
+
+		return cntPush;
 	}
 
 	/**************************************
@@ -345,7 +360,7 @@ namespace Field::Model
 	/**************************************
 	Placeポップ処理
 	***************************************/
-	void RoutePlaceStack::Pop(unsigned num)
+	void RoutePlaceStack::Pop(int num)
 	{
 		route.resize(route.size() - num);
 	}
