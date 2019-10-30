@@ -15,6 +15,7 @@
 #include "Route\RouteProcessor.h"
 #include "PlaceActorController.h"
 #include "FieldEventHandler.h"
+#include "../FieldObject/PassengerController.h"
 
 #include "Controller\FieldDevelopper.h"
 #include "Controller\FieldInput.h"
@@ -61,6 +62,7 @@ namespace Field
 		placeContainer = new Model::PlaceContainer();
 		operateContainer = new Model::OperatePlaceContainer();
 		placeActController = new Actor::PlaceActorController();
+		passengerController = new PassengerController();
 		developper = new FieldDevelopper(this);
 		input = new FieldInput(this);
 
@@ -99,6 +101,7 @@ namespace Field
 		SAFE_DELETE(operateContainer);
 		SAFE_DELETE(routeProcessor);
 		SAFE_DELETE(placeActController);
+		SAFE_DELETE(passengerController);
 		SAFE_DELETE(developper);
 		SAFE_DELETE(input);
 
@@ -123,6 +126,8 @@ namespace Field
 		operateContainer->Update();
 
 		placeActController->Update();
+
+		passengerController->Update();
 	}
 
 	/**************************************
@@ -158,7 +163,6 @@ namespace Field
 #ifdef DEBUG_PLACEMODEL
 		placeContainer->DrawDebug();
 #endif
-
 
 		//カーソルには透過オブジェクトが含まれるので最後に描画
 		cursor->Draw();
