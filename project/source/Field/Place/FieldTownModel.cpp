@@ -20,13 +20,15 @@ namespace Field::Model
 	/**************************************
 	コンストラクタ
 	***************************************/
-	TownModel::TownModel(const PlaceModel * place) :
+	TownModel::TownModel(const PlaceModel * place, std::function<void(std::vector<D3DXVECTOR3>&)> *action) :
 		uniqueID(incrementID++),
 		place(place),
 		cntGate(0),
 		linkLevel(0),
 		developmentLevel(0),
-		biasLinkLevel(0)
+		biasLinkLevel(0),
+		cntFrame(0),
+		departPassenger(action)
 	{
 
 	}
@@ -36,6 +38,23 @@ namespace Field::Model
 	***************************************/
 	TownModel::~TownModel()
 	{
+	}
+
+	/**************************************
+	更新処理
+	***************************************/
+	void TownModel::Update()
+	{
+		cntFrame++;
+		
+		//4秒おきに繋がっている街に向かってパッセンジャーを出発させる
+		if (cntFrame % 120 == 0)
+		{
+			for (auto&& route : routeContainer)
+			{
+				(*departPassenger)(route);
+			}
+		}
 	}
 
 	/**************************************

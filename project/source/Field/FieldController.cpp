@@ -59,12 +59,14 @@ namespace Field
 		//インスタンス作成
 		cursor = new FieldCursor(PlaceOffset);
 		ground = new FieldGround();
-		placeContainer = new Model::PlaceContainer();
 		operateContainer = new Model::OperatePlaceContainer();
 		placeActController = new Actor::PlaceActorController();
 		passengerController = new PassengerController();
 		developper = new FieldDevelopper(this);
 		input = new FieldInput(this);
+
+		auto departPassenger = std::bind(&PassengerController::SetPassenger, passengerController, std::placeholders::_1);
+		placeContainer = new Model::PlaceContainer(departPassenger);
 
 		//ステートマシン作成
 		fsm.resize(State::Max, NULL);
@@ -163,6 +165,8 @@ namespace Field
 #ifdef DEBUG_PLACEMODEL
 		placeContainer->DrawDebug();
 #endif
+
+		passengerController->Draw();
 
 		//カーソルには透過オブジェクトが含まれるので最後に描画
 		cursor->Draw();
