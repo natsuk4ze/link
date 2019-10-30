@@ -115,15 +115,6 @@
     <ClInclude Include="source\FieldObject\Actor\RiverActor.h" />
     <ClInclude Include="source\FieldObject\Actor\StraightRoadActor.h" />
     <ClInclude Include="source\FieldObject\Actor\TJunctionActor.h" />
-    <ClInclude Include="source\FieldObject\Info\CongestionFieldInfoState.h" />
-    <ClInclude Include="source\FieldObject\Info\ConnectFieldInfoState.h" />
-    <ClInclude Include="source\FieldObject\Info\CreateFieldInfoState.h" />
-    <ClInclude Include="source\FieldObject\Info\FieldInfoActor.h" />
-    <ClInclude Include="source\FieldObject\Info\IdleFieldInfoState.h" />
-    <ClInclude Include="source\FieldObject\Info\LinkFieldInfoState.h" />
-    <ClInclude Include="source\FieldObject\Info\RemoveFieldInfoState.h" />
-    <ClInclude Include="source\FieldObject\Item\ItemActor.h" />
-    <ClInclude Include="source\FieldObject\Item\ItemModel.h" />
     <ClInclude Include="source\FieldObject\Passenger\PassengerActor.h" />
     <ClInclude Include="source\Scene\GameState\GameIdle.h" />
     <ClInclude Include="source\Scene\GameState\GameInit.h" />
@@ -193,6 +184,8 @@
     <ClInclude Include="source\Viewer\GameScene\EventViewer\BeatGameViewer.h" />
     <ClInclude Include="source\Effect\Game\MeteorExplosion.h" />
     <ClInclude Include="source\Effect\Game\TownExplosion.h" />
+    <ClInclude Include="source\FieldObject\Infomation\InfoActor.h" />
+    <ClInclude Include="source\FieldObject\Infomation\LinkInfoActor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -294,15 +287,6 @@
     <ClCompile Include="source\FieldObject\Actor\RiverActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\StraightRoadActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\TJunctionActor.cpp" />
-    <ClCompile Include="source\FieldObject\Info\CongestionFieldInfoState.cpp" />
-    <ClCompile Include="source\FieldObject\Info\ConnectFieldInfoState.cpp" />
-    <ClCompile Include="source\FieldObject\Info\CreateFieldInfoState.cpp" />
-    <ClCompile Include="source\FieldObject\Info\FieldInfoActor.cpp" />
-    <ClCompile Include="source\FieldObject\Info\IdleFieldInfoState.cpp" />
-    <ClCompile Include="source\FieldObject\Info\LinkFieldInfoState.cpp" />
-    <ClCompile Include="source\FieldObject\Info\RemoveFieldInfoState.cpp" />
-    <ClCompile Include="source\FieldObject\Item\ItemActor.cpp" />
-    <ClCompile Include="source\FieldObject\Item\ItemModel.cpp" />
     <ClCompile Include="source\FieldObject\Passenger\PassengerActor.cpp" />
     <ClCompile Include="source\Scene\GameState\GameIdle.cpp" />
     <ClCompile Include="source\Scene\GameState\GameInit.cpp" />
@@ -370,6 +354,8 @@
     <ClCompile Include="source\Viewer\GameScene\EventViewer\BeatGameViewer.cpp" />
     <ClCompile Include="source\Effect\Game\MeteorExplosion.cpp" />
     <ClCompile Include="source\Effect\Game\TownExplosion.cpp" />
+    <ClCompile Include="source\FieldObject\Infomation\InfoActor.cpp" />
+    <ClCompile Include="source\FieldObject\Infomation\LinkInfoActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
