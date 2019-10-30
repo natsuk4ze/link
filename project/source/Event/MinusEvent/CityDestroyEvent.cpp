@@ -11,8 +11,17 @@
 #include "../../../Framework/Camera/CameraTranslationPlugin.h"
 #include "../../Effect/GameParticleManager.h"
 #include "../../../Framework/Task/TaskManager.h"
+#include "../../../Framework/Resource/ResourceManager.h"
 
-
+enum State
+{
+	TelopExpanding,
+	MeteorDebut,
+	BeatGameStart,
+	BeatGameSuccess,
+	BeatGameFail,
+	EffectHappend,
+};
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -20,15 +29,12 @@
 const float MeteoriteRadius = 3.0f;
 const float MeteoriteDistance = 200.0f;
 const float FallSpeed = 4.0f;
-// 隕石が来るまでの時間
-const int EscapeTime = 10;
 
 //*****************************************************************************
 // スタティック変数宣言
 //*****************************************************************************
 #if _DEBUG
 LPD3DXMESH CityDestroyEvent::SphereMesh = nullptr;
-LPD3DXMESH CityDestroyEvent::MissileMesh = nullptr;
 D3DMATERIAL9 CityDestroyEvent::Material =
 {
 	D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),	// Diffuse color RGBA
@@ -43,9 +49,7 @@ D3DMATERIAL9 CityDestroyEvent::Material =
 // コンストラクタ
 //=============================================================================
 CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer) :
-	EventAvoid(false),
-	BeatGameOver(false),
-	EffectHappened(false)
+	EventState(State::TelopExpanding)
 {
 	// 連打ゲームインスタンス
 	beatGame = new BeatGame([&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
@@ -61,12 +65,10 @@ CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer) :
 	// テロップ設置
 	eventViewer->SetEventTelop(NegativeEvent01, [&]()
 	{
-		Camera::TranslationPlugin::Instance()->Move(TownPos, 30, [&]()
-		{
-			CountdownStart();
-		});
+		Camera::TranslationPlugin::Instance()->Move(TownPos, 30, [&]() {MeteorFallStart(); });
 	});
 
+	// 隕石落下方向計算
 	MeteoritePos = TownPos + D3DXVECTOR3(MeteoriteDistance, MeteoriteDistance, 0.0f);
 	MoveDirection = TownPos - MeteoritePos;
 	D3DXVec3Normalize(&MoveDirection, &MoveDirection);
@@ -77,7 +79,6 @@ CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer) :
 	{
 		LPDIRECT3DDEVICE9 Device = GetDevice();
 		D3DXCreateSphere(Device, MeteoriteRadius, 16, 16, &SphereMesh, NULL);
-		D3DXCreateSphere(Device, 1.0f, 16, 16, &MissileMesh, NULL);
 	}
 #endif
 }
@@ -95,67 +96,71 @@ CityDestroyEvent::~CityDestroyEvent()
 //=============================================================================
 void CityDestroyEvent::Update()
 {
-	if (!BeatGameOver)
-	{
-		beatGame->Update();
-	}
-	else
-	{
-		if (EffectHappened)
-		{
-			return;
-		}
+	float Distance = 0.0f;
 
-		if (EventAvoid)
-		{
-			// =================
-			// ミサイル発射
-			// =================
-			float Distance = D3DXVec3LengthSq(&D3DXVECTOR3(MeteoritePos - MissilePos));
+	switch (EventState)
+	{
+		// 隕石登場
+	case MeteorDebut:
 
-			if (Distance > pow(3.0f, 2))
-			{
-				MissilePos += MoveDirection * FallSpeed;
-				MeteoritePos += -MoveDirection * FallSpeed;
-				Camera::TranslationPlugin::Instance()->Move(MissilePos, 1, nullptr);
-			}
-			else
-			{
-				// ミサイル命中エフェクト
-				GameParticleManager::Instance()->SetMissileHitEffect(MeteoritePos);
-				// 30フレームの遅延を設置
-				TaskManager::Instance()->CreateDelayedTask(30, [&]()
-				{
-					Camera::TranslationPlugin::Instance()->Restore(60, [&]() { EventOver(); });
-				});
-				EffectHappened = true;
-			}
+		Distance = D3DXVec3LengthSq(&D3DXVECTOR3(MeteoritePos - TownPos));
+
+		if (Distance > pow(20.0f, 2))
+		{
+			MeteoritePos += MoveDirection * FallSpeed;
 		}
 		else
 		{
-			// =================
-			// 隕石落下
-			// =================
-			float Distance = D3DXVec3LengthSq(&D3DXVECTOR3(MeteoritePos - TownPos));
-
-			if (Distance > pow(3.0f, 2))
-			{
-				MeteoritePos += MoveDirection * FallSpeed;
-			}
-			else
-			{
-				// 隕石落下エフェクト
-				GameParticleManager::Instance()->SetMeteorExplosionEffect(TownPos);
-				// 30フレームの遅延を設置
-				TaskManager::Instance()->CreateDelayedTask(30, [&]()
-				{
-					Camera::TranslationPlugin::Instance()->Restore(60, [&]() { EventOver(); });
-				});
-				// 町消滅処理
-				fieldEventHandler->DestroyTown(Target);
-				EffectHappened = true;
-			}
+			CountdownStart();
+			EventState = State::BeatGameStart;
 		}
+		break;
+
+	case BeatGameStart:
+
+		// 連打ゲームの更新
+		beatGame->Update();
+		break;
+
+		// 隕石撃破
+	case BeatGameSuccess:
+
+		// 隕石撃破エフェクト
+		GameParticleManager::Instance()->SetMissileHitEffect(MeteoritePos);
+		// 30フレームの遅延を設置
+		TaskManager::Instance()->CreateDelayedTask(30, [&]()
+		{
+			Camera::TranslationPlugin::Instance()->Restore(60, [&]() { EventOver(); });
+		});
+		EventState = EffectHappend;
+		break;
+
+		// 隕石落下
+	case BeatGameFail:
+
+		Distance = D3DXVec3LengthSq(&D3DXVECTOR3(MeteoritePos - TownPos));
+
+		if (Distance > pow(3.0f, 2))
+		{
+			MeteoritePos += MoveDirection * FallSpeed;
+		}
+		else
+		{
+			// 隕石落下エフェクト
+			GameParticleManager::Instance()->SetMeteorExplosionEffect(TownPos);
+			// 30フレームの遅延を設置
+			TaskManager::Instance()->CreateDelayedTask(30, [&]()
+			{
+				Camera::TranslationPlugin::Instance()->Restore(60, [&]() { EventOver(); });
+			});
+			// 町消滅処理
+			fieldEventHandler->DestroyTown(Target);
+			EventState = EffectHappend;
+		}
+		break;
+
+	default:
+		break;
 	}
 }
 
@@ -166,10 +171,8 @@ void CityDestroyEvent::Draw()
 {
 	LPDIRECT3DDEVICE9 Device = GetDevice();
 
-	beatGame->Draw();
-
 #if _DEBUG
-	if (!EffectHappened)
+	if (EventState != State::EffectHappend)
 	{
 		D3DXMATRIX WorldMatrix, TransMatrix;
 
@@ -188,21 +191,10 @@ void CityDestroyEvent::Draw()
 
 		// 球体描画
 		SphereMesh->DrawSubset(0);
-
-		// ワールドマトリックスの初期化
-		D3DXMatrixIdentity(&WorldMatrix);
-
-		// 移動を反映
-		D3DXMatrixTranslation(&TransMatrix, MissilePos.x, MissilePos.y, MissilePos.z);
-		D3DXMatrixMultiply(&WorldMatrix, &WorldMatrix, &TransMatrix);
-
-		// ワールドマトリックスの設定
-		Device->SetTransform(D3DTS_WORLD, &WorldMatrix);
-
-		// ミサイル描画
-		MissileMesh->DrawSubset(0);
 	}
 #endif
+
+	beatGame->Draw();
 }
 
 //=============================================================================
@@ -225,6 +217,14 @@ void CityDestroyEvent::EventOver(void)
 }
 
 //=============================================================================
+// テロップ再生終了、隕石落下開始
+//=============================================================================
+void CityDestroyEvent::MeteorFallStart(void)
+{
+	EventState = State::MeteorDebut;
+}
+
+//=============================================================================
 // 連打ゲームのカウントダウン開始
 //=============================================================================
 void CityDestroyEvent::CountdownStart(void)
@@ -237,18 +237,19 @@ void CityDestroyEvent::CountdownStart(void)
 //=============================================================================
 void CityDestroyEvent::ReceiveBeatResult(bool IsSuccess)
 {
-	BeatGameOver = true;
+	//BeatGameOver = true;
+	//EventState = State::BeatGameSuccess;
 
 	if (IsSuccess)
 	{
 		// 成功、ミサイル発射
-		EventAvoid = true;
-		MoveDirection = D3DXVECTOR3(MeteoritePos - MissilePos);
-		D3DXVec3Normalize(&MoveDirection, &MoveDirection);
+		EventState = State::BeatGameSuccess;
+		//EventAvoid = true;
 	}
 	else
 	{
 		// 失敗、隕石落下
-		EventAvoid = false;
+		EventState = State::BeatGameFail;
+		//EventAvoid = false;
 	}
 }

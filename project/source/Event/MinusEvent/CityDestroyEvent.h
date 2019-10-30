@@ -9,6 +9,7 @@
 
 #include "../EventBase.h"
 #include "../../Field/Place/FieldPlaceModel.h"
+#include "../../../Framework/Renderer3D/MeshContainer.h"
 
 //*****************************************************************************
 // ëOï˚êÈåæ
@@ -26,9 +27,7 @@ private:
 	D3DXVECTOR3 MissilePos;
 	D3DXVECTOR3 TownPos;
 	D3DXVECTOR3 MoveDirection;
-	bool BeatGameOver;
-	bool EventAvoid;
-	bool EffectHappened;
+	int EventState;
 	const Field::Model::PlaceModel* Target;
 
 	// òAë≈ÉQÅ[ÉÄ
@@ -36,7 +35,6 @@ private:
 
 #if _DEBUG
 	static LPD3DXMESH SphereMesh;
-	static LPD3DXMESH MissileMesh;
 	static D3DMATERIAL9 Material;
 #endif
 
@@ -46,8 +44,10 @@ public:
 	void Update(void) override;
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;
-	void EventOver(void);
+
+	void MeteorFallStart(void);
 	void CountdownStart(void);
+	void EventOver(void);
 	void ReceiveBeatResult(bool IsSuccess);
 };
 

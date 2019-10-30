@@ -17,6 +17,7 @@
 class BaseViewerDrawer;
 class CountViewerDrawer;
 class TextViewer;
+class BeatGameViewer;
 
 //*****************************************************************************
 // クラス定義
@@ -27,24 +28,28 @@ private:
 	int RemainFrame;
 	int InputCount;
 	bool TelopOver;
+	bool IsDrawingViewer;
+	bool IsSuccess;
+	BeatGameViewer *Viewer;
 	std::function<void(bool)> Callback;
 
+	void EventOver(void);
+
 	// テキスト
-	static TextViewer *Text;
+	TextViewer *Text;
+	TextViewer *CountdownText;
 	// 小数点
-	static BaseViewerDrawer *point;
+	BaseViewerDrawer *point;
 	// 少数部
-	static CountViewerDrawer *fewNum;
+	CountViewerDrawer *fewNum;
 	// 整数部
-	static CountViewerDrawer *intNum;
+	CountViewerDrawer *intNum;
 
 public:
 	BeatGame(std::function<void(bool)> CallBack = nullptr);
 	~BeatGame();
 	void Update(void) override;
 	void Draw(void) override;
-	static void Init(void);
-	static void Uninit(void);
 	string GetEventMessage(int FieldLevel) override;
 	void CountdownStart(void);
 };

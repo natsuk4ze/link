@@ -74,7 +74,7 @@ void BaseViewerDrawer::MakeVertex()
 
 	// テクスチャ座標の設定
 	vertexWk[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-	vertexWk[1].tex = D3DXVECTOR2(1.0, 0.0f);
+	vertexWk[1].tex = D3DXVECTOR2(1.0f, 0.0f);
 	vertexWk[2].tex = D3DXVECTOR2(0.0f, 1.0f);
 	vertexWk[3].tex = D3DXVECTOR2(1.0f, 1.0f);
 }
