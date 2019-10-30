@@ -36,7 +36,7 @@ BeatGameViewer::BeatGameViewer() :
 	D3DXCreateTextureFromFile(Device, TexturePath[1], &FailTexture);
 
 	Viewer = new BaseViewerDrawer();
-	Viewer->size = D3DXVECTOR3(SCREEN_WIDTH / 2, 60.0f, 0.0f);
+	Viewer->size = D3DXVECTOR3(SCREEN_WIDTH / 2, 120.0f, 0.0f);
 	Viewer->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	Viewer->position = D3DXVECTOR3((float)SCREEN_WIDTH / 2, (float)SCREEN_HEIGHT / 2, 0.0f);
 	Viewer->SetColor(SET_COLOR_NOT_COLORED);
@@ -114,6 +114,8 @@ void BeatGameViewer::TextureExpand(void)
 	{
 		ExpandPercent = 1.0f;
 	}
+
+	// 60フレームの表示後、描画終了
 	if (CountFrame >= 60)
 	{
 		Callback();
@@ -122,7 +124,7 @@ void BeatGameViewer::TextureExpand(void)
 }
 
 //=============================================================================
-// 背景を開く処理
+// 描画開始
 //=============================================================================
 void BeatGameViewer::DrawStart(bool IsSuccess, std::function<void(void)> Callback)
 {

@@ -24,7 +24,6 @@ class CityDestroyEvent : public EventBase
 {
 private:
 	D3DXVECTOR3 MeteoritePos;
-	D3DXVECTOR3 MissilePos;
 	D3DXVECTOR3 TownPos;
 	D3DXVECTOR3 MoveDirection;
 	int EventState;
@@ -44,7 +43,6 @@ public:
 	void Update(void) override;
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;
-
 	void MeteorFallStart(void);
 	void CountdownStart(void);
 	void EventOver(void);

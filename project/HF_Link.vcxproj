@@ -132,8 +132,6 @@
     <ClInclude Include="source\Event\MinusEvent\BeatGame.h" />
     <ClInclude Include="source\Event\MinusEvent\CityDestroyEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\LinkLevelDecreaseEvent.h" />
-    <ClInclude Include="source\Event\MinusEvent\CongestionUpEvent.h" />
-    <ClInclude Include="source\Event\MinusEvent\MoveInverseEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\AILevelUpEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\AllLinkLevelUpEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\LinkLevelUpEvent.h" />
@@ -205,6 +203,7 @@
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\countviewerdrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.h" />
+    <ClInclude Include="source\Viewer\GameScene\EventViewer\BeatGameViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventViewer.h" />
@@ -315,8 +314,6 @@
     <ClCompile Include="source\Event\MinusEvent\BanStockUseEvent.cpp" />
     <ClCompile Include="source\Event\MinusEvent\BeatGame.cpp" />
     <ClCompile Include="source\Event\MinusEvent\CityDestroyEvent.cpp" />
-    <ClCompile Include="source\Event\MinusEvent\CongestionUpEvent.cpp" />
-    <ClCompile Include="source\Event\MinusEvent\MoveInverseEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\AILevelUpEvent.cpp" />
     <ClCompile Include="source\Event\MinusEvent\LinkLevelDecreaseEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\LinkLevelUpEvent.cpp" />
@@ -385,6 +382,7 @@
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\EventViewer\BeatGameViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventMessage.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventTelop.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventViewer.cpp" />

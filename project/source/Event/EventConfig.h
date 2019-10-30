@@ -13,17 +13,15 @@ namespace EventConfig
 	{
 		LinkLevelUp,		// 一つの町のリンクレベル上昇
 		NewCity,			// 新しい町、国、星出現
-		StockRecovery,		// 橋、ドリルのストック数を増やす
-		FamousPeople,		// 町に「有名人がいる状態」付与。街の発展度計算に倍率をかける
+		StockRecovery,		// ドリルのストック数を増やす
+		FamousPeople,		// 街の発展度計算に倍率をかける
 		AllLinkLevelUp,		// 道が繋がっている街全体のリンクレベル上昇
 		AILevelUp,			// スロットを回してAI発展レベルにボーナス
 		TimeRecovery,		// 制限時間の回復
 		LinkLevelDecrease,	// 町のリンクレベル減少
 		CityDestroy,		// 町消滅
 		AILevelDecrease,	// AI発展レベル減少
-		MoveInverse,		// 操作反転（上下左右）
 		BanStockUse,		// 一定時間特殊チップ使用不可
-		CongestionUp,		// 交差点の混雑度一定時間上昇
 		NoEvent = -1,		// イベントなし
 	};
 }

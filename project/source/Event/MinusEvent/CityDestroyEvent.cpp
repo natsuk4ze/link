@@ -11,7 +11,6 @@
 #include "../../../Framework/Camera/CameraTranslationPlugin.h"
 #include "../../Effect/GameParticleManager.h"
 #include "../../../Framework/Task/TaskManager.h"
-#include "../../../Framework/Resource/ResourceManager.h"
 
 enum State
 {
@@ -57,7 +56,6 @@ CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer) :
 	// 破壊する町の予定地を取得
 	Target = fieldEventHandler->GetDestroyTarget();
 	TownPos = Target->GetPosition().ConvertToWorldPosition();
-	MissilePos = TownPos;
 
 	// ゲーム進行停止
 	fieldEventHandler->PauseGame();
@@ -237,19 +235,14 @@ void CityDestroyEvent::CountdownStart(void)
 //=============================================================================
 void CityDestroyEvent::ReceiveBeatResult(bool IsSuccess)
 {
-	//BeatGameOver = true;
-	//EventState = State::BeatGameSuccess;
-
 	if (IsSuccess)
 	{
-		// 成功、ミサイル発射
+		// 成功、隕石撃破
 		EventState = State::BeatGameSuccess;
-		//EventAvoid = true;
 	}
 	else
 	{
 		// 失敗、隕石落下
 		EventState = State::BeatGameFail;
-		//EventAvoid = false;
 	}
 }
