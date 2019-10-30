@@ -31,6 +31,8 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 
 	// 3Dオブジェクトのリソースをロード
 	ResourceManager::Instance()->LoadMesh("NoneActor", "data/MODEL/PlaceActor/ground.x");
+	// イベント用モデル
+
 	// FieldLevel = City
 	ResourceManager::Instance()->LoadMesh("CrossJunction-City", "data/MODEL/PlaceActor/Cross-Junction.x");
 	ResourceManager::Instance()->LoadMesh("TJunction-City", "data/MODEL/PlaceActor/T-Junction.x");

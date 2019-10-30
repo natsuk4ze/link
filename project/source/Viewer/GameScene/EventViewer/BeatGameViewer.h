@@ -1,40 +1,45 @@
 //=============================================================================
 //
-// ストック使用不可イベントクラス [BanStockUseEvent.h]
+// 連打ゲームビューアクラス [BeatGameViewer.cpp]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#ifndef _BanStockUseEvent_H_
-#define _BanStockUseEvent_H_
+#ifndef _BeatGameViewer_H_
+#define _BeatGameViewer_H_
 
-#include "../EventBase.h"
+#include <functional>
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
-class BeatGame;
-class EventViewer;
+class BaseViewerDrawer;
+
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class BanStockUseEvent : public EventBase
+class BeatGameViewer 
 {
 private:
-	// 連打ゲーム
-	BeatGame *beatGame;
+	int CountFrame;
+	float ExpandPercent;
+	bool DrawFlag;
+	std::function<void(void)> Callback;
 
-	int RemainTime;
+	BaseViewerDrawer* Viewer;
+	LPDIRECT3DTEXTURE9 SuccessTexture;
+	LPDIRECT3DTEXTURE9 FailTexture;
+
+	void SetVertex();
+	void TextureExpand();
 
 public:
-	BanStockUseEvent(EventViewer* eventViewer);
-	~BanStockUseEvent();
-	void Update(void) override;
-	void Draw(void) override;
-	string GetEventMessage(int FieldLevel) override;
-	void ReceiveBeatResult(bool IsSuccess);
-	void CountdownStart(void);
-	void EventOver(void);
+	BeatGameViewer();
+	~BeatGameViewer();
+	void Update(void);
+	void Draw(void);
+	void DrawStart(bool IsSuccess,std::function<void(void)> Callback);
 };
 
 #endif
+

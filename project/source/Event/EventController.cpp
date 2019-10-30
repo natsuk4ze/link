@@ -18,8 +18,6 @@
 #include "MinusEvent/BanStockUseEvent.h"
 #include "MinusEvent/CityDestroyEvent.h"
 #include "MinusEvent/LinkLevelDecreaseEvent.h"
-#include "MinusEvent/CongestionUpEvent.h"
-#include "MinusEvent/MoveInverseEvent.h"
 #include "MinusEvent/BeatGame.h"
 
 #include "../../Framework/Core/Utility.h"
@@ -60,8 +58,6 @@ EventController::EventController(int FieldLevel) : FieldLevel(FieldLevel)
 
 	eventViewer = new EventViewer();
 
-	BeatGame::Init();
-
 #if _DEBUG
 	ResourceManager::Instance()->MakePolygon("Event", "data/TEXTURE/PlaceTest/Event.png", { 4.5f, 4.5f }, { 13.0f,1.0f });
 	polygon = new BoardPolygon();
@@ -82,7 +78,6 @@ EventController::~EventController()
 	fieldController = nullptr;
 
 	SAFE_DELETE(eventViewer);
-	BeatGame::Uninit();
 
 #if _DEBUG
 	SAFE_DELETE(polygon);
@@ -97,6 +92,7 @@ void EventController::Update()
 #if _DEBUG
 	if (Keyboard::GetTrigger(DIK_F))
 	{
+		//EventVec.push_back(new BeatGame());
 	}
 #endif
 
@@ -264,14 +260,8 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 				case AILevelDecrease:
 					Ptr = new AILevelDecreaseEvent();
 					break;
-				case MoveInverse:
-					Ptr = new MoveInverseEvent(300);
-					break;
 				case BanStockUse:
-					Ptr = new BanStockUseEvent(300);
-					break;
-				case CongestionUp:
-					Ptr = new CongestionUpEvent(300);
+					Ptr = new BanStockUseEvent(eventViewer);
 					break;
 				default:
 					break;
@@ -284,10 +274,10 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 
 					// イベントベクトルにプッシュ
 					EventVec.push_back(Ptr);
-
-					// CSVデータから発生したイベントの資料を削除
-					EventPlace = EventCSVData.erase(EventPlace);
 				}
+
+				// CSVデータから発生したイベントの資料を削除
+				EventPlace = EventCSVData.erase(EventPlace);
 			}
 			else
 				++EventPlace;

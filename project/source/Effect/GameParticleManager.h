@@ -43,9 +43,9 @@ public:
 	//シンギュラリティイベントのエフェクトセット処理
 	void SetSingularityEffect(const D3DXVECTOR3& position, std::function<void(void)> callback = nullptr);
 	//隕石落下イベントのエフェクトセット処理
-	void SetMeteorExplosionEffect(const D3DXVECTOR3& position);
+	void SetMeteorExplosionEffect(const D3DXVECTOR3& position, std::function<void(void)> callback = nullptr);
 	//ミサイル命中イベントのエフェクトセット処理
-	void SetMissileHitEffect(const D3DXVECTOR3& position);
+	void SetMissileHitEffect(const D3DXVECTOR3& position, std::function<void(void)> callback = nullptr);
 
 private:
 	static const float BloomPower[3];

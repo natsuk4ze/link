@@ -8,6 +8,7 @@
 #include "BeatGame.h"
 #include "../../Viewer/Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Viewer/Framework/ViewerDrawer/countviewerdrawer.h"
+#include "../../Viewer/GameScene/EventViewer/BeatGameViewer.h"
 #include "../../../Framework/Renderer2D/TextViewer.h"
 #include "../../../Framework/Input/input.h"
 
@@ -23,40 +24,26 @@ const int InputGoal = 20;
 //*****************************************************************************
 // スタティック変数宣言
 //*****************************************************************************
-TextViewer *BeatGame::Text = nullptr;
-BaseViewerDrawer *BeatGame::point = nullptr;
-CountViewerDrawer *BeatGame::fewNum = nullptr;
-CountViewerDrawer *BeatGame::intNum = nullptr;
+
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 BeatGame::BeatGame(std::function<void(bool)> Callback) :
 	RemainFrame(InputTime * 30),
-	TelopOver(false),
 	InputCount(0),
+	TelopOver(false),
+	IsDrawingViewer(false),
+	IsSuccess(false),
 	Callback(Callback)
 {
-	Text->SetText("Cボタン連打！　残り 20 回");
-}
+	Viewer = new BeatGameViewer();
 
-//=============================================================================
-// デストラクタ
-//=============================================================================
-BeatGame::~BeatGame()
-{
-
-}
-
-//=============================================================================
-// 初期化
-//=============================================================================
-void BeatGame::Init()
-{
 	// テキスト
 	Text = new TextViewer("data/TEXTURE/Viewer/EventViewer/EventMessage/Text_cinecaption226.ttf", 80);
 	Text->SetColor(SET_COLOR_NOT_COLORED);
 	Text->SetPos((int)(SCREEN_WIDTH / 2), (int)(SCREEN_HEIGHT / 10 * 2.0f + 120.0f));
+	Text->SetText("Cボタン連打！　残り 20 回");
 
 	// 整数部
 	intNum = new CountViewerDrawer();
@@ -95,14 +82,16 @@ void BeatGame::Init()
 }
 
 //=============================================================================
-// リリース
+// デストラクタ
 //=============================================================================
-void BeatGame::Uninit()
+BeatGame::~BeatGame()
 {
 	SAFE_DELETE(Text);
+	SAFE_DELETE(CountdownText);
 	SAFE_DELETE(point);
 	SAFE_DELETE(fewNum);
 	SAFE_DELETE(intNum);
+	SAFE_DELETE(Viewer);
 }
 
 //=============================================================================
@@ -110,40 +99,48 @@ void BeatGame::Uninit()
 //=============================================================================
 void BeatGame::Update()
 {
-	if (!UseFlag)
-		return;
-
-	if (!TelopOver)
+	// テロップ再生中またゲーム終了
+	if (!TelopOver || !UseFlag)
 	{
 		return;
 	}
 	else
 	{
-		RemainFrame--;
-
-		// カウント計算
-		if (Keyboard::GetTrigger(DIK_C))
+		// ビューア描画していない
+		if (!IsDrawingViewer)
 		{
-			InputCount++;
+			RemainFrame--;
+
+			// カウント計算
+			if (Keyboard::GetTrigger(DIK_C))
+			{
+				InputCount++;
+			}
+
+			char Message[64];
+			sprintf(Message, "Cボタン連打！　残り %d 回", InputGoal - InputCount);
+			Text->SetText(Message);
+
+			if (InputCount >= 20)
+			{
+				// 成功
+				Viewer->DrawStart(true, [&]() {EventOver(); });
+				IsSuccess = true;
+				IsDrawingViewer = true;
+			}
+
+			if (RemainFrame <= 0)
+			{
+				// 失敗
+				Viewer->DrawStart(false, [&]() {EventOver(); });
+				IsSuccess = false;
+				IsDrawingViewer = true;
+			}
 		}
-
-		char Message[64];
-		sprintf(Message, "Cボタン連打！　残り %d 回", InputGoal - InputCount);
-		Text->SetText(Message);
-
-		if (InputCount >= 20)
+		// ビューア描画中
+		else
 		{
-			// 成功
-			Callback(true);
-			UseFlag = false;
-			return;
-		}
-
-		if (RemainFrame <= 0)
-		{
-			// 失敗
-			Callback(false);
-			UseFlag = false;
+			Viewer->Update();
 		}
 	}
 }
@@ -158,30 +155,37 @@ void BeatGame::Draw()
 
 	LPDIRECT3DDEVICE9 Device = GetDevice();
 
-	// テキスト
-	Text->Draw();
+	if (!IsDrawingViewer)
+	{
+		// テキスト
+		Text->Draw();
 
-	Device->SetRenderState(D3DRS_ALPHATESTENABLE, true);
-	Device->SetRenderState(D3DRS_ALPHAREF, 0);
-	Device->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+		Device->SetRenderState(D3DRS_ALPHATESTENABLE, true);
+		Device->SetRenderState(D3DRS_ALPHAREF, 0);
+		Device->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+		Device->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 
-	// 小数点
-	point->Draw();
-	point->SetVertex();
+		// 小数点
+		point->Draw();
+		point->SetVertex();
 
-	float RemainTime = RemainFrame / 30.0f;
+		float RemainTime = RemainFrame / 30.0f;
 
-	// 整数部
-	intNum->DrawCounter(intNum->baseNumber, (int)RemainTime, intNum->placeMax,
-		intNum->intervalNumberScr, intNum->intervalNumberTex);
+		// 整数部
+		intNum->DrawCounter(intNum->baseNumber, (int)RemainTime, intNum->placeMax,
+			intNum->intervalNumberScr, intNum->intervalNumberTex);
 
-	// 小数部
-	fewNum->DrawCounter(fewNum->baseNumber, (int)((RemainTime - (int)RemainTime)*pow(fewNum->baseNumber, fewNum->placeMax)), fewNum->placeMax,
-		fewNum->intervalNumberScr, fewNum->intervalNumberTex);
+		// 小数部
+		fewNum->DrawCounter(fewNum->baseNumber, (int)((RemainTime - (int)RemainTime)*pow(fewNum->baseNumber, fewNum->placeMax)), fewNum->placeMax,
+			fewNum->intervalNumberScr, fewNum->intervalNumberTex);
 
-	Device->SetRenderState(D3DRS_ALPHATESTENABLE, false);
-	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+		Device->SetRenderState(D3DRS_ALPHATESTENABLE, false);
+		Device->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+	}
+	else
+	{
+		Viewer->Draw();
+	}
 }
 
 //=============================================================================
@@ -194,9 +198,18 @@ string BeatGame::GetEventMessage(int FieldLevel)
 }
 
 //=============================================================================
-// イベントメッセージを取得
+// カウントダウン開始
 //=============================================================================
 void BeatGame::CountdownStart(void)
 {
 	TelopOver = true;
+}
+
+//=============================================================================
+// イベント終了
+//=============================================================================
+void BeatGame::EventOver(void)
+{
+	Callback(IsSuccess);
+	UseFlag = false;
 }

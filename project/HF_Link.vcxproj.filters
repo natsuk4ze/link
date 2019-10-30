@@ -152,9 +152,7 @@
     <ClInclude Include="source\Event\PlusEvent\FamousPeopleEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\AILevelUpEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\AILevelDecreaseEvent.h" />
-    <ClInclude Include="source\Event\MinusEvent\MoveInverseEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\BanStockUseEvent.h" />
-    <ClInclude Include="source\Event\MinusEvent\CongestionUpEvent.h" />
     <ClInclude Include="source\Effect\GameParticleManager.h" />
     <ClInclude Include="source\Effect\Game\BlueSpark.h" />
     <ClInclude Include="source\Scene\ParticleTestScene.h" />
@@ -195,6 +193,7 @@
     <ClInclude Include="source\Field\Along\AlongModel.h" />
     <ClInclude Include="source\Field\Along\AlongActor.h" />
     <ClInclude Include="source\Field\Along\AlongController.h" />
+    <ClInclude Include="source\Viewer\GameScene\EventViewer\BeatGameViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -330,9 +329,7 @@
     <ClCompile Include="source\Event\PlusEvent\FamousPeopleEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\AILevelUpEvent.cpp" />
     <ClCompile Include="source\Event\MinusEvent\AILevelDecreaseEvent.cpp" />
-    <ClCompile Include="source\Event\MinusEvent\MoveInverseEvent.cpp" />
     <ClCompile Include="source\Event\MinusEvent\BanStockUseEvent.cpp" />
-    <ClCompile Include="source\Event\MinusEvent\CongestionUpEvent.cpp" />
     <ClCompile Include="source\Effect\GameParticleManager.cpp" />
     <ClCompile Include="source\Effect\Game\BlueSpark.cpp" />
     <ClCompile Include="source\Scene\ParticleTestScene.cpp" />
@@ -374,6 +371,7 @@
     <ClCompile Include="source\Field\Along\AlongModel.cpp" />
     <ClCompile Include="source\Field\Along\AlongActor.cpp" />
     <ClCompile Include="source\Field\Along\AlongController.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\EventViewer\BeatGameViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
