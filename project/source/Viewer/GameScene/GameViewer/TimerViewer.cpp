@@ -20,7 +20,6 @@ TimerViewer::TimerViewer()
 	intNum->MakeVertex();
 	intNum->size = D3DXVECTOR3(60.0f, 60.0f, 0.0f);
 	intNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	//intNum->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.3f, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
 	intNum->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.3f, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
 	intNum->SetColor(SET_COLOR_NOT_COLORED);
 	intNum->intervalNumberScr = 80.0f;
@@ -92,10 +91,12 @@ void TimerViewer::Draw(void)
 	point->SetVertex();
 
 	//®”•”
-	intNum->DrawCounter(intNum->baseNumber, (int)parameterBox, intNum->placeMax,
+	intNum->DrawCounter(intNum->baseNumber,
+		(int)parameterBox, intNum->placeMax,
 		intNum->intervalNumberScr, intNum->intervalNumberTex);
 
 	//¬”•”
-	fewNum->DrawCounter(fewNum->baseNumber, (int)((parameterBox - (int)parameterBox)*pow(fewNum->baseNumber, fewNum->placeMax)), fewNum->placeMax,
+	fewNum->DrawCounter(fewNum->baseNumber, 
+		(int)((parameterBox - (int)parameterBox)*pow(fewNum->baseNumber, fewNum->placeMax)), fewNum->placeMax,
 		fewNum->intervalNumberScr, fewNum->intervalNumberTex);
 }

@@ -90,12 +90,6 @@ void ItemStockViewer::Draw(void)
 //=============================================================================
 void ItemStockViewer::Animate(void)
 {
-	//現在のパラメータ
-	static int currentParam;
-
-	//１フレーム前のパラメータ
-	static int lastParam;
-
 	//前フレームのパラメータとの差が0でないときホッピング状態にする
 	currentParam = parameterBox;
 	if (currentParam - lastParam != 0)

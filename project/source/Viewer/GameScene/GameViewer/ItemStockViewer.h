@@ -36,6 +36,12 @@ private:
 
 	//アニメーション
 	void Animate(void);
+
+	//現在のパラメータ
+	int currentParam;
+
+	//１フレーム前のパラメータ
+	int lastParam;
 };
 
 

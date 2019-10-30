@@ -6,6 +6,7 @@
 //=============================================================================
 #include "../../../../main.h"
 #include "../../../../Framework/Math/Easing.h"
+#include "../../../../Framework/Math/TMath.h"
 #include "../../../../Framework/Renderer2D/TextViewer.h"
 #include "../../../../Framework/Pattern/Delegate.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
@@ -103,6 +104,9 @@ void EventMessage::Update(void)
 //=============================================================================
 void EventMessage::Draw(void)
 {
+	//再生中なら実行
+	if (!isPlaying) return;
+
 	//背景を先に描画
 	bg->Draw();
 	bg->SetVertex();
@@ -117,55 +121,55 @@ void EventMessage::Draw(void)
 void EventMessage::Animate(void)
 {
 	//再生中なら実行
-	if (isPlaying)
+	if (!isPlaying) return;
+	
+	//フレーム更新
+	countFrame++;
+
+	//ポジション
+	D3DXVECTOR2 position;
+
+	//ポジションを開始位置に初期化
+	position = animStartPosition[0];
+	
+	//時間更新
+	time = countFrame / animDuration[currentAnim];
+
+	//ポジションを更新
+	position = Easing::EaseValue(time,
+	animStartPosition[currentAnim],
+	animEndPosition[currentAnim],
+	animType[currentAnim]);
+
+	//アニメーション更新
+	if (countFrame == animDuration[currentAnim])
 	{
-		//フレーム更新
-		countFrame++;
-
-		//ポジション
-		D3DXVECTOR2 position;
-
-		//ポジションを開始位置に初期化
-		position = animStartPosition[0];
-		
-		//時間更新
-		time = countFrame / animDuration[currentAnim];
-
-		//ポジションを更新
-		position = Easing::EaseValue(time,
-		animStartPosition[currentAnim],
-		animEndPosition[currentAnim],
-		animType[currentAnim]);
-
-		//アニメーション更新
-		if (countFrame == animDuration[currentAnim])
-		{
-			countFrame = 0;
-			currentAnim++;
-		}
-
-		//Outシーン中はフェードアウトを実行
-		if (currentAnim == Out)
-		{
-			FadeOut();
-		}
-
-		//アニメーション終了
-		if (currentAnim == animMax)
-		{
-			countFrame = 0;
-			currentAnim = 0;
-			time = 0;
-			alpha = 1.0f;
-			text->SetColor(SET_COLOR_NOT_COLORED);
-			bg->SetColor(SET_COLOR_NOT_COLORED);
-			isPlaying = false;
-		}
-
-		//ポジションをセット(*後に変更予定)
-		text->SetPos((int)position.x,(int)position.y + int((messageSetCnt-1) * intervalViewerPos));
-		bg->position = D3DXVECTOR3(position.x, position.y + (messageSetCnt-1) * intervalViewerPos, 0.0f);
+		countFrame = 0;
+		currentAnim++;
 	}
+
+	//Outシーン中はフェードアウトを実行
+	if (currentAnim == Out)
+	{
+		FadeOut();
+	}
+
+	//アニメーション終了
+	if (currentAnim == animMax)
+	{
+		countFrame = 0;
+		currentAnim = 0;
+		time = 0;
+		alpha = 1.0f;
+		text->SetColor(SET_COLOR_NOT_COLORED);
+		bg->SetColor(SET_COLOR_NOT_COLORED);
+		isPlaying = false;
+	}
+
+	//ポジションをセット(*後に変更予定)
+	text->SetPos((int)position.x,(int)position.y + int((messageSetCnt-1) * intervalViewerPos));
+	bg->position = D3DXVECTOR3(position.x, position.y + (messageSetCnt-1) * intervalViewerPos, 0.0f);
+	
 }
 
 //=============================================================================
@@ -173,14 +177,13 @@ void EventMessage::Animate(void)
 //=============================================================================
 void EventMessage::FadeOut(void)
 {
+	//α値の最小を0.0fに設定
+	alpha = Math::Max(alpha, 0.0f);
+
 	//フェードアウト中はα値を減算
 	if (alpha > 0.0f)
 	{
 		alpha -= 0.05f;
-	}
-	if (alpha < 0.0f)
-	{
-		alpha = 0.0f;
 	}
 
 	text->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, alpha));

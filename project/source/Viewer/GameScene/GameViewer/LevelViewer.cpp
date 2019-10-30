@@ -125,14 +125,8 @@ void LevelViewer::Draw(void)
 //=============================================================================
 void LevelViewer::Animate(void)
 {
-	//現在のパラメータ
-	static int currentParam;
-
-	//１フレーム前のパラメータ
-	static int lastParam;
-
 	//数字のホップ量
-	static const float hopNumValue = 50.0f;
+	const float hopNumValue = 50.0f;
 
 	//前フレームのパラメータより現在のパラメータが大きい場合ホッピング状態にする
 	currentParam = (int)parameterBox[LevelAI];
