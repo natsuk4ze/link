@@ -124,11 +124,11 @@ void CityDestroyEvent::Update()
 	case BeatGameSuccess:
 
 		// 隕石撃破エフェクト
-		GameParticleManager::Instance()->SetMissileHitEffect(MeteoritePos);
+		GameParticleManager::Instance()->SetMeteorExplosionEffect(MeteoritePos);
 		// 30フレームの遅延を設置
 		TaskManager::Instance()->CreateDelayedTask(30, [&]()
 		{
-			Camera::TranslationPlugin::Instance()->Restore(60, [&]() { EventOver(); });
+			Camera::TranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
 		});
 		EventState = EffectHappend;
 		break;
@@ -144,12 +144,12 @@ void CityDestroyEvent::Update()
 		}
 		else
 		{
-			// 隕石落下エフェクト
-			GameParticleManager::Instance()->SetMeteorExplosionEffect(TownPos);
+			// 町消滅エフェクト
+			GameParticleManager::Instance()->SetTownExplosionEffect(TownPos);
 			// 30フレームの遅延を設置
 			TaskManager::Instance()->CreateDelayedTask(30, [&]()
 			{
-				Camera::TranslationPlugin::Instance()->Restore(60, [&]() { EventOver(); });
+				Camera::TranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
 			});
 			// 町消滅処理
 			fieldEventHandler->DestroyTown(Target);

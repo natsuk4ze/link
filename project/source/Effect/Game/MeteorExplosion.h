@@ -1,11 +1,11 @@
 //=============================================================================
 //
-// ミサイル命中クラス [MissileHit.cpp]
+// 隕石爆発エフェクトクラス [MeteorExplosion.cpp]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#ifndef _MissileHit_H_
-#define _MissileHit_H_
+#ifndef _MeteorExplosion_H_
+#define _MeteorExplosion_H_
 
 #include "../../../main.h"
 #include "../../../Framework/Particle/BaseParticleController.h"
@@ -14,21 +14,21 @@
 namespace Effect::Game
 {
 	/**************************************
-	MissileHitControllerクラス
+	MeteorExplosionControllerクラス
 	***************************************/
-	class MissileHitController : public BaseParticleController
+	class MeteorExplosionController : public BaseParticleController
 	{
 	public:
-		MissileHitController();
+		MeteorExplosionController();
 	};
 
 	/**************************************
-	MissileHitクラス
+	MeteorExplosionクラス
 	***************************************/
-	class MissileHit : public AnimationParticle3D
+	class MeteorExplosion : public AnimationParticle3D
 	{
 	public:
-		MissileHit();
+		MeteorExplosion();
 
 		void Init() override;
 		void Update() override;

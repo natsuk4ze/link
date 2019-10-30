@@ -1,18 +1,18 @@
 //=============================================================================
 //
-// ミサイル命中エフェクトクラス [MissileHit.cpp]
+// 隕石爆発エフェクトクラス [MeteorExplosion.cpp]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#include "MissileHit.h"
+#include "MeteorExplosion.h"
 #include "../../../Framework/Math/Easing.h"
 
 namespace Effect::Game
 {
 	/**************************************
-	MissileHitControllerコンストラクタ
+	MeteorExplosionControllerコンストラクタ
 	***************************************/
-	MissileHitController::MissileHitController() :
+	MeteorExplosionController::MeteorExplosionController() :
 		BaseParticleController(Particle_3D)
 	{
 		//単位頂点バッファ作成
@@ -21,7 +21,7 @@ namespace Effect::Game
 		MakeUnitBuffer(SizeParticle, DivineTex);
 
 		//テクスチャ読み込み
-		const char* Path = "data/TEXTURE/Particle/MissileHit.png";
+		const char* Path = "data/TEXTURE/Particle/MeteorExplosion.png";
 		LoadTexture(Path);
 
 		//パーティクルコンテナ作成
@@ -29,7 +29,7 @@ namespace Effect::Game
 		particleContainer.resize(MaxParticle, nullptr);
 		for (auto &particle : particleContainer)
 		{
-			particle = new MissileHit();
+			particle = new MeteorExplosion();
 		}
 
 		//エミッターコンテナ作成処理
@@ -44,30 +44,30 @@ namespace Effect::Game
 	}
 
 	/**************************************
-	MissileHit staticメンバ
+	MeteorExplosion staticメンバ
 	***************************************/
-	const int MissileHit::Life = 20;
+	const int MeteorExplosion::Life = 20;
 
 	/**************************************
-	MissileHitコンストラクタ
+	MeteorExplosionコンストラクタ
 	***************************************/
-	MissileHit::MissileHit() : AnimationParticle3D(8.0f, 8.0f, Life)
+	MeteorExplosion::MeteorExplosion() : AnimationParticle3D(8.0f, 8.0f, Life)
 	{
 	}
 
 	/**************************************
-	MissileHit初期化処理
+	MeteorExplosion初期化処理
 	***************************************/
-	void MissileHit::Init()
+	void MeteorExplosion::Init()
 	{
 		cntFrame = 0;
 		active = true;
 	}
 
 	/**************************************
-	MissileHit更新処理
+	MeteorExplosion更新処理
 	***************************************/
-	void MissileHit::Update()
+	void MeteorExplosion::Update()
 	{
 		if (!IsActive())
 			return;

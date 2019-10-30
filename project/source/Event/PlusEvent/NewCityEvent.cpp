@@ -6,8 +6,10 @@
 //=============================================================================
 #include "../../../main.h"
 #include "NewCityEvent.h"
-
 #include "../../../Framework/Camera/CameraTranslationPlugin.h"
+#include "../../Viewer/GameScene/EventViewer/EventViewer.h"
+#include "../../Effect/GameParticleManager.h"
+#include "../../../Framework/Task/TaskManager.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -26,7 +28,7 @@ NewCityEvent::NewCityEvent(EventViewer *Ptr) : eventViewer(Ptr)
 {
 	// 新しい町を作る予定地を取得
 	NewTown = fieldEventHandler->GetNewTownPosition();
-	const D3DXVECTOR3 TownPosVec3 = NewTown->GetPosition().ConvertToWorldPosition();
+	const D3DXVECTOR3 TownPos = NewTown->GetPosition().ConvertToWorldPosition();
 
 	// ゲーム進行停止
 	fieldEventHandler->PauseGame();
@@ -35,14 +37,7 @@ NewCityEvent::NewCityEvent(EventViewer *Ptr) : eventViewer(Ptr)
 	eventViewer->SetEventTelop(PositiveEvent01, [=]()
 	{
 		// 予定地にカメラを移動させる
-		Camera::TranslationPlugin::Instance()->Move(
-			TownPosVec3,
-			30,
-			// 新しい町を作る関数のラムダ式
-			[=]()
-		{
-			fieldEventHandler->CreateNewTown(NewTown);
-		});
+		Camera::TranslationPlugin::Instance()->Move(TownPos, 30, [&]() {CreateNewCity(); });
 	});
 }
 
@@ -59,7 +54,7 @@ NewCityEvent::~NewCityEvent()
 //=============================================================================
 void NewCityEvent::Update()
 {
-	UseFlag = false;
+	//UseFlag = false;
 }
 
 //=============================================================================
@@ -77,4 +72,27 @@ string NewCityEvent::GetEventMessage(int FieldLevel)
 {
 	// ヌル
 	return "";
+}
+
+//=============================================================================
+// 新しい町を作る
+//=============================================================================
+void NewCityEvent::CreateNewCity(void)
+{
+	const D3DXVECTOR3 TownPos = NewTown->GetPosition().ConvertToWorldPosition();
+
+	fieldEventHandler->CreateNewTown(NewTown);
+	GameParticleManager::Instance()->SetSingularityEffect(TownPos);
+	TaskManager::Instance()->CreateDelayedTask(60, [&]() {EventOver(); });
+}
+
+//=============================================================================
+// イベント終了処理
+//=============================================================================
+void NewCityEvent::EventOver(void)
+{
+	// イベント終了、ゲーム続行
+	Camera::TranslationPlugin::Instance()->Restore(30, nullptr);
+	fieldEventHandler->ResumeGame();
+	UseFlag = false;
 }

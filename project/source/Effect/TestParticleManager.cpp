@@ -10,10 +10,10 @@
 #include "Game/BlueSpark.h"
 #include "Game/BlueDebris.h"
 #include "Game/WhiteSmog.h"
-#include "Game/Explosion.h"
+#include "Game/TownExplosion.h"
 #include "Game/ExplosionFlare.h"
 #include "Game/AngryFace.h"
-#include "Game/MissileHit.h"
+#include "Game/MeteorExplosion.h"
 
 /**************************************
 èâä˙âªèàóù
@@ -28,8 +28,8 @@ void TestParticleManager::Init()
 	controllers[TestParticle::WhiteSmog] = new Effect::Game::WhiteSmogController();
 	controllers[TestParticle::ExplosionFlare] = new Effect::Game::ExplosionFlareController();
 	controllers[TestParticle::AngryFace] = new Effect::Game::AngryFaceController();
-	controllers[TestParticle::Explosion] = new Effect::Game::ExplosionController();
-	controllers[TestParticle::MissileHit] = new Effect::Game::MissileHitController();
+	controllers[TestParticle::TownExplosion] = new Effect::Game::TownExplosionController();
+	controllers[TestParticle::MeteorExplosion] = new Effect::Game::MeteorExplosionController();
 }
 
 /**************************************
@@ -45,14 +45,14 @@ void TestParticleManager::Update()
 		Generate(TestParticle::BlueDebris, Vector3::Up * 10.0f);
 	else if (Debug::Button("WhiteSmog"))
 		Generate(TestParticle::WhiteSmog, Vector3::Up * 10.0f);
-	else if (Debug::Button("Explosion"))
-		Generate(TestParticle::Explosion, Vector3::Up * 20.0f);
+	else if (Debug::Button("TownExplosion"))
+		Generate(TestParticle::TownExplosion, Vector3::Up * 20.0f);
 	else if (Debug::Button("ExplosionFlare"))
 		Generate(TestParticle::ExplosionFlare, Vector3::Up);
 	else if (Debug::Button("AngryFace"))
 		Generate(TestParticle::AngryFace, Vector3::Zero);
-	else if (Debug::Button("MissileHit"))
-		Generate(TestParticle::MissileHit, Vector3::Up * 10.0f);
+	else if (Debug::Button("MeteorExplosion"))
+		Generate(TestParticle::MeteorExplosion, Vector3::Up * 10.0f);
 
 	Debug::NewLine();
 
@@ -61,15 +61,15 @@ void TestParticleManager::Update()
 		Generate(TestParticle::BlueSpark, Vector3::Up * 10.0f);
 		Generate(TestParticle::BlueDebris, Vector3::Up * 10.0f);
 	}
-	else if (Debug::Button("MeteorExplosion"))
+	else if (Debug::Button("TownExplosion & Flare"))
 	{
 		Generate(TestParticle::ExplosionFlare, Vector3::Up);
-		Generate(TestParticle::Explosion, Vector3::Up * 20.0f);
+		Generate(TestParticle::TownExplosion, Vector3::Up * 20.0f);
 	}
-	else if (Debug::Button("MissileExplosion"))
+	else if (Debug::Button("MeteorExplosion & Flare"))
 	{
-		Generate(TestParticle::MissileHit, Vector3::Up * 10.0f);
 		Generate(TestParticle::ExplosionFlare, Vector3::Up* 10.0f);
+		Generate(TestParticle::MeteorExplosion, Vector3::Up * 10.0f);
 	}
 
 	Debug::NewLine();

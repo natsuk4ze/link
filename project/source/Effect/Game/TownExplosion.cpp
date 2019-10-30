@@ -1,18 +1,18 @@
 //=============================================================================
 //
-// 爆発エフェクトクラス [Explosion.cpp]
+// 町消滅エフェクトクラス [TownExplosion.cpp]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#include "Explosion.h"
+#include "TownExplosion.h"
 #include "../../../Framework/Math/Easing.h"
 
 namespace Effect::Game
 {
 	/**************************************
-	ExplosionControllerコンストラクタ
+	TownExplosionControllerコンストラクタ
 	***************************************/
-	ExplosionController::ExplosionController() :
+	TownExplosionController::TownExplosionController() :
 		BaseParticleController(Particle_3D)
 	{
 		//単位頂点バッファ作成
@@ -21,7 +21,7 @@ namespace Effect::Game
 		MakeUnitBuffer(SizeParticle, DivineTex);
 
 		//テクスチャ読み込み
-		const char* Path = "data/TEXTURE/Particle/MeteorExplosion.png";
+		const char* Path = "data/TEXTURE/Particle/TownExplosion.png";
 		LoadTexture(Path);
 
 		//パーティクルコンテナ作成
@@ -29,7 +29,7 @@ namespace Effect::Game
 		particleContainer.resize(MaxParticle, nullptr);
 		for (auto &particle : particleContainer)
 		{
-			particle = new Explosion();
+			particle = new TownExplosion();
 		}
 
 		//エミッターコンテナ作成処理
@@ -44,31 +44,31 @@ namespace Effect::Game
 	}
 
 	/**************************************
-	Explosion staticメンバ
+	TownExplosion staticメンバ
 	***************************************/
-	const int Explosion::Life = 20;
+	const int TownExplosion::Life = 20;
 
 	/**************************************
-	Explosionコンストラクタ
+	TownExplosionコンストラクタ
 	***************************************/
-	Explosion::Explosion() : AnimationParticle3D(4.0f, 2.0f, Life)
+	TownExplosion::TownExplosion() : AnimationParticle3D(4.0f, 2.0f, Life)
 	{
 
 	}
 
 	/**************************************
-	Explosion初期化処理
+	TownExplosion初期化処理
 	***************************************/
-	void Explosion::Init()
+	void TownExplosion::Init()
 	{
 		cntFrame = 0;
 		active = true;
 	}
 
 	/**************************************
-	Explosion更新処理
+	TownExplosion更新処理
 	***************************************/
-	void Explosion::Update()
+	void TownExplosion::Update()
 	{
 		if (!IsActive())
 			return;
