@@ -32,14 +32,14 @@ NewCityEvent::NewCityEvent(EventViewer *Ptr) : eventViewer(Ptr)
 	fieldEventHandler->PauseGame();
 
 	// テロップ設置
-	eventViewer->SetEventTelop(PositiveEvent01, [=]()
+	eventViewer->SetEventTelop(PositiveEvent01, [=, *this]()
 	{
 		// 予定地にカメラを移動させる
 		Camera::TranslationPlugin::Instance()->Move(
 			TownPosVec3,
 			30,
 			// 新しい町を作る関数のラムダ式
-			[=]()
+			[=, *this]()
 		{
 			fieldEventHandler->CreateNewTown(NewTown);
 		});
