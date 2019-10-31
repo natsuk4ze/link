@@ -45,5 +45,18 @@ InfoDigit::~InfoDigit()
 //=====================================
 void InfoDigit::Update()
 {
+}
 
+//=====================================
+// •\Ž¦‚·‚é”Žš‚Ì•ÏX
+//=====================================
+void InfoDigit::ChangeDigit(const int& num)
+{
+	this->num = num;
+	int x = this->num % divideX;
+	int y = this->num / divideX;
+	float left = (float)x * width;
+	float top = (float)y * height;
+	this->SetUV(left, top, width, height);
+	this->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 }

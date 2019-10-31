@@ -26,6 +26,9 @@ public:
 	~InfoDigit();
 
 	void Update();
+
+	// •\¦‚·‚é”š‚Ì•ÏX
+	void ChangeDigit(const int& num);
 };
 
 #endif

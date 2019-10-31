@@ -13,7 +13,8 @@
 //**************************************
 // スタティックメンバ初期化
 //**************************************
-const float InfoActor::ActorSize = 5.0f;
+const D3DXVECTOR2 InfoActor::ViewerWorldSize = D3DXVECTOR2(5.0f, 5.0f);
+const DWORD InfoActor::ViewerCanvasSize = 256;
 
 //=====================================
 // コンストラクタ
@@ -25,7 +26,7 @@ InfoActor::InfoActor(const D3DXVECTOR3& pos)
 	this->SetActive(true);
 
 	// ビューアの作成
-	viewer = new Viewer3D(256, 256, D3DXVECTOR2(ActorSize, ActorSize));
+	viewer = new Viewer3D(ViewerCanvasSize, ViewerCanvasSize, ViewerWorldSize);
 	viewer->SetPosition(D3DXVECTOR3(pos));
 }
 

@@ -24,6 +24,12 @@ private:
 	InfoDigit* digitActor[MaxDigit];	// 一桁ごとに表示
 	Polygon2D* logo;					// リンクレベルのロゴ表示
 
+	// ビューア内の表示場所、サイズ
+	static const D3DXVECTOR3 digitPos[MaxDigit];
+	static const D3DXVECTOR3 logoPos;
+	static const D3DXVECTOR2 digitSize;
+	static const D3DXVECTOR2 logoSize;
+
 public:
 	LinkInfoActor(const D3DXVECTOR3& pos, const int& level);
 	~LinkInfoActor();

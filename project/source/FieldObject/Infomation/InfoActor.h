@@ -20,7 +20,8 @@ class InfoActor :
 protected:
 	Viewer3D* viewer;	// 3Dï\é¶èàóù
 
-	static const float ActorSize;
+	static const D3DXVECTOR2 ViewerWorldSize;
+	static const DWORD ViewerCanvasSize;
 
 public:
 	InfoActor(const D3DXVECTOR3& pos);

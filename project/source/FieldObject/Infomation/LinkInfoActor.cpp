@@ -8,6 +8,15 @@
 #include "LinkInfoActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
 
+//**************************************
+// スタティックメンバ初期化
+//**************************************
+const D3DXVECTOR3 LinkInfoActor::digitPos[] =
+{ D3DXVECTOR3(160.0f, 160.0f, 0.0f),
+D3DXVECTOR3(96.0f, 160.0f, 0.0f) };
+const D3DXVECTOR3 LinkInfoActor::logoPos = D3DXVECTOR3(128.8f, 80.0f, 0.0f);
+const D3DXVECTOR2 LinkInfoActor::logoSize = D3DXVECTOR2(100.0f, 100.0f);
+
 //=====================================
 // コンストラクタ
 //=====================================
@@ -16,22 +25,18 @@ LinkInfoActor::LinkInfoActor(const D3DXVECTOR3& pos, const int& level):
 {
 	// ロゴ表示
 	logo = new Polygon2D();
-	logo->SetPosition(D3DXVECTOR3(128.0f, 80.0f, 0.0f));
+	logo->SetPosition(logoPos);
 	logo->LoadTexture("data/TEXTURE/Logo/Logo.png");
-	logo->SetSize(100.0f, 100.0f);
+	logo->SetSize(logoSize.x, logoSize.y);
 	logo->SetUV(0.0f, 0.0f, 1.0f, 1.0f);
 	logo->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 	// レベル表示
-	int d[2];
-	d[0] = linkLevel % 10;
-	d[1] = linkLevel / 10;
-	D3DXVECTOR3 dpos[2];
-	dpos[0] = D3DXVECTOR3(160.0f, 160.0f, 0.0f);
-	dpos[1] = D3DXVECTOR3(96.0f, 160.0f, 0.0f);
-	for (int i = 0; i < 2; i++)
+	digit[0] = linkLevel % 10;
+	digit[1] = linkLevel / 10;
+	for (int i = 0; i < MaxDigit; i++)
 	{
-		digitActor[i] = new InfoDigit(d[i], dpos[i]);
+		digitActor[i] = new InfoDigit(digit[i], digitPos[i]);
 	}
 
 }
@@ -41,7 +46,7 @@ LinkInfoActor::LinkInfoActor(const D3DXVECTOR3& pos, const int& level):
 //=====================================
 LinkInfoActor::~LinkInfoActor()
 {
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < MaxDigit; i++)
 	{
 		SAFE_DELETE(digitActor[i]);
 	}
@@ -54,7 +59,7 @@ LinkInfoActor::~LinkInfoActor()
 //=====================================
 void LinkInfoActor::Update()
 {
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < MaxDigit; i++)
 	{
 		digitActor[i]->Update();
 	}
@@ -74,7 +79,7 @@ void LinkInfoActor::Draw()
 
 	viewer->Begin2D();
 	logo->Draw();
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < MaxDigit; i++)
 	{
 		digitActor[i]->Draw();
 	}
