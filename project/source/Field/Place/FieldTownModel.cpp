@@ -20,13 +20,16 @@ namespace Field::Model
 	/**************************************
 	コンストラクタ
 	***************************************/
-	TownModel::TownModel(const PlaceModel * place) :
+	TownModel::TownModel(const PlaceModel * place, std::function<void(std::vector<D3DXVECTOR3>&)> *action) :
 		uniqueID(incrementID++),
 		place(place),
 		cntGate(0),
 		linkLevel(0),
 		developmentLevel(0),
-		biasLinkLevel(0)
+		biasLinkLevel(0),
+		cntFrame(0),
+		indexDestination(0),
+		departPassenger(action)
 	{
 
 	}
@@ -36,6 +39,24 @@ namespace Field::Model
 	***************************************/
 	TownModel::~TownModel()
 	{
+	}
+
+	/**************************************
+	更新処理
+	***************************************/
+	void TownModel::Update()
+	{
+		cntFrame++;
+
+		if (routeContainer.size() == 0)
+			return;
+
+		//4秒おきに繋がっている街に向かってパッセンジャーを出発させる
+		if (cntFrame % 120 == 0)
+		{
+			indexDestination = Math::WrapAround(0, (int)routeContainer.size(), ++indexDestination);
+			(*departPassenger)(routeContainer[indexDestination]);
+		}
 	}
 
 	/**************************************
@@ -86,16 +107,17 @@ namespace Field::Model
 		linkLevel = biasLinkLevel;
 
 		RouteContainer searchedRoute;
-		std::vector<PlaceModel*> searchedTown;
+		std::vector<const PlaceModel*> searchedTown;
+		searchedTown.push_back(place);
 
 		RouteContainer belongRoute = place->GetConnectingRoutes();
-		
-		std::vector<D3DXVECTOR3> routeStack;
-		routeStack.push_back(place->GetPosition().ConvertToWorldPosition());
 
+		RoutePlaceStack routeStack;
+
+		routeContainer.clear();
 		for (auto&& route : belongRoute)
 		{
-			linkLevel += route->FindLinkedTown(this, searchedRoute, searchedTown, routeStack);
+			linkLevel += route->FindLinkedTown(this, searchedRoute, searchedTown, routeStack, place);
 		}
 
 		developmentLevel = (float)linkLevel * linkLevel;
@@ -127,6 +149,23 @@ namespace Field::Model
 		auto itr = std::unique(container.begin(), container.end());
 		container.erase(itr, container.end());
 
-		routeContainer.push_back(container);
+		bool shouldAdd = true;
+
+		//目的地が同じルートが既にある場合は長さを比較
+		for (auto&& route : routeContainer)
+		{
+			if (route.back() != container.back())
+				continue;
+
+			if (route.size() > container.size())
+			{
+				route = container;
+			}
+
+			shouldAdd = false;
+		}
+
+		if(shouldAdd)
+			routeContainer.push_back(container);
 	}
 }
