@@ -22,6 +22,7 @@ private:
 	int linkLevel;						// リンクレベル
 	int digit[MaxDigit];				// リンクレベルを一桁ごとに分離
 	InfoDigit* digitActor[MaxDigit];	// 一桁ごとに表示
+	Polygon2D* logo;					// リンクレベルのロゴ表示
 
 public:
 	LinkInfoActor(const D3DXVECTOR3& pos, const int& level);

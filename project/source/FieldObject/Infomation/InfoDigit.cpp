@@ -23,7 +23,7 @@ InfoDigit::InfoDigit(const int& num, const D3DXVECTOR3& pos)
 	transform->SetPosition(pos);
 	this->num = num;
 	this->LoadTexture("data/TEXTURE/Viewer/GameViewer/StockViewer/Number.png");
-	this->SetSize(100.0f, 100.0f);
+	this->SetSize(80.0f, 80.0f);
 
 	int x = this->num % divideX;
 	int y = this->num / divideX;
