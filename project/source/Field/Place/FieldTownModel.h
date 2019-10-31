@@ -86,6 +86,9 @@ namespace Field::Model
 		//フレームカウンタ
 		int cntFrame;
 
+		//どの街へ向かわせるか
+		int indexDestination;
+
 		//パッセンジャー出発処理
 		std::function<void(std::vector<D3DXVECTOR3>&)> *departPassenger;
 

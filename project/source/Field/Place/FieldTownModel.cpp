@@ -28,6 +28,7 @@ namespace Field::Model
 		developmentLevel(0),
 		biasLinkLevel(0),
 		cntFrame(0),
+		indexDestination(0),
 		departPassenger(action)
 	{
 
@@ -50,10 +51,9 @@ namespace Field::Model
 		//4秒おきに繋がっている街に向かってパッセンジャーを出発させる
 		if (cntFrame % 120 == 0)
 		{
-			for (auto&& route : routeContainer)
-			{
-				(*departPassenger)(route);
-			}
+			(*departPassenger)(routeContainer[indexDestination]);
+
+			indexDestination = Math::WrapAround(0, (int)routeContainer.size(), ++indexDestination);
 		}
 	}
 
@@ -108,7 +108,7 @@ namespace Field::Model
 		std::vector<PlaceModel*> searchedTown;
 
 		RouteContainer belongRoute = place->GetConnectingRoutes();
-		
+
 		RoutePlaceStack routeStack;
 
 		routeContainer.clear();
