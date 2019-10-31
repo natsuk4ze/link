@@ -31,6 +31,7 @@ public:
 	int parameterBox;
 	bool InBanStock;
 	bool BanIconDebut;
+	bool InPauseEvent;
 
 private:
 	BaseViewerDrawer *icon;				// ストックアイコン

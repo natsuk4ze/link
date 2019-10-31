@@ -84,6 +84,7 @@ ItemStockViewer::~ItemStockViewer()
 	SAFE_DELETE(num);
 	SAFE_DELETE(icon);
 	SAFE_DELETE(BanIcon);
+	SAFE_DELETE(BanIcon_White);
 }
 
 //=============================================================================
@@ -166,7 +167,11 @@ void ItemStockViewer::Animate(void)
 			float RemainTimePercent = (float)FrameCount / (float)DefaultDebuffCount;
 			float Percent = Easing::EaseValue((1 - RemainTimePercent), 1.0f, -1.0f, EaseType::Linear);
 
-			FrameCount--;
+			if (!InPauseEvent)
+			{
+				FrameCount--;
+			}
+
 			// ItemStockViewerの頂点設置関数、効果が違う
 			SetBanIconVertex(Percent);
 			SetBanIconTexture(RemainTimePercent);
@@ -191,7 +196,7 @@ void ItemStockViewer::SetBanIconVertex(float Percent)
 }
 
 //=============================================================================
-// バツアイコンの頂点情報設定
+// バツアイコンのテクスチャ情報設定
 //=============================================================================
 void ItemStockViewer::SetBanIconTexture(float Percent)
 {

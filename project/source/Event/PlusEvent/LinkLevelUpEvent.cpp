@@ -20,7 +20,8 @@ const int LinkLevelUpNum = 1;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-LinkLevelUpEvent::LinkLevelUpEvent()
+LinkLevelUpEvent::LinkLevelUpEvent() :
+	EventBase(false)
 {
 
 }

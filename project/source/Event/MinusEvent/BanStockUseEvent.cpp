@@ -26,10 +26,30 @@ const int DefaultDebuffFrame = 300;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-BanStockUseEvent::BanStockUseEvent(EventViewer* eventViewer, std::function<void(bool)> SetBanStock) :
+BanStockUseEvent::BanStockUseEvent(EventViewer* eventViewer,
+	std::function<void(bool)> SetBanStock,
+	std::function<bool(void)> GetInPause) :
+	EventBase(true),
 	RemainTime(DefaultDebuffFrame),
 	InDebuff(false),
-	SetBanStock(SetBanStock)
+	SetBanStock(SetBanStock),
+	GetInPause(GetInPause),
+	eventViewer(eventViewer)
+{
+}
+
+//=============================================================================
+// デストラクタ
+//=============================================================================
+BanStockUseEvent::~BanStockUseEvent()
+{
+	SAFE_DELETE(beatGame);
+}
+
+//=============================================================================
+// 初期化
+//=============================================================================
+void BanStockUseEvent::Init()
 {
 	// 連打ゲームインスタンス
 	beatGame = new BeatGame([&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
@@ -43,15 +63,11 @@ BanStockUseEvent::BanStockUseEvent(EventViewer* eventViewer, std::function<void(
 	// 怒り顔エフェクト設置
 	GameParticleManager::Instance()->SetAngryFaceEffect();
 
+	// 怒り顔エフェクト終わるまで待つ
 	TaskManager::Instance()->CreateDelayedTask(210, [&]() {CountdownStart(); });
-}
 
-//=============================================================================
-// デストラクタ
-//=============================================================================
-BanStockUseEvent::~BanStockUseEvent()
-{
-	SAFE_DELETE(beatGame);
+	// 初期化終了
+	Initialized = true;
 }
 
 //=============================================================================
@@ -59,9 +75,13 @@ BanStockUseEvent::~BanStockUseEvent()
 //=============================================================================
 void BanStockUseEvent::Update()
 {
+	// まだ初期化していない
+	if (!Initialized)
+		return;
+
 	beatGame->Update();
 
-	if (InDebuff)
+	if (InDebuff && !GetInPause())
 	{
 		RemainTime--;
 		if (RemainTime <= 0)
@@ -79,6 +99,10 @@ void BanStockUseEvent::Update()
 //=============================================================================
 void BanStockUseEvent::Draw()
 {
+	// まだ初期化していない
+	if (!Initialized)
+		return;
+
 	beatGame->Draw();
 }
 

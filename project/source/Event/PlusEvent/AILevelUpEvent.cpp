@@ -20,7 +20,8 @@ const float UpPercent = 0.1f;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-AILevelUpEvent::AILevelUpEvent()
+AILevelUpEvent::AILevelUpEvent() :
+	EventBase(false)
 {
 
 }

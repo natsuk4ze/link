@@ -20,7 +20,9 @@ const float BonusNum = 1.5f;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-FamousPeopleEvent::FamousPeopleEvent(int RemainTime) : RemainTime(RemainTime)
+FamousPeopleEvent::FamousPeopleEvent(int RemainTime) :
+	EventBase(false),
+	RemainTime(RemainTime)
 {
 	fieldEventHandler->SetDevelopBonus(BonusNum);
 }

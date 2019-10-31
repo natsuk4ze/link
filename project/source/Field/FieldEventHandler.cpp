@@ -154,6 +154,7 @@ bool FieldEventHandler::TryUsingInsurance()
 void FieldEventHandler::PauseGame()
 {
 	functerVoid[FuncterID_void::Pause]();
+	SetEventControllerInPause(true);
 }
 
 /**************************************
@@ -162,6 +163,7 @@ void FieldEventHandler::PauseGame()
 void FieldEventHandler::ResumeGame()
 {
 	functerVoid[FuncterID_void::Resume]();
+	SetEventControllerInPause(false);
 }
 
 /**************************************

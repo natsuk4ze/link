@@ -24,7 +24,25 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-NewCityEvent::NewCityEvent(EventViewer *Ptr) : eventViewer(Ptr)
+NewCityEvent::NewCityEvent(EventViewer *Ptr) : 
+	EventBase(true),
+	eventViewer(Ptr)
+{
+
+}
+
+//=============================================================================
+// デストラクタ
+//=============================================================================
+NewCityEvent::~NewCityEvent()
+{
+	eventViewer = nullptr;
+}
+
+//=============================================================================
+// 初期化
+//=============================================================================
+void NewCityEvent::Init()
 {
 	// 新しい町を作る予定地を取得
 	NewTown = fieldEventHandler->GetNewTownPosition();
@@ -39,14 +57,9 @@ NewCityEvent::NewCityEvent(EventViewer *Ptr) : eventViewer(Ptr)
 		// 予定地にカメラを移動させる
 		Camera::TranslationPlugin::Instance()->Move(TownPos, 30, [&]() {CreateNewCity(); });
 	});
-}
 
-//=============================================================================
-// デストラクタ
-//=============================================================================
-NewCityEvent::~NewCityEvent()
-{
-
+	// 初期化終了
+	Initialized = true;
 }
 
 //=============================================================================
@@ -54,6 +67,7 @@ NewCityEvent::~NewCityEvent()
 //=============================================================================
 void NewCityEvent::Update()
 {
+
 }
 
 //=============================================================================
@@ -82,7 +96,7 @@ void NewCityEvent::CreateNewCity(void)
 
 	fieldEventHandler->CreateNewTown(NewTown);
 	GameParticleManager::Instance()->SetSingularityEffect(TownPos);
-	TaskManager::Instance()->CreateDelayedTask(60, [&]() {EventOver(); });
+	TaskManager::Instance()->CreateDelayedTask(90, [&]() {EventOver(); });
 }
 
 //=============================================================================
