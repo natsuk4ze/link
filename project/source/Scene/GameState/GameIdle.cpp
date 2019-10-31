@@ -45,7 +45,7 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 	//AI発展レベルが最大に到達していたらレベルアップ
 	else if (entity.field->ShouldLevelUp())
 	{
-		//entity.ChangeState(State::LevelUp);
+		entity.ChangeState(State::LevelUp);
 	}
 	//遠景モードへの遷移確認
 	else if (Keyboard::GetTrigger(DIK_SPACE))
