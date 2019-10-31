@@ -72,7 +72,7 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 
 	//制限時間読み込み
 	//TODO:シーンを跨いで引き継ぐようにする
-	entity.remainTime = 30 * 180;
+	entity.remainTime = 30 * 1800;
 
 	//トランジション画面をオフにして遷移
 	TransitionController::Instance()->SetTransition(true, TransitionType::HexaPop, [&]()

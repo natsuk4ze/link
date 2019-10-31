@@ -12,6 +12,7 @@
 
 #include <list>
 #include <vector>
+#include <functional>
 
 namespace Field::Model
 {
@@ -27,8 +28,11 @@ namespace Field::Model
 	{
 	public:
 		//コンストラクタ、デストラクタ
-		TownModel(const PlaceModel* place);
+		TownModel(const PlaceModel* place, std::function<void(std::vector<D3DXVECTOR3>&)> *action);
 		~TownModel();
+
+		//更新処理
+		void Update();
 
 		//出口追加処理
 		void AddGate();
@@ -79,8 +83,17 @@ namespace Field::Model
 		//発展度
 		float developmentLevel;
 
+		//フレームカウンタ
+		int cntFrame;
+
+		//どの街へ向かわせるか
+		int indexDestination;
+
+		//パッセンジャー出発処理
+		std::function<void(std::vector<D3DXVECTOR3>&)> *departPassenger;
+
 		//繋がってる街への経路
-		std::list<std::vector<D3DXVECTOR3>> routeContainer;
+		std::vector<std::vector<D3DXVECTOR3>> routeContainer;
 	};
 }
 #endif

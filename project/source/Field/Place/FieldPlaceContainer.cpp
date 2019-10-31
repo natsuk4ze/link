@@ -31,12 +31,13 @@ namespace Field::Model
 	/**************************************
 	コンストラクタ
 	***************************************/
-	PlaceContainer::PlaceContainer() :
+	PlaceContainer::PlaceContainer(const TownAction& action) :
 		placeRowMax(0),
 		placeColumMax(0),
 		initialized(false),
 		trafficJamRate(0.0f),
-		trafficJamBias(0.0f)
+		trafficJamBias(0.0f),
+		onDepartPassenger(action)
 	{
 		placeVector.reserve(PlaceMax);
 
@@ -71,6 +72,11 @@ namespace Field::Model
 	{
 		if (!initialized)
 			return;
+
+		for (auto&& town : townContainer)
+		{
+			town.second->Update();
+		}
 
 		//デバッグ表示
 		Debug::Log("CntLinkedTown:%d", townContainer.size());
@@ -208,7 +214,7 @@ namespace Field::Model
 		//登録確認
 		if (townContainer.count(placeID) == 0)
 		{
-			townContainer.emplace(placeID, new TownModel(place));
+			townContainer.emplace(placeID, new TownModel(place, &onDepartPassenger));
 		}
 
 		townContainer[placeID]->AddGate();
