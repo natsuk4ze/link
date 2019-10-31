@@ -332,6 +332,10 @@ namespace Field::Model
 	***************************************/
 	bool RoutePlaceStack::Push(const PlaceModel * place)
 	{
+		//‹´‚Í’Ç‰Á‚µ‚È‚¢
+		if (place->IsType(PlaceType::Bridge))
+			return false;
+
 		if (place->IsType(PlaceType::Road))
 		{
 			std::vector<Adjacency> AdjacencyType = place->GetConnectingAdjacency();
