@@ -261,7 +261,14 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					Ptr = new AILevelDecreaseEvent();
 					break;
 				case BanStockUse:
-					Ptr = new BanStockUseEvent(eventViewer, [&](bool Flag) {SetBanStock(Flag); });
+					if (InBanStock)
+					{
+						continue;
+					}
+					else
+					{
+						Ptr = new BanStockUseEvent(eventViewer, [&](bool Flag) {SetBanStock(Flag); });
+					}
 					break;
 				default:
 					break;

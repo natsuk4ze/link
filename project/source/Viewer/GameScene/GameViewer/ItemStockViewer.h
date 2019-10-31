@@ -30,14 +30,18 @@ public:
 	//パラメータを受けとる箱
 	int parameterBox;
 	bool InBanStock;
+	bool BanIconDebut;
 
 private:
-	BaseViewerDrawer *icon;		// ストックアイコン
-	BaseViewerDrawer *BanIcon;	// バツアイコン
+	BaseViewerDrawer *icon;				// ストックアイコン
+	BaseViewerDrawer *BanIcon;			// バツアイコン
+	BaseViewerDrawer *BanIcon_White;	// バツアイコン(白)
 	CountViewerDrawer *num;
 
 	//アニメーション
 	void Animate(void);
+	void SetBanIconVertex(float Percent);
+	void SetBanIconTexture(float Percent);
 };
 
 

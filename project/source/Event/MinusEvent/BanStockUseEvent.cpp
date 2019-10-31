@@ -43,7 +43,7 @@ BanStockUseEvent::BanStockUseEvent(EventViewer* eventViewer, std::function<void(
 	// 怒り顔エフェクト設置
 	GameParticleManager::Instance()->SetAngryFaceEffect();
 
-	TaskManager::Instance()->CreateDelayedTask(90, [&]() {CountdownStart(); });
+	TaskManager::Instance()->CreateDelayedTask(210, [&]() {CountdownStart(); });
 }
 
 //=============================================================================
