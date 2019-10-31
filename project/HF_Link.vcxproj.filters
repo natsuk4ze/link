@@ -193,6 +193,7 @@
     <ClInclude Include="source\Viewer\GameScene\EventViewer\BeatGameViewer.h" />
     <ClInclude Include="source\Effect\Game\MeteorExplosion.h" />
     <ClInclude Include="source\Effect\Game\TownExplosion.h" />
+    <ClInclude Include="source\Effect\Game\BanIcon.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -370,6 +371,7 @@
     <ClCompile Include="source\Viewer\GameScene\EventViewer\BeatGameViewer.cpp" />
     <ClCompile Include="source\Effect\Game\MeteorExplosion.cpp" />
     <ClCompile Include="source\Effect\Game\TownExplosion.cpp" />
+    <ClCompile Include="source\Effect\Game\BanIcon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

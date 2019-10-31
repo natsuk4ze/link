@@ -26,8 +26,10 @@ const int DefaultDebuffFrame = 300;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-BanStockUseEvent::BanStockUseEvent(EventViewer* eventViewer) :
-	RemainTime(DefaultDebuffFrame)
+BanStockUseEvent::BanStockUseEvent(EventViewer* eventViewer, std::function<void(bool)> SetBanStock) :
+	RemainTime(DefaultDebuffFrame),
+	InDebuff(false),
+	SetBanStock(SetBanStock)
 {
 	// 連打ゲームインスタンス
 	beatGame = new BeatGame([&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
@@ -41,7 +43,7 @@ BanStockUseEvent::BanStockUseEvent(EventViewer* eventViewer) :
 	// 怒り顔エフェクト設置
 	GameParticleManager::Instance()->SetAngryFaceEffect();
 
-	TaskManager::Instance()->CreateDelayedTask(90, [&]() {CountdownStart(); });
+	TaskManager::Instance()->CreateDelayedTask(210, [&]() {CountdownStart(); });
 }
 
 //=============================================================================
@@ -57,12 +59,18 @@ BanStockUseEvent::~BanStockUseEvent()
 //=============================================================================
 void BanStockUseEvent::Update()
 {
-	RemainTime--;
-	if (RemainTime <= 0)
+	beatGame->Update();
+
+	if (InDebuff)
 	{
-		// 封印解除
-		fieldEventHandler->SealUsingItem(false);
-		UseFlag = false;
+		RemainTime--;
+		if (RemainTime <= 0)
+		{
+			// 封印解除
+			fieldEventHandler->SealUsingItem(false);
+			SetBanStock(false);
+			UseFlag = false;
+		}
 	}
 }
 
@@ -71,7 +79,7 @@ void BanStockUseEvent::Update()
 //=============================================================================
 void BanStockUseEvent::Draw()
 {
-
+	beatGame->Draw();
 }
 
 //=============================================================================
@@ -89,6 +97,7 @@ string BanStockUseEvent::GetEventMessage(int FieldLevel)
 void BanStockUseEvent::EventOver(void)
 {
 	// イベント終了、ゲーム続行
+	SetBanStock(false);
 	fieldEventHandler->ResumeGame();
 	UseFlag = false;
 }
@@ -115,6 +124,9 @@ void BanStockUseEvent::ReceiveBeatResult(bool IsSuccess)
 	{
 		// 失敗、ストック使用封印
 		fieldEventHandler->SealUsingItem(true);
+		InDebuff = true;
+		SetBanStock(true);
+		fieldEventHandler->ResumeGame();
 	}
 }
 

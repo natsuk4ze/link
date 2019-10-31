@@ -29,6 +29,8 @@ public:
 	********************************************/
 	//ストック数
 	int stockNum;
+
+	bool InBanStock = false;
 };
 
 #endif

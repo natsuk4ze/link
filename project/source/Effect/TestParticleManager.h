@@ -30,12 +30,18 @@ namespace TestParticle
 	};
 }
 
+// 頼君テスト用
+class BanIcon;
+
 /**************************************
 クラス定義
 ***************************************/
 class TestParticleManager : public SceneParticleManager, public BaseSingleton<TestParticleManager>
 {
 	using SceneParticleManager::SceneParticleManager;
+
+	// 頼君テスト用
+	BanIcon *banIcon;
 public:
 	void Init() override;
 	void Update() override;
