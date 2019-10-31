@@ -132,7 +132,7 @@ namespace Field::Model
 		{
 			std::shared_ptr<RouteModel> sptr = adjacenct.route.lock();
 
-			if(sptr && *sptr == *opponent)
+			if (sptr && *sptr == *opponent)
 				return;
 		}
 
@@ -210,7 +210,7 @@ namespace Field::Model
 	/**************************************
 	Œq‚ª‚Á‚Ä‚¢‚éŠX‚ðŽæ“¾
 	***************************************/
-	int RouteModel::FindLinkedTown(TownModel * root, std::vector<RouteModelPtr> & searchedRoute, std::vector<PlaceModel*> searchedTown, RoutePlaceStack& stackRoute, const PlaceModel* start)
+	int RouteModel::FindLinkedTown(TownModel * root, std::vector<RouteModelPtr> & searchedRoute, std::vector<const PlaceModel*>& searchedTown, RoutePlaceStack& stackRoute, const PlaceModel* start)
 	{
 		int cntTown = 0;
 
@@ -220,8 +220,8 @@ namespace Field::Model
 		//‘ÎÛ‚ÉŒq‚ª‚Á‚Ä‚¢‚éŠX‚ðŠm”F
 		searchedRoute.push_back(shared_from_this());
 
-		PlaceModel* town = this->GetConnectedTown(root->GetPlace());
-		if (town != nullptr && !Utility::IsContain(searchedTown, town))
+		const PlaceModel* town = this->GetConnectedTown(root->GetPlace());
+		if (town != nullptr)
 		{
 			cntTown++;
 			searchedTown.push_back(town);
@@ -287,6 +287,7 @@ namespace Field::Model
 		else
 		{
 			out.push_back(edgeStart);
+
 			std::copy(route.begin(), route.end(), std::back_inserter(out));
 			out.push_back(edgeEnd);
 		}

@@ -48,6 +48,9 @@ namespace Field::Model
 	{
 		cntFrame++;
 
+		if (routeContainer.size() == 0)
+			return;
+
 		//4秒おきに繋がっている街に向かってパッセンジャーを出発させる
 		if (cntFrame % 120 == 0)
 		{
@@ -104,7 +107,8 @@ namespace Field::Model
 		linkLevel = biasLinkLevel;
 
 		RouteContainer searchedRoute;
-		std::vector<PlaceModel*> searchedTown;
+		std::vector<const PlaceModel*> searchedTown;
+		searchedTown.push_back(place);
 
 		RouteContainer belongRoute = place->GetConnectingRoutes();
 
@@ -145,6 +149,23 @@ namespace Field::Model
 		auto itr = std::unique(container.begin(), container.end());
 		container.erase(itr, container.end());
 
-		routeContainer.push_back(container);
+		bool shouldAdd = true;
+
+		//目的地が同じルートが既にある場合は長さを比較
+		for (auto&& route : routeContainer)
+		{
+			if (route.back() != container.back())
+				continue;
+
+			if (route.size() > container.size())
+			{
+				route = container;
+			}
+
+			shouldAdd = false;
+		}
+
+		if(shouldAdd)
+			routeContainer.push_back(container);
 	}
 }

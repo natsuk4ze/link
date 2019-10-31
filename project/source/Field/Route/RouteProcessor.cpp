@@ -242,8 +242,8 @@ namespace Field::Model
 		routeList.erase(std::remove(routeList.begin(), routeList.end(), model));
 		for (auto&& route : routeList)
 		{
-			model->AddAdjacency(place, place, route);
-			route->AddAdjacency(place, place, model);
+			model->AddAdjacency(edge, place, route);
+			route->AddAdjacency(place, edge, model);
 		}
 	}
 }
