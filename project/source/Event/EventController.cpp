@@ -263,6 +263,8 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 				case BanStockUse:
 					if (InBanStock)
 					{
+						// 今ストック使用禁止中
+						++EventPlace;
 						continue;
 					}
 					else
