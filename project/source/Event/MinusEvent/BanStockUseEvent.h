@@ -8,12 +8,14 @@
 #define _BanStockUseEvent_H_
 
 #include "../EventBase.h"
+#include <functional>
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
 class BeatGame;
 class EventViewer;
+class BaseViewerDrawer;
 
 //*****************************************************************************
 // クラス定義
@@ -21,13 +23,17 @@ class EventViewer;
 class BanStockUseEvent : public EventBase
 {
 private:
+	int RemainTime;
+	bool InDebuff;
+	std::function<void(bool)> SetBanStock;
+
 	// 連打ゲーム
 	BeatGame *beatGame;
+	BaseViewerDrawer *Viewer;
 
-	int RemainTime;
 
 public:
-	BanStockUseEvent(EventViewer* eventViewer);
+	BanStockUseEvent(EventViewer* eventViewer, std::function<void(bool)> SetBanStock);
 	~BanStockUseEvent();
 	void Update(void) override;
 	void Draw(void) override;

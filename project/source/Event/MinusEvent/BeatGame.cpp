@@ -17,7 +17,7 @@
 // マクロ定義
 //*****************************************************************************
 // 連打ゲームの時間
-const int InputTime = 3;
+const int DefaultInputFrame = 90;
 // 連打の回数
 const int InputGoal = 20;
 
@@ -30,7 +30,7 @@ const int InputGoal = 20;
 // コンストラクタ
 //=============================================================================
 BeatGame::BeatGame(std::function<void(bool)> Callback) :
-	RemainFrame(InputTime * 30),
+	RemainFrame(DefaultInputFrame),
 	InputCount(0),
 	TelopOver(false),
 	IsDrawingViewer(false),
@@ -44,6 +44,11 @@ BeatGame::BeatGame(std::function<void(bool)> Callback) :
 	Text->SetColor(SET_COLOR_NOT_COLORED);
 	Text->SetPos((int)(SCREEN_WIDTH / 2), (int)(SCREEN_HEIGHT / 10 * 2.0f + 120.0f));
 	Text->SetText("Cボタン連打！　残り 20 回");
+
+	CountdownText = new TextViewer("data/TEXTURE/Viewer/EventViewer/EventMessage/Text_cinecaption226.ttf", 160);
+	CountdownText->SetColor(SET_COLOR_NOT_COLORED);
+	CountdownText->SetPos((int)(SCREEN_WIDTH / 2), (int)(SCREEN_HEIGHT / 2));
+	CountdownText->SetText("Ready");
 
 	// 整数部
 	intNum = new CountViewerDrawer();
@@ -87,7 +92,6 @@ BeatGame::BeatGame(std::function<void(bool)> Callback) :
 BeatGame::~BeatGame()
 {
 	SAFE_DELETE(Text);
-	SAFE_DELETE(CountdownText);
 	SAFE_DELETE(point);
 	SAFE_DELETE(fewNum);
 	SAFE_DELETE(intNum);
@@ -120,6 +124,15 @@ void BeatGame::Update()
 			char Message[64];
 			sprintf(Message, "Cボタン連打！　残り %d 回", InputGoal - InputCount);
 			Text->SetText(Message);
+
+			if (DefaultInputFrame - RemainFrame >= 30)
+			{
+				CountdownText->SetText("");
+			}
+			else
+			{
+				CountdownText->SetText("START!!!");
+			}
 
 			if (InputCount >= 20)
 			{
@@ -155,10 +168,16 @@ void BeatGame::Draw()
 
 	LPDIRECT3DDEVICE9 Device = GetDevice();
 
+	if (TelopOver)
+	{
+		CountdownText->Draw();
+	}
+
 	if (!IsDrawingViewer)
 	{
 		// テキスト
 		Text->Draw();
+		CountdownText->Draw();
 
 		Device->SetRenderState(D3DRS_ALPHATESTENABLE, true);
 		Device->SetRenderState(D3DRS_ALPHAREF, 0);

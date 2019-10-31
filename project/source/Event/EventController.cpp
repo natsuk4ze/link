@@ -27,6 +27,7 @@
 
 #include "../Field/Place/FieldPlaceModel.h"
 #include "../Viewer/GameScene/EventViewer/EventViewer.h"
+#include "../Viewer/GameScene/GameViewer/GameViewerParam.h"
 
 #include <fstream>
 
@@ -92,7 +93,6 @@ void EventController::Update()
 #if _DEBUG
 	if (Keyboard::GetTrigger(DIK_F))
 	{
-		//EventVec.push_back(new BeatGame());
 	}
 #endif
 
@@ -261,7 +261,7 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					Ptr = new AILevelDecreaseEvent();
 					break;
 				case BanStockUse:
-					Ptr = new BanStockUseEvent(eventViewer);
+					Ptr = new BanStockUseEvent(eventViewer, [&](bool Flag) {SetBanStock(Flag); });
 					break;
 				default:
 					break;
@@ -291,4 +291,20 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 void EventController::ReceiveFieldEventHandler(FieldEventHandler *Ptr)
 {
 	EventBase::ReceiveFieldEventHandler(Ptr);
+}
+
+//=============================================================================
+// ビューワパラメータ埋め込み処理
+//=============================================================================
+void EventController::EmbedViewerParam(GameViewerParam& param)
+{
+	param.InBanStock = this->InBanStock;
+}
+
+//=============================================================================
+// ストック使用禁止の設置
+//=============================================================================
+void EventController::SetBanStock(bool Flag)
+{
+	InBanStock = Flag;
 }

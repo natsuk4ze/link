@@ -26,7 +26,8 @@ static const D3DXVECTOR3 initNumSize = D3DXVECTOR3(42.0f, 42.0f, 0.0f);
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-ItemStockViewer::ItemStockViewer()
+ItemStockViewer::ItemStockViewer() :
+	InBanStock(false)
 {
 	//数字
 	num = new CountViewerDrawer();
@@ -43,7 +44,7 @@ ItemStockViewer::ItemStockViewer()
 	num->isHopped = false;
 	num->radian = 0;
 
-	//アイコン
+	//ストックアイコン
 	icon = new BaseViewerDrawer();
 	icon->LoadTexture("data/TEXTURE/Viewer/GameViewer/StockViewer/Drill.png");
 	icon->MakeVertex();
@@ -51,6 +52,15 @@ ItemStockViewer::ItemStockViewer()
 	icon->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	icon->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.7f, SCREEN_HEIGHT / 10 * 3.5f, 0.0f);
 	icon->SetColor(SET_COLOR_NOT_COLORED);
+
+	//バツアイコン
+	BanIcon = new BaseViewerDrawer();
+	BanIcon->LoadTexture("data/TEXTURE/Viewer/GameViewer/StockViewer/BanStock.png");
+	BanIcon->size = D3DXVECTOR3(180.0f, 135.0f, 0.0f);
+	BanIcon->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	BanIcon->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.7f, SCREEN_HEIGHT / 10 * 3.5f, 0.0f);
+	BanIcon->SetColor(SET_COLOR_NOT_COLORED);
+	BanIcon->MakeVertex();
 }
 
 //*****************************************************************************
@@ -60,6 +70,7 @@ ItemStockViewer::~ItemStockViewer()
 {
 	SAFE_DELETE(num);
 	SAFE_DELETE(icon);
+	SAFE_DELETE(BanIcon);
 }
 
 //=============================================================================
@@ -77,12 +88,18 @@ void ItemStockViewer::Update(void)
 void ItemStockViewer::Draw(void)
 {
 	//アイコン
-	icon->Draw();
 	icon->SetVertex();
+	icon->Draw();
 
 	//数字
 	num->DrawCounter(num->baseNumber, parameterBox, num->placeMax,
 		num->intervalNumberScr, num->intervalNumberTex);
+
+	// バツアイコン
+	if (InBanStock)
+	{
+		BanIcon->Draw();
+	}
 }
 
 //=============================================================================

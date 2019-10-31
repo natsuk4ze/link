@@ -67,10 +67,11 @@ void GameViewer::Draw(void)
 //=============================================================================
 // パラメータ受け取り処理
 //=============================================================================
-void GameViewer::ReceiveParam(GameViewerParam&param)
+void GameViewer::ReceiveParam(GameViewerParam &param)
 {
 	//ストックビュアー
 	stockViewer->parameterBox = param.stockNum;
+	stockViewer->InBanStock = param.InBanStock;
 
 	//タイマービュアー
 	timerViewer->parameterBox = param.remainTime;
