@@ -89,7 +89,7 @@ void GameScene::Init()
 	//root.push_back(push);
 	//passengerController = new PassengerController();
 	//passengerController->SetPassenger(root);
-	testInfo = new InfoActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f));
+	testInfo = new InfoActor(D3DXVECTOR3(160.0f, 20.0f, -160.0f));
 }
 
 /**************************************
@@ -190,7 +190,6 @@ void GameScene::Draw()
 	// テスト用
 	//testActor->Draw();
 	//passengerController->Draw();
-	testInfo->Draw();
 
 	//オブジェクト描画
 	ProfilerCPU::Instance()->Begin("Draw Object");
@@ -201,6 +200,7 @@ void GameScene::Draw()
 	ProfilerCPU::Instance()->Begin("Draw Event");
 	eventController->DrawEventObject();
 	ProfilerCPU::Instance()->End("Draw Event");
+	testInfo->Draw();
 
 	//ポストエフェクトは重いのでリリース版のみ適用する
 #ifndef _DEBUG

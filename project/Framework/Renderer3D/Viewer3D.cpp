@@ -80,7 +80,7 @@ void Viewer3D::Draw3D()
 	pDevice->GetRenderState(D3DRS_ZENABLE, &flgEnableZ);
 	pDevice->GetRenderState(D3DRS_ZWRITEENABLE, &flgWriteenableZ);
 
-	////レンダーステート切り替え
+	//レンダーステート切り替え
 	pDevice->SetRenderState(D3DRS_LIGHTING, false);
 	pDevice->SetRenderState(D3DRS_ZENABLE, false);
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);

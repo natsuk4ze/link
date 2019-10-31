@@ -38,7 +38,7 @@ InfoActor::InfoActor(const D3DXVECTOR3& pos)
 	}
 
 	// ƒrƒ…[ƒA‚Ìì¬
-	viewer = new Viewer3D(256, 256, D3DXVECTOR2(100.0f, 100.0f));
+	viewer = new Viewer3D(256, 256, D3DXVECTOR2(5.0f, 5.0f));
 	viewer->SetPosition(D3DXVECTOR3(pos));
 }
 
@@ -77,6 +77,9 @@ void InfoActor::Draw()
 	if (!this->IsActive())
 		return;
 
+	LPDIRECT3DDEVICE9 device = GetDevice();
+	device->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+
 	viewer->Begin2D();
 	for (int i = 0; i < 2; i++)
 	{
@@ -84,7 +87,9 @@ void InfoActor::Draw()
 	}
 	viewer->End2D();
 
-	//viewer->Draw3D();
+	viewer->Draw3D();
+
+	device->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 
 }
 
