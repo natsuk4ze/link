@@ -89,7 +89,7 @@ void GameScene::Init()
 	//root.push_back(push);
 	//passengerController = new PassengerController();
 	//passengerController->SetPassenger(root);
-	testInfo = new LinkInfoActor(D3DXVECTOR3(160.0f, 25.0f, -160.0f), 85);
+	testInfo = new LinkInfoActor(D3DXVECTOR3(160.0f, 0.0f, -160.0f), 85);
 }
 
 /**************************************

@@ -30,8 +30,11 @@ private:
 	static const D3DXVECTOR2 digitSize;
 	static const D3DXVECTOR2 logoSize;
 
+	// ビューアの表示場所調整
+	static const float upPos;
+
 public:
-	LinkInfoActor(const D3DXVECTOR3& pos, const int& level);
+	LinkInfoActor(const D3DXVECTOR3& townPos, const int& townLevel);
 	~LinkInfoActor();
 
 	// 更新、描画

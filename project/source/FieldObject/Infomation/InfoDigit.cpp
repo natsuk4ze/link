@@ -58,5 +58,4 @@ void InfoDigit::ChangeDigit(const int& num)
 	float left = (float)x * width;
 	float top = (float)y * height;
 	this->SetUV(left, top, width, height);
-	this->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 }
