@@ -9,6 +9,7 @@
 #define _VIEWER3D_H_
 
 #include "../../main.h"
+#include "BillboardTransform.h"
 
 /**************************************
 前方宣言
@@ -56,7 +57,7 @@ protected:
 	LPDIRECT3DVERTEXBUFFER9 vtxBuff;
 
 	//SRT情報
-	Transform* transform;
+	BillboardTransform* transform;
 
 	//頂点バッファ作成処理
 	virtual void MakeVertexBuffer(const D3DXVECTOR2& size);

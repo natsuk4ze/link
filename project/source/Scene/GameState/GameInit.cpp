@@ -43,7 +43,7 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	ResourceManager::Instance()->LoadMesh("Mountain-City", "data/MODEL/PlaceActor/mountain.x");
 	ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
 	ResourceManager::Instance()->LoadMesh("Car", "data/MODEL/PassengerActor/ToonCar.x");
-	ResourceManager::Instance()->MakePolygon("LinkInfo", "data/TEXTURE/Viewer/GameViewer/StockViewer/Number.png", D3DXVECTOR2(3.0f, 5.0f), D3DXVECTOR2(4.0f, 3.0f));
+	ResourceManager::Instance()->LoadTexture("data/TEXTURE/Viewer/GameViewer/StockViewer/Number.png");
 
 	// FieldLevel = World
 

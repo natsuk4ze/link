@@ -14,9 +14,11 @@
 /**************************************
 コンストラクタ
 ***************************************/
-Viewer3D::Viewer3D(DWORD sizeX, DWORD sizeY, const D3DXVECTOR2& worldSize) :
-	transform(new Transform())
+Viewer3D::Viewer3D(DWORD sizeX, DWORD sizeY, const D3DXVECTOR2& worldSize)
 {
+	// ビルボードの作成
+	transform = new BillboardTransform();
+
 	//レンダーターゲット作成
 	MakeRenderTarget(sizeX, sizeY);
 
@@ -78,7 +80,7 @@ void Viewer3D::Draw3D()
 	pDevice->GetRenderState(D3DRS_ZENABLE, &flgEnableZ);
 	pDevice->GetRenderState(D3DRS_ZWRITEENABLE, &flgWriteenableZ);
 
-	//レンダーステート切り替え
+	////レンダーステート切り替え
 	pDevice->SetRenderState(D3DRS_LIGHTING, false);
 	pDevice->SetRenderState(D3DRS_ZENABLE, false);
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);

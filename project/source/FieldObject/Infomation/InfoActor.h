@@ -9,18 +9,32 @@
 #define _INFOACTOR_H_
 
 #include "../../../Framework/Renderer3D/BillboardObject.h"
-#include "../../../Framework/Renderer3D/BoardPolygon.h"
+#include "../../../Framework/Renderer2D/Polygon2D.h"
+#include "../../../Framework/Renderer3D/Viewer3D.h"
 
 //**************************************
 // クラス定義
 //**************************************
+class DigitInfo :
+	public Polygon2D
+{
+private:
+	int num;
+
+public:
+	DigitInfo(const int& num, const D3DXVECTOR3& pos);
+	~DigitInfo();
+
+	void Update();
+};
+
 class InfoActor :
 	public BillboardObject
 {
 protected:
-	//*******継承先で使用********
-	BoardPolygon* polygon;
-	//***************************
+	Viewer3D* viewer;	// 3D表示処理
+	DigitInfo* digit[2];
+	int linkLevel;
 
 	static const float ActorSize;
 
@@ -32,5 +46,4 @@ public:
 	virtual void Update();
 	virtual void Draw();
 };
-
 #endif

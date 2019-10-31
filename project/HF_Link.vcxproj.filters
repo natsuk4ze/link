@@ -186,6 +186,7 @@
     <ClInclude Include="source\Effect\Game\TownExplosion.h" />
     <ClInclude Include="source\FieldObject\Infomation\InfoActor.h" />
     <ClInclude Include="source\FieldObject\Infomation\LinkInfoActor.h" />
+    <ClInclude Include="Framework\Renderer3D\Viewer3D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -356,6 +357,7 @@
     <ClCompile Include="source\Effect\Game\TownExplosion.cpp" />
     <ClCompile Include="source\FieldObject\Infomation\InfoActor.cpp" />
     <ClCompile Include="source\FieldObject\Infomation\LinkInfoActor.cpp" />
+    <ClCompile Include="Framework\Renderer3D\Viewer3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
