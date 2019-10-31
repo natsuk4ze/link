@@ -151,6 +151,7 @@
     <ClInclude Include="source\FieldObject\Actor\TJunctionActor.h" />
     <ClInclude Include="source\FieldObject\Animation\ActorAnimation.h" />
     <ClInclude Include="source\FieldObject\Infomation\InfoActor.h" />
+    <ClInclude Include="source\FieldObject\Infomation\InfoDigit.h" />
     <ClInclude Include="source\FieldObject\Infomation\LinkInfoActor.h" />
     <ClInclude Include="source\FieldObject\PassengerController.h" />
     <ClInclude Include="source\FieldObject\Passenger\PassengerActor.h" />
@@ -326,6 +327,7 @@
     <ClCompile Include="source\FieldObject\Actor\StraightRoadActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\TJunctionActor.cpp" />
     <ClCompile Include="source\FieldObject\Animation\ActorAnimation.cpp" />
+    <ClCompile Include="source\FieldObject\Infomation\InfoDigit.cpp" />
     <ClCompile Include="source\FieldObject\Infomation\InfoActor.cpp" />
     <ClCompile Include="source\FieldObject\Infomation\LinkInfoActor.cpp" />
     <ClCompile Include="source\FieldObject\PassengerController.cpp" />

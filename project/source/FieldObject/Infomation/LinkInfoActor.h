@@ -1,7 +1,7 @@
 //=====================================
 //
 // リンクインフォアクター[LinkInfoActor.h]
-// 機能：町のリンクレベルを表示
+// 機能：リンクレベルを表示
 // Author:GP12B332 19 染谷武志
 //
 //=====================================
@@ -9,6 +9,7 @@
 #define _LINKINFOACTOR_H_
 
 #include "InfoActor.h"
+#include "InfoDigit.h"
 
 //**************************************
 // クラス定義
@@ -18,8 +19,9 @@ class LinkInfoActor :
 {
 private:
 	static const int MaxDigit = 2;
-	int linkLevel;
-	int digit[MaxDigit];
+	int linkLevel;						// リンクレベル
+	int digit[MaxDigit];				// リンクレベルを一桁ごとに分離
+	InfoDigit* digitActor[MaxDigit];	// 一桁ごとに表示
 
 public:
 	LinkInfoActor(const D3DXVECTOR3& pos, const int& level);

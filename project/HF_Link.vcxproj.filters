@@ -187,6 +187,7 @@
     <ClInclude Include="source\FieldObject\Infomation\InfoActor.h" />
     <ClInclude Include="source\FieldObject\Infomation\LinkInfoActor.h" />
     <ClInclude Include="Framework\Renderer3D\Viewer3D.h" />
+    <ClInclude Include="source\FieldObject\Infomation\InfoDigit.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -358,6 +359,7 @@
     <ClCompile Include="source\FieldObject\Infomation\InfoActor.cpp" />
     <ClCompile Include="source\FieldObject\Infomation\LinkInfoActor.cpp" />
     <ClCompile Include="Framework\Renderer3D\Viewer3D.cpp" />
+    <ClCompile Include="source\FieldObject\Infomation\InfoDigit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
