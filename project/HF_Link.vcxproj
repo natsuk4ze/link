@@ -165,6 +165,7 @@
     <ClInclude Include="source\Field\Along\AlongController.h" />
     <ClInclude Include="source\Field\Along\AlongModel.h" />
     <ClInclude Include="source\FieldObject\Passenger\PassengerModel.h" />
+    <ClInclude Include="source\Field\AStar\AStarController.h" />
     <ClInclude Include="source\Field\Camera\FieldCamera.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraFar.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraQuater.h" />
@@ -348,6 +349,7 @@
     <ClCompile Include="source\Field\Along\AlongController.cpp" />
     <ClCompile Include="source\Field\Along\AlongModel.cpp" />
     <ClCompile Include="source\FieldObject\Passenger\PassengerModel.cpp" />
+    <ClCompile Include="source\Field\AStar\AStarController.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCamera.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraFar.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraQuater.cpp" />
