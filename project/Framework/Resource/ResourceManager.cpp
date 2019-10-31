@@ -71,7 +71,7 @@ void ResourceManager::LoadTexture(const char* path)
 
 	//èdï°ämîF
 	if (texturePool.count(tagStr) != 0)
-		SAFE_RELEASE(texturePool[tagStr]);
+		return;
 
 	//ì«Ç›çûÇ›
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
