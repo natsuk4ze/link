@@ -37,7 +37,7 @@ private:
 	Field::FieldController *fieldController;
 
 	bool InBanStock;
-	bool InPause;
+	bool InPauseEvent;
 	int FieldLevel;
 
 	void LoadCSV(const char* FilePath);
@@ -58,6 +58,7 @@ public:
 	void EmbedViewerParam(GameViewerParam& param);
 	void SetBanStock(bool Flag);
 	void SetInPause(bool Flag);
+	bool GetInPause(void);
 };
 
 #endif

@@ -26,13 +26,16 @@ private:
 	int RemainTime;
 	bool InDebuff;
 	std::function<void(bool)> SetBanStock;
+	std::function<bool(void)> GetInPause;
 
 	// òAë≈ÉQÅ[ÉÄ
 	BeatGame *beatGame;
 	EventViewer* eventViewer;
 
 public:
-	BanStockUseEvent(EventViewer* eventViewer, std::function<void(bool)> SetBanStock);
+	BanStockUseEvent(EventViewer* eventViewer, 
+		std::function<void(bool)> SetBanStock,
+		std::function<bool(void)> GetInPause);
 	~BanStockUseEvent();
 	void Init(void) override;
 	void Update(void) override;

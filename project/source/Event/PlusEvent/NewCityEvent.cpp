@@ -96,7 +96,7 @@ void NewCityEvent::CreateNewCity(void)
 
 	fieldEventHandler->CreateNewTown(NewTown);
 	GameParticleManager::Instance()->SetSingularityEffect(TownPos);
-	TaskManager::Instance()->CreateDelayedTask(60, [&]() {EventOver(); });
+	TaskManager::Instance()->CreateDelayedTask(90, [&]() {EventOver(); });
 }
 
 //=============================================================================

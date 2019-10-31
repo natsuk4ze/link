@@ -100,7 +100,7 @@ void EventController::Update()
 	{
 		if (Event->GetUse())
 		{
-			if (Event->GetIsPauseEvent() && !Event->GetInitialized() && !InPause)
+			if (Event->GetIsPauseEvent() && !Event->GetInitialized() && !InPauseEvent)
 			{
 				Event->Init();
 			}
@@ -279,7 +279,9 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					}
 					else
 					{
-						Ptr = new BanStockUseEvent(eventViewer, [&](bool Flag) {SetBanStock(Flag); });
+						Ptr = new BanStockUseEvent(eventViewer,
+							[&](bool Flag) {SetBanStock(Flag); },
+							[&]() {return GetInPause(); });
 					}
 					break;
 				default:
@@ -323,6 +325,7 @@ void EventController::ReceiveFieldEventHandler(FieldEventHandler *Ptr)
 void EventController::EmbedViewerParam(GameViewerParam& param)
 {
 	param.InBanStock = this->InBanStock;
+	param.InPauseEvent = this->InPauseEvent;
 }
 
 //=============================================================================
@@ -338,5 +341,13 @@ void EventController::SetBanStock(bool Flag)
 //=============================================================================
 void EventController::SetInPause(bool Flag)
 {
-	InPause = Flag;
+	InPauseEvent = Flag;
+}
+
+//=============================================================================
+// 現在はタイムストップイベントが発生しているかどうか
+//=============================================================================
+bool EventController::GetInPause(void)
+{
+	return InPauseEvent;
 }

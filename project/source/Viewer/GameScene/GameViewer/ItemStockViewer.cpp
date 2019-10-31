@@ -167,7 +167,11 @@ void ItemStockViewer::Animate(void)
 			float RemainTimePercent = (float)FrameCount / (float)DefaultDebuffCount;
 			float Percent = Easing::EaseValue((1 - RemainTimePercent), 1.0f, -1.0f, EaseType::Linear);
 
-			FrameCount--;
+			if (!InPauseEvent)
+			{
+				FrameCount--;
+			}
+
 			// ItemStockViewer‚Ì’¸“_İ’uŠÖ”AŒø‰Ê‚ªˆá‚¤
 			SetBanIconVertex(Percent);
 			SetBanIconTexture(RemainTimePercent);

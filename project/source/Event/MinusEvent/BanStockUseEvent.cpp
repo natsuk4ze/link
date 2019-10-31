@@ -26,11 +26,14 @@ const int DefaultDebuffFrame = 300;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-BanStockUseEvent::BanStockUseEvent(EventViewer* eventViewer, std::function<void(bool)> SetBanStock) :
+BanStockUseEvent::BanStockUseEvent(EventViewer* eventViewer,
+	std::function<void(bool)> SetBanStock,
+	std::function<bool(void)> GetInPause) :
 	EventBase(true),
 	RemainTime(DefaultDebuffFrame),
 	InDebuff(false),
 	SetBanStock(SetBanStock),
+	GetInPause(GetInPause),
 	eventViewer(eventViewer)
 {
 }
@@ -78,7 +81,7 @@ void BanStockUseEvent::Update()
 
 	beatGame->Update();
 
-	if (InDebuff)
+	if (InDebuff && !GetInPause())
 	{
 		RemainTime--;
 		if (RemainTime <= 0)
