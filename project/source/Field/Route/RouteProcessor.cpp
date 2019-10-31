@@ -180,11 +180,8 @@ namespace Field::Model
 		//分割前のルートの隣接ルートを取得
 		std::vector<AdjacentRoute> adjacencies = model->adjacentRoute;
 
-		//隣接情報作成
-		first->AddAdjacency(adjacencies);
+		//分割したルート同士の隣接情報作成
 		first->AddAdjacency(junction, junction, second);
-
-		second->AddAdjacency(adjacencies);
 		second->AddAdjacency(junction, junction, first);
 
 		//分割前に隣接していたルートに対して隣接情報を追加
@@ -198,7 +195,8 @@ namespace Field::Model
 			std::shared_ptr<RouteModel> sptr = adjacency.route.lock();
 			if (sptr)
 			{
-				sptr->AddAdjacency(adjacency.end, junction, opponent);
+				sptr->AddAdjacency(adjacency.end, adjacency.start, opponent);
+				opponent->AddAdjacency(adjacency.start, adjacency.end, sptr);
 			}
 		}
 
@@ -235,11 +233,13 @@ namespace Field::Model
 
 				//相手を分割
 				RouteContainer divList = Divide(*targetList.begin(), place, routeContainer);
+				std::copy(divList.begin(), divList.end(), std::back_inserter(routeContainer));
 			}
 		}
 
 		//連結相手と作ったルートの隣接情報を作成
 		RouteContainer routeList = place->GetConnectingRoutes();
+		routeList.erase(std::remove(routeList.begin(), routeList.end(), model));
 		for (auto&& route : routeList)
 		{
 			model->AddAdjacency(place, place, route);

@@ -64,6 +64,8 @@ namespace Field::Model
 		//コンストラクタ
 		RouteModel(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction);
 
+		bool operator ==(const RouteModel& rhs) const;
+
 		//Create関数でこのクラスのshared_ptrを作成させる
 		static RouteModelPtr Create(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction);
 		static RouteModelPtr Create(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction, const std::vector<PlaceModel*>& placeVector);
@@ -82,8 +84,7 @@ namespace Field::Model
 
 		//隣接ルート追加
 		void AddAdjacency(PlaceModel* junction, PlaceModel* connectTarget, std::shared_ptr<RouteModel> opponent);
-		void AddAdjacency(const std::vector<AdjacentRoute>& adjacenctRoute);
-
+	
 		//端点設定
 		void SetEdge();
 		void SetEdge(PlaceModel* edge);

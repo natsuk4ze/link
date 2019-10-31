@@ -90,7 +90,7 @@ namespace Field::Model
 		std::function<void(std::vector<D3DXVECTOR3>&)> *departPassenger;
 
 		//Œq‚ª‚Á‚Ä‚éŠX‚Ö‚ÌŒo˜H
-		std::list<std::vector<D3DXVECTOR3>> routeContainer;
+		std::vector<std::vector<D3DXVECTOR3>> routeContainer;
 	};
 }
 #endif

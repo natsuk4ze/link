@@ -41,6 +41,14 @@ namespace Field::Model
 	}
 
 	/**************************************
+	等地比較演算子
+	***************************************/
+	bool RouteModel::operator==(const RouteModel & rhs) const
+	{
+		return route == rhs.route;
+	}
+
+	/**************************************
 	スマートポインタ作成処理
 	***************************************/
 	RouteModelPtr RouteModel::Create(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction)
@@ -117,15 +125,18 @@ namespace Field::Model
 	***************************************/
 	void RouteModel::AddAdjacency(PlaceModel * junction, PlaceModel * connectTarget, std::shared_ptr<RouteModel> opponent)
 	{
-		adjacentRoute.push_back(AdjacentRoute(junction, connectTarget, opponent));
-	}
+		if (*opponent == *this)
+			return;
 
-	/**************************************
-	隣接ルート追加
-	***************************************/
-	void RouteModel::AddAdjacency(const std::vector<AdjacentRoute>& adjacenctRoute)
-	{
-		std::copy(adjacenctRoute.begin(), adjacenctRoute.end(), std::back_inserter(this->adjacentRoute));
+		for (auto&& adjacenct : adjacentRoute)
+		{
+			std::shared_ptr<RouteModel> sptr = adjacenct.route.lock();
+
+			if(sptr && *sptr == *opponent)
+				return;
+		}
+
+		adjacentRoute.push_back(AdjacentRoute(junction, connectTarget, opponent));
 	}
 
 	/**************************************
@@ -207,35 +218,36 @@ namespace Field::Model
 		int cntPush = stackRoute.Push(GetAllPlaces(start));
 
 		//対象に繋がっている街を確認
-		if (!(from(searchedRoute) >> contains(shared_from_this())))
+		searchedRoute.push_back(shared_from_this());
+
+		PlaceModel* town = this->GetConnectedTown(root->GetPlace());
+		if (town != nullptr && !Utility::IsContain(searchedTown, town))
 		{
-			searchedRoute.push_back(shared_from_this());
+			cntTown++;
+			searchedTown.push_back(town);
 
-			PlaceModel* town = this->GetConnectedTown(root->GetPlace());
-			if (town != nullptr && !(from(searchedTown) >> contains(town)))
+			//経路を保存
+			root->AddLinkedRoute(stackRoute.route);
+		}
+		else
+		{
+			//隣接しているルートに対して再帰的に探索
+			for (auto&& adjacency : this->adjacentRoute)
 			{
-				cntTown++;
-				searchedTown.push_back(town);
+				if (adjacency.start == start)
+					continue;
 
-				//経路を保存
-				root->AddLinkedRoute(stackRoute.route);
+				RouteModelPtr ptr = adjacency.route.lock();
+
+				if (!ptr)
+					continue;
+
+				if (Utility::IsContain(searchedRoute, ptr))
+					continue;
+
+				cntTown += ptr->FindLinkedTown(root, searchedRoute, searchedTown, stackRoute, adjacency.end);
 			}
 		}
-
-		//隣接しているルートに対して再帰的に探索
-		for (auto&& adjacency : this->adjacentRoute)
-		{
-			RouteModelPtr ptr = adjacency.route.lock();
-
-			if (!ptr)
-				continue;
-
-			if (from(searchedRoute) >> contains(ptr))
-				continue;
-
-			cntTown += ptr->FindLinkedTown(root, searchedRoute, searchedTown, stackRoute, adjacency.end);
-		}
-
 		//スタックから自身を取り除く
 		stackRoute.Pop(cntPush);
 

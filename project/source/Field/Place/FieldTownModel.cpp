@@ -46,7 +46,7 @@ namespace Field::Model
 	void TownModel::Update()
 	{
 		cntFrame++;
-		
+
 		//4•b‚¨‚«‚ÉŒq‚ª‚Á‚Ä‚¢‚éŠX‚ÉŒü‚©‚Á‚ÄƒpƒbƒZƒ“ƒWƒƒ[‚ðo”­‚³‚¹‚é
 		if (cntFrame % 120 == 0)
 		{
@@ -111,6 +111,7 @@ namespace Field::Model
 		
 		RoutePlaceStack routeStack;
 
+		routeContainer.clear();
 		for (auto&& route : belongRoute)
 		{
 			linkLevel += route->FindLinkedTown(this, searchedRoute, searchedTown, routeStack, place);
