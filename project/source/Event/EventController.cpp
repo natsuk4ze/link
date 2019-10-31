@@ -43,7 +43,7 @@ using namespace EventConfig;
 // マクロ定義
 //*****************************************************************************
 // 使用していないイベントを削除
-bool RemoveCondition(EventBase *Event) { return Event == nullptr ? true : false; }
+//bool RemoveCondition(EventBase *Event) { return Event == nullptr ? true : false; }
 
 //*****************************************************************************
 // グローバル変数
@@ -100,7 +100,14 @@ void EventController::Update()
 	{
 		if (Event->GetUse())
 		{
-			Event->Update();
+			if (Event->GetIsPauseEvent() && !Event->GetInitialized() && !InPause)
+			{
+				Event->Init();
+			}
+			else
+			{
+				Event->Update();
+			}
 		}
 		else
 		{
@@ -112,7 +119,10 @@ void EventController::Update()
 	// イベントビューア更新
 	eventViewer->Update();
 
-	EventVec.erase(std::remove_if(std::begin(EventVec), std::end(EventVec), RemoveCondition), std::end(EventVec));
+	EventVec.erase(std::remove_if(std::begin(EventVec), std::end(EventVec), [&](EventBase *Event)
+	{
+		return Event == nullptr ? true : false;
+	}), std::end(EventVec));
 }
 
 //=============================================================================
@@ -295,10 +305,15 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 }
 
 //=============================================================================
-// FieldControllerのポインタを受け取る
+// FieldEventHandlerのポインタを受け取る
 //=============================================================================
 void EventController::ReceiveFieldEventHandler(FieldEventHandler *Ptr)
 {
+	// FieldEventHandlerのある関数を設定する
+	Ptr->SetEventControllerInPause = [&](bool Flag)
+	{
+		SetInPause(Flag);
+	};
 	EventBase::ReceiveFieldEventHandler(Ptr);
 }
 
@@ -316,4 +331,12 @@ void EventController::EmbedViewerParam(GameViewerParam& param)
 void EventController::SetBanStock(bool Flag)
 {
 	InBanStock = Flag;
+}
+
+//=============================================================================
+// 現在はタイムストップイベントが発生しているかどうか
+//=============================================================================
+void EventController::SetInPause(bool Flag)
+{
+	InPause = Flag;
 }

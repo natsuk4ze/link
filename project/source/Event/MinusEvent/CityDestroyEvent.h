@@ -31,6 +31,7 @@ private:
 
 	// òAë≈ÉQÅ[ÉÄ
 	BeatGame *beatGame;
+	EventViewer* eventViewer;
 
 #if _DEBUG
 	static LPD3DXMESH SphereMesh;
@@ -40,6 +41,7 @@ private:
 public:
 	CityDestroyEvent(EventViewer* eventViewer);
 	~CityDestroyEvent();
+	void Init(void) override;
 	void Update(void) override;
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;

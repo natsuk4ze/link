@@ -20,7 +20,8 @@ const int LinkLevelDecreaseNum = -1;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-LinkLevelDecreaseEvent::LinkLevelDecreaseEvent()
+LinkLevelDecreaseEvent::LinkLevelDecreaseEvent() :
+	EventBase(false)
 {
 
 }

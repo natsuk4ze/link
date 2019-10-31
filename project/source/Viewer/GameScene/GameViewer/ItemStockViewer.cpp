@@ -84,6 +84,7 @@ ItemStockViewer::~ItemStockViewer()
 	SAFE_DELETE(num);
 	SAFE_DELETE(icon);
 	SAFE_DELETE(BanIcon);
+	SAFE_DELETE(BanIcon_White);
 }
 
 //=============================================================================
@@ -191,7 +192,7 @@ void ItemStockViewer::SetBanIconVertex(float Percent)
 }
 
 //=============================================================================
-// バツアイコンの頂点情報設定
+// バツアイコンのテクスチャ情報設定
 //=============================================================================
 void ItemStockViewer::SetBanIconTexture(float Percent)
 {

@@ -30,6 +30,7 @@ const int InputGoal = 20;
 // コンストラクタ
 //=============================================================================
 BeatGame::BeatGame(std::function<void(bool)> Callback) :
+	EventBase(false),
 	RemainFrame(DefaultInputFrame),
 	InputCount(0),
 	TelopOver(false),

@@ -29,12 +29,12 @@ private:
 
 	// òAë≈ÉQÅ[ÉÄ
 	BeatGame *beatGame;
-	BaseViewerDrawer *Viewer;
-
+	EventViewer* eventViewer;
 
 public:
 	BanStockUseEvent(EventViewer* eventViewer, std::function<void(bool)> SetBanStock);
 	~BanStockUseEvent();
+	void Init(void) override;
 	void Update(void) override;
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;

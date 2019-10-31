@@ -122,9 +122,11 @@ private:
 	std::vector<std::function<void(void)>> functerVoid;
 	std::vector<std::function<const Field::Model::PlaceModel*(void)>> functerPlaceReturn;
 	std::vector<std::function<void(const Field::Model::PlaceModel*)>> functerPlace;
+	std::function<void(bool)> SetEventControllerInPause;
 
 	friend class GameScene;
 	friend class Field::FieldController;
+	friend class EventController;
 };
 
 #endif

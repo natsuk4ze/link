@@ -24,6 +24,7 @@ private:
 public:
 	NewCityEvent(EventViewer *Ptr);
 	~NewCityEvent();
+	void Init(void) override;
 	void Update(void) override;
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;

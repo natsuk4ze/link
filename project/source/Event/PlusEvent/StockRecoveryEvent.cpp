@@ -20,7 +20,8 @@ const int AddNum = 3;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-StockRecoveryEvent::StockRecoveryEvent()
+StockRecoveryEvent::StockRecoveryEvent() :
+	EventBase(false)
 {
 
 }
