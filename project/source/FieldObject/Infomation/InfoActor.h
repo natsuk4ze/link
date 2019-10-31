@@ -21,21 +21,16 @@ protected:
 	//*******継承先で使用********
 	BoardPolygon* polygon;
 	//***************************
-	int linkLevel;
-	//bool onCamera;
 
 	static const float ActorSize;
 
 public:
-	InfoActor(const D3DXVECTOR3& pos, const int& level);
+	InfoActor(const D3DXVECTOR3& pos);
 	virtual ~InfoActor();
 
 	// 更新、描画
 	virtual void Update();
 	virtual void Draw();
-
-	// レベル変更時使用
-	void SetLevel(const int& nextLevel);
 };
 
 #endif

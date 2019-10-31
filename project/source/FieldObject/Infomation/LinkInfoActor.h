@@ -18,7 +18,8 @@ class LinkInfoActor :
 {
 private:
 	static const int MaxDigit = 2;
-	DigitActor* digit[MaxDigit];
+	int linkLevel;
+	int digit[MaxDigit];
 
 public:
 	LinkInfoActor(const D3DXVECTOR3& pos, const int& level);
@@ -27,21 +28,10 @@ public:
 	// 更新、描画
 	void Update()override;
 	void Draw()override;
-};
 
-class DigitActor :
-	public BillboardObject
-{
-private:
-	BoardPolygon* polygon;
-	int num;				// 表示する数字
+	// レベル変更時使用
+	void SetLevel(const int& nextLevel);
 
-public:
-	DigitActor(int num);
-	~DigitActor();
-
-	void Update();
-	void Draw();
 };
 
 #endif

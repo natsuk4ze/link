@@ -17,8 +17,7 @@ const float InfoActor::ActorSize = 10.0f;
 //=====================================
 // コンストラクタ
 //=====================================
-InfoActor::InfoActor(const D3DXVECTOR3& pos, const int& level) :
-	linkLevel(level)
+InfoActor::InfoActor(const D3DXVECTOR3& pos)
 {
 	transform->SetPosition(pos);
 	transform->SetScale(Vector3::One);
@@ -58,12 +57,4 @@ void InfoActor::Draw()
 
 	polygon->Draw(transform->GetMatrix());
 
-}
-
-//=====================================
-// レベル変更
-//=====================================
-void InfoActor::SetLevel(const int& nextLevel)
-{
-	linkLevel = nextLevel;
 }

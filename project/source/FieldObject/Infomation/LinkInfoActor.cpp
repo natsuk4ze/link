@@ -5,12 +5,14 @@
 // コンストラクタ
 //=====================================
 LinkInfoActor::LinkInfoActor(const D3DXVECTOR3& pos, const int& level):
-	InfoActor(pos, level)
+	InfoActor(pos), linkLevel(level)
 {
-	for (int i = 0; i < MaxDigit; i++)
-	{
-		digit[i] = new DigitActor();
-	}
+	polygon = new BoardPolygon();
+	ResourceManager::Instance()->GetPolygon("LinkInfo", polygon);
+
+	digit[0] = linkLevel % 10;
+	digit[1] = linkLevel / 10;
+	polygon->SetTexDiv(D3DXVECTOR2(4.0f, 3.0f));
 }
 
 //=====================================
@@ -18,10 +20,7 @@ LinkInfoActor::LinkInfoActor(const D3DXVECTOR3& pos, const int& level):
 //=====================================
 LinkInfoActor::~LinkInfoActor()
 {
-	for (int i = 0; i < MaxDigit; i++)
-	{
-		SAFE_DELETE(digit[i]);
-	}
+	SAFE_DELETE(polygon);
 }
 
 //=====================================
@@ -29,10 +28,6 @@ LinkInfoActor::~LinkInfoActor()
 //=====================================
 void LinkInfoActor::Update()
 {
-	for (int i = 0; i < MaxDigit; i++)
-	{
-		digit[i]->Update();
-	}
 }
 
 //=====================================
@@ -43,18 +38,21 @@ void LinkInfoActor::Draw()
 	if (!this->IsActive())
 		return;
 
-	//if (!onCamera)
-	//	return;
-
-	polygon->Draw(transform->GetMatrix());
+	D3DXVECTOR3 center = transform->GetPosition();
+	D3DXVECTOR3 tyousei[MaxDigit] = { D3DXVECTOR3(-3.0f, 0.0f, 0.0f), D3DXVECTOR3(3.0f, 0.0f, 0.0f) };
 	for (int i = 0; i < MaxDigit; i++)
 	{
-		digit[i]->Draw();
+		transform->SetPosition(center + tyousei[i]);
+		polygon->SetTextureIndex(digit[i]);
+		polygon->Draw(transform->GetMatrix());
 	}
+	transform->SetPosition(center);
 }
 
-DigitActor::DigitActor(int num)
+// レベル変更時使用
+void LinkInfoActor::SetLevel(const int& nextLevel)
 {
-	this->num = num;
-
+	linkLevel = nextLevel;
+	digit[0] = linkLevel % 10;
+	digit[1] = linkLevel / 10;
 }

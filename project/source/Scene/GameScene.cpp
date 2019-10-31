@@ -89,6 +89,7 @@ void GameScene::Init()
 	//root.push_back(push);
 	//passengerController = new PassengerController();
 	//passengerController->SetPassenger(root);
+	testInfo = new LinkInfoActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), 12);
 }
 
 /**************************************
@@ -116,6 +117,7 @@ void GameScene::Uninit()
 	// テスト用
 	//SAFE_DELETE(testActor);
 	//SAFE_DELETE(passengerController);
+	SAFE_DELETE(testInfo);
 
 	//デリゲート削除
 	SAFE_DELETE(onBuildRoad);
@@ -144,6 +146,7 @@ void GameScene::Update()
 	// テスト用
 	//testActor->Update();
 	//passengerController->Update();
+	testInfo->Update();
 
 	//ビューワパラメータをビューワに渡す
 	GameViewerParam param;
@@ -187,6 +190,7 @@ void GameScene::Draw()
 	// テスト用
 	//testActor->Draw();
 	//passengerController->Draw();
+	testInfo->Draw();
 
 	//オブジェクト描画
 	ProfilerCPU::Instance()->Begin("Draw Object");
