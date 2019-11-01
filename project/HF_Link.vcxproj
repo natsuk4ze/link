@@ -124,6 +124,7 @@
     <ClInclude Include="source\Effect\Game\WhiteSmog.h" />
     <ClInclude Include="source\Effect\TestParticleCamera.h" />
     <ClInclude Include="source\Effect\TestParticleManager.h" />
+    <ClInclude Include="source\Event\EventActor.h" />
     <ClInclude Include="source\Event\EventBase.h" />
     <ClInclude Include="source\Event\EventConfig.h" />
     <ClInclude Include="source\Event\EventController.h" />
@@ -308,6 +309,7 @@
     <ClCompile Include="source\Effect\Game\WhiteSmog.cpp" />
     <ClCompile Include="source\Effect\TestParticleCamera.cpp" />
     <ClCompile Include="source\Effect\TestParticleManager.cpp" />
+    <ClCompile Include="source\Event\EventActor.cpp" />
     <ClCompile Include="source\Event\EventBase.cpp" />
     <ClCompile Include="source\Event\EventController.cpp" />
     <ClCompile Include="source\Event\MinusEvent\AILevelDecreaseEvent.cpp" />
