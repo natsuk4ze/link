@@ -13,7 +13,7 @@ namespace Field::Route
 	/**************************************
 	staticメンバ
 	***************************************/
-	const unsigned AStarController::MaxCheckRoute = 1000;
+	const unsigned AStarController::MaxCheckRoute = 10000;
 
 	/**************************************
 	AStarNodeコンストラクタ
