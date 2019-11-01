@@ -51,7 +51,7 @@ namespace Field::Model
 			return;
 
 		//4秒おきに繋がっている街に向かってパッセンジャーを出発させる
-		if (cntFrame % 120 == 0)
+		if (cntFrame % 30 == 0)
 		{
 			indexDestination = Math::WrapAround(0, (int)linkedTown.size(), ++indexDestination);
 			(*departPassenger)(place, linkedTown[indexDestination]);

@@ -95,7 +95,7 @@ void PassengerActor::MoveDest(const D3DXVECTOR3 dest, std::function<void(void)> 
 	// ˆÚ“®ƒtƒŒ[ƒ€
 	int frame = int(D3DXVec3Length(&vec) / Field::Actor::PlaceActorController::PlacePositionOffset) * 15;
 
-	if (Vector3::Angle(vec, transform->Forward()) >= 90.0f)
+	if (Vector3::Angle(vec, transform->Forward()) >= 45.0f)
 	{
 		// Œü‚«‚ğ‡‚í‚¹‚Ä‚©‚çˆÚ“®
 		Tween::Turn(*this, vec, 30, Linear, Vector3::Up, [=]
