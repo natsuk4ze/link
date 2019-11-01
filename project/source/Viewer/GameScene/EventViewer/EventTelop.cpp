@@ -97,19 +97,19 @@ EventTelop::EventTelop()
 {
 	//テキスト
 	text = new BaseViewerDrawer();
-	text->MakeVertex();
 	text->size = D3DXVECTOR3(512, 128.0f, 0.0f);
 	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	text->position = D3DXVECTOR3(SCREEN_WIDTH*1.2, SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
 	text->SetColor(SET_COLOR_NOT_COLORED);
+	text->MakeVertex();
 
 	//背景
 	bg = new BaseViewerDrawer();
-	MakeVertexBG();
 	bg->size = D3DXVECTOR3(SCREEN_WIDTH / 2, 60.0f, 0.0f);
 	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	bg->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 5), SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
 	bg->SetColor(SET_COLOR_NOT_COLORED);
+	MakeVertexBG();
 
 	//コンテナにテクスチャ情報をロードする
 	for (int i = 0; i < typeMax; i++)
@@ -147,6 +147,7 @@ EventTelop::~EventTelop()
 //=============================================================================
 void EventTelop::Update()
 {
+	//テロップ再生処理
 	Play();
 
 #ifdef _DEBUG
@@ -190,7 +191,7 @@ void EventTelop::Play()
 	//時間更新
 	animTime = countFrame / animDuration[currentAnim];
 
-	//アニメーションがWaitBG_Openの間背景をオープンする
+	//アニメーションシーンがBG_Openの間背景をオープンする
 	if (currentAnim == BG_Open)
 	{
 		OpenBG();
@@ -202,7 +203,7 @@ void EventTelop::Play()
 		textEndPositionX[currentAnim],
 		animType[currentAnim]);
 
-	//アニメーションがWaitBG_Closeの間背景をクローズする
+	//アニメーションシーンがBG_Closeの間背景をクローズする
 	if (currentAnim == BG_Close)
 	{
 		CloseBG();

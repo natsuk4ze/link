@@ -68,7 +68,7 @@ ItemStockViewer::~ItemStockViewer()
 void ItemStockViewer::Update(void)
 {
 	//アニメーション
-	Animate();
+	Hop();
 }
 
 //=============================================================================
@@ -88,7 +88,7 @@ void ItemStockViewer::Draw(void)
 //=============================================================================
 // アニメーション処理
 //=============================================================================
-void ItemStockViewer::Animate(void)
+void ItemStockViewer::Hop(void)
 {
 	//前フレームのパラメータとの差が0でないときホッピング状態にする
 	currentParam = parameterBox;

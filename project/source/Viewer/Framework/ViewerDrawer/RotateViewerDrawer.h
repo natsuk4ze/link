@@ -18,10 +18,11 @@ public:
 	RotateViewerDrawer();
 	~RotateViewerDrawer();
 
-	void CreateCircle();
 	void MakeVertex();
 	void SetVertex();
+	void CreateCircle();
 
+private:
 	float baseAngle;
 	float radius;
 };

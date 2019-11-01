@@ -35,7 +35,7 @@ private:
 	CountViewerDrawer *num;
 
 	//アニメーション
-	void Animate(void);
+	void Hop(void);
 
 	//現在のパラメータ
 	int currentParam;

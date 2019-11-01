@@ -11,6 +11,11 @@
 #include "GameViewerParam.h"
 #include "GameViewer.h"
 
+#ifdef _DEBUG
+#include "../../../../Framework/Input/input.h"
+#include "../../../../Framework/Tool/DebugWindow.h"
+#endif
+
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
@@ -76,6 +81,6 @@ void GameViewer::ReceiveParam(GameViewerParam&param)
 	timerViewer->parameterBox = param.remainTime;
 
 	//AIレベルビュアー
-	levelViewer->parameterBox[levelViewer->LevelAI] = (float)param.levelAI;
-	levelViewer->parameterBox[levelViewer->RatioLevel] = param.ratioLevel;
+	//levelViewer->parameterBox[levelViewer->LevelAI] = (float)param.levelAI;
+	//levelViewer->parameterBox[levelViewer->RatioLevel] = param.ratioLevel;
 }

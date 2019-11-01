@@ -23,6 +23,7 @@
 //アニメーションの数
 static const int animMax = 3;
 
+//ビュアーの表示座標間隔
 static const float intervalViewerPos = 100.0f;
 
 //アニメーション開始位置
@@ -57,7 +58,7 @@ static const float animDuration[animMax] = {
 enum animScene
 {
     In,
-	Wait,
+	Stop,
 	Out
 };
 
@@ -74,11 +75,11 @@ EventMessage::EventMessage()
 	//背景
 	bg = new BaseViewerDrawer();
 	bg->LoadTexture("data/TEXTURE/Viewer/EventViewer/EventMessage/BG.png");
-	bg->MakeVertex();
 	bg->size = D3DXVECTOR3(280.0f, 52.0f, 0.0f);
 	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	bg->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 8.6), (float)(SCREEN_HEIGHT*1.5),0.0f);
 	bg->SetColor(SET_COLOR_NOT_COLORED);
+	bg->MakeVertex();
 }
 
 //*****************************************************************************
@@ -95,8 +96,8 @@ EventMessage::~EventMessage()
 //=============================================================================
 void EventMessage::Update(void)
 {
-	//アニメーション
-	Animate();
+	//再生処理
+	Play();
 }
 
 //=============================================================================
@@ -116,27 +117,24 @@ void EventMessage::Draw(void)
 }
 
 //=============================================================================
-// アニメーション処理
+// 再生処理
 //=============================================================================
-void EventMessage::Animate(void)
+void EventMessage::Play(void)
 {
 	//再生中なら実行
 	if (!isPlaying) return;
 	
+	//ポジション
+	D3DXVECTOR2 position;
+	
 	//フレーム更新
 	countFrame++;
 
-	//ポジション
-	D3DXVECTOR2 position;
-
-	//ポジションを開始位置に初期化
-	position = animStartPosition[0];
-	
 	//時間更新
-	time = countFrame / animDuration[currentAnim];
+	animTime = countFrame / animDuration[currentAnim];
 
 	//ポジションを更新
-	position = Easing::EaseValue(time,
+	position = Easing::EaseValue(animTime,
 	animStartPosition[currentAnim],
 	animEndPosition[currentAnim],
 	animType[currentAnim]);
@@ -159,7 +157,7 @@ void EventMessage::Animate(void)
 	{
 		countFrame = 0;
 		currentAnim = 0;
-		time = 0;
+		animTime = 0;
 		alpha = 1.0f;
 		text->SetColor(SET_COLOR_NOT_COLORED);
 		bg->SetColor(SET_COLOR_NOT_COLORED);
@@ -169,7 +167,6 @@ void EventMessage::Animate(void)
 	//ポジションをセット(*後に変更予定)
 	text->SetPos((int)position.x,(int)position.y + int((messageSetCnt-1) * intervalViewerPos));
 	bg->position = D3DXVECTOR3(position.x, position.y + (messageSetCnt-1) * intervalViewerPos, 0.0f);
-	
 }
 
 //=============================================================================
@@ -181,10 +178,7 @@ void EventMessage::FadeOut(void)
 	alpha = Math::Max(alpha, 0.0f);
 
 	//フェードアウト中はα値を減算
-	if (alpha > 0.0f)
-	{
-		alpha -= 0.05f;
-	}
+	alpha -= 0.05f;
 
 	text->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, alpha));
 	bg->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, alpha));
@@ -210,7 +204,7 @@ void EventMessage::Reset(void)
 
 	countFrame = 0;
 	currentAnim = 0;
-	time = 0;
+	animTime = 0;
 	alpha = 1.0f;
 	text->SetColor(SET_COLOR_NOT_COLORED);
 	bg->SetColor(SET_COLOR_NOT_COLORED);
