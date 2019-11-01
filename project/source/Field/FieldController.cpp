@@ -29,6 +29,7 @@
 #include <algorithm>
 
 #include "../Effect/GameParticleManager.h"
+#include "../../Framework/Math/Easing.h"
 
 namespace Field
 {
@@ -371,7 +372,7 @@ namespace Field
 
 		float raiseValue = placeContainer->CalcDevelopmentLevelAI(developSpeedBonus);
 		developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + raiseValue);
-		realDevelopmentLevelAI = Easing::EaseValue(developmentLevelAI / 9999.0f, 0.0f, 9999.0f, OutSine);
+		realDevelopmentLevelAI = Easing::EaseValue(developmentLevelAI / 9999.0f, 0.0f, 9999.0f, EaseType::OutSine);
 	}
 
 	/**************************************

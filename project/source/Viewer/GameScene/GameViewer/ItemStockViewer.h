@@ -41,7 +41,17 @@ private:
 	CountViewerDrawer *num;
 
 	//アニメーション
-	void Animate(void);
+	void Hop(void);
+
+	//現在のパラメータ
+	int currentParam;
+
+	//１フレーム前のパラメータ
+	int lastParam;
+
+	//封印演出のフレームカウント
+	int FrameCount;
+
 	void SetBanIconVertex(float Percent);
 	void SetBanIconTexture(float Percent);
 };
