@@ -17,6 +17,9 @@
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
+#include "../Event/EventActor.h"
+
+const D3DXVECTOR3 Scale = D3DXVECTOR3(0.15f, 0.15f, 0.15f);
 
 /**************************************
 初期化処理
@@ -42,10 +45,12 @@ void ParticleTestScene::Init()
 	ResourceManager::Instance()->LoadMesh("Town-City", "data/MODEL/PlaceActor/Town.x");
 	ResourceManager::Instance()->LoadMesh("Mountain-City", "data/MODEL/PlaceActor/mountain.x");
 	ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
+	ResourceManager::Instance()->LoadMesh("UFO", "data/MODEL/UFO/UFO_Max.x");
 	actor = new CityActor(Vector3::Zero, Field::Model::FieldLevel::City);
 	//actor = new MountainActor(Vector3::Zero, Field::Model::FieldLevel::City);
 	//actor = new RiverActor(Vector3::Zero, Field::Model::FieldLevel::City);
 	//actor->SetScale(Vector3::One * 1.0f);
+	eventActor = new EventActor(Vector3::Up * 10.0f, Scale, "UFO");
 
 	//カメラ設定
 	Camera::SetMainCamera(sceneCamera);
@@ -68,6 +73,7 @@ void ParticleTestScene::Uninit()
 	SAFE_DELETE(ground);
 	SAFE_DELETE(sceneCamera);
 	SAFE_DELETE(actor);
+	SAFE_DELETE(eventActor);
 	SAFE_DELETE(bloom);
 
 	//パーティクル削除
@@ -103,15 +109,21 @@ void ParticleTestScene::Draw()
 	skybox->Draw();
 	ground->Draw();
 
-	static bool drawableActor = true;
-	
+	static bool drawableActor = false;
+	static bool DrawEventActor = true;
+
 	Debug::Begin("DrawActor");
-	if (Debug::Button("Switch"))
+	if (Debug::Button("DrawPlaceActor"))
 		drawableActor = !drawableActor;
+	if (Debug::Button("DrawEventActor"))
+		DrawEventActor = !DrawEventActor;
 	Debug::End();
 
-	if(drawableActor)
+	if (drawableActor)
 		actor->Draw();
+
+	if (DrawEventActor)
+		eventActor->Draw();
 
 	bloom->Draw(renderTexture);
 

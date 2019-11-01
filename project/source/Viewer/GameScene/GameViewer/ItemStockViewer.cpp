@@ -133,6 +133,7 @@ void ItemStockViewer::Hop(void)
 	//ホッピング処理
 	num->size.y = num->HopNumber(num->size.y, initNumSize.y, hopNumValue);
 
+	// バツアイコン演出
 	if (InBanStock)
 	{
 		if (BanIconDebut)

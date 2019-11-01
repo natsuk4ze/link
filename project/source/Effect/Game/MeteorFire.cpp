@@ -76,6 +76,6 @@ namespace Effect::Game
 
 		//経過時間でアニメーション
 		AnimIndex++;
-		Animation(AnimIndex / 3);
+		Animation((float)AnimIndex / 3);
 	}
 }

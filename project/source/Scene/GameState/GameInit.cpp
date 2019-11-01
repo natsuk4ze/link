@@ -34,6 +34,7 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 
 	// イベント用モデル
 	ResourceManager::Instance()->LoadMesh("Meteor", "data/MODEL/Planet/Meteor.x");
+	ResourceManager::Instance()->LoadMesh("UFO", "data/MODEL/UFO/UFO.x");
 
 	// FieldLevel = City
 	ResourceManager::Instance()->LoadMesh("CrossJunction-City", "data/MODEL/PlaceActor/Cross-Junction.x");
