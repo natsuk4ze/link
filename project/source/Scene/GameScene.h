@@ -20,6 +20,7 @@
 #include "../FieldObject/PassengerController.h"
 #include "../FieldObject/Infomation/InfoActor.h"
 #include "../FieldObject/Infomation/LinkInfoActor.h"
+#include "../FieldObject/InfoController.h"
 
 /**************************************
 前方宣言
@@ -118,7 +119,8 @@ private:
 
 	//PlaceActor* testActor;
 	//PassengerController* passengerController;
-	InfoActor* testInfo;
+	//InfoActor* testInfo;
+	//InfoController* testInfoController;
 
 	//デバッグ用フィールドレベル
 	static int level;

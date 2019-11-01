@@ -89,7 +89,11 @@ void GameScene::Init()
 	//root.push_back(push);
 	//passengerController = new PassengerController();
 	//passengerController->SetPassenger(root);
-	testInfo = new LinkInfoActor(D3DXVECTOR3(160.0f, 0.0f, -160.0f), 85);
+	//testInfo = new LinkInfoActor(D3DXVECTOR3(160.0f, 0.0f, -160.0f), 85);
+	//testInfoController = new InfoController();
+	//testInfoController->SetLinkLevel(Field::FieldPosition(16, 16), 100);
+	//testInfoController->SetLinkLevel(Field::FieldPosition(17, 17), 90);
+	//testInfoController->SetLinkLevel(Field::FieldPosition(29, 29), 99);
 }
 
 /**************************************
@@ -117,7 +121,8 @@ void GameScene::Uninit()
 	// テスト用
 	//SAFE_DELETE(testActor);
 	//SAFE_DELETE(passengerController);
-	SAFE_DELETE(testInfo);
+	//SAFE_DELETE(testInfo);
+	//SAFE_DELETE(testInfoController);
 
 	//デリゲート削除
 	SAFE_DELETE(onBuildRoad);
@@ -146,7 +151,8 @@ void GameScene::Update()
 	// テスト用
 	//testActor->Update();
 	//passengerController->Update();
-	testInfo->Update();
+	//testInfo->Update();
+	//testInfoController->Update();
 
 	//ビューワパラメータをビューワに渡す
 	GameViewerParam param;
@@ -200,7 +206,8 @@ void GameScene::Draw()
 	ProfilerCPU::Instance()->Begin("Draw Event");
 	eventController->DrawEventObject();
 	ProfilerCPU::Instance()->End("Draw Event");
-	testInfo->Draw();
+	//testInfo->Draw();
+	//testInfoController->Draw();
 
 	//ポストエフェクトは重いのでリリース版のみ適用する
 #ifndef _DEBUG

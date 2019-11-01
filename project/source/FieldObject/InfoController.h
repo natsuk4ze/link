@@ -3,10 +3,12 @@
 
 #include <map>
 #include "Infomation/LinkInfoActor.h"
+#include "../Field/FieldConfig.h"
 
 class InfoController
 {
-private:			// リンクレベル表示用
+private:
+	std::map<Field::FieldPosition, LinkInfoActor*> LinkInfoMap; // リンクレベル表示用
 
 public:
 	InfoController();
@@ -15,7 +17,8 @@ public:
 	void Update();
 	void Draw();
 
-	void SetLinkLevel(int x, int y, int townLevel);
+	// 町のリンクレベルのセット、レベルアップ
+	void SetLinkLevel(const Field::FieldPosition& key, const int& townLevel);
 };
 
 #endif

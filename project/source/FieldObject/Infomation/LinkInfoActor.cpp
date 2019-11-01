@@ -33,6 +33,7 @@ LinkInfoActor::LinkInfoActor(const D3DXVECTOR3& townPos, const int& townLevel):
 	logo->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 	// ƒŒƒxƒ‹•\Ž¦
+	linkLevel = Math::Clamp(0, 99, linkLevel);
 	digit[0] = linkLevel % 10;
 	digit[1] = linkLevel / 10;
 	for (int i = 0; i < MaxDigit; i++)
