@@ -51,6 +51,9 @@ namespace Field::Actor
 		alongController = new Along::AlongController();
 		aStarController = new Route::AStarController();
 		passengerController = new PassengerController();
+
+		auto onReachPassenger = std::bind(&Along::AlongController::OnReachPassenger, alongController, std::placeholders::_1);
+		passengerController->SetCallbackOnReach(onReachPassenger);
 	}
 
 	/**************************************

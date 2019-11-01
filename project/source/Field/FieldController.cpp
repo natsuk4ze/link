@@ -25,6 +25,7 @@
 
 #include "../../Framework/Input/input.h"
 #include "../../Framework/Tool/DebugWindow.h"
+#include "../../Framework/Math//Easing.h"
 
 #include <algorithm>
 

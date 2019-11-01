@@ -163,7 +163,7 @@ namespace Field::Route
 		std::deque<D3DXVECTOR3> route;
 
 		//試行回数を数えて、2000回超えたら強制中断
-		for (int i = 0; i < 2000; ++i)
+		for (int i = 0; i < 10000; ++i)
 		{
 			//オープンしたノードをクローズする
 			CloseNode(node);

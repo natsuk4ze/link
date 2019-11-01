@@ -324,10 +324,10 @@ namespace Field::Model
 		//ŠX‚È‚çoŒû‚ð‘‚â‚·
 		if (opponent->IsType(PlaceType::Town))
 		{
-			(*onConnectedTown)(opponent, place);
-
 			//•ûŒü’Ç‰Á
 			opponent->AddDirection(opponent->IsAdjacent(place));
+
+			(*onConnectedTown)(opponent, place);
 		}
 	}
 

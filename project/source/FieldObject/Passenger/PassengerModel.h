@@ -20,7 +20,8 @@ class PassengerModel
 {
 private:
 	PassengerActor* actor;
-	std::deque<D3DXVECTOR3> root;					// 出発地点から目的地までの座標を格納
+	std::deque<D3DXVECTOR3> route;					// 出発地点から目的地までの座標を格納
+	int current;									// 
 	int nextDest;									// rootの添字として使用
 
 	void CheckCallback();							// コールバックの確認
@@ -40,6 +41,8 @@ public:
 
 	// アクターのセット
 	void SetActor(const std::deque<D3DXVECTOR3>& root);
+
+	D3DXVECTOR3 FindDestination();
 };
 
 #endif
