@@ -195,6 +195,7 @@
     <ClInclude Include="source\Effect\Game\TownExplosion.h" />
     <ClInclude Include="source\Effect\Game\BanIcon.h" />
     <ClInclude Include="source\Event\EventActor.h" />
+    <ClInclude Include="source\Effect\Game\MeteorFire.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -374,6 +375,7 @@
     <ClCompile Include="source\Effect\Game\TownExplosion.cpp" />
     <ClCompile Include="source\Effect\Game\BanIcon.cpp" />
     <ClCompile Include="source\Event\EventActor.cpp" />
+    <ClCompile Include="source\Effect\Game\MeteorFire.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

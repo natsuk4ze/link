@@ -14,9 +14,7 @@
 #include "Game/ExplosionFlare.h"
 #include "Game/AngryFace.h"
 #include "Game/MeteorExplosion.h"
-
-// 頼君テスト用
-#include "Game/BanIcon.h"
+#include "Game/MeteorFire.h"
 
 /**************************************
 初期化処理
@@ -33,7 +31,7 @@ void TestParticleManager::Init()
 	controllers[TestParticle::AngryFace] = new Effect::Game::AngryFaceController();
 	controllers[TestParticle::TownExplosion] = new Effect::Game::TownExplosionController();
 	controllers[TestParticle::MeteorExplosion] = new Effect::Game::MeteorExplosionController();
-	banIcon = new BanIcon();
+	controllers[TestParticle::MeteorFire] = new Effect::Game::MeteorFireController();
 }
 
 /**************************************
@@ -57,8 +55,8 @@ void TestParticleManager::Update()
 		Generate(TestParticle::AngryFace, Vector3::Zero);
 	else if (Debug::Button("MeteorExplosion"))
 		Generate(TestParticle::MeteorExplosion, Vector3::Up * 10.0f);
-	else if (Debug::Button("BanIcon"))
-		banIcon->Init();
+	else if (Debug::Button("MeteorFire"))
+		Generate(TestParticle::MeteorFire, Vector3::Up * 20.0f);
 
 	Debug::NewLine();
 
@@ -91,7 +89,6 @@ void TestParticleManager::Update()
 	Debug::End();
 
 	SceneParticleManager::Update();
-	banIcon->Update();
 }
 
 /**************************************
@@ -99,8 +96,6 @@ void TestParticleManager::Update()
 ***************************************/
 void TestParticleManager::Draw()
 {
-	banIcon->Draw();
-
 	SceneParticleManager::Draw();
 
 	Debug::Begin("PartcileProfile");

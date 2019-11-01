@@ -27,7 +27,7 @@ enum State
 //*****************************************************************************
 const float MeteoriteDistance = 200.0f;
 const float FallSpeed = 4.0f;
-const D3DXVECTOR3 Scale = D3DXVECTOR3(0.1f, 0.1f, 0.1f);
+const D3DXVECTOR3 Scale = D3DXVECTOR3(0.15f, 0.15f, 0.15f);
 
 //*****************************************************************************
 // スタティック変数宣言

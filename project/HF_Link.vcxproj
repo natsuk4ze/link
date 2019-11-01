@@ -118,6 +118,7 @@
     <ClInclude Include="source\Effect\Game\BlueDebris.h" />
     <ClInclude Include="source\Effect\Game\BlueSpark.h" />
     <ClInclude Include="source\Effect\Game\ColorfulDebris.h" />
+    <ClInclude Include="source\Effect\Game\MeteorFire.h" />
     <ClInclude Include="source\Effect\Game\TownExplosion.h" />
     <ClInclude Include="source\Effect\Game\ExplosionFlare.h" />
     <ClInclude Include="source\Effect\Game\MeteorExplosion.h" />
@@ -303,6 +304,7 @@
     <ClCompile Include="source\Effect\Game\BlueDebris.cpp" />
     <ClCompile Include="source\Effect\Game\BlueSpark.cpp" />
     <ClCompile Include="source\Effect\Game\ColorfulDebris.cpp" />
+    <ClCompile Include="source\Effect\Game\MeteorFire.cpp" />
     <ClCompile Include="source\Effect\Game\TownExplosion.cpp" />
     <ClCompile Include="source\Effect\Game\ExplosionFlare.cpp" />
     <ClCompile Include="source\Effect\Game\MeteorExplosion.cpp" />
