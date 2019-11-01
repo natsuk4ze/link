@@ -10,7 +10,7 @@
 //=====================================
 // コンストラクタ
 //=====================================
-PassengerModel::PassengerModel(const std::vector<D3DXVECTOR3>& root, std::function<void(const D3DXVECTOR3&)> *callback) :
+PassengerModel::PassengerModel(const std::deque<D3DXVECTOR3>& root, std::function<void(const D3DXVECTOR3&)> *callback) :
 	callbackToAlong(callback)
 {
 	this->root = root;
@@ -82,7 +82,7 @@ bool PassengerModel::IsActive()
 //=====================================
 // アクターのセット
 //=====================================
-void PassengerModel::SetActor(const std::vector<D3DXVECTOR3>& root)
+void PassengerModel::SetActor(const std::deque<D3DXVECTOR3>& root)
 {
 	this->root = root;
 	// あとでフォールドレベルを反映させる

@@ -56,7 +56,7 @@ namespace Field::Model
 		FieldPosition GetPlaceBorder() const;
 
 		//ŠX‚ª“¹‚ÆŒq‚ª‚Á‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚éˆ—
-		void OnConnectedTown(const PlaceModel* place);
+		void OnConnectedTown(const PlaceModel* place, const PlaceModel *gate);
 
 		//Œğ·“_‚ªì‚ç‚ê‚½Û‚ÉŒÄ‚Î‚ê‚éˆ—
 		void OnCreateJunction(const PlaceModel* place);

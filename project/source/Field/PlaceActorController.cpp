@@ -72,6 +72,7 @@ namespace Field::Actor
 	void PlaceActorController::Update()
 	{
 		alongController->Update();
+		passengerController->Update();
 
 		RiverActor::UpdateHeight();
 
@@ -113,6 +114,7 @@ namespace Field::Actor
 		}
 
 		alongController->Draw();
+		passengerController->Draw();
 	}
 
 	/**************************************
@@ -227,11 +229,21 @@ namespace Field::Actor
 	}
 
 	/**************************************
+	街が繋がった
+	***************************************/
+	void PlaceActorController::OnConnectedTown(const Model::PlaceModel * place)
+	{
+		aStarController->OnChangePlace(place);
+	}
+
+	/**************************************
 	パッセンジャー出発処理
 	***************************************/
 	void PlaceActorController::DepartPassenger(const Model::PlaceModel * start, const Model::PlaceModel * goal)
 	{
-		aStarController->CalcRoute(start->GetPosition(), goal->GetPosition());
+		auto route = aStarController->CalcRoute(start->GetPosition(), goal->GetPosition());
+		if(route.size() != 0)
+			passengerController->SetPassenger(route);
 	}
 
 	/**************************************

@@ -36,7 +36,7 @@ namespace Field::Model
 		void Update();
 
 		//出口追加処理
-		void AddGate();
+		void AddGate(const PlaceModel* gate);
 
 		//出てくる人数の取得処理
 		float DepatureNum();
@@ -72,9 +72,6 @@ namespace Field::Model
 		//参照するプレイスモデル
 		const PlaceModel* place;
 
-		//出口数
-		int cntGate;
-
 		//リンクレベル
 		int linkLevel;
 
@@ -95,6 +92,9 @@ namespace Field::Model
 
 		//繋がってる街への経路
 		std::vector<const PlaceModel*> linkedTown;
+
+		//出口
+		std::vector<const PlaceModel*> gateList;
 	};
 }
 #endif

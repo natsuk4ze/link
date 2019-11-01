@@ -207,17 +207,17 @@ namespace Field::Model
 	/**************************************
 	ŠX‚ª“¹‚ÆŒq‚ª‚Á‚½‚Æ‚«‚Ìˆ—
 	***************************************/
-	void Field::Model::PlaceContainer::OnConnectedTown(const PlaceModel * place)
+	void Field::Model::PlaceContainer::OnConnectedTown(const PlaceModel * town, const PlaceModel *gate)
 	{
-		unsigned placeID = place->ID();
+		unsigned placeID = town->ID();
 
 		//“o˜^Šm”F
 		if (townContainer.count(placeID) == 0)
 		{
-			townContainer.emplace(placeID, new TownModel(place, &onDepartPassenger));
+			townContainer.emplace(placeID, new TownModel(town, &onDepartPassenger));
 		}
 
-		townContainer[placeID]->AddGate();
+		townContainer[placeID]->AddGate(gate);
 	}
 
 	/**************************************

@@ -25,6 +25,7 @@ namespace Field::Route
 		heuristicCost(9999)
 	{
 		adjacencyList.reserve(Field::Model::Adjacency::Max);
+		adjacencyList = place->GetConnectingAdjacency();
 	}
 
 	/**************************************
@@ -106,6 +107,7 @@ namespace Field::Route
 	void AStarNode::Change(const Field::Model::PlaceModel * place)
 	{
 		//隣接情報を更新する
+		adjacencyList = place->GetConnectingAdjacency();
 	}
 
 	/**************************************
@@ -146,6 +148,9 @@ namespace Field::Route
 	***************************************/
 	std::deque<D3DXVECTOR3> AStarController::CalcRoute(const Field::FieldPosition &start, const Field::FieldPosition &goal)
 	{
+		closeList.clear();
+		openList.clear();
+
 		//ゴール地点のノードを取得
 		AStarNode *goalNode = nodeMap[goal].get();
 
@@ -233,8 +238,15 @@ namespace Field::Route
 		//オープン
 		for (auto&& adjacency : adjacencies)
 		{
-			nodeMap[adjacency]->Open(node, node->GetCost() + 1);
-			openList.push_back(nodeMap[adjacency].get());
+			AStarNode *around = nodeMap[adjacency].get();
+
+			if (Utility::IsContain(closeList, around))
+			{
+				continue;
+			}
+
+			around->Open(node, node->GetCost() + 1);
+			openList.push_back(around);
 		}
 	}
 

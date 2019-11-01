@@ -73,6 +73,9 @@ namespace Field::Actor
 		//道沿いのモデル成長処理
 		void GrowthAlongObject(const D3DXVECTOR3& position);
 
+		//街が繋がった
+		void OnConnectedTown(const Model::PlaceModel *place);
+
 		//パッセンジャー出発処理
 		void DepartPassenger(const Model::PlaceModel* start, const Model::PlaceModel* goal);
 		

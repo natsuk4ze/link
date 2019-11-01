@@ -23,7 +23,6 @@ namespace Field::Model
 	TownModel::TownModel(const PlaceModel* place, std::function<void(const PlaceModel *start, const PlaceModel *goal)> *action) :
 		uniqueID(incrementID++),
 		place(place),
-		cntGate(0),
 		linkLevel(0),
 		developmentLevel(0),
 		biasLinkLevel(0),
@@ -31,7 +30,7 @@ namespace Field::Model
 		indexDestination(0),
 		departPassenger(action)
 	{
-
+		gateList.reserve(4);
 	}
 
 	/**************************************
@@ -62,9 +61,14 @@ namespace Field::Model
 	/**************************************
 	ÉQÅ[Égí«â¡èàóù
 	***************************************/
-	void TownModel::AddGate()
+	void TownModel::AddGate(const PlaceModel* gate)
 	{
-		cntGate++;
+		auto itr = std::find(gateList.begin(), gateList.end(), gate);
+
+		if (itr == gateList.end())
+		{
+			gateList.push_back(gate);
+		}
 	}
 
 	/**************************************
@@ -72,7 +76,7 @@ namespace Field::Model
 	***************************************/
 	float TownModel::DepatureNum()
 	{
-		return 100.0f / cntGate;
+		return 100.0f / gateList.size();
 	}
 
 	/**************************************
@@ -80,7 +84,7 @@ namespace Field::Model
 	***************************************/
 	int TownModel::GateNum()
 	{
-		return cntGate;
+		return gateList.size();
 	}
 
 	/**************************************

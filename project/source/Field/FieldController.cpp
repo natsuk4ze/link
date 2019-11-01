@@ -71,7 +71,7 @@ namespace Field
 		fsm[State::Develop] = new UseItemState();
 
 		//ÉfÉäÉQÅ[ÉgçÏê¨
-		onConnectTown = DelegateObject<PlaceContainer, void(const PlaceModel*)>::Create(placeContainer, &PlaceContainer::OnConnectedTown);
+		onConnectTown = DelegateObject<FieldController, void(const PlaceModel*, const PlaceModel*)>::Create(this, &FieldController::OnConnectedTown);
 		onCreateJunction = DelegateObject<PlaceContainer, void(const PlaceModel*)>::Create(placeContainer, &PlaceContainer::OnCreateJunction);
 		onChangePlaceType = DelegateObject<Actor::PlaceActorController, void(const PlaceModel*)>::Create(placeActController, &Actor::PlaceActorController::ChangeActor);
 
@@ -366,5 +366,14 @@ namespace Field
 
 		float raiseValue = placeContainer->CalcDevelopmentLevelAI(developSpeedBonus);
 		developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + raiseValue);
+	}
+
+	/**************************************
+	äXÇ™åqÇ™Ç¡ÇΩ
+	***************************************/
+	void FieldController::OnConnectedTown(const Model::PlaceModel * town, const Model::PlaceModel * gate)
+	{
+		placeContainer->OnConnectedTown(town, gate);
+		placeActController->OnConnectedTown(town);
 	}
 }
