@@ -11,7 +11,7 @@
 /**************************************
 コンストラクタ
 ***************************************/
-MeshResource::MeshResource(const std::string & path):
+MeshResource::MeshResource(const std::string & path) :
 	mesh(NULL),
 	materialNum(0),
 	cntRef(0)
@@ -73,7 +73,7 @@ MeshResource::~MeshResource()
 		SAFE_RELEASE(texture);
 	}
 
-	//クローンしたMeshContainerが正常に開放されているか確認
+	//クローンしたMeshContainerが正常に解放されているか確認
 	assert(cntRef == 0);
 }
 

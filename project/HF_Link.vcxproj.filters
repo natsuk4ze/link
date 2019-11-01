@@ -190,6 +190,8 @@
     <ClInclude Include="source\FieldObject\Infomation\InfoDigit.h" />
     <ClInclude Include="source\FieldObject\InfoController.h" />
     <ClInclude Include="source\Effect\Game\BanIcon.h" />
+    <ClInclude Include="source\Event\EventActor.h" />
+    <ClInclude Include="source\Effect\Game\MeteorFire.h" />
     <ClInclude Include="source\Field\AStar\AStarController.h" />
   </ItemGroup>
   <ItemGroup>
@@ -365,6 +367,8 @@
     <ClCompile Include="source\FieldObject\Infomation\InfoDigit.cpp" />
     <ClCompile Include="source\FieldObject\InfoController.cpp" />
     <ClCompile Include="source\Effect\Game\BanIcon.cpp" />
+    <ClCompile Include="source\Event\EventActor.cpp" />
+    <ClCompile Include="source\Effect\Game\MeteorFire.cpp" />
     <ClCompile Include="source\Field\AStar\AStarController.cpp" />
   </ItemGroup>
   <ItemGroup>
