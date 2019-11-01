@@ -21,15 +21,20 @@ class EventBase
 {
 protected:
 	bool UseFlag;
+	bool Initialized;
+	bool IsPauseEvent;
 	static FieldEventHandler *fieldEventHandler;
 
 public:
-	EventBase();
-	~EventBase();
+	EventBase(bool IsPauseEvent);
+	virtual ~EventBase();
+	virtual void Init(void);
 	virtual void Update(void);
 	virtual void Draw(void);
 	virtual string GetEventMessage(int FieldLevel) = 0;
 	bool GetUse(void) { return this->UseFlag; };
+	bool GetInitialized(void) { return this->Initialized; };
+	bool GetIsPauseEvent(void) { return this->IsPauseEvent; };
 	static void ReceiveFieldEventHandler(FieldEventHandler *Ptr);
 };
 

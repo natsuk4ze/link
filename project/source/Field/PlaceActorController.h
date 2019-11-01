@@ -19,6 +19,7 @@
 ***************************************/
 class PlaceActor;
 class TaskHandle;
+class PassengerController;
 
 namespace Field::Model
 {
@@ -29,6 +30,11 @@ namespace Field::Model
 namespace Field::Along
 {
 	class AlongController;
+}
+
+namespace Field::Route
+{
+	class AStarController;
 }
 
 namespace Field::Actor
@@ -63,6 +69,15 @@ namespace Field::Actor
 
 		//アクター消滅処理
 		bool DestroyActor(const Model::PlaceModel* place);
+
+		//道沿いのモデル成長処理
+		void GrowthAlongObject(const D3DXVECTOR3& position);
+
+		//街が繋がった
+		void OnConnectedTown(const Model::PlaceModel *place);
+
+		//パッセンジャー出発処理
+		void DepartPassenger(const Model::PlaceModel* start, const Model::PlaceModel* goal);
 		
 		//定数メンバ
 		static const D3DXVECTOR3 PositionEmitSmog;		//道落下時の煙発生位置
@@ -92,6 +107,12 @@ namespace Field::Actor
 
 		//道沿いの情報コンテナ
 		Along::AlongController *alongController;
+
+		//A*コントローラ
+		Route::AStarController *aStarController;
+
+		//パッセンジャーコントローラ
+		PassengerController *passengerController;
 
 		//各アクター生成処理
 		void SetRoad(const Model::PlaceModel* place, int delay);

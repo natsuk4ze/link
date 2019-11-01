@@ -16,7 +16,8 @@ const int PassengerController::PassengerReserve = 1000;
 //=====================================
 // コンストラクタ
 //=====================================
-PassengerController::PassengerController()
+PassengerController::PassengerController() :
+	callback(nullptr)
 {
 	modelVector.reserve(PassengerReserve);
 }
@@ -58,14 +59,14 @@ void PassengerController::Draw()
 //=====================================
 // パッセンジャーのセット
 //=====================================
-void PassengerController::SetPassenger(std::vector<D3DXVECTOR3>& root)
+void PassengerController::SetPassenger(std::deque<D3DXVECTOR3>& root)
 {
 	bool check = false;
 	int sub = 0;
 	// vectorの内部に未使用のものがあるか確認
 	for (auto& vec : modelVector)
 	{
-		if (vec->IsActive())
+		if (!vec->IsActive())
 		{
 			check = true;
 			break;
@@ -79,7 +80,15 @@ void PassengerController::SetPassenger(std::vector<D3DXVECTOR3>& root)
 	}
 	else
 	{
-		PassengerModel *model = new PassengerModel(root);
+		PassengerModel *model = new PassengerModel(root, &callback);
 		modelVector.push_back(model);
 	}
+}
+
+//=====================================
+// コールバック設定処理
+//=====================================
+void PassengerController::SetCallbackOnReach(const std::function<void(const D3DXVECTOR3&)>& callback)
+{
+	this->callback = callback;
 }

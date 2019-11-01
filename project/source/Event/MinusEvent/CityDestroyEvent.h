@@ -9,13 +9,14 @@
 
 #include "../EventBase.h"
 #include "../../Field/Place/FieldPlaceModel.h"
-#include "../../../Framework/Renderer3D/MeshContainer.h"
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
 class BeatGame;
 class EventViewer;
+class MeshContainer;
+class EventActor;
 
 //*****************************************************************************
 // クラス定義
@@ -29,17 +30,14 @@ private:
 	int EventState;
 	const Field::Model::PlaceModel* Target;
 
-	// 連打ゲーム
 	BeatGame *beatGame;
-
-#if _DEBUG
-	static LPD3DXMESH SphereMesh;
-	static D3DMATERIAL9 Material;
-#endif
+	EventViewer* eventViewer;
+	EventActor *Meteor;
 
 public:
 	CityDestroyEvent(EventViewer* eventViewer);
 	~CityDestroyEvent();
+	void Init(void) override;
 	void Update(void) override;
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;

@@ -10,7 +10,8 @@
 //=====================================
 // コンストラクタ
 //=====================================
-PassengerModel::PassengerModel(const std::vector<D3DXVECTOR3>& root)
+PassengerModel::PassengerModel(const std::deque<D3DXVECTOR3>& root, std::function<void(const D3DXVECTOR3&)> *callback) :
+	callbackToAlong(callback)
 {
 	this->root = root;
 	// あとでフォールドレベルを反映させる
@@ -52,6 +53,9 @@ void PassengerModel::Draw()
 //=====================================
 void PassengerModel::CheckCallback()
 {
+	//道沿いのモデルコントローラへアクターが到着した座標を渡す
+	//(*callbackToAlong)(root[nextDest]);
+
 	// 目的地に到達しているか確認
 	if ((size_t)nextDest >= root.size() - 1)
 	{
@@ -78,7 +82,7 @@ bool PassengerModel::IsActive()
 //=====================================
 // アクターのセット
 //=====================================
-void PassengerModel::SetActor(const std::vector<D3DXVECTOR3>& root)
+void PassengerModel::SetActor(const std::deque<D3DXVECTOR3>& root)
 {
 	this->root = root;
 	// あとでフォールドレベルを反映させる

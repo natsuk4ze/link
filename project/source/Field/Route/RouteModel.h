@@ -10,6 +10,7 @@
 
 #include "../../../main.h"
 #include "../../../Framework/Pattern/Delegate.h"
+#include "../Place/PlaceConfig.h"
 
 #include <vector>
 
@@ -40,6 +41,20 @@ namespace Field::Model
 	}AdjacentRoute;
 
 	/**************************************
+	経路となるプレイスのスタック
+	***************************************/
+	struct RoutePlaceStack
+	{
+		std::vector<D3DXVECTOR3> route;
+
+		bool Push(const PlaceModel* place);
+		int Push(const std::vector<const PlaceModel*>& route);
+		void Pop();
+		void Pop(int num);
+		unsigned Size() const;
+	};
+
+	/**************************************
 	クラス定義
 	***************************************/
 	class RouteModel : public std::enable_shared_from_this<RouteModel>
@@ -47,11 +62,13 @@ namespace Field::Model
 		friend class RouteProcessor;
 	public:
 		//コンストラクタ
-		RouteModel(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction);
+		RouteModel(Delegate<void(const PlaceModel*, const PlaceModel*)> *onConnectTown, DelegatePlace *onCreateJunction);
+
+		bool operator ==(const RouteModel& rhs) const;
 
 		//Create関数でこのクラスのshared_ptrを作成させる
-		static RouteModelPtr Create(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction);
-		static RouteModelPtr Create(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction, const std::vector<PlaceModel*>& placeVector);
+		static RouteModelPtr Create(Delegate<void(const PlaceModel*, const PlaceModel*)> *onConnectTown, DelegatePlace *onCreateJunction);
+		static RouteModelPtr Create(Delegate<void(const PlaceModel*, const PlaceModel*)> *onConnectTown, DelegatePlace *onCreateJunction, const std::vector<PlaceModel*>& placeVector);
 
 		//デストラクタ
 		~RouteModel();		//所属を離脱
@@ -67,8 +84,7 @@ namespace Field::Model
 
 		//隣接ルート追加
 		void AddAdjacency(PlaceModel* junction, PlaceModel* connectTarget, std::shared_ptr<RouteModel> opponent);
-		void AddAdjacency(const std::vector<AdjacentRoute>& adjacenctRoute);
-
+	
 		//端点設定
 		void SetEdge();
 		void SetEdge(PlaceModel* edge);
@@ -80,14 +96,14 @@ namespace Field::Model
 		PlaceModel* GetConnectedTown(const PlaceModel* self);
 
 		//ルートに繋がっている街の探索
-		int FindLinkedTown(TownModel* root, std::vector<RouteModelPtr>& searchedRoute, std::vector<PlaceModel*> searchedTown, std::vector<D3DXVECTOR3>& stack);
+		int FindLinkedTown(TownModel* root, std::vector<RouteModelPtr>& searchedRoute, std::vector<const PlaceModel*>& searchedTown, RoutePlaceStack& stack, const PlaceModel* start);
 
 		//使用判定
 		void SetUnused(bool use);
 		bool IsUnused();
 
 		//全プレイス取得
-		const std::vector<const PlaceModel*> GetAllPlaces() const;
+		const std::vector<const PlaceModel*> GetAllPlaces(const PlaceModel* start = nullptr) const;
 
 		//始点、終点取得処理
 		PlaceModel* GetFirst() const;
@@ -103,7 +119,7 @@ namespace Field::Model
 
 		bool isUnused;								//使用判定
 
-		Delegate<void(const PlaceModel*)> *onConnectedTown;	//街と道が繋がったときのデリゲータ
+		Delegate<void(const PlaceModel*, const PlaceModel*)> *onConnectedTown;	//街と道が繋がったときのデリゲータ
 		Delegate<void(const PlaceModel*)> *onCreateJunction;	//交差点を作ったときのデリゲータ
 
 		void _SetEdge(PlaceModel* place);			//端点設定内部処理

@@ -27,6 +27,7 @@
 
 #include "../Field/Place/FieldPlaceModel.h"
 #include "../Viewer/GameScene/EventViewer/EventViewer.h"
+#include "../Viewer/GameScene/GameViewer/GameViewerParam.h"
 
 #include <fstream>
 
@@ -42,7 +43,7 @@ using namespace EventConfig;
 // マクロ定義
 //*****************************************************************************
 // 使用していないイベントを削除
-bool RemoveCondition(EventBase *Event) { return Event == nullptr ? true : false; }
+//bool RemoveCondition(EventBase *Event) { return Event == nullptr ? true : false; }
 
 //*****************************************************************************
 // グローバル変数
@@ -92,7 +93,6 @@ void EventController::Update()
 #if _DEBUG
 	if (Keyboard::GetTrigger(DIK_F))
 	{
-		//EventVec.push_back(new BeatGame());
 	}
 #endif
 
@@ -100,7 +100,14 @@ void EventController::Update()
 	{
 		if (Event->GetUse())
 		{
-			Event->Update();
+			if (Event->GetIsPauseEvent() && !Event->GetInitialized() && !InPauseEvent)
+			{
+				Event->Init();
+			}
+			else
+			{
+				Event->Update();
+			}
 		}
 		else
 		{
@@ -112,7 +119,10 @@ void EventController::Update()
 	// イベントビューア更新
 	eventViewer->Update();
 
-	EventVec.erase(std::remove_if(std::begin(EventVec), std::end(EventVec), RemoveCondition), std::end(EventVec));
+	EventVec.erase(std::remove_if(std::begin(EventVec), std::end(EventVec), [&](EventBase *Event)
+	{
+		return Event == nullptr ? true : false;
+	}), std::end(EventVec));
 }
 
 //=============================================================================
@@ -261,7 +271,18 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					Ptr = new AILevelDecreaseEvent();
 					break;
 				case BanStockUse:
-					Ptr = new BanStockUseEvent(eventViewer);
+					if (InBanStock)
+					{
+						// 今ストック使用禁止中
+						++EventPlace;
+						continue;
+					}
+					else
+					{
+						Ptr = new BanStockUseEvent(eventViewer,
+							[&](bool Flag) {SetBanStock(Flag); },
+							[&]() {return GetInPause(); });
+					}
 					break;
 				default:
 					break;
@@ -286,9 +307,47 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 }
 
 //=============================================================================
-// FieldControllerのポインタを受け取る
+// FieldEventHandlerのポインタを受け取る
 //=============================================================================
 void EventController::ReceiveFieldEventHandler(FieldEventHandler *Ptr)
 {
+	// FieldEventHandlerのある関数を設定する
+	Ptr->SetEventControllerInPause = [&](bool Flag)
+	{
+		SetInPause(Flag);
+	};
 	EventBase::ReceiveFieldEventHandler(Ptr);
+}
+
+//=============================================================================
+// ビューワパラメータ埋め込み処理
+//=============================================================================
+void EventController::EmbedViewerParam(GameViewerParam& param)
+{
+	param.InBanStock = this->InBanStock;
+	param.InPauseEvent = this->InPauseEvent;
+}
+
+//=============================================================================
+// ストック使用禁止の設置
+//=============================================================================
+void EventController::SetBanStock(bool Flag)
+{
+	InBanStock = Flag;
+}
+
+//=============================================================================
+// 現在はタイムストップイベントが発生しているかどうか
+//=============================================================================
+void EventController::SetInPause(bool Flag)
+{
+	InPauseEvent = Flag;
+}
+
+//=============================================================================
+// 現在はタイムストップイベントが発生しているかどうか
+//=============================================================================
+bool EventController::GetInPause(void)
+{
+	return InPauseEvent;
 }

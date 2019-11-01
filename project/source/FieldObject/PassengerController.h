@@ -9,7 +9,7 @@
 #define _PASSENGERCONTROLLER_H_
 
 #include "Passenger/PassengerModel.h"
-#include <vector>
+#include <deque>
 #include <functional>
 
 //**************************************
@@ -18,6 +18,7 @@
 class PassengerController
 {
 public:
+	//コンストラクタで道沿いモデルへのコールバックを渡す
 	PassengerController();
 	~PassengerController();
 
@@ -26,10 +27,15 @@ public:
 	void Draw();
 
 	// パッセンジャーセット
-	void SetPassenger(std::vector<D3DXVECTOR3>& root);
+	void SetPassenger(std::deque<D3DXVECTOR3>& root);
+
+	//パッセンジャーがプレイスに到達した際のコールバックが設定される
+	void SetCallbackOnReach(const std::function<void(const D3DXVECTOR3&)>& callback);
 
 private:
 	std::vector<PassengerModel*> modelVector;
+
+	std::function<void(const D3DXVECTOR3&)> callback;
 
 	static const int PassengerReserve;
 };

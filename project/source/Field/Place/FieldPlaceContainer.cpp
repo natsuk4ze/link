@@ -36,7 +36,8 @@ namespace Field::Model
 		placeColumMax(0),
 		initialized(false),
 		trafficJamRate(0.0f),
-		trafficJamBias(0.0f)
+		trafficJamBias(0.0f),
+		onDepartPassenger(nullptr)
 	{
 		placeVector.reserve(PlaceMax);
 
@@ -71,6 +72,11 @@ namespace Field::Model
 	{
 		if (!initialized)
 			return;
+
+		for (auto&& town : townContainer)
+		{
+			town.second->Update();
+		}
 
 		//デバッグ表示
 		Debug::Log("CntLinkedTown:%d", townContainer.size());
@@ -201,17 +207,17 @@ namespace Field::Model
 	/**************************************
 	街が道と繋がったときの処理
 	***************************************/
-	void Field::Model::PlaceContainer::OnConnectedTown(const PlaceModel * place)
+	void Field::Model::PlaceContainer::OnConnectedTown(const PlaceModel * town, const PlaceModel *gate)
 	{
-		unsigned placeID = place->ID();
+		unsigned placeID = town->ID();
 
 		//登録確認
 		if (townContainer.count(placeID) == 0)
 		{
-			townContainer.emplace(placeID, new TownModel(place));
+			townContainer.emplace(placeID, new TownModel(town, &onDepartPassenger));
 		}
 
-		townContainer[placeID]->AddGate();
+		townContainer[placeID]->AddGate(gate);
 	}
 
 	/**************************************
@@ -371,6 +377,14 @@ namespace Field::Model
 
 		PlaceModel* place = *itrPlace;
 		place->SetType(PlaceType::Town);
+	}
+
+	/**************************************
+	パッセンジャー出発ファンクタ設定
+	***************************************/
+	void Field::Model::PlaceContainer::SetDepartPassengerFanctor(const TownAction & action)
+	{
+		onDepartPassenger = action;
 	}
 
 	/**************************************

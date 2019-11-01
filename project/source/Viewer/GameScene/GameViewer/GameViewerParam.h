@@ -24,6 +24,11 @@ public:
 
 	//ストック数
 	int stockNum;
+
+	// ストック使用禁止中
+	bool InBanStock = false;
+	// タイムストップイベント中
+	bool InPauseEvent = false;
 };
 
 #endif

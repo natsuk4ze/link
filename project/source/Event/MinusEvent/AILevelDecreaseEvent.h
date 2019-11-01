@@ -18,6 +18,7 @@ private:
 public:
 	AILevelDecreaseEvent();
 	~AILevelDecreaseEvent();
+	void Init(void) override;
 	void Update(void) override;
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;

@@ -29,6 +29,7 @@
 #include <algorithm>
 
 #include "../Effect/GameParticleManager.h"
+#include "../../Framework/Math/Easing.h"
 
 namespace Field
 {
@@ -47,6 +48,7 @@ namespace Field
 		fieldBorder(InitFieldBorder),
 		cntFrame(0),
 		developmentLevelAI(0),
+		realDevelopmentLevelAI(0),
 		developSpeedBonus(1.0f),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
@@ -58,11 +60,11 @@ namespace Field
 		//インスタンス作成
 		cursor = new FieldCursor(PlaceOffset);
 		ground = new FieldGround();
-		placeContainer = new Model::PlaceContainer();
 		operateContainer = new Model::OperatePlaceContainer();
 		placeActController = new Actor::PlaceActorController();
 		developper = new FieldDevelopper(this);
 		input = new FieldInput(this);
+		placeContainer = new Model::PlaceContainer();
 
 		//ステートマシン作成
 		fsm.resize(State::Max, NULL);
@@ -71,9 +73,12 @@ namespace Field
 		fsm[State::Develop] = new UseItemState();
 
 		//デリゲート作成
-		onConnectTown = DelegateObject<PlaceContainer, void(const PlaceModel*)>::Create(placeContainer, &PlaceContainer::OnConnectedTown);
+		onConnectTown = DelegateObject<FieldController, void(const PlaceModel*, const PlaceModel*)>::Create(this, &FieldController::OnConnectedTown);
 		onCreateJunction = DelegateObject<PlaceContainer, void(const PlaceModel*)>::Create(placeContainer, &PlaceContainer::OnCreateJunction);
 		onChangePlaceType = DelegateObject<Actor::PlaceActorController, void(const PlaceModel*)>::Create(placeActController, &Actor::PlaceActorController::ChangeActor);
+
+		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2);
+		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
 
 		//ルートプロセッサ作成
 		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
@@ -158,8 +163,6 @@ namespace Field
 #ifdef DEBUG_PLACEMODEL
 		placeContainer->DrawDebug();
 #endif
-
-
 		//カーソルには透過オブジェクトが含まれるので最後に描画
 		cursor->Draw();
 		operateContainer->Draw();
@@ -209,8 +212,12 @@ namespace Field
 	***************************************/
 	void FieldController::EmbedViewerParam(GameViewerParam & param)
 	{
-		param.levelAI = (int)developmentLevelAI;
-		param.ratioLevel = (float)developmentLevelAI / MaxDevelopmentLevelAI;
+		//param.levelAI = (int)developmentLevelAI;
+		//param.ratioLevel = (float)developmentLevelAI / MaxDevelopmentLevelAI;
+
+		param.levelAI = (int)realDevelopmentLevelAI;
+		param.ratioLevel = (float)realDevelopmentLevelAI / MaxDevelopmentLevelAI;
+
 		developper->EmbedViewerParam(param);
 	}
 
@@ -365,5 +372,15 @@ namespace Field
 
 		float raiseValue = placeContainer->CalcDevelopmentLevelAI(developSpeedBonus);
 		developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + raiseValue);
+		realDevelopmentLevelAI = Easing::EaseValue(developmentLevelAI / 9999.0f, 0.0f, 9999.0f, EaseType::OutSine);
+	}
+
+	/**************************************
+	街が繋がった
+	***************************************/
+	void FieldController::OnConnectedTown(const Model::PlaceModel * town, const Model::PlaceModel * gate)
+	{
+		placeContainer->OnConnectedTown(town, gate);
+		placeActController->OnConnectedTown(town);
 	}
 }

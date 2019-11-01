@@ -20,15 +20,17 @@ namespace Field::Model
 	/**************************************
 	コンストラクタ
 	***************************************/
-	TownModel::TownModel(const PlaceModel * place) :
+	TownModel::TownModel(const PlaceModel* place, std::function<void(const PlaceModel *start, const PlaceModel *goal)> *action) :
 		uniqueID(incrementID++),
 		place(place),
-		cntGate(0),
 		linkLevel(0),
 		developmentLevel(0),
-		biasLinkLevel(0)
+		biasLinkLevel(0),
+		cntFrame(0),
+		indexDestination(0),
+		departPassenger(action)
 	{
-
+		gateList.reserve(4);
 	}
 
 	/**************************************
@@ -39,11 +41,34 @@ namespace Field::Model
 	}
 
 	/**************************************
+	更新処理
+	***************************************/
+	void TownModel::Update()
+	{
+		cntFrame++;
+		
+		if (linkedTown.size() == 0)
+			return;
+
+		//4秒おきに繋がっている街に向かってパッセンジャーを出発させる
+		if (cntFrame % 30 == 0)
+		{
+			indexDestination = Math::WrapAround(0, (int)linkedTown.size(), ++indexDestination);
+			(*departPassenger)(place, linkedTown[indexDestination]);
+		}
+	}
+
+	/**************************************
 	ゲート追加処理
 	***************************************/
-	void TownModel::AddGate()
+	void TownModel::AddGate(const PlaceModel* gate)
 	{
-		cntGate++;
+		auto itr = std::find(gateList.begin(), gateList.end(), gate);
+
+		if (itr == gateList.end())
+		{
+			gateList.push_back(gate);
+		}
 	}
 
 	/**************************************
@@ -51,7 +76,7 @@ namespace Field::Model
 	***************************************/
 	float TownModel::DepatureNum()
 	{
-		return 100.0f / cntGate;
+		return 100.0f / gateList.size();
 	}
 
 	/**************************************
@@ -59,7 +84,7 @@ namespace Field::Model
 	***************************************/
 	int TownModel::GateNum()
 	{
-		return cntGate;
+		return gateList.size();
 	}
 
 	/**************************************
@@ -86,19 +111,20 @@ namespace Field::Model
 		linkLevel = biasLinkLevel;
 
 		RouteContainer searchedRoute;
-		std::vector<PlaceModel*> searchedTown;
+		std::vector<const PlaceModel*> searchedTown;
+		searchedTown.push_back(place);
 
 		RouteContainer belongRoute = place->GetConnectingRoutes();
-		
-		std::vector<D3DXVECTOR3> routeStack;
-		routeStack.push_back(place->GetPosition().ConvertToWorldPosition());
 
+		RoutePlaceStack routeStack;
+
+		linkedTown.clear();
 		for (auto&& route : belongRoute)
 		{
-			linkLevel += route->FindLinkedTown(this, searchedRoute, searchedTown, routeStack);
+			linkLevel += route->FindLinkedTown(this, searchedRoute, searchedTown, routeStack, place);
 		}
 
-		developmentLevel = (float)linkLevel * linkLevel;
+		developmentLevel = (float)linkLevel /** linkLevel*/;
 	}
 
 	/**************************************
@@ -120,13 +146,8 @@ namespace Field::Model
 	/**************************************
 	経路追加処理
 	***************************************/
-	void TownModel::AddLinkedRoute(std::vector<D3DXVECTOR3>& route)
+	void TownModel::AddLinkedTown(const PlaceModel *place)
 	{
-		//コピーして重複を削除
-		std::vector<D3DXVECTOR3> container(route);
-		auto itr = std::unique(container.begin(), container.end());
-		container.erase(itr, container.end());
-
-		routeContainer.push_back(container);
+		linkedTown.push_back(place);
 	}
 }

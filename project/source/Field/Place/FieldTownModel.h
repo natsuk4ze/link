@@ -9,9 +9,11 @@
 #define _FIELDTOWNMODEL_H_
 
 #include "../../../main.h"
+#include "../FieldConfig.h"
 
 #include <list>
 #include <vector>
+#include <functional>
 
 namespace Field::Model
 {
@@ -27,11 +29,14 @@ namespace Field::Model
 	{
 	public:
 		//コンストラクタ、デストラクタ
-		TownModel(const PlaceModel* place);
+		TownModel(const PlaceModel* place, std::function<void(const PlaceModel *start, const PlaceModel *goal)> *action);
 		~TownModel();
 
+		//更新処理
+		void Update();
+
 		//出口追加処理
-		void AddGate();
+		void AddGate(const PlaceModel* gate);
 
 		//出てくる人数の取得処理
 		float DepatureNum();
@@ -55,7 +60,7 @@ namespace Field::Model
 		const PlaceModel* GetPlace();
 		
 		//経路追加処理
-		void AddLinkedRoute(std::vector<D3DXVECTOR3>& route);
+		void AddLinkedTown(const PlaceModel *place);
 
 	private:
 		static const float BaseDepatureNum;		//基準となる出発数
@@ -67,9 +72,6 @@ namespace Field::Model
 		//参照するプレイスモデル
 		const PlaceModel* place;
 
-		//出口数
-		int cntGate;
-
 		//リンクレベル
 		int linkLevel;
 
@@ -79,8 +81,20 @@ namespace Field::Model
 		//発展度
 		float developmentLevel;
 
+		//フレームカウンタ
+		int cntFrame;
+
+		//どの街へ向かわせるか
+		int indexDestination;
+
+		//パッセンジャー出発処理
+		std::function<void(const PlaceModel* start, const PlaceModel *end)> *departPassenger;
+
 		//繋がってる街への経路
-		std::list<std::vector<D3DXVECTOR3>> routeContainer;
+		std::vector<const PlaceModel*> linkedTown;
+
+		//出口
+		std::vector<const PlaceModel*> gateList;
 	};
 }
 #endif

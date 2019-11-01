@@ -20,7 +20,8 @@ const float DecreasePercent = -0.1f;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-AILevelDecreaseEvent::AILevelDecreaseEvent()
+AILevelDecreaseEvent::AILevelDecreaseEvent() :
+	EventBase(true)
 {
 
 }
@@ -33,12 +34,32 @@ AILevelDecreaseEvent::~AILevelDecreaseEvent()
 
 }
 
+
+//=============================================================================
+// 初期化
+//=============================================================================
+void AILevelDecreaseEvent::Init()
+{
+	// ゲーム進行停止
+	fieldEventHandler->PauseGame();
+
+	// 初期化終了
+	Initialized = true;
+}
+
 //=============================================================================
 // 更新
 //=============================================================================
 void AILevelDecreaseEvent::Update()
 {
+	// まだ初期化していない
+	if (!Initialized)
+		return;
+
 	fieldEventHandler->AdjustLevelAI(DecreasePercent);
+
+	// イベント終了、ゲーム続行
+	fieldEventHandler->ResumeGame();
 	UseFlag = false;
 }
 
@@ -47,7 +68,11 @@ void AILevelDecreaseEvent::Update()
 //=============================================================================
 void AILevelDecreaseEvent::Draw()
 {
+	// まだ初期化していない
+	if (!Initialized)
+		return;
 
+	
 }
 
 //=============================================================================

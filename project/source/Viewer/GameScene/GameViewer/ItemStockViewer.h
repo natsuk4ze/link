@@ -29,9 +29,14 @@ public:
 
 	//パラメータを受けとる箱
 	int parameterBox;
+	bool InBanStock;
+	bool BanIconDebut;
+	bool InPauseEvent;
 
 private:
-	BaseViewerDrawer *icon;
+	BaseViewerDrawer *icon;				// ストックアイコン
+	BaseViewerDrawer *BanIcon;			// バツアイコン
+	BaseViewerDrawer *BanIcon_White;	// バツアイコン(白)
 	CountViewerDrawer *num;
 
 	//アニメーション
@@ -42,6 +47,12 @@ private:
 
 	//１フレーム前のパラメータ
 	int lastParam;
+
+	//封印演出のフレームカウント
+	int FrameCount;
+
+	void SetBanIconVertex(float Percent);
+	void SetBanIconTexture(float Percent);
 };
 
 
