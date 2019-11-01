@@ -190,6 +190,7 @@
     <ClInclude Include="source\FieldObject\Infomation\InfoDigit.h" />
     <ClInclude Include="source\FieldObject\InfoController.h" />
     <ClInclude Include="source\Effect\Game\BanIcon.h" />
+    <ClInclude Include="source\Field\AStar\AStarController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -364,6 +365,7 @@
     <ClCompile Include="source\FieldObject\Infomation\InfoDigit.cpp" />
     <ClCompile Include="source\FieldObject\InfoController.cpp" />
     <ClCompile Include="source\Effect\Game\BanIcon.cpp" />
+    <ClCompile Include="source\Field\AStar\AStarController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

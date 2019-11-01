@@ -62,13 +62,13 @@ namespace Field::Model
 		friend class RouteProcessor;
 	public:
 		//コンストラクタ
-		RouteModel(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction);
+		RouteModel(Delegate<void(const PlaceModel*, const PlaceModel*)> *onConnectTown, DelegatePlace *onCreateJunction);
 
 		bool operator ==(const RouteModel& rhs) const;
 
 		//Create関数でこのクラスのshared_ptrを作成させる
-		static RouteModelPtr Create(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction);
-		static RouteModelPtr Create(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction, const std::vector<PlaceModel*>& placeVector);
+		static RouteModelPtr Create(Delegate<void(const PlaceModel*, const PlaceModel*)> *onConnectTown, DelegatePlace *onCreateJunction);
+		static RouteModelPtr Create(Delegate<void(const PlaceModel*, const PlaceModel*)> *onConnectTown, DelegatePlace *onCreateJunction, const std::vector<PlaceModel*>& placeVector);
 
 		//デストラクタ
 		~RouteModel();		//所属を離脱
@@ -119,7 +119,7 @@ namespace Field::Model
 
 		bool isUnused;								//使用判定
 
-		Delegate<void(const PlaceModel*)> *onConnectedTown;	//街と道が繋がったときのデリゲータ
+		Delegate<void(const PlaceModel*, const PlaceModel*)> *onConnectedTown;	//街と道が繋がったときのデリゲータ
 		Delegate<void(const PlaceModel*)> *onCreateJunction;	//交差点を作ったときのデリゲータ
 
 		void _SetEdge(PlaceModel* place);			//端点設定内部処理

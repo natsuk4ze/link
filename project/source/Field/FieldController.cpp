@@ -15,7 +15,6 @@
 #include "Route\RouteProcessor.h"
 #include "PlaceActorController.h"
 #include "FieldEventHandler.h"
-#include "../FieldObject/PassengerController.h"
 
 #include "Controller\FieldDevelopper.h"
 #include "Controller\FieldInput.h"
@@ -61,17 +60,9 @@ namespace Field
 		ground = new FieldGround();
 		operateContainer = new Model::OperatePlaceContainer();
 		placeActController = new Actor::PlaceActorController();
-		passengerController = new PassengerController();
 		developper = new FieldDevelopper(this);
 		input = new FieldInput(this);
-
-		//引数が必要なインスタンスの作成
-		auto departPassenger = std::bind(&PassengerController::SetPassenger, passengerController, std::placeholders::_1);
-		placeContainer = new Model::PlaceContainer(departPassenger);
-
-		//パッセンジャーコントローラにコールバックを設定する
-		auto onReachPassenger = std::bind(&Actor::PlaceActorController::GrowthAlongObject, placeActController, std::placeholders::_1);
-		passengerController->SetCallbackOnReach(onReachPassenger);
+		placeContainer = new Model::PlaceContainer();
 
 		//ステートマシン作成
 		fsm.resize(State::Max, NULL);
@@ -80,9 +71,12 @@ namespace Field
 		fsm[State::Develop] = new UseItemState();
 
 		//デリゲート作成
-		onConnectTown = DelegateObject<PlaceContainer, void(const PlaceModel*)>::Create(placeContainer, &PlaceContainer::OnConnectedTown);
+		onConnectTown = DelegateObject<FieldController, void(const PlaceModel*, const PlaceModel*)>::Create(this, &FieldController::OnConnectedTown);
 		onCreateJunction = DelegateObject<PlaceContainer, void(const PlaceModel*)>::Create(placeContainer, &PlaceContainer::OnCreateJunction);
 		onChangePlaceType = DelegateObject<Actor::PlaceActorController, void(const PlaceModel*)>::Create(placeActController, &Actor::PlaceActorController::ChangeActor);
+
+		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2);
+		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
 
 		//ルートプロセッサ作成
 		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
@@ -108,7 +102,6 @@ namespace Field
 		SAFE_DELETE(operateContainer);
 		SAFE_DELETE(routeProcessor);
 		SAFE_DELETE(placeActController);
-		SAFE_DELETE(passengerController);
 		SAFE_DELETE(developper);
 		SAFE_DELETE(input);
 
@@ -133,8 +126,6 @@ namespace Field
 		operateContainer->Update();
 
 		placeActController->Update();
-
-		passengerController->Update();
 	}
 
 	/**************************************
@@ -170,9 +161,6 @@ namespace Field
 #ifdef DEBUG_PLACEMODEL
 		placeContainer->DrawDebug();
 #endif
-
-		passengerController->Draw();
-
 		//カーソルには透過オブジェクトが含まれるので最後に描画
 		cursor->Draw();
 		operateContainer->Draw();
@@ -378,5 +366,14 @@ namespace Field
 
 		float raiseValue = placeContainer->CalcDevelopmentLevelAI(developSpeedBonus);
 		developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + raiseValue);
+	}
+
+	/**************************************
+	街が繋がった
+	***************************************/
+	void FieldController::OnConnectedTown(const Model::PlaceModel * town, const Model::PlaceModel * gate)
+	{
+		placeContainer->OnConnectedTown(town, gate);
+		placeActController->OnConnectedTown(town);
 	}
 }

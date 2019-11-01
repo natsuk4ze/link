@@ -54,7 +54,7 @@ namespace Utility
 	ƒRƒ“ƒeƒi“àŒŸõˆ—
 	***************************************/
 	template<class T, class OBJ>
-	static inline bool IsContain(T& container, OBJ& target)
+	static inline bool IsContain(T& container, const OBJ& target)
 	{
 		auto itr = std::find(container.begin(), container.end(), target);
 
