@@ -30,7 +30,7 @@ namespace Field::Model
 	/**************************************
 	コンストラクタ
 	***************************************/
-	RouteModel::RouteModel(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction) :
+	RouteModel::RouteModel(Delegate<void(const PlaceModel*, const PlaceModel*)> *onConnectTown, DelegatePlace *onCreateJunction) :
 		edgeStart(nullptr), edgeEnd(nullptr),
 		uniqueID(incrementID++),
 		isUnused(false),
@@ -51,7 +51,7 @@ namespace Field::Model
 	/**************************************
 	スマートポインタ作成処理
 	***************************************/
-	RouteModelPtr RouteModel::Create(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction)
+	RouteModelPtr RouteModel::Create(Delegate<void(const PlaceModel*, const PlaceModel*)> *onConnectTown, DelegatePlace *onCreateJunction)
 	{
 		RouteModelPtr ptr = std::make_shared<RouteModel>(onConnectTown, onCreateJunction);
 		return ptr;
@@ -60,7 +60,7 @@ namespace Field::Model
 	/**************************************
 	スマートポインタ作成処理
 	***************************************/
-	RouteModelPtr RouteModel::Create(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction, const std::vector<PlaceModel*>& placeVector)
+	RouteModelPtr RouteModel::Create(Delegate<void(const PlaceModel*, const PlaceModel*)> *onConnectTown, DelegatePlace *onCreateJunction, const std::vector<PlaceModel*>& placeVector)
 	{
 		RouteModelPtr ptr = std::make_shared<RouteModel>(onConnectTown, onCreateJunction);
 
@@ -227,7 +227,7 @@ namespace Field::Model
 			searchedTown.push_back(town);
 
 			//経路を保存
-			root->AddLinkedRoute(stackRoute.route);
+			root->AddLinkedTown(town);
 		}
 		else
 		{
@@ -323,9 +323,12 @@ namespace Field::Model
 
 		//街なら出口を増やす
 		if (opponent->IsType(PlaceType::Town))
-			(*onConnectedTown)(opponent);
+		{
+			(*onConnectedTown)(opponent, place);
 
-		//交差点なら所属ルートを追加
+			//方向追加
+			opponent->AddDirection(opponent->IsAdjacent(place));
+		}
 	}
 
 	/**************************************

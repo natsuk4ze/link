@@ -22,21 +22,23 @@ namespace Field
 	{
 		int x, z;
 
-		FieldPosition()
-		{
-			x = 0;
-			z = 0;
-		}
+		FieldPosition() : x(0), z(0) {}
 
-		FieldPosition(int x, int z)
-		{
-			this->x = x;
-			this->z = z;
-		}
+		FieldPosition(int x, int z) : x(x), z(z) {}
 
 		inline D3DXVECTOR3 ConvertToWorldPosition() const
 		{
 			return { x * 10.0f, 0.0f, z * -10.0f };
+		}
+
+		bool operator <(const FieldPosition& rhs) const
+		{
+			return std::tie(x, z) < std::tie(rhs.x, rhs.z);
+		}
+
+		FieldPosition operator + (const FieldPosition& rhs) const
+		{
+			return FieldPosition(x + rhs.x, z + rhs.z);
 		}
 
 	};
