@@ -20,7 +20,7 @@ namespace Field::Model
 	/**************************************
 	コンストラクタ
 	***************************************/
-	TownModel::TownModel(const PlaceModel * place, std::function<void(std::vector<D3DXVECTOR3>&)> *action) :
+	TownModel::TownModel(const PlaceModel* place, std::function<void(const PlaceModel *start, const PlaceModel *goal)> *action) :
 		uniqueID(incrementID++),
 		place(place),
 		cntGate(0),
@@ -48,17 +48,14 @@ namespace Field::Model
 	{
 		cntFrame++;
 		
-		if (*departPassenger = nullptr)
-			return;
-
-		if (routeContainer.size() == 0)
+		if (linkedTown.size() == 0)
 			return;
 
 		//4秒おきに繋がっている街に向かってパッセンジャーを出発させる
 		if (cntFrame % 120 == 0)
 		{
-			indexDestination = Math::WrapAround(0, (int)routeContainer.size(), ++indexDestination);
-			(*departPassenger)(routeContainer[indexDestination]);
+			indexDestination = Math::WrapAround(0, (int)linkedTown.size(), ++indexDestination);
+			(*departPassenger)(place, linkedTown[indexDestination]);
 		}
 	}
 
@@ -117,7 +114,7 @@ namespace Field::Model
 
 		RoutePlaceStack routeStack;
 
-		routeContainer.clear();
+		linkedTown.clear();
 		for (auto&& route : belongRoute)
 		{
 			linkLevel += route->FindLinkedTown(this, searchedRoute, searchedTown, routeStack, place);
@@ -145,30 +142,8 @@ namespace Field::Model
 	/**************************************
 	経路追加処理
 	***************************************/
-	void TownModel::AddLinkedRoute(std::vector<D3DXVECTOR3>& route)
+	void TownModel::AddLinkedTown(const PlaceModel *place)
 	{
-		//コピーして重複を削除
-		std::vector<D3DXVECTOR3> container(route);
-		auto itr = std::unique(container.begin(), container.end());
-		container.erase(itr, container.end());
-
-		bool shouldAdd = true;
-
-		//目的地が同じルートが既にある場合は長さを比較
-		for (auto&& route : routeContainer)
-		{
-			if (route.back() != container.back())
-				continue;
-
-			if (route.size() > container.size())
-			{
-				route = container;
-			}
-
-			shouldAdd = false;
-		}
-
-		if(shouldAdd)
-			routeContainer.push_back(container);
+		linkedTown.push_back(place);
 	}
 }

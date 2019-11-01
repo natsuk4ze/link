@@ -54,7 +54,7 @@ void PassengerModel::Draw()
 void PassengerModel::CheckCallback()
 {
 	//道沿いのモデルコントローラへアクターが到着した座標を渡す
-	(*callbackToAlong)(root[nextDest]);
+	//(*callbackToAlong)(root[nextDest]);
 
 	// 目的地に到達しているか確認
 	if ((size_t)nextDest >= root.size() - 1)

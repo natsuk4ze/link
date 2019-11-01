@@ -227,6 +227,14 @@ namespace Field::Actor
 	}
 
 	/**************************************
+	パッセンジャー出発処理
+	***************************************/
+	void PlaceActorController::DepartPassenger(const Model::PlaceModel * start, const Model::PlaceModel * goal)
+	{
+		aStarController->CalcRoute(start->GetPosition(), goal->GetPosition());
+	}
+
+	/**************************************
 	ロードセット処理
 	***************************************/
 	void PlaceActorController::SetRoad(const Model::PlaceModel * place, int delay)

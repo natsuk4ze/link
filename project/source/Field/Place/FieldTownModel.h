@@ -9,6 +9,7 @@
 #define _FIELDTOWNMODEL_H_
 
 #include "../../../main.h"
+#include "../FieldConfig.h"
 
 #include <list>
 #include <vector>
@@ -28,7 +29,7 @@ namespace Field::Model
 	{
 	public:
 		//コンストラクタ、デストラクタ
-		TownModel(const PlaceModel* place, std::function<void(std::vector<D3DXVECTOR3>&)> *action);
+		TownModel(const PlaceModel* place, std::function<void(const PlaceModel *start, const PlaceModel *goal)> *action);
 		~TownModel();
 
 		//更新処理
@@ -59,7 +60,7 @@ namespace Field::Model
 		const PlaceModel* GetPlace();
 		
 		//経路追加処理
-		void AddLinkedRoute(std::vector<D3DXVECTOR3>& route);
+		void AddLinkedTown(const PlaceModel *place);
 
 	private:
 		static const float BaseDepatureNum;		//基準となる出発数
@@ -90,10 +91,10 @@ namespace Field::Model
 		int indexDestination;
 
 		//パッセンジャー出発処理
-		std::function<void(std::vector<D3DXVECTOR3>&)> *departPassenger;
+		std::function<void(const PlaceModel* start, const PlaceModel *end)> *departPassenger;
 
 		//繋がってる街への経路
-		std::vector<std::vector<D3DXVECTOR3>> routeContainer;
+		std::vector<const PlaceModel*> linkedTown;
 	};
 }
 #endif

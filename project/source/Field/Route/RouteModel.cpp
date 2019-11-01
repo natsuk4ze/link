@@ -227,7 +227,7 @@ namespace Field::Model
 			searchedTown.push_back(town);
 
 			//Œo˜H‚ð•Û‘¶
-			root->AddLinkedRoute(stackRoute.route);
+			root->AddLinkedTown(town);
 		}
 		else
 		{

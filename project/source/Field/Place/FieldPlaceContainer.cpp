@@ -380,6 +380,14 @@ namespace Field::Model
 	}
 
 	/**************************************
+	パッセンジャー出発ファンクタ設定
+	***************************************/
+	void Field::Model::PlaceContainer::SetDepartPassengerFanctor(const TownAction & action)
+	{
+		onDepartPassenger = action;
+	}
+
+	/**************************************
 	隣接情報作成
 	***************************************/
 	void PlaceContainer::MakeAdjacency()
