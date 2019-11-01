@@ -36,7 +36,7 @@ namespace Field::Model
 	{
 	public:
 		//コンストラクタ、デストラクタ
-		PlaceContainer(const TownAction& action);
+		PlaceContainer();
 		~PlaceContainer();
 
 		//更新処理、描画処理

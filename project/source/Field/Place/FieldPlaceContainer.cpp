@@ -31,13 +31,13 @@ namespace Field::Model
 	/**************************************
 	コンストラクタ
 	***************************************/
-	PlaceContainer::PlaceContainer(const TownAction& action) :
+	PlaceContainer::PlaceContainer() :
 		placeRowMax(0),
 		placeColumMax(0),
 		initialized(false),
 		trafficJamRate(0.0f),
 		trafficJamBias(0.0f),
-		onDepartPassenger(action)
+		onDepartPassenger(nullptr)
 	{
 		placeVector.reserve(PlaceMax);
 

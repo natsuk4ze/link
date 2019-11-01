@@ -12,6 +12,8 @@
 #include "../../Framework/Task/TaskManager.h"
 #include "../Effect/GameParticleManager.h"
 #include "Along\AlongController.h"
+#include "AStar\AStarController.h"
+#include "../FieldObject/PassengerController.h"
 
 #include "../FieldObject/Actor/CityActor.h"
 #include "../FieldObject/Actor/CrossJunctionActor.h"
@@ -47,6 +49,8 @@ namespace Field::Actor
 	{
 		bgContainer.reserve(ReserveGround);
 		alongController = new Along::AlongController();
+		aStarController = new Route::AStarController();
+		passengerController = new PassengerController();
 	}
 
 	/**************************************
@@ -55,6 +59,9 @@ namespace Field::Actor
 	PlaceActorController::~PlaceActorController()
 	{
 		SAFE_DELETE(alongController);
+		SAFE_DELETE(aStarController);
+		SAFE_DELETE(passengerController);
+
 		bgContainer.clear();
 		actorContainer.clear();
 	}
@@ -273,6 +280,9 @@ namespace Field::Actor
 			actor->SetScale(Vector3::Zero);
 			SetRoadGenerateAnimation(actor, actorPos, delay);
 		}
+
+		//A*‚É“o˜^
+		aStarController->OnChangePlace(place);
 	}
 
 	/**************************************
@@ -289,6 +299,9 @@ namespace Field::Actor
 		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
 
 		AddContainer(place->ID(), actor);
+
+		//A*‚É“o˜^
+		aStarController->OnChangePlace(place);
 	}
 
 	/**************************************
@@ -331,6 +344,8 @@ namespace Field::Actor
 
 		AddContainer(place->ID(), actor);
 
+		//A*‚É“o˜^
+		aStarController->OnChangePlace(place);
 	}
 
 	/**************************************
@@ -378,6 +393,9 @@ namespace Field::Actor
 			// ¶¬ƒAƒjƒ[ƒVƒ‡ƒ“
 			ActorAnimation::RotateAndExpantion(*actor);
 		}
+
+		//A*‚É“o˜^
+		aStarController->OnChangePlace(place);
 	}
 
 	/**************************************

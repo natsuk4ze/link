@@ -47,6 +47,9 @@ namespace Field::Model
 	void TownModel::Update()
 	{
 		cntFrame++;
+		
+		if (*departPassenger = nullptr)
+			return;
 
 		if (routeContainer.size() == 0)
 			return;
