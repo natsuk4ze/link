@@ -30,7 +30,6 @@ static const char *arrowTexPath[LevelViewer::typeMax]
 //数字の初期サイズ
 static const D3DXVECTOR3 initNumSize = D3DXVECTOR3(70.0f, 70.0f, 0.0f);
 
-
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
@@ -105,29 +104,7 @@ LevelViewer::~LevelViewer()
 //=============================================================================
 void LevelViewer::Update(void)
 {
-
-#ifdef _DEBUG
-
-	if (Keyboard::GetTrigger(DIK_1))
-	{
-		parameterBox[LevelAI] += 200.0f;
-		parameterBox[RatioLevel] += 0.6f;
-	}
-
-	if (Keyboard::GetTrigger(DIK_2))
-	{
-		parameterBox[LevelAI] -= 100.0f;
-		parameterBox[RatioLevel] -= 0.4f;
-	}
-
-	Debug::Text("isLevelAI_Increasing:%d", isLevelAI_Increasing);
-	Debug::Text("isLevelAI_Decreasing:%d", isLevelAI_Decreasing);
-	Debug::Text("ratioLevel:%d", parameterBox[RatioLevel]);
-	Debug::Text("drawingRatioLevel:%d", drawingRatioLevel);
-
-#endif
-
-	//前フレームのLevelAIより現在のLevelAIが大きい場合ホッピング状態にする
+	//現在のフレームのパラメータとしてセット
 	currentParam[LevelAI] = (int)parameterBox[LevelAI];
 
 	//描画用ratioLevel設定
@@ -160,12 +137,14 @@ void LevelViewer::Draw(void)
 	num->DrawCounter(num->baseNumber, (int)parameterBox[LevelAI], num->placeMax,
 		num->intervalNumberScr, num->intervalNumberTex);
 
-	if (isArrowPlaying)
-	{
-		//矢印
-		arrow->SetVertex();
-		arrow->Draw();
-	}
+	//*詳しい仕様が固まるまで矢印は描画しないでおく
+
+	//if (isArrowPlaying)
+	//{
+	//	//矢印
+	//	arrow->SetVertex();
+	//	arrow->Draw();
+	//}
 }
 
 //=============================================================================
@@ -176,6 +155,7 @@ void LevelViewer::HopNumber(void)
 	//数字のホップ量
 	const float hopNumValue = 50.0f;
 
+	//前フレームのLevelAIより現在のLevelAIが大きい場合ホッピング状態にする
 	if (currentParam[LevelAI] - lastParam[LevelAI] > 0)
 	{
 		num->isHopped = true;
