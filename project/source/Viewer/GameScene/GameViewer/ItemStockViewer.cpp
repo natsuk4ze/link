@@ -93,7 +93,7 @@ ItemStockViewer::~ItemStockViewer()
 void ItemStockViewer::Update(void)
 {
 	//アニメーション
-	Animate();
+	Hop();
 }
 
 //=============================================================================
@@ -120,16 +120,8 @@ void ItemStockViewer::Draw(void)
 //=============================================================================
 // アニメーション処理
 //=============================================================================
-void ItemStockViewer::Animate(void)
+void ItemStockViewer::Hop(void)
 {
-	//現在のパラメータ
-	static int currentParam;
-
-	//１フレーム前のパラメータ
-	static int lastParam;
-
-	static int FrameCount = 0;
-
 	//前フレームのパラメータとの差が0でないときホッピング状態にする
 	currentParam = parameterBox;
 	if (currentParam - lastParam != 0)
@@ -176,6 +168,10 @@ void ItemStockViewer::Animate(void)
 			SetBanIconVertex(Percent);
 			SetBanIconTexture(RemainTimePercent);
 		}
+	}
+	else
+	{
+		FrameCount = 0;
 	}
 }
 

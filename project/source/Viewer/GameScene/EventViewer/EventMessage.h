@@ -42,8 +42,8 @@ private:
 	BaseViewerDrawer *bg;
 	TextViewer *text;
 
-	//時間
-	float time;
+	//アニメーション時間
+	float animTime;
 
 	//フレームカウント
 	int countFrame;
@@ -54,10 +54,10 @@ private:
 	//α値
 	float alpha = 1.0f;
 
-	//アニメーションさせる
-	void Animate(void);
+	//再生処理
+	void Play(void);
 
-	//フェードアウトさせる
+	//フェードアウト処理
 	void FadeOut(void);
 
 	//リセットする

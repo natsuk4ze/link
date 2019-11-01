@@ -38,6 +38,9 @@ void RotateViewerDrawer::MakeVertex()
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
+	//オブジェクトサークルの作成
+	CreateCircle();
+
 	// 頂点座標の設定
 	vertexWk[0].vtx.x = position.x - cosf(baseAngle + rotation.z) * radius;
 	vertexWk[0].vtx.y = position.y - sinf(baseAngle + rotation.z) * radius;
