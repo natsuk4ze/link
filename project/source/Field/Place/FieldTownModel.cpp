@@ -124,7 +124,7 @@ namespace Field::Model
 			linkLevel += route->FindLinkedTown(this, searchedRoute, searchedTown, routeStack, place);
 		}
 
-		developmentLevel = (float)linkLevel * linkLevel;
+		developmentLevel = (float)linkLevel /** linkLevel*/;
 	}
 
 	/**************************************

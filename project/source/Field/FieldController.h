@@ -119,6 +119,7 @@ namespace Field
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int cntFrame;							//フレームカウント
 		float developmentLevelAI;				//AI発展レベル
+		float realDevelopmentLevelAI;
 		float developSpeedBonus;				//発展スピード増加ボーナス
 
 		State current;
