@@ -41,6 +41,14 @@ namespace Field::Model
 	}
 
 	/**************************************
+	等地比較演算子
+	***************************************/
+	bool RouteModel::operator==(const RouteModel & rhs) const
+	{
+		return route == rhs.route;
+	}
+
+	/**************************************
 	スマートポインタ作成処理
 	***************************************/
 	RouteModelPtr RouteModel::Create(DelegatePlace *onConnectTown, DelegatePlace *onCreateJunction)
@@ -117,15 +125,18 @@ namespace Field::Model
 	***************************************/
 	void RouteModel::AddAdjacency(PlaceModel * junction, PlaceModel * connectTarget, std::shared_ptr<RouteModel> opponent)
 	{
-		adjacentRoute.push_back(AdjacentRoute(junction, connectTarget, opponent));
-	}
+		if (*opponent == *this)
+			return;
 
-	/**************************************
-	隣接ルート追加
-	***************************************/
-	void RouteModel::AddAdjacency(const std::vector<AdjacentRoute>& adjacenctRoute)
-	{
-		std::copy(adjacenctRoute.begin(), adjacenctRoute.end(), std::back_inserter(this->adjacentRoute));
+		for (auto&& adjacenct : adjacentRoute)
+		{
+			std::shared_ptr<RouteModel> sptr = adjacenct.route.lock();
+
+			if (sptr && *sptr == *opponent)
+				return;
+		}
+
+		adjacentRoute.push_back(AdjacentRoute(junction, connectTarget, opponent));
 	}
 
 	/**************************************
@@ -156,7 +167,7 @@ namespace Field::Model
 
 		//各プレイスの方向を決定
 		unsigned routeSize = route.size();
-		
+
 		first->AddDirection(first->IsAdjacent(edgeStart));
 		first->AddDirection(first->IsAdjacent(route[1]));
 
@@ -189,7 +200,7 @@ namespace Field::Model
 	{
 		if (edgeStart->IsType(PlaceType::Town) && edgeStart != self)
 			return edgeStart;
-		
+
 		if (edgeEnd->IsType(PlaceType::Town) && edgeEnd != self)
 			return edgeEnd;
 
@@ -199,47 +210,46 @@ namespace Field::Model
 	/**************************************
 	繋がっている街を取得
 	***************************************/
-	int RouteModel::FindLinkedTown(TownModel * root, std::vector<RouteModelPtr> & searchedRoute, std::vector<PlaceModel*> searchedTown, std::vector<D3DXVECTOR3>& stackRoute)
+	int RouteModel::FindLinkedTown(TownModel * root, std::vector<RouteModelPtr> & searchedRoute, std::vector<const PlaceModel*>& searchedTown, RoutePlaceStack& stackRoute, const PlaceModel* start)
 	{
 		int cntTown = 0;
 
+		//ルートスタックに自身を積む
+		int cntPush = stackRoute.Push(GetAllPlaces(start));
+
 		//対象に繋がっている街を確認
-		if (!(from(searchedRoute) >> contains(shared_from_this())))
+		searchedRoute.push_back(shared_from_this());
+
+		const PlaceModel* town = this->GetConnectedTown(root->GetPlace());
+		if (town != nullptr)
 		{
-			searchedRoute.push_back(shared_from_this());
+			cntTown++;
+			searchedTown.push_back(town);
 
-			PlaceModel* town = this->GetConnectedTown(root->GetPlace());
-			if (town != nullptr && !(from(searchedTown) >> contains(town)))
+			//経路を保存
+			root->AddLinkedRoute(stackRoute.route);
+		}
+		else
+		{
+			//隣接しているルートに対して再帰的に探索
+			for (auto&& adjacency : this->adjacentRoute)
 			{
-				cntTown++;
-				searchedTown.push_back(town);
+				if (adjacency.start == start)
+					continue;
 
-				//経路を保存
-				stackRoute.push_back(town->GetPosition().ConvertToWorldPosition());
-				root->AddLinkedRoute(stackRoute);
-				stackRoute.pop_back();
+				RouteModelPtr ptr = adjacency.route.lock();
+
+				if (!ptr)
+					continue;
+
+				if (Utility::IsContain(searchedRoute, ptr))
+					continue;
+
+				cntTown += ptr->FindLinkedTown(root, searchedRoute, searchedTown, stackRoute, adjacency.end);
 			}
 		}
-
-		//隣接しているルートに対して再帰的に探索
-		for (auto&& adjacency : this->adjacentRoute)
-		{
-			RouteModelPtr ptr = adjacency.route.lock();
-
-			if (!ptr)
-				continue;
-
-			if (from(searchedRoute) >> contains(ptr))
-				continue;
-
-			stackRoute.push_back(adjacency.start->GetPosition().ConvertToWorldPosition());
-			stackRoute.push_back(adjacency.end->GetPosition().ConvertToWorldPosition());
-
-			cntTown += ptr->FindLinkedTown(root, searchedRoute, searchedTown, stackRoute);
-			
-			stackRoute.pop_back();
-			stackRoute.pop_back();
-		}
+		//スタックから自身を取り除く
+		stackRoute.Pop(cntPush);
 
 		return cntTown;
 	}
@@ -263,14 +273,24 @@ namespace Field::Model
 	/**************************************
 	全プレイス取得
 	***************************************/
-	const std::vector<const PlaceModel*> RouteModel::GetAllPlaces() const
+	const std::vector<const PlaceModel*> RouteModel::GetAllPlaces(const PlaceModel* start) const
 	{
 		std::vector<const PlaceModel*> out;
 		out.reserve(route.size() + 2);
 
-		out.push_back(edgeStart);
-		std::copy(route.begin(), route.end(), std::back_inserter(out));
-		out.push_back(edgeEnd);
+		if (start == edgeEnd)
+		{
+			out.push_back(edgeEnd);
+			std::copy(route.rbegin(), route.rend(), std::back_inserter(out));
+			out.push_back(edgeStart);
+		}
+		else
+		{
+			out.push_back(edgeStart);
+
+			std::copy(route.begin(), route.end(), std::back_inserter(out));
+			out.push_back(edgeEnd);
+		}
 
 		return out;
 	}
@@ -306,5 +326,67 @@ namespace Field::Model
 			(*onConnectedTown)(opponent);
 
 		//交差点なら所属ルートを追加
+	}
+
+	/**************************************
+	Placeプッシュ処理
+	***************************************/
+	bool RoutePlaceStack::Push(const PlaceModel * place)
+	{
+		//橋は追加しない
+		if (place->IsType(PlaceType::Bridge))
+			return false;
+
+		if (place->IsType(PlaceType::Road))
+		{
+			std::vector<Adjacency> AdjacencyType = place->GetConnectingAdjacency();
+			StraightType straightType = IsStraight(AdjacencyType);
+
+			//直線道なら追加しない
+			if (straightType != StraightType::NotStraight)
+				return false;
+		}
+
+		route.push_back(place->GetPosition().ConvertToWorldPosition());
+		return true;
+	}
+
+	/**************************************
+	Placeプッシュ処理
+	***************************************/
+	int RoutePlaceStack::Push(const std::vector<const PlaceModel*>& route)
+	{
+		int cntPush = 0;
+		for (auto&& place : route)
+		{
+			if (Push(place))
+				cntPush++;
+		}
+
+		return cntPush;
+	}
+
+	/**************************************
+	Placeポップ処理
+	***************************************/
+	void RoutePlaceStack::Pop()
+	{
+		route.pop_back();
+	}
+
+	/**************************************
+	Placeポップ処理
+	***************************************/
+	void RoutePlaceStack::Pop(int num)
+	{
+		route.resize(route.size() - num);
+	}
+
+	/**************************************
+	サイズ取得処理
+	***************************************/
+	unsigned RoutePlaceStack::Size() const
+	{
+		return route.size();
 	}
 }

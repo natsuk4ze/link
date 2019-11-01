@@ -1,48 +1,45 @@
 //=============================================================================
 //
-// ストックビュアー処理 [ItemStockViewer.h]
+// ストックビュアー処理 [BanIcon.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
 #ifndef _STOCK_VIEWER_H_
 #define _STOCK_VIEWER_H_
 
-#include "../../Framework/BaseViewer.h"
+#include "../../Viewer/Framework/BaseViewer.h"
+#include "../../Viewer/Framework/ViewerDrawer/BaseViewerDrawer.h"
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
 class BaseViewerDrawer;
-class CountViewerDrawer;
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class ItemStockViewer :public BaseViewer
+class BanIcon :public BaseViewer
 {
 public:
-	ItemStockViewer();
-	~ItemStockViewer();
+	BanIcon();
+	~BanIcon();
 
 	void Update(void);
 	void Draw(void);
-
-	//パラメータを受けとる箱
-	int parameterBox;
-	bool InBanStock;
-	bool BanIconDebut;
-	bool InPauseEvent;
+	void Init(void);
 
 private:
-	BaseViewerDrawer *icon;				// ストックアイコン
-	BaseViewerDrawer *BanIcon;			// バツアイコン
-	BaseViewerDrawer *BanIcon_White;	// バツアイコン(白)
-	CountViewerDrawer *num;
+	int RemainFrame;
+	bool IsPlaying;
+	BaseViewerDrawer *Icon;			
+	BaseViewerDrawer *Icon1;		
+	BaseViewerDrawer *Icon2;		
+	BaseViewerDrawer *Icon2_White;	
 
 	//アニメーション
 	void Animate(void);
-	void SetBanIconVertex(float Percent);
-	void SetBanIconTexture(float Percent);
+	void SetVertex(float Percent);
+	void SetTexture(float Percent);
 };
 
 

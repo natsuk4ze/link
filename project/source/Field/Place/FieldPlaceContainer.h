@@ -14,6 +14,7 @@
 
 #include <vector>
 #include <unordered_map>
+#include <functional>
 
 namespace Field::Model
 {
@@ -26,6 +27,7 @@ namespace Field::Model
 
 	using JunctionContainer = std::unordered_map<unsigned, JunctionModel*>;
 	using TownContainer = std::unordered_map<unsigned, TownModel*>;
+	using TownAction = std::function<void(std::vector<D3DXVECTOR3>&)>;
 
 	/**************************************
 	クラス定義
@@ -34,7 +36,7 @@ namespace Field::Model
 	{
 	public:
 		//コンストラクタ、デストラクタ
-		PlaceContainer();
+		PlaceContainer(const TownAction& action);
 		~PlaceContainer();
 
 		//更新処理、描画処理
@@ -104,6 +106,8 @@ namespace Field::Model
 
 		float trafficJamRate;					//混雑度
 		float trafficJamBias;					//混雑度バイアス
+
+		TownAction onDepartPassenger;			//街からパッセンジャーが出る時に呼ぶファンクタ
 
 		//隣接プレイス作成内部処理
 		void MakeAdjacency();

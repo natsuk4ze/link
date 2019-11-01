@@ -26,8 +26,30 @@ const int DefaultDebuffFrame = 300;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-BanStockUseEvent::BanStockUseEvent(EventViewer* eventViewer) :
-	RemainTime(DefaultDebuffFrame)
+BanStockUseEvent::BanStockUseEvent(EventViewer* eventViewer,
+	std::function<void(bool)> SetBanStock,
+	std::function<bool(void)> GetInPause) :
+	EventBase(true),
+	RemainTime(DefaultDebuffFrame),
+	InDebuff(false),
+	SetBanStock(SetBanStock),
+	GetInPause(GetInPause),
+	eventViewer(eventViewer)
+{
+}
+
+//=============================================================================
+// デストラクタ
+//=============================================================================
+BanStockUseEvent::~BanStockUseEvent()
+{
+	SAFE_DELETE(beatGame);
+}
+
+//=============================================================================
+// 初期化
+//=============================================================================
+void BanStockUseEvent::Init()
 {
 	// 連打ゲームインスタンス
 	beatGame = new BeatGame([&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
@@ -41,15 +63,11 @@ BanStockUseEvent::BanStockUseEvent(EventViewer* eventViewer) :
 	// 怒り顔エフェクト設置
 	GameParticleManager::Instance()->SetAngryFaceEffect();
 
-	TaskManager::Instance()->CreateDelayedTask(90, [&]() {CountdownStart(); });
-}
+	// 怒り顔エフェクト終わるまで待つ
+	TaskManager::Instance()->CreateDelayedTask(210, [&]() {CountdownStart(); });
 
-//=============================================================================
-// デストラクタ
-//=============================================================================
-BanStockUseEvent::~BanStockUseEvent()
-{
-	SAFE_DELETE(beatGame);
+	// 初期化終了
+	Initialized = true;
 }
 
 //=============================================================================
@@ -57,12 +75,22 @@ BanStockUseEvent::~BanStockUseEvent()
 //=============================================================================
 void BanStockUseEvent::Update()
 {
-	RemainTime--;
-	if (RemainTime <= 0)
+	// まだ初期化していない
+	if (!Initialized)
+		return;
+
+	beatGame->Update();
+
+	if (InDebuff && !GetInPause())
 	{
-		// 封印解除
-		fieldEventHandler->SealUsingItem(false);
-		UseFlag = false;
+		RemainTime--;
+		if (RemainTime <= 0)
+		{
+			// 封印解除
+			fieldEventHandler->SealUsingItem(false);
+			SetBanStock(false);
+			UseFlag = false;
+		}
 	}
 }
 
@@ -71,7 +99,11 @@ void BanStockUseEvent::Update()
 //=============================================================================
 void BanStockUseEvent::Draw()
 {
+	// まだ初期化していない
+	if (!Initialized)
+		return;
 
+	beatGame->Draw();
 }
 
 //=============================================================================
@@ -89,6 +121,7 @@ string BanStockUseEvent::GetEventMessage(int FieldLevel)
 void BanStockUseEvent::EventOver(void)
 {
 	// イベント終了、ゲーム続行
+	SetBanStock(false);
 	fieldEventHandler->ResumeGame();
 	UseFlag = false;
 }
@@ -115,6 +148,9 @@ void BanStockUseEvent::ReceiveBeatResult(bool IsSuccess)
 	{
 		// 失敗、ストック使用封印
 		fieldEventHandler->SealUsingItem(true);
+		InDebuff = true;
+		SetBanStock(true);
+		fieldEventHandler->ResumeGame();
 	}
 }
 

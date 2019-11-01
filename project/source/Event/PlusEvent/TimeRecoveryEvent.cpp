@@ -20,7 +20,8 @@ const int RecoveryFrame = 150;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-TimeRecoveryEvent::TimeRecoveryEvent()
+TimeRecoveryEvent::TimeRecoveryEvent() :
+	EventBase(false)
 {
 
 }

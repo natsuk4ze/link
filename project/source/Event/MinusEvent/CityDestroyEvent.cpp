@@ -48,7 +48,24 @@ D3DMATERIAL9 CityDestroyEvent::Material =
 // コンストラクタ
 //=============================================================================
 CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer) :
-	EventState(State::TelopExpanding)
+	EventBase(true),
+	EventState(State::TelopExpanding),
+	eventViewer(eventViewer)
+{
+}
+
+//=============================================================================
+// デストラクタ
+//=============================================================================
+CityDestroyEvent::~CityDestroyEvent()
+{
+	SAFE_DELETE(beatGame);
+}
+
+//=============================================================================
+// 初期化
+//=============================================================================
+void CityDestroyEvent::Init()
 {
 	// 連打ゲームインスタンス
 	beatGame = new BeatGame([&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
@@ -79,14 +96,9 @@ CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer) :
 		D3DXCreateSphere(Device, MeteoriteRadius, 16, 16, &SphereMesh, NULL);
 	}
 #endif
-}
 
-//=============================================================================
-// デストラクタ
-//=============================================================================
-CityDestroyEvent::~CityDestroyEvent()
-{
-	SAFE_DELETE(beatGame);
+	// 初期化終了
+	Initialized = true;
 }
 
 //=============================================================================
@@ -94,6 +106,10 @@ CityDestroyEvent::~CityDestroyEvent()
 //=============================================================================
 void CityDestroyEvent::Update()
 {
+	// まだ初期化していない
+	if (!Initialized)
+		return;
+
 	float Distance = 0.0f;
 
 	switch (EventState)
@@ -167,6 +183,10 @@ void CityDestroyEvent::Update()
 //=============================================================================
 void CityDestroyEvent::Draw()
 {
+	// まだ初期化していない
+	if (!Initialized)
+		return;
+
 	LPDIRECT3DDEVICE9 Device = GetDevice();
 
 #if _DEBUG

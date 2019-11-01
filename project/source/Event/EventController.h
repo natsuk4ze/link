@@ -17,6 +17,7 @@
 //*****************************************************************************
 class EventViewer;
 class BoardPolygon;
+class GameViewerParam;
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -35,6 +36,8 @@ private:
 	EventViewer *eventViewer;
 	Field::FieldController *fieldController;
 
+	bool InBanStock;
+	bool InPauseEvent;
 	int FieldLevel;
 
 	void LoadCSV(const char* FilePath);
@@ -52,6 +55,10 @@ public:
 	void DrawEventViewer(void);
 	void CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& route, int FieldLevel);
 	void ReceiveFieldEventHandler(FieldEventHandler *Ptr);
+	void EmbedViewerParam(GameViewerParam& param);
+	void SetBanStock(bool Flag);
+	void SetInPause(bool Flag);
+	bool GetInPause(void);
 };
 
 #endif

@@ -30,7 +30,7 @@
 #include "GameState/GameFinish.h"
 #include "GameState/GameLevelUp.h"
 #include "GameState/GamePause.h"
-#include "GameState\GameFarView.h"
+#include "GameState/GameFarView.h"
 
 #include "../../Framework/Tool/DebugWindow.h"
 
@@ -158,6 +158,7 @@ void GameScene::Update()
 	GameViewerParam param;
 	param.remainTime = remainTime / 30.0f;
 	field->EmbedViewerParam(param);
+	eventController->EmbedViewerParam(param);
 	gameViewer->ReceiveParam(param);
 
 	//ビュアー更新

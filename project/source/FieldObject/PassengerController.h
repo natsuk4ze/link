@@ -18,6 +18,7 @@
 class PassengerController
 {
 public:
+	//コンストラクタで道沿いモデルへのコールバックを渡す
 	PassengerController();
 	~PassengerController();
 
@@ -28,8 +29,13 @@ public:
 	// パッセンジャーセット
 	void SetPassenger(std::vector<D3DXVECTOR3>& root);
 
+	//パッセンジャーがプレイスに到達した際のコールバックが設定される
+	void SetCallbackOnReach(const std::function<void(const D3DXVECTOR3&)>& callback);
+
 private:
 	std::vector<PassengerModel*> modelVector;
+
+	std::function<void(const D3DXVECTOR3&)> callback;
 
 	static const int PassengerReserve;
 };

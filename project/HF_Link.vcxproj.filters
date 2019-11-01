@@ -189,6 +189,7 @@
     <ClInclude Include="Framework\Renderer3D\Viewer3D.h" />
     <ClInclude Include="source\FieldObject\Infomation\InfoDigit.h" />
     <ClInclude Include="source\FieldObject\InfoController.h" />
+    <ClInclude Include="source\Effect\Game\BanIcon.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -362,6 +363,7 @@
     <ClCompile Include="Framework\Renderer3D\Viewer3D.cpp" />
     <ClCompile Include="source\FieldObject\Infomation\InfoDigit.cpp" />
     <ClCompile Include="source\FieldObject\InfoController.cpp" />
+    <ClCompile Include="source\Effect\Game\BanIcon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
