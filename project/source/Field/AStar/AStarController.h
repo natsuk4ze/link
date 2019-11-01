@@ -10,9 +10,12 @@
 
 #include "../../../main.h"
 #include "../Place/PlaceConfig.h"
+#include "../FieldConfig.h"
 
 #include <vector>
+#include <deque>
 #include <map>
+#include <list>
 
 /**************************************
 前方宣言
@@ -24,26 +27,6 @@ namespace Field::Model
 
 namespace Field::Route
 {
-	/**************************************
-	ノードの座標構造体
-	***************************************/
-	struct NodePosition
-	{
-		float x, z;
-
-		//コンストラクタ
-		NodePosition(const D3DXVECTOR3& position);
-
-		//+演算子
-		NodePosition operator+(const NodePosition& rhs);
-
-		//<演算子
-		bool operator < (const NodePosition& rhs);
-
-		//ワールド座標への変換
-		D3DXVECTOR3 ToWorld();
-	};
-
 	/**************************************
 	AStarノードクラス
 	***************************************/
@@ -57,24 +40,30 @@ namespace Field::Route
 		//スコア取得
 		int GetScore() const;
 
+		//実コスト取得
+		int GetCost() const;
+
 		//ヒューリスティックコスト計算
-		void CalcHeuristicCost(const NodePosition& goal);
+		void CalcHeuristicCost(const Field::FieldPosition& goal);
 
 		//オープン処理
 		void Open(AStarNode *parent, int realCost);
 
 		//移動可能な範囲を取得
-		std::vector<NodePosition> GetAround() const;
+		std::vector<Field::FieldPosition> GetAround() const;
 
 		//パス計算
-		void GetPath(std::vector<const D3DXVECTOR3>& pathList) const;
+		void GetPath(std::deque<D3DXVECTOR3>& pathList) const;
+
+		//変更
+		void Change(const Field::Model::PlaceModel *place);
 
 	private:
-		const NodePosition Position;		//ノード座標
+		const FieldPosition Position;		//ノード座標
 		
 		AStarNode *parent;					//親ノード
 
-		int realScore;						//実コスト
+		int realCost;						//実コスト
 		int heuristicCost;					//ヒューリスティックコスト
 
 		std::vector<Field::Model::Adjacency> adjacencyList;	//隣接情報
@@ -94,17 +83,28 @@ namespace Field::Route
 		void OnChangePlace(const Field::Model::PlaceModel* place);
 
 		//スタートからゴールへの計算処理
-		std::vector<const D3DXVECTOR3> CalcRoute(const D3DXVECTOR3& start, const D3DXVECTOR3& goal);
+		std::deque<D3DXVECTOR3> CalcRoute(const Field::FieldPosition& start, const Field::FieldPosition& goal);
+
+		static const unsigned MaxCheckRoute;
 
 	private:
 		//ノードマップ
-		std::map<NodePosition, std::unique_ptr<AStarNode>> nodeMap;
+		std::map<FieldPosition, std::unique_ptr<AStarNode>> nodeMap;
 
 		//オープンリスト
-		std::vector<const AStarNode*> openList;
+		std::list<AStarNode*> openList;
 
 		//クローズリスト
-		std::vector<const AStarNode*> closeList;
+		std::list<AStarNode*> closeList;
+
+		//最小スコアのノード取得
+		AStarNode* SearchMinScoreNode(const Field::FieldPosition& goal);
+
+		//ノードの周囲のマスをオープンする
+		void OpenAroundNode(AStarNode* node);
+
+		//ノードをクローズする
+		void CloseNode(AStarNode* node);
 	};
 }
 
