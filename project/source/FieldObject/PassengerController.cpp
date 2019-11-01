@@ -59,7 +59,7 @@ void PassengerController::Draw()
 //=====================================
 // パッセンジャーのセット
 //=====================================
-void PassengerController::SetPassenger(std::vector<D3DXVECTOR3>& root)
+void PassengerController::SetPassenger(std::deque<D3DXVECTOR3>& root)
 {
 	bool check = false;
 	int sub = 0;

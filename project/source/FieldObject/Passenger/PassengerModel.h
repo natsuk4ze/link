@@ -9,6 +9,8 @@
 #define _PASSENGERMODEL_H_
 
 #include <vector>
+#include <deque>
+
 #include "PassengerActor.h"
 
 //**************************************
@@ -18,7 +20,7 @@ class PassengerModel
 {
 private:
 	PassengerActor* actor;
-	std::vector<D3DXVECTOR3> root;					// 出発地点から目的地までの座標を格納
+	std::deque<D3DXVECTOR3> root;					// 出発地点から目的地までの座標を格納
 	int nextDest;									// rootの添字として使用
 
 	void CheckCallback();							// コールバックの確認
@@ -26,7 +28,7 @@ private:
 	std::function<void(const D3DXVECTOR3&)> *callbackToAlong;
 
 public:
-	PassengerModel(const std::vector<D3DXVECTOR3>& root, std::function<void(const D3DXVECTOR3&)> *callback);
+	PassengerModel(const std::deque<D3DXVECTOR3>& root, std::function<void(const D3DXVECTOR3&)> *callback);
 	~PassengerModel();
 
 	// 更新、描画
@@ -37,7 +39,7 @@ public:
 	bool IsActive();
 
 	// アクターのセット
-	void SetActor(const std::vector<D3DXVECTOR3>& root);
+	void SetActor(const std::deque<D3DXVECTOR3>& root);
 };
 
 #endif

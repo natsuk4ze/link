@@ -17,7 +17,6 @@
 #include <vector>
 
 class FieldEventHandler;
-class PassengerController;
 
 namespace Field
 {
@@ -113,7 +112,6 @@ namespace Field
 		Model::RouteContainer routeContainer;				//ルートモデルコンテナ
 		Model::RouteProcessor *routeProcessor;				//ルートプロセッサ
 		Actor::PlaceActorController* placeActController;	//プレイスアクターコントローラ
-		PassengerController *passengerController;			//パッセンジャーコントローラ
 
 		FieldDevelopper *developper;
 		FieldInput *input;
@@ -121,6 +119,7 @@ namespace Field
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int cntFrame;							//フレームカウント
 		float developmentLevelAI;				//AI発展レベル
+		float realDevelopmentLevelAI;
 		float developSpeedBonus;				//発展スピード増加ボーナス
 
 		State current;
@@ -128,7 +127,7 @@ namespace Field
 		std::vector<ControllerState*> fsm;		//ステートマシン
 
 		//デリゲータ
-		Delegate<void(const Model::PlaceModel*)> *onConnectTown;
+		Delegate<void(const Model::PlaceModel*, const Model::PlaceModel*)> *onConnectTown;
 		Delegate<void(const Model::PlaceModel*)> *onCreateJunction;
 		Delegate<void(const Model::PlaceModel*)> *onChangePlaceType;
 		Delegate<void(std::vector<Model::PlaceModel*>&)> *onBuildRoad;
@@ -141,6 +140,8 @@ namespace Field
 		
 		//AI発展レベルの計算、加算
 		void CalcDevelopmentLevelAI();
+
+		void OnConnectedTown(const Model::PlaceModel *town, const Model::PlaceModel *gate);
 
 		//各ステートクラスの前方宣言
 		class IdleState;

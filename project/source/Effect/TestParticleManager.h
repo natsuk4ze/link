@@ -26,12 +26,10 @@ namespace TestParticle
 		AngryFace,
 		TownExplosion,
 		MeteorExplosion,
+		MeteorFire,
 		Max
 	};
 }
-
-// 頼君テスト用
-class BanIcon;
 
 /**************************************
 クラス定義
@@ -39,9 +37,6 @@ class BanIcon;
 class TestParticleManager : public SceneParticleManager, public BaseSingleton<TestParticleManager>
 {
 	using SceneParticleManager::SceneParticleManager;
-
-	// 頼君テスト用
-	BanIcon *banIcon;
 public:
 	void Init() override;
 	void Update() override;

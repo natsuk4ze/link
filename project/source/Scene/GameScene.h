@@ -18,6 +18,9 @@
 // モデル表示テスト用
 #include "../FieldObject/Actor/PlaceActor.h"
 #include "../FieldObject/PassengerController.h"
+#include "../FieldObject/Infomation/InfoActor.h"
+#include "../FieldObject/Infomation/LinkInfoActor.h"
+#include "../FieldObject/InfoController.h"
 
 /**************************************
 前方宣言
@@ -116,6 +119,8 @@ private:
 
 	//PlaceActor* testActor;
 	//PassengerController* passengerController;
+	//InfoActor* testInfo;
+	//InfoController* testInfoController;
 
 	//デバッグ用フィールドレベル
 	static int level;

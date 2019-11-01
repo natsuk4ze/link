@@ -93,6 +93,7 @@ BeatGame::BeatGame(std::function<void(bool)> Callback) :
 BeatGame::~BeatGame()
 {
 	SAFE_DELETE(Text);
+	SAFE_DELETE(CountdownText);
 	SAFE_DELETE(point);
 	SAFE_DELETE(fewNum);
 	SAFE_DELETE(intNum);
