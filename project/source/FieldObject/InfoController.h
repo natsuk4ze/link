@@ -1,3 +1,10 @@
+//=====================================
+//
+// インフォコントローラ[InfoController.h]
+// 機能：InfoActorのコントローラクラス
+// Author:GP12B332 19 染谷武志
+//
+//=====================================
 #ifndef _INFOCONTROLLER_H_
 #define _INFOCONTROLLER_H_
 
@@ -5,6 +12,9 @@
 #include "Infomation/LinkInfoActor.h"
 #include "../Field/FieldConfig.h"
 
+//**************************************
+// クラス定義
+//**************************************
 class InfoController
 {
 private:
