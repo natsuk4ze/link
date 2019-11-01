@@ -48,6 +48,7 @@ namespace Field
 		fieldBorder(InitFieldBorder),
 		cntFrame(0),
 		developmentLevelAI(0),
+		realDevelopmentLevelAI(0),
 		developSpeedBonus(1.0f),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
@@ -222,8 +223,12 @@ namespace Field
 	***************************************/
 	void FieldController::EmbedViewerParam(GameViewerParam & param)
 	{
-		param.levelAI = (int)developmentLevelAI;
-		param.ratioLevel = (float)developmentLevelAI / MaxDevelopmentLevelAI;
+		//param.levelAI = (int)developmentLevelAI;
+		//param.ratioLevel = (float)developmentLevelAI / MaxDevelopmentLevelAI;
+
+		param.levelAI = (int)realDevelopmentLevelAI;
+		param.ratioLevel = (float)realDevelopmentLevelAI / MaxDevelopmentLevelAI;
+
 		developper->EmbedViewerParam(param);
 	}
 
@@ -378,5 +383,6 @@ namespace Field
 
 		float raiseValue = placeContainer->CalcDevelopmentLevelAI(developSpeedBonus);
 		developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + raiseValue);
+		realDevelopmentLevelAI = Easing::EaseValue(developmentLevelAI / 9999.0f, 0.0f, 9999.0f, OutSine);
 	}
 }
