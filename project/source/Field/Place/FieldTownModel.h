@@ -30,7 +30,7 @@ namespace Field::Model
 	{
 	public:
 		//コンストラクタ、デストラクタ
-		TownModel(const PlaceModel* place, std::function<void(const PlaceModel *start, const PlaceModel *goal)> *action);
+		TownModel(const PlaceModel* place, std::function<void(const PlaceModel *start, const PlaceModel *goal, const PlaceModel *town)> *action);
 		~TownModel();
 
 		//更新処理
@@ -89,7 +89,7 @@ namespace Field::Model
 		int indexDestination;
 
 		//パッセンジャー出発処理
-		std::function<void(const PlaceModel* start, const PlaceModel *end)> *departPassenger;
+		std::function<void(const PlaceModel* start, const PlaceModel *end, const PlaceModel *town)> *departPassenger;
 
 		//繋がってる街への経路
 		//first : 相手の街, second : 出口

@@ -210,12 +210,12 @@ namespace Field::Model
 	/**************************************
 	Œq‚ª‚Á‚Ä‚¢‚éŠX‚ðŽæ“¾
 	***************************************/
-	int RouteModel::FindLinkedTown(TownModel * root, std::vector<RouteModelPtr> & searchedRoute)
+	int RouteModel::FindLinkedTown(TownModel * root, std::vector<unsigned> & searchedRoute)
 	{
 		int cntTown = 0;
 
 		//‘ÎÛ‚ÉŒq‚ª‚Á‚Ä‚¢‚éŠX‚ðŠm”F
-		searchedRoute.push_back(shared_from_this());
+		searchedRoute.push_back(uniqueID);
 
 		const PlaceModel* town = this->GetConnectedTown(root->GetPlace());
 		if (town != nullptr)
@@ -235,7 +235,7 @@ namespace Field::Model
 				if (!ptr)
 					continue;
 
-				if (Utility::IsContain(searchedRoute, ptr))
+				if (Utility::IsContain(searchedRoute, ptr->uniqueID))
 					continue;
 
 				cntTown += ptr->FindLinkedTown(root, searchedRoute);

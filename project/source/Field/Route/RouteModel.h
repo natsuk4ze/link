@@ -96,7 +96,7 @@ namespace Field::Model
 		PlaceModel* GetConnectedTown(const PlaceModel* self);
 
 		//ルートに繋がっている街の探索
-		int FindLinkedTown(TownModel* root, std::vector<RouteModelPtr>& searchedRoute);
+		int FindLinkedTown(TownModel* root, std::vector<unsigned>& searchedRoute);
 
 		//使用判定
 		void SetUnused(bool use);

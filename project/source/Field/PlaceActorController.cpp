@@ -242,11 +242,14 @@ namespace Field::Actor
 	/**************************************
 	パッセンジャー出発処理
 	***************************************/
-	void PlaceActorController::DepartPassenger(const Model::PlaceModel * start, const Model::PlaceModel * goal)
+	void PlaceActorController::DepartPassenger(const Model::PlaceModel * start, const Model::PlaceModel * goal, const Model::PlaceModel* town)
 	{
-		auto route = aStarController->CalcRoute(start->GetPosition(), goal->GetPosition());
-		if(route.size() != 0)
+		auto route = aStarController->CalcRoute(start->GetPosition(), goal->GetPosition(), town->GetPosition());
+
+		if (route.size() != 0)
+		{
 			passengerController->SetPassenger(route);
+		}
 	}
 
 	/**************************************

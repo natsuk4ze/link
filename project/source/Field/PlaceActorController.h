@@ -77,7 +77,7 @@ namespace Field::Actor
 		void OnConnectedTown(const Model::PlaceModel *place);
 
 		//パッセンジャー出発処理
-		void DepartPassenger(const Model::PlaceModel* start, const Model::PlaceModel* goal);
+		void DepartPassenger(const Model::PlaceModel* start, const Model::PlaceModel* goal, const Model::PlaceModel* town);
 		
 		//定数メンバ
 		static const D3DXVECTOR3 PositionEmitSmog;		//道落下時の煙発生位置

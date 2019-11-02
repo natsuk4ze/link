@@ -21,7 +21,7 @@ namespace Field::Model
 	/**************************************
 	コンストラクタ
 	***************************************/
-	TownModel::TownModel(const PlaceModel* place, std::function<void(const PlaceModel *start, const PlaceModel *goal)> *action) :
+	TownModel::TownModel(const PlaceModel* place, std::function<void(const PlaceModel *start, const PlaceModel *goal, const PlaceModel* town)> *action) :
 		uniqueID(incrementID++),
 		place(place),
 		linkLevel(0),
@@ -56,7 +56,7 @@ namespace Field::Model
 		if (cntFrame % Interval == 0)
 		{
 			indexDestination = Math::WrapAround(0, (int)linkedTown.size(), ++indexDestination);
-			(*departPassenger)(place, linkedTown[indexDestination].first);
+			(*departPassenger)(linkedTown[indexDestination].second, linkedTown[indexDestination].first, place);
 		}
 	}
 
@@ -112,14 +112,17 @@ namespace Field::Model
 	{
 		linkLevel = biasLinkLevel;
 
-		RouteContainer searchedRoute;
-
-		RouteContainer belongRoute = place->GetConnectingRoutes();
+		std::vector<unsigned> searchedRoute;
 
 		linkedTown.clear();
-		for (auto&& route : belongRoute)
+		for(indexSearchingGate = 0; indexSearchingGate < gateList.size(); indexSearchingGate++)
 		{
-			route->FindLinkedTown(this, searchedRoute);
+			auto routeList = gateList[indexSearchingGate]->GetConnectingRoutes();
+			searchedRoute.clear();
+			for (auto&& route : routeList)
+			{
+				route->FindLinkedTown(this, searchedRoute);
+			}
 		}
 
 		developmentLevel = (float)linkLevel;
