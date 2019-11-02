@@ -57,7 +57,7 @@ void PassengerModel::Draw()
 void PassengerModel::CheckCallback()
 {
 	//道沿いのモデルコントローラへアクターが到着した座標を渡す
-	for (unsigned i = current; i <= nextDest; i++)
+	for (int i = current; i <= nextDest; i++)
 	{
 		(*callbackToAlong)(route[i]);
 	}
@@ -114,7 +114,7 @@ D3DXVECTOR3 PassengerModel::FindDestination()
 	unsigned i = current;
 	for (; i < route.size() - 1; i++, nextDest++)
 	{
-		D3DXVECTOR3 next = position + offset * (i + 1 - current);
+		D3DXVECTOR3 next = position + offset * (i + 1.0f - current);
 
 		//曲がり角に出くわすまで検索する
 		if (!Vector3::Equal(next, route[i + 1]))
