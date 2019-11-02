@@ -25,7 +25,7 @@ namespace Field::Along
 	AlongActor::AlongActor()
 	{
 		mesh = new MeshContainer();
-		ResourceManager::Instance()->GetMesh("AlongActor", mesh);
+		ResourceManager::Instance()->GetMesh("AlongCity", mesh);
 	}
 
 	/**************************************

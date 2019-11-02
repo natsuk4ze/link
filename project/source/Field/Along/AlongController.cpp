@@ -18,7 +18,7 @@ namespace Field::Along
 	***************************************/
 	AlongController::AlongController()
 	{
-		ResourceManager::Instance()->LoadMesh("AlongActor", "data/MODEL/AlongActor/AlongActor.x");
+
 	}
 
 	/**************************************

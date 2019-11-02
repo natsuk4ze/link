@@ -46,8 +46,6 @@ namespace Field::Model
 	***************************************/
 	void TownModel::Update()
 	{
-		cntFrame++;
-		
 		if (linkedTown.size() == 0)
 			return;
 
@@ -58,6 +56,8 @@ namespace Field::Model
 			indexDestination = Math::WrapAround(0, (int)linkedTown.size(), ++indexDestination);
 			(*departPassenger)(linkedTown[indexDestination].second, linkedTown[indexDestination].first, place);
 		}
+
+		cntFrame++;
 	}
 
 	/**************************************
