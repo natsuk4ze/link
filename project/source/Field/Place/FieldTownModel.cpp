@@ -8,6 +8,7 @@
 #include "FieldTownModel.h"
 #include "FieldPlaceModel.h"
 #include "../Route/RouteModel.h"
+#include <algorithm>
 
 namespace Field::Model
 {
@@ -55,7 +56,7 @@ namespace Field::Model
 		if (cntFrame % Interval == 0)
 		{
 			indexDestination = Math::WrapAround(0, (int)linkedTown.size(), ++indexDestination);
-			(*departPassenger)(place, linkedTown[indexDestination]);
+			(*departPassenger)(place, linkedTown[indexDestination].first);
 		}
 	}
 
@@ -105,27 +106,23 @@ namespace Field::Model
 	}
 
 	/**************************************
-	¬’·‚·‚é‚ÉŒÄ‚Î‚ê‚éˆ—
+	Œq‚ª‚Á‚Ä‚¢‚éŠX‚ğ’T‚·ˆ—
 	***************************************/
 	void TownModel::FindLinkedTown()
 	{
 		linkLevel = biasLinkLevel;
 
 		RouteContainer searchedRoute;
-		std::vector<const PlaceModel*> searchedTown;
-		searchedTown.push_back(place);
 
 		RouteContainer belongRoute = place->GetConnectingRoutes();
-
-		RoutePlaceStack routeStack;
 
 		linkedTown.clear();
 		for (auto&& route : belongRoute)
 		{
-			linkLevel += route->FindLinkedTown(this, searchedRoute, searchedTown, routeStack, place);
+			route->FindLinkedTown(this, searchedRoute);
 		}
 
-		developmentLevel = (float)linkLevel /** linkLevel*/;
+		developmentLevel = (float)linkLevel;
 	}
 
 	/**************************************
@@ -149,6 +146,22 @@ namespace Field::Model
 	***************************************/
 	void TownModel::AddLinkedTown(const PlaceModel *place)
 	{
-		linkedTown.push_back(place);
+		//‘Šè‚ğŠù‚ÉƒJƒEƒ“ƒgÏ‚İ‚©‚Ç‚¤‚©ŒŸõ
+		bool searchedTown = false;
+		bool linkedSameRoute = false;
+
+		for (auto&& route : linkedTown)
+		{
+			searchedTown |= route.first == place;
+			linkedSameRoute |= searchedTown && (route.second == gateList[indexSearchingGate]);
+		}
+
+		//“¯‚¶ŠX‚ªŒq‚ª‚Á‚Ä‚¢‚È‚¯‚ê‚ÎƒŠƒ“ƒNƒŒƒxƒ‹‚ğ‘‰Á
+		if (!searchedTown)
+			linkLevel++;
+
+		//“¯‚¶ƒ‹[ƒg‚ª‚È‚¯‚ê‚Î’Ç‰Á
+		if (!linkedSameRoute)
+			linkedTown.push_back(std::make_pair(place, gateList[indexSearchingGate]));
 	}
 }
