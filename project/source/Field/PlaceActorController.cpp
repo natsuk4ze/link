@@ -45,7 +45,8 @@ namespace Field::Actor
 	/**************************************
 	コンストラクタ
 	***************************************/
-	PlaceActorController::PlaceActorController()
+	PlaceActorController::PlaceActorController() :
+		bonusSideWay(0.0f)
 	{
 		bgContainer.reserve(ReserveGround);
 		alongController = new Along::AlongController();
@@ -54,6 +55,11 @@ namespace Field::Actor
 
 		auto onReachPassenger = std::bind(&Along::AlongController::OnReachPassenger, alongController, std::placeholders::_1);
 		passengerController->SetCallbackOnReach(onReachPassenger);
+
+		alongController->SetBuildBonusFunc([this]()
+		{
+			bonusSideWay += 1.0f;
+		});
 	}
 
 	/**************************************
@@ -250,6 +256,14 @@ namespace Field::Actor
 		{
 			passengerController->SetPassenger(route);
 		}
+	}
+
+	/**************************************
+	道沿いボーナス取得処理
+	***************************************/
+	float PlaceActorController::GetSideWayBonus() const
+	{
+		return bonusSideWay;
 	}
 
 	/**************************************

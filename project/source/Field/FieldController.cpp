@@ -371,7 +371,8 @@ namespace Field
 			return;
 
 		float raiseValue = placeContainer->CalcDevelopmentLevelAI(developSpeedBonus);
-		developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + raiseValue);
+		float bonusSideWay = placeActController->GetSideWayBonus();
+		developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + raiseValue + bonusSideWay);
 		realDevelopmentLevelAI = Easing::EaseValue(developmentLevelAI / 9999.0f, 0.0f, 9999.0f, OutSine);
 	}
 

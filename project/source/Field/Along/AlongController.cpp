@@ -73,6 +73,7 @@ namespace Field::Along
 			return;
 
 		modelMap[position]->CreateActor();
+		addBuildBonus();
 	}
 
 	/**************************************
@@ -90,6 +91,14 @@ namespace Field::Along
 
 		modelMap[key]->SetType((AlongModel::Type)type);
 		modelMap[key]->SetTransform(transform);
+	}
+
+	/**************************************
+	道沿いが栄えた際のボーナス処理
+	***************************************/
+	void AlongController::SetBuildBonusFunc(const std::function<void()>& functor)
+	{
+		addBuildBonus = functor;
 	}
 
 	/**************************************
