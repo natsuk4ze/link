@@ -97,19 +97,19 @@ EventTelop::EventTelop()
 {
 	//テキスト
 	text = new BaseViewerDrawer();
-	text->MakeVertex();
 	text->size = D3DXVECTOR3(512, 128.0f, 0.0f);
 	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	text->position = D3DXVECTOR3(SCREEN_WIDTH*1.2, SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
 	text->SetColor(SET_COLOR_NOT_COLORED);
+	text->MakeVertex();
 
 	//背景
 	bg = new BaseViewerDrawer();
-	MakeVertexBG();
 	bg->size = D3DXVECTOR3(SCREEN_WIDTH / 2, 60.0f, 0.0f);
 	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	bg->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 5), SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
 	bg->SetColor(SET_COLOR_NOT_COLORED);
+	MakeVertexBG();
 
 	//コンテナにテクスチャ情報をロードする
 	for (int i = 0; i < typeMax; i++)
@@ -147,6 +147,7 @@ EventTelop::~EventTelop()
 //=============================================================================
 void EventTelop::Update()
 {
+	//テロップ再生処理
 	Play();
 
 #ifdef _DEBUG
@@ -165,15 +166,15 @@ void EventTelop::Update()
 void EventTelop::Draw(void)
 {
 	//再生中なら描画
-	if (isPlaying)
-	{
-		//背景を先に描画
-		bg->Draw();
-		SetVertexBG(percentageBG);
+	if (!isPlaying) return;
 
-		text->Draw();
-		text->SetVertex();
-	}
+	//背景を先に描画
+	bg->Draw();
+	SetVertexBG(percentageBG);
+
+	//テキスト
+	text->Draw();
+	text->SetVertex();
 }
 
 //=============================================================================
@@ -181,52 +182,52 @@ void EventTelop::Draw(void)
 //=============================================================================
 void EventTelop::Play()
 {
-	if (isPlaying)
+	//再生中なら描画
+	if (!isPlaying) return;
+
+	//フレーム更新
+	countFrame++;
+
+	//時間更新
+	animTime = countFrame / animDuration[currentAnim];
+
+	//アニメーションシーンがBG_Openの間背景をオープンする
+	if (currentAnim == BG_Open)
 	{
-		//フレーム更新
-		countFrame++;
+		OpenBG();
+	}
 
-		//時間更新
-		animTime = countFrame / animDuration[currentAnim];
+	//ポジションを更新
+	text->position.x = Easing::EaseValue(animTime,
+		textStartPositionX[currentAnim],
+		textEndPositionX[currentAnim],
+		animType[currentAnim]);
 
-		//アニメーションがWaitBG_Openの間背景をオープンする
-		if (currentAnim == BG_Open)
+	//アニメーションシーンがBG_Closeの間背景をクローズする
+	if (currentAnim == BG_Close)
+	{
+		CloseBG();
+	}
+
+	//アニメーション更新
+	if (countFrame == animDuration[currentAnim])
+	{
+		countFrame = 0;
+		currentAnim++;
+	}
+
+	//アニメーション終了
+	if (currentAnim >= animMax)
+	{
+		countFrame = 0;
+		currentAnim = 0;
+		isPlaying = false;
+
+		//ヌルチェック
+		if (Callback != nullptr)
 		{
-			OpenBG();
-		}
-
-		//ポジションを更新
-		text->position.x = Easing::EaseValue(animTime,
-			textStartPositionX[currentAnim],
-			textEndPositionX[currentAnim],
-			animType[currentAnim]);
-
-		//アニメーションがWaitBG_Closeの間背景をクローズする
-		if (currentAnim == BG_Close)
-		{
-			CloseBG();
-		}
-
-		//アニメーション更新
-		if (countFrame == animDuration[currentAnim])
-		{
-			countFrame = 0;
-			currentAnim++;
-		}
-
-		//アニメーション終了
-		if (currentAnim >= animMax)
-		{
-			countFrame = 0;
-			currentAnim = 0;
-			isPlaying = false;
-
-			//ヌルチェック
-			if (Callback != nullptr)
-			{
-				//再生終了の通知
-				Callback();
-			}
+			//再生終了の通知
+			Callback();
 		}
 	}
 }

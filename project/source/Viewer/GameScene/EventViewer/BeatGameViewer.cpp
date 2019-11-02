@@ -51,9 +51,15 @@ BeatGameViewer::BeatGameViewer() :
 //*****************************************************************************
 BeatGameViewer::~BeatGameViewer()
 {
+	if (Viewer->texture == SuccessTexture)
+	{
+		SAFE_RELEASE(FailTexture);
+	}
+	else
+	{
+		SAFE_RELEASE(SuccessTexture);
+	}
 	SAFE_DELETE(Viewer);
-	SAFE_DELETE(SuccessTexture);
-	SAFE_DELETE(FailTexture);
 }
 
 //=============================================================================

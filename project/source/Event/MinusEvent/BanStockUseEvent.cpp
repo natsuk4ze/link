@@ -44,6 +44,7 @@ BanStockUseEvent::BanStockUseEvent(EventViewer* eventViewer,
 BanStockUseEvent::~BanStockUseEvent()
 {
 	SAFE_DELETE(beatGame);
+	eventViewer = nullptr;
 }
 
 //=============================================================================

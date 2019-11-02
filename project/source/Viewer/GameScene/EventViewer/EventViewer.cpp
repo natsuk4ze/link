@@ -48,7 +48,6 @@ void EventViewer::Update()
 	for (int i = 0; i < eventViewerMax; i++)
 	{
 		eventViewer[i]->Update();
-
 	}
 
 #ifdef _DEBUG

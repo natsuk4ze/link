@@ -1,11 +1,11 @@
 //=============================================================================
 //
-// 隕石爆発エフェクトクラス [MeteorExplosion.cpp]
+// 隕石周りの炎エフェクトクラス [MeteorFire.cpp]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#ifndef _MeteorExplosion_H_
-#define _MeteorExplosion_H_
+#ifndef _MeteorFire_H_
+#define _MeteorFire_H_
 
 #include "../../../main.h"
 #include "../../../Framework/Particle/BaseParticleController.h"
@@ -14,27 +14,28 @@
 namespace Effect::Game
 {
 	/**************************************
-	MeteorExplosionControllerクラス
+	MeteorFireControllerクラス
 	***************************************/
-	class MeteorExplosionController : public BaseParticleController
+	class MeteorFireController : public BaseParticleController
 	{
 	public:
-		MeteorExplosionController();
+		MeteorFireController();
 	};
 
 	/**************************************
-	MeteorExplosionクラス
+	MeteorFireクラス
 	***************************************/
-	class MeteorExplosion : public AnimationParticle3D
+	class MeteorFire : public AnimationParticle3D
 	{
 	public:
-		MeteorExplosion();
+		MeteorFire();
 
 		void Init() override;
 		void Update() override;
 
 	private:
 		static const int Life;
+		int AnimIndex;
 	};
 }
 #endif

@@ -31,6 +31,8 @@ public:
 	float parameterBox;
 
 private:
+
+	//”wŒi
 	BaseViewerDrawer *bg;
 
 	//¬”“_

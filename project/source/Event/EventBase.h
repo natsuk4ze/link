@@ -27,7 +27,7 @@ protected:
 
 public:
 	EventBase(bool IsPauseEvent);
-	~EventBase();
+	virtual ~EventBase();
 	virtual void Init(void);
 	virtual void Update(void);
 	virtual void Draw(void);

@@ -7,9 +7,10 @@
 #include "../../../main.h"
 #include "CityDestroyEvent.h"
 #include "BeatGame.h"
+#include "../EventActor.h"
 #include "../../Viewer/GameScene/EventViewer/EventViewer.h"
-#include "../../../Framework/Camera/CameraTranslationPlugin.h"
 #include "../../Effect/GameParticleManager.h"
+#include "../../../Framework/Camera/CameraTranslationPlugin.h"
 #include "../../../Framework/Task/TaskManager.h"
 
 enum State
@@ -24,25 +25,14 @@ enum State
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-// 隕石の半径
-const float MeteoriteRadius = 3.0f;
 const float MeteoriteDistance = 200.0f;
 const float FallSpeed = 4.0f;
+const D3DXVECTOR3 Scale = D3DXVECTOR3(0.15f, 0.15f, 0.15f);
 
 //*****************************************************************************
 // スタティック変数宣言
 //*****************************************************************************
-#if _DEBUG
-LPD3DXMESH CityDestroyEvent::SphereMesh = nullptr;
-D3DMATERIAL9 CityDestroyEvent::Material =
-{
-	D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),	// Diffuse color RGBA
-	D3DXCOLOR(1.0f, 0.65f, 0.0f, 1.0f),	// Ambient color RGB
-	D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f),	// Specular 'shininess'
-	D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f),	// Emissive color RGB
-	0.0f,								// Sharpness if specular highlight 
-};
-#endif
+
 
 //=============================================================================
 // コンストラクタ
@@ -59,7 +49,9 @@ CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer) :
 //=============================================================================
 CityDestroyEvent::~CityDestroyEvent()
 {
+	SAFE_DELETE(Meteor);
 	SAFE_DELETE(beatGame);
+	eventViewer = nullptr;
 }
 
 //=============================================================================
@@ -74,6 +66,14 @@ void CityDestroyEvent::Init()
 	Target = fieldEventHandler->GetDestroyTarget();
 	TownPos = Target->GetPosition().ConvertToWorldPosition();
 
+	// 隕石落下方向計算
+	MeteoritePos = TownPos + D3DXVECTOR3(MeteoriteDistance, MeteoriteDistance, 0.0f);
+	MoveDirection = TownPos - MeteoritePos;
+	D3DXVec3Normalize(&MoveDirection, &MoveDirection);
+
+	// 隕石メッシュ作成
+	Meteor = new EventActor(MeteoritePos, Scale, "Meteor");
+
 	// ゲーム進行停止
 	fieldEventHandler->PauseGame();
 
@@ -82,20 +82,6 @@ void CityDestroyEvent::Init()
 	{
 		Camera::TranslationPlugin::Instance()->Move(TownPos, 30, [&]() {MeteorFallStart(); });
 	});
-
-	// 隕石落下方向計算
-	MeteoritePos = TownPos + D3DXVECTOR3(MeteoriteDistance, MeteoriteDistance, 0.0f);
-	MoveDirection = TownPos - MeteoritePos;
-	D3DXVec3Normalize(&MoveDirection, &MoveDirection);
-
-#if _DEBUG
-	// 球体メッシュを作成する
-	if (SphereMesh == nullptr)
-	{
-		LPDIRECT3DDEVICE9 Device = GetDevice();
-		D3DXCreateSphere(Device, MeteoriteRadius, 16, 16, &SphereMesh, NULL);
-	}
-#endif
 
 	// 初期化終了
 	Initialized = true;
@@ -187,30 +173,11 @@ void CityDestroyEvent::Draw()
 	if (!Initialized)
 		return;
 
-	LPDIRECT3DDEVICE9 Device = GetDevice();
-
-#if _DEBUG
 	if (EventState != State::EffectHappend)
 	{
-		D3DXMATRIX WorldMatrix, TransMatrix;
-
-		// ワールドマトリックスの初期化
-		D3DXMatrixIdentity(&WorldMatrix);
-
-		// 移動を反映
-		D3DXMatrixTranslation(&TransMatrix, MeteoritePos.x, MeteoritePos.y, MeteoritePos.z);
-		D3DXMatrixMultiply(&WorldMatrix, &WorldMatrix, &TransMatrix);
-
-		// ワールドマトリックスの設定
-		Device->SetTransform(D3DTS_WORLD, &WorldMatrix);
-
-		// マテリアルの設定
-		Device->SetMaterial(&Material);
-
-		// 球体描画
-		SphereMesh->DrawSubset(0);
+		Meteor->SetPosition(MeteoritePos);
+		Meteor->Draw();
 	}
-#endif
 
 	beatGame->Draw();
 }
