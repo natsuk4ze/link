@@ -14,6 +14,7 @@
 #include <list>
 #include <vector>
 #include <functional>
+#include <utility>
 
 namespace Field::Model
 {
@@ -29,7 +30,7 @@ namespace Field::Model
 	{
 	public:
 		//コンストラクタ、デストラクタ
-		TownModel(const PlaceModel* place, std::function<void(const PlaceModel *start, const PlaceModel *goal)> *action);
+		TownModel(const PlaceModel* place, std::function<void(const PlaceModel *start, const PlaceModel *goal, const PlaceModel *town)> *action);
 		~TownModel();
 
 		//更新処理
@@ -50,7 +51,7 @@ namespace Field::Model
 		//発展度取得処理
 		float DevelopmentLevel();
 
-		//レベルが上がる際に呼ばれる処理
+		//繋がっている街を探す処理
 		void FindLinkedTown();
 
 		//リンクレベル加算処理
@@ -88,13 +89,17 @@ namespace Field::Model
 		int indexDestination;
 
 		//パッセンジャー出発処理
-		std::function<void(const PlaceModel* start, const PlaceModel *end)> *departPassenger;
+		std::function<void(const PlaceModel* start, const PlaceModel *end, const PlaceModel *town)> *departPassenger;
 
 		//繋がってる街への経路
-		std::vector<const PlaceModel*> linkedTown;
+		//first : 相手の街, second : 出口
+		std::vector<std::pair<const PlaceModel*, const PlaceModel*>> linkedTown;
 
 		//出口
 		std::vector<const PlaceModel*> gateList;
+
+		//探索中の出口のインデックス
+		unsigned indexSearchingGate;
 	};
 }
 #endif

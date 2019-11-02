@@ -146,10 +146,13 @@ namespace Field::Route
 	/**************************************
 	ルート計算処理
 	***************************************/
-	std::deque<D3DXVECTOR3> AStarController::CalcRoute(const Field::FieldPosition &start, const Field::FieldPosition &goal)
+	std::deque<D3DXVECTOR3> AStarController::CalcRoute(const Field::FieldPosition &start, const Field::FieldPosition &goal, const Field::FieldPosition& town)
 	{
 		closeList.clear();
 		openList.clear();
+
+		//タウンのノードをクローズ
+		CloseNode(nodeMap[town].get());
 
 		//ゴール地点のノードを取得
 		AStarNode *goalNode = nodeMap[goal].get();
@@ -163,7 +166,7 @@ namespace Field::Route
 		std::deque<D3DXVECTOR3> route;
 
 		//試行回数を数えて、2000回超えたら強制中断
-		for (int i = 0; i < 2000; ++i)
+		for (int i = 0; i < 10000; ++i)
 		{
 			//オープンしたノードをクローズする
 			CloseNode(node);
@@ -184,6 +187,7 @@ namespace Field::Route
 			{
 				CloseNode(node);
 				node->GetPath(route);
+				route.push_front(town.ConvertToWorldPosition());
 				break;
 			}
 		}

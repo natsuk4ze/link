@@ -45,6 +45,7 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	ResourceManager::Instance()->LoadMesh("Mountain-City", "data/MODEL/PlaceActor/mountain.x");
 	ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
 	ResourceManager::Instance()->LoadMesh("Car", "data/MODEL/PassengerActor/ToonCar.x");
+	ResourceManager::Instance()->LoadMesh("AlongCity", "data/MODEL/AlongActor/AlongActorCity.x");
 
 	// FieldLevel = World
 

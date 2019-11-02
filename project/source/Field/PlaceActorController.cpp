@@ -45,12 +45,21 @@ namespace Field::Actor
 	/**************************************
 	コンストラクタ
 	***************************************/
-	PlaceActorController::PlaceActorController()
+	PlaceActorController::PlaceActorController() :
+		bonusSideWay(0.0f)
 	{
 		bgContainer.reserve(ReserveGround);
 		alongController = new Along::AlongController();
 		aStarController = new Route::AStarController();
 		passengerController = new PassengerController();
+
+		auto onReachPassenger = std::bind(&Along::AlongController::OnReachPassenger, alongController, std::placeholders::_1);
+		passengerController->SetCallbackOnReach(onReachPassenger);
+
+		alongController->SetBuildBonusFunc([this]()
+		{
+			bonusSideWay += 1.0f;
+		});
 	}
 
 	/**************************************
@@ -239,11 +248,22 @@ namespace Field::Actor
 	/**************************************
 	パッセンジャー出発処理
 	***************************************/
-	void PlaceActorController::DepartPassenger(const Model::PlaceModel * start, const Model::PlaceModel * goal)
+	void PlaceActorController::DepartPassenger(const Model::PlaceModel * start, const Model::PlaceModel * goal, const Model::PlaceModel* town)
 	{
-		auto route = aStarController->CalcRoute(start->GetPosition(), goal->GetPosition());
-		if(route.size() != 0)
+		auto route = aStarController->CalcRoute(start->GetPosition(), goal->GetPosition(), town->GetPosition());
+
+		if (route.size() != 0)
+		{
 			passengerController->SetPassenger(route);
+		}
+	}
+
+	/**************************************
+	道沿いボーナス取得処理
+	***************************************/
+	float PlaceActorController::GetSideWayBonus() const
+	{
+		return bonusSideWay;
 	}
 
 	/**************************************

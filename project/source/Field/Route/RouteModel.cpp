@@ -210,21 +210,17 @@ namespace Field::Model
 	/**************************************
 	繋がっている街を取得
 	***************************************/
-	int RouteModel::FindLinkedTown(TownModel * root, std::vector<RouteModelPtr> & searchedRoute, std::vector<const PlaceModel*>& searchedTown, RoutePlaceStack& stackRoute, const PlaceModel* start)
+	int RouteModel::FindLinkedTown(TownModel * root, std::vector<unsigned> & searchedRoute)
 	{
 		int cntTown = 0;
 
-		//ルートスタックに自身を積む
-		int cntPush = stackRoute.Push(GetAllPlaces(start));
-
 		//対象に繋がっている街を確認
-		searchedRoute.push_back(shared_from_this());
+		searchedRoute.push_back(uniqueID);
 
 		const PlaceModel* town = this->GetConnectedTown(root->GetPlace());
 		if (town != nullptr)
 		{
 			cntTown++;
-			searchedTown.push_back(town);
 
 			//経路を保存
 			root->AddLinkedTown(town);
@@ -234,22 +230,17 @@ namespace Field::Model
 			//隣接しているルートに対して再帰的に探索
 			for (auto&& adjacency : this->adjacentRoute)
 			{
-				if (adjacency.start == start)
-					continue;
-
 				RouteModelPtr ptr = adjacency.route.lock();
 
 				if (!ptr)
 					continue;
 
-				if (Utility::IsContain(searchedRoute, ptr))
+				if (Utility::IsContain(searchedRoute, ptr->uniqueID))
 					continue;
 
-				cntTown += ptr->FindLinkedTown(root, searchedRoute, searchedTown, stackRoute, adjacency.end);
+				cntTown += ptr->FindLinkedTown(root, searchedRoute);
 			}
 		}
-		//スタックから自身を取り除く
-		stackRoute.Pop(cntPush);
 
 		return cntTown;
 	}
@@ -324,10 +315,10 @@ namespace Field::Model
 		//街なら出口を増やす
 		if (opponent->IsType(PlaceType::Town))
 		{
-			(*onConnectedTown)(opponent, place);
-
 			//方向追加
 			opponent->AddDirection(opponent->IsAdjacent(place));
+
+			(*onConnectedTown)(opponent, place);
 		}
 	}
 

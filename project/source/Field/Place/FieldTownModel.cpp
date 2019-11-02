@@ -8,6 +8,7 @@
 #include "FieldTownModel.h"
 #include "FieldPlaceModel.h"
 #include "../Route/RouteModel.h"
+#include <algorithm>
 
 namespace Field::Model
 {
@@ -20,7 +21,7 @@ namespace Field::Model
 	/**************************************
 	コンストラクタ
 	***************************************/
-	TownModel::TownModel(const PlaceModel* place, std::function<void(const PlaceModel *start, const PlaceModel *goal)> *action) :
+	TownModel::TownModel(const PlaceModel* place, std::function<void(const PlaceModel *start, const PlaceModel *goal, const PlaceModel* town)> *action) :
 		uniqueID(incrementID++),
 		place(place),
 		linkLevel(0),
@@ -45,17 +46,18 @@ namespace Field::Model
 	***************************************/
 	void TownModel::Update()
 	{
-		cntFrame++;
-		
 		if (linkedTown.size() == 0)
 			return;
 
 		//4秒おきに繋がっている街に向かってパッセンジャーを出発させる
-		if (cntFrame % 30 == 0)
+		const int Interval = 120;
+		if (cntFrame % Interval == 0)
 		{
 			indexDestination = Math::WrapAround(0, (int)linkedTown.size(), ++indexDestination);
-			(*departPassenger)(place, linkedTown[indexDestination]);
+			(*departPassenger)(linkedTown[indexDestination].second, linkedTown[indexDestination].first, place);
 		}
+
+		cntFrame++;
 	}
 
 	/**************************************
@@ -104,27 +106,26 @@ namespace Field::Model
 	}
 
 	/**************************************
-	成長する時に呼ばれる処理
+	繋がっている街を探す処理
 	***************************************/
 	void TownModel::FindLinkedTown()
 	{
 		linkLevel = biasLinkLevel;
 
-		RouteContainer searchedRoute;
-		std::vector<const PlaceModel*> searchedTown;
-		searchedTown.push_back(place);
-
-		RouteContainer belongRoute = place->GetConnectingRoutes();
-
-		RoutePlaceStack routeStack;
+		std::vector<unsigned> searchedRoute;
 
 		linkedTown.clear();
-		for (auto&& route : belongRoute)
+		for(indexSearchingGate = 0; indexSearchingGate < gateList.size(); indexSearchingGate++)
 		{
-			linkLevel += route->FindLinkedTown(this, searchedRoute, searchedTown, routeStack, place);
+			auto routeList = gateList[indexSearchingGate]->GetConnectingRoutes();
+			searchedRoute.clear();
+			for (auto&& route : routeList)
+			{
+				route->FindLinkedTown(this, searchedRoute);
+			}
 		}
 
-		developmentLevel = (float)linkLevel /** linkLevel*/;
+		developmentLevel = (float)linkLevel;
 	}
 
 	/**************************************
@@ -148,6 +149,22 @@ namespace Field::Model
 	***************************************/
 	void TownModel::AddLinkedTown(const PlaceModel *place)
 	{
-		linkedTown.push_back(place);
+		//相手を既にカウント済みかどうか検索
+		bool searchedTown = false;
+		bool linkedSameRoute = false;
+
+		for (auto&& route : linkedTown)
+		{
+			searchedTown |= route.first == place;
+			linkedSameRoute |= searchedTown && (route.second == gateList[indexSearchingGate]);
+		}
+
+		//同じ街が繋がっていなければリンクレベルを増加
+		if (!searchedTown)
+			linkLevel++;
+
+		//同じルートがなければ追加
+		if (!linkedSameRoute)
+			linkedTown.push_back(std::make_pair(place, gateList[indexSearchingGate]));
 	}
 }

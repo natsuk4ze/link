@@ -25,6 +25,7 @@
 
 #include "../../Framework/Input/input.h"
 #include "../../Framework/Tool/DebugWindow.h"
+#include "../../Framework/Math//Easing.h"
 
 #include <algorithm>
 
@@ -77,7 +78,7 @@ namespace Field
 		onCreateJunction = DelegateObject<PlaceContainer, void(const PlaceModel*)>::Create(placeContainer, &PlaceContainer::OnCreateJunction);
 		onChangePlaceType = DelegateObject<Actor::PlaceActorController, void(const PlaceModel*)>::Create(placeActController, &Actor::PlaceActorController::ChangeActor);
 
-		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2);
+		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
 
 		//ルートプロセッサ作成
@@ -371,7 +372,8 @@ namespace Field
 			return;
 
 		float raiseValue = placeContainer->CalcDevelopmentLevelAI(developSpeedBonus);
-		developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + raiseValue);
+		float bonusSideWay = placeActController->GetSideWayBonus();
+		developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + raiseValue + bonusSideWay);
 		realDevelopmentLevelAI = Easing::EaseValue(developmentLevelAI / 9999.0f, 0.0f, 9999.0f, EaseType::OutSine);
 	}
 

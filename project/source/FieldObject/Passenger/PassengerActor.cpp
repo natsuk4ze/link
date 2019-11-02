@@ -95,16 +95,10 @@ void PassengerActor::MoveDest(const D3DXVECTOR3 dest, std::function<void(void)> 
 	// ˆÚ“®ƒtƒŒ[ƒ€
 	int frame = int(D3DXVec3Length(&vec) / Field::Actor::PlaceActorController::PlacePositionOffset) * 15;
 
-	if (Vector3::Angle(vec, transform->Forward()) >= 45.0f)
+	// Œü‚«‚ð‡‚í‚¹‚Ä‚©‚çˆÚ“®
+	Tween::Turn(*this, vec, 30, OutCubic, Vector3::Up, [=]
 	{
-		// Œü‚«‚ð‡‚í‚¹‚Ä‚©‚çˆÚ“®
-		Tween::Turn(*this, vec, 30, Linear, Vector3::Up, [=]
-		{
-			Tween::Move(*this, pos, this->dest, frame, Linear, callback);
-		});
-	}
-	else
-	{
-		Tween::Move(*this, pos, this->dest, frame, Linear, callback);
-	}
+		Tween::Move(*this, pos, this->dest, frame, InOutCirc, callback);
+	});
+
 }
