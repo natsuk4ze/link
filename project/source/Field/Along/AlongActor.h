@@ -37,6 +37,7 @@ namespace Field::Along
 		static const float RangePositionOffset;
 		static const float MinScale;
 		static const float MaxScale;
+		static const D3DXCOLOR MaterialColor[];
 
 		MeshContainer * mesh;
 	};

@@ -18,6 +18,11 @@ namespace Field::Along
 	const float AlongActor::RangePositionOffset = 1.5f;
 	const float AlongActor::MinScale = 0.9f;
 	const float AlongActor::MaxScale = 1.2f;
+	const D3DXCOLOR AlongActor::MaterialColor[] = {
+		{ 1.0f, 0.4f, 0.4f, 1.0f },
+		{ 0.4f, 0.4f, 1.0f, 1.0f },
+		{ 1.0f, 0.9f, 0.6f, 1.0f }
+	};
 
 	/**************************************
 	コンストラクタ
@@ -26,6 +31,9 @@ namespace Field::Along
 	{
 		mesh = new MeshContainer();
 		ResourceManager::Instance()->GetMesh("AlongCity", mesh);
+
+		int colorIndex = Math::RandomRange(0, 3);
+		mesh->SetMaterialColor(MaterialColor[colorIndex], 1);
 	}
 
 	/**************************************
