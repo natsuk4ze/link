@@ -6,9 +6,9 @@
 //
 //=====================================
 #include "FieldCursor.h"
-#include "../../Framework/Math/Easing.h"
-#include "../../Framework/Tool/DebugWindow.h"
-#include "../../Framework/Resource/ResourceManager.h"
+#include "../../../Framework/Math/Easing.h"
+#include "../../../Framework/Tool/DebugWindow.h"
+#include "../../../Framework/Resource/ResourceManager.h"
 
 #include <algorithm>
 

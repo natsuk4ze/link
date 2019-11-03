@@ -6,7 +6,7 @@
 //=====================================
 #include "FieldControllerIdle.h"
 #include "../Controller/FieldInput.h"
-#include "../FieldCursor.h"
+#include "../Object/FieldCursor.h"
 
 namespace Field
 {

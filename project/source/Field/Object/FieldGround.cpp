@@ -6,8 +6,8 @@
 //
 //=====================================
 #include "FieldGround.h"
-#include "../../Framework/Renderer3D/BoardPolygon.h"
-#include "../../Framework/Resource/ResourceManager.h"
+#include "../../../Framework/Renderer3D/BoardPolygon.h"
+#include "../../../Framework/Resource/ResourceManager.h"
 
 namespace Field
 {

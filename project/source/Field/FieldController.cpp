@@ -6,8 +6,8 @@
 //
 //=====================================
 #include "FieldController.h"
-#include "FieldCursor.h"
-#include "FieldGround.h"
+#include "Object/FieldCursor.h"
+#include "Object/FieldGround.h"
 #include "Place\FieldPlaceContainer.h"
 #include "Place\OperatePlaceContainer.h"
 #include "Place\FieldPlaceModel.h"

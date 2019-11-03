@@ -103,8 +103,6 @@
     <ClInclude Include="source\Field\State\UseItem.h" />
     <ClInclude Include="source\Field\FieldConfig.h" />
     <ClInclude Include="source\Field\FieldController.h" />
-    <ClInclude Include="source\Field\FieldCursor.h" />
-    <ClInclude Include="source\Field\FieldGround.h" />
     <ClInclude Include="source\Field\PlaceActorController.h" />
     <ClInclude Include="source\FieldObject\Actor\BridgeActor.h" />
     <ClInclude Include="source\FieldObject\Actor\CityActor.h" />
@@ -193,6 +191,8 @@
     <ClInclude Include="source\Event\EventActor.h" />
     <ClInclude Include="source\Effect\Game\MeteorFire.h" />
     <ClInclude Include="source\Field\AStar\AStarController.h" />
+    <ClInclude Include="source\Field\Object\FieldCursor.h" />
+    <ClInclude Include="source\Field\Object\FieldGround.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -282,8 +282,6 @@
     <ClCompile Include="source\Field\State\FieldControllerIdle.cpp" />
     <ClCompile Include="source\Field\State\UseItem.cpp" />
     <ClCompile Include="source\Field\FieldController.cpp" />
-    <ClCompile Include="source\Field\FieldCursor.cpp" />
-    <ClCompile Include="source\Field\FieldGround.cpp" />
     <ClCompile Include="source\Field\PlaceActorController.cpp" />
     <ClCompile Include="source\FieldObject\Actor\BridgeActor.cpp" />
     <ClCompile Include="source\FieldObject\Actor\CityActor.cpp" />
@@ -370,6 +368,8 @@
     <ClCompile Include="source\Event\EventActor.cpp" />
     <ClCompile Include="source\Effect\Game\MeteorFire.cpp" />
     <ClCompile Include="source\Field\AStar\AStarController.cpp" />
+    <ClCompile Include="source\Field\Object\FieldCursor.cpp" />
+    <ClCompile Include="source\Field\Object\FieldGround.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

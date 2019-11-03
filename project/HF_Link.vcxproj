@@ -170,9 +170,9 @@
     <ClInclude Include="source\Field\Controller\FieldDevelopper.h" />
     <ClInclude Include="source\Field\FieldConfig.h" />
     <ClInclude Include="source\Field\FieldController.h" />
-    <ClInclude Include="source\Field\FieldCursor.h" />
+    <ClInclude Include="source\Field\Object\FieldCursor.h" />
     <ClInclude Include="source\Field\FieldEventHandler.h" />
-    <ClInclude Include="source\Field\FieldGround.h" />
+    <ClInclude Include="source\Field\Object\FieldGround.h" />
     <ClInclude Include="source\Field\Controller\FieldInput.h" />
     <ClInclude Include="source\Field\PlaceActorController.h" />
     <ClInclude Include="source\Field\Place\FieldJunctionModel.h" />
@@ -351,9 +351,9 @@
     <ClCompile Include="source\Field\Camera\State\FieldCameraQuater.cpp" />
     <ClCompile Include="source\Field\Controller\FieldDevelopper.cpp" />
     <ClCompile Include="source\Field\FieldController.cpp" />
-    <ClCompile Include="source\Field\FieldCursor.cpp" />
+    <ClCompile Include="source\Field\Object\FieldCursor.cpp" />
     <ClCompile Include="source\Field\FieldEventHandler.cpp" />
-    <ClCompile Include="source\Field\FieldGround.cpp" />
+    <ClCompile Include="source\Field\Object\FieldGround.cpp" />
     <ClCompile Include="source\Field\Controller\FieldInput.cpp" />
     <ClCompile Include="source\Field\PlaceActorController.cpp" />
     <ClCompile Include="source\Field\Place\FieldJunctionModel.cpp" />
