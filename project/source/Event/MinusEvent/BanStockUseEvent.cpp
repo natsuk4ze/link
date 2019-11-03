@@ -65,7 +65,7 @@ void BanStockUseEvent::Init()
 	GameParticleManager::Instance()->SetAngryFaceEffect();
 
 	// 怒り顔エフェクト終わるまで待つ
-	TaskManager::Instance()->CreateDelayedTask(210, [&]() {CountdownStart(); });
+	TaskManager::Instance()->CreateDelayedTask(210, [&]() {	beatGame->CountdownStart(); });
 
 	// 初期化終了
 	Initialized = true;
@@ -125,14 +125,6 @@ void BanStockUseEvent::EventOver(void)
 	SetBanStock(false);
 	fieldEventHandler->ResumeGame();
 	UseFlag = false;
-}
-
-//=============================================================================
-// 連打ゲームのカウントダウン開始
-//=============================================================================
-void BanStockUseEvent::CountdownStart(void)
-{
-	beatGame->CountdownStart();
 }
 
 //=============================================================================

@@ -129,8 +129,8 @@ bool BaseEmitter::Emit(std::vector<BaseParticle*>& container)
 		//カウント
 		cntEmit++;
 
-		//決められ数だけ放出していたら終了
-		if (cntEmit == emitNum)
+		//決められ数だけ放出していたら、また放出遅延時間が設定されたら終了
+		if (cntEmit == emitNum || DelayCount > 0)
 			return true;
 	}
 
@@ -146,4 +146,12 @@ bool BaseEmitter::IsActive() const
 		return false;
 
 	return cntFrame <= duration;
+}
+
+/**************************************
+放出遅延フレームを設定
+***************************************/
+void BaseEmitter::SetDelayCount(int DelayCount)
+{
+	this->DelayCount = DelayCount;
 }

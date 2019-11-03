@@ -32,6 +32,7 @@ enum State
 	BeatGameSuccess,
 	BeatGameFail,
 	EffectHappend,
+	UFOExit,
 };
 
 //*****************************************************************************
@@ -73,10 +74,10 @@ void AILevelDecreaseEvent::Init()
 	Target = fieldEventHandler->GetDestroyTarget();
 	TownPos = Target->GetPosition().ConvertToWorldPosition();
 
-	// 隕石落下方向計算
-	UFOPos = TownPos + Vector3::Up * 40.0f;
+	// 初期座標設定
+	UFOPos = TownPos + Vector3::Up * 50.0f;
 
-	// 隕石メッシュ作成
+	// UFOメッシュ作成
 	UFO = new EventActor(UFOPos, Scale, "UFO");
 
 	// テロップ設置
@@ -112,6 +113,7 @@ void AILevelDecreaseEvent::Update()
 		if (Distance > pow(25.0f, 2))
 		{
 			UFOPos += Vector3::Down * FallSpeed;
+			UFO->SetPosition(UFOPos);
 		}
 		else
 		{
@@ -122,21 +124,7 @@ void AILevelDecreaseEvent::Update()
 
 	case BeatGameStart:
 
-		/*float RadiusX = 1.0f;
-		float RadiusY = 2.0f;
-		float RadiusZ = 3.0f;
-		float RateX = 3.0f;
-		float RateY = 4.0f;
-		float RateZ = 5.0f;
-
-		D3DXVECTOR3 hover = D3DXVECTOR3
-		{
-				RadiusX * sinf(RateX * (float)FrameCount),
-				RadiusY * sinf(RateY * (float)FrameCount),
-				RadiusZ * sinf(RateZ * (float)FrameCount)
-		};
-
-		UFOPos += hover;*/
+		UFO->Update();
 
 		// 連打ゲームの更新
 		beatGame->Update();
@@ -158,12 +146,30 @@ void AILevelDecreaseEvent::Update()
 		// AIレベル減らす
 	case BeatGameFail:
 
-		// 30フレームの遅延を設置
-		TaskManager::Instance()->CreateDelayedTask(30, [&]()
+		UFO->Update();
+
+		// エフェクト
+		GameParticleManager::Instance()->SetDarknessEffect(TownPos);
+		TaskManager::Instance()->CreateDelayedTask(90, [&]()
 		{
-			Camera::TranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
+			EventState = UFOExit;
 		});
-		EventState = EffectHappend;
+		break;
+
+		// UFO退場
+	case UFOExit:
+
+		Distance = D3DXVec3LengthSq(&D3DXVECTOR3(UFOPos - TownPos));
+
+		if (Distance < pow(40.0f, 2))
+		{
+			UFOPos += Vector3::Up * FallSpeed;
+			UFO->SetPosition(UFOPos);
+		}
+		else
+		{
+			EventOver();
+		}
 		break;
 
 	default:
@@ -182,7 +188,6 @@ void AILevelDecreaseEvent::Draw()
 
 	if (EventState != State::EffectHappend)
 	{
-		UFO->SetPosition(UFOPos);
 		UFO->Draw();
 	}
 
@@ -213,6 +218,7 @@ void AILevelDecreaseEvent::UFODebutStart(void)
 void AILevelDecreaseEvent::EventOver(void)
 {
 	// イベント終了、ゲーム続行
+	Camera::TranslationPlugin::Instance()->Restore(15, nullptr);
 	fieldEventHandler->ResumeGame();
 	UseFlag = false;
 }
@@ -223,6 +229,7 @@ void AILevelDecreaseEvent::EventOver(void)
 void AILevelDecreaseEvent::CountdownStart(void)
 {
 	beatGame->CountdownStart();
+	UFO->SetHoverMotion(true);
 }
 
 //=============================================================================

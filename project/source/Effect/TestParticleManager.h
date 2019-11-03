@@ -27,6 +27,7 @@ namespace TestParticle
 		TownExplosion,
 		MeteorExplosion,
 		MeteorFire,
+		Darkness,
 		Max
 	};
 }

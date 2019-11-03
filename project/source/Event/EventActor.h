@@ -33,7 +33,6 @@ public:
 	void Rotate(float y);							// Y軸回転
 	void SetPosition(const D3DXVECTOR3& Pos);		// 座標セット
 	void SetHoverMotion(bool Flag);
-	void SetHoverPara(D3DXVECTOR3 Radius, D3DXVECTOR3 Offset, D3DXVECTOR3 Rate);
 };	
 
 #endif

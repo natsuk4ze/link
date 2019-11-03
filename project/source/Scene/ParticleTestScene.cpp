@@ -112,8 +112,8 @@ void ParticleTestScene::Draw()
 	skybox->Draw();
 	ground->Draw();
 
-	static bool drawableActor = false;
-	static bool DrawEventActor = true;
+	static bool drawableActor = true;
+	static bool DrawEventActor = false;
 
 	Debug::Begin("DrawActor");
 	if (Debug::Button("DrawPlaceActor"))

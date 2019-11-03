@@ -193,6 +193,7 @@
     <ClInclude Include="source\Event\EventActor.h" />
     <ClInclude Include="source\Effect\Game\MeteorFire.h" />
     <ClInclude Include="source\Field\AStar\AStarController.h" />
+    <ClInclude Include="source\Effect\Game\Darkness.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -370,6 +371,7 @@
     <ClCompile Include="source\Event\EventActor.cpp" />
     <ClCompile Include="source\Effect\Game\MeteorFire.cpp" />
     <ClCompile Include="source\Field\AStar\AStarController.cpp" />
+    <ClCompile Include="source\Effect\Game\Drakness.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
