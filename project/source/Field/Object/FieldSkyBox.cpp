@@ -25,8 +25,8 @@ namespace Field
 		"data/TEXTURE/Skybox/SpaceBack_Tex.jpg",
 		"data/TEXTURE/Skybox/SpaceDown_Tex.jpg",
 		"data/TEXTURE/Skybox/SpaceFront_Tex.jpg",
-		"data/TEXTURE/Skybox/SpaceLeft_Tex.jpg",
 		"data/TEXTURE/Skybox/SpaceRight_Tex.jpg",
+		"data/TEXTURE/Skybox/SpaceLeft_Tex.jpg",
 	};
 
 	/**************************************
