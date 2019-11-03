@@ -51,66 +51,24 @@ namespace Field::Model
 			if (place->IsType(PlaceType::Bridge))
 				continue;
 
-			PlaceModel* connectTarget = place->GetConnectTarget();
-
-			//連結対象な見つからなかったのでコンティニュー
-			if (connectTarget == nullptr)
-				continue;
-
-			//連結対象が無視リストに含まれていたらコンティニュー
-			if (Utility::IsContain(*ignoreList, connectTarget))
-				continue;
-
-			//対象のPlaceを交差点にして分割
-			place->SetType(PlaceType::Junction);
-			divideList = Divide(model, place, routeContainer);
-			(*model->onCreateJunction)(place);
-
-			place->AddDirection(connectTarget);
-			connectTarget->AddDirection(place);
-
-			//繋がった相手も必要であれば分割する
-			connectTarget->SetType(PlaceType::Junction);
-			RouteContainer subDivList;
-			if (connectTarget->GetPrevType() == PlaceType::Road)
+			auto connectTargets = place->GetConnectTargets();
+			
+			for (auto&& target : connectTargets)
 			{
-				(*model->onCreateJunction)(connectTarget);
-				RouteModelPtr opponent = connectTarget->GetConnectingRoute();
-				subDivList = Divide(opponent, connectTarget, routeContainer);
+				//連結対象な見つからなかったのでコンティニュー
+				if (target == nullptr)
+					continue;
+
+				//連結対象が無視リストに含まれていたらコンティニュー
+				if (Utility::IsContain(*ignoreList, target))
+					continue;
+
+				_Process(model, place, target, routeContainer, divideList);
 			}
-			else
-			{
-				subDivList = connectTarget->GetConnectingRoutes();
-			}
-
-			//繋がったルート同士を隣接メンバとして保存
-			for (auto&& own : divideList)
-			{
-				for (auto&& other : subDivList)
-				{
-					own->AddAdjacency(place, connectTarget, other);
-					other->AddAdjacency(connectTarget, place, own);
-				}
-			}
-
-			//相手を分割していればRouteContainerに追加
-			if (subDivList.size() > 1)
-			{
-				std::copy(subDivList.begin(), subDivList.end(), std::back_inserter(routeContainer));
-			}
-
-			//所属を更新
-			RouteContainer belongList = connectTarget->GetConnectingRoutes();
-			place->BelongRoute(belongList);
-
-			connectTarget->BelongRoute(divideList);
-
-			//交差点と連結対象のオブジェクトを設定
-			(*onChangePlaceType)(place);
-			(*onChangePlaceType)(connectTarget);
 
 			//ルートを分割した時点で正常にループできなくなるのでブレイク
-			break;
+			if(!divideList.empty())
+				break;
 		}
 
 		//分割が行われていなかったらルートコンテナに追加
@@ -204,6 +162,60 @@ namespace Field::Model
 		RouteContainer routeList{ first, second };
 
 		return routeList;
+	}
+
+	/**************************************
+	加工処理（内部）
+	***************************************/
+	void RouteProcessor::_Process(RouteModelPtr& model, PlaceModel* place, PlaceModel* target, RouteContainer& routeContainer, RouteContainer& divList)
+	{
+		//対象のPlaceを交差点にして分割
+		place->SetType(PlaceType::Junction);
+		divList = Divide(model, place, routeContainer);
+		(*model->onCreateJunction)(place);
+
+		place->AddDirection(target);
+		target->AddDirection(place);
+
+		//繋がった相手も必要であれば分割する
+		target->SetType(PlaceType::Junction);
+		RouteContainer subDivList;
+		if (target->GetPrevType() == PlaceType::Road)
+		{
+			(*model->onCreateJunction)(target);
+			RouteModelPtr opponent = target->GetConnectingRoute();
+			subDivList = Divide(opponent, target, routeContainer);
+		}
+		else
+		{
+			subDivList = target->GetConnectingRoutes();
+		}
+
+		//繋がったルート同士を隣接メンバとして保存
+		for (auto&& own : divList)
+		{
+			for (auto&& other : subDivList)
+			{
+				own->AddAdjacency(place, target, other);
+				other->AddAdjacency(target, place, own);
+			}
+		}
+
+		//相手を分割していればRouteContainerに追加
+		if (subDivList.size() > 1)
+		{
+			std::copy(subDivList.begin(), subDivList.end(), std::back_inserter(routeContainer));
+		}
+
+		//所属を更新
+		RouteContainer belongList = target->GetConnectingRoutes();
+		place->BelongRoute(belongList);
+
+		target->BelongRoute(divList);
+
+		//交差点と連結対象のオブジェクトを設定
+		(*onChangePlaceType)(place);
+		(*onChangePlaceType)(target);
 	}
 
 	/**************************************

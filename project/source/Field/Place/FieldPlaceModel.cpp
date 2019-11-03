@@ -253,8 +253,10 @@ namespace Field::Model
 	連結相手の取得
 	TODO:連結相手を複数化
 	***************************************/
-	PlaceModel* PlaceModel::GetConnectTarget() const
+	std::vector<PlaceModel*> PlaceModel::GetConnectTargets() const
 	{
+		std::vector<PlaceModel*> out;
+
 		for (auto&& adjacency : adjacencies)
 		{
 			if (adjacency == NULL)
@@ -270,10 +272,10 @@ namespace Field::Model
 
 			//同じルートに属していなければ連結できる
 			if (!IsSameRoute(adjacency))
-				return adjacency;
+				out.push_back(adjacency);
 		}
 
-		return nullptr;
+		return out;
 	}
 
 	/**************************************

@@ -39,6 +39,8 @@ namespace Field::Model
 		//プレイスタイプを変化させた際のデリゲート
 		Delegate<void(const PlaceModel*)> *onChangePlaceType;
 
+		void _Process(RouteModelPtr& model, PlaceModel* place, PlaceModel* target, RouteContainer& routeContainer, RouteContainer& divList);
+
 		void _ConnectWithEdge(RouteModelPtr& model, PlaceModel *place, RouteContainer& routeContainer, PlaceModel *edge);
 	};
 }
