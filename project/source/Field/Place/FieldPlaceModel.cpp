@@ -201,6 +201,20 @@ namespace Field::Model
 		if (itr == adjacencies.end())
 			return Adjacency::NotAdjacenct;
 
+		Adjacency adjacency = (Adjacency)std::distance(adjacencies.begin(), itr);
+
+		//‹´‚Ìê‡‚ÍŒü‚«‚àl—¶
+		if (type == PlaceType::Bridge && !Utility::IsContain(connectDirection, adjacency))
+		{
+			return Adjacency::NotAdjacenct;
+		}
+		
+		auto opponentDirection = place->GetConnectingAdjacency();
+		if (place->IsType(PlaceType::Bridge) && !Utility::IsContain(opponentDirection, GetInverseSide(adjacency)))
+		{
+			return Adjacency::NotAdjacenct;
+		}
+
 		return (Adjacency)std::distance(adjacencies.begin(), itr);
 	}
 
