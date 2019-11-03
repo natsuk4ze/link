@@ -69,7 +69,7 @@ ItemStockViewer::ItemStockViewer() :
 	//バツアイコン
 	BanIcon_White = new BaseViewerDrawer();
 	BanIcon_White->LoadTexture("data/TEXTURE/Viewer/GameViewer/StockViewer/BanStock_White.png");
-	BanIcon_White->size = D3DXVECTOR3(100.0f, 100.0f, 0.0f);
+	BanIcon_White->size = D3DXVECTOR3(200.0f, 200.0f, 0.0f);
 	BanIcon_White->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	BanIcon_White->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.5f, SCREEN_HEIGHT / 10 * 3.5f, 0.0f);
 	BanIcon_White->SetColor(SET_COLOR_NOT_COLORED);
@@ -133,6 +133,7 @@ void ItemStockViewer::Hop(void)
 	//ホッピング処理
 	num->size.y = num->HopNumber(num->size.y, initNumSize.y, hopNumValue);
 
+	// バツアイコン演出
 	if (InBanStock)
 	{
 		if (BanIconDebut)
@@ -173,6 +174,15 @@ void ItemStockViewer::Hop(void)
 	{
 		FrameCount = 0;
 	}
+}
+
+//=============================================================================
+// バツアイコン
+//=============================================================================
+void ItemStockViewer::InitBanIcon(void)
+{
+	BanIcon->MakeVertex();
+	BanIcon_White->MakeVertex();
 }
 
 //=============================================================================

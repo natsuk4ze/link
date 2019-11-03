@@ -6,11 +6,36 @@
 //=============================================================================
 #include "../../../main.h"
 #include "AILevelDecreaseEvent.h"
+#include "BeatGame.h"
+#include "../EventActor.h"
+#include "../../Field/Place/FieldPlaceModel.h"
+#include "../../Viewer/GameScene/EventViewer/EventViewer.h"
+#include "../../Effect/GameParticleManager.h"
+#include "../../../Framework/Camera/CameraTranslationPlugin.h"
+#include "../../../Framework/Task/TaskManager.h"
 
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
+// UFOの降下速度
+const float FallSpeed = 0.2f;
+// AIレベル減らすの効果値
 const float DecreasePercent = -0.1f;
+// UFOモデルのスケール
+const D3DXVECTOR3 Scale = D3DXVECTOR3(0.15f, 0.15f, 0.15f);
+// デフォルトの高さ
+const float DefaultHeight = 50.0f;
+
+enum State
+{
+	TelopExpanding,
+	UFODebut,
+	BeatGameStart,
+	BeatGameSuccess,
+	BeatGameFail,
+	EffectHappend,
+	UFOExit,
+};
 
 //*****************************************************************************
 // スタティック変数宣言
@@ -20,8 +45,10 @@ const float DecreasePercent = -0.1f;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-AILevelDecreaseEvent::AILevelDecreaseEvent() :
-	EventBase(true)
+AILevelDecreaseEvent::AILevelDecreaseEvent(EventViewer* eventViewer) :
+	EventBase(true),
+	EventState(State::TelopExpanding),
+	eventViewer(eventViewer)
 {
 
 }
@@ -31,7 +58,9 @@ AILevelDecreaseEvent::AILevelDecreaseEvent() :
 //=============================================================================
 AILevelDecreaseEvent::~AILevelDecreaseEvent()
 {
-
+	SAFE_DELETE(beatGame);
+	SAFE_DELETE(UFO);
+	eventViewer = nullptr;
 }
 
 
@@ -40,6 +69,25 @@ AILevelDecreaseEvent::~AILevelDecreaseEvent()
 //=============================================================================
 void AILevelDecreaseEvent::Init()
 {
+	// 連打ゲームインスタンス
+	beatGame = new BeatGame([&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
+
+	// 目標町の予定地を取得
+	Target = fieldEventHandler->GetDestroyTarget();
+	TownPos = Target->GetPosition().ConvertToWorldPosition();
+
+	// 初期座標設定
+	UFOPos = TownPos + Vector3::Up * DefaultHeight;
+
+	// UFOメッシュ作成
+	UFO = new EventActor(UFOPos, Scale, "UFO");
+
+	// テロップ設置
+	eventViewer->SetEventTelop(NegativeEvent01, [&]()
+	{
+		Camera::TranslationPlugin::Instance()->Move(TownPos, 30, [&]() {UFODebutStart(); });
+	});
+
 	// ゲーム進行停止
 	fieldEventHandler->PauseGame();
 
@@ -56,11 +104,81 @@ void AILevelDecreaseEvent::Update()
 	if (!Initialized)
 		return;
 
-	fieldEventHandler->AdjustLevelAI(DecreasePercent);
+	float Distance = 0.0f;
 
-	// イベント終了、ゲーム続行
-	fieldEventHandler->ResumeGame();
-	UseFlag = false;
+	switch (EventState)
+	{
+		// UFO登場
+	case UFODebut:
+
+		Distance = D3DXVec3LengthSq(&D3DXVECTOR3(UFOPos - TownPos));
+
+		if (Distance > pow(25.0f, 2))
+		{
+			UFOPos += Vector3::Down * FallSpeed;
+			UFO->SetPosition(UFOPos);
+		}
+		else
+		{
+			CountdownStart();
+			EventState = State::BeatGameStart;
+		}
+		break;
+
+	case BeatGameStart:
+
+		UFO->Update();
+
+		// 連打ゲームの更新
+		beatGame->Update();
+		break;
+
+		// UFO撃墜
+	case BeatGameSuccess:
+
+		// UFO撃墜エフェクト
+		GameParticleManager::Instance()->SetMeteorExplosionEffect(UFOPos);
+		// 30フレームの遅延を設置
+		TaskManager::Instance()->CreateDelayedTask(30, [&]()
+		{
+			Camera::TranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
+		});
+		EventState = EffectHappend;
+		break;
+
+		// AIレベル減らす
+	case BeatGameFail:
+
+		UFO->Update();
+
+		// エフェクト
+		GameParticleManager::Instance()->SetDarknessEffect(TownPos);
+		TaskManager::Instance()->CreateDelayedTask(90, [&]()
+		{
+			EventState = UFOExit;
+		});
+		break;
+
+		// UFO退場
+	case UFOExit:
+
+		Distance = D3DXVec3LengthSq(&D3DXVECTOR3(UFOPos - TownPos));
+
+		if (Distance < pow(DefaultHeight, 2))
+		{
+			UFOPos += Vector3::Up * FallSpeed;
+			UFO->SetPosition(UFOPos);
+		}
+		else
+		{
+			Camera::TranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
+			EventState = EffectHappend;
+		}
+		break;
+
+	default:
+		break;
+	}
 }
 
 //=============================================================================
@@ -72,7 +190,12 @@ void AILevelDecreaseEvent::Draw()
 	if (!Initialized)
 		return;
 
-	
+	if (EventState != State::EffectHappend)
+	{
+		UFO->Draw();
+	}
+
+	beatGame->Draw();
 }
 
 //=============================================================================
@@ -80,29 +203,53 @@ void AILevelDecreaseEvent::Draw()
 //=============================================================================
 string AILevelDecreaseEvent::GetEventMessage(int FieldLevel)
 {
-	vector<string> MessageContainer;
+	// ヌル
+	return "";
+}
 
-	if (FieldLevel == Field::City)
-	{
-		MessageContainer.push_back("AIレベル減らすイベント");
-	}
-	else if (FieldLevel == Field::World)
-	{
+//=============================================================================
+// UFOが登場開始
+//=============================================================================
+void AILevelDecreaseEvent::UFODebutStart(void)
+{
+	EventState = UFODebut;
+}
 
-	}
-	else if (FieldLevel == Field::Space)
-	{
+//=============================================================================
+// イベント終了処理
+//=============================================================================
+void AILevelDecreaseEvent::EventOver(void)
+{
+	// イベント終了、ゲーム続行
+	fieldEventHandler->ResumeGame();
+	UseFlag = false;
+}
 
-	}
+//=============================================================================
+// 連打ゲームのカウントダウン開始
+//=============================================================================
+void AILevelDecreaseEvent::CountdownStart(void)
+{
+	beatGame->CountdownStart();
+	UFO->SetHoverMotion(true);
+}
 
-	if (!MessageContainer.empty())
+//=============================================================================
+// 連打ゲームの結果による処理
+//=============================================================================
+void AILevelDecreaseEvent::ReceiveBeatResult(bool IsSuccess)
+{
+	if (IsSuccess)
 	{
-		int MessageNo = rand() % MessageContainer.size();
-		return MessageContainer.at(MessageNo);
+		// 成功
+		EventState = BeatGameSuccess;
 	}
 	else
 	{
-		string ErrMsg = "イベントメッセージがありません";
-		return ErrMsg;
+		// 失敗
+		fieldEventHandler->AdjustLevelAI(DecreasePercent);
+		EventState = BeatGameFail;
 	}
 }
+
+

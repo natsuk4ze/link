@@ -191,6 +191,7 @@
     <ClInclude Include="source\Event\EventActor.h" />
     <ClInclude Include="source\Effect\Game\MeteorFire.h" />
     <ClInclude Include="source\Field\AStar\AStarController.h" />
+    <ClInclude Include="source\Effect\Game\Darkness.h" />
     <ClInclude Include="source\Field\Object\FieldCursor.h" />
     <ClInclude Include="source\Field\Object\FieldGround.h" />
     <ClInclude Include="source\Field\Object\FieldSkyBox.h" />
@@ -372,6 +373,7 @@
     <ClCompile Include="source\Event\EventActor.cpp" />
     <ClCompile Include="source\Effect\Game\MeteorFire.cpp" />
     <ClCompile Include="source\Field\AStar\AStarController.cpp" />
+    <ClCompile Include="source\Effect\Game\Drakness.cpp" />
     <ClCompile Include="source\Field\Object\FieldCursor.cpp" />
     <ClCompile Include="source\Field\Object\FieldGround.cpp" />
     <ClCompile Include="source\Field\Object\FieldSkyBox.cpp" />

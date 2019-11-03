@@ -8,14 +8,12 @@
 #define _CityDestroyEvent_H_
 
 #include "../EventBase.h"
-#include "../../Field/Place/FieldPlaceModel.h"
 
 //*****************************************************************************
 // ëOï˚êÈåæ
 //*****************************************************************************
 class BeatGame;
 class EventViewer;
-class MeshContainer;
 class EventActor;
 
 //*****************************************************************************

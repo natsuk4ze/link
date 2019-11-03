@@ -8,6 +8,7 @@
 #include "CityDestroyEvent.h"
 #include "BeatGame.h"
 #include "../EventActor.h"
+#include "../../Field/Place/FieldPlaceModel.h"
 #include "../../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../../Effect/GameParticleManager.h"
 #include "../../../Framework/Camera/CameraTranslationPlugin.h"

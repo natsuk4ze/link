@@ -268,7 +268,7 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					Ptr = new CityDestroyEvent(eventViewer);
 					break;
 				case AILevelDecrease:
-					Ptr = new AILevelDecreaseEvent();
+					Ptr = new AILevelDecreaseEvent(eventViewer);
 					break;
 				case BanStockUse:
 					if (InBanStock)

@@ -14,8 +14,7 @@
 //=====================================
 // コンストラクタ
 //=====================================
-EventActor::EventActor(D3DXVECTOR3 Pos, D3DXVECTOR3 Scale, const char* MeshTag) :
-	onCamera(true)
+EventActor::EventActor(D3DXVECTOR3 Pos, D3DXVECTOR3 Scale, const char* MeshTag)
 {
 	// メッシュコンテナの作成
 	mesh = MeshContainer::Create();
@@ -32,7 +31,7 @@ EventActor::EventActor(D3DXVECTOR3 Pos, D3DXVECTOR3 Scale, const char* MeshTag) 
 //=====================================
 EventActor::~EventActor()
 {
-	SAFE_RELEASE(mesh);
+	SAFE_DELETE(mesh);
 }
 
 //=====================================
@@ -40,6 +39,11 @@ EventActor::~EventActor()
 //=====================================
 void EventActor::Update()
 {
+	if (InHoverMotion)
+	{
+		FrameCount++;
+		HoverMotion();
+	}
 }
 
 //=====================================
@@ -71,24 +75,40 @@ void EventActor::SetPosition(const D3DXVECTOR3& Pos)
 }
 
 //=====================================
-// メッシュデータのカラー変更
+// ホバリング運動の移動計算
 //=====================================
-void EventActor::SetColor(const D3DXCOLOR& Color)
+void EventActor::HoverMotion(void)
 {
-	unsigned numMaterial = mesh->GetMaterialNum();
+	// 運動範囲
+	D3DXVECTOR3 Radius = D3DXVECTOR3(0.6f, 0.6f, 0.5f);
+	D3DXVECTOR3	Offset = D3DXVECTOR3(20.0f, 10.0f, 30.0f);
+	// 運動速度
+	D3DXVECTOR3	Rate = D3DXVECTOR3(3.0f, 5.0f, 5.0f);
+	D3DXVECTOR3	Theta = D3DXVECTOR3
+	(
+		D3DXToRadian(Rate.x * FrameCount + Offset.x),
+		D3DXToRadian(Rate.y * FrameCount + Offset.y),
+		D3DXToRadian(Rate.z * FrameCount + Offset.z)
+	);
 
-	for (unsigned i = 0; i < numMaterial; i++)
-	{
-		mesh->SetMaterialColor(Color, i);
-	}
+	D3DXVECTOR3 hover = D3DXVECTOR3
+	(
+		Radius.x * sinf(Theta.x),
+		Radius.y * sinf(Theta.y),
+		Radius.z * sinf(Theta.z)
+	);
+
+	transform->SetPosition(BaseHoverPos + hover);
 }
 
 //=====================================
-// 座標、回転、大きさをリセット
+// ホバリング運動フラグ設置
 //=====================================
-void EventActor::ResetTransform()
+void EventActor::SetHoverMotion(bool Flag)
 {
-	transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	//transform->SetScale(Scale);
-	transform->SetRotation(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	InHoverMotion = Flag;
+	if (InHoverMotion)
+	{
+		BaseHoverPos = transform->GetPosition();
+	}
 }

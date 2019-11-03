@@ -10,18 +10,39 @@
 #include "../EventBase.h"
 
 //*****************************************************************************
+// 前方宣言
+//*****************************************************************************
+class BeatGame;
+class EventViewer;
+class EventActor;
+
+//*****************************************************************************
 // クラス定義
 //*****************************************************************************
 class AILevelDecreaseEvent : public EventBase
 {
 private:
+	D3DXVECTOR3 UFOPos;
+	D3DXVECTOR3 TownPos;
+	int EventState;
+	int FrameCount;
+	const Field::Model::PlaceModel* Target;
+
+	BeatGame *beatGame;
+	EventViewer* eventViewer;
+	EventActor *UFO;
+
 public:
-	AILevelDecreaseEvent();
+	AILevelDecreaseEvent(EventViewer* eventViewer);
 	~AILevelDecreaseEvent();
 	void Init(void) override;
 	void Update(void) override;
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;
+	void UFODebutStart(void);
+	void ReceiveBeatResult(bool IsSuccess);
+	void CountdownStart(void);
+	void EventOver(void);
 };
 
 #endif

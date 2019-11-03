@@ -26,6 +26,7 @@ public:
 
 	void Update(void);
 	void Draw(void);
+	void InitBanIcon(void);
 
 	//ƒpƒ‰ƒ[ƒ^‚ğó‚¯‚Æ‚é” 
 	int parameterBox;

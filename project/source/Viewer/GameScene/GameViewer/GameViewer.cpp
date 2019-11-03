@@ -79,6 +79,7 @@ void GameViewer::ReceiveParam(GameViewerParam &param)
 	if (stockViewer->InBanStock == false && stockViewer->InBanStock != param.InBanStock)
 	{
 		stockViewer->BanIconDebut = true;
+		stockViewer->InitBanIcon();
 	}
 	stockViewer->InBanStock = param.InBanStock;
 	stockViewer->InPauseEvent = param.InPauseEvent;

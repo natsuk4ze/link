@@ -15,6 +15,7 @@
 #include "Game/AngryFace.h"
 #include "Game/MeteorExplosion.h"
 #include "Game/MeteorFire.h"
+#include "Game/Darkness.h"
 
 /**************************************
 èâä˙âªèàóù
@@ -32,6 +33,7 @@ void TestParticleManager::Init()
 	controllers[TestParticle::TownExplosion] = new Effect::Game::TownExplosionController();
 	controllers[TestParticle::MeteorExplosion] = new Effect::Game::MeteorExplosionController();
 	controllers[TestParticle::MeteorFire] = new Effect::Game::MeteorFireController();
+	controllers[TestParticle::Darkness] = new Effect::Game::DarknessController();
 }
 
 /**************************************
@@ -57,6 +59,8 @@ void TestParticleManager::Update()
 		Generate(TestParticle::MeteorExplosion, Vector3::Up * 10.0f);
 	else if (Debug::Button("MeteorFire"))
 		Generate(TestParticle::MeteorFire, Vector3::Up * 20.0f);
+	else if (Debug::Button("Darkness"))
+		Generate(TestParticle::Darkness, Vector3::Zero);
 
 	Debug::NewLine();
 

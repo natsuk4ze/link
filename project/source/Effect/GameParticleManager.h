@@ -27,6 +27,7 @@ namespace GameParticle
 		AngryFace,		//怒り顔
 		TownExplosion,	//隕石爆発
 		MeteorExplosion,//ミサイル命中
+		Darkness,		//闇の粒子(AIレベル減少イベント)
 		Max
 	};
 }
@@ -49,6 +50,8 @@ public:
 	void SetMeteorExplosionEffect(const D3DXVECTOR3& position, std::function<void(void)> callback = nullptr);
 	//怒り顔のエフェクトセット処理
 	void SetAngryFaceEffect(std::function<void(void)> callback = nullptr);
+	//闇の粒子のエフェクトセット処理
+	void SetDarknessEffect(const D3DXVECTOR3 & position,std::function<void(void)> callback = nullptr);
 
 private:
 	static const float BloomPower[3];

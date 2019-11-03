@@ -42,7 +42,6 @@ public:
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;
 	void ReceiveBeatResult(bool IsSuccess);
-	void CountdownStart(void);
 	void EventOver(void);
 };
 

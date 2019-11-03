@@ -15,6 +15,7 @@
 #include "Game/TownExplosion.h"
 #include "Game/MeteorExplosion.h"
 #include "Game/AngryFace.h"
+#include "Game/Darkness.h"
 
 /**************************************
 staticメンバ
@@ -38,6 +39,7 @@ void GameParticleManager::Init()
 	controllers[GameParticle::ExplosionFlare] = new Effect::Game::ExplosionFlareController();
 	controllers[GameParticle::TownExplosion] = new Effect::Game::TownExplosionController();
 	controllers[GameParticle::MeteorExplosion] = new Effect::Game::MeteorExplosionController();
+	controllers[GameParticle::Darkness] = new Effect::Game::DarknessController();
 
 	crossFilter->SetPower(BloomPower[0], BloomPower[1], BloomPower[2]);
 	crossFilter->SetThrethold(BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]);
@@ -82,3 +84,12 @@ void GameParticleManager::SetAngryFaceEffect(std::function<void(void)> callback)
 {
 	controllers[GameParticle::AngryFace]->SetEmitter(Vector3::Zero);
 }
+
+/**************************************
+闇の粒子のエフェクトセット処理
+***************************************/
+void GameParticleManager::SetDarknessEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback)
+{
+	controllers[GameParticle::Darkness]->SetEmitter(position, nullptr);
+}
+
