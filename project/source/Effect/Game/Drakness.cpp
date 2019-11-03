@@ -37,14 +37,12 @@ namespace Effect::Game
 
 		//エミッターコンテナ作成処理
 		const unsigned MaxEmitter = 1;
-		const int NumEmit = 1;
+		const int NumEmit = 8;
 		const int DurationEmit = 90;
-		const int DelayCount = 1;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(NumEmit, DurationEmit);
-			emitter->SetDelayCount(0);
 		}
 	}
 
@@ -90,8 +88,8 @@ namespace Effect::Game
 		D3DXVECTOR3 InitOffset = D3DXVECTOR3
 		(
 			7.0f * cosf(D3DXToRadian(Theta)),
-			//Math::RandomRange(15.0f, 20.0f),
-			20.0f,
+			Math::RandomRange(15.0f, 20.0f),
+			//20.0f,
 			7.0f * sinf(D3DXToRadian(Theta))
 		);
 		transform->Move(InitOffset);

@@ -23,6 +23,8 @@ const float FallSpeed = 0.2f;
 const float DecreasePercent = -0.1f;
 // UFOモデルのスケール
 const D3DXVECTOR3 Scale = D3DXVECTOR3(0.15f, 0.15f, 0.15f);
+// デフォルトの高さ
+const float DefaultHeight = 50.0f;
 
 enum State
 {
@@ -75,7 +77,7 @@ void AILevelDecreaseEvent::Init()
 	TownPos = Target->GetPosition().ConvertToWorldPosition();
 
 	// 初期座標設定
-	UFOPos = TownPos + Vector3::Up * 50.0f;
+	UFOPos = TownPos + Vector3::Up * DefaultHeight;
 
 	// UFOメッシュ作成
 	UFO = new EventActor(UFOPos, Scale, "UFO");
@@ -106,6 +108,7 @@ void AILevelDecreaseEvent::Update()
 
 	switch (EventState)
 	{
+		// UFO登場
 	case UFODebut:
 
 		Distance = D3DXVec3LengthSq(&D3DXVECTOR3(UFOPos - TownPos));
@@ -161,14 +164,15 @@ void AILevelDecreaseEvent::Update()
 
 		Distance = D3DXVec3LengthSq(&D3DXVECTOR3(UFOPos - TownPos));
 
-		if (Distance < pow(40.0f, 2))
+		if (Distance < pow(DefaultHeight, 2))
 		{
 			UFOPos += Vector3::Up * FallSpeed;
 			UFO->SetPosition(UFOPos);
 		}
 		else
 		{
-			EventOver();
+			Camera::TranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
+			EventState = EffectHappend;
 		}
 		break;
 
@@ -218,7 +222,6 @@ void AILevelDecreaseEvent::UFODebutStart(void)
 void AILevelDecreaseEvent::EventOver(void)
 {
 	// イベント終了、ゲーム続行
-	Camera::TranslationPlugin::Instance()->Restore(15, nullptr);
 	fieldEventHandler->ResumeGame();
 	UseFlag = false;
 }

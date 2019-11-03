@@ -34,13 +34,11 @@ public:
 	virtual bool Emit(std::vector<BaseParticle*>& container);
 
 	virtual bool IsActive() const override;
-	void SetDelayCount(int DelayCount);
 
 protected:
 	int cntFrame;
 	int duration;
 	int emitNum;
-	int DelayCount = 0;
 
 	std::function<void(void)> callback;
 };
