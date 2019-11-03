@@ -112,6 +112,7 @@
     <ClInclude Include="Library\imgui\imstb_textedit.h" />
     <ClInclude Include="Library\imgui\imstb_truetype.h" />
     <ClInclude Include="Library\json11\json11.hpp" />
+    <ClInclude Include="Library\nameof\nameof.hpp" />
     <ClInclude Include="main.h" />
     <ClInclude Include="source\Effect\GameParticleManager.h" />
     <ClInclude Include="source\Effect\Game\AngryFace.h" />

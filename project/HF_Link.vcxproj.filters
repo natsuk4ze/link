@@ -194,6 +194,7 @@
     <ClInclude Include="source\Field\Object\FieldCursor.h" />
     <ClInclude Include="source\Field\Object\FieldGround.h" />
     <ClInclude Include="source\Field\Object\FieldSkyBox.h" />
+    <ClInclude Include="Library\nameof\nameof.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
