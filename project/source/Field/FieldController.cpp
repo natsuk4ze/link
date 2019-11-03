@@ -84,6 +84,9 @@ namespace Field
 		//ルートプロセッサ作成
 		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
 
+		//リソース読み込み
+		placeActController->LoadResource();
+
 		//制限時間初期化
 		//TODO:シーンを跨いで引き継げるようにする
 

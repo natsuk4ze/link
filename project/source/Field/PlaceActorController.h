@@ -59,6 +59,8 @@ namespace Field::Actor
 		void Update();
 		void Draw();
 
+		void LoadResource();
+
 		//アクター生成処理
 		void SetActor(const Model::PlaceModel* place, int delay = 0);
 		void SetActor(const RouteModelPtr routeModel);
