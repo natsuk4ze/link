@@ -11,7 +11,9 @@
 #include "../../Framework/Transition/TransitionController.h"
 #include "../../Framework/Core/SceneManager.h"
 #include "../../Framework/Tool/ProfilerCPU.h"
+#include "../../Framework/Core/PlayerPrefs.h"
 
+#include "../GameConfig.h"
 #include "../Field/Object/FieldSkyBox.h"
 #include "../FieldObject/Actor/PlaceActor.h"
 #include "../Field/FieldController.h"
@@ -260,9 +262,11 @@ void GameScene::OnBuildRoad(Route& route)
 ***************************************/
 void GameScene::OnLevelUp()
 {
+	//現在の制限時間を保存
+	PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_RemainTime), remainTime);
+
 	//テストなのでインクリメントしてしまう
 	//本番ではちゃんと制限する
-	
 	TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
 	{
 		level++;

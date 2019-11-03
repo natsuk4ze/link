@@ -15,6 +15,8 @@
 #include "../../../Framework/Camera/CameraTranslationPlugin.h"
 #include "../../../Framework/Camera/CameraShakePlugin.h"
 #include "../../../Framework/PostEffect/BloomController.h"
+#include "../../../Framework/Core/PlayerPrefs.h"
+#include "../../GameConfig.h"
 
 /**************************************
 入場処理
@@ -47,8 +49,7 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	entity.bloomController->SetThrethold(entity.BloomThrethold[0], entity.BloomThrethold[1], entity.BloomThrethold[2]);
 
 	//制限時間読み込み
-	//TODO:シーンを跨いで引き継ぐようにする
-	entity.remainTime = 30 * 180;
+	entity.remainTime = PlayerPrefs::GetNumber<int>(Utility::ToString(GameConfig::Key_RemainTime));
 
 	//トランジション画面をオフにして遷移
 	TransitionController::Instance()->SetTransition(true, TransitionType::HexaPop, [&]()
