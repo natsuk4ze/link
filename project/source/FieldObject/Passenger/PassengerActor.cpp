@@ -18,20 +18,20 @@ const D3DXVECTOR3 PassengerActor::InitForward = Vector3::Back;
 //=====================================
 // コンストラクタ
 //=====================================
-PassengerActor::PassengerActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
+PassengerActor::PassengerActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
 {
 	mesh = MeshContainer::Create();
 
 	// レベルに合わせてモデル読み込み
 	switch (currentLevel)
 	{
-	case FModel::City:
+	case Field::City:
 		ResourceManager::Instance()->GetMesh("Car", mesh);
 		break;
-	case FModel::World:
+	case Field::World:
 		ResourceManager::Instance()->GetMesh("Train", mesh);
 		break;
-	case FModel::Space:
+	case Field::Space:
 		ResourceManager::Instance()->GetMesh("Rocket", mesh);
 		break;
 	default:
@@ -95,16 +95,10 @@ void PassengerActor::MoveDest(const D3DXVECTOR3 dest, std::function<void(void)> 
 	// 移動フレーム
 	int frame = int(D3DXVec3Length(&vec) / Field::Actor::PlaceActorController::PlacePositionOffset) * 15;
 
-	if (Vector3::Angle(vec, transform->Forward()) >= 45.0f)
+	// 向きを合わせてから移動
+	Tween::Turn(*this, vec, 30, OutCubic, Vector3::Up, [=]
 	{
-		// 向きを合わせてから移動
-		Tween::Turn(*this, vec, 30, Linear, Vector3::Up, [=]
-		{
-			Tween::Move(*this, pos, this->dest, frame, Linear, callback);
-		});
-	}
-	else
-	{
-		Tween::Move(*this, pos, this->dest, frame, Linear, callback);
-	}
+		Tween::Move(*this, pos, this->dest, frame, InOutCirc, callback);
+	});
+
 }

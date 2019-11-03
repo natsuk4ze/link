@@ -10,6 +10,7 @@
 
 #include "../../main.h"
 #include "Place\PlaceConfig.h"
+#include "FieldConfig.h"
 
 #include <vector>
 #include <unordered_map>
@@ -52,12 +53,14 @@ namespace Field::Actor
 	class PlaceActorController
 	{
 	public:
-		PlaceActorController();
+		PlaceActorController(Field::FieldLevel level);
 		~PlaceActorController();
 
 		//更新処理、描画処理
 		void Update();
 		void Draw();
+
+		void LoadResource();
 
 		//アクター生成処理
 		void SetActor(const Model::PlaceModel* place, int delay = 0);
@@ -77,8 +80,11 @@ namespace Field::Actor
 		void OnConnectedTown(const Model::PlaceModel *place);
 
 		//パッセンジャー出発処理
-		void DepartPassenger(const Model::PlaceModel* start, const Model::PlaceModel* goal);
+		void DepartPassenger(const Model::PlaceModel* start, const Model::PlaceModel* goal, const Model::PlaceModel* town);
 		
+		//道沿いボーナス取得設定
+		float GetSideWayBonus() const;
+
 		//定数メンバ
 		static const D3DXVECTOR3 PositionEmitSmog;		//道落下時の煙発生位置
 		static const float PlacePositionOffset;			//アクター同士の配置間隔
@@ -100,6 +106,9 @@ namespace Field::Actor
 			Max
 		};
 
+		//フィールドレベル
+		Field::FieldLevel currentLevel;
+
 		//アクターコンテナ
 		ActorContainer actorContainer;
 		BackGroundContainer bgContainer;
@@ -113,6 +122,9 @@ namespace Field::Actor
 
 		//パッセンジャーコントローラ
 		PassengerController *passengerController;
+
+		//道造の発展ボーナス
+		float bonusSideWay;
 
 		//各アクター生成処理
 		void SetRoad(const Model::PlaceModel* place, int delay);

@@ -7,7 +7,7 @@
 #include "ParticleTestScene.h"
 #include "../../Framework/Renderer3D/SkyBox.h"
 #include "../../Framework/Resource/ResourceManager.h"
-#include "../Field/FieldGround.h"
+#include "../Field/Object/FieldGround.h"
 #include "../Effect/TestParticleCamera.h"
 #include "../FieldObject/Actor/CityActor.h"
 #include "../FieldObject/Actor/MountainActor.h"
@@ -17,9 +17,10 @@
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
+#include "../Field/Object/FieldSkyBox.h"
 #include "../Event/EventActor.h"
 
-const D3DXVECTOR3 Scale = D3DXVECTOR3(0.15f, 0.15f, 0.15f);
+const D3DXVECTOR3 UFOScale = D3DXVECTOR3(0.15f, 0.15f, 0.15f);
 
 /**************************************
 初期化処理
@@ -27,19 +28,11 @@ const D3DXVECTOR3 Scale = D3DXVECTOR3(0.15f, 0.15f, 0.15f);
 void ParticleTestScene::Init()
 {
 	//インスタンス作成
-	skybox = new SkyBox(Vector3::One * 10000.0f);
+	skybox = new Field::FieldSkyBox(Field::FieldLevel::Space);
 	ground = new Field::FieldGround();
 	sceneCamera = new TestParticleCamera();
 	particleManager = TestParticleManager::Instance();
 	bloom = new BloomController();
-
-	//スカイボックスのテクスチャロード
-	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_up.png", SkyBox::Surface::Up);
-	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_back.png", SkyBox::Surface::Back);
-	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_down.jpg", SkyBox::Surface::Down);
-	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_front.png", SkyBox::Surface::Front);
-	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_left.png", SkyBox::Surface::Left);
-	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_right.png", SkyBox::Surface::Right);
 
 	//アクターのモデルをロード
 	ResourceManager::Instance()->LoadMesh("Town-City", "data/MODEL/PlaceActor/Town.x");
@@ -50,7 +43,7 @@ void ParticleTestScene::Init()
 	//actor = new MountainActor(Vector3::Zero, Field::Model::FieldLevel::City);
 	//actor = new RiverActor(Vector3::Zero, Field::Model::FieldLevel::City);
 	//actor->SetScale(Vector3::One * 1.0f);
-	eventActor = new EventActor(Vector3::Up * 10.0f, Scale, "UFO");
+	eventActor = new EventActor(Vector3::Up * 10.0f, UFOScale, "UFO");
 	eventActor->SetHoverMotion(true);
 
 	//カメラ設定
@@ -110,7 +103,7 @@ void ParticleTestScene::Draw()
 	SpriteEffect::SetProjection(sceneCamera->GetProjectionMtx());
 
 	skybox->Draw();
-	ground->Draw();
+	//ground->Draw();
 
 	static bool drawableActor = true;
 	static bool DrawEventActor = false;

@@ -20,7 +20,7 @@ const D3DXVECTOR3 PlaceActor::Scale = D3DXVECTOR3(0.25f, 0.25f, 0.25f);
 //=====================================
 // コンストラクタ
 //=====================================
-PlaceActor::PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel) :
+PlaceActor::PlaceActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel) :
 	onCamera(true)
 {
 	// メッシュコンテナの作成

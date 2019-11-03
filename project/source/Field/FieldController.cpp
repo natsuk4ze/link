@@ -6,8 +6,9 @@
 //
 //=====================================
 #include "FieldController.h"
-#include "FieldCursor.h"
-#include "FieldGround.h"
+#include "Object/FieldCursor.h"
+#include "Object/FieldGround.h"
+#include "Object/FieldSkyBox.h"
 #include "Place\FieldPlaceContainer.h"
 #include "Place\OperatePlaceContainer.h"
 #include "Place\FieldPlaceModel.h"
@@ -15,7 +16,6 @@
 #include "Route\RouteProcessor.h"
 #include "PlaceActorController.h"
 #include "FieldEventHandler.h"
-
 #include "Controller\FieldDevelopper.h"
 #include "Controller\FieldInput.h"
 
@@ -25,6 +25,9 @@
 
 #include "../../Framework/Input/input.h"
 #include "../../Framework/Tool/DebugWindow.h"
+#include "../../Framework/Math//Easing.h"
+#include "../../Framework/Core/PlayerPrefs.h"
+#include "../GameConfig.h"
 
 #include <algorithm>
 
@@ -44,12 +47,13 @@ namespace Field
 	/**************************************
 	コンストラクタ
 	***************************************/
-	FieldController::FieldController() :
+	FieldController::FieldController(Field::FieldLevel level) :
 		fieldBorder(InitFieldBorder),
 		cntFrame(0),
 		developmentLevelAI(0),
 		realDevelopmentLevelAI(0),
 		developSpeedBonus(1.0f),
+		currentLevel(level),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
 		onChangePlaceType(nullptr)
@@ -58,10 +62,11 @@ namespace Field
 		using Model::PlaceModel;
 
 		//インスタンス作成
+		skybox = new FieldSkyBox(level);
 		cursor = new FieldCursor(PlaceOffset);
 		ground = new FieldGround();
 		operateContainer = new Model::OperatePlaceContainer();
-		placeActController = new Actor::PlaceActorController();
+		placeActController = new Actor::PlaceActorController(level);
 		developper = new FieldDevelopper(this);
 		input = new FieldInput(this);
 		placeContainer = new Model::PlaceContainer();
@@ -77,11 +82,14 @@ namespace Field
 		onCreateJunction = DelegateObject<PlaceContainer, void(const PlaceModel*)>::Create(placeContainer, &PlaceContainer::OnCreateJunction);
 		onChangePlaceType = DelegateObject<Actor::PlaceActorController, void(const PlaceModel*)>::Create(placeActController, &Actor::PlaceActorController::ChangeActor);
 
-		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2);
+		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
 
 		//ルートプロセッサ作成
 		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
+
+		//リソース読み込み
+		placeActController->LoadResource();
 
 		//制限時間初期化
 		//TODO:シーンを跨いで引き継げるようにする
@@ -98,6 +106,7 @@ namespace Field
 		routeContainer.clear();
 
 		//インスタンス削除
+		SAFE_DELETE(skybox);
 		SAFE_DELETE(cursor);
 		SAFE_DELETE(ground);
 		SAFE_DELETE(placeContainer);
@@ -156,7 +165,7 @@ namespace Field
 	***************************************/
 	void FieldController::Draw()
 	{
-		//ground->Draw();
+		skybox->Draw();
 
 		placeActController->Draw();
 
@@ -174,7 +183,14 @@ namespace Field
 	***************************************/
 	void FieldController::Load()
 	{
-		placeContainer->LoadCSV("data/FIELD/sample01.csv");
+		const char* DataName[] =
+		{
+			"data/FIELD/City/City_Field.csv",
+			"data/FIELD/World/World_Field.csv",
+			"data/FIELD/Space/Space_Field.csv",
+		};
+
+		placeContainer->LoadCSV(DataName[currentLevel]);
 
 		//アクター生成
 		auto places = placeContainer->GetAllPlaces();
@@ -234,6 +250,11 @@ namespace Field
 	***************************************/
 	bool FieldController::ShouldLevelUp()
 	{
+		//宇宙レベルではレベルアップしない
+		if (currentLevel == FieldLevel::Space)
+			return false;
+
+		//AI発展レベルが最大値に到達していたらレベルアップする
 		return developmentLevelAI >= MaxDevelopmentLevelAI;
 	}
 
@@ -371,7 +392,8 @@ namespace Field
 			return;
 
 		float raiseValue = placeContainer->CalcDevelopmentLevelAI(developSpeedBonus);
-		developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + raiseValue);
+		float bonusSideWay = placeActController->GetSideWayBonus();
+		developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + raiseValue + bonusSideWay);
 		realDevelopmentLevelAI = Easing::EaseValue(developmentLevelAI / 9999.0f, 0.0f, 9999.0f, EaseType::OutSine);
 	}
 

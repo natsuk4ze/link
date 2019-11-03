@@ -27,7 +27,7 @@ namespace Field::Model
 
 	using JunctionContainer = std::unordered_map<unsigned, JunctionModel*>;
 	using TownContainer = std::unordered_map<unsigned, TownModel*>;
-	using TownAction = std::function<void(const PlaceModel *start, const PlaceModel *goal)>;
+	using TownAction = std::function<void(const PlaceModel *start, const PlaceModel *goal, const PlaceModel* town)>;
 
 	/**************************************
 	ƒNƒ‰ƒX’è‹`

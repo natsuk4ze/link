@@ -12,6 +12,7 @@
 #include "../../Framework/Pattern/BaseState.h"
 #include "../../Framework/Pattern/Delegate.h"
 #include "Place\PlaceConfig.h"
+#include "FieldConfig.h"
 #include "../Viewer/GameScene/GameViewer/GameViewerParam.h"
 
 #include <vector>
@@ -25,7 +26,8 @@ namespace Field
 	***************************************/
 	class FieldCursor;
 	class FieldGround;
-	
+	class FieldSkyBox;
+
 	namespace Model
 	{
 		class PlaceContainer;
@@ -59,7 +61,7 @@ namespace Field
 		using ControllerState = BaseState<FieldController, FieldController::State>;
 
 		//コンストラクタ、デストラクタ
-		FieldController();
+		FieldController(Field::FieldLevel level);
 		~FieldController();
 
 		//オブジェクトの更新処理
@@ -106,6 +108,7 @@ namespace Field
 
 		FieldCursor *cursor;								//カーソル
 		FieldGround *ground;								//地面
+		FieldSkyBox *skybox;								//スカイボックス
 
 		Model::PlaceContainer *placeContainer;				//プレイスコンテナ
 		Model::OperatePlaceContainer *operateContainer;		//操作対象プレイスのコンテナ
@@ -118,9 +121,11 @@ namespace Field
 
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int cntFrame;							//フレームカウント
-		float developmentLevelAI;				//AI発展レベル
-		float realDevelopmentLevelAI;
+		float developmentLevelAI;				//AI発展レベル(リンクレベルの累積)
+		float realDevelopmentLevelAI;			//実際のAI発展レベル
 		float developSpeedBonus;				//発展スピード増加ボーナス
+
+		FieldLevel currentLevel;				//現在のフィールドレベル
 
 		State current;
 		ControllerState *state;					//現在のステート

@@ -14,6 +14,7 @@
 #include "Along\AlongController.h"
 #include "AStar\AStarController.h"
 #include "../FieldObject/PassengerController.h"
+#include "../../Framework/Resource/ResourceManager.h"
 
 #include "../FieldObject/Actor/CityActor.h"
 #include "../FieldObject/Actor/CrossJunctionActor.h"
@@ -45,12 +46,26 @@ namespace Field::Actor
 	/**************************************
 	コンストラクタ
 	***************************************/
-	PlaceActorController::PlaceActorController()
+	PlaceActorController::PlaceActorController(Field::FieldLevel level) :
+		currentLevel(level),
+		bonusSideWay(0.0f)
 	{
 		bgContainer.reserve(ReserveGround);
 		alongController = new Along::AlongController();
 		aStarController = new Route::AStarController();
 		passengerController = new PassengerController();
+
+		auto onReachPassenger = std::bind(&Along::AlongController::OnReachPassenger, alongController, std::placeholders::_1);
+		passengerController->SetCallbackOnReach(onReachPassenger);
+
+		alongController->SetBuildBonusFunc([this]()
+		{
+			bonusSideWay += 1.0f;
+		});
+
+		//国レベルのモデルが無いので一旦、街レベルに落とす
+		if (currentLevel == FieldLevel::World)
+			currentLevel = FieldLevel::City;
 	}
 
 	/**************************************
@@ -115,6 +130,32 @@ namespace Field::Actor
 
 		alongController->Draw();
 		passengerController->Draw();
+	}
+
+	/**************************************
+	リソース読み込み処理
+	***************************************/
+	void PlaceActorController::LoadResource()
+	{
+		// 3Dオブジェクトのリソースをロード
+		ResourceManager::Instance()->LoadMesh("NoneActor", "data/MODEL/PlaceActor/ground.x");
+
+		// FieldLevel = City
+		ResourceManager::Instance()->LoadMesh("CrossJunction-City", "data/MODEL/PlaceActor/Cross-Junction.x");
+		ResourceManager::Instance()->LoadMesh("TJunction-City", "data/MODEL/PlaceActor/T-Junction.x");
+		ResourceManager::Instance()->LoadMesh("StraightRoad-City", "data/MODEL/PlaceActor/Straight.x");
+		ResourceManager::Instance()->LoadMesh("CurveRoad-City", "data/MODEL/PlaceActor/Curve.x");
+		ResourceManager::Instance()->LoadMesh("Town-City", "data/MODEL/PlaceActor/Town.x");
+		ResourceManager::Instance()->LoadMesh("Bridge-City", "data/MODEL/PlaceActor/bridge.x");
+		ResourceManager::Instance()->LoadMesh("Mountain-City", "data/MODEL/PlaceActor/mountain.x");
+		ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
+		ResourceManager::Instance()->LoadMesh("Car", "data/MODEL/PassengerActor/ToonCar.x");
+		ResourceManager::Instance()->LoadMesh("AlongCity", "data/MODEL/AlongActor/AlongActorCity.x");
+	
+		// FieldLevel = World
+
+		// FieldLevel = Space
+		ResourceManager::Instance()->LoadMesh("Town-Space", "data/Model/PlaceActor/earth.x");
 	}
 
 	/**************************************
@@ -239,11 +280,22 @@ namespace Field::Actor
 	/**************************************
 	パッセンジャー出発処理
 	***************************************/
-	void PlaceActorController::DepartPassenger(const Model::PlaceModel * start, const Model::PlaceModel * goal)
+	void PlaceActorController::DepartPassenger(const Model::PlaceModel * start, const Model::PlaceModel * goal, const Model::PlaceModel* town)
 	{
-		auto route = aStarController->CalcRoute(start->GetPosition(), goal->GetPosition());
-		if(route.size() != 0)
+		auto route = aStarController->CalcRoute(start->GetPosition(), goal->GetPosition(), town->GetPosition());
+
+		if (route.size() != 0)
+		{
 			passengerController->SetPassenger(route);
+		}
+	}
+
+	/**************************************
+	道沿いボーナス取得処理
+	***************************************/
+	float PlaceActorController::GetSideWayBonus() const
+	{
+		return bonusSideWay;
 	}
 
 	/**************************************
@@ -261,7 +313,7 @@ namespace Field::Actor
 		if (straightType != StraightType::NotStraight)
 		{
 			//アクター生成
-			PlaceActor* actor = new StraightRoadActor(actorPos, Model::FieldLevel::City);
+			PlaceActor* actor = new StraightRoadActor(actorPos, currentLevel);
 			AddContainer(place->ID(), actor);
 
 			//左右に繋がるタイプなら回転させる
@@ -278,7 +330,7 @@ namespace Field::Actor
 		else
 		{
 			//アクター生成
-			PlaceActor* actor = new CurveRoadActor(actorPos, Model::FieldLevel::City);
+			PlaceActor* actor = new CurveRoadActor(actorPos, currentLevel);
 			AddContainer(place->ID(), actor);
 
 			//回転角度を決定して回転
@@ -313,7 +365,7 @@ namespace Field::Actor
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
 		//アクター生成
-		PlaceActor* actor = new CityActor(actorPos, Model::FieldLevel::City);
+		PlaceActor* actor = new CityActor(actorPos, currentLevel);
 
 		// 生成アニメーション
 		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
@@ -332,7 +384,7 @@ namespace Field::Actor
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
 		//アクター生成
-		PlaceActor* actor = new RiverActor(actorPos, Model::FieldLevel::City);
+		PlaceActor* actor = new RiverActor(actorPos, currentLevel);
 
 		//アニメーション
 		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
@@ -348,7 +400,7 @@ namespace Field::Actor
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
 		//アクター生成
-		PlaceActor* actor = new BridgeActor(actorPos, Model::FieldLevel::City);
+		PlaceActor* actor = new BridgeActor(actorPos, currentLevel);
 
 		//回転角度を決定
 		std::vector<Adjacency> AdjacencyType = place->GetConnectingAdjacency();
@@ -380,7 +432,7 @@ namespace Field::Actor
 		//十字路のアクター作成
 		if (adjacencyTypeList.size() == 4)
 		{
-			PlaceActor *actor = new CrossJunctionActor(actorPos, Model::FieldLevel::City);
+			PlaceActor *actor = new CrossJunctionActor(actorPos, currentLevel);
 
 			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::CrossJunction);
 
@@ -392,7 +444,7 @@ namespace Field::Actor
 		//T字路のアクター生成
 		else
 		{
-			PlaceActor* actor = new TJunctionActor(actorPos, Model::FieldLevel::City);
+			PlaceActor* actor = new TJunctionActor(actorPos, currentLevel);
 
 			TjunctionType junctionType = IsTjunction(adjacencyTypeList);
 			float rotAngle = 0.0f;
@@ -425,7 +477,7 @@ namespace Field::Actor
 	{
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
-		PlaceActor *actor = new MountainActor(actorPos, Model::FieldLevel::City);
+		PlaceActor *actor = new MountainActor(actorPos, currentLevel);
 
 		//回転
 		float rotateAngle = Math::RandomRange(0, 4) * 90.0f;
@@ -442,12 +494,15 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::SetNone(const Model::PlaceModel * place, float randomRange)
 	{
+		if (currentLevel == FieldLevel::Space)
+			return;
+
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
 		//真っ平らだと不自然なので高さに少し凹凸をつける
 		actorPos.y += Math::RandomRange(-randomRange, 0.0f);
 
-		PlaceActor* actor = new NoneActor(actorPos, Model::FieldLevel::City);
+		PlaceActor* actor = new NoneActor(actorPos, currentLevel);
 
 		// 生成アニメーション
 		ActorAnimation::RotateAndExpantion(*actor);

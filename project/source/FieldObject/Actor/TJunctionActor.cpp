@@ -12,24 +12,24 @@
 //=====================================
 // コンストラクタ
 //=====================================
-TJunctionActor::TJunctionActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
+TJunctionActor::TJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
 	: PlaceActor(pos, currentLevel)
 {
 	// モデルデータ参照
 	switch (currentLevel)
 	{
-	case FModel::City:
+	case Field::City:
 		ResourceManager::Instance()->GetMesh("TJunction-City", mesh);
 		break;
-	case FModel::World:
+	case Field::World:
 		break;
-	case FModel::Space:
+	case Field::Space:
 		break;
 	default:
 		break;
 	}
 
-	type = FModel::Junction;
+	type = Field::Model::Junction;
 }
 
 //=====================================

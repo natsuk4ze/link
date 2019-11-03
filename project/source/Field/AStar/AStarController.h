@@ -83,7 +83,7 @@ namespace Field::Route
 		void OnChangePlace(const Field::Model::PlaceModel* place);
 
 		//スタートからゴールへの計算処理
-		std::deque<D3DXVECTOR3> CalcRoute(const Field::FieldPosition& start, const Field::FieldPosition& goal);
+		std::deque<D3DXVECTOR3> CalcRoute(const Field::FieldPosition& start, const Field::FieldPosition& goal, const Field::FieldPosition& town);
 
 		static const unsigned MaxCheckRoute;
 

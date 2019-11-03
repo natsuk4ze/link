@@ -20,7 +20,7 @@ class MountainActor :
 	public PlaceActor
 {
 public:
-	MountainActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
+	MountainActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	~MountainActor();
 };
 

@@ -11,8 +11,10 @@
 #include "../../Framework/Transition/TransitionController.h"
 #include "../../Framework/Core/SceneManager.h"
 #include "../../Framework/Tool/ProfilerCPU.h"
+#include "../../Framework/Core/PlayerPrefs.h"
 
-#include "../../Framework/Renderer3D/SkyBox.h"
+#include "../GameConfig.h"
+#include "../Field/Object/FieldSkyBox.h"
 #include "../FieldObject/Actor/PlaceActor.h"
 #include "../Field/FieldController.h"
 #include "../Field/Camera/FieldCamera.h"
@@ -50,11 +52,13 @@ void GameScene::Init()
 	fieldCamera = new FieldCamera();
 	Camera::SetMainCamera(fieldCamera);
 
+	//フィールドレベル読み込み
+	Field::FieldLevel level = (Field::FieldLevel)PlayerPrefs::GetNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel));
+
 	//各インスタンス作成
-	skybox = new SkyBox(D3DXVECTOR3(20000.0f, 20000.0f, 20000.0f));
-	field = new Field::FieldController();
+	field = new Field::FieldController(level);
 	gameViewer = new GameViewer();
-	eventController = new EventController(Field::Model::City);
+	eventController = new EventController(level);
 	eventHandler = new FieldEventHandler();
 	eventController->ReceiveFieldEventHandler(eventHandler);
 	particleManager = GameParticleManager::Instance();
@@ -77,7 +81,7 @@ void GameScene::Init()
 	ChangeState(State::Initialize);
 
 	// テスト用
-	//testActor = new CityActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), FModel::City);
+	//testActor = new CityActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), Field::City);
 	//std::vector<D3DXVECTOR3> root;
 	//D3DXVECTOR3 push = D3DXVECTOR3(150.0f, 0.0f, -150.0f);
 	//root.push_back(push);
@@ -105,7 +109,6 @@ void GameScene::Uninit()
 	SAFE_DELETE(fieldCamera);
 
 	//インスタンス削除
-	SAFE_DELETE(skybox);
 	SAFE_DELETE(field);
 	SAFE_DELETE(gameViewer);
 	SAFE_DELETE(eventController);
@@ -191,9 +194,6 @@ void GameScene::Draw()
 	//カメラセット
 	fieldCamera->Set();
 
-	//背景描画
-	skybox->Draw();
-
 	// テスト用
 	//testActor->Draw();
 	//passengerController->Draw();
@@ -252,7 +252,7 @@ void GameScene::ChangeState(State next)
 ***************************************/
 void GameScene::OnBuildRoad(Route& route)
 {
-	eventController->CheckEventHappen(route, Field::Model::FieldLevel::City);
+	eventController->CheckEventHappen(route, Field::FieldLevel::City);
 }
 
 /**************************************
@@ -260,12 +260,15 @@ void GameScene::OnBuildRoad(Route& route)
 ***************************************/
 void GameScene::OnLevelUp()
 {
+	//現在の制限時間を保存
+	PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_RemainTime), remainTime);
+
 	//テストなのでインクリメントしてしまう
 	//本番ではちゃんと制限する
-	
 	TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
 	{
 		level++;
+		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), level);
 		SceneManager::ChangeScene(GameConfig::SceneID::Game);
 	});
 }

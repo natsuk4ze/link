@@ -15,9 +15,18 @@ namespace Field::Along
 	/**************************************
 	staticメンバ
 	***************************************/
-	const float AlongActor::RangePositionOffset = 1.5f;
-	const float AlongActor::MinScale = 0.9f;
-	const float AlongActor::MaxScale = 1.2f;
+	const float AlongActor::RangePositionOffset = 2.0f;
+
+	const float AlongActor::MinScale = 0.75f;
+	const float AlongActor::MaxScale = 1.25f;
+	const float AlongActor::MinScaleY = 1.0f;
+	const float AlongActor::MaxScaleY = 1.5f;
+
+	const D3DXCOLOR AlongActor::MaterialColor[] = {
+		{ 1.0f, 0.4f, 0.4f, 1.0f },
+		{ 0.4f, 0.4f, 1.0f, 1.0f },
+		{ 1.0f, 0.9f, 0.6f, 1.0f }
+	};
 
 	/**************************************
 	コンストラクタ
@@ -25,7 +34,10 @@ namespace Field::Along
 	AlongActor::AlongActor()
 	{
 		mesh = new MeshContainer();
-		ResourceManager::Instance()->GetMesh("AlongActor", mesh);
+		ResourceManager::Instance()->GetMesh("AlongCity", mesh);
+
+		int colorIndex = Math::RandomRange(0, 3);
+		mesh->SetMaterialColor(MaterialColor[colorIndex], 1);
 	}
 
 	/**************************************
@@ -58,7 +70,12 @@ namespace Field::Along
 	void AlongActor::PlayAnimation()
 	{
 		float scale = Math::RandomRange(MinScale, MaxScale);
-		Tween::Scale(*this, Vector3::Zero, Vector3::One * scale, 15, InCubic);
+		float scaleY = Math::RandomRange(MinScaleY, MaxScaleY);
+
+		Tween::Scale(*this, Vector3::Zero, { scale, scaleY, scale }, 15, InCubic);
+
+		int rotation = Math::RandomRange(0, 8);
+		transform->Rotate(rotation * 45.0f, Vector3::Up);
 	}
 
 	/**************************************
