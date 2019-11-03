@@ -195,6 +195,8 @@
     <ClInclude Include="source\Field\Object\FieldGround.h" />
     <ClInclude Include="source\Field\Object\FieldSkyBox.h" />
     <ClInclude Include="Library\nameof\nameof.hpp" />
+    <ClInclude Include="Framework\Core\PlayerPrefs.h" />
+    <ClInclude Include="Library\picojson\picojson.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -373,6 +375,7 @@
     <ClCompile Include="source\Field\Object\FieldCursor.cpp" />
     <ClCompile Include="source\Field\Object\FieldGround.cpp" />
     <ClCompile Include="source\Field\Object\FieldSkyBox.cpp" />
+    <ClCompile Include="Framework\Core\PlayerPrefs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

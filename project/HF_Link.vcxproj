@@ -33,6 +33,7 @@
     <ClInclude Include="Framework\Core\BaseGame.h" />
     <ClInclude Include="Framework\Core\BaseScene.h" />
     <ClInclude Include="Framework\Core\GameObject.h" />
+    <ClInclude Include="Framework\Core\PlayerPrefs.h" />
     <ClInclude Include="Framework\Core\SceneManager.h" />
     <ClInclude Include="Framework\Core\Transform.h" />
     <ClInclude Include="Framework\Core\Utility.h" />
@@ -113,6 +114,7 @@
     <ClInclude Include="Library\imgui\imstb_truetype.h" />
     <ClInclude Include="Library\json11\json11.hpp" />
     <ClInclude Include="Library\nameof\nameof.hpp" />
+    <ClInclude Include="Library\picojson\picojson.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="source\Effect\GameParticleManager.h" />
     <ClInclude Include="source\Effect\Game\AngryFace.h" />
@@ -228,6 +230,7 @@
     <ClCompile Include="Framework\Core\BaseGame.cpp" />
     <ClCompile Include="Framework\Core\BaseScene.cpp" />
     <ClCompile Include="Framework\Core\GameObject.cpp" />
+    <ClCompile Include="Framework\Core\PlayerPrefs.cpp" />
     <ClCompile Include="Framework\Core\SceneManager.cpp" />
     <ClCompile Include="Framework\Core\Transform.cpp" />
     <ClCompile Include="Framework\Effect\SpriteEffect.cpp" />
