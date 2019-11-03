@@ -124,6 +124,7 @@ namespace Field
 		float developmentLevelAI;				//AI発展レベル(リンクレベルの累積)
 		float realDevelopmentLevelAI;			//実際のAI発展レベル
 		float developSpeedBonus;				//発展スピード増加ボーナス
+		bool enableDevelop;						//開拓可能かどうか
 
 		FieldLevel currentLevel;				//現在のフィールドレベル
 
