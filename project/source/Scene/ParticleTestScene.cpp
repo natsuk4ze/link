@@ -39,9 +39,9 @@ void ParticleTestScene::Init()
 	ResourceManager::Instance()->LoadMesh("Mountain-City", "data/MODEL/PlaceActor/mountain.x");
 	ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
 	ResourceManager::Instance()->LoadMesh("UFO", "data/MODEL/UFO/UFO.x");
-	actor = new CityActor(Vector3::Zero, Field::Model::FieldLevel::City);
-	//actor = new MountainActor(Vector3::Zero, Field::Model::FieldLevel::City);
-	//actor = new RiverActor(Vector3::Zero, Field::Model::FieldLevel::City);
+	actor = new CityActor(Vector3::Zero, Field::FieldLevel::City);
+	//actor = new MountainActor(Vector3::Zero, Field::FieldLevel::City);
+	//actor = new RiverActor(Vector3::Zero, Field::FieldLevel::City);
 	//actor->SetScale(Vector3::One * 1.0f);
 	eventActor = new EventActor(Vector3::Up * 10.0f, UFOScale, "UFO");
 	eventActor->SetHoverMotion(true);
