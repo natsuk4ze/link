@@ -168,18 +168,26 @@ namespace Field::Model
 		//各プレイスの方向を決定
 		unsigned routeSize = route.size();
 
-		first->AddDirection(first->IsAdjacent(edgeStart));
-		first->AddDirection(first->IsAdjacent(route[1]));
-
-		for (unsigned i = 1; i < routeSize - 1; i++)
+		if (routeSize != 1)
 		{
-			PlaceModel* place = route[i];
-			place->AddDirection(place->IsAdjacent(route[i - 1]));
-			place->AddDirection(place->IsAdjacent(route[i + 1]));
-		}
+			first->AddDirection(first->IsAdjacent(edgeStart));
+			first->AddDirection(first->IsAdjacent(route[1]));
 
-		last->AddDirection(last->IsAdjacent(route[routeSize - 2]));
-		last->AddDirection(last->IsAdjacent(edgeEnd));
+			for (unsigned i = 1; i < routeSize - 1; i++)
+			{
+				PlaceModel* place = route[i];
+				place->AddDirection(place->IsAdjacent(route[i - 1]));
+				place->AddDirection(place->IsAdjacent(route[i + 1]));
+			}
+
+			last->AddDirection(last->IsAdjacent(route[routeSize - 2]));
+			last->AddDirection(last->IsAdjacent(edgeEnd));
+		}
+		else
+		{
+			first->AddDirection(first->IsAdjacent(edgeStart));
+			first->AddDirection(first->IsAdjacent(edgeEnd));
+		}
 	}
 
 	/**************************************
@@ -308,79 +316,27 @@ namespace Field::Model
 	void RouteModel::_SetEdge(PlaceModel* place)
 	{
 		//連結相手を取得
-		PlaceModel* opponent = place->GetEdgeOpponent();
-		SetEdge(opponent);
-		opponent->BelongRoute(shared_from_this());
+		PlaceModel* edge = nullptr;
+		auto opponents = place->GetEdgeOpponents();
+		for (auto&& opponent : opponents)
+		{
+			if (opponent != edgeEnd && opponent != edgeStart)
+			{
+				edge = opponent;
+				break;
+			}
+		}
+
+		SetEdge(edge);
+		edge->BelongRoute(shared_from_this());
 
 		//街なら出口を増やす
-		if (opponent->IsType(PlaceType::Town))
+		if (edge->IsType(PlaceType::Town))
 		{
 			//方向追加
-			opponent->AddDirection(opponent->IsAdjacent(place));
+			edge->AddDirection(edge->IsAdjacent(place));
 
-			(*onConnectedTown)(opponent, place);
+			(*onConnectedTown)(edge, place);
 		}
-	}
-
-	/**************************************
-	Placeプッシュ処理
-	***************************************/
-	bool RoutePlaceStack::Push(const PlaceModel * place)
-	{
-		//橋は追加しない
-		if (place->IsType(PlaceType::Bridge))
-			return false;
-
-		if (place->IsType(PlaceType::Road))
-		{
-			std::vector<Adjacency> AdjacencyType = place->GetConnectingAdjacency();
-			StraightType straightType = IsStraight(AdjacencyType);
-
-			//直線道なら追加しない
-			if (straightType != StraightType::NotStraight)
-				return false;
-		}
-
-		route.push_back(place->GetPosition().ConvertToWorldPosition());
-		return true;
-	}
-
-	/**************************************
-	Placeプッシュ処理
-	***************************************/
-	int RoutePlaceStack::Push(const std::vector<const PlaceModel*>& route)
-	{
-		int cntPush = 0;
-		for (auto&& place : route)
-		{
-			if (Push(place))
-				cntPush++;
-		}
-
-		return cntPush;
-	}
-
-	/**************************************
-	Placeポップ処理
-	***************************************/
-	void RoutePlaceStack::Pop()
-	{
-		route.pop_back();
-	}
-
-	/**************************************
-	Placeポップ処理
-	***************************************/
-	void RoutePlaceStack::Pop(int num)
-	{
-		route.resize(route.size() - num);
-	}
-
-	/**************************************
-	サイズ取得処理
-	***************************************/
-	unsigned RoutePlaceStack::Size() const
-	{
-		return route.size();
 	}
 }

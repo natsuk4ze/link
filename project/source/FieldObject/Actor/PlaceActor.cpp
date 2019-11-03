@@ -113,39 +113,42 @@ void PlaceActor::ResetTransform()
 #if _DEBUG
 void PlaceActor::Debug()
 {
-	Debug::Begin("PlaceActor", false);
-	Debug::Text("ChangeAnimation");
-	Debug::NewLine();
-	if (Debug::Button("Fall"))
-	{
-		ActorAnimation::FallAndExpantion(*this);
-	}
-	Debug::NewLine();
-	if (Debug::Button("RotateAndExpantion"))
-	{
-		ActorAnimation::RotateAndExpantion(*this);
-	}
-	Debug::NewLine();
-	if (Debug::Button("RotateAndShrink"))
-	{
-		ActorAnimation::RotateAndShrink(*this);
-	}
-	Debug::NewLine();
-	if (Debug::Button("ExpantionYAndReturnToOrigin"))
-	{
-		ActorAnimation::ExpantionYAndReturnToOrigin(*this);
-	}
-	Debug::NewLine();
-	if (Debug::Button("ResetScale"))
-	{
-		transform->SetScale(Scale);
-	}
-	Debug::NewLine();
-	Debug::Text("OnCamera = %s", onCamera ? "true" : "false");
-	if (Debug::Button("OnCamera"))
-	{
-		onCamera ? onCamera = false : onCamera = true;
-	}
-	Debug::End();
+	//アクターにデバッグ機能をもたせてしまうと
+	//インスタンスごとに呼ばれてしまって重くなる
+
+	//Debug::Begin("PlaceActor", false);
+	//Debug::Text("ChangeAnimation");
+	//Debug::NewLine();
+	//if (Debug::Button("Fall"))
+	//{
+	//	ActorAnimation::FallAndExpantion(*this);
+	//}
+	//Debug::NewLine();
+	//if (Debug::Button("RotateAndExpantion"))
+	//{
+	//	ActorAnimation::RotateAndExpantion(*this);
+	//}
+	//Debug::NewLine();
+	//if (Debug::Button("RotateAndShrink"))
+	//{
+	//	ActorAnimation::RotateAndShrink(*this);
+	//}
+	//Debug::NewLine();
+	//if (Debug::Button("ExpantionYAndReturnToOrigin"))
+	//{
+	//	ActorAnimation::ExpantionYAndReturnToOrigin(*this);
+	//}
+	//Debug::NewLine();
+	//if (Debug::Button("ResetScale"))
+	//{
+	//	transform->SetScale(Scale);
+	//}
+	//Debug::NewLine();
+	//Debug::Text("OnCamera = %s", onCamera ? "true" : "false");
+	//if (Debug::Button("OnCamera"))
+	//{
+	//	onCamera ? onCamera = false : onCamera = true;
+	//}
+	//Debug::End();
 }
 #endif

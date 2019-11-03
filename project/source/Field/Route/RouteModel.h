@@ -41,20 +41,6 @@ namespace Field::Model
 	}AdjacentRoute;
 
 	/**************************************
-	経路となるプレイスのスタック
-	***************************************/
-	struct RoutePlaceStack
-	{
-		std::vector<D3DXVECTOR3> route;
-
-		bool Push(const PlaceModel* place);
-		int Push(const std::vector<const PlaceModel*>& route);
-		void Pop();
-		void Pop(int num);
-		unsigned Size() const;
-	};
-
-	/**************************************
 	クラス定義
 	***************************************/
 	class RouteModel : public std::enable_shared_from_this<RouteModel>

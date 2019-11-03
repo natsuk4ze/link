@@ -68,10 +68,10 @@ namespace Field::Model
 		bool IsSameRoute(PlaceModel* place) const;
 
 		//連結対象の取得
-		PlaceModel* GetConnectTarget() const;		//TODO:連結対象の複数化
+		std::vector<PlaceModel*> GetConnectTargets() const;		//TODO:連結対象の複数化
 
 		//端点となるPlaceの取得
-		PlaceModel* GetEdgeOpponent()  const;
+		std::vector<PlaceModel*> GetEdgeOpponents() const;
 
 		//ルートモデルへの所属、離脱
 		void BelongRoute(std::shared_ptr<RouteModel> route);

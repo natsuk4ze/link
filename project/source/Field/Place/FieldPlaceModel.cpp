@@ -201,6 +201,20 @@ namespace Field::Model
 		if (itr == adjacencies.end())
 			return Adjacency::NotAdjacenct;
 
+		Adjacency adjacency = (Adjacency)std::distance(adjacencies.begin(), itr);
+
+		//橋の場合は向きも考慮
+		if (type == PlaceType::Bridge && !Utility::IsContain(connectDirection, adjacency))
+		{
+			return Adjacency::NotAdjacenct;
+		}
+		
+		auto opponentDirection = place->GetConnectingAdjacency();
+		if (place->IsType(PlaceType::Bridge) && !Utility::IsContain(opponentDirection, GetInverseSide(adjacency)))
+		{
+			return Adjacency::NotAdjacenct;
+		}
+
 		return (Adjacency)std::distance(adjacencies.begin(), itr);
 	}
 
@@ -237,10 +251,11 @@ namespace Field::Model
 
 	/**************************************
 	連結相手の取得
-	TODO:連結相手を複数化
 	***************************************/
-	PlaceModel* PlaceModel::GetConnectTarget() const
+	std::vector<PlaceModel*> PlaceModel::GetConnectTargets() const
 	{
+		std::vector<PlaceModel*> out;
+
 		for (auto&& adjacency : adjacencies)
 		{
 			if (adjacency == NULL)
@@ -256,18 +271,19 @@ namespace Field::Model
 
 			//同じルートに属していなければ連結できる
 			if (!IsSameRoute(adjacency))
-				return adjacency;
+				out.push_back(adjacency);
 		}
 
-		return nullptr;
+		return out;
 	}
 
 	/**************************************
 	端点となるプレイスの取得
 	***************************************/
-	PlaceModel* PlaceModel::GetEdgeOpponent() const
+	std::vector<PlaceModel*> PlaceModel::GetEdgeOpponents() const
 	{
-		PlaceModel* opponent = nullptr;
+		std::vector<PlaceModel*> out;
+		out.reserve(4);
 
 		for (auto&& adjacency : adjacencies)
 		{
@@ -276,20 +292,20 @@ namespace Field::Model
 
 			//街を最優先で端点とする
 			if (adjacency->IsType(PlaceType::Town))
-				return adjacency;
+				out.push_back(adjacency);
 
 			//街か交差点なら端点として成立
 			if (adjacency->IsType(PlaceType::Junction))
-				opponent = adjacency;
+				out.push_back(adjacency);
 
 			//道で同じルートに属していなければ端点として成立
 			if (adjacency->IsType(PlaceType::Road) && !IsSameRoute(adjacency))
-				opponent = adjacency;
+				out.push_back(adjacency);
 		}
 
-		return opponent;
+		return out;
 	}
-
+	
 	/**************************************
 	ルートモデルへの所属
 	***************************************/

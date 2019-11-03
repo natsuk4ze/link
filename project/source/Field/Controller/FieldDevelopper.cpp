@@ -14,6 +14,8 @@
 #include "../Place/FieldPlaceContainer.h"
 #include "../Place/FieldPlaceContainer.h"
 
+#include "../../../Library/cppLinq/cpplinq.hpp"
+
 #include <algorithm>
 
 namespace Field
@@ -47,9 +49,31 @@ namespace Field
 	void FieldController::FieldDevelopper::BuildRoad()
 	{
 		using namespace Field::Model;
+		using cpplinq::from;
+		using cpplinq::intersect_with;
+		using cpplinq::union_with;
+		using cpplinq::except;
+		using cpplinq::count;
+
+		std::vector<PlaceModel*> route = entity->operateContainer->GetPlaces();
+	
+		if (route.size() > 1)
+		{
+			//両端が別のPlaceで無ければ早期リターン
+			auto firstEdge = route.front()->GetEdgeOpponents();
+			auto lastEdge = route.back()->GetEdgeOpponents();
+			auto first = from(firstEdge);							//始点側の連結相手
+			auto last = from(lastEdge);								//終点側の連結相手
+			auto intersectList = first >> intersect_with(last);		//連結相手の積集合
+			auto unionList = first >> union_with(last);				//連結相手の和集合
+
+			//和集合から積集合を引いてXORを求める
+			//XORの数が0ならルートがループしているのでリターン
+			if (unionList >> except(intersectList) >> count() == 0)
+				return;
+		}
 
 		//操作対象のプレイスをRoadタイプに変換
-		std::vector<PlaceModel*> route = entity->operateContainer->GetPlaces();
 		for (auto&& place : route)
 		{
 			if (place->IsType(PlaceType::None))
@@ -179,6 +203,10 @@ namespace Field
 		//川の一つ前のプレイス（始点）がどの方向で隣接しているか確認
 		PlaceModel* start = *(river - 1);
 		Adjacency startAdjacency = (*river)->IsAdjacent(start);
+
+		//川の一つ前が橋ならそもそも架けられない
+		if (start->IsType(PlaceType::Bridge))
+			return route.end();
 
 		//プレイスを前へ一つずつ確認していき終点を探す
 		PlaceIterator end = route.end();

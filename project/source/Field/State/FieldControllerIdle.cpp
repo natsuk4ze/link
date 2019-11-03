@@ -33,7 +33,7 @@ namespace Field
 		}
 
 		//XƒL[‚ª‰Ÿ‚³‚ê‚½‚çDevelop‚Ö‘JˆÚ
-		if (entity.input->GetDevelopTrigger())
+		if (entity.input->GetDevelopTrigger() && entity.enableDevelop)
 		{
 			entity.cursor->SetMode(FieldCursor::Mode::Develop);
 			next = State::Develop;

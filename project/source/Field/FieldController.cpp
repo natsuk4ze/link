@@ -54,6 +54,7 @@ namespace Field
 		realDevelopmentLevelAI(0),
 		developSpeedBonus(1.0f),
 		currentLevel(level),
+		enableDevelop(true),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
 		onChangePlaceType(nullptr)
@@ -185,6 +186,7 @@ namespace Field
 	{
 		const char* DataName[] =
 		{
+			//"data/FIELD/sample01.csv",
 			"data/FIELD/City/City_Field.csv",
 			"data/FIELD/World/World_Field.csv",
 			"data/FIELD/Space/Space_Field.csv",
@@ -325,7 +327,7 @@ namespace Field
 		//ストック封印処理
 		handler.functerBool[Handler::FuncterID_bool::SealItem] = [&](bool isSeal)
 		{
-			//後で作る
+			enableDevelop = !isSeal;
 		};
 
 		//混雑度調整処理
