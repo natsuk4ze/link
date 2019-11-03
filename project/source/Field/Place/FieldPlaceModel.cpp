@@ -251,7 +251,6 @@ namespace Field::Model
 
 	/**************************************
 	連結相手の取得
-	TODO:連結相手を複数化
 	***************************************/
 	std::vector<PlaceModel*> PlaceModel::GetConnectTargets() const
 	{
@@ -278,34 +277,6 @@ namespace Field::Model
 		return out;
 	}
 
-	/**************************************
-	端点となるプレイスの取得
-	***************************************/
-	PlaceModel* PlaceModel::GetEdgeOpponent() const
-	{
-		PlaceModel* opponent = nullptr;
-
-		for (auto&& adjacency : adjacencies)
-		{
-			if (adjacency == NULL)
-				continue;
-
-			//街を最優先で端点とする
-			if (adjacency->IsType(PlaceType::Town))
-				return adjacency;
-
-			//街か交差点なら端点として成立
-			if (adjacency->IsType(PlaceType::Junction))
-				opponent = adjacency;
-
-			//道で同じルートに属していなければ端点として成立
-			if (adjacency->IsType(PlaceType::Road) && !IsSameRoute(adjacency))
-				opponent = adjacency;
-		}
-
-		return opponent;
-	}
-	
 	/**************************************
 	端点となるプレイスの取得
 	***************************************/
