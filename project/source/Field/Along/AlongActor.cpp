@@ -74,7 +74,7 @@ namespace Field::Along
 
 		Tween::Scale(*this, Vector3::Zero, { scale, scaleY, scale }, 15, InCubic);
 
-		float rotation = Math::RandomRange(0, 8);
+		int rotation = Math::RandomRange(0, 8);
 		transform->Rotate(rotation * 45.0f, Vector3::Up);
 	}
 

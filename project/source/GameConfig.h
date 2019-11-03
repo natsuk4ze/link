@@ -10,6 +10,9 @@
 
 namespace GameConfig
 {
+	/**************************************
+	シーンのID
+	***************************************/
 	enum SceneID
 	{
 		Title,
@@ -17,6 +20,16 @@ namespace GameConfig
 		Result,
 		ParticleTest,
 		Max
+	};
+
+	/**************************************
+	データ保存用のキー
+	***************************************/
+	enum SaveKey
+	{
+		Key_RemainTime,		//制限時間
+		Key_ItemStock,		//アイテムストック
+		Key_FieldLevel		//フィールドレベル
 	};
 }
 

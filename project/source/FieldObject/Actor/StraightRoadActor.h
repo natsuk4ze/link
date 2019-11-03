@@ -20,7 +20,7 @@ class StraightRoadActor :
 	public PlaceActor
 {
 public:
-	StraightRoadActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
+	StraightRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	~StraightRoadActor();
 };
 

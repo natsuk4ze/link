@@ -12,6 +12,7 @@
 #include "../../../Framework/Math/Easing.h"
 #include "../../../Framework/Renderer3D/MeshContainer.h"
 #include "../../Field/Place/PlaceConfig.h"
+#include "../../Field/FieldConfig.h"
 
 //**************************************
 // マクロ定義
@@ -29,7 +30,7 @@ class PlaceActor :
 	public GameObject
 {
 public:
-	PlaceActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
+	PlaceActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	virtual ~PlaceActor();
 
 	virtual void Update();
@@ -44,7 +45,7 @@ public:
 protected:
 	// ***継承先のクラスで読み込み***
 	MeshContainer* mesh;								// メッシュコンテナ
-	FModel::PlaceType type;								// アクターの種類
+	Field::Model::PlaceType type;								// アクターの種類
 	// ******************************
 
 	bool onCamera;										// 描画の可否判定

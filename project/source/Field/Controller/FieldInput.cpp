@@ -6,7 +6,7 @@
 //=====================================
 #include "FieldInput.h"
 #include "../../../Framework/Input/input.h"
-#include "../FieldCursor.h"
+#include "../Object/FieldCursor.h"
 
 namespace Field
 {

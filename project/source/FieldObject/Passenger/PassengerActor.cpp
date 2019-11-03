@@ -18,20 +18,20 @@ const D3DXVECTOR3 PassengerActor::InitForward = Vector3::Back;
 //=====================================
 // コンストラクタ
 //=====================================
-PassengerActor::PassengerActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
+PassengerActor::PassengerActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
 {
 	mesh = MeshContainer::Create();
 
 	// レベルに合わせてモデル読み込み
 	switch (currentLevel)
 	{
-	case FModel::City:
+	case Field::City:
 		ResourceManager::Instance()->GetMesh("Car", mesh);
 		break;
-	case FModel::World:
+	case Field::World:
 		ResourceManager::Instance()->GetMesh("Train", mesh);
 		break;
-	case FModel::Space:
+	case Field::Space:
 		ResourceManager::Instance()->GetMesh("Rocket", mesh);
 		break;
 	default:

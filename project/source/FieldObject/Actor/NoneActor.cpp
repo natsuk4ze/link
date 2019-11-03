@@ -11,12 +11,12 @@
 //=====================================
 // コンストラクタ
 //=====================================
-NoneActor::NoneActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
+NoneActor::NoneActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
 	: PlaceActor(pos, currentLevel)
 {
 	// モデルデータ参照
 	ResourceManager::Instance()->GetMesh("NoneActor", mesh);
-	type = FModel::None;
+	type = Field::Model::None;
 }
 
 //=====================================

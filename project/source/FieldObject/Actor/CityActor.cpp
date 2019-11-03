@@ -12,24 +12,25 @@
 //=====================================
 // コンストラクタ
 //=====================================
-CityActor::CityActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel)
+CityActor::CityActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
 	: PlaceActor(pos, currentLevel)
 {
 	// モデルデータ参照
 	switch (currentLevel)
 	{
-	case FModel::City:
+	case Field::City:
 		ResourceManager::Instance()->GetMesh("Town-City", mesh);
 		break;
-	case FModel::World:
+	case Field::World:
 		break;
-	case FModel::Space:
+	case Field::Space:
+		ResourceManager::Instance()->GetMesh("Town-Space", mesh);
 		break;
 	default:
 		break;
 	}
 
-	type = FModel::Town;
+	type = Field::Model::Town;
 }
 
 //=====================================

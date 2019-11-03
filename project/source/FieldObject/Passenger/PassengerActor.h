@@ -12,6 +12,8 @@
 #include "../../../Framework/Renderer3D/MeshContainer.h"
 #include "../../Field/Place/PlaceConfig.h"
 #include "../../../Framework/Tween/Tween.h"
+#include "../../Field/FieldConfig.h"
+
 #include <functional>
 
 //**************************************
@@ -35,7 +37,7 @@ private:
 	static const D3DXVECTOR3 InitForward;
 
 public:
-	PassengerActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
+	PassengerActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	~PassengerActor();
 
 	void Update();

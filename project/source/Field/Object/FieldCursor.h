@@ -10,9 +10,9 @@
 
 #include <vector>
 
-#include "../../main.h"
-#include "FieldConfig.h"
-#include "../../Framework/Renderer3D/BoardPolygon.h"
+#include "../../../main.h"
+#include "../FieldConfig.h"
+#include "../../../Framework/Renderer3D/BoardPolygon.h"
 
 namespace Field
 {

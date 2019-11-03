@@ -18,7 +18,7 @@ PassengerModel::PassengerModel(const std::deque<D3DXVECTOR3>& root, std::functio
 	this->route = root;
 
 	// あとでフォールドレベルを反映させる
-	actor = new PassengerActor(this->route[0], FModel::City);
+	actor = new PassengerActor(this->route[0], Field::City);
 	D3DXVECTOR3 destination = FindDestination();
 	actor->MoveDest(destination, [=]
 	{

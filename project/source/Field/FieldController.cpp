@@ -6,8 +6,9 @@
 //
 //=====================================
 #include "FieldController.h"
-#include "FieldCursor.h"
-#include "FieldGround.h"
+#include "Object/FieldCursor.h"
+#include "Object/FieldGround.h"
+#include "Object/FieldSkyBox.h"
 #include "Place\FieldPlaceContainer.h"
 #include "Place\OperatePlaceContainer.h"
 #include "Place\FieldPlaceModel.h"
@@ -15,7 +16,6 @@
 #include "Route\RouteProcessor.h"
 #include "PlaceActorController.h"
 #include "FieldEventHandler.h"
-
 #include "Controller\FieldDevelopper.h"
 #include "Controller\FieldInput.h"
 
@@ -26,6 +26,8 @@
 #include "../../Framework/Input/input.h"
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Math//Easing.h"
+#include "../../Framework/Core/PlayerPrefs.h"
+#include "../GameConfig.h"
 
 #include <algorithm>
 
@@ -45,12 +47,13 @@ namespace Field
 	/**************************************
 	コンストラクタ
 	***************************************/
-	FieldController::FieldController() :
+	FieldController::FieldController(Field::FieldLevel level) :
 		fieldBorder(InitFieldBorder),
 		cntFrame(0),
 		developmentLevelAI(0),
 		realDevelopmentLevelAI(0),
 		developSpeedBonus(1.0f),
+		currentLevel(level),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
 		onChangePlaceType(nullptr)
@@ -59,10 +62,11 @@ namespace Field
 		using Model::PlaceModel;
 
 		//インスタンス作成
+		skybox = new FieldSkyBox(level);
 		cursor = new FieldCursor(PlaceOffset);
 		ground = new FieldGround();
 		operateContainer = new Model::OperatePlaceContainer();
-		placeActController = new Actor::PlaceActorController();
+		placeActController = new Actor::PlaceActorController(level);
 		developper = new FieldDevelopper(this);
 		input = new FieldInput(this);
 		placeContainer = new Model::PlaceContainer();
@@ -84,6 +88,9 @@ namespace Field
 		//ルートプロセッサ作成
 		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
 
+		//リソース読み込み
+		placeActController->LoadResource();
+
 		//制限時間初期化
 		//TODO:シーンを跨いで引き継げるようにする
 
@@ -99,6 +106,7 @@ namespace Field
 		routeContainer.clear();
 
 		//インスタンス削除
+		SAFE_DELETE(skybox);
 		SAFE_DELETE(cursor);
 		SAFE_DELETE(ground);
 		SAFE_DELETE(placeContainer);
@@ -157,7 +165,7 @@ namespace Field
 	***************************************/
 	void FieldController::Draw()
 	{
-		//ground->Draw();
+		skybox->Draw();
 
 		placeActController->Draw();
 
@@ -235,6 +243,11 @@ namespace Field
 	***************************************/
 	bool FieldController::ShouldLevelUp()
 	{
+		//宇宙レベルではレベルアップしない
+		if (currentLevel == FieldLevel::Space)
+			return false;
+
+		//AI発展レベルが最大値に到達していたらレベルアップする
 		return developmentLevelAI >= MaxDevelopmentLevelAI;
 	}
 
