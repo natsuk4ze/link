@@ -22,6 +22,8 @@ class TestParticleCamera : public Camera
 {
 public:
 	TestParticleCamera();
+
+	void Update() override;
 };
 
 #endif

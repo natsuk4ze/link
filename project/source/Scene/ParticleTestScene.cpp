@@ -17,6 +17,7 @@
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
+#include "../Field/Object/FieldSkyBox.h"
 
 /**************************************
 初期化処理
@@ -24,19 +25,11 @@
 void ParticleTestScene::Init()
 {
 	//インスタンス作成
-	skybox = new SkyBox(Vector3::One * 10000.0f);
+	skybox = new Field::FieldSkyBox(Field::FieldLevel::Space);
 	ground = new Field::FieldGround();
 	sceneCamera = new TestParticleCamera();
 	particleManager = TestParticleManager::Instance();
 	bloom = new BloomController();
-
-	//スカイボックスのテクスチャロード
-	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_up.png", SkyBox::Surface::Up);
-	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_back.png", SkyBox::Surface::Back);
-	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_down.jpg", SkyBox::Surface::Down);
-	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_front.png", SkyBox::Surface::Front);
-	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_left.png", SkyBox::Surface::Left);
-	skybox->LoadTexture("data/TEXTURE/Skybox/Sunny_01A_right.png", SkyBox::Surface::Right);
 
 	//アクターのモデルをロード
 	ResourceManager::Instance()->LoadMesh("Town-City", "data/MODEL/PlaceActor/Town.x");
@@ -101,7 +94,7 @@ void ParticleTestScene::Draw()
 	SpriteEffect::SetProjection(sceneCamera->GetProjectionMtx());
 
 	skybox->Draw();
-	ground->Draw();
+	//ground->Draw();
 
 	static bool drawableActor = true;
 	

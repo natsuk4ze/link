@@ -22,8 +22,7 @@ class GameMain : public BaseGame
 {
 public:
 	GameMain(HINSTANCE hInstance, HWND hWnd);
-#ifdef _DEBUG
+
 	void Update() override;
-#endif
 };
 #endif
