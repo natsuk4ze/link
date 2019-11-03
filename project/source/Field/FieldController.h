@@ -25,7 +25,8 @@ namespace Field
 	***************************************/
 	class FieldCursor;
 	class FieldGround;
-	
+	class FieldSkyBox;
+
 	namespace Model
 	{
 		class PlaceContainer;
@@ -106,6 +107,7 @@ namespace Field
 
 		FieldCursor *cursor;								//カーソル
 		FieldGround *ground;								//地面
+		FieldSkyBox *skybox;								//スカイボックス
 
 		Model::PlaceContainer *placeContainer;				//プレイスコンテナ
 		Model::OperatePlaceContainer *operateContainer;		//操作対象プレイスのコンテナ

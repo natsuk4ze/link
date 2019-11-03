@@ -53,7 +53,6 @@ void GameScene::Init()
 	Camera::SetMainCamera(fieldCamera);
 
 	//各インスタンス作成
-	skybox = new Field::FieldSkyBox(Field::FieldLevel::Space);
 	field = new Field::FieldController();
 	gameViewer = new GameViewer();
 	eventController = new EventController(Field::City);
@@ -107,7 +106,6 @@ void GameScene::Uninit()
 	SAFE_DELETE(fieldCamera);
 
 	//インスタンス削除
-	SAFE_DELETE(skybox);
 	SAFE_DELETE(field);
 	SAFE_DELETE(gameViewer);
 	SAFE_DELETE(eventController);
@@ -192,9 +190,6 @@ void GameScene::Draw()
 {
 	//カメラセット
 	fieldCamera->Set();
-
-	//背景描画
-	skybox->Draw();
 
 	// テスト用
 	//testActor->Draw();

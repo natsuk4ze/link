@@ -27,8 +27,9 @@ namespace GameConfig
 	***************************************/
 	enum SaveKey
 	{
-		Key_RemainTime,
-		Key_ItemStock
+		Key_RemainTime,		//制限時間
+		Key_ItemStock,		//アイテムストック
+		Key_FieldLevel		//フィールドレベル
 	};
 }
 

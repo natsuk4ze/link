@@ -25,8 +25,9 @@ GameMain::GameMain(HINSTANCE hInstance, HWND hWnd) :
 	sceneManager->Add(GameConfig::SceneID::Game, new GameScene(renderTexture, renderSurface));
 	sceneManager->Add(GameConfig::SceneID::ParticleTest, new ParticleTestScene(renderTexture, renderSurface));
 
-	//タイトルがまだ無いのでここで制限時間を初期化してしまう
+	//タイトルがまだ無いのでここでパラメータを初期化してしまう
 	PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_RemainTime), 30 * 180);
+	PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), 0);
 
 	//初期シーンに遷移
 	const int InitScene = GameConfig::SceneID::Game;

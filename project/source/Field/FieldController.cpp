@@ -8,6 +8,7 @@
 #include "FieldController.h"
 #include "Object/FieldCursor.h"
 #include "Object/FieldGround.h"
+#include "Object/FieldSkyBox.h"
 #include "Place\FieldPlaceContainer.h"
 #include "Place\OperatePlaceContainer.h"
 #include "Place\FieldPlaceModel.h"
@@ -15,7 +16,6 @@
 #include "Route\RouteProcessor.h"
 #include "PlaceActorController.h"
 #include "FieldEventHandler.h"
-
 #include "Controller\FieldDevelopper.h"
 #include "Controller\FieldInput.h"
 
@@ -26,6 +26,8 @@
 #include "../../Framework/Input/input.h"
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Math//Easing.h"
+#include "../../Framework/Core/PlayerPrefs.h"
+#include "../GameConfig.h"
 
 #include <algorithm>
 
@@ -58,11 +60,15 @@ namespace Field
 		using Model::PlaceContainer;
 		using Model::PlaceModel;
 
+		//フィールドレベル読み込み
+		FieldLevel level = (FieldLevel)PlayerPrefs::GetNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel));
+
 		//インスタンス作成
+		skybox = new FieldSkyBox(level);
 		cursor = new FieldCursor(PlaceOffset);
 		ground = new FieldGround();
 		operateContainer = new Model::OperatePlaceContainer();
-		placeActController = new Actor::PlaceActorController(FieldLevel::City);
+		placeActController = new Actor::PlaceActorController(level);
 		developper = new FieldDevelopper(this);
 		input = new FieldInput(this);
 		placeContainer = new Model::PlaceContainer();
@@ -102,6 +108,7 @@ namespace Field
 		routeContainer.clear();
 
 		//インスタンス削除
+		SAFE_DELETE(skybox);
 		SAFE_DELETE(cursor);
 		SAFE_DELETE(ground);
 		SAFE_DELETE(placeContainer);
@@ -160,7 +167,7 @@ namespace Field
 	***************************************/
 	void FieldController::Draw()
 	{
-		//ground->Draw();
+		skybox->Draw();
 
 		placeActController->Draw();
 

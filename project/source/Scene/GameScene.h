@@ -80,7 +80,6 @@ private:
 	std::vector<SceneState*> fsm;
 	State currentState, prevState;
 
-	Field::FieldSkyBox *skybox;					//背景スカイボックス
 	FieldCamera* fieldCamera;					//フィールドカメラ
 	Field::FieldController *field;				//フィールドコントローラ
 	GameViewer *gameViewer;						//ゲームビュアー
