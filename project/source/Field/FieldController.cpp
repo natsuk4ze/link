@@ -62,7 +62,7 @@ namespace Field
 		cursor = new FieldCursor(PlaceOffset);
 		ground = new FieldGround();
 		operateContainer = new Model::OperatePlaceContainer();
-		placeActController = new Actor::PlaceActorController();
+		placeActController = new Actor::PlaceActorController(FieldLevel::City);
 		developper = new FieldDevelopper(this);
 		input = new FieldInput(this);
 		placeContainer = new Model::PlaceContainer();

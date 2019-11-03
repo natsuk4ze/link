@@ -46,7 +46,8 @@ namespace Field::Actor
 	/**************************************
 	コンストラクタ
 	***************************************/
-	PlaceActorController::PlaceActorController() :
+	PlaceActorController::PlaceActorController(Field::FieldLevel level) :
+		currentLevel(level),
 		bonusSideWay(0.0f)
 	{
 		bgContainer.reserve(ReserveGround);
@@ -308,7 +309,7 @@ namespace Field::Actor
 		if (straightType != StraightType::NotStraight)
 		{
 			//アクター生成
-			PlaceActor* actor = new StraightRoadActor(actorPos, FieldLevel::Space);
+			PlaceActor* actor = new StraightRoadActor(actorPos, currentLevel);
 			AddContainer(place->ID(), actor);
 
 			//左右に繋がるタイプなら回転させる
@@ -325,7 +326,7 @@ namespace Field::Actor
 		else
 		{
 			//アクター生成
-			PlaceActor* actor = new CurveRoadActor(actorPos, FieldLevel::Space);
+			PlaceActor* actor = new CurveRoadActor(actorPos, currentLevel);
 			AddContainer(place->ID(), actor);
 
 			//回転角度を決定して回転
@@ -360,7 +361,7 @@ namespace Field::Actor
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
 		//アクター生成
-		PlaceActor* actor = new CityActor(actorPos, FieldLevel::Space);
+		PlaceActor* actor = new CityActor(actorPos, currentLevel);
 
 		// 生成アニメーション
 		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
@@ -379,7 +380,7 @@ namespace Field::Actor
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
 		//アクター生成
-		PlaceActor* actor = new RiverActor(actorPos, FieldLevel::Space);
+		PlaceActor* actor = new RiverActor(actorPos, currentLevel);
 
 		//アニメーション
 		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
@@ -395,7 +396,7 @@ namespace Field::Actor
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
 		//アクター生成
-		PlaceActor* actor = new BridgeActor(actorPos, FieldLevel::Space);
+		PlaceActor* actor = new BridgeActor(actorPos, currentLevel);
 
 		//回転角度を決定
 		std::vector<Adjacency> AdjacencyType = place->GetConnectingAdjacency();
@@ -427,7 +428,7 @@ namespace Field::Actor
 		//十字路のアクター作成
 		if (adjacencyTypeList.size() == 4)
 		{
-			PlaceActor *actor = new CrossJunctionActor(actorPos, FieldLevel::Space);
+			PlaceActor *actor = new CrossJunctionActor(actorPos, currentLevel);
 
 			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::CrossJunction);
 
@@ -439,7 +440,7 @@ namespace Field::Actor
 		//T字路のアクター生成
 		else
 		{
-			PlaceActor* actor = new TJunctionActor(actorPos, FieldLevel::Space);
+			PlaceActor* actor = new TJunctionActor(actorPos, currentLevel);
 
 			TjunctionType junctionType = IsTjunction(adjacencyTypeList);
 			float rotAngle = 0.0f;
@@ -472,7 +473,7 @@ namespace Field::Actor
 	{
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
-		PlaceActor *actor = new MountainActor(actorPos, FieldLevel::Space);
+		PlaceActor *actor = new MountainActor(actorPos, currentLevel);
 
 		//回転
 		float rotateAngle = Math::RandomRange(0, 4) * 90.0f;
@@ -489,12 +490,15 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::SetNone(const Model::PlaceModel * place, float randomRange)
 	{
+		if (currentLevel == FieldLevel::Space)
+			return;
+
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
 		//真っ平らだと不自然なので高さに少し凹凸をつける
 		actorPos.y += Math::RandomRange(-randomRange, 0.0f);
 
-		PlaceActor* actor = new NoneActor(actorPos, FieldLevel::Space);
+		PlaceActor* actor = new NoneActor(actorPos, currentLevel);
 
 		// 生成アニメーション
 		ActorAnimation::RotateAndExpantion(*actor);

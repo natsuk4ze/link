@@ -10,6 +10,7 @@
 
 #include "../../main.h"
 #include "Place\PlaceConfig.h"
+#include "FieldConfig.h"
 
 #include <vector>
 #include <unordered_map>
@@ -52,7 +53,7 @@ namespace Field::Actor
 	class PlaceActorController
 	{
 	public:
-		PlaceActorController();
+		PlaceActorController(Field::FieldLevel level);
 		~PlaceActorController();
 
 		//更新処理、描画処理
@@ -104,6 +105,9 @@ namespace Field::Actor
 			None,
 			Max
 		};
+
+		//フィールドレベル
+		Field::FieldLevel currentLevel;
 
 		//アクターコンテナ
 		ActorContainer actorContainer;
