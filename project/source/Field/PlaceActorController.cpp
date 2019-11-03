@@ -62,6 +62,10 @@ namespace Field::Actor
 		{
 			bonusSideWay += 1.0f;
 		});
+
+		//国レベルのモデルが無いので一旦、街レベルに落とす
+		if (currentLevel == FieldLevel::World)
+			currentLevel = FieldLevel::City;
 	}
 
 	/**************************************

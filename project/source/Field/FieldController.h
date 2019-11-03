@@ -12,6 +12,7 @@
 #include "../../Framework/Pattern/BaseState.h"
 #include "../../Framework/Pattern/Delegate.h"
 #include "Place\PlaceConfig.h"
+#include "FieldConfig.h"
 #include "../Viewer/GameScene/GameViewer/GameViewerParam.h"
 
 #include <vector>
@@ -60,7 +61,7 @@ namespace Field
 		using ControllerState = BaseState<FieldController, FieldController::State>;
 
 		//コンストラクタ、デストラクタ
-		FieldController();
+		FieldController(Field::FieldLevel level);
 		~FieldController();
 
 		//オブジェクトの更新処理
@@ -123,6 +124,8 @@ namespace Field
 		float developmentLevelAI;				//AI発展レベル(リンクレベルの累積)
 		float realDevelopmentLevelAI;			//実際のAI発展レベル
 		float developSpeedBonus;				//発展スピード増加ボーナス
+
+		FieldLevel currentLevel;				//現在のフィールドレベル
 
 		State current;
 		ControllerState *state;					//現在のステート

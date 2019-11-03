@@ -52,10 +52,13 @@ void GameScene::Init()
 	fieldCamera = new FieldCamera();
 	Camera::SetMainCamera(fieldCamera);
 
+	//フィールドレベル読み込み
+	Field::FieldLevel level = (Field::FieldLevel)PlayerPrefs::GetNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel));
+
 	//各インスタンス作成
-	field = new Field::FieldController();
+	field = new Field::FieldController(level);
 	gameViewer = new GameViewer();
-	eventController = new EventController(Field::City);
+	eventController = new EventController(level);
 	eventHandler = new FieldEventHandler();
 	eventController->ReceiveFieldEventHandler(eventHandler);
 	particleManager = GameParticleManager::Instance();
@@ -265,6 +268,7 @@ void GameScene::OnLevelUp()
 	TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
 	{
 		level++;
+		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), level);
 		SceneManager::ChangeScene(GameConfig::SceneID::Game);
 	});
 }

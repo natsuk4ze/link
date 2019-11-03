@@ -47,21 +47,19 @@ namespace Field
 	/**************************************
 	コンストラクタ
 	***************************************/
-	FieldController::FieldController() :
+	FieldController::FieldController(Field::FieldLevel level) :
 		fieldBorder(InitFieldBorder),
 		cntFrame(0),
 		developmentLevelAI(0),
 		realDevelopmentLevelAI(0),
 		developSpeedBonus(1.0f),
+		currentLevel(level),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
 		onChangePlaceType(nullptr)
 	{
 		using Model::PlaceContainer;
 		using Model::PlaceModel;
-
-		//フィールドレベル読み込み
-		FieldLevel level = (FieldLevel)PlayerPrefs::GetNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel));
 
 		//インスタンス作成
 		skybox = new FieldSkyBox(level);
@@ -245,6 +243,11 @@ namespace Field
 	***************************************/
 	bool FieldController::ShouldLevelUp()
 	{
+		//宇宙レベルではレベルアップしない
+		if (currentLevel == FieldLevel::Space)
+			return false;
+
+		//AI発展レベルが最大値に到達していたらレベルアップする
 		return developmentLevelAI >= MaxDevelopmentLevelAI;
 	}
 
