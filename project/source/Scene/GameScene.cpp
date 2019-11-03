@@ -12,7 +12,7 @@
 #include "../../Framework/Core/SceneManager.h"
 #include "../../Framework/Tool/ProfilerCPU.h"
 
-#include "../../Framework/Renderer3D/SkyBox.h"
+#include "../Field/Object/FieldSkyBox.h"
 #include "../FieldObject/Actor/PlaceActor.h"
 #include "../Field/FieldController.h"
 #include "../Field/Camera/FieldCamera.h"
@@ -51,7 +51,7 @@ void GameScene::Init()
 	Camera::SetMainCamera(fieldCamera);
 
 	//各インスタンス作成
-	skybox = new SkyBox(D3DXVECTOR3(20000.0f, 20000.0f, 20000.0f));
+	skybox = new Field::FieldSkyBox(Field::FieldLevel::Space);
 	field = new Field::FieldController();
 	gameViewer = new GameViewer();
 	eventController = new EventController(Field::City);

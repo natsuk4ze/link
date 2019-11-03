@@ -28,6 +28,7 @@
 namespace Field
 {
 	class FieldController;
+	class FieldSkyBox;
 }
 
 namespace Field::Model
@@ -35,7 +36,6 @@ namespace Field::Model
 	class PlaceModel;
 }
 
-class SkyBox;
 class FieldCamera;
 class GameViewer;
 class EventController;
@@ -80,7 +80,7 @@ private:
 	std::vector<SceneState*> fsm;
 	State currentState, prevState;
 
-	SkyBox *skybox;								//背景スカイボックス
+	Field::FieldSkyBox *skybox;					//背景スカイボックス
 	FieldCamera* fieldCamera;					//フィールドカメラ
 	Field::FieldController *field;				//フィールドコントローラ
 	GameViewer *gameViewer;						//ゲームビュアー

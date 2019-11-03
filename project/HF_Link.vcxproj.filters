@@ -193,6 +193,7 @@
     <ClInclude Include="source\Field\AStar\AStarController.h" />
     <ClInclude Include="source\Field\Object\FieldCursor.h" />
     <ClInclude Include="source\Field\Object\FieldGround.h" />
+    <ClInclude Include="source\Field\Object\FieldSkyBox.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -370,6 +371,7 @@
     <ClCompile Include="source\Field\AStar\AStarController.cpp" />
     <ClCompile Include="source\Field\Object\FieldCursor.cpp" />
     <ClCompile Include="source\Field\Object\FieldGround.cpp" />
+    <ClCompile Include="source\Field\Object\FieldSkyBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
