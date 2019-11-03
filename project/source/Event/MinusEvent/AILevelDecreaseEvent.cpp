@@ -122,6 +122,22 @@ void AILevelDecreaseEvent::Update()
 
 	case BeatGameStart:
 
+		/*float RadiusX = 1.0f;
+		float RadiusY = 2.0f;
+		float RadiusZ = 3.0f;
+		float RateX = 3.0f;
+		float RateY = 4.0f;
+		float RateZ = 5.0f;
+
+		D3DXVECTOR3 hover = D3DXVECTOR3
+		{
+				RadiusX * sinf(RateX * (float)FrameCount),
+				RadiusY * sinf(RateY * (float)FrameCount),
+				RadiusZ * sinf(RateZ * (float)FrameCount)
+		};
+
+		UFOPos += hover;*/
+
 		// 連打ゲームの更新
 		beatGame->Update();
 		break;
@@ -142,12 +158,12 @@ void AILevelDecreaseEvent::Update()
 		// AIレベル減らす
 	case BeatGameFail:
 
-			// 30フレームの遅延を設置
-			TaskManager::Instance()->CreateDelayedTask(30, [&]()
-			{
-				Camera::TranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
-			});
-			EventState = EffectHappend;
+		// 30フレームの遅延を設置
+		TaskManager::Instance()->CreateDelayedTask(30, [&]()
+		{
+			Camera::TranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
+		});
+		EventState = EffectHappend;
 		break;
 
 	default:

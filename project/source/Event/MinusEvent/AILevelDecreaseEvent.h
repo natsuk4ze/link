@@ -25,6 +25,7 @@ private:
 	D3DXVECTOR3 UFOPos;
 	D3DXVECTOR3 TownPos;
 	int EventState;
+	int FrameCount;
 	const Field::Model::PlaceModel* Target;
 
 	BeatGame *beatGame;

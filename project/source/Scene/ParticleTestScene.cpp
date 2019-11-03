@@ -45,12 +45,13 @@ void ParticleTestScene::Init()
 	ResourceManager::Instance()->LoadMesh("Town-City", "data/MODEL/PlaceActor/Town.x");
 	ResourceManager::Instance()->LoadMesh("Mountain-City", "data/MODEL/PlaceActor/mountain.x");
 	ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
-	ResourceManager::Instance()->LoadMesh("UFO", "data/MODEL/UFO/UFO_Max.x");
+	ResourceManager::Instance()->LoadMesh("UFO", "data/MODEL/UFO/UFO.x");
 	actor = new CityActor(Vector3::Zero, Field::Model::FieldLevel::City);
 	//actor = new MountainActor(Vector3::Zero, Field::Model::FieldLevel::City);
 	//actor = new RiverActor(Vector3::Zero, Field::Model::FieldLevel::City);
 	//actor->SetScale(Vector3::One * 1.0f);
 	eventActor = new EventActor(Vector3::Up * 10.0f, Scale, "UFO");
+	eventActor->SetHoverMotion(true);
 
 	//ƒJƒƒ‰Ý’è
 	Camera::SetMainCamera(sceneCamera);
@@ -90,6 +91,8 @@ void ParticleTestScene::Update()
 	Debug::Slider("Angle", angle, 0.0f, 360.0f);
 	actor->SetRotatition(Vector3::Up * angle);
 	Debug::End();
+
+	eventActor->Update();
 
 	sceneCamera->Update();
 

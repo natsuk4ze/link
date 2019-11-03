@@ -17,9 +17,12 @@
 class EventActor : public GameObject
 {
 private:
-	MeshContainer* mesh;								// メッシュコンテナ
-	bool onCamera;
+	D3DXVECTOR3 BaseHoverPos;
+	MeshContainer* mesh;							// メッシュコンテナ
+	int FrameCount;
+	bool InHoverMotion;
 
+	void HoverMotion(void);							// ホバリング運動
 public:
 	EventActor(D3DXVECTOR3 Pos, D3DXVECTOR3 Scale, const char* MeshTag);
 	~EventActor();
@@ -27,10 +30,10 @@ public:
 	virtual void Update();
 	virtual void Draw();
 
-	void Rotate(float y);								// Y軸回転
-	void SetPosition(const D3DXVECTOR3& Pos);			// 座標セット
-	void SetColor(const D3DXCOLOR& Color);				// メッシュの色変更
-	void ResetTransform();								// 座標、回転、大きさをリセットする
-};
+	void Rotate(float y);							// Y軸回転
+	void SetPosition(const D3DXVECTOR3& Pos);		// 座標セット
+	void SetHoverMotion(bool Flag);
+	void SetHoverPara(D3DXVECTOR3 Radius, D3DXVECTOR3 Offset, D3DXVECTOR3 Rate);
+};	
 
 #endif
