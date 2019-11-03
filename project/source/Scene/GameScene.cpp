@@ -54,7 +54,7 @@ void GameScene::Init()
 	skybox = new SkyBox(D3DXVECTOR3(20000.0f, 20000.0f, 20000.0f));
 	field = new Field::FieldController();
 	gameViewer = new GameViewer();
-	eventController = new EventController(Field::Model::City);
+	eventController = new EventController(Field::City);
 	eventHandler = new FieldEventHandler();
 	eventController->ReceiveFieldEventHandler(eventHandler);
 	particleManager = GameParticleManager::Instance();
@@ -77,7 +77,7 @@ void GameScene::Init()
 	ChangeState(State::Initialize);
 
 	// テスト用
-	//testActor = new CityActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), FModel::City);
+	//testActor = new CityActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), Field::City);
 	//std::vector<D3DXVECTOR3> root;
 	//D3DXVECTOR3 push = D3DXVECTOR3(150.0f, 0.0f, -150.0f);
 	//root.push_back(push);
@@ -252,7 +252,7 @@ void GameScene::ChangeState(State next)
 ***************************************/
 void GameScene::OnBuildRoad(Route& route)
 {
-	eventController->CheckEventHappen(route, Field::Model::FieldLevel::City);
+	eventController->CheckEventHappen(route, Field::FieldLevel::City);
 }
 
 /**************************************

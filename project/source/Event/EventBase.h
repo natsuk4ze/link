@@ -11,6 +11,7 @@
 #include <vector>
 #include "../Field/FieldEventHandler.h"
 #include "../Field/Place/PlaceConfig.h"
+#include "../Field/FieldConfig.h"
 
 using namespace std;
 

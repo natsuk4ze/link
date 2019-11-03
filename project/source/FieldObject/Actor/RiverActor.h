@@ -20,7 +20,7 @@ class RiverActor :
 	public PlaceActor
 {
 public:
-	RiverActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
+	RiverActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	~RiverActor();
 
 	void Update() override;

@@ -20,7 +20,7 @@ class TJunctionActor :
 	public PlaceActor
 {
 public:
-	TJunctionActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
+	TJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	~TJunctionActor();
 };
 

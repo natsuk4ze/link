@@ -22,7 +22,7 @@ class NoneActor :
 {
 private:
 public:
-	NoneActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
+	NoneActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	~NoneActor();
 };
 

@@ -23,7 +23,7 @@ class CrossJunctionActor :
 private:
 
 public:
-	CrossJunctionActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
+	CrossJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	~CrossJunctionActor();
 };
 

@@ -58,15 +58,15 @@ string StockRecoveryEvent::GetEventMessage(int FieldLevel)
 {
 	vector<string> MessageContainer;
 
-	if (FieldLevel == Field::Model::City)
+	if (FieldLevel == Field::City)
 	{
 		MessageContainer.push_back("危機管理！(ストック使用回数回復)");
 	}
-	else if (FieldLevel == Field::Model::World)
+	else if (FieldLevel == Field::World)
 	{
 
 	}
-	else if (FieldLevel == Field::Model::Space)
+	else if (FieldLevel == Field::Space)
 	{
 
 	}

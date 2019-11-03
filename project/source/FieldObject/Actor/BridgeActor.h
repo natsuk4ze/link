@@ -20,7 +20,7 @@ class BridgeActor :
 	public PlaceActor
 {
 public:
-	BridgeActor(const D3DXVECTOR3& pos, FModel::FieldLevel currentLevel);
+	BridgeActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	~BridgeActor();
 };
 
