@@ -303,7 +303,36 @@ namespace Field::Model
 
 		return opponent;
 	}
+	
+	/**************************************
+	端点となるプレイスの取得
+	***************************************/
+	std::vector<PlaceModel*> PlaceModel::GetEdgeOpponents() const
+	{
+		std::vector<PlaceModel*> out;
+		out.reserve(4);
 
+		for (auto&& adjacency : adjacencies)
+		{
+			if (adjacency == NULL)
+				continue;
+
+			//街を最優先で端点とする
+			if (adjacency->IsType(PlaceType::Town))
+				out.push_back(adjacency);
+
+			//街か交差点なら端点として成立
+			if (adjacency->IsType(PlaceType::Junction))
+				out.push_back(adjacency);
+
+			//道で同じルートに属していなければ端点として成立
+			if (adjacency->IsType(PlaceType::Road) && !IsSameRoute(adjacency))
+				out.push_back(adjacency);
+		}
+
+		return out;
+	}
+	
 	/**************************************
 	ルートモデルへの所属
 	***************************************/

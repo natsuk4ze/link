@@ -168,18 +168,26 @@ namespace Field::Model
 		//各プレイスの方向を決定
 		unsigned routeSize = route.size();
 
-		first->AddDirection(first->IsAdjacent(edgeStart));
-		first->AddDirection(first->IsAdjacent(route[1]));
-
-		for (unsigned i = 1; i < routeSize - 1; i++)
+		if (routeSize != 1)
 		{
-			PlaceModel* place = route[i];
-			place->AddDirection(place->IsAdjacent(route[i - 1]));
-			place->AddDirection(place->IsAdjacent(route[i + 1]));
-		}
+			first->AddDirection(first->IsAdjacent(edgeStart));
+			first->AddDirection(first->IsAdjacent(route[1]));
 
-		last->AddDirection(last->IsAdjacent(route[routeSize - 2]));
-		last->AddDirection(last->IsAdjacent(edgeEnd));
+			for (unsigned i = 1; i < routeSize - 1; i++)
+			{
+				PlaceModel* place = route[i];
+				place->AddDirection(place->IsAdjacent(route[i - 1]));
+				place->AddDirection(place->IsAdjacent(route[i + 1]));
+			}
+
+			last->AddDirection(last->IsAdjacent(route[routeSize - 2]));
+			last->AddDirection(last->IsAdjacent(edgeEnd));
+		}
+		else
+		{
+			first->AddDirection(first->IsAdjacent(edgeStart));
+			first->AddDirection(first->IsAdjacent(edgeEnd));
+		}
 	}
 
 	/**************************************
@@ -308,17 +316,27 @@ namespace Field::Model
 	void RouteModel::_SetEdge(PlaceModel* place)
 	{
 		//連結相手を取得
-		PlaceModel* opponent = place->GetEdgeOpponent();
-		SetEdge(opponent);
-		opponent->BelongRoute(shared_from_this());
+		PlaceModel* edge = nullptr;
+		auto opponents = place->GetEdgeOpponents();
+		for (auto&& opponent : opponents)
+		{
+			if (opponent != edgeEnd && opponent != edgeStart)
+			{
+				edge = opponent;
+				break;
+			}
+		}
+
+		SetEdge(edge);
+		edge->BelongRoute(shared_from_this());
 
 		//街なら出口を増やす
-		if (opponent->IsType(PlaceType::Town))
+		if (edge->IsType(PlaceType::Town))
 		{
 			//方向追加
-			opponent->AddDirection(opponent->IsAdjacent(place));
+			edge->AddDirection(edge->IsAdjacent(place));
 
-			(*onConnectedTown)(opponent, place);
+			(*onConnectedTown)(edge, place);
 		}
 	}
 

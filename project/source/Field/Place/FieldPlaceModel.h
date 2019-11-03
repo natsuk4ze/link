@@ -72,6 +72,7 @@ namespace Field::Model
 
 		//端点となるPlaceの取得
 		PlaceModel* GetEdgeOpponent()  const;
+		std::vector<PlaceModel*> GetEdgeOpponents() const;
 
 		//ルートモデルへの所属、離脱
 		void BelongRoute(std::shared_ptr<RouteModel> route);

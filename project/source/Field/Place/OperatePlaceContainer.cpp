@@ -125,27 +125,30 @@ namespace Field::Model
 	***************************************/
 	bool OperatePlaceContainer::EndRoute()
 	{
-		//ルートが成立するプレイスの数
-		const int validContainerSize = 2;
-
-		//プレイスが足りていなければコンテナをクリアしてreturn false
-		if (container.size() < validContainerSize)
+		if (container.size() == 1)
 		{
-			container.clear();
-			actorContainer.clear();
-			return false;
+			//端点がそれぞれ別のプレイスか
+			std::vector<PlaceModel*> connectTarget = container.back()->GetEdgeOpponents();
+			if (connectTarget.size() > 1)
+				return true;
+		}
+		else
+		{
+			//最後に追加したプレイスがルートを始められるタイプでなければreturn false
+			PlaceModel* last = *container.rbegin();
+			if (!last->CanStartRoute())
+			{
+				container.clear();
+				actorContainer.clear();
+				return false;
+			}
+			else
+			{
+				return true;
+			}
 		}
 
-		//最後に追加したプレイスがルートを始められるタイプでなければreturn false
-		PlaceModel* last = *container.rbegin();
-		if (!last->CanStartRoute())
-		{
-			container.clear();
-			actorContainer.clear();
-			return false;
-		}
-
-		return true;
+		return false;
 	}
 
 	/**************************************
@@ -154,7 +157,7 @@ namespace Field::Model
 	bool OperatePlaceContainer::EndDevelop()
 	{
 		//開拓可能タイプ以外が2つ以上含まれていなければコンテナをクリアしてreturn false
-		int cntNonDevelopable = 
+		int cntNonDevelopable =
 			from(container) >>
 			where([](auto& place) { return !place->IsDevelopableType(); }) >>
 			count();
