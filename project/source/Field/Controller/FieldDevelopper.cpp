@@ -180,6 +180,10 @@ namespace Field
 		PlaceModel* start = *(river - 1);
 		Adjacency startAdjacency = (*river)->IsAdjacent(start);
 
+		//川の一つ前が橋ならそもそも架けられない
+		if (start->IsType(PlaceType::Bridge))
+			return route.end();
+
 		//プレイスを前へ一つずつ確認していき終点を探す
 		PlaceIterator end = route.end();
 		for (auto itr = river + 1; itr != route.end(); itr++)
