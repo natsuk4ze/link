@@ -32,20 +32,57 @@ public:
 	//boolŒ^
 	static bool GetBool(const std::string& key);
 
-	//intŒ^
-	static int GetInt(const std::string& key);
-
-	//floatŒ^
-	static float GetFloat(const std::string& key);
-
 	//stringŒ^
 	static std::string GetString(const std::string& key);
+
+	//”’lŒ^
+	template<class T>
+	static T GetNumber(const std::string& key)
+	{
+		picojson::value value = GetData(key);
+
+		if (value.is<picojson::null>())
+			return 0;
+
+		return static_cast<T>(value.get<double>());
+	}
 
 	/*********************************************
 	ƒf[ƒ^‚Ì•Û‘¶ˆ—
 	*********************************************/
+	//boolŒ^
+	static void SaveBool(const std::string& key, bool value);
+
+	//stringŒ^
+	static void SaveString(const std::string& key, const std::string& value);
+
+	//intŒ^
 	template<class T>
-	static void Save(const std::string& key, const T& value)
+	static void SaveNumber(const std::string& key, T value)
+	{
+		Save<double>(key, static_cast<double>(value));
+	}
+
+private:
+	PlayerPrefs();
+	
+	//‰Šú‰»ˆ—
+	template<class T>
+	static void Initialize(const std::string& key, T value)
+	{
+		picojson::object data;
+		data.emplace(key, picojson::value(value));
+
+		std::string serializeData = picojson::value(data).serialize();
+		std::ofstream ofs;
+		ofs.open(FileName, std::ios::out);
+		ofs << serializeData << std::endl;
+		ofs.close();
+	}
+
+	//•Û‘¶ˆ—
+	template <class T>
+	static void Save(const std::string& key, T value)
 	{
 		std::ifstream ifs;
 		ifs.open(FileName, std::ios::binary);
@@ -67,25 +104,8 @@ public:
 		}
 		else
 		{
-			Initialize(key, value);
+			Initialize<T>(key, value);
 		}
-	}
-
-private:
-	PlayerPrefs();
-	
-	//‰Šú‰»ˆ—
-	template<class T>
-	void Initialize(const std::string& key, T value)
-	{
-		picojson::object data;
-		data.emplace(key, picojson::value(value));
-
-		std::string serializeData = picojson::value(data).serialize();
-		std::ofstream ofs;
-		ofs.open(FileName, std::ios::out);
-		ofs << serializeData << std::endl;
-		ofs.close();
 	}
 
 	//JSONæ“¾ˆ—

@@ -26,32 +26,6 @@ bool PlayerPrefs::GetBool(const std::string & key)
 }
 
 /**************************************
-intæ“¾ˆ—
-***************************************/
-int PlayerPrefs::GetInt(const std::string & key)
-{
-	picojson::value value = GetData(key);
-
-	if (!value.is<picojson::null>())
-		return 0;
-
-	return (int)value.get<double>();
-}
-
-/**************************************
-floatæ“¾ˆ—
-***************************************/
-float PlayerPrefs::GetFloat(const std::string & key)
-{
-	picojson::value value = GetData(key);
-
-	if (!value.is<picojson::null>())
-		return 0.0f;
-
-	return (float)value.get<double>();
-}
-
-/**************************************
 Stringæ“¾ˆ—
 ***************************************/
 std::string PlayerPrefs::GetString(const std::string & key)
@@ -62,6 +36,22 @@ std::string PlayerPrefs::GetString(const std::string & key)
 		return false;
 
 	return value.get<std::string>();
+}
+
+/**************************************
+bool•Û‘¶ˆ—
+***************************************/
+void PlayerPrefs::SaveBool(const std::string & key, bool value)
+{
+	Save<bool>(key, value);
+}
+
+/**************************************
+String•Û‘¶ˆ—
+***************************************/
+void PlayerPrefs::SaveString(const std::string & key, const std::string & value)
+{
+	Save<const std::string&>(key, value);
 }
 
 /**************************************

@@ -8,6 +8,7 @@
 #define _UTILITY_H_
 
 #include <algorithm>
+#include "../../Library/nameof/nameof.hpp"
 
 /**************************************
 ‘O•ûéŒ¾
@@ -61,6 +62,14 @@ namespace Utility
 		return itr != container.end();
 	}
 
+	/**************************************
+	enum‚Ì•¶š—ñ‰»
+	***************************************/
+	template <class Enum>
+	std::string ToString(const Enum& val)
+	{
+		return std::string(NAMEOF_ENUM(val));
+	}
 };
 
 #endif
