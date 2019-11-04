@@ -58,6 +58,20 @@ namespace GamePad
 	BOOL GetTriggerPOV(int padNo, DWORD button);
 	BOOL GetReleasePOV(int padNo, DWORD button);
 
+	BOOL GetPressLeft(int padNo);
+	BOOL GetPressRight(int padNo);
+	BOOL GetRepeatLeft(int padNo);
+	BOOL GetRepeatRight(int padNo);
+	BOOL GetTriggerLeft(int padNo);
+	BOOL GetTriggerRight(int padNo);
+
+	BOOL GetPressDown(int padNo);
+	BOOL GetPressUp(int padNo);
+	BOOL GetRepeatDown(int padNo);
+	BOOL GetRepeatUp(int padNo);
+	BOOL GetTriggerDown(int padNo);
+	BOOL GetTriggerUp(int padNo);
+
 	float GetRightStickX(int padNo);
 	float GetRightStickY(int padNo);
 
