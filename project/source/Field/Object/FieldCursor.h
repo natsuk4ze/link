@@ -56,6 +56,9 @@ namespace Field
 		//モード切り替え処理
 		void SetMode(Mode mode);
 
+		//移動中かどうか
+		bool IsMoving() const;
+
 	private:
 		const int SquareMax = 5;			//四角形最大数
 		const int EmitInterval = 10;		//四角形生成インターバル

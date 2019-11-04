@@ -253,6 +253,14 @@ namespace Field
 	}
 
 	/**************************************
+	カメラを切り替えるかどうかの判定
+	***************************************/
+	bool FieldController::ShouldSwicthCamera() const
+	{
+		return input->CheckSwicthCameraMode();
+	}
+
+	/**************************************
 	イベントハンドラ作成処理
 	***************************************/
 	void FieldController::SetEventHandler(::FieldEventHandler& handler)

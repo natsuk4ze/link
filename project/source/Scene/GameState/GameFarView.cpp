@@ -46,7 +46,7 @@ GameScene::State GameScene::GameFarView::OnUpdate(GameScene & entity)
 		entity.ChangeState(State::LevelUp);
 	}
 	//視点変更ボタンが押されたらIdleモードへ遷移
-	else if (Keyboard::GetTrigger(DIK_SPACE))
+	else if (entity.field->ShouldSwicthCamera())
 	{
 		entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
 		entity.ChangeState(State::Idle);
