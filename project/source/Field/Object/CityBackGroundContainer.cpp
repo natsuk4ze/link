@@ -1,12 +1,15 @@
 //=====================================
 //
-//背景アクターコンテナ処理[BackGroundActorContainer.cpp]
+//背景アクターコンテナ処理[CityBackGroundContainer.cpp]
 //Author:GP12A332 21 立花雄太
 //
 //=====================================
-#include "BackGroundActorContainer.h"
+#include "CityBackGroundContainer.h"
+
+#include "../../FieldObject/Actor/PlaceActor.h"
 #include "../../FieldObject/Actor/RiverActor.h"
 #include "../../FieldObject/Actor/NoneActor.h"
+
 #include "../Place/PlaceConfig.h"
 
 #include "../../../Framework/String/String.h"
@@ -16,11 +19,9 @@
 
 namespace Field::Actor
 {
-	/**************************************
-	コンストラクタ
+	/**************************************コンストラクタ
 	***************************************/
-	BackGroundActorContainer::BackGroundActorContainer(FieldLevel level) :
-		fieldLevel(level)
+	CityBackGroundContainer::CityBackGroundContainer()
 	{
 		const unsigned ReserveSizeGround = 2500;
 		const unsigned ReserveSizeRiver = 200;
@@ -32,7 +33,7 @@ namespace Field::Actor
 	/**************************************
 	デストラクタ
 	***************************************/
-	BackGroundActorContainer::~BackGroundActorContainer()
+	CityBackGroundContainer::~CityBackGroundContainer()
 	{
 		Utility::DeleteContainer(groundContainer);
 		Utility::DeleteContainer(riverContainer);
@@ -41,7 +42,7 @@ namespace Field::Actor
 	/**************************************
 	更新処理
 	***************************************/
-	void BackGroundActorContainer::Update()
+	void CityBackGroundContainer::Update()
 	{
 		for (auto&& ground : groundContainer)
 		{
@@ -57,7 +58,7 @@ namespace Field::Actor
 	/**************************************
 	描画処理
 	***************************************/
-	void BackGroundActorContainer::Draw()
+	void CityBackGroundContainer::Draw()
 	{
 		for (auto&& ground : groundContainer)
 		{
@@ -73,20 +74,14 @@ namespace Field::Actor
 	/**************************************
 	読み込み処理
 	***************************************/
-	void BackGroundActorContainer::Load()
+	void CityBackGroundContainer::Load()
 	{
 		using Model::PlaceType;
 
-		const char* DataName[] =
-		{
-			//"data/FIELD/sample01.csv",
-			"data/FIELD/City/City_Field.csv",
-			"data/FIELD/World/World_Field.csv",
-			"data/FIELD/Space/Space_Field.csv",
-		};
+		const char* DataName = "data/FIELD/City/City_Field.csv";
 
 		//CSVファイルを読み込み
-		std::ifstream stream(DataName[fieldLevel]);
+		std::ifstream stream(DataName);
 
 		std::string line;			//CSVを1行ずつ読むバッファ
 		const char Delim = ',';		//区切り文字
@@ -112,7 +107,7 @@ namespace Field::Actor
 
 				if (type == PlaceType::River)
 				{
-					actor = new RiverActor(position, fieldLevel);
+					actor = new RiverActor(position, FieldLevel::City);
 					riverContainer.push_back(actor);
 				}
 				else
@@ -120,7 +115,7 @@ namespace Field::Actor
 					//真っ平らだと不自然なので高さに少し凹凸をつける
 					position.y += Math::RandomRange(-2.0f, 0.0f);
 
-					actor = new NoneActor(position, fieldLevel);
+					actor = new NoneActor(position, FieldLevel::City);
 					groundContainer.push_back(actor);
 				}
 

@@ -15,7 +15,7 @@
 #include "AStar\AStarController.h"
 #include "../FieldObject/PassengerController.h"
 #include "../../Framework/Resource/ResourceManager.h"
-#include "Object/BackGroundActorContainer.h"
+#include "Object/CityBackGroundContainer.h"
 
 #include "../FieldObject/Actor/CityActor.h"
 #include "../FieldObject/Actor/CrossJunctionActor.h"
@@ -54,7 +54,7 @@ namespace Field::Actor
 		alongController = new Along::AlongController();
 		aStarController = new Route::AStarController();
 		passengerController = new PassengerController();
-		bgContainer = new BackGroundActorContainer(level);
+		bgContainer = new CityBackGroundContainer();
 
 		auto onReachPassenger = std::bind(&Along::AlongController::OnReachPassenger, alongController, std::placeholders::_1);
 		passengerController->SetCallbackOnReach(onReachPassenger);

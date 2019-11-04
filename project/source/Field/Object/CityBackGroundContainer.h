@@ -1,14 +1,16 @@
 //=====================================
 //
-// BackGroundActorContainer.h
+// CityBackGroundContainer.h
 // 機能:背景アクターのコンテナ
 // Author:GP12B332 21 立花雄太
 //
 //=====================================
-#ifndef _BACKGROUNDACTORCONTAINER_H_
-#define _BACKGROUNDACTORCONTAINER_H_
+#ifndef _CITYBACKGROUNDCONTAINER_H_
+#define _CITYBACKGROUNDCONTAINER_H_
 
 #include "../../../main.h"
+#include "BackGroundContainer.h"
+
 #include <vector>
 
 #include "../FieldConfig.h"
@@ -27,21 +29,16 @@ namespace Field::Actor
 	/**************************************
 	クラス定義	
 	***************************************/
-	class BackGroundActorContainer
+	class CityBackGroundContainer : public BackGroundContainer
 	{
 	public:
-		BackGroundActorContainer(FieldLevel level);
-		~BackGroundActorContainer();
+		CityBackGroundContainer();
+		~CityBackGroundContainer();
 
 		void Update();
 		void Draw();
 
 		void Load();
-
-	private:
-		FieldLevel fieldLevel;
-		std::vector<PlaceActor*> groundContainer;
-		std::vector<PlaceActor*> riverContainer;
 	};
 }
 #endif

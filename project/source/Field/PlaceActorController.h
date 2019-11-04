@@ -45,9 +45,8 @@ namespace Field::Actor
 	***************************************/
 	using RouteModelPtr = std::shared_ptr<Field::Model::RouteModel>;
 	using ActorContainer = std::unordered_map<unsigned, std::unique_ptr<PlaceActor>>;
-	using BackGroundContainer = std::vector<std::unique_ptr<PlaceActor>>;
 
-	class BackGroundActorContainer;
+	class BackGroundContainer;
 
 	/**************************************
 	クラス定義
@@ -116,7 +115,7 @@ namespace Field::Actor
 		ActorContainer poolDestroy;
 
 		//背景アクターコンテナ
-		BackGroundActorContainer *bgContainer;
+		BackGroundContainer *bgContainer;
 
 		//道沿いの情報コンテナ
 		Along::AlongController *alongController;
