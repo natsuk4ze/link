@@ -92,10 +92,8 @@ namespace Field::Actor
 	{
 		using Model::PlaceType;
 
-		const char* DataName = "data/FIELD/City/City_Field.csv";
-
 		//CSVファイルを読み込み
-		std::ifstream stream(DataName);
+		std::ifstream stream(Const::FieldDataFile[0]);
 
 		std::string line;			//CSVを1行ずつ読むバッファ
 		const char Delim = ',';		//区切り文字

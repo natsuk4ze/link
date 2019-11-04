@@ -388,6 +388,7 @@
     <ClCompile Include="Framework\Effect\InstancingMeshEffect.cpp" />
     <ClCompile Include="Framework\Effect\RendererEffect.cpp" />
     <ClCompile Include="Framework\Renderer3D\InstancingMeshContainer.cpp" />
+    <ClCompile Include="source\Field\FieldConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

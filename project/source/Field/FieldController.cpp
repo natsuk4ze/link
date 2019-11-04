@@ -184,15 +184,7 @@ namespace Field
 	***************************************/
 	void FieldController::Load()
 	{
-		const char* DataName[] =
-		{
-			//"data/FIELD/sample01.csv",
-			"data/FIELD/City/City_Field.csv",
-			"data/FIELD/World/World_Field.csv",
-			"data/FIELD/Space/Space_Field.csv",
-		};
-
-		placeContainer->LoadCSV(DataName[currentLevel]);
+		placeContainer->LoadCSV(Const::FieldDataFile[currentLevel]);
 
 		//アクター生成
 		auto places = placeContainer->GetAllPlaces();
@@ -258,6 +250,14 @@ namespace Field
 
 		//AI発展レベルが最大値に到達していたらレベルアップする
 		return developmentLevelAI >= MaxDevelopmentLevelAI;
+	}
+
+	/**************************************
+	カメラを切り替えるかどうかの判定
+	***************************************/
+	bool FieldController::ShouldSwicthCamera() const
+	{
+		return input->CheckSwicthCameraMode();
 	}
 
 	/**************************************

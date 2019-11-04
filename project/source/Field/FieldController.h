@@ -92,6 +92,9 @@ namespace Field
 		//レベルアップするべきかどうか
 		bool ShouldLevelUp();
 
+		//カメラを切り替えるべきかどうか
+		bool ShouldSwicthCamera() const;
+
 		//イベントハンドラ設定処理
 		void SetEventHandler(::FieldEventHandler& handler);
 

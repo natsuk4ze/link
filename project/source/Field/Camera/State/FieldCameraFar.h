@@ -24,5 +24,9 @@ class FieldCamera::FieldCameraFar : public BaseState<FieldCamera, FieldCamera::M
 public:
 	void OnStart(FieldCamera& entity);
 	FieldCamera::Mode OnUpdate(FieldCamera& entity);
+
+	static const float CameraLength;
+	static const float CameraAngleXZ;
+	static const float CameraAngleY;
 };
 #endif

@@ -14,7 +14,7 @@ namespace Field
 	staticメンバ
 	***************************************/
 	const int FieldController::FieldInput::InputLongWait = 15;
-	const int FieldController::FieldInput::InputShortWait = 3;
+	const int FieldController::FieldInput::InputShortWait = 4;
 
 	/**************************************
 	コンストラクタ
@@ -118,6 +118,21 @@ namespace Field
 		{
 			entity->ChangeState(next);
 		}
+	}
+
+	/**************************************
+	カメラ切り替え入力の検出
+	***************************************/
+	bool FieldController::FieldInput::CheckSwicthCameraMode()
+	{
+		//カーソル移動中はfalse
+		if (entity->cursor->IsMoving())
+			return false;
+
+		if (Keyboard::GetTrigger(DIK_SPACE) || GamePad::GetTrigger(0, BUTTON_Z))
+			return true;
+
+		return false;
 	}
 
 	/**************************************

@@ -48,7 +48,7 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 		entity.ChangeState(State::LevelUp);
 	}
 	//‰“Œiƒ‚[ƒh‚Ö‚Ì‘JˆÚŠm”F
-	else if (Keyboard::GetTrigger(DIK_SPACE))
+	else if (entity.field->ShouldSwicthCamera())
 	{
 		entity.ChangeState(State::FarView);
 	}
