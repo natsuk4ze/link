@@ -25,13 +25,13 @@ namespace Field::Actor
 	***************************************/
 	CityBackGroundContainer::CityBackGroundContainer()
 	{
-		const unsigned ReserveSizeGround = 2500;
+		const unsigned ReserveSizeGround = 10000;
 		const unsigned ReserveSizeRiver = 200;
 
 		groundContainer.reserve(ReserveSizeGround);
 		riverContainer.reserve(ReserveSizeRiver);
 
-		groundMesh = new InstancingMeshContainer(2500);
+		groundMesh = new InstancingMeshContainer(ReserveSizeGround);
 		groundMesh->Load("data/MODEL/PlaceActor/ground.x");
 	}
 
@@ -79,10 +79,6 @@ namespace Field::Actor
 
 		groundMesh->Draw();
 
-		//for (auto&& ground : groundContainer)
-		//{
-		//	ground->Draw();
-		//}
 		for (auto&& river : riverContainer)
 		{
 			river->Draw();
@@ -146,7 +142,7 @@ namespace Field::Actor
 #ifndef _DEBUG
 		//フィールドの外側の背景を作る
 		//NOTE:とりあえずなので全部地面にしてしまう
-		const int MaxOuter = 50;
+		const int MaxOuter = 25;
 		for (int outerX = -MaxOuter; outerX < x + MaxOuter; outerX++)
 		{
 			for (int outerZ = -MaxOuter; outerZ < z + MaxOuter; outerZ++)
