@@ -8,6 +8,7 @@
 #ifndef _FIELDCONFIG_H_
 #define _FIELDCONFIG_H_
 
+#include "../../main.h"
 #include "Place\PlaceConfig.h"
 
 #include <vector>
@@ -15,13 +16,14 @@
 
 namespace Field
 {
-	/**************************************
-	データ保存に使用するキー
-	***************************************/
-	enum SaveKey
+	class Const
 	{
-		Key_FieldLevel,
-		Key_Stock,
+	public:
+		static const char* FieldDataFile[];
+
+	private:
+		Const() {}
+		~Const() {}
 	};
 
 	/**************************************

@@ -184,15 +184,7 @@ namespace Field
 	***************************************/
 	void FieldController::Load()
 	{
-		const char* DataName[] =
-		{
-			//"data/FIELD/sample01.csv",
-			"data/FIELD/City/City_Field.csv",
-			"data/FIELD/World/World_Field.csv",
-			"data/FIELD/Space/Space_Field.csv",
-		};
-
-		placeContainer->LoadCSV(DataName[currentLevel]);
+		placeContainer->LoadCSV(Const::FieldDataFile[currentLevel]);
 
 		//アクター生成
 		auto places = placeContainer->GetAllPlaces();
