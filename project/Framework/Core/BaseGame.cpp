@@ -96,7 +96,6 @@ void BaseGame::Draw()
 	//描画用エフェクトへパラメータを設定
 	RendererEffect::SetView(Camera::MainCamera()->GetViewMtx());
 	RendererEffect::SetProjection(Camera::MainCamera()->GetProjectionMtx());
-	RendererEffect::SetLight(0, Light::GetData(0));
 
 	//トランジションマスクを描画
 	TransitionController::Instance()->DrawMask();

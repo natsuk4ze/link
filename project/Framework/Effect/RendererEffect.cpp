@@ -11,18 +11,6 @@ static変数
 ***************************************/
 D3DXMATRIX RendererEffect::mtxView;
 D3DXMATRIX RendererEffect::mtxProjection;
-std::vector<D3DLIGHT9> RendererEffect::lightContainer;
-
-/*************************************
-ライト設定処理
-***************************************/
-void RendererEffect::SetLight(int index, const D3DLIGHT9 & light)
-{
-	if ((int)lightContainer.size() <= index)
-		lightContainer.resize(index + 1);
-
-	lightContainer[index] = light;
-}
 
 /*************************************
 ビュー行列設定処理
@@ -53,7 +41,7 @@ void RendererEffect::Commit()
 ***************************************/
 void RendererEffect::Begin()
 {
-	CommitLightAndCamera();
+	CommitCameraParameter();
 	effect->Begin(0, 0);
 }
 

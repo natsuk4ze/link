@@ -25,7 +25,7 @@ public:
 	InstancingMeshEffect();
 	~InstancingMeshEffect();
 
-	void CommitLightAndCamera();
+	void CommitCameraParameter();
 
 	//ƒ}ƒeƒŠƒAƒ‹İ’èˆ—
 	void SetMaterial(const D3DMATERIAL9& material);

@@ -14,10 +14,10 @@ float4 materialDiffuse;			//マテリアルディフューズ
 float4 materialAmbient;			//マテリアルアンビエント
 float4 materialSpecular;		//マテリアルスペキュラー
 
-float4 lightDiffuse;			//ライトディフューズ
-float4 lightAmbient;			//ライトアンビエント
-float4 lightSpecular;			//ライトスペキュラ
-float3 lightDirection;			//ライト方向
+float4 lightDiffuse[3];			//ライトディフューズ
+float4 lightAmbient[3];			//ライトアンビエント
+float4 lightSpecular[3];		//ライトスペキュラ
+float4 lightDirection[3];		//ライト方向
 
 /**************************************
 *テクスチャサンプラー
@@ -62,10 +62,17 @@ VS_OUT VS(
 	Out.uv = uv;
 
 	//ライトによる色を計算
-	float3 L = normalize(-lightDirection);
-	float4 diffuse = max(0.0f, dot(L, N)) * materialDiffuse * lightDiffuse;
-	float4 ambient = materialAmbient * lightAmbient;
-	Out.color = saturate(diffuse + ambient);
+	float4 diffuse = (float4)0;
+	float4 ambient = (float4)0;
+
+	for (int i = 0; i < 3; i++)
+	{
+		float3 L = normalize(-lightDirection[i].xyz);
+		diffuse += max(0.0f, dot(L, N)) * lightDiffuse[i];
+		ambient += lightAmbient[i];
+	}
+
+	Out.color = saturate(diffuse * materialDiffuse + ambient * materialAmbient);
 
 	Out.color.a = 1.0f;
 

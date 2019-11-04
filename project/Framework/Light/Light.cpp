@@ -55,13 +55,13 @@ namespace Light
 		pDevice->SetLight(0, &light[0]);
 		pDevice->LightEnable(0, TRUE);
 
-		//// ライトをレンダリングパイプラインに設定
-		//pDevice->SetLight(1, &light[1]);
-		//pDevice->LightEnable(1, TRUE);
+		// ライトをレンダリングパイプラインに設定
+		pDevice->SetLight(1, &light[1]);
+		pDevice->LightEnable(1, TRUE);
 
-		//// ライトをレンダリングパイプラインに設定
-		//pDevice->SetLight(2, &light[2]);
-		//pDevice->LightEnable(2, TRUE);
+		// ライトをレンダリングパイプラインに設定
+		pDevice->SetLight(2, &light[2]);
+		pDevice->LightEnable(2, TRUE);
 
 		// ライティングモード
 		pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);

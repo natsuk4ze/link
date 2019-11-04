@@ -6,6 +6,7 @@
 //=====================================
 #include "InstancingMeshEffect.h"
 #include "../Resource/ResourceManager.h"
+#include "../Light/Light.h"
 
 /**************************************
 コンストラクタ
@@ -43,17 +44,44 @@ InstancingMeshEffect::~InstancingMeshEffect()
 /**************************************
 ライトとカメラの変更反映処理
 ***************************************/
-void InstancingMeshEffect::CommitLightAndCamera()
+void InstancingMeshEffect::CommitCameraParameter()
 {
 	//ビュー、プロジェクション行列設定
 	effect->SetMatrix(hMtxView, &mtxView);
 	effect->SetMatrix(hMtxProjection, &mtxProjection);
 
-	//ライト情報設定
-	effect->SetFloatArray(hLightDirection, (float*)&lightContainer[0].Direction, 3);
-	effect->SetFloatArray(hLightDiffuse, (float*)&lightContainer[0].Diffuse, 4);
-	effect->SetFloatArray(hLightAmbient, (float*)&lightContainer[0].Ambient, 4);
-	effect->SetFloatArray(hLightSpecular, (float*)&lightContainer[0].Specular, 4);
+	//ライト情報取得
+	int numLight = Light::LightMax();
+	std::vector<D3DLIGHT9> light(numLight);
+	for (int i = 0; i < numLight; i++)
+	{
+		light[i] = Light::GetData(i);
+	}
+
+	//作業領域
+	std::vector<D3DXVECTOR4> workDir(numLight);
+	std::vector<D3DCOLORVALUE> workColor(numLight);
+
+	//ライト方向設定
+	for (int i = 0; i < numLight; i++)
+	{
+		workDir[i] = D3DXVECTOR4(light[i].Direction, 0.0f);
+	}
+	effect->SetVectorArray(hLightDirection, &workDir[0], numLight);
+
+	//ライト拡散光設定
+	for (int i = 0; i < numLight; i++)
+	{
+		workColor[i] = light[i].Diffuse;
+	}
+	effect->SetVectorArray(hLightDiffuse, (D3DXVECTOR4*)&workColor[0], numLight);
+
+	//ライト環境光設定
+	for (int i = 0; i < numLight; i++)
+	{
+		workColor[i] = light[i].Ambient;
+	}
+	effect->SetVectorArray(hLightAmbient, (D3DXVECTOR4*)&workColor[0], numLight);
 }
 
 /**************************************
