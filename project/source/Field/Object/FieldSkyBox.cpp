@@ -14,10 +14,19 @@ namespace Field
 	const char* FieldSkyBox::CityTexturePath[] = {
 		"data/TEXTURE/Skybox/Sunny_01A_up.png",
 		"data/TEXTURE/Skybox/Sunny_01A_back.png",
-		"data/TEXTURE/Skybox/Sunny_01A_down.jpg",
+		"data/TEXTURE/Skybox/Sunny_01A_down.png",
 		"data/TEXTURE/Skybox/Sunny_01A_front.png",
 		"data/TEXTURE/Skybox/Sunny_01A_left.png",
 		"data/TEXTURE/Skybox/Sunny_01A_right.png"
+	};
+
+	const char* FieldSkyBox::WorldTexturePath[] = {
+		"data/TEXTURE/Skybox/WorldSkyBox02bUp.jpg",
+		"data/TEXTURE/Skybox/WorldSkyBox02bBack.jpg",
+		"data/TEXTURE/Skybox/WorldSkyBox02bDown.jpg",
+		"data/TEXTURE/Skybox/WorldSkyBox02bFront.jpg",
+		"data/TEXTURE/Skybox/WorldSkyBox02bLeft.jpg",
+		"data/TEXTURE/Skybox/WorldSkyBox02bRight.jpg",
 	};
 
 	const char* FieldSkyBox::SpaceTexturePath[] = {
@@ -42,6 +51,13 @@ namespace Field
 			for (int i = 0; i < Surface::Max; i++)
 			{
 				LoadTexture(CityTexturePath[i], (Surface)i);
+			}
+			break;
+
+		case FieldLevel::World:
+			for (int i = 0; i < Surface::Max; i++)
+			{
+				LoadTexture(WorldTexturePath[i], (Surface)i);
 			}
 			break;
 

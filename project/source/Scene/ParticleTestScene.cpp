@@ -28,7 +28,7 @@ const D3DXVECTOR3 UFOScale = D3DXVECTOR3(0.15f, 0.15f, 0.15f);
 void ParticleTestScene::Init()
 {
 	//インスタンス作成
-	skybox = new Field::FieldSkyBox(Field::FieldLevel::Space);
+	skybox = new Field::FieldSkyBox(Field::FieldLevel::World);
 	ground = new Field::FieldGround();
 	sceneCamera = new TestParticleCamera();
 	particleManager = TestParticleManager::Instance();
