@@ -5,6 +5,7 @@
 //
 //=====================================
 #include "BackGroundContainer.h"
+#include "../../FieldObject/Actor/PlaceActor.h"
 
 /**************************************
 コンストラクタ
