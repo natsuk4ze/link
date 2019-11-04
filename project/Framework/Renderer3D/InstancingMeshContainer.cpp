@@ -158,6 +158,7 @@ SRTバッフファロック処理
 void InstancingMeshContainer::Lock()
 {
 	assert(pWorld == nullptr);
+	indexTransform = 0;
 	transformBuffer->Lock(0, 0, (void**)&pWorld, 0);
 }
 
@@ -168,6 +169,7 @@ void InstancingMeshContainer::Unlock()
 {
 	assert(pWorld != nullptr);
 	transformBuffer->Unlock();
+	pWorld = nullptr;
 }
 
 /**************************************
@@ -182,6 +184,8 @@ bool InstancingMeshContainer::EmbedTranform(const Transform & transform)
 	
 	pWorld++;
 	indexTransform++;
+
+	return true;
 }
 
 /**************************************
@@ -193,6 +197,7 @@ void InstancingMeshContainer::MakeDeclaration(LPD3DXMESH mesh)
 
 	D3DVERTEXELEMENT9 elem[65];
 	ZeroMemory(&elem[0], sizeof(D3DVERTEXELEMENT9) * 65);
+	mesh->GetDeclaration(elem);
 
 	for (int i = 0; i < 65; i++)
 	{
