@@ -18,8 +18,8 @@ std::vector<D3DLIGHT9> RendererEffect::lightContainer;
 ***************************************/
 void RendererEffect::SetLight(int index, const D3DLIGHT9 & light)
 {
-	if ((int)lightContainer.size() < index)
-		lightContainer.resize(index);
+	if ((int)lightContainer.size() <= index)
+		lightContainer.resize(index + 1);
 
 	lightContainer[index] = light;
 }
@@ -53,6 +53,7 @@ void RendererEffect::Commit()
 ***************************************/
 void RendererEffect::Begin()
 {
+	CommitLightAndCamera();
 	effect->Begin(0, 0);
 }
 
