@@ -85,6 +85,7 @@
     <ClInclude Include="Framework\Renderer3D\BillboardObject.h" />
     <ClInclude Include="Framework\Renderer3D\BillboardTransform.h" />
     <ClInclude Include="Framework\Renderer3D\BoardPolygon.h" />
+    <ClInclude Include="Framework\Renderer3D\InstancingMeshContainer.h" />
     <ClInclude Include="Framework\Renderer3D\MeshContainer.h" />
     <ClInclude Include="Framework\Renderer3D\SkyBox.h" />
     <ClInclude Include="Framework\Renderer3D\TransformObject.h" />
@@ -280,6 +281,7 @@
     <ClCompile Include="Framework\Renderer3D\BillboardObject.cpp" />
     <ClCompile Include="Framework\Renderer3D\BillboardTransform.cpp" />
     <ClCompile Include="Framework\Renderer3D\BoardPolygon.cpp" />
+    <ClCompile Include="Framework\Renderer3D\InstancingMeshContainer.cpp" />
     <ClCompile Include="Framework\Renderer3D\MeshContainer.cpp" />
     <ClCompile Include="Framework\Renderer3D\SkyBox.cpp" />
     <ClCompile Include="Framework\Renderer3D\TransformObject.cpp" />

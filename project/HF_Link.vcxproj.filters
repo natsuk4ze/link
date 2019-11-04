@@ -202,6 +202,7 @@
     <ClInclude Include="source\Field\Object\BackGroundContainer.h" />
     <ClInclude Include="Framework\Effect\InstancingMeshEffect.h" />
     <ClInclude Include="Framework\Effect\RendererEffect.h" />
+    <ClInclude Include="Framework\Renderer3D\InstancingMeshContainer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -386,6 +387,7 @@
     <ClCompile Include="source\Field\Object\BackGroundContainer.cpp" />
     <ClCompile Include="Framework\Effect\InstancingMeshEffect.cpp" />
     <ClCompile Include="Framework\Effect\RendererEffect.cpp" />
+    <ClCompile Include="Framework\Renderer3D\InstancingMeshContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

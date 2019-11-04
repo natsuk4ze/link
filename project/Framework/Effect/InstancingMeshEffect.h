@@ -18,12 +18,12 @@
 /**************************************
 クラス定義
 ***************************************/
-class InstancingMeshRenderer : public RendererEffect
+class InstancingMeshEffect : public RendererEffect
 {
 public:
 	//コンストラクタ、デストラクタ
-	InstancingMeshRenderer();
-	~InstancingMeshRenderer();
+	InstancingMeshEffect();
+	~InstancingMeshEffect();
 
 	void CommitLightAndCamera();
 

@@ -10,7 +10,7 @@
 /**************************************
 コンストラクタ
 ***************************************/
-InstancingMeshRenderer::InstancingMeshRenderer()
+InstancingMeshEffect::InstancingMeshEffect()
 {
 	//エフェクト読み込み
 	ResourceManager::Instance()->GetEffect("data/EFFECT/InstancingMesh.cfx", effect);
@@ -35,7 +35,7 @@ InstancingMeshRenderer::InstancingMeshRenderer()
 /**************************************
 デストラクタ
 ***************************************/
-InstancingMeshRenderer::~InstancingMeshRenderer()
+InstancingMeshEffect::~InstancingMeshEffect()
 {
 	SAFE_RELEASE(effect);
 }
@@ -43,7 +43,7 @@ InstancingMeshRenderer::~InstancingMeshRenderer()
 /**************************************
 ライトとカメラの変更反映処理
 ***************************************/
-void InstancingMeshRenderer::CommitLightAndCamera()
+void InstancingMeshEffect::CommitLightAndCamera()
 {
 	//ビュー、プロジェクション行列設定
 	effect->SetMatrix(hMtxView, &mtxView);
@@ -59,7 +59,7 @@ void InstancingMeshRenderer::CommitLightAndCamera()
 /**************************************
 マテリアルセット処理
 ***************************************/
-void InstancingMeshRenderer::SetMaterial(const D3DMATERIAL9 & material)
+void InstancingMeshEffect::SetMaterial(const D3DMATERIAL9 & material)
 {
 	effect->GetFloatArray(hMaterialDiffuse, (float*)&material.Diffuse, 4);
 	effect->GetFloatArray(hMaterialAmbient, (float*)&material.Ambient, 4);
