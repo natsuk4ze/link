@@ -63,12 +63,6 @@ private:
 	//テクスチャ情報受け渡し
 	void PassTexture(TelopID id);
 
-	//背景頂点セット
-	void SetVertexBG(float percentage);
-
-	//背景頂点作成
-	void MakeVertexBG(void);
-
 	//背景をオープン
 	void OpenBG(void);
 

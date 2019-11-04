@@ -60,6 +60,13 @@ void EventViewer::Update()
 		SetEventMessage("イベント発生！");
 	}
 
+
+	if (Keyboard::GetTrigger(DIK_T))
+	{
+		SetEventTelop(PositiveEvent01, nullptr);
+	}
+
+
 	Debug::Begin("EventViewer");
 	Debug::Text("MessageSetCnt:%d", messageSetCnt);
 	Debug::End();

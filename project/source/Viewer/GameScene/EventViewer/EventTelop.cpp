@@ -6,6 +6,7 @@
 //=============================================================================
 #include "../../../../main.h"
 #include"../../../../Framework/Math/Easing.h"
+#include "../../../../Framework/Math/TMath.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "EventTelop.h"
 
@@ -71,7 +72,7 @@ static const EaseType animType[animMax] = {
 };
 
 //テキストアニメーション間隔(ここを変更するとアニメーションの速さを調整できる)
-//*注意(0を入れると無限になるからアニメーションそのものを削除すること)
+//*注意(0を入れると無限大になるからアニメーションそのものを削除すること)
 static const float animDuration[animMax] = {
 	15,
 	50,
@@ -84,9 +85,9 @@ static const float animDuration[animMax] = {
 enum TelopAnimScene
 {
 	BG_Open,
-	InText,
-	StopText,
-	OutText,
+	Text_In,
+	Text_Stop,
+	Text_Out,
 	BG_Close
 };
 
@@ -105,11 +106,17 @@ EventTelop::EventTelop()
 
 	//背景
 	bg = new BaseViewerDrawer();
-	bg->size = D3DXVECTOR3(SCREEN_WIDTH / 2, 60.0f, 0.0f);
+	bg->size = D3DXVECTOR3(SCREEN_WIDTH / 2, 0.0f, 0.0f);
 	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	bg->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 5), SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
 	bg->SetColor(SET_COLOR_NOT_COLORED);
-	MakeVertexBG();
+	bg->MakeVertex();
+
+	//背景のUV座標を変更
+	bg->vertexWk[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+	bg->vertexWk[1].tex = D3DXVECTOR2(3.0, 0.0f);
+	bg->vertexWk[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	bg->vertexWk[3].tex = D3DXVECTOR2(3.0f, 1.0f);
 
 	//コンテナにテクスチャ情報をロードする
 	for (int i = 0; i < typeMax; i++)
@@ -149,15 +156,6 @@ void EventTelop::Update()
 {
 	//テロップ再生処理
 	Play();
-
-#ifdef _DEBUG
-
-	if (Keyboard::GetTrigger(DIK_T))
-	{
-		Set(PositiveEvent01, nullptr);
-	}
-
-#endif
 }
 
 //=============================================================================
@@ -170,7 +168,7 @@ void EventTelop::Draw(void)
 
 	//背景を先に描画
 	bg->Draw();
-	SetVertexBG(percentageBG);
+	bg->SetVertex();
 
 	//テキスト
 	text->Draw();
@@ -233,60 +231,19 @@ void EventTelop::Play()
 }
 
 //=============================================================================
-// 背景テクスチャの頂点の作成
-//=============================================================================
-void EventTelop::MakeVertexBG()
-{
-	//最初はアクティブパーセンテージを0に設定
-	percentageBG = 0.0f;
-
-	// 頂点座標の設定
-	bg->vertexWk[0].vtx = D3DXVECTOR3(0, bg->position.y - bg->size.y*percentageBG, bg->position.z);
-	bg->vertexWk[1].vtx = D3DXVECTOR3(SCREEN_WIDTH, bg->position.y - bg->size.y*percentageBG, bg->position.z);
-	bg->vertexWk[2].vtx = D3DXVECTOR3(0, bg->position.y + bg->size.y*percentageBG, bg->position.z);
-	bg->vertexWk[3].vtx = D3DXVECTOR3(SCREEN_WIDTH, bg->position.y + bg->size.y*percentageBG, bg->position.z);
-
-	// テクスチャのパースペクティブコレクト用
-	bg->vertexWk[0].rhw =
-		bg->vertexWk[1].rhw =
-		bg->vertexWk[2].rhw =
-		bg->vertexWk[3].rhw = 1.0f;
-
-	// テクスチャ座標の設定
-	bg->vertexWk[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-	bg->vertexWk[1].tex = D3DXVECTOR2(3.0, 0.0f);
-	bg->vertexWk[2].tex = D3DXVECTOR2(0.0f, 1.0f);
-	bg->vertexWk[3].tex = D3DXVECTOR2(3.0f, 1.0f);
-}
-
-//=============================================================================
-// 背景の頂点座標の設定
-//=============================================================================
-void EventTelop::SetVertexBG(float percentageBG)
-{
-	// 頂点座標の設定
-	bg->vertexWk[0].vtx = D3DXVECTOR3(0, bg->position.y - bg->size.y*percentageBG, bg->position.z);
-	bg->vertexWk[1].vtx = D3DXVECTOR3(SCREEN_WIDTH, bg->position.y - bg->size.y*percentageBG, bg->position.z);
-	bg->vertexWk[2].vtx = D3DXVECTOR3(0, bg->position.y + bg->size.y*percentageBG, bg->position.z);
-	bg->vertexWk[3].vtx = D3DXVECTOR3(SCREEN_WIDTH, bg->position.y + bg->size.y*percentageBG, bg->position.z);
-}
-
-//=============================================================================
 // 背景を開く処理
 //=============================================================================
 void EventTelop::OpenBG(void)
 {
 	//イージングのスタートとゴールを設定
 	float bgEasingStart = 0.0f;
-	float bgEasingGoal = 1.0f;
+	float bgEasingGoal = 60.0f;
 
 	//背景アクティブパーセンテージを更新
-	percentageBG = Easing::EaseValue(animTime, bgEasingStart, bgEasingGoal, animType[BG_Open]);
+	bg->size.y = Easing::EaseValue(animTime, bgEasingStart, bgEasingGoal, animType[BG_Open]);
 
-	if (percentageBG >= bgEasingGoal)
-	{
-		percentageBG = 1.0f;
-	}
+	//bg->size.yの最大をbgEasingGoalに設定
+	Math::WrapAround(bg->size.y, bgEasingGoal, bg->size.y);
 }
 
 //=============================================================================
@@ -295,16 +252,14 @@ void EventTelop::OpenBG(void)
 void EventTelop::CloseBG(void)
 {
 	//イージングのスタートとゴールを設定
-	float bgEasingStart = 1.0f;
+	float bgEasingStart = 60.0f;
 	float bgEasingGoal = 0.0f;
 
 	//背景アクティブパーセンテージを更新
-	percentageBG = Easing::EaseValue(animTime, bgEasingStart, bgEasingGoal, animType[BG_Close]);
+	bg->size.y = Easing::EaseValue(animTime, bgEasingStart, bgEasingGoal, animType[BG_Close]);
 
-	if (percentageBG <= bgEasingGoal)
-	{
-		percentageBG = 0.0f;
-	}
+	//bg->size.yの最小をbgEasingGoalに設定
+	Math::WrapAround(bg->size.y, bgEasingGoal, bg->size.y);
 }
 
 //=============================================================================
