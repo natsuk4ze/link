@@ -19,6 +19,7 @@
 ‘O•ûéŒ¾
 ***************************************/
 class PlaceActor;
+class InstancingMeshContainer;
 
 namespace Field::Actor
 {
@@ -39,6 +40,9 @@ namespace Field::Actor
 		void Draw();
 
 		void Load();
+
+	private:
+		InstancingMeshContainer *groundMesh;
 	};
 }
 #endif
