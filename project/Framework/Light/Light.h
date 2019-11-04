@@ -24,6 +24,8 @@ namespace Light
 	void Init();
 
 	D3DLIGHT9 GetData(int id);
+
+	int LightMax();
 }
 
 #endif
