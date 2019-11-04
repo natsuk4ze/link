@@ -124,5 +124,22 @@ namespace Field::Actor
 
 			z++;
 		}
+
+		//フィールドの外側の背景を作る
+		//NOTE:とりあえずなので全部地面にしてしまう
+		const int MaxOuter = 50;
+		for (int outerX = -MaxOuter; outerX < x + MaxOuter; outerX++)
+		{
+			for (int outerZ = -MaxOuter; outerZ < z + MaxOuter; outerZ++)
+			{
+				if (outerX >= 0 && outerX < x && outerZ >= 0 && outerZ < z)
+					continue;
+
+				D3DXVECTOR3 position = FieldPosition(outerX, outerZ).ConvertToWorldPosition();
+				position.y += Math::RandomRange(-2.0f, 0.0f);
+				PlaceActor * actor = new NoneActor(position, FieldLevel::City);
+				groundContainer.push_back(actor);
+			}
+		}
 	}
 }
