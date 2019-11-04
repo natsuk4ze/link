@@ -43,6 +43,8 @@ private:
 	D3DXHANDLE hLightDiffuse;
 	D3DXHANDLE hLightAmbient;
 	D3DXHANDLE hLightSpecular;
+
+	D3DXHANDLE hTechnique;
 };
 
 #endif

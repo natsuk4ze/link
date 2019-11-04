@@ -27,6 +27,9 @@ InstancingMeshRenderer::InstancingMeshRenderer()
 	hLightDiffuse = effect->GetParameterByName(0, "lightDiffuse");
 	hLightAmbient = effect->GetParameterByName(0, "lightAmbient");
 	hLightSpecular = effect->GetParameterByName(0, "lightSpecular");
+
+	hTechnique = effect->GetTechniqueByName("tech");
+	effect->SetTechnique(hTechnique);
 }
 
 /**************************************
