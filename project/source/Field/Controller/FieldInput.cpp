@@ -129,7 +129,7 @@ namespace Field
 		if (entity->cursor->IsMoving())
 			return false;
 
-		if (Keyboard::GetTrigger(DIK_SPACE) || GamePad::GetTrigger(0, BUTTON_R))
+		if (Keyboard::GetTrigger(DIK_SPACE) || GamePad::GetTrigger(0, BUTTON_Z))
 			return true;
 
 		return false;
