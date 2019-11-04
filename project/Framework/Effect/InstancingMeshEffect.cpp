@@ -61,7 +61,7 @@ void InstancingMeshEffect::CommitLightAndCamera()
 ***************************************/
 void InstancingMeshEffect::SetMaterial(const D3DMATERIAL9 & material)
 {
-	effect->GetFloatArray(hMaterialDiffuse, (float*)&material.Diffuse, 4);
-	effect->GetFloatArray(hMaterialAmbient, (float*)&material.Ambient, 4);
-	effect->GetFloatArray(hMaterialSpecular, (float*)&material.Specular, 4);
+	effect->SetFloatArray(hMaterialDiffuse, (float*)&material.Diffuse, 4);
+	effect->SetFloatArray(hMaterialAmbient, (float*)&material.Ambient, 4);
+	effect->SetFloatArray(hMaterialSpecular, (float*)&material.Specular, 4);
 }
