@@ -12,6 +12,7 @@
 #include "../Tool/ProfilerCPU.h"
 #include "../Task/TaskManager.h"
 #include "../Transition/TransitionController.h"
+#include "../Effect/RendererEffect.h"
 
 Tween* Tween::mInstance = NULL;
 /**************************************
@@ -91,6 +92,11 @@ void BaseGame::Draw()
 	pDevice->GetRenderTarget(0, &oldSuf);
 	pDevice->SetRenderTarget(0, renderSurface);
 	pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BackColor, 1.0f, 0);
+
+	//描画用エフェクトへパラメータを設定
+	RendererEffect::SetView(Camera::MainCamera()->GetViewMtx());
+	RendererEffect::SetProjection(Camera::MainCamera()->GetProjectionMtx());
+	RendererEffect::SetLight(0, Light::GetData(0));
 
 	//トランジションマスクを描画
 	TransitionController::Instance()->DrawMask();
