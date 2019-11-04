@@ -40,7 +40,7 @@ public:
 	PassengerActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	~PassengerActor();
 
-	void Update();
+	virtual void Update();
 	void Draw();
 
 	void ChangeMesh(const char* nextTag);	// ƒƒbƒVƒ…Ø‚è‘Ö‚¦

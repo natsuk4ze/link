@@ -24,15 +24,9 @@ MetamorPassActor::~MetamorPassActor()
 }
 
 //=====================================
-// ワールド座標からPlaceModelの座標に変換する
+// 更新
 //=====================================
-Field::FieldPosition MetamorPassActor::ConvertToFieldPosition()
+void MetamorPassActor::Update()
 {
-	D3DXVECTOR3 pos = transform->GetPosition();
-	Field::FieldPosition ret;
 
-	ret.x = (int)pos.x / 10;
-	ret.z = abs((int)pos.z / 10);
-
-	return ret;
 }

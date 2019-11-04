@@ -21,6 +21,7 @@ public:
 	MetamorPassActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	~MetamorPassActor();
 
+	void Update()override;
 };
 
 #endif
