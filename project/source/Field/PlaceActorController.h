@@ -47,6 +47,8 @@ namespace Field::Actor
 	using ActorContainer = std::unordered_map<unsigned, std::unique_ptr<PlaceActor>>;
 	using BackGroundContainer = std::vector<std::unique_ptr<PlaceActor>>;
 
+	class BackGroundActorContainer;
+
 	/**************************************
 	クラス定義
 	***************************************/
@@ -111,8 +113,10 @@ namespace Field::Actor
 
 		//アクターコンテナ
 		ActorContainer actorContainer;
-		BackGroundContainer bgContainer;
 		ActorContainer poolDestroy;
+
+		//背景アクターコンテナ
+		BackGroundActorContainer *bgContainer;
 
 		//道沿いの情報コンテナ
 		Along::AlongController *alongController;
@@ -129,11 +133,9 @@ namespace Field::Actor
 		//各アクター生成処理
 		void SetRoad(const Model::PlaceModel* place, int delay);
 		void SetTown(const Model::PlaceModel* place);
-		void SetRiver(const Model::PlaceModel* place);
 		void SetBridge(const Model::PlaceModel* place);
 		void SetJunction(const Model::PlaceModel* place);
 		void SetMountain(const Model::PlaceModel* place);
-		void SetNone(const Model::PlaceModel* place, float randomRange = 0.0f);
 
 		//コンテナ追加、削除処理
 		void AddContainer(unsigned key, PlaceActor* actor);
