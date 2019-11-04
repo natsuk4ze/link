@@ -10,6 +10,13 @@
 #include "../../../../Framework/Input/input.h"
 
 /**************************************
+staticÉÅÉìÉo
+***************************************/
+const float FieldCamera::FieldCameraFar::CameraLength = 200.0f;
+const float FieldCamera::FieldCameraFar::CameraAngleXZ = D3DXToRadian(90.0f);
+const float FieldCamera::FieldCameraFar::CameraAngleY = D3DXToRadian(85.0f);
+
+/**************************************
 ì¸èÍèàóù
 ***************************************/
 void FieldCamera::FieldCameraFar::OnStart(FieldCamera & entity)
@@ -19,9 +26,7 @@ void FieldCamera::FieldCameraFar::OnStart(FieldCamera & entity)
 	entity.cntFrame = 0;
 
 	//à⁄ìÆêÊÇÃç¿ïWÇê›íË
-	const float CameraAngleXZ = D3DXToRadian(90.0f);
-	const float CameraAngleY = D3DXToRadian(85.0f);
-	const float CameraLength = 200.0f;
+
 
 	entity.goalPosition = D3DXVECTOR3(
 		cosf(CameraAngleY) * cosf(CameraAngleXZ),
@@ -59,8 +64,19 @@ FieldCamera::Mode FieldCamera::FieldCameraFar::OnUpdate(FieldCamera & entity)
 
 		D3DXVec3Normalize(&directionMove, &directionMove);
 
-		entity.transform.Move(directionMove * MoveSpeed);
-		entity.target += directionMove * MoveSpeed;
+		D3DXVECTOR3 position = entity.target;
+		position += directionMove * MoveSpeed;
+		position.x = Math::Clamp(0.0f, 50 * 10.0f, position.x);
+		position.z = Math::Clamp(-50 * 10.0f, 0.0f, position.z);
+
+		entity.target = position;
+
+		D3DXVECTOR3 eyePosition = D3DXVECTOR3(
+			cosf(CameraAngleY) * cosf(CameraAngleXZ),
+			sinf(CameraAngleY),
+			cosf(CameraAngleY) * -sinf(CameraAngleXZ)) * CameraLength;
+
+		entity.transform.SetPosition(position + eyePosition);
 	}
 
 	return FieldCamera::FarView;
