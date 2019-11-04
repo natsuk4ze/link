@@ -24,6 +24,8 @@ private:
 public:
 	NoneActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	~NoneActor();
+
+	void Update() override;
 };
 
 #endif
