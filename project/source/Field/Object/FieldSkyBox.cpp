@@ -14,7 +14,7 @@ namespace Field
 	const char* FieldSkyBox::CityTexturePath[] = {
 		"data/TEXTURE/Skybox/Sunny_01A_up.png",
 		"data/TEXTURE/Skybox/Sunny_01A_back.png",
-		"data/TEXTURE/Skybox/Sunny_01A_down.jpg",
+		"data/TEXTURE/Skybox/Sunny_01A_down.png",
 		"data/TEXTURE/Skybox/Sunny_01A_front.png",
 		"data/TEXTURE/Skybox/Sunny_01A_left.png",
 		"data/TEXTURE/Skybox/Sunny_01A_right.png"
