@@ -16,12 +16,28 @@
 class MetamorPassActor :
 	public PassengerActor
 {
+private:
+	Field::FieldPosition fieldPos;	// フィールド上の座標
+
+	// メッシュの状態を表すステート
+	enum State
+	{
+		Ship,
+		Train,
+	};
+	State current;					// 現在のメッシュの状態
+	bool change;					// メッシュ切り替えフラグ
+
+	void CheckState();
 
 public:
 	MetamorPassActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	~MetamorPassActor();
 
 	void Update()override;
+
+	Field::FieldPosition FieldPosition();	// フィールド上の座標を返す
+	void SetChange(bool flag);				// 　メッシュ切り替えフラグのセット
 };
 
 #endif

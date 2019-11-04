@@ -50,7 +50,7 @@ namespace Field
 			return { x * 10.0f, 0.0f, z * -10.0f };
 		}
 
-		inline FieldPosition ConvertToFieldPosition(const D3DXVECTOR3& pos) const
+		static FieldPosition ConvertToFieldPosition(const D3DXVECTOR3& pos)
 		{
 			return { (int)pos.x / 10, abs((int)pos.z / 10) };
 		}
