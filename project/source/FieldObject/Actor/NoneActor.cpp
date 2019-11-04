@@ -25,3 +25,11 @@ NoneActor::NoneActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
 NoneActor::~NoneActor()
 {
 }
+
+//=====================================
+// 更新処理
+//=====================================
+void NoneActor::Update()
+{
+	//とにかく数が多いのでカリングを切ってインスタンシングに任せる
+}

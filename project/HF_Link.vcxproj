@@ -37,6 +37,8 @@
     <ClInclude Include="Framework\Core\SceneManager.h" />
     <ClInclude Include="Framework\Core\Transform.h" />
     <ClInclude Include="Framework\Core\Utility.h" />
+    <ClInclude Include="Framework\Effect\InstancingMeshEffect.h" />
+    <ClInclude Include="Framework\Effect\RendererEffect.h" />
     <ClInclude Include="Framework\Effect\SpriteEffect.h" />
     <ClInclude Include="Framework\Input\Gamepad.h" />
     <ClInclude Include="Framework\Input\input.h" />
@@ -83,6 +85,7 @@
     <ClInclude Include="Framework\Renderer3D\BillboardObject.h" />
     <ClInclude Include="Framework\Renderer3D\BillboardTransform.h" />
     <ClInclude Include="Framework\Renderer3D\BoardPolygon.h" />
+    <ClInclude Include="Framework\Renderer3D\InstancingMeshContainer.h" />
     <ClInclude Include="Framework\Renderer3D\MeshContainer.h" />
     <ClInclude Include="Framework\Renderer3D\SkyBox.h" />
     <ClInclude Include="Framework\Renderer3D\TransformObject.h" />
@@ -236,6 +239,8 @@
     <ClCompile Include="Framework\Core\PlayerPrefs.cpp" />
     <ClCompile Include="Framework\Core\SceneManager.cpp" />
     <ClCompile Include="Framework\Core\Transform.cpp" />
+    <ClCompile Include="Framework\Effect\InstancingMeshEffect.cpp" />
+    <ClCompile Include="Framework\Effect\RendererEffect.cpp" />
     <ClCompile Include="Framework\Effect\SpriteEffect.cpp" />
     <ClCompile Include="Framework\Input\Gamepad.cpp" />
     <ClCompile Include="Framework\Input\input.cpp" />
@@ -276,6 +281,7 @@
     <ClCompile Include="Framework\Renderer3D\BillboardObject.cpp" />
     <ClCompile Include="Framework\Renderer3D\BillboardTransform.cpp" />
     <ClCompile Include="Framework\Renderer3D\BoardPolygon.cpp" />
+    <ClCompile Include="Framework\Renderer3D\InstancingMeshContainer.cpp" />
     <ClCompile Include="Framework\Renderer3D\MeshContainer.cpp" />
     <ClCompile Include="Framework\Renderer3D\SkyBox.cpp" />
     <ClCompile Include="Framework\Renderer3D\TransformObject.cpp" />
@@ -441,7 +447,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Effect</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">2.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Shaders\ModelInstancing.fx">
+    <FxCompile Include="Shaders\InstancingMesh.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">2.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Effect</ShaderType>

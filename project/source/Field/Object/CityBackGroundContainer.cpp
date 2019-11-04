@@ -13,21 +13,26 @@
 #include "../Place/PlaceConfig.h"
 
 #include "../../../Framework/String/String.h"
+#include "../../../Framework/Renderer3D/InstancingMeshContainer.h"
 
 #include <fstream>
 #include <string>
 
 namespace Field::Actor
 {
-	/**************************************コンストラクタ
+	/**************************************
+	コンストラクタ
 	***************************************/
 	CityBackGroundContainer::CityBackGroundContainer()
 	{
-		const unsigned ReserveSizeGround = 2500;
+		const unsigned ReserveSizeGround = 10000;
 		const unsigned ReserveSizeRiver = 200;
 
 		groundContainer.reserve(ReserveSizeGround);
 		riverContainer.reserve(ReserveSizeRiver);
+
+		groundMesh = new InstancingMeshContainer(ReserveSizeGround);
+		groundMesh->Load("data/MODEL/PlaceActor/ground.x");
 	}
 
 	/**************************************
@@ -37,6 +42,8 @@ namespace Field::Actor
 	{
 		Utility::DeleteContainer(groundContainer);
 		Utility::DeleteContainer(riverContainer);
+
+		SAFE_DELETE(groundMesh);
 	}
 
 	/**************************************
@@ -60,10 +67,17 @@ namespace Field::Actor
 	***************************************/
 	void CityBackGroundContainer::Draw()
 	{
+		//地面はインスタンシングで描画する
+		groundMesh->Lock();
 		for (auto&& ground : groundContainer)
 		{
-			ground->Draw();
+			bool result = groundMesh->EmbedTranform(ground->GetTransform());
+			if (!result)
+				break;
 		}
+		groundMesh->Unlock();
+
+		groundMesh->Draw();
 
 		for (auto&& river : riverContainer)
 		{
@@ -125,9 +139,10 @@ namespace Field::Actor
 			z++;
 		}
 
+#ifndef _DEBUG
 		//フィールドの外側の背景を作る
 		//NOTE:とりあえずなので全部地面にしてしまう
-		const int MaxOuter = 50;
+		const int MaxOuter = 25;
 		for (int outerX = -MaxOuter; outerX < x + MaxOuter; outerX++)
 		{
 			for (int outerZ = -MaxOuter; outerZ < z + MaxOuter; outerZ++)
@@ -141,5 +156,6 @@ namespace Field::Actor
 				groundContainer.push_back(actor);
 			}
 		}
+#endif
 	}
 }
