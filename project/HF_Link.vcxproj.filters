@@ -200,6 +200,8 @@
     <ClInclude Include="Library\picojson\picojson.h" />
     <ClInclude Include="source\Field\Object\CityBackGroundContainer.h" />
     <ClInclude Include="source\Field\Object\BackGroundContainer.h" />
+    <ClInclude Include="Framework\Effect\InstancingMeshEffect.h" />
+    <ClInclude Include="Framework\Effect\RendererEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -382,6 +384,8 @@
     <ClCompile Include="Framework\Core\PlayerPrefs.cpp" />
     <ClCompile Include="source\Field\Object\CityBackGroundContainer.cpp" />
     <ClCompile Include="source\Field\Object\BackGroundContainer.cpp" />
+    <ClCompile Include="Framework\Effect\InstancingMeshEffect.cpp" />
+    <ClCompile Include="Framework\Effect\RendererEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

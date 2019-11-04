@@ -39,3 +39,43 @@ void RendererEffect::SetProjection(const D3DXMATRIX & projectionMatrix)
 {
 	mtxProjection = projectionMatrix;
 }
+
+/**************************************
+変更反映処理
+***************************************/
+void RendererEffect::Commit()
+{
+	effect->CommitChanges();
+}
+
+/**************************************
+描画開始宣言
+***************************************/
+void RendererEffect::Begin()
+{
+	effect->Begin(0, 0);
+}
+
+/**************************************
+パス開始宣言
+***************************************/
+void RendererEffect::BeginPass(DWORD pass)
+{
+	effect->BeginPass(pass);
+}
+
+/**************************************
+パス終了宣言
+***************************************/
+void RendererEffect::EndPass()
+{
+	effect->EndPass();
+}
+
+/**************************************
+描画終了宣言
+***************************************/
+void RendererEffect::End()
+{
+	effect->End();
+}

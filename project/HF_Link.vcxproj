@@ -37,6 +37,8 @@
     <ClInclude Include="Framework\Core\SceneManager.h" />
     <ClInclude Include="Framework\Core\Transform.h" />
     <ClInclude Include="Framework\Core\Utility.h" />
+    <ClInclude Include="Framework\Effect\InstancingMeshEffect.h" />
+    <ClInclude Include="Framework\Effect\RendererEffect.h" />
     <ClInclude Include="Framework\Effect\SpriteEffect.h" />
     <ClInclude Include="Framework\Input\Gamepad.h" />
     <ClInclude Include="Framework\Input\input.h" />
@@ -236,6 +238,8 @@
     <ClCompile Include="Framework\Core\PlayerPrefs.cpp" />
     <ClCompile Include="Framework\Core\SceneManager.cpp" />
     <ClCompile Include="Framework\Core\Transform.cpp" />
+    <ClCompile Include="Framework\Effect\InstancingMeshEffect.cpp" />
+    <ClCompile Include="Framework\Effect\RendererEffect.cpp" />
     <ClCompile Include="Framework\Effect\SpriteEffect.cpp" />
     <ClCompile Include="Framework\Input\Gamepad.cpp" />
     <ClCompile Include="Framework\Input\input.cpp" />
