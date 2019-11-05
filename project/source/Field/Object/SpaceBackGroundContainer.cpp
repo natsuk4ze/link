@@ -15,6 +15,8 @@
 #include "../../../Framework/String/String.h"
 #include "../../../Framework/Renderer3D/InstancingMeshContainer.h"
 
+#include "../../Effect/GameParticleManager.h"
+
 #include <fstream>
 #include <string>
 
@@ -28,10 +30,10 @@ namespace Field::Actor
 		//NoneActorは表示しないのでRiverだけリザーブする
 		const unsigned ReserveTearSize = 1000;
 
-		riverContainer.reserve(ReserveTearSize);
+		//riverContainer.reserve(ReserveTearSize);
 
-		tearMesh = new InstancingMeshContainer(ReserveTearSize);
-		tearMesh->Load("data/MODEL/PlaceActor/SpaceTear.x");
+		//tearMesh = new InstancingMeshContainer(ReserveTearSize);
+		//tearMesh->Load("data/MODEL/PlaceActor/SpaceTear.x");
 	}
 
 	/**************************************
@@ -39,7 +41,7 @@ namespace Field::Actor
 	***************************************/
 	SpaceBackGroundContainer::~SpaceBackGroundContainer()
 	{
-		Utility::DeleteContainer(riverContainer);
+		//Utility::DeleteContainer(riverContainer);
 	}
 
 	/**************************************
@@ -55,20 +57,22 @@ namespace Field::Actor
 	***************************************/
 	void SpaceBackGroundContainer::Draw()
 	{
-		LPDIRECT3DDEVICE9 pDevice = GetDevice();
+		//LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-		pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+		//pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+		//pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
 
-		tearMesh->Lock();
-		for (auto&& tear : riverContainer)
-		{
-			tearMesh->EmbedTranform(tear->GetTransform());
-		}
-		tearMesh->Unlock();
+		//tearMesh->Lock();
+		//for (auto&& tear : riverContainer)
+		//{
+		//	tearMesh->EmbedTranform(tear->GetTransform());
+		//}
+		//tearMesh->Unlock();
 
-		tearMesh->Draw();
+		//tearMesh->Draw();
 
-		pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+		//pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+		//pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
 	}
 
 	/**************************************
@@ -105,8 +109,12 @@ namespace Field::Actor
 
 				if (type == PlaceType::River)
 				{
-					actor = new RiverActor(position, FieldLevel::Space);
-					riverContainer.push_back(actor);
+					//actor = new RiverActor(position, FieldLevel::Space);
+					//riverContainer.push_back(actor);
+
+					//パーティクルのエミッタをセット
+					D3DXVECTOR3 position = FieldPosition(x, z).ConvertToWorldPosition();
+					GameParticleManager::Instance()->Generate(GameParticle::SpaceTear, position);
 				}
 				x++;
 			}

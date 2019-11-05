@@ -205,6 +205,7 @@
     <ClInclude Include="Framework\Renderer3D\InstancingMeshContainer.h" />
     <ClInclude Include="source\Field\Object\WorldBackGroundContainer.h" />
     <ClInclude Include="source\Field\Object\SpaceBackGroundContainer.h" />
+    <ClInclude Include="source\Effect\Game\SpaceTear.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -393,6 +394,7 @@
     <ClCompile Include="source\Field\FieldConfig.cpp" />
     <ClCompile Include="source\Field\Object\WorldBackGroundContainer.cpp" />
     <ClCompile Include="source\Field\Object\SpaceBackGroundContainer.cpp" />
+    <ClCompile Include="source\Effect\Game\SpaceTear.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
