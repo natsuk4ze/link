@@ -365,6 +365,102 @@ namespace GamePad
 	}
 
 	/**************************************
+	右プレス検出処理
+	***************************************/
+	BOOL GetPressLeft(int padNo)
+	{
+		return GetPress(padNo, BUTTON_LEFT) || GetPressPOV(padNo, POV_LEFT) || GetPressPOV(padNo, POV_LEFTUP) || GetPressPOV(padNo, POV_LEFTDOWN);
+	}
+
+	/**************************************
+	右プレス検出処理
+	***************************************/
+	BOOL GetPressRight(int padNo)
+	{
+		return GetPress(padNo, BUTTON_RIGHT) || GetPressPOV(padNo, POV_RIGHT) || GetPressPOV(padNo, POV_RIGHTUP) || GetPressPOV(padNo, POV_RIGHTDOWN);
+	}
+
+	/**************************************
+	左リピート検出処理
+	***************************************/
+	BOOL GetRepeatLeft(int padNo)
+	{
+		return GetRepeat(padNo, BUTTON_LEFT) || GetRepeatPOV(padNo, POV_LEFT) || GetRepeatPOV(padNo, POV_LEFTUP) || GetRepeatPOV(padNo, POV_LEFTDOWN);
+	}
+
+	/**************************************
+	右リピート検出処理
+	***************************************/
+	BOOL GetRepeatRight(int padNo)
+	{
+		return GetRepeat(padNo, BUTTON_RIGHT) || GetRepeatPOV(padNo, POV_RIGHT) || GetRepeatPOV(padNo, POV_RIGHTUP) || GetRepeatPOV(padNo, POV_RIGHTDOWN);
+	}
+
+	/**************************************
+	左トリガー検出処理
+	***************************************/
+	BOOL GetTriggerLeft(int padNo)
+	{
+		return GetTrigger(padNo, BUTTON_LEFT) || GetTriggerPOV(padNo, POV_LEFT) || GetTriggerPOV(padNo, POV_LEFTUP) || GetTriggerPOV(padNo, POV_LEFTDOWN);
+	}
+
+	/**************************************
+	右トリガー検出処理
+	***************************************/
+	BOOL GetTriggerRight(int padNo)
+	{
+		return GetTrigger(padNo, BUTTON_RIGHT) || GetTriggerPOV(padNo, POV_RIGHT) || GetTriggerPOV(padNo, POV_RIGHTUP) || GetTriggerPOV(padNo, POV_RIGHTDOWN);
+	}
+
+	/**************************************
+	下プレス検出処理
+	***************************************/
+	BOOL GetPressDown(int padNo)
+	{
+		return GetPress(padNo, BUTTON_DOWN) || GetPressPOV(padNo, POV_DOWN) || GetPressPOV(padNo, POV_RIGHTDOWN) || GetPressPOV(padNo, POV_LEFTDOWN);
+	}
+
+	/**************************************
+	上プレス検出処理
+	***************************************/
+	BOOL GetPressUp(int padNo)
+	{
+		return GetPress(padNo, BUTTON_UP) || GetPressPOV(padNo, POV_UP) || GetPressPOV(padNo, POV_RIGHTUP) || GetPressPOV(padNo, POV_LEFTUP);
+	}
+
+	/**************************************
+	下リピート検出処理
+	***************************************/
+	BOOL GetRepeatDown(int padNo)
+	{
+		return GetRepeat(padNo, BUTTON_DOWN) || GetRepeatPOV(padNo, POV_DOWN) || GetRepeatPOV(padNo, POV_RIGHTDOWN) || GetRepeatPOV(padNo, POV_LEFTDOWN);
+	}
+
+	/**************************************
+	上リピート検出処理
+	***************************************/
+	BOOL GetRepeatUp(int padNo)
+	{
+		return GetRepeat(padNo, BUTTON_UP) || GetRepeatPOV(padNo, POV_UP) || GetRepeatPOV(padNo, POV_RIGHTUP) || GetRepeatPOV(padNo, POV_LEFTUP);
+	}
+
+	/**************************************
+	下トリガー検出処理
+	***************************************/
+	BOOL GetTriggerDown(int padNo)
+	{
+		return GetTrigger(padNo, BUTTON_DOWN) || GetTriggerPOV(padNo, POV_DOWN) || GetTriggerPOV(padNo, POV_RIGHTDOWN) || GetTriggerPOV(padNo, POV_LEFTDOWN);
+	}
+
+	/**************************************
+	上トリガー検出処理
+	***************************************/
+	BOOL GetTriggerUp(int padNo)
+	{
+		return GetTrigger(padNo, BUTTON_UP) || GetTriggerPOV(padNo, POV_UP) || GetTriggerPOV(padNo, POV_RIGHTUP) || GetTriggerPOV(padNo, POV_LEFTUP);
+	}
+
+	/**************************************
 	X軸トリガー検出処理
 	***************************************/
 	int GetTriggerX(int padNo)

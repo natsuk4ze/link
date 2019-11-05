@@ -105,7 +105,7 @@ namespace Field
 		if (x == 0 && z == 0)
 			return;
 
-		if (cntMove <= MoveDuration)
+		if (cntMove < MoveDuration)
 			return;
 
 		//移動開始地点を保存
@@ -141,6 +141,14 @@ namespace Field
 	void Field::FieldCursor::SetMode(Mode mode)
 	{
 		currentMode = mode;
+	}
+
+	/**************************************
+	移動中かどうか
+	***************************************/
+	bool Field::FieldCursor::IsMoving() const
+	{
+		return cntMove <= MoveDuration;
 	}
 
 	/**************************************

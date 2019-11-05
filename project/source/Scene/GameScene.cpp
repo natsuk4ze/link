@@ -81,19 +81,6 @@ void GameScene::Init()
 	ChangeState(State::Initialize);
 
 	// テスト用
-	//testActor = new CityActor(D3DXVECTOR3(150.0f, 0.0f, -150.0f), Field::City);
-	//std::vector<D3DXVECTOR3> root;
-	//D3DXVECTOR3 push = D3DXVECTOR3(150.0f, 0.0f, -150.0f);
-	//root.push_back(push);
-	//push = D3DXVECTOR3(250.0f, 0.0f, -150.0f);
-	//root.push_back(push);
-	//push = D3DXVECTOR3(250.0f, 0.0f, -50.0f);
-	//root.push_back(push);
-	//push = D3DXVECTOR3(150.0f, 0.0f, -50.0f);
-	//root.push_back(push);
-	//passengerController = new PassengerController();
-	//passengerController->SetPassenger(root);
-	//testInfo = new LinkInfoActor(D3DXVECTOR3(160.0f, 0.0f, -160.0f), 85);
 	//testInfoController = new InfoController();
 	//testInfoController->SetLinkLevel(Field::FieldPosition(16, 16), 100);
 	//testInfoController->SetLinkLevel(Field::FieldPosition(17, 17), 90);
@@ -122,9 +109,6 @@ void GameScene::Uninit()
 	Utility::DeleteContainer(fsm);
 
 	// テスト用
-	//SAFE_DELETE(testActor);
-	//SAFE_DELETE(passengerController);
-	//SAFE_DELETE(testInfo);
 	//SAFE_DELETE(testInfoController);
 
 	//デリゲート削除
@@ -152,9 +136,6 @@ void GameScene::Update()
 	SpriteEffect::SetProjection(fieldCamera->GetProjectionMtx());
 
 	// テスト用
-	//testActor->Update();
-	//passengerController->Update();
-	//testInfo->Update();
 	//testInfoController->Update();
 
 	//ビューワパラメータをビューワに渡す
@@ -195,8 +176,6 @@ void GameScene::Draw()
 	fieldCamera->Set();
 
 	// テスト用
-	//testActor->Draw();
-	//passengerController->Draw();
 
 	//オブジェクト描画
 	ProfilerCPU::Instance()->Begin("Draw Object");
@@ -207,7 +186,7 @@ void GameScene::Draw()
 	ProfilerCPU::Instance()->Begin("Draw Event");
 	eventController->DrawEventObject();
 	ProfilerCPU::Instance()->End("Draw Event");
-	//testInfo->Draw();
+
 	//testInfoController->Draw();
 
 	//ポストエフェクトは重いのでリリース版のみ適用する

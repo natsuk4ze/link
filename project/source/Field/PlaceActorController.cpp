@@ -16,6 +16,9 @@
 #include "../FieldObject/PassengerController.h"
 #include "../../Framework/Resource/ResourceManager.h"
 
+#include "Object/CityBackGroundContainer.h"
+#include "Object/WorldBackGroundContainer.h"
+
 #include "../FieldObject/Actor/CityActor.h"
 #include "../FieldObject/Actor/CrossJunctionActor.h"
 #include "../FieldObject/Actor/CurveRoadActor.h"
@@ -50,10 +53,24 @@ namespace Field::Actor
 		currentLevel(level),
 		bonusSideWay(0.0f)
 	{
-		bgContainer.reserve(ReserveGround);
 		alongController = new Along::AlongController();
 		aStarController = new Route::AStarController();
 		passengerController = new PassengerController(currentLevel);
+
+		switch (level)
+		{
+		case FieldLevel::City:
+			bgContainer = new CityBackGroundContainer();
+			break;
+
+		case FieldLevel::World:
+			bgContainer = new WorldBackGroundContainer();
+			break;
+
+		default:
+			bgContainer = new CityBackGroundContainer();
+			break;
+		}
 
 		auto onReachPassenger = std::bind(&Along::AlongController::OnReachPassenger, alongController, std::placeholders::_1);
 		passengerController->SetCallbackOnReach(onReachPassenger);
@@ -76,8 +93,8 @@ namespace Field::Actor
 		SAFE_DELETE(alongController);
 		SAFE_DELETE(aStarController);
 		SAFE_DELETE(passengerController);
+		SAFE_DELETE(bgContainer);
 
-		bgContainer.clear();
 		actorContainer.clear();
 	}
 
@@ -90,11 +107,8 @@ namespace Field::Actor
 		passengerController->Update();
 
 		RiverActor::UpdateHeight();
-
-		for (auto&& ground : bgContainer)
-		{
-			ground->Update();
-		}
+	
+		bgContainer->Update();
 
 		for (auto&& actor : actorContainer)
 		{
@@ -113,10 +127,7 @@ namespace Field::Actor
 	void PlaceActorController::Draw()
 	{
 		//NOTE:インスタンシングで描画するために結構いじるかも
-		for (auto&& ground : bgContainer)
-		{
-			ground->Draw();
-		}
+		bgContainer->Draw();
 
 		for (auto&& actor : actorContainer)
 		{
@@ -159,6 +170,9 @@ namespace Field::Actor
 		// FieldLevel = Space
 		ResourceManager::Instance()->LoadMesh("Town-Space", "data/Model/PlaceActor/earth.x");
 		ResourceManager::Instance()->LoadMesh("SpaceShip", "data/MODEL/PassengerActor/Rocket.x");
+
+		//背景アクターをロード
+		bgContainer->Load();
 	}
 
 	/**************************************
@@ -180,11 +194,6 @@ namespace Field::Actor
 
 		case PlaceType::Mountain:
 			SetMountain(place);
-			SetNone(place);
-			break;
-
-		case PlaceType::River:
-			SetRiver(place);
 			break;
 
 		case PlaceType::Road:
@@ -193,11 +202,6 @@ namespace Field::Actor
 
 		case PlaceType::Town:
 			SetTown(place);
-			SetNone(place);
-			break;
-
-		case PlaceType::None:
-			SetNone(place, 2.0f);
 			break;
 		}
 	}
@@ -380,22 +384,6 @@ namespace Field::Actor
 	}
 
 	/**************************************
-	川セット処理
-	***************************************/
-	void PlaceActorController::SetRiver(const Model::PlaceModel * place)
-	{
-		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
-
-		//アクター生成
-		PlaceActor* actor = new RiverActor(actorPos, currentLevel);
-
-		//アニメーション
-		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
-
-		bgContainer.push_back(std::unique_ptr<PlaceActor>(actor));
-	}
-
-	/**************************************
 	ブリッジセット処理
 	***************************************/
 	void PlaceActorController::SetBridge(const Model::PlaceModel * place)
@@ -490,27 +478,6 @@ namespace Field::Actor
 		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
 
 		AddContainer(place->ID(), actor);
-	}
-
-	/**************************************
-	Noneセット処理
-	***************************************/
-	void PlaceActorController::SetNone(const Model::PlaceModel * place, float randomRange)
-	{
-		if (currentLevel == FieldLevel::Space)
-			return;
-
-		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
-
-		//真っ平らだと不自然なので高さに少し凹凸をつける
-		actorPos.y += Math::RandomRange(-randomRange, 0.0f);
-
-		PlaceActor* actor = new NoneActor(actorPos, currentLevel);
-
-		// 生成アニメーション
-		ActorAnimation::RotateAndExpantion(*actor);
-
-		bgContainer.push_back(std::unique_ptr<PlaceActor>(actor));
 	}
 
 	/**************************************

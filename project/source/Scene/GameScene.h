@@ -116,9 +116,6 @@ private:
 	class GamePause;
 	class GameFarView;
 
-	//PlaceActor* testActor;
-	//PassengerController* passengerController;
-	//InfoActor* testInfo;
 	//InfoController* testInfoController;
 
 	//デバッグ用フィールドレベル

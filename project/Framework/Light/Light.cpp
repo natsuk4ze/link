@@ -13,6 +13,7 @@ namespace Light
 	グローバル変数
 	***************************************/
 	static D3DLIGHT9 light[NUM_LIGHT];
+	static int NumLigt = 3;
 
 	/**************************************
 	初期化処理
@@ -75,6 +76,14 @@ namespace Light
 			return D3DLIGHT9();
 		else
 			return light[id];
+	}
+
+	/**************************************	
+	ライト数取得処理
+	***************************************/
+	int LightMax()
+	{
+		return NumLigt;
 	}
 
 }

@@ -20,7 +20,7 @@ namespace Input
 	{
 		HRESULT hr;
 
-		if(!pDInput)
+		if (!pDInput)
 		{
 			// DirectInputオブジェクトの作成
 			hr = DirectInput8Create(hInst, DIRECTINPUT_VERSION,
@@ -82,20 +82,20 @@ namespace Input
 	{
 		if (no == 0)
 		{
-			if (Keyboard::GetPress(DIK_LEFT) || GamePad::GetPress(0, BUTTON_LEFT) || GamePad::GetPressPOV(0, POV_LEFT))
+			if (Keyboard::GetPress(DIK_LEFT) || GamePad::GetPressLeft(0))
 				return -1.0f;
 
-			if (Keyboard::GetPress(DIK_RIGHT) || GamePad::GetPress(0, BUTTON_RIGHT) || GamePad::GetPressPOV(0, POV_RIGHT))
+			if (Keyboard::GetPress(DIK_RIGHT) || GamePad::GetPressRight(0))
 				return 1.0f;
 
 			return 0.0f;
 		}
 		else
 		{
-			if (GamePad::GetPress(no, BUTTON_LEFT) || GamePad::GetPressPOV(no, POV_LEFT))
+			if (GamePad::GetPressLeft(no))
 				return -1.0f;
 
-			if (GamePad::GetPress(no, BUTTON_RIGHT) || GamePad::GetPressPOV(no, POV_RIGHT))
+			if (GamePad::GetPressRight(no))
 				return 1.0f;
 
 			return 0.0f;
@@ -109,20 +109,20 @@ namespace Input
 	{
 		if (no == 0)
 		{
-			if (Keyboard::GetPress(DIK_DOWN) || GamePad::GetPress(0, BUTTON_DOWN) || GamePad::GetPressPOV(0, POV_DOWN))
+			if (Keyboard::GetPress(DIK_DOWN) || GamePad::GetPressDown(0))
 				return -1.0f;
 
-			if (Keyboard::GetPress(DIK_UP) || GamePad::GetPress(0, BUTTON_UP) || GamePad::GetPressPOV(0, POV_UP))
+			if (Keyboard::GetPress(DIK_UP) || GamePad::GetPressUp(0))
 				return 1.0f;
 
 			return 0.0f;
 		}
 		else
 		{
-			if (GamePad::GetPress(no, BUTTON_DOWN) || GamePad::GetPress(no, POV_DOWN))
+			if (GamePad::GetPressDown(no))
 				return -1.0f;
 
-			if (GamePad::GetPress(no, BUTTON_UP) || GamePad::GetPress(no, POV_UP))
+			if (GamePad::GetPressUp(no))
 				return 1.0f;
 		}
 
@@ -136,18 +136,18 @@ namespace Input
 	{
 		if (no == 0)
 		{
-			if (Keyboard::GetTrigger(DIK_LEFT) || GamePad::GetTrigger(0, BUTTON_LEFT) || GamePad::GetTriggerPOV(0, POV_LEFT))
+			if (Keyboard::GetTrigger(DIK_LEFT) || GamePad::GetTriggerLeft(0))
 				return -1.0f;
 
-			if (Keyboard::GetTrigger(DIK_RIGHT) || GamePad::GetTrigger(0, BUTTON_RIGHT) || GamePad::GetTriggerPOV(0, POV_RIGHT))
+			if (Keyboard::GetTrigger(DIK_RIGHT) || GamePad::GetTriggerRight(0))
 				return 1.0f;
 		}
 		else
 		{
-			if (GamePad::GetTrigger(no, BUTTON_LEFT) || GamePad::GetTriggerPOV(no, POV_LEFT))
+			if (GamePad::GetTriggerLeft(no))
 				return -1.0f;
 
-			if (GamePad::GetTrigger(no, BUTTON_RIGHT) || GamePad::GetTriggerPOV(no, POV_RIGHT))
+			if (GamePad::GetTriggerRight(no))
 				return 1.0f;
 		}
 
@@ -161,18 +161,18 @@ namespace Input
 	{
 		if (no == 0)
 		{
-			if (Keyboard::GetTrigger(DIK_DOWN) || GamePad::GetTrigger(0, BUTTON_DOWN) || GamePad::GetTriggerPOV(0, POV_DOWN))
+			if (Keyboard::GetTrigger(DIK_DOWN) || GamePad::GetTriggerDown(0))
 				return -1.0f;
 
-			if (Keyboard::GetTrigger(DIK_UP) || GamePad::GetTrigger(0, BUTTON_UP) || GamePad::GetTriggerPOV(0, POV_UP))
+			if (Keyboard::GetTrigger(DIK_UP) || GamePad::GetTriggerUp(0))
 				return 1.0f;
 		}
 		else
 		{
-			if (GamePad::GetTrigger(no, BUTTON_DOWN) || GamePad::GetTriggerPOV(no, POV_DOWN))
+			if (GamePad::GetTriggerDown(no))
 				return -1.0f;
 
-			if (GamePad::GetTrigger(no, BUTTON_UP) || GamePad::GetTriggerPOV(no, POV_UP))
+			if (GamePad::GetTriggerUp(no))
 				return 1.0f;
 		}
 
@@ -180,26 +180,26 @@ namespace Input
 	}
 
 	//=============================================================================
-	// 垂直方向への入力処理
+	// 水平方向への入力処理
 	//=============================================================================
 	float GetRepeatHorizontal(int no)
 	{
 		if (no == 0)
 		{
-			if (Keyboard::GetRepeat(DIK_LEFT) || GamePad::GetRepeat(0, BUTTON_LEFT) || GamePad::GetRepeatPOV(0, POV_LEFT))
+			if (Keyboard::GetRepeat(DIK_LEFT) || GamePad::GetRepeatLeft(0))
 				return -1.0f;
 
-			if (Keyboard::GetRepeat(DIK_RIGHT) || GamePad::GetRepeat(0, BUTTON_RIGHT) || GamePad::GetRepeatPOV(0, POV_RIGHT))
+			if (Keyboard::GetRepeat(DIK_RIGHT) || GamePad::GetRepeatRight(0))
 				return 1.0f;
 
 			return 0.0f;
 		}
 		else
 		{
-			if (GamePad::GetRepeat(no, BUTTON_LEFT) || GamePad::GetRepeatPOV(no, POV_LEFT))
+			if (GamePad::GetRepeatLeft(no))
 				return -1.0f;
 
-			if (GamePad::GetRepeat(no, BUTTON_RIGHT) || GamePad::GetRepeatPOV(no, POV_RIGHT))
+			if (GamePad::GetRepeatRight(no))
 				return 1.0f;
 
 			return 0.0f;
@@ -215,20 +215,20 @@ namespace Input
 	{
 		if (no == 0)
 		{
-			if (Keyboard::GetRepeat(DIK_DOWN) || GamePad::GetRepeat(no, BUTTON_DOWN) || GamePad::GetRepeatPOV(no, POV_DOWN))
+			if (Keyboard::GetRepeat(DIK_DOWN) || GamePad::GetRepeatDown(0))
 				return -1.0f;
-			
-			if (Keyboard::GetRepeat(DIK_UP) || GamePad::GetRepeat(no, BUTTON_UP) || GamePad::GetRepeatPOV(no, POV_UP))
+
+			if (Keyboard::GetRepeat(DIK_UP) || GamePad::GetRepeatUp(0))
 				return 1.0f;
 
 			return 0.0f;
 		}
 		else
 		{
-			if (GamePad::GetRepeat(no, BUTTON_DOWN) || GamePad::GetRepeatPOV(no, POV_DOWN))
+			if (GamePad::GetRepeatDown(no))
 				return -1.0f;
 
-			if (GamePad::GetRepeat(no, BUTTON_UP) || GamePad::GetRepeatPOV(no, POV_UP))
+			if (GamePad::GetRepeatUp(no))
 				return 1.0f;
 		}
 

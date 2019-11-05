@@ -8,6 +8,7 @@
 #ifndef _FIELDCONFIG_H_
 #define _FIELDCONFIG_H_
 
+#include "../../main.h"
 #include "Place\PlaceConfig.h"
 
 #include <vector>
@@ -15,13 +16,15 @@
 
 namespace Field
 {
-	/**************************************
-	データ保存に使用するキー
-	***************************************/
-	enum SaveKey
+	class Const
 	{
-		Key_FieldLevel,
-		Key_Stock,
+	public:
+		static const char* FieldDataFile[];		//PlaceデータのCSVファイル名
+		static const char* FieldLayerFile[];	//陸地、海データのCSVファイル名
+
+	private:
+		Const() {}
+		~Const() {}
 	};
 
 	/**************************************
@@ -32,6 +35,15 @@ namespace Field
 		City,	// 都市レベル
 		World,	// 国レベル
 		Space,	// 星レベル
+	};
+
+	/**************************************
+	陸、海列挙子
+	***************************************/
+	enum FieldLayer
+	{
+		Ground = 0,		//陸
+		Sea = -1		//海
 	};
 
 	/**************************************

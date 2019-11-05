@@ -198,6 +198,12 @@
     <ClInclude Include="Library\nameof\nameof.hpp" />
     <ClInclude Include="Framework\Core\PlayerPrefs.h" />
     <ClInclude Include="Library\picojson\picojson.h" />
+    <ClInclude Include="source\Field\Object\CityBackGroundContainer.h" />
+    <ClInclude Include="source\Field\Object\BackGroundContainer.h" />
+    <ClInclude Include="Framework\Effect\InstancingMeshEffect.h" />
+    <ClInclude Include="Framework\Effect\RendererEffect.h" />
+    <ClInclude Include="Framework\Renderer3D\InstancingMeshContainer.h" />
+    <ClInclude Include="source\Field\Object\WorldBackGroundContainer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -378,6 +384,13 @@
     <ClCompile Include="source\Field\Object\FieldGround.cpp" />
     <ClCompile Include="source\Field\Object\FieldSkyBox.cpp" />
     <ClCompile Include="Framework\Core\PlayerPrefs.cpp" />
+    <ClCompile Include="source\Field\Object\CityBackGroundContainer.cpp" />
+    <ClCompile Include="source\Field\Object\BackGroundContainer.cpp" />
+    <ClCompile Include="Framework\Effect\InstancingMeshEffect.cpp" />
+    <ClCompile Include="Framework\Effect\RendererEffect.cpp" />
+    <ClCompile Include="Framework\Renderer3D\InstancingMeshContainer.cpp" />
+    <ClCompile Include="source\Field\FieldConfig.cpp" />
+    <ClCompile Include="source\Field\Object\WorldBackGroundContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
@@ -389,7 +402,6 @@
     <FxCompile Include="Shaders\DepthRenderer.fx" />
     <FxCompile Include="Shaders\DepthShadow.fx" />
     <FxCompile Include="Shaders\HexaCrossBlur.fx" />
-    <FxCompile Include="Shaders\ModelInstancing.fx" />
     <FxCompile Include="Shaders\MonotoneFilter.fx" />
     <FxCompile Include="Shaders\particle3D.fx" />
     <FxCompile Include="Shaders\ShockBlur.fx" />
@@ -397,5 +409,6 @@
     <FxCompile Include="Shaders\SpikeNoise.fx" />
     <FxCompile Include="Shaders\StrongBlurFilter.fx" />
     <FxCompile Include="Shaders\Sprite.fx" />
+    <FxCompile Include="Shaders\InstancingMesh.fx" />
   </ItemGroup>
 </Project>
