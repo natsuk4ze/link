@@ -33,24 +33,25 @@ public:
 	void Draw(void);
 
 	//メッセージセット
-	void SetEventMessage(const std::string Message);
-	void SetEventTelop(TelopID id, std::function<void(void)> Callback = nullptr);
+	void SetEventMessage(const std::string message);
 
-	//メッセージがセットされるとカウントアップするカウンター
-	int messageSetCnt;
+	//テロップをセット
+	void SetEventTelop(EventTelop::TelopID id, std::function<void(void)> Callback = nullptr);
 
 private:
 	static const int messageMax = 5;
-	int eventViewerMax;
 
 	std::vector <BaseViewer*> eventViewer;
-	std::vector <int> messageContainer;
+	std::vector <std::string> messageContainer;
 
 	EventTelop * eventTelop;
 	EventMessage *eventMessage[messageMax];
 
 	void CountMessage(void);
+	void PlayMessage(void);
 
+	//メッセージがセットされるとカウントアップするカウンター
+	int messageSetCnt;
 };
 
 #endif

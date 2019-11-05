@@ -59,7 +59,7 @@ void BanStockUseEvent::Init()
 	fieldEventHandler->PauseGame();
 
 	// テロップ設置
-	eventViewer->SetEventTelop(NegativeEvent01, nullptr);
+	eventViewer->SetEventTelop(EventTelop::NegativeEvent01, nullptr);
 
 	// 怒り顔エフェクト設置
 	GameParticleManager::Instance()->SetAngryFaceEffect();
