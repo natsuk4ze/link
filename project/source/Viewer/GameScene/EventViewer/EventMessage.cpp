@@ -208,7 +208,6 @@ void EventMessage::Reset(void)
 	alpha = 1.0f;
 	text->SetColor(SET_COLOR_NOT_COLORED);
 	bg->SetColor(SET_COLOR_NOT_COLORED);
-	isPlaying = false;
 }
 
 //=============================================================================

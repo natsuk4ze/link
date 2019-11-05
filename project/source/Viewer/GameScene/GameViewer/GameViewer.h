@@ -36,8 +36,6 @@ public:
 	std::vector <BaseViewer*> gameViewer;
 
 private:
-	int gameViewerMax;
-
 	ItemStockViewer *stockViewer;
 	TimerViewer *timerViewer;
 	LevelViewer *levelViewer;
