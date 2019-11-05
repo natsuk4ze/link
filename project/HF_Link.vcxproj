@@ -124,6 +124,7 @@
     <ClInclude Include="source\Effect\Game\BanIcon.h" />
     <ClInclude Include="source\Effect\Game\BlueDebris.h" />
     <ClInclude Include="source\Effect\Game\BlueSpark.h" />
+    <ClInclude Include="source\Effect\Game\Bubble.h" />
     <ClInclude Include="source\Effect\Game\ColorfulDebris.h" />
     <ClInclude Include="source\Effect\Game\Darkness.h" />
     <ClInclude Include="source\Effect\Game\MeteorFire.h" />
@@ -144,9 +145,12 @@
     <ClInclude Include="source\Event\MinusEvent\LinkLevelDecreaseEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\AILevelUpEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\AllLinkLevelUpEvent.h" />
+    <ClInclude Include="source\Event\PlusEvent\CreateNewTown\NewTownEvent_City.h" />
+    <ClInclude Include="source\Event\PlusEvent\CreateNewTown\NewTownEvent_Space.h" />
+    <ClInclude Include="source\Event\PlusEvent\CreateNewTown\NewTownEvent_World.h" />
     <ClInclude Include="source\Event\PlusEvent\LinkLevelUpEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\FamousPeopleEvent.h" />
-    <ClInclude Include="source\Event\PlusEvent\NewCityEvent.h" />
+    <ClInclude Include="source\Event\PlusEvent\CreateNewTown\NewTownEventCtrl.h" />
     <ClInclude Include="source\Event\PlusEvent\StockRecoveryEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\TimeRecoveryEvent.h" />
     <ClInclude Include="source\FieldObject\Actor\BridgeActor.h" />
@@ -315,6 +319,7 @@
     <ClCompile Include="source\Effect\Game\BanIcon.cpp" />
     <ClCompile Include="source\Effect\Game\BlueDebris.cpp" />
     <ClCompile Include="source\Effect\Game\BlueSpark.cpp" />
+    <ClCompile Include="source\Effect\Game\Bubble.cpp" />
     <ClCompile Include="source\Effect\Game\ColorfulDebris.cpp" />
     <ClCompile Include="source\Effect\Game\Drakness.cpp" />
     <ClCompile Include="source\Effect\Game\MeteorFire.cpp" />
@@ -333,9 +338,12 @@
     <ClCompile Include="source\Event\MinusEvent\CityDestroyEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\AILevelUpEvent.cpp" />
     <ClCompile Include="source\Event\MinusEvent\LinkLevelDecreaseEvent.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\CreateNewTown\NewTownEvent_City.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\CreateNewTown\NewTownEvent_Space.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\CreateNewTown\NewTownEvent_World.cpp" />
     <ClCompile Include="source\Event\PlusEvent\LinkLevelUpEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\FamousPeopleEvent.cpp" />
-    <ClCompile Include="source\Event\PlusEvent\NewCityEvent.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\CreateNewTown\NewTownEventCtrl.cpp" />
     <ClCompile Include="source\Event\PlusEvent\AllLinkLevelUpEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\StockRecoveryEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\TimeRecoveryEvent.cpp" />

@@ -10,7 +10,10 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
+// ボーナス数値
 const float BonusNum = 1.5f;
+// デフォルトのボーナス効果フレーム
+const int DefalutBonusFrame = 150;
 
 //*****************************************************************************
 // スタティック変数宣言
@@ -20,9 +23,9 @@ const float BonusNum = 1.5f;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-FamousPeopleEvent::FamousPeopleEvent(int RemainTime) :
+FamousPeopleEvent::FamousPeopleEvent() :
 	EventBase(false),
-	RemainTime(RemainTime)
+	RemainTime(DefalutBonusFrame)
 {
 	fieldEventHandler->SetDevelopBonus(BonusNum);
 }

@@ -1,15 +1,15 @@
 //=============================================================================
 //
-// 新しい町イベントクラス [NewCityEvent.cpp]
+// 新しい町(都市レベル)イベントクラス [NewTownEvent_City.cpp]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#include "../../../main.h"
-#include "NewCityEvent.h"
-#include "../../../Framework/Camera/CameraTranslationPlugin.h"
-#include "../../Viewer/GameScene/EventViewer/EventViewer.h"
-#include "../../Effect/GameParticleManager.h"
-#include "../../../Framework/Task/TaskManager.h"
+#include "../../../../main.h"
+#include "NewTownEvent_City.h"
+#include "../../../../Framework/Camera/CameraTranslationPlugin.h"
+#include "../../../Viewer/GameScene/EventViewer/EventViewer.h"
+#include "../../../Effect/GameParticleManager.h"
+#include "../../../../Framework/Task/TaskManager.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -24,9 +24,10 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-NewCityEvent::NewCityEvent(EventViewer *Ptr) : 
+NewTownEvent_City::NewTownEvent_City(EventViewer *Ptr, std::function<void(void)> EventOverFunc) :
 	EventBase(true),
-	eventViewer(Ptr)
+	eventViewer(Ptr),
+	EventOverFunc(EventOverFunc)
 {
 
 }
@@ -34,15 +35,16 @@ NewCityEvent::NewCityEvent(EventViewer *Ptr) :
 //=============================================================================
 // デストラクタ
 //=============================================================================
-NewCityEvent::~NewCityEvent()
+NewTownEvent_City::~NewTownEvent_City()
 {
 	eventViewer = nullptr;
+	NewTown = nullptr;
 }
 
 //=============================================================================
 // 初期化
 //=============================================================================
-void NewCityEvent::Init()
+void NewTownEvent_City::Init()
 {
 	// 新しい町を作る予定地を取得
 	NewTown = fieldEventHandler->GetNewTownPosition();
@@ -55,7 +57,7 @@ void NewCityEvent::Init()
 	eventViewer->SetEventTelop(PositiveEvent01, [=]()
 	{
 		// 予定地にカメラを移動させる
-		Camera::TranslationPlugin::Instance()->Move(TownPos, 30, [&]() {CreateNewCity(); });
+		Camera::TranslationPlugin::Instance()->Move(TownPos, 30, [&]() {CreateNewTown(); });
 	});
 
 	// 初期化終了
@@ -65,7 +67,7 @@ void NewCityEvent::Init()
 //=============================================================================
 // 更新
 //=============================================================================
-void NewCityEvent::Update()
+void NewTownEvent_City::Update()
 {
 
 }
@@ -73,7 +75,7 @@ void NewCityEvent::Update()
 //=============================================================================
 // 描画
 //=============================================================================
-void NewCityEvent::Draw()
+void NewTownEvent_City::Draw()
 {
 
 }
@@ -81,7 +83,7 @@ void NewCityEvent::Draw()
 //=============================================================================
 // イベントメッセージを取得
 //=============================================================================
-string NewCityEvent::GetEventMessage(int FieldLevel)
+string NewTownEvent_City::GetEventMessage(int FieldLevel)
 {
 	// ヌル
 	return "";
@@ -90,22 +92,22 @@ string NewCityEvent::GetEventMessage(int FieldLevel)
 //=============================================================================
 // 新しい町を作る
 //=============================================================================
-void NewCityEvent::CreateNewCity(void)
+void NewTownEvent_City::CreateNewTown(void)
 {
-	const D3DXVECTOR3 TownPos = NewTown->GetPosition().ConvertToWorldPosition();
+	D3DXVECTOR3 TownPos = NewTown->GetPosition().ConvertToWorldPosition();
 
 	fieldEventHandler->CreateNewTown(NewTown);
 	GameParticleManager::Instance()->SetSingularityEffect(TownPos);
-	TaskManager::Instance()->CreateDelayedTask(90, [&]() {EventOver(); });
+	TaskManager::Instance()->CreateDelayedTask(90, [&]() {EventOverFunc(); });
 }
 
-//=============================================================================
-// イベント終了処理
-//=============================================================================
-void NewCityEvent::EventOver(void)
-{
-	// イベント終了、ゲーム続行
-	Camera::TranslationPlugin::Instance()->Restore(30, nullptr);
-	fieldEventHandler->ResumeGame();
-	UseFlag = false;
-}
+////=============================================================================
+//// イベント終了処理
+////=============================================================================
+//void NewTownEvent_City::EventOver(void)
+//{
+//	// イベント終了、ゲーム続行
+//	Camera::TranslationPlugin::Instance()->Restore(30, nullptr);
+//	fieldEventHandler->ResumeGame();
+//	UseFlag = false;
+//}

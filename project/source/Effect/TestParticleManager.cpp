@@ -16,6 +16,7 @@
 #include "Game/MeteorExplosion.h"
 #include "Game/MeteorFire.h"
 #include "Game/Darkness.h"
+#include "Game/Bubble.h"
 
 /**************************************
 èâä˙âªèàóù
@@ -34,6 +35,7 @@ void TestParticleManager::Init()
 	controllers[TestParticle::MeteorExplosion] = new Effect::Game::MeteorExplosionController();
 	controllers[TestParticle::MeteorFire] = new Effect::Game::MeteorFireController();
 	controllers[TestParticle::Darkness] = new Effect::Game::DarknessController();
+	controllers[TestParticle::Bubble] = new Effect::Game::BubbleController();
 }
 
 /**************************************
@@ -61,6 +63,8 @@ void TestParticleManager::Update()
 		Generate(TestParticle::MeteorFire, Vector3::Up * 20.0f);
 	else if (Debug::Button("Darkness"))
 		Generate(TestParticle::Darkness, Vector3::Zero);
+	else if (Debug::Button("Bubble"))
+		Generate(TestParticle::Bubble, Vector3::Zero);
 
 	Debug::NewLine();
 

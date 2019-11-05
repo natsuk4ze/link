@@ -28,6 +28,7 @@ namespace TestParticle
 		MeteorExplosion,
 		MeteorFire,
 		Darkness,
+		Bubble,
 		Max
 	};
 }
