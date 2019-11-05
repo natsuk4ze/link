@@ -95,13 +95,22 @@ void PassengerModel::SetActor(const std::deque<D3DXVECTOR3>& root, Field::FieldL
 	switch (level)
 	{
 	case Field::City:
-		ChangeMesh("Car");
+		if (actor->GetType() != PassengerActor::Car)
+		{
+			ChangeMesh("Car");
+		}
 		break;
 	case Field::World:
-		ChangeMesh("Train");
+		if (actor->GetType() != PassengerActor::Train)
+		{
+			ChangeMesh("Train");
+		}
 		break;
 	case Field::Space:
-		ChangeMesh("SpaceShip");
+		if (actor->GetType() != PassengerActor::SpaceShip)
+		{
+			ChangeMesh("SpaceShip");
+		}
 		break;
 	default:
 		break;

@@ -153,7 +153,7 @@ namespace Field::Actor
 		ResourceManager::Instance()->LoadMesh("AlongCity", "data/MODEL/AlongActor/AlongActorCity.x");
 	
 		// FieldLevel = World
-		ResourceManager::Instance()->LoadMesh("Train", );
+		ResourceManager::Instance()->LoadMesh("Train", "data/MODEL/PassengerActor/ToonCar.x");
 		ResourceManager::Instance()->LoadMesh("Ship", "data/MODEL/PassengerActor/Boad.x");
 
 		// FieldLevel = Space

@@ -80,7 +80,7 @@ void PassengerActor::Draw()
 //=====================================
 void PassengerActor::ChangeMesh(const char* nextTag)
 {
-	mesh = NULL;
+	//mesh = NULL;
 	ResourceManager::Instance()->GetMesh(nextTag, mesh);
 }
 

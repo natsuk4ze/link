@@ -53,7 +53,7 @@ void PassengerController::Update()
 		actor->Update();
 	}
 
-	if (currentLevel == Field::Space)
+	if (currentLevel == Field::World)
 	{
 		// メッシュ切り替えの確認
 		CheckPassengerMesh();
@@ -121,12 +121,12 @@ void PassengerController::CheckPassengerMesh()
 		// フィールドのタイプが陸、アクターのタイプが舟の場合
 		if (type == 0 && model->GetType() == PassengerActor::Ship)
 		{
-			model->ChangeMesh("Train-World");
+			//model->ChangeMesh("Train");
 		}
 		// フィールドのタイプが海、アクターのタイプが電車の場合
 		else if (type == -1 && model->GetType() == PassengerActor::Train)
 		{
-			model->ChangeMesh("Ship-World");
+			//model->ChangeMesh("Ship");
 		}
 	}
 }
