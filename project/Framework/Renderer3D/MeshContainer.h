@@ -25,8 +25,7 @@ public:
 	MeshContainer();					//コンストラクタ
 	~MeshContainer();					//デストラクタ
 
-	static MeshContainer* Create();
-	void Release();
+	//混乱の原因になるのでCreate()とReleaseは削除
 
 	void Draw();						//モデルを描画
 
