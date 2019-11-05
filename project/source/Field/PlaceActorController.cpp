@@ -18,6 +18,7 @@
 
 #include "Object/CityBackGroundContainer.h"
 #include "Object/WorldBackGroundContainer.h"
+#include "Object/SpaceBackGroundContainer.h"
 
 #include "../FieldObject/Actor/CityActor.h"
 #include "../FieldObject/Actor/CrossJunctionActor.h"
@@ -65,6 +66,10 @@ namespace Field::Actor
 
 		case FieldLevel::World:
 			bgContainer = new WorldBackGroundContainer();
+			break;
+
+		case FieldLevel::Space:
+			bgContainer = new SpaceBackGroundContainer();
 			break;
 
 		default:
