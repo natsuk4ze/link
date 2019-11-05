@@ -1,51 +1,38 @@
 //=============================================================================
 //
-// Gameシーンビュアー管理処理 [GameViewer.h]
+// Fieldビュアー管理処理 [FieldViewer.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _GAME_VIEWER_H_
-#define _GAME_VIEWER_H_
+#ifndef _FIELD_VIEWER_H_
+#define _FIELD_VIEWER_H_
 
 #include <vector>
+#include "FieldTelop.h"
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
-class ItemStockViewer;
-class TimerViewer;
-class LevelViewer;
-class GameViewerParam;
+class FieldTelop;
 class BaseViewer;
-
-//テスト中
-class FieldViewer;
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class GameViewer
+class FieldViewer
 {
 public:
-	GameViewer();
-	~GameViewer();
+	FieldViewer();
+	~FieldViewer();
 
 	void Update(void);
 	void Draw(void);
 
-	//パラメータ受け取り
-	void ReceiveParam(GameViewerParam&param);
-
-	std::vector <BaseViewer*> gameViewer;
+	void SetFieldTelop(FieldTelop::TelopID id, std::function<void(void)> Callback);
+	std::vector <BaseViewer*> fieldViewer;
 
 private:
-	ItemStockViewer *stockViewer;
-	TimerViewer *timerViewer;
-	LevelViewer *levelViewer;
-	GameViewerParam *gameViewerParam;
-
-	//テスト中
-	FieldViewer*fieldViewer;
+	FieldTelop * fieldTelop;
 };
 
 #endif
