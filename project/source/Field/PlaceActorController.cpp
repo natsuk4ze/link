@@ -131,8 +131,6 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::Draw()
 	{
-		//NOTE:インスタンシングで描画するために結構いじるかも
-		bgContainer->Draw();
 
 		for (auto&& actor : actorContainer)
 		{
@@ -146,6 +144,8 @@ namespace Field::Actor
 
 		alongController->Draw();
 		passengerController->Draw();
+
+		bgContainer->Draw();
 	}
 
 	/**************************************
