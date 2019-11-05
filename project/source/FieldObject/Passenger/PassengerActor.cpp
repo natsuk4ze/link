@@ -27,12 +27,15 @@ PassengerActor::PassengerActor(const D3DXVECTOR3& pos, Field::FieldLevel current
 	{
 	case Field::City:
 		ResourceManager::Instance()->GetMesh("Car", mesh);
+		current = Car;
 		break;
 	case Field::World:
 		ResourceManager::Instance()->GetMesh("Train", mesh);
+		current = Train;
 		break;
 	case Field::Space:
 		ResourceManager::Instance()->GetMesh("Rocket", mesh);
+		current = SpaceShip;
 		break;
 	default:
 		break;
@@ -101,4 +104,12 @@ void PassengerActor::MoveDest(const D3DXVECTOR3 dest, std::function<void(void)> 
 		Tween::Move(*this, pos, this->dest, frame, InOutCirc, callback);
 	});
 
+}
+
+//=====================================
+// Œ»İ‚ÌƒƒbƒVƒ…‚Ìí—Ş‚ğæ“¾
+//=====================================
+PassengerActor::State PassengerActor::GetType()
+{
+	return current;
 }

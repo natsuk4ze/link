@@ -53,7 +53,7 @@ namespace Field::Actor
 		bgContainer.reserve(ReserveGround);
 		alongController = new Along::AlongController();
 		aStarController = new Route::AStarController();
-		passengerController = new PassengerController();
+		passengerController = new PassengerController(currentLevel);
 
 		auto onReachPassenger = std::bind(&Along::AlongController::OnReachPassenger, alongController, std::placeholders::_1);
 		passengerController->SetCallbackOnReach(onReachPassenger);
@@ -153,9 +153,12 @@ namespace Field::Actor
 		ResourceManager::Instance()->LoadMesh("AlongCity", "data/MODEL/AlongActor/AlongActorCity.x");
 	
 		// FieldLevel = World
+		ResourceManager::Instance()->LoadMesh("Train", );
+		ResourceManager::Instance()->LoadMesh("Ship", "data/MODEL/PassengerActor/Boad.x");
 
 		// FieldLevel = Space
 		ResourceManager::Instance()->LoadMesh("Town-Space", "data/Model/PlaceActor/earth.x");
+		ResourceManager::Instance()->LoadMesh("SpaceShip", "data/MODEL/PassengerActor/Rocket.x");
 	}
 
 	/**************************************
