@@ -24,8 +24,6 @@ GameViewer::GameViewer()
 	gameViewer.push_back(stockViewer = new ItemStockViewer());
 	gameViewer.push_back(timerViewer = new TimerViewer());
 	gameViewer.push_back(levelViewer = new LevelViewer());
-
-	gameViewerMax = gameViewer.size();
 }
 
 //*****************************************************************************
@@ -42,7 +40,7 @@ GameViewer::~GameViewer()
 //=============================================================================
 void GameViewer::Update()
 {
-	for (int i = 0; i < gameViewerMax; i++)
+	for (unsigned int i = 0; i < gameViewer.size(); i++)
 	{
 		gameViewer[i]->Update();
 	}
@@ -60,7 +58,7 @@ void GameViewer::Draw(void)
 	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE,true);
 
-	for (int i = 0; i < gameViewerMax; i++)
+	for (unsigned int i = 0; i < gameViewer.size(); i++)
 	{
 		gameViewer[i]->Draw();
 	}

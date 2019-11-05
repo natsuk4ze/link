@@ -20,11 +20,8 @@
 // グローバル変数
 //*****************************************************************************
 
-//テロップの種類数
-const int EventTelop::typeMax;
-
 //テキストのテクスチャパス
-static const char *textTexPath[EventTelop::typeMax]
+static const char *textTexPath[EventTelop::Max]
 {
 	"data/TEXTURE/Viewer/EventViewer/EventTelop/Text/PositiveText01.png",
 	"data/TEXTURE/Viewer/EventViewer/EventTelop/Text/PositiveText02.png",
@@ -33,7 +30,7 @@ static const char *textTexPath[EventTelop::typeMax]
 };
 
 //背景のテクスチャパス
-static const char *bgTexPath[EventTelop::typeMax]
+static const char *bgTexPath[EventTelop::Max]
 {
 	"data/TEXTURE/Viewer/EventViewer/EventTelop/BG/PositiveBG.png",
 	"data/TEXTURE/Viewer/EventViewer/EventTelop/BG/PositiveBG.png",
@@ -119,7 +116,7 @@ EventTelop::EventTelop()
 	bg->vertexWk[3].tex = D3DXVECTOR2(3.0f, 1.0f);
 
 	//コンテナにテクスチャ情報をロードする
-	for (int i = 0; i < typeMax; i++)
+	for (int i = 0; i < Max; i++)
 	{
 		LPDIRECT3DDEVICE9 pDevice = GetDevice();
 

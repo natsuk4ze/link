@@ -22,14 +22,12 @@
 //*****************************************************************************
 EventViewer::EventViewer()
 {
-	eventViewer.push_back(eventTelop = new EventTelop());
-
 	for (int i = 0; i < messageMax; i++)
 	{
 		eventViewer.push_back(eventMessage[i] = new EventMessage());
 	}
 
-	eventViewerMax = eventViewer.size();
+	eventViewer.push_back(eventTelop = new EventTelop());
 }
 
 //*****************************************************************************
@@ -46,7 +44,7 @@ EventViewer::~EventViewer()
 //=============================================================================
 void EventViewer::Update()
 {
-	for (int i = 0; i < eventViewerMax; i++)
+	for (unsigned int i = 0; i < eventViewer.size(); i++)
 	{
 		eventViewer[i]->Update();
 	}
@@ -63,7 +61,7 @@ void EventViewer::Update()
 
 	if (Keyboard::GetTrigger(DIK_T))
 	{
-		SetEventTelop(PositiveEvent01, nullptr);
+		SetEventTelop(eventTelop->PositiveEvent01, nullptr);
 	}
 
 
@@ -86,7 +84,7 @@ void EventViewer::Draw(void)
 	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 
-	for (int i = 0; i < eventViewerMax; i++)
+	for (unsigned int i = 0; i < eventViewer.size(); i++)
 	{
 		eventViewer[i]->Draw();
 	}
@@ -152,7 +150,7 @@ void EventViewer::SetEventMessage(const std::string message)
 //=============================================================================
 // イベント発生テロップを設置
 //=============================================================================
-void EventViewer::SetEventTelop(TelopID id, std::function<void(void)> Callback)
+void EventViewer::SetEventTelop(EventTelop::TelopID id, std::function<void(void)> Callback)
 {
 	eventTelop->Set(id, Callback);
 }

@@ -36,11 +36,10 @@ public:
 	void SetEventMessage(const std::string message);
 
 	//テロップをセット
-	void SetEventTelop(TelopID id, std::function<void(void)> Callback = nullptr);
+	void SetEventTelop(EventTelop::TelopID id, std::function<void(void)> Callback = nullptr);
 
 private:
 	static const int messageMax = 5;
-	int eventViewerMax;
 
 	std::vector <BaseViewer*> eventViewer;
 	std::vector <std::string> messageContainer;

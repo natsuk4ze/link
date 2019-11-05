@@ -13,15 +13,6 @@
 #include <vector>
 #include <functional>
 
-//テロップの種類
-enum TelopID
-{
-	PositiveEvent01,
-	PositiveEvent02,
-	NegativeEvent01,
-	NegativeEvent02
-};
-
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
@@ -33,12 +24,18 @@ class BaseViewerDrawer;
 class EventTelop :public BaseViewer
 {
 public:
-
 	EventTelop();
 	~EventTelop();
 
-	//テロップの種類数
-	static const int typeMax = 4;
+	//テロップの種類
+	enum TelopID
+	{
+		PositiveEvent01,
+		PositiveEvent02,
+		NegativeEvent01,
+		NegativeEvent02,
+		Max
+	};
 
 	void Update();
 	void Draw(void);
@@ -68,9 +65,6 @@ private:
 
 	//背景をクローズ
 	void CloseBG(void);
-
-	//背景のアクティブパーセンテージ
-	float percentageBG;
 
 	//再生中かどうか
 	bool isPlaying;
