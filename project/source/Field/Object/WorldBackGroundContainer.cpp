@@ -28,12 +28,13 @@ namespace Field::Actor
 		const unsigned ReserveSizeGround = 2000;
 
 		riverContainer.reserve(ReserveSizeSea);
+		groundContainer.reserve(ReserveSizeGround);
 
 		groundMesh = new InstancingMeshContainer(ReserveSizeGround);
 		groundMesh->Load("data/MODEL/PlaceActor/ground.x");
 
 		seaMesh = new InstancingMeshContainer(ReserveSizeSea);
-		groundMesh->Load("data/MODEL/PlaceActor/river.x");
+		seaMesh->Load("data/MODEL/PlaceActor/river.x");
 	}
 
 	/**************************************
@@ -104,8 +105,6 @@ namespace Field::Actor
 		//CSVの終わりまで読み込み続ける
 		while (std::getline(layerData, layerLine))
 		{
-			std::getline(layerData, layerLine);
-
 			//1行分読み込んだデータを区切り文字で分割する
 			std::vector<std::string> subStrLayer;
 			String::Split(subStrLayer, layerLine, Delim);
