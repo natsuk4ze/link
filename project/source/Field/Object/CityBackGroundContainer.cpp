@@ -51,11 +51,6 @@ namespace Field::Actor
 	***************************************/
 	void CityBackGroundContainer::Update()
 	{
-		for (auto&& ground : groundContainer)
-		{
-			ground->Update();
-		}
-
 		for (auto&& river : riverContainer)
 		{
 			river->Update();
