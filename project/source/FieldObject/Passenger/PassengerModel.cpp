@@ -10,15 +10,14 @@
 //=====================================
 // コンストラクタ
 //=====================================
-PassengerModel::PassengerModel(const std::deque<D3DXVECTOR3>& root, std::function<void(const D3DXVECTOR3&)> *callback) :
+PassengerModel::PassengerModel(const std::deque<D3DXVECTOR3>& root, Field::FieldLevel level, std::function<void(const D3DXVECTOR3&)> *callback) :
 	current(0),
 	nextDest(0),
 	callbackToAlong(callback)
 {
 	this->route = root;
 
-	// あとでフォールドレベルを反映させる
-	actor = new PassengerActor(this->route[0], Field::City);
+	actor = new PassengerActor(this->route[0], level);
 	D3DXVECTOR3 destination = FindDestination();
 	actor->MoveDest(destination, [=]
 	{
@@ -89,14 +88,38 @@ bool PassengerModel::IsActive()
 //=====================================
 // アクターのセット
 //=====================================
-void PassengerModel::SetActor(const std::deque<D3DXVECTOR3>& root)
+void PassengerModel::SetActor(const std::deque<D3DXVECTOR3>& root, Field::FieldLevel level)
 {
 	this->route = root;
 
-	// あとでフォールドレベルを反映させる
+	switch (level)
+	{
+	case Field::City:
+		if (actor->GetType() != PassengerActor::Car)
+		{
+			ChangeMesh("Car");
+		}
+		break;
+	case Field::World:
+		if (actor->GetType() != PassengerActor::Train)
+		{
+			ChangeMesh("Train");
+		}
+		break;
+	case Field::Space:
+		if (actor->GetType() != PassengerActor::SpaceShip)
+		{
+			ChangeMesh("SpaceShip");
+		}
+		break;
+	default:
+		break;
+	}
+
+	// あとでフィールドレベルを反映させる
 	actor->SetActive(true);
 	actor->SetPosition(this->route[0]);
-	current = nextDest = 0;
+	this->current = nextDest = 0;
 	actor->MoveDest(this->route[nextDest], [=]
 	{
 		CheckCallback();
@@ -125,4 +148,28 @@ D3DXVECTOR3 PassengerModel::FindDestination()
 
 	nextDest = route.size() - 1;
 	return route.back();
+}
+
+//=====================================
+// アクターの座標をフィールド座標に変換して返す
+//=====================================
+Field::FieldPosition PassengerModel::GetFieldPosition()
+{
+	return Field::FieldPosition::ConvertToFieldPosition(actor->GetPosition());
+}
+
+//=====================================
+// アクターのメッシュ変更
+//=====================================
+void PassengerModel::ChangeMesh(const char* tag)
+{
+	actor->ChangeMesh(tag);
+}
+
+//=====================================
+// アクターの現在のメッシュの状態を取得
+//=====================================
+PassengerActor::State PassengerModel::GetType()
+{
+	return actor->GetType();
 }

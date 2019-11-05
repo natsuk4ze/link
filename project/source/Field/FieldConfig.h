@@ -19,7 +19,8 @@ namespace Field
 	class Const
 	{
 	public:
-		static const char* FieldDataFile[];
+		static const char* FieldDataFile[];		//PlaceデータのCSVファイル名
+		static const char* FieldLayerFile[];	//陸地、海データのCSVファイル名
 
 	private:
 		Const() {}
@@ -37,6 +38,15 @@ namespace Field
 	};
 
 	/**************************************
+	陸、海列挙子
+	***************************************/
+	enum FieldLayer
+	{
+		Ground = 0,		//陸
+		Sea = -1		//海
+	};
+
+	/**************************************
 	PlaceModelの座標構造体
 	***************************************/
 	struct FieldPosition
@@ -50,6 +60,11 @@ namespace Field
 		inline D3DXVECTOR3 ConvertToWorldPosition() const
 		{
 			return { x * 10.0f, 0.0f, z * -10.0f };
+		}
+
+		static FieldPosition ConvertToFieldPosition(const D3DXVECTOR3& pos)
+		{
+			return { (int)pos.x / 10, abs((int)pos.z / 10) };
 		}
 
 		bool operator <(const FieldPosition& rhs) const
