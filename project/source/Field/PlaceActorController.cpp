@@ -55,7 +55,7 @@ namespace Field::Actor
 	{
 		alongController = new Along::AlongController();
 		aStarController = new Route::AStarController();
-		passengerController = new PassengerController();
+		passengerController = new PassengerController(currentLevel);
 
 		switch (level)
 		{
@@ -164,9 +164,12 @@ namespace Field::Actor
 		ResourceManager::Instance()->LoadMesh("AlongCity", "data/MODEL/AlongActor/AlongActorCity.x");
 	
 		// FieldLevel = World
+		ResourceManager::Instance()->LoadMesh("Train", "data/MODEL/PassengerActor/ToonCar.x");
+		ResourceManager::Instance()->LoadMesh("Ship", "data/MODEL/PassengerActor/Boad.x");
 
 		// FieldLevel = Space
 		ResourceManager::Instance()->LoadMesh("Town-Space", "data/Model/PlaceActor/earth.x");
+		ResourceManager::Instance()->LoadMesh("SpaceShip", "data/MODEL/PassengerActor/Rocket.x");
 
 		//背景アクターをロード
 		bgContainer->Load();
