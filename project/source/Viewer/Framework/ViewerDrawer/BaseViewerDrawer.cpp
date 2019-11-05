@@ -43,6 +43,9 @@ void BaseViewerDrawer::Draw()
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
+	//頂点座標をセット
+	SetVertexPos();
+
 	// 頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
@@ -54,17 +57,14 @@ void BaseViewerDrawer::Draw()
 }
 
 //=============================================================================
-// テクスチャの頂点の作成
+// 頂点の作成
 //=============================================================================
 void BaseViewerDrawer::MakeVertex()
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	// 頂点座標の設定
-	vertexWk[0].vtx = position + D3DXVECTOR3(-size.x, -size.y, 0.0f);
-	vertexWk[1].vtx = position + D3DXVECTOR3(size.x, -size.y, 0.0f);
-	vertexWk[2].vtx = position + D3DXVECTOR3(-size.x, size.y, 0.0f);
-	vertexWk[3].vtx = position + D3DXVECTOR3(size.x, size.y, 0.0f);
+	SetVertexPos();
 
 	// テクスチャのパースペクティブコレクト用
 	vertexWk[0].rhw =
@@ -77,22 +77,24 @@ void BaseViewerDrawer::MakeVertex()
 	vertexWk[1].tex = D3DXVECTOR2(1.0f, 0.0f);
 	vertexWk[2].tex = D3DXVECTOR2(0.0f, 1.0f);
 	vertexWk[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+
+	SetColor(SET_COLOR_NOT_COLORED);
 }
 
 //=============================================================================
-// オブジェクトの頂点座標の設定
+// 頂点座標の設定
 //=============================================================================
-void BaseViewerDrawer::SetVertex()
+void BaseViewerDrawer::SetVertexPos()
 {
 	// 頂点座標の設定
-	vertexWk[0].vtx = position + D3DXVECTOR3(-size.x, -size.y, 0.0f);
-	vertexWk[1].vtx = position + D3DXVECTOR3(size.x, -size.y, 0.0f);
-	vertexWk[2].vtx = position + D3DXVECTOR3(-size.x, size.y, 0.0f);
-	vertexWk[3].vtx = position + D3DXVECTOR3(size.x, size.y, 0.0f);
+	vertexWk[0].vtx = position + D3DXVECTOR3(-size.x/2, -size.y/2, 0.0f);
+	vertexWk[1].vtx = position + D3DXVECTOR3(size.x/2, -size.y/2, 0.0f);
+	vertexWk[2].vtx = position + D3DXVECTOR3(-size.x/2, size.y/2, 0.0f);
+	vertexWk[3].vtx = position + D3DXVECTOR3(size.x/2, size.y/2, 0.0f);
 }
 
 //=============================================================================
-//オブジェクトのテクスチャ座標設定処理
+// テクスチャ座標設定処理
 //=============================================================================
 void BaseViewerDrawer::SetTexture(int divX, int divY, int pattern)
 {

@@ -75,10 +75,9 @@ EventMessage::EventMessage()
 	//”wŒi
 	bg = new BaseViewerDrawer();
 	bg->LoadTexture("data/TEXTURE/Viewer/EventViewer/EventMessage/BG.png");
-	bg->size = D3DXVECTOR3(280.0f, 52.0f, 0.0f);
+	bg->size = D3DXVECTOR3(560.0f, 104.0f, 0.0f);
 	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	bg->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 8.6), (float)(SCREEN_HEIGHT*1.5),0.0f);
-	bg->SetColor(SET_COLOR_NOT_COLORED);
 	bg->MakeVertex();
 }
 
@@ -110,7 +109,6 @@ void EventMessage::Draw(void)
 
 	//”wŒi‚ðæ‚É•`‰æ
 	bg->Draw();
-	bg->SetVertex();
 
 	//ƒeƒLƒXƒg
 	text->Draw();

@@ -120,7 +120,6 @@
     <ClInclude Include="source\Scene\ResultScene.h" />
     <ClInclude Include="source\Scene\TitleScene.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.h" />
-    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\countviewerdrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\BaseViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h" />
@@ -204,6 +203,7 @@
     <ClInclude Include="Framework\Effect\RendererEffect.h" />
     <ClInclude Include="Framework\Renderer3D\InstancingMeshContainer.h" />
     <ClInclude Include="source\Field\Object\WorldBackGroundContainer.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

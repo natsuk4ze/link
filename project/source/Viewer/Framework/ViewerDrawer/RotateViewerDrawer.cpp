@@ -26,13 +26,13 @@ RotateViewerDrawer::~RotateViewerDrawer()
 //=============================================================================
 void RotateViewerDrawer::CreateCircle()
 {
-	D3DXVECTOR2 temp = D3DXVECTOR2(size.x, size.y);
+	D3DXVECTOR2 temp = D3DXVECTOR2(size.x/2, size.y/2);
 	radius = D3DXVec2Length(&temp);
-	baseAngle = atan2f(size.y, size.x);
+	baseAngle = atan2f(size.y/2, size.x/2);
 }
 
 //=============================================================================
-// テクスチャの頂点の作成 (回転オブジェクト用)
+// 頂点の作成 (回転オブジェクト用)
 //=============================================================================
 void RotateViewerDrawer::MakeVertex()
 {
@@ -69,12 +69,14 @@ void RotateViewerDrawer::MakeVertex()
 	vertexWk[1].tex = D3DXVECTOR2(1.0, 0.0f);
 	vertexWk[2].tex = D3DXVECTOR2(0.0f, 1.0f);
 	vertexWk[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+
+	SetColor(SET_COLOR_NOT_COLORED);
 }
 
 //=============================================================================
-// オブジェクトの頂点座標の設定 (回転オブジェクト用)
+// 頂点座標の設定 (回転オブジェクト用)
 //=============================================================================
-void RotateViewerDrawer::SetVertex()
+void RotateViewerDrawer::SetVertexPos()
 {
 	// 頂点座標の設定
 	vertexWk[0].vtx.x = position.x - cosf(baseAngle + rotation.z) * radius;

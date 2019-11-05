@@ -95,18 +95,16 @@ EventTelop::EventTelop()
 {
 	//テキスト
 	text = new BaseViewerDrawer();
-	text->size = D3DXVECTOR3(512, 128.0f, 0.0f);
+	text->size = D3DXVECTOR3(1024, 256.0f, 0.0f);
 	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	text->position = D3DXVECTOR3(SCREEN_WIDTH*1.2, SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
-	text->SetColor(SET_COLOR_NOT_COLORED);
 	text->MakeVertex();
 
 	//背景
 	bg = new BaseViewerDrawer();
-	bg->size = D3DXVECTOR3(SCREEN_WIDTH / 2, 0.0f, 0.0f);
+	bg->size = D3DXVECTOR3(SCREEN_WIDTH, 0.0f, 0.0f);
 	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	bg->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 5), SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
-	bg->SetColor(SET_COLOR_NOT_COLORED);
 	bg->MakeVertex();
 
 	//背景のUV座標を変更
@@ -165,11 +163,9 @@ void EventTelop::Draw(void)
 
 	//背景を先に描画
 	bg->Draw();
-	bg->SetVertex();
 
 	//テキスト
 	text->Draw();
-	text->SetVertex();
 }
 
 //=============================================================================
@@ -234,7 +230,7 @@ void EventTelop::OpenBG(void)
 {
 	//イージングのスタートとゴールを設定
 	float bgEasingStart = 0.0f;
-	float bgEasingGoal = 60.0f;
+	float bgEasingGoal = 120.0f;
 
 	//背景アクティブパーセンテージを更新
 	bg->size.y = Easing::EaseValue(animTime, bgEasingStart, bgEasingGoal, animType[BG_Open]);
@@ -249,7 +245,7 @@ void EventTelop::OpenBG(void)
 void EventTelop::CloseBG(void)
 {
 	//イージングのスタートとゴールを設定
-	float bgEasingStart = 60.0f;
+	float bgEasingStart = 120.0f;
 	float bgEasingGoal = 0.0f;
 
 	//背景アクティブパーセンテージを更新

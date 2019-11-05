@@ -39,7 +39,6 @@ BeatGameViewer::BeatGameViewer() :
 	Viewer->size = D3DXVECTOR3(SCREEN_WIDTH / 2, 120.0f, 0.0f);
 	Viewer->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	Viewer->position = D3DXVECTOR3((float)SCREEN_WIDTH / 2, (float)SCREEN_HEIGHT / 2, 0.0f);
-	Viewer->SetColor(SET_COLOR_NOT_COLORED);
 	Viewer->MakeVertex();
 	Viewer->texture = SuccessTexture;
 
