@@ -53,7 +53,7 @@ namespace Effect::Game
 	***************************************/
 	SpaceTear::SpaceTear() :
 		Particle3D(MinLife, MaxLife),
-		angleRotate(Math::RandomRange(0.0f, 360.0f))
+		angleRotate(Math::RandomRange(-20.0f, 20.0f))
 	{
 		//テクスチャの通し番号をランダムに決定
 		int indexU = Math::RandomRange(0, 2);
@@ -61,8 +61,6 @@ namespace Effect::Game
 
 		uv.u = indexU * 0.5f;
 		uv.v = indexV * 0.5f;
-
-		transform->Rotate(90.0f, Vector3::Right);
 	}
 
 	/**************************************
@@ -74,14 +72,14 @@ namespace Effect::Game
 		active = true;
 
 		//回転
-		//transform->Rotate(angleRotate, Vector3::Up);
+		transform->Rotate(angleRotate, Vector3::Forward);
 
 		//移動
 		float posY = Math::RandomRange(-1.0f, 1.0f);
 		transform->Move(Vector3::Up * posY);
 
 		//スケーリング
-		initScaleX = Math::RandomRange(0.1f, 1.0f);
+		initScaleX = Math::RandomRange(0.5f, 2.0f);
 		initScaleY = Math::RandomRange(0.5f, 1.5f);
 		transform->SetScale({ initScaleX, initScaleY, 1.0f });
 	}
