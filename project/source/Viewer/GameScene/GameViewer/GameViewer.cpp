@@ -31,6 +31,12 @@ GameViewer::GameViewer()
 //*****************************************************************************
 GameViewer::~GameViewer()
 {
+	//メモリを解放
+	for (unsigned int i = 0; i < gameViewer.size(); i++)
+	{
+		SAFE_DELETE(gameViewer[i]);
+	}
+
 	//インスタンスを入れた配列をクリア
 	gameViewer.clear();
 }

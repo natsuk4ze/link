@@ -35,6 +35,12 @@ EventViewer::EventViewer()
 //*****************************************************************************
 EventViewer::~EventViewer()
 {
+	//メモリを解放
+	for (unsigned int i = 0; i < eventViewer.size(); i++)
+	{
+		SAFE_DELETE(eventViewer[i]);
+	}
+
 	//インスタンスを入れた配列をクリア
 	eventViewer.clear();
 }
