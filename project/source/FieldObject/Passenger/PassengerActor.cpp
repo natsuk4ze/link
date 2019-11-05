@@ -20,7 +20,7 @@ const D3DXVECTOR3 PassengerActor::InitForward = Vector3::Back;
 //=====================================
 PassengerActor::PassengerActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
 {
-	mesh = MeshContainer::Create();
+	mesh = new MeshContainer();
 
 	// ƒŒƒxƒ‹‚É‡‚í‚¹‚Äƒ‚ƒfƒ‹“Ç‚İ‚İ
 	switch (currentLevel)
@@ -51,7 +51,7 @@ PassengerActor::PassengerActor(const D3DXVECTOR3& pos, Field::FieldLevel current
 //=====================================
 PassengerActor::~PassengerActor()
 {
-	SAFE_RELEASE(mesh);
+	SAFE_DELETE(mesh);
 }
 
 //=====================================

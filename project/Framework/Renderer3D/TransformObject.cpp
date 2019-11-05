@@ -18,7 +18,7 @@ TransformObject::TransformObject()
 {
 	ResourceManager::Instance()->LoadMesh("Transform", "data/MODEL/transform.x");
 	
-	mesh = MeshContainer::Create();
+	mesh = new MeshContainer();
 	ResourceManager::Instance()->GetMesh("Transform", mesh);
 }
 
@@ -27,7 +27,7 @@ TransformObject::TransformObject()
 ***************************************/
 TransformObject::~TransformObject()
 {
-	SAFE_RELEASE(mesh);
+	SAFE_DELETE(mesh);
 }
 
 /**************************************
