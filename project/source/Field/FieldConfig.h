@@ -19,7 +19,8 @@ namespace Field
 	class Const
 	{
 	public:
-		static const char* FieldDataFile[];
+		static const char* FieldDataFile[];		//PlaceデータのCSVファイル名
+		static const char* FieldLayerFile[];	//陸地、海データのCSVファイル名
 
 	private:
 		Const() {}
@@ -34,6 +35,15 @@ namespace Field
 		City,	// 都市レベル
 		World,	// 国レベル
 		Space,	// 星レベル
+	};
+
+	/**************************************
+	陸、海列挙子
+	***************************************/
+	enum FieldLayer
+	{
+		Ground = 0,		//陸
+		Sea = -1		//海
 	};
 
 	/**************************************

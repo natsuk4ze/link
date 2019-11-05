@@ -16,4 +16,11 @@ namespace Field
 		"data/FIELD/World/World_Field.csv",
 		"data/FIELD/Space/Space_Field.csv",
 	};
+
+	/**************************************
+	陸地と海のレイヤーCSVファイル名
+	***************************************/
+	const char* Const::FieldLayerFile[] = {
+		"data/FIELD/World/World_Continent.csv",
+	};
 }
