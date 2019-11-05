@@ -167,6 +167,7 @@ namespace Field::Actor
 
 		// FieldLevel = Space
 		ResourceManager::Instance()->LoadMesh("Town-Space", "data/Model/PlaceActor/earth.x");
+		ResourceManager::Instance()->LoadMesh("River-Space", "data/Model/PlaceActor/spaceTear.x");
 
 		//背景アクターをロード
 		bgContainer->Load();

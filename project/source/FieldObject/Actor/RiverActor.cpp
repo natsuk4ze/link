@@ -32,6 +32,7 @@ RiverActor::RiverActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
 	case Field::World:
 		break;
 	case Field::Space:
+		ResourceManager::Instance()->GetMesh("River-Space", mesh);
 		break;
 	default:
 		break;
