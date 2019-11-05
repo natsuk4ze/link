@@ -1,19 +1,17 @@
 //=====================================
 //
-//背景アクターコンテナ処理[CityBackGroundContainer.cpp]
-//Author:GP12A332 21 立花雄太
+//WorldBackGroundContainer.cpp
+//機能:Worldレベルの背景コンテナ
+//Author:GP12B332 21 立花雄太
 //
 //=====================================
-#include "CityBackGroundContainer.h"
-
+#include "WorldBackGroundContainer.h"
 #include "../../FieldObject/Actor/PlaceActor.h"
 #include "../../FieldObject/Actor/RiverActor.h"
 #include "../../FieldObject/Actor/NoneActor.h"
 
-#include "../Place/PlaceConfig.h"
-
-#include "../../../Framework/String/String.h"
 #include "../../../Framework/Renderer3D/InstancingMeshContainer.h"
+#include "../../../Framework/String/String.h"
 
 #include <fstream>
 #include <string>
@@ -23,98 +21,107 @@ namespace Field::Actor
 	/**************************************
 	コンストラクタ
 	***************************************/
-	CityBackGroundContainer::CityBackGroundContainer()
+	WorldBackGroundContainer::WorldBackGroundContainer()
 	{
-		const unsigned ReserveSizeGround = 10000;
-		const unsigned ReserveSizeRiver = 200;
+		//riverContainerを海として扱う
+		const unsigned ReserveSizeSea = 10000;
+		const unsigned ReserveSizeGround = 2000;
 
+		riverContainer.reserve(ReserveSizeSea);
 		groundContainer.reserve(ReserveSizeGround);
-		riverContainer.reserve(ReserveSizeRiver);
 
 		groundMesh = new InstancingMeshContainer(ReserveSizeGround);
 		groundMesh->Load("data/MODEL/PlaceActor/ground.x");
+
+		seaMesh = new InstancingMeshContainer(ReserveSizeSea);
+		seaMesh->Load("data/MODEL/PlaceActor/river.x");
 	}
 
 	/**************************************
 	デストラクタ
 	***************************************/
-	CityBackGroundContainer::~CityBackGroundContainer()
+	WorldBackGroundContainer::~WorldBackGroundContainer()
 	{
-		Utility::DeleteContainer(groundContainer);
-		Utility::DeleteContainer(riverContainer);
-
 		SAFE_DELETE(groundMesh);
+		SAFE_DELETE(seaMesh);
 	}
 
 	/**************************************
 	更新処理
 	***************************************/
-	void CityBackGroundContainer::Update()
+	void WorldBackGroundContainer::Update()
 	{
-		for (auto&& river : riverContainer)
+		for (auto&& sea : riverContainer)
 		{
-			river->Update();
+			sea->Update();
 		}
 	}
 
 	/**************************************
 	描画処理
 	***************************************/
-	void CityBackGroundContainer::Draw()
+	void WorldBackGroundContainer::Draw()
 	{
-		//地面はインスタンシングで描画する
+		//地面の描画
 		groundMesh->Lock();
 		for (auto&& ground : groundContainer)
 		{
-			bool result = groundMesh->EmbedTranform(ground->GetTransform());
-			if (!result)
+			bool res = groundMesh->EmbedTranform(ground->GetTransform());
+			if (!res)
 				break;
 		}
 		groundMesh->Unlock();
 
 		groundMesh->Draw();
 
-		for (auto&& river : riverContainer)
+		//海の描画
+		seaMesh->Lock();
+		for (auto&& sea : riverContainer)
 		{
-			river->Draw();
+			bool res = seaMesh->EmbedTranform(sea->GetTransform());
+			if (!res)
+				break;
 		}
+		seaMesh->Unlock();
+
+		seaMesh->Draw();
 	}
 
 	/**************************************
 	読み込み処理
 	***************************************/
-	void CityBackGroundContainer::Load()
+	void WorldBackGroundContainer::Load()
 	{
 		using Model::PlaceType;
 
 		//CSVファイルを読み込み
-		std::ifstream stream(Const::FieldDataFile[0]);
+		std::ifstream layerData(Const::FieldLayerFile[0]);
 
-		std::string line;			//CSVを1行ずつ読むバッファ
+		std::string layerLine;
 		const char Delim = ',';		//区切り文字
 		int x = 0;					//PlaceのX位置
 		int z = 0;					//PlaceのZ位置
 
 		//CSVの終わりまで読み込み続ける
-		while (std::getline(stream, line))
+		while (std::getline(layerData, layerLine))
 		{
 			//1行分読み込んだデータを区切り文字で分割する
-			std::vector<std::string> subStr;
-			String::Split(subStr, line, Delim);
+			std::vector<std::string> subStrLayer;
+			String::Split(subStrLayer, layerLine, Delim);
 
 			x = 0;
 
 			//分割したデータ毎にPlaceModelを作成
-			for (auto&& str : subStr)
+			for(auto&& layer : subStrLayer)
 			{
-				PlaceType type = Model::IntToPlaceType(std::stoi(str));
-				
+				int type = std::stoi(layer);
+
 				D3DXVECTOR3 position = Field::FieldPosition(x, z).ConvertToWorldPosition();
 				PlaceActor *actor = nullptr;
 
-				if (type == PlaceType::River)
+				if (type == FieldLayer::Sea)
 				{
-					actor = new RiverActor(position, FieldLevel::City);
+					actor = new RiverActor(position, FieldLevel::City);		//Cityと同じなのでとりあえず
 					riverContainer.push_back(actor);
 				}
 				else
@@ -134,7 +141,7 @@ namespace Field::Actor
 
 #ifndef _DEBUG
 		//フィールドの外側の背景を作る
-		//NOTE:とりあえずなので全部地面にしてしまう
+		//NOTE:とりあえずなので全部海にしてしまう
 		const int MaxOuter = 25;
 		for (int outerX = -MaxOuter; outerX < x + MaxOuter; outerX++)
 		{
@@ -144,9 +151,8 @@ namespace Field::Actor
 					continue;
 
 				D3DXVECTOR3 position = FieldPosition(outerX, outerZ).ConvertToWorldPosition();
-				position.y += Math::RandomRange(-2.0f, 0.0f);
-				PlaceActor * actor = new NoneActor(position, FieldLevel::City);
-				groundContainer.push_back(actor);
+				PlaceActor * actor = new RiverActor(position, FieldLevel::City);
+				riverContainer.push_back(actor);
 			}
 		}
 #endif

@@ -184,6 +184,7 @@
     <ClInclude Include="source\Field\Object\FieldGround.h" />
     <ClInclude Include="source\Field\Controller\FieldInput.h" />
     <ClInclude Include="source\Field\Object\FieldSkyBox.h" />
+    <ClInclude Include="source\Field\Object\WorldBackGroundContainer.h" />
     <ClInclude Include="source\Field\PlaceActorController.h" />
     <ClInclude Include="source\Field\Place\FieldJunctionModel.h" />
     <ClInclude Include="source\Field\Place\FieldPlaceContainer.h" />
@@ -374,6 +375,7 @@
     <ClCompile Include="source\Field\Object\FieldGround.cpp" />
     <ClCompile Include="source\Field\Controller\FieldInput.cpp" />
     <ClCompile Include="source\Field\Object\FieldSkyBox.cpp" />
+    <ClCompile Include="source\Field\Object\WorldBackGroundContainer.cpp" />
     <ClCompile Include="source\Field\PlaceActorController.cpp" />
     <ClCompile Include="source\Field\Place\FieldJunctionModel.cpp" />
     <ClCompile Include="source\Field\Place\FieldPlaceContainer.cpp" />
