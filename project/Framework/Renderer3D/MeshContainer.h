@@ -42,6 +42,9 @@ protected:
 
 private:
 	MeshResource * resource;						//リソースの参照元
+	bool initialized;								//メッシュが初期化済みかどうか
+
+	void ReleaseResource();							//リソース解放処理
 };
 
 #endif

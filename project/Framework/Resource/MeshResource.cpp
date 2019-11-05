@@ -85,11 +85,20 @@ void MeshResource::Clone(MeshContainer * container)
 	if (container == NULL)
 		return;
 
+	//初期化済みであればリリースする
+	if (container->initialized)
+	{
+		container->ReleaseResource();
+	}
+
+	//メッシュの参照を保持
 	container->mesh = mesh;
 	mesh->AddRef();
 
+	//マテリアルをコピー
 	container->materials = materials;
 
+	//テクスチャへの参照を設定
 	container->textures = textures;
 	for (auto&& texture : textures)
 	{
@@ -99,9 +108,13 @@ void MeshResource::Clone(MeshContainer * container)
 		texture->AddRef();
 	}
 
+	//マテリアル数を保存
 	container->materialNum = materialNum;
 
+	//自身をリソースとして登録
 	container->resource = this;
+
+	container->initialized = true;
 
 	cntRef++;
 }

@@ -17,7 +17,8 @@
 MeshContainer::MeshContainer() : 
 	mesh(NULL),
 	materialNum(0),
-	resource(NULL)
+	resource(NULL),
+	initialized(false)
 {
 
 }
@@ -27,15 +28,7 @@ MeshContainer::MeshContainer() :
 ***************************************/
 MeshContainer::~MeshContainer()
 {
-	SAFE_RELEASE(mesh);
-
-	for (DWORD i = 0; i < materialNum; i++)
-	{
-		SAFE_RELEASE(textures[i]);
-	}
-
-	if (resource != NULL)
-		resource->OnRelease();
+	ReleaseResource();
 }
 
 /**************************************
@@ -100,4 +93,27 @@ void MeshContainer::SetMaterialAlpha(float alpha, UINT index)
 {
 	assert(index >= 0 && index < materialNum);
 	materials[index].Diffuse.a = alpha;
+}
+
+/**************************************
+リソース開放処理
+***************************************/
+void MeshContainer::ReleaseResource()
+{
+	SAFE_RELEASE(mesh);
+
+	for (DWORD i = 0; i < materialNum; i++)
+	{
+		SAFE_RELEASE(textures[i]);
+	}
+
+	materials.clear();
+
+	materialNum = 0;
+
+	if (resource != NULL)
+	{
+		resource->OnRelease();
+		resource = NULL;
+	}
 }
