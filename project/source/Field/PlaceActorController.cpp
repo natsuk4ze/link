@@ -15,7 +15,9 @@
 #include "AStar\AStarController.h"
 #include "../FieldObject/PassengerController.h"
 #include "../../Framework/Resource/ResourceManager.h"
+
 #include "Object/CityBackGroundContainer.h"
+#include "Object/WorldBackGroundContainer.h"
 
 #include "../FieldObject/Actor/CityActor.h"
 #include "../FieldObject/Actor/CrossJunctionActor.h"
@@ -54,7 +56,21 @@ namespace Field::Actor
 		alongController = new Along::AlongController();
 		aStarController = new Route::AStarController();
 		passengerController = new PassengerController();
-		bgContainer = new CityBackGroundContainer();
+
+		switch (level)
+		{
+		case FieldLevel::City:
+			bgContainer = new CityBackGroundContainer();
+			break;
+
+		case FieldLevel::World:
+			bgContainer = new WorldBackGroundContainer();
+			break;
+
+		default:
+			bgContainer = new CityBackGroundContainer();
+			break;
+		}
 
 		auto onReachPassenger = std::bind(&Along::AlongController::OnReachPassenger, alongController, std::placeholders::_1);
 		passengerController->SetCallbackOnReach(onReachPassenger);
