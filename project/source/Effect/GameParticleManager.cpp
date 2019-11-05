@@ -16,6 +16,7 @@
 #include "Game/MeteorExplosion.h"
 #include "Game/AngryFace.h"
 #include "Game/Darkness.h"
+#include "Game/SpaceTear.h"
 
 /**************************************
 staticƒƒ“ƒo
@@ -40,6 +41,7 @@ void GameParticleManager::Init()
 	controllers[GameParticle::TownExplosion] = new Effect::Game::TownExplosionController();
 	controllers[GameParticle::MeteorExplosion] = new Effect::Game::MeteorExplosionController();
 	controllers[GameParticle::Darkness] = new Effect::Game::DarknessController();
+	controllers[GameParticle::SpaceTear] = new Effect::Game::SpaceTearController();
 
 	crossFilter->SetPower(BloomPower[0], BloomPower[1], BloomPower[2]);
 	crossFilter->SetThrethold(BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]);

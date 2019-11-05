@@ -28,6 +28,7 @@ namespace GameParticle
 		TownExplosion,	//隕石爆発
 		MeteorExplosion,//ミサイル命中
 		Darkness,		//闇の粒子(AIレベル減少イベント)
+		SpaceTear,		//時空断裂のスパーク
 		Max
 	};
 }
