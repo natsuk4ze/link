@@ -18,9 +18,6 @@ class LevelViewer;
 class GameViewerParam;
 class BaseViewer;
 
-//テスト中
-class FieldViewer;
-
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
@@ -43,9 +40,6 @@ private:
 	TimerViewer *timerViewer;
 	LevelViewer *levelViewer;
 	GameViewerParam *gameViewerParam;
-
-	//テスト中
-	FieldViewer*fieldViewer;
 };
 
 #endif

@@ -48,6 +48,7 @@ void FieldViewer::Update()
 
 #ifdef _DEBUG
 
+	//‚¨ŽŽ‚µ‚Åƒeƒƒbƒv‚ðŽÀ‘•
 	if (Keyboard::GetTrigger(DIK_F))
 	{
 		SetFieldTelop(fieldTelop->City, nullptr);

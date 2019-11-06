@@ -16,9 +16,6 @@
 #include "../../../../Framework/Tool/DebugWindow.h"
 #endif
 
-//テスト中
-#include "../FieldViewer/FieldViewer.h"
-
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
@@ -27,9 +24,6 @@ GameViewer::GameViewer()
 	gameViewer.push_back(stockViewer = new ItemStockViewer());
 	gameViewer.push_back(timerViewer = new TimerViewer());
 	gameViewer.push_back(levelViewer = new LevelViewer());
-
-	//テスト中
-	fieldViewer = new FieldViewer();
 }
 
 //*****************************************************************************
@@ -45,9 +39,6 @@ GameViewer::~GameViewer()
 
 	//インスタンスを入れた配列をクリア
 	gameViewer.clear();
-
-	//テスト中
-	SAFE_DELETE(fieldViewer);
 }
 
 //=============================================================================
@@ -59,9 +50,6 @@ void GameViewer::Update()
 	{
 		gameViewer[i]->Update();
 	}
-
-	//テスト中
-	fieldViewer->Update();
 }
 
 //=============================================================================
@@ -83,9 +71,6 @@ void GameViewer::Draw(void)
 
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
-
-	//テスト中
-	fieldViewer->Draw();
 }
 
 //=============================================================================

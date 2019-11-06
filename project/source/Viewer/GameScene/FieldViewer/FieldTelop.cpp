@@ -32,18 +32,18 @@ static const int animMax = 4;
 
 //テキストアニメーション開始位置
 static const float textStartPositionY[animMax] = {
-	SCREEN_CENTER_Y,
-	SCREEN_CENTER_Y,
-	SCREEN_CENTER_Y/3,
-	SCREEN_CENTER_Y/3
+	SCREEN_CENTER_Y/1.5,
+	SCREEN_CENTER_Y/1.5,
+	SCREEN_CENTER_Y/2.7,
+	SCREEN_CENTER_Y/2.7
 };
 
 //テキストアニメーション終了位置
 static const float textEndPositionY[animMax] = {
-	SCREEN_CENTER_Y,
-	SCREEN_CENTER_Y/3,
-	SCREEN_CENTER_Y/3,
-	SCREEN_CENTER_Y/3 
+	SCREEN_CENTER_Y/1.5,
+	SCREEN_CENTER_Y/2.7,
+	SCREEN_CENTER_Y/2.7,
+	SCREEN_CENTER_Y/2.7 
 };
 
 //テキストアニメーション種類
@@ -58,7 +58,7 @@ static const EaseType animType[animMax] = {
 //*注意(0を入れると無限大になるからアニメーションそのものを削除すること)
 static const float animDuration[animMax] = {
 	30,
-	50,
+	90,
 	20,
 	100
 };
@@ -81,7 +81,7 @@ FieldTelop::FieldTelop()
 	text = new BaseViewerDrawer();
 	text->size = D3DXVECTOR3(512, 128.0f, 0.0f);
 	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	text->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_CENTER_Y, 0.0f);
+	text->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_CENTER_Y/1.5, 0.0f);
 	text->MakeVertex();
 
 	//ライン
@@ -145,7 +145,7 @@ void FieldTelop::Draw(void)
 	line->Draw();
 
 	//テキスト
-	text->Draw();
+	DrawTelopText();
 }
 
 //=============================================================================
@@ -241,6 +241,52 @@ void FieldTelop::FadeOut(void)
 
 	text->SetAlpha(alpha);
 	line->SetAlpha(alpha);
+}
+
+//=============================================================================
+// テキスト描画処理
+//=============================================================================
+void FieldTelop::DrawTelopText(void)
+{
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+	float percant;
+	float t;
+	float y;
+
+	t = line->position.y - textEndPositionY[Text_Raise];
+
+	//テキストの座標がラインの座標より高い位置にきた時から描画開始
+	if (text->position.y <= line->position.y)
+	{
+		y = text->position.y - textEndPositionY[Text_Raise];
+		percant = 1.0f - (y / t);
+	}
+	else
+	{
+		percant = 0.0f;
+	}
+
+	// テクスチャ座標の設定
+	text->vertexWk[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+	text->vertexWk[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+	text->vertexWk[2].tex = D3DXVECTOR2(0.0f, 1.0f*percant);
+	text->vertexWk[3].tex = D3DXVECTOR2(1.0f, 1.0f*percant);
+
+	// 頂点座標の設定
+	text->vertexWk[0].vtx = text->position + D3DXVECTOR3(-text->size.x / 2, -text->size.y / 2, 0.0f);
+	text->vertexWk[1].vtx = text->position + D3DXVECTOR3(text->size.x / 2, -text->size.y / 2, 0.0f);
+	text->vertexWk[2].vtx = text->position + D3DXVECTOR3(-text->size.x / 2, text->size.y / 2*percant, 0.0f);
+	text->vertexWk[3].vtx = text->position + D3DXVECTOR3(text->size.x / 2, text->size.y / 2*percant, 0.0f);
+
+	// 頂点フォーマットの設定
+	pDevice->SetFVF(FVF_VERTEX_2D);
+
+	// テクスチャの設定
+	pDevice->SetTexture(0, text->texture);
+
+	// ポリゴンの描画
+	pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_POLYGON, text->vertexWk, sizeof(VERTEX_2D));
 }
 
 //=============================================================================

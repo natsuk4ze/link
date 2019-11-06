@@ -67,7 +67,7 @@ void CountViewerDrawer::DrawCounter(int baseNumber, int parameterBox, int placeM
 			/ (int)(pow(baseNumber, (placeMax - nCntPlace - 1)));
 
 		this->Draw();
-		SetVertexPos(nCntPlace, intervalNumberScr);
+		this->SetVertexPos(nCntPlace, intervalNumberScr);
 		SetTexture(num, intervalNumberTex);
 	}
 }

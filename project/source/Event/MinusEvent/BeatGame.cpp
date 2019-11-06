@@ -187,7 +187,8 @@ void BeatGame::Draw()
 		Device->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 
 		// ¬”“_
-		point->Draw();
+		point->DrawOrigin();
+		point->SetVertexPos();
 
 		float RemainTime = RemainFrame / 30.0f;
 

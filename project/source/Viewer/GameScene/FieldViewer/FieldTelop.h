@@ -60,6 +60,8 @@ private:
 	//線を引く
 	void DrawLine(void);
 
+	void DrawTelopText(void);
+
 	//フェードアウト
 	void FadeOut(void);
 
