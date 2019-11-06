@@ -98,7 +98,7 @@ namespace Field
 		entity->placeContainer->CalcLinkLevel();
 
 		// 接続されている全ての町のリンクレベルをセット
-		entity->infoController->SetAllLinkLevel(entity->placeContainer->GetAllTownLevel());
+		entity->SetLinkLevelInfo();
 
 		//コールバック
 		(*entity->onBuildRoad)(route);

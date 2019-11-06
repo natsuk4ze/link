@@ -253,7 +253,7 @@ namespace Field::Model
 		float developLevel = 0.0f;
 		for (auto&& town : townContainer)
 		{
-			developLevel += town.second->DevelopmentLevel();
+			developLevel += town.second->LinkLevel();
 		}
 
 		return developLevel;

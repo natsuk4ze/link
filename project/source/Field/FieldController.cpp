@@ -291,12 +291,14 @@ namespace Field
 		handler.functerInt[Handler::FuncterID_int::AdjustLinkAll] = [&](int num)
 		{
 			placeContainer->AddAllLinkLevel(num);
+			SetLinkLevelInfo();
 		};
 
 		//単体リンクレベル調整ファンクタ
 		handler.functerInt[Handler::FuncterID_int::AdjustLink] = [&](int num)
 		{
 			placeContainer->AddLinkLevel(num);
+			SetLinkLevelInfo();
 		};
 
 		//アイテムストック加算ファンクタ
@@ -444,5 +446,14 @@ namespace Field
 		}
 
 		return nullptr;
+	}
+
+	/**************************************
+	リンクレベル情報をInfoControllerにセットする
+	***************************************/
+	void FieldController::SetLinkLevelInfo()
+	{
+		auto infoLinkLevel = placeContainer->GetAllTownLevel();
+		infoController->SetAllLinkLevel(infoLinkLevel);
 	}
 }

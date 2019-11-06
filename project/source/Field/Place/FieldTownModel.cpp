@@ -25,7 +25,6 @@ namespace Field::Model
 		uniqueID(incrementID++),
 		place(place),
 		linkLevel(0),
-		developmentLevel(0),
 		biasLinkLevel(0),
 		cntFrame(0),
 		indexDestination(0),
@@ -74,35 +73,11 @@ namespace Field::Model
 	}
 
 	/**************************************
-	出発人数取得処理
-	***************************************/
-	float TownModel::DepatureNum()
-	{
-		return 100.0f / gateList.size();
-	}
-
-	/**************************************
-	ゲート数取得処理
-	***************************************/
-	int TownModel::GateNum()
-	{
-		return gateList.size();
-	}
-
-	/**************************************
 	リンクレベル取得処理
 	***************************************/
 	int TownModel::LinkLevel()
 	{
-		return linkLevel;
-	}
-
-	/**************************************
-	発展度取得処理
-	***************************************/
-	float TownModel::DevelopmentLevel()
-	{
-		return developmentLevel;
+		return linkLevel + biasLinkLevel;
 	}
 
 	/**************************************
@@ -110,7 +85,7 @@ namespace Field::Model
 	***************************************/
 	void TownModel::FindLinkedTown()
 	{
-		linkLevel = biasLinkLevel;
+		linkLevel = 0;
 
 		std::vector<unsigned> searchedRoute;
 
@@ -124,8 +99,6 @@ namespace Field::Model
 				route->FindLinkedTown(this, searchedRoute);
 			}
 		}
-
-		developmentLevel = (float)linkLevel;
 	}
 
 	/**************************************
@@ -174,6 +147,6 @@ namespace Field::Model
 	PlaceData TownModel::GetPlaceData()
 	{
 		FieldPosition pos = place->GetPosition();
-		return { pos, (int)developmentLevel };
+		return { pos, (int)(linkLevel + biasLinkLevel) };
 	}
 }
