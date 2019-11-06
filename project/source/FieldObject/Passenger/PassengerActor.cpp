@@ -80,7 +80,6 @@ void PassengerActor::Draw()
 //=====================================
 void PassengerActor::ChangeMesh(const char* nextTag)
 {
-	//mesh = NULL;
 	ResourceManager::Instance()->GetMesh(nextTag, mesh);
 }
 
@@ -112,4 +111,12 @@ void PassengerActor::MoveDest(const D3DXVECTOR3 dest, std::function<void(void)> 
 PassengerActor::State PassengerActor::GetType()
 {
 	return current;
+}
+
+//=====================================
+// タグを次のメッシュの種類に変更
+//=====================================
+void PassengerActor::SetType(PassengerActor::State next)
+{
+	current = next;
 }
