@@ -77,6 +77,11 @@ namespace Field
 			return FieldPosition(x + rhs.x, z + rhs.z);
 		}
 
+		bool operator ==(const FieldPosition& rhs) const
+		{
+			return x == rhs.x && z == rhs.z;
+		}
+
 	};
 
 	/**************************************

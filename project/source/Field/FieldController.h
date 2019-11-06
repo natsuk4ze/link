@@ -153,6 +153,9 @@ namespace Field
 
 		void OnConnectedTown(const Model::PlaceModel *town, const Model::PlaceModel *gate);
 
+		//アトランティス予定地の取得
+		const Model::PlaceModel* GetAtlantisPlace();
+
 		//各ステートクラスの前方宣言
 		class IdleState;
 		class BuildRoadState;

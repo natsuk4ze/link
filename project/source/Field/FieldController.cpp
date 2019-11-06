@@ -315,7 +315,7 @@ namespace Field
 		handler.functerPlace[Handler::FuncterID_Place::Create] = [&](auto place)
 		{
 			placeContainer->CreateTown(place);
-			placeActController->SetActor(place);
+			placeActController->CreateNewTown(place);
 		};
 
 		//街破壊ファンクタ
@@ -366,6 +366,17 @@ namespace Field
 		{
 			return placeContainer->GetNonePlace();
 		};
+
+		//アトランティス作成地の取得
+		auto getAtlantis = std::bind(&FieldController::GetAtlantisPlace, this);
+		handler.functerPlaceReturn[Handler::FuncterID_PlaceReturn::Atlantis] = getAtlantis;
+
+		//アトランティス出現
+		handler.functerPlace[Handler::FuncterID_Place::SetAtlantis] = [&](auto place)
+		{
+			placeContainer->CreateTown(place);
+			placeActController->SetAtlantis(place);
+		};
 	}
 
 	/**************************************
@@ -413,5 +424,25 @@ namespace Field
 	{
 		placeContainer->OnConnectedTown(town, gate);
 		placeActController->OnConnectedTown(town);
+	}
+
+	/**************************************
+	アトランティス予定地取得
+	***************************************/
+	const Model::PlaceModel * FieldController::GetAtlantisPlace()
+	{
+		std::vector<Model::PlaceModel*> ignoreList;
+
+		while(true)
+		{
+			const Model::PlaceModel* target = placeContainer->GetNonePlace();
+
+			if (placeActController->IsSeaPlace(target->GetPosition()))
+				return target;
+
+			ignoreList.push_back(const_cast<Model::PlaceModel*>(target));
+		}
+
+		return nullptr;
 	}
 }

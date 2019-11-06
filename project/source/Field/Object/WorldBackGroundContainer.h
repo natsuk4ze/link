@@ -11,6 +11,8 @@
 #include "../../../main.h"
 #include "BackGroundContainer.h"
 
+#include <vector>
+
 /**************************************
 ‘O•ûéŒ¾
 ***************************************/
@@ -33,9 +35,15 @@ namespace Field::Actor
 
 		void Load();
 
+		bool IsSeaPlace(const FieldPosition& position) const;
+
+		void CreateAtlantis(const FieldPosition& position);
+
 	private:
 		InstancingMeshContainer *groundMesh;
 		InstancingMeshContainer *seaMesh;
+
+		std::vector<FieldPosition> seaMap;
 	};
 }
 #endif

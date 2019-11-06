@@ -312,6 +312,51 @@ namespace Field::Actor
 	}
 
 	/**************************************
+	海かどうかの判定
+	***************************************/
+	bool PlaceActorController::IsSeaPlace(const FieldPosition & position) const
+	{
+		return bgContainer->IsSeaPlace(position);
+	}
+
+	/**************************************
+	新しい街作成
+	***************************************/
+	PlaceActor* PlaceActorController::CreateNewTown(const Model::PlaceModel * place)
+	{
+		//アクター生成
+		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
+		PlaceActor* actor = new CityActor(actorPos, currentLevel);
+
+		AddContainer(place->ID(), actor);
+		aStarController->OnChangePlace(place);
+
+		Tween::Scale(*actor, { 0.25f, 0.0f, 0.25f }, { 0.25f, 0.25f, 0.25f }, 60, EaseType::InCubic);
+
+		return actor;
+	}
+
+	/**************************************
+	アトランティス出現
+	***************************************/
+	void PlaceActorController::SetAtlantis(const Model::PlaceModel * place)
+	{
+		//街作成
+		const D3DXVECTOR3 InitOffset = Vector3::Down * 10.0f;
+		PlaceActor* townActor = CreateNewTown(place);
+
+		D3DXVECTOR3 actorPos = townActor->GetPosition();
+		Tween::Move(*townActor, actorPos + InitOffset, actorPos, 60, EaseType::InOutCirc);
+
+		//地面生成
+		WorldBackGroundContainer *worldBgContainer = dynamic_cast<WorldBackGroundContainer*>(bgContainer);
+		worldBgContainer->CreateAtlantis(place->GetPosition());
+
+		//パッセンジャー側に地形の変化を通知
+
+	}
+
+	/**************************************
 	ロードセット処理
 	***************************************/
 	void PlaceActorController::SetRoad(const Model::PlaceModel * place, int delay)
