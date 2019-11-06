@@ -167,4 +167,13 @@ namespace Field::Model
 		if (!linkedSameRoute)
 			linkedTown.push_back(std::make_pair(place, gateList[indexSearchingGate]));
 	}
+
+	//=================================
+	// î•ñŽæ“¾ˆ—
+	//=================================
+	PlaceData TownModel::GetPlaceData()
+	{
+		FieldPosition pos = place->GetPosition();
+		return { pos, developmentLevel };
+	}
 }
