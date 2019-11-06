@@ -1,26 +1,26 @@
 //=============================================================================
 //
-// 泡エフェクトクラス [Bubble.cpp]
+// 移動の残像エフェクトクラス [Tail.cpp]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#include "Bubble.h"
+#include "Tail.h"
 #include "../../../Framework/Math/Easing.h"
 
 namespace Effect::Game
 {
 	/**************************************
-	BubbleControllerコンストラクタ
+	TailControllerコンストラクタ
 	***************************************/
-	BubbleController::BubbleController() :
+	TailController::TailController() :
 		BaseParticleController(Particle_3D)
 	{
 		//単位頂点バッファ作成
-		const D3DXVECTOR2 ParticleSize{ 1.0f, 1.0f};
+		const D3DXVECTOR2 ParticleSize{ 1.0f, 1.0f };
 		MakeUnitBuffer(ParticleSize);
 
 		//テクスチャ読み込み
-		const char* path = "data/TEXTURE/Particle/Bubble.png";
+		const char* path = "data/TEXTURE/Particle/Tail.png";
 		LoadTexture(path);
 
 		//パーティクルコンテナ作成
@@ -28,12 +28,12 @@ namespace Effect::Game
 		particleContainer.resize(MaxParticle, nullptr);
 		for (auto&& particle : particleContainer)
 		{
-			particle = new Bubble();
+			particle = new Tail();
 		}
 
 		//エミッターコンテナ作成
 		const unsigned MaxEmitter = 1;
-		const int NumEmit = 64;
+		const int NumEmit = 1;
 		const int DurationEmit = 90;
 
 		emitterContainer.resize(MaxEmitter, nullptr);
@@ -44,58 +44,50 @@ namespace Effect::Game
 	}
 
 	/**************************************
-	Bubble staticメンバ
+	Tail staticメンバ
 	***************************************/
-	const int Bubble::MaxLife = 15;
-	const int Bubble::MinLife = 5;
-	const float Bubble::MinSpeed = 0.4f;
-	const float Bubble::MaxSpeed = 0.1f;
+	const int Tail::Life = 10;
 
 	/**************************************
-	Bubbleコンストラクタ
+	Tailコンストラクタ
 	***************************************/
-	Bubble::Bubble() :
-		Particle3D(MinLife, MaxLife),
-		Speed(Math::RandomRange(MinSpeed, MaxSpeed)),
-		Scale(Math::RandomRange(0.1f, 1.0f))
+	Tail::Tail() :
+		Particle3D(Life)
 	{
-
 	}
 
 	/**************************************
-	Bubble初期化処理
+	Tail初期化処理
 	***************************************/
-	void Bubble::Init()
+	void Tail::Init()
 	{
 		cntFrame = 0;
 		active = true;
 
 		//初期位置を移動方向へオフセット
-		float BaseAngle = 10.0f;
-		float Theta = Math::RandomRange(0, 36) * BaseAngle;
-		float Length = Math::RandomRange(0.0f, 15.0f);
-		D3DXVECTOR3 InitOffset = D3DXVECTOR3
-		(
-			Length * cosf(D3DXToRadian(Theta)),
-			Math::RandomRange(0.0f, 1.0f),
-			Length * sinf(D3DXToRadian(Theta))
-		);
-		transform->Move(InitOffset);
+		//float BaseAngle = 10.0f;
+		//float Theta = Math::RandomRange(0, 36) * BaseAngle;
+		//float Length = Math::RandomRange(0.0f, 15.0f);
+		//D3DXVECTOR3 InitOffset = D3DXVECTOR3
+		//(
+		//	Length * cosf(D3DXToRadian(Theta)),
+		//	Math::RandomRange(0.0f, 1.0f),
+		//	Length * sinf(D3DXToRadian(Theta))
+		//);
+		//transform->Move(InitOffset);
 
-		//スケーリング
-		transform->SetScale({ Scale, Scale, 1.0f });
 	}
 
 	/**************************************
-	Bubble更新処理
+	Tail更新処理
 	***************************************/
-	void Bubble::Update()
+	void Tail::Update()
 	{
 		if (!IsActive())
 			return;
 
 		cntFrame++;
 
-		transform->Move(Vector3::Up * Speed);
+		transform->Move(Vector3::Right * 2.0f);
 	}
 }

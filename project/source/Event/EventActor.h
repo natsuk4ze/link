@@ -23,6 +23,9 @@ private:
 	bool InHoverMotion;
 
 	void HoverMotion(void);							// ƒzƒoƒŠƒ“ƒO‰^“®
+#if _DEBUG
+	void HoverMotionTest(void);						
+#endif
 public:
 	EventActor(D3DXVECTOR3 Pos, D3DXVECTOR3 Scale, const char* MeshTag);
 	~EventActor();

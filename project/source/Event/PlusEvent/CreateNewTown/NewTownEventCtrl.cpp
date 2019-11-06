@@ -33,7 +33,8 @@ NewTownEventCtrl::NewTownEventCtrl(EventViewer *Ptr, int FieldLevel) :
 {
 	if (FieldLevel == Field::City)
 	{
-		NewTownEvent = new NewTownEvent_City(Ptr, [&]() {EventOver(); });
+		NewTownEvent = new NewTownEvent_World(Ptr, [&]() {EventOver(); });
+		//NewTownEvent = new NewTownEvent_City(Ptr, [&]() {EventOver(); });
 	}
 	else if (FieldLevel == Field::World)
 	{

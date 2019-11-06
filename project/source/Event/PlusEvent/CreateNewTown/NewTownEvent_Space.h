@@ -11,6 +11,7 @@
 #include "../../../Field/Place/FieldPlaceModel.h"
 
 class EventViewer;
+class EventActor;
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -19,8 +20,14 @@ class NewTownEvent_Space : public EventBase
 {
 private:
 	EventViewer *eventViewer;
-	const Field::Model::PlaceModel* NewTown;
+	EventActor *PlanetModel;
+	D3DXVECTOR3 PlanetPos;
+	D3DXVECTOR3 BuildPos;
+	D3DXVECTOR3 MoveDirection;
+	const Field::Model::PlaceModel* NewPlanet;
+	int EventState;
 	std::function<void(void)> EventOverFunc;
+
 
 public:
 	NewTownEvent_Space(EventViewer *Ptr, std::function<void(void)> EventOverFunc);
@@ -29,7 +36,7 @@ public:
 	void Update(void) override;
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;
-	void CreateNewTown(void);
+	void FallenStart(void);
 	//void EventOver(void);
 };
 

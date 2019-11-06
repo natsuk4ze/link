@@ -207,6 +207,8 @@
     <ClInclude Include="source\Event\PlusEvent\CreateNewTown\NewTownEvent_World.h" />
     <ClInclude Include="source\Event\PlusEvent\CreateNewTown\NewTownEvent_Space.h" />
     <ClInclude Include="source\Effect\Game\Bubble.h" />
+    <ClInclude Include="source\Effect\Game\WaterSmog.h" />
+    <ClInclude Include="source\Effect\Game\Tail.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -397,6 +399,8 @@
     <ClCompile Include="source\Event\PlusEvent\CreateNewTown\NewTownEvent_World.cpp" />
     <ClCompile Include="source\Event\PlusEvent\CreateNewTown\NewTownEvent_Space.cpp" />
     <ClCompile Include="source\Effect\Game\Bubble.cpp" />
+    <ClCompile Include="source\Effect\Game\WaterSmog.cpp" />
+    <ClCompile Include="source\Effect\Game\Tail.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

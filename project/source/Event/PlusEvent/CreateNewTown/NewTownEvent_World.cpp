@@ -47,7 +47,7 @@ NewTownEvent_World::~NewTownEvent_World()
 //=============================================================================
 void NewTownEvent_World::Init()
 {
-	// V‚µ‚¢’¬‚ðì‚é—\’è’n‚ðŽæ“¾
+	// V‚µ‚¢‘‚ðì‚é—\’è’n‚ðŽæ“¾
 	NewTown = fieldEventHandler->GetNewTownPosition();
 	const D3DXVECTOR3 TownPos = NewTown->GetPosition().ConvertToWorldPosition();
 
@@ -96,12 +96,12 @@ string NewTownEvent_World::GetEventMessage(int FieldLevel)
 void NewTownEvent_World::CreateNewTown(void)
 {
 	D3DXVECTOR3 TownPos = NewTown->GetPosition().ConvertToWorldPosition();
-	D3DXVECTOR3 Amplitude = D3DXVECTOR3(10.0f, 5.0f, 10.0f);
+	D3DXVECTOR3 Amplitude = D3DXVECTOR3(5.0f, 3.0f, 5.0f);
 
-	Camera::ShakePlugin::Instance()->Set(Amplitude,60);
+	Camera::ShakePlugin::Instance()->Set(Amplitude, 300);
 	fieldEventHandler->CreateNewTown(NewTown);
-	GameParticleManager::Instance()->SetSingularityEffect(TownPos);
-	TaskManager::Instance()->CreateDelayedTask(90, [&]() {EventOverFunc(); });
+	GameParticleManager::Instance()->SetArtlantisEffect(TownPos);
+	TaskManager::Instance()->CreateDelayedTask(180, [&]() {EventOverFunc(); });
 }
 
 ////=============================================================================

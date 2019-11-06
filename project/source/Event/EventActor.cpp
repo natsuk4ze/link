@@ -42,7 +42,8 @@ void EventActor::Update()
 	if (InHoverMotion)
 	{
 		FrameCount++;
-		HoverMotion();
+		HoverMotionTest();
+		//HoverMotion();
 	}
 }
 
@@ -100,6 +101,26 @@ void EventActor::HoverMotion(void)
 
 	transform->SetPosition(BaseHoverPos + hover);
 }
+
+#if _DEBUG
+//=====================================
+// ホバリング運動の移動計算
+//=====================================
+void EventActor::HoverMotionTest(void)
+{
+	float Rate = 5.0f;
+	float Theta = D3DXToRadian(Rate * FrameCount);
+
+	D3DXVECTOR3 hover = D3DXVECTOR3
+	(
+		10.0f * cosf(Theta),
+		10.0f,
+		10.0f * sinf(Theta)
+	);
+
+	transform->SetPosition(BaseHoverPos + hover);
+}
+#endif
 
 //=====================================
 // ホバリング運動フラグ設置

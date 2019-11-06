@@ -1,42 +1,46 @@
 //=============================================================================
 //
-// 水の霧エフェクトクラス [WaterSmog.h]
+// 移動の残像エフェクトクラス [Tail.h]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#ifndef _WaterSmog_H_
-#define _WaterSmog_H_
+#ifndef _Tail_H_
+#define _Tail_H_
 
 #include "../../../main.h"
 #include "../../../Framework/Particle/BaseParticleController.h"
-#include "../../../Framework/Particle/3D/AnimationParticle3D.h"
+#include "../../../Framework/Particle/3D/Particle3D.h"
+
+/**************************************
+前方宣言
+***************************************/
 
 namespace Effect::Game
 {
 	/**************************************
-	WaterSmogControllerクラス
+	TailControllerクラス
 	***************************************/
-	class WaterSmogController : public BaseParticleController
+	class TailController : public BaseParticleController
 	{
 	public:
-		WaterSmogController();
-		void Update(void) override;
-		static int FrameCount;
+		TailController();
 	};
 
 	/**************************************
-	WaterSmogクラス
+	Tailクラス
 	***************************************/
-	class WaterSmog : public AnimationParticle3D
+	class Tail : public Particle3D
 	{
 	public:
-		WaterSmog();
+		Tail();
 
 		void Init() override;
 		void Update() override;
 
 	private:
-		static const int MaxLife, MinLife;
+		static const int Life;
 	};
 }
+
+
 #endif

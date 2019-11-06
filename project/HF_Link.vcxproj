@@ -128,9 +128,11 @@
     <ClInclude Include="source\Effect\Game\ColorfulDebris.h" />
     <ClInclude Include="source\Effect\Game\Darkness.h" />
     <ClInclude Include="source\Effect\Game\MeteorFire.h" />
+    <ClInclude Include="source\Effect\Game\Tail.h" />
     <ClInclude Include="source\Effect\Game\TownExplosion.h" />
     <ClInclude Include="source\Effect\Game\ExplosionFlare.h" />
     <ClInclude Include="source\Effect\Game\MeteorExplosion.h" />
+    <ClInclude Include="source\Effect\Game\WaterSmog.h" />
     <ClInclude Include="source\Effect\Game\WhiteSmog.h" />
     <ClInclude Include="source\Effect\TestParticleCamera.h" />
     <ClInclude Include="source\Effect\TestParticleManager.h" />
@@ -323,9 +325,11 @@
     <ClCompile Include="source\Effect\Game\ColorfulDebris.cpp" />
     <ClCompile Include="source\Effect\Game\Drakness.cpp" />
     <ClCompile Include="source\Effect\Game\MeteorFire.cpp" />
+    <ClCompile Include="source\Effect\Game\Tail.cpp" />
     <ClCompile Include="source\Effect\Game\TownExplosion.cpp" />
     <ClCompile Include="source\Effect\Game\ExplosionFlare.cpp" />
     <ClCompile Include="source\Effect\Game\MeteorExplosion.cpp" />
+    <ClCompile Include="source\Effect\Game\WaterSmog.cpp" />
     <ClCompile Include="source\Effect\Game\WhiteSmog.cpp" />
     <ClCompile Include="source\Effect\TestParticleCamera.cpp" />
     <ClCompile Include="source\Effect\TestParticleManager.cpp" />
