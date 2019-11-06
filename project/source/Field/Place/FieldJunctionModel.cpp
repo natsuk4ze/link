@@ -51,7 +51,7 @@ namespace Field::Model
 			if (!opponent->IsType(PlaceType::Town))
 				continue;
 
-			inflowNum += townContainer[opponent->ID()]->DepatureNum();
+			//inflowNum += townContainer[opponent->ID()]->DepatureNum();
 		}
 
 		trafficJam = inflowNum;
