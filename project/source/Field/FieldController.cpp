@@ -361,19 +361,8 @@ namespace Field
 		};
 
 		//アトランティス作成地の取得
-		handler.functerPlaceReturn[Handler::FuncterID_PlaceReturn::Atlantis] = [&]()
-		{
-			//試行回数200回で強制終了
-			for (int cntLoop = 0; cntLoop < 2000; cntLoop++)
-			{
-				const Model::PlaceModel* target = placeContainer->GetNonePlace();
-
-				if (placeActController->IsSeaPlace(target->GetPosition()))
-					return target;
-			}
-
-			return placeContainer->GetNonePlace();
-		};
+		auto getAtlantis = std::bind(&FieldController::GetAtlantisPlace, this);
+		handler.functerPlaceReturn[Handler::FuncterID_PlaceReturn::Atlantis] = getAtlantis;
 	}
 
 	/**************************************
@@ -421,5 +410,21 @@ namespace Field
 	{
 		placeContainer->OnConnectedTown(town, gate);
 		placeActController->OnConnectedTown(town);
+	}
+
+	/**************************************
+	アトランティス予定地取得
+	***************************************/
+	const Model::PlaceModel * FieldController::GetAtlantisPlace()
+	{
+		for (int cntLoop = 0; cntLoop < 2000; cntLoop++)
+		{
+			const Model::PlaceModel* target = placeContainer->GetNonePlace();
+
+			if (placeActController->IsSeaPlace(target->GetPosition()))
+				return target;
+		}
+
+		return nullptr;
 	}
 }
