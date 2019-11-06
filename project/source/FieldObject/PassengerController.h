@@ -28,6 +28,12 @@ public:
 	void Update();
 	void Draw();
 
+	// リソース読み込み
+	void LoadResource();
+
+	// CSV読み込み
+	void LoadCSV(const char* path);
+
 	// パッセンジャーセット
 	void SetPassenger(std::deque<D3DXVECTOR3>& root);
 
@@ -44,11 +50,9 @@ private:
 	int mapRowMax;
 	int mapColumMax;
 	Field::FieldLevel currentLevel;
+	bool initializedMap;
 
 	static const int PassengerReserve;
-
-	// CSV読み込み
-	void LoadCSV(const char* path);
 
 };
 

@@ -165,20 +165,20 @@ namespace Field::Actor
 		ResourceManager::Instance()->LoadMesh("Bridge-City", "data/MODEL/PlaceActor/bridge.x");
 		ResourceManager::Instance()->LoadMesh("Mountain-City", "data/MODEL/PlaceActor/mountain.x");
 		ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
-		ResourceManager::Instance()->LoadMesh("Car", "data/MODEL/PassengerActor/ToonCar.x");
 		ResourceManager::Instance()->LoadMesh("AlongCity", "data/MODEL/AlongActor/AlongActorCity.x");
 	
 		// FieldLevel = World
-		ResourceManager::Instance()->LoadMesh("Train", "data/MODEL/PassengerActor/ToonCar.x");
-		ResourceManager::Instance()->LoadMesh("Ship", "data/MODEL/PassengerActor/Boat.x");
 
 		// FieldLevel = Space
 		ResourceManager::Instance()->LoadMesh("Town-Space", "data/Model/PlaceActor/earth.x");
 		ResourceManager::Instance()->LoadMesh("River-Space", "data/Model/PlaceActor/spaceTear.x");
-		ResourceManager::Instance()->LoadMesh("SpaceShip", "data/MODEL/PassengerActor/Rocket.x");
 
 		//背景アクターをロード
 		bgContainer->Load();
+
+		// パッセンジャー
+		passengerController->LoadResource();
+		passengerController->LoadCSV(Field::Const::FieldLayerFile[0]);
 	}
 
 	/**************************************
