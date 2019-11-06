@@ -12,6 +12,7 @@
 
 #include "../../../Framework/Renderer3D/InstancingMeshContainer.h"
 #include "../../../Framework/String/String.h"
+#include "../../../Framework/Tween/Tween.h"
 
 #include <fstream>
 #include <string>
@@ -187,13 +188,18 @@ namespace Field::Actor
 	***************************************/
 	void WorldBackGroundContainer::CreateAtlantis(const FieldPosition & position)
 	{
+		const D3DXVECTOR3 InitOffset = Vector3::Down * 10.0f;
+
 		for (int x = -1; x <= 1; x++)
 		{
 			for (int z = -1; z <= 1; z++)
 			{
 				D3DXVECTOR3 worldPosition = (position + FieldPosition(x, z)).ConvertToWorldPosition();
-				PlaceActor * actor = new NoneActor(worldPosition, FieldLevel::City);
+				PlaceActor * actor = new NoneActor(worldPosition + InitOffset, FieldLevel::City);
 				groundContainer.push_back(actor);
+
+				//海からせり上がってくるアニメーション
+				Tween::Move(*actor, worldPosition + InitOffset, worldPosition, 60, EaseType::InOutCirc);
 			}
 		}
 	}
