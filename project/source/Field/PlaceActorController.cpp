@@ -353,7 +353,7 @@ namespace Field::Actor
 		worldBgContainer->CreateAtlantis(place->GetPosition());
 
 		//パッセンジャー側に地形の変化を通知
-
+		passengerController->RewriteMap(place->GetPosition(), PassengerController::Geography::Ground);
 	}
 
 	/**************************************

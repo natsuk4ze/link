@@ -20,6 +20,13 @@
 class PassengerController
 {
 public:
+	//海なのか陸なのか
+	enum Geography
+	{
+		Ground,
+		Sea
+	};
+
 	//コンストラクタで道沿いモデルへのコールバックを渡す
 	PassengerController(Field::FieldLevel level);
 	~PassengerController();
@@ -44,7 +51,7 @@ public:
 	void CheckPassengerMesh();
 
 	// 陸or海のデータが書き換わった場合こちらを呼び出す
-	void RewriteMap(const Field::FieldPosition& pos, const int& data);
+	void RewriteMap(const Field::FieldPosition& pos, const Geography& data);
 
 private:
 	std::vector<PassengerModel*> modelVector;
