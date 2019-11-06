@@ -180,3 +180,11 @@ void PassengerController::LoadResource()
 	ResourceManager::Instance()->LoadMesh("Ship", "data/MODEL/PassengerActor/Boat.x");
 	ResourceManager::Instance()->LoadMesh("SpaceShip", "data/MODEL/PassengerActor/Rocket.x");
 }
+
+//=====================================
+// 陸or海のデータが書き換わった場合こちらを呼び出す
+//=====================================
+void PassengerController::RewriteMap(const Field::FieldPosition& pos, const int& data)
+{
+	continentMap[pos] = data;
+}

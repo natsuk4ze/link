@@ -43,6 +43,9 @@ public:
 	// PlaceActorに合わせてパッセンジャーの種類を切り替え（FieldLevel = Worldでのみ使用）
 	void CheckPassengerMesh();
 
+	// 陸or海のデータが書き換わった場合こちらを呼び出す
+	void RewriteMap(const Field::FieldPosition& pos, const int& data);
+
 private:
 	std::vector<PassengerModel*> modelVector;
 	std::function<void(const D3DXVECTOR3&)> callback;
