@@ -55,7 +55,7 @@ BeatGame::BeatGame(std::function<void(bool)> Callback) :
 	intNum = new CountViewerDrawer();
 	intNum->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Number.png");
 	intNum->MakeVertex();
-	intNum->size = D3DXVECTOR3(60.0f, 60.0f, 0.0f);
+	intNum->size = D3DXVECTOR3(120.0f, 120.0f, 0.0f);
 	intNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	intNum->position = D3DXVECTOR3(SCREEN_WIDTH / 2 - 140.0f, SCREEN_HEIGHT / 10 * 2.0f + 20.0f, 0.0f);
 	intNum->SetColor(SET_COLOR_NOT_COLORED);
@@ -68,7 +68,7 @@ BeatGame::BeatGame(std::function<void(bool)> Callback) :
 	fewNum = new CountViewerDrawer();
 	fewNum->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Number.png");
 	fewNum->MakeVertex();
-	fewNum->size = D3DXVECTOR3(30.0f, 30.0f, 0.0f);
+	fewNum->size = D3DXVECTOR3(60.0f, 60.0f, 0.0f);
 	fewNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	fewNum->position = D3DXVECTOR3(SCREEN_WIDTH / 2 + 40.0f, SCREEN_HEIGHT / 10 * 2.0f + 30.0f, 0.0f);
 	fewNum->SetColor(SET_COLOR_NOT_COLORED);
