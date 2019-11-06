@@ -89,6 +89,9 @@ namespace Field::Actor
 		//海かどうかの判定
 		bool IsSeaPlace(const FieldPosition& position) const;
 
+		//新しい街作成
+		PlaceActor* CreateNewTown(const Model::PlaceModel* place);
+
 		//アトランティス出現
 		void SetAtlantis(const Model::PlaceModel* place);
 
