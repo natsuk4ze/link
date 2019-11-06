@@ -63,6 +63,9 @@ namespace Field::Model
 		//Œo˜H’Ç‰Áˆ—
 		void AddLinkedTown(const PlaceModel *place);
 
+		// î•ñæ“¾ˆ—
+		PlaceData GetPlaceData();
+
 	private:
 		static const float BaseDepatureNum;		//Šî€‚Æ‚È‚éo”­”
 

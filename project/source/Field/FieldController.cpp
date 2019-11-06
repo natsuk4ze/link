@@ -18,6 +18,7 @@
 #include "FieldEventHandler.h"
 #include "Controller\FieldDevelopper.h"
 #include "Controller\FieldInput.h"
+#include "../FieldObject/InfoController.h"
 
 #include "State/BuildRoad.h"
 #include "State/FieldControllerIdle.h"
@@ -71,6 +72,7 @@ namespace Field
 		developper = new FieldDevelopper(this);
 		input = new FieldInput(this);
 		placeContainer = new Model::PlaceContainer();
+		infoController = new InfoController();
 
 		//ステートマシン作成
 		fsm.resize(State::Max, NULL);
@@ -113,6 +115,7 @@ namespace Field
 		SAFE_DELETE(placeActController);
 		SAFE_DELETE(developper);
 		SAFE_DELETE(input);
+		SAFE_DELETE(infoController);
 
 		//デリゲート削除
 		SAFE_DELETE(onConnectTown);
@@ -135,6 +138,8 @@ namespace Field
 		operateContainer->Update();
 
 		placeActController->Update();
+
+		infoController->Update();
 	}
 
 	/**************************************
@@ -166,6 +171,8 @@ namespace Field
 		skybox->Draw();
 
 		placeActController->Draw();
+
+		infoController->Draw();
 
 #ifdef DEBUG_PLACEMODEL
 		placeContainer->DrawDebug();

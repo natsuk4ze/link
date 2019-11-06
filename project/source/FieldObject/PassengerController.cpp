@@ -10,6 +10,7 @@
 #include <fstream>
 #include <string>
 #include "../../Framework/String/String.h"
+#include "../../Framework/Resource/ResourceManager.h"
 
 //**************************************
 // クラスのメンバ変数初期化
@@ -23,12 +24,6 @@ PassengerController::PassengerController(Field::FieldLevel level) :
 	callback(nullptr), currentLevel(level)
 {
 	modelVector.reserve(PassengerReserve);
-
-	// ワールドレベルのときのみCSVを読み込む 
-	if (currentLevel == Field::World)
-	{
-		LoadCSV("data/Field/World/World_Continent.csv");
-	}
 }
 
 //=====================================
@@ -138,6 +133,9 @@ void PassengerController::CheckPassengerMesh()
 //=====================================
 void PassengerController::LoadCSV(const char* path)
 {
+	if (initializedMap)
+		return;
+
 	std::fstream stream(path);
 
 	std::string line;		// 行
@@ -168,4 +166,25 @@ void PassengerController::LoadCSV(const char* path)
 	// 行数と列数を保存
 	mapRowMax = x;
 	mapColumMax = z;
+
+	initializedMap = true;
+}
+
+//=====================================
+// リソース読み込み
+//=====================================
+void PassengerController::LoadResource()
+{
+	ResourceManager::Instance()->LoadMesh("Car", "data/MODEL/PassengerActor/ToonCar.x");
+	ResourceManager::Instance()->LoadMesh("Train", "data/MODEL/PassengerActor/ToonCar.x");
+	ResourceManager::Instance()->LoadMesh("Ship", "data/MODEL/PassengerActor/Boat.x");
+	ResourceManager::Instance()->LoadMesh("SpaceShip", "data/MODEL/PassengerActor/Rocket.x");
+}
+
+//=====================================
+// 陸or海のデータが書き換わった場合こちらを呼び出す
+//=====================================
+void PassengerController::RewriteMap(const Field::FieldPosition& pos, const int& data)
+{
+	continentMap[pos] = data;
 }

@@ -91,6 +91,9 @@ namespace Field::Model
 		//パッセンジャー出発ファンクタ設定
 		void SetDepartPassengerFanctor(const TownAction& action);
 
+		//すべての町の発展レベルを取得する
+		std::vector<PlaceData> GetAllTownLevel();
+
 #ifdef DEBUG_PLACEMODEL
 		void DrawDebug();
 #endif

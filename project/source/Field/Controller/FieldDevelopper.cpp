@@ -13,6 +13,7 @@
 #include "../Route/RouteProcessor.h"
 #include "../Place/FieldPlaceContainer.h"
 #include "../Place/FieldPlaceContainer.h"
+#include "../../FieldObject/InfoController.h"
 
 #include "../../../Library/cppLinq/cpplinq.hpp"
 
@@ -95,6 +96,9 @@ namespace Field
 
 		//リンクレベルを計算
 		entity->placeContainer->CalcLinkLevel();
+
+		// 接続されている全ての町のリンクレベルをセット
+		entity->infoController->SetAllLinkLevel(entity->placeContainer->GetAllTownLevel());
 
 		//コールバック
 		(*entity->onBuildRoad)(route);

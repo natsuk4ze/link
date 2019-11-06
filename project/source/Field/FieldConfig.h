@@ -197,6 +197,14 @@ namespace Field
 
 		return TjunctionType::ExceptRight;
 	}
+
+	// 各PlaceActorごとのデータを取得するための構造体
+	struct PlaceData
+	{
+		FieldPosition key;
+		int townLevel;
+	};
+
 }
 
 #endif
