@@ -11,6 +11,7 @@
 #include <map>
 #include "Infomation/LinkInfoActor.h"
 #include "../Field/FieldConfig.h"
+#include "../Field/Place/PlaceConfig.h"
 
 //**************************************
 // クラス定義
@@ -28,7 +29,7 @@ public:
 	void Draw();
 
 	// 町のリンクレベルのセット、レベルアップ
-	void SetLinkLevel(const Field::FieldPosition& key, const int& townLevel);
+	void SetLinkLevel(const Field::Model::PlaceData& data);
 };
 
 #endif

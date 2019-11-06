@@ -52,17 +52,17 @@ void InfoController::Draw()
 //=====================================
 // 町リンクレベルのセット、レベルアップ
 //=====================================
-void InfoController::SetLinkLevel(const Field::FieldPosition& key, const int& townLevel)
+void InfoController::SetLinkLevel(const Field::Model::PlaceData& data)
 {
 		// 一致する要素がMap内に存在しない場合
-		if (LinkInfoMap.count(key) == 0)
+		if (LinkInfoMap.count(data.key) == 0)
 		{
-			LinkInfoActor* link = new LinkInfoActor(key.ConvertToWorldPosition(), townLevel);
-			LinkInfoMap.emplace(key, link);
+			LinkInfoActor* link = new LinkInfoActor(data.key.ConvertToWorldPosition(), data.townLevel);
+			LinkInfoMap.emplace(data.key, link);
 		}
 		// 存在する場合、レベルを更新するだけ
 		else
 		{
-			LinkInfoMap.at(key)->SetLevel(townLevel);
+			LinkInfoMap.at(data.key)->SetLevel(data.townLevel);
 		}
 }
