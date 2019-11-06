@@ -21,6 +21,9 @@ class InfoController
 private:
 	std::map<Field::FieldPosition, LinkInfoActor*> LinkInfoMap; // リンクレベル表示用
 
+	// 町のリンクレベルのセット、レベルアップ
+	void SetLinkLevel(const Field::PlaceData& data);
+
 public:
 	InfoController();
 	~InfoController();
@@ -28,8 +31,8 @@ public:
 	void Update();
 	void Draw();
 
-	// 町のリンクレベルのセット、レベルアップ
-	void SetLinkLevel(const Field::Model::PlaceData& data);
+	// 全ての町のリンクレベルのセット、レベルアップ
+	void SetAllLinkLevel(const std::vector<Field::PlaceData>& vec);
 };
 
 #endif

@@ -411,4 +411,21 @@ namespace Field::Model
 			}
 		}
 	}
+
+	//=====================================
+	// ‚·‚×‚Ä‚Ì’¬‚Ì”­“WƒŒƒxƒ‹‚ðŽæ“¾‚·‚é
+	//=====================================
+	std::vector<PlaceData> PlaceContainer::GetAllTownLevel()
+	{
+		std::vector<PlaceData> ret;
+		PlaceData data;
+		int i = 0;
+		for (auto& model : townContainer)
+		{
+			data = model.second->GetPlaceData();
+			ret.push_back(data);
+		}
+
+		return ret;
+	}
 }

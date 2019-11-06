@@ -52,7 +52,7 @@ void InfoController::Draw()
 //=====================================
 // 町リンクレベルのセット、レベルアップ
 //=====================================
-void InfoController::SetLinkLevel(const Field::Model::PlaceData& data)
+void InfoController::SetLinkLevel(const Field::PlaceData& data)
 {
 		// 一致する要素がMap内に存在しない場合
 		if (LinkInfoMap.count(data.key) == 0)
@@ -65,4 +65,15 @@ void InfoController::SetLinkLevel(const Field::Model::PlaceData& data)
 		{
 			LinkInfoMap.at(data.key)->SetLevel(data.townLevel);
 		}
+}
+
+//=====================================
+// 全ての町のリンクレベルのセット、レベルアップ
+//=====================================
+void InfoController::SetAllLinkLevel(const std::vector<Field::PlaceData>& vec)
+{
+	for (auto& v : vec)
+	{
+		SetLinkLevel(v);
+	}
 }

@@ -18,7 +18,7 @@
 #include <vector>
 
 class FieldEventHandler;
-
+class InfoController;
 namespace Field
 {
 	/**************************************
@@ -118,6 +118,7 @@ namespace Field
 		Model::RouteContainer routeContainer;				//ルートモデルコンテナ
 		Model::RouteProcessor *routeProcessor;				//ルートプロセッサ
 		Actor::PlaceActorController* placeActController;	//プレイスアクターコントローラ
+		InfoController* infoController;						//インフォメーションコントローラ
 
 		FieldDevelopper *developper;
 		FieldInput *input;

@@ -174,6 +174,6 @@ namespace Field::Model
 	PlaceData TownModel::GetPlaceData()
 	{
 		FieldPosition pos = place->GetPosition();
-		return { pos, developmentLevel };
+		return { pos, (int)developmentLevel };
 	}
 }
