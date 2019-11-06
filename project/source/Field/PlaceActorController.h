@@ -89,6 +89,9 @@ namespace Field::Actor
 		//海かどうかの判定
 		bool IsSeaPlace(const FieldPosition& position) const;
 
+		//アトランティス出現
+		void SetAtlantis(const Model::PlaceModel* place);
+
 		//定数メンバ
 		static const D3DXVECTOR3 PositionEmitSmog;		//道落下時の煙発生位置
 		static const float PlacePositionOffset;			//アクター同士の配置間隔

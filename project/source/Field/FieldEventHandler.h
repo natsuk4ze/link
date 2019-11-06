@@ -43,6 +43,7 @@ public:
 	void SetDevelopBonus(float percent);						//発展度ボーナス設定処理
 	void CreateNewTown(const Field::Model::PlaceModel* place);	//新しい街作成処理
 	void DestroyTown(const Field::Model::PlaceModel* place);	//街破壊処理
+	void CreateAtlantis(const Field::Model::PlaceModel* place);		//アトランティス出現処理
 	void ReverseOperation(bool isReverse);						//操作反転処理
 	void SealUsingItem(bool isSeal);							//アイテムストック封印処理
 	void AdjustTrafficJam(float bias);							//混雑度調整処理
@@ -54,7 +55,7 @@ public:
 	const Field::Model::PlaceModel* GetDestroyTarget();			//破壊対象の街取得処理
 	const Field::Model::PlaceModel* GetNewTownPosition();		//新しく街を作る予定のPlace取得
 	const Field::Model::PlaceModel* GetAtlantisPlace();			//アトランティスとなるPlaceの取得
-
+	
 private:
 	//float型を引数にとるファンクタの通し番号
 	enum FuncterID_float
@@ -114,6 +115,7 @@ private:
 	{
 		Destroy,
 		Create,
+		SetAtlantis,
 		FuncterPlaceMax
 	};
 

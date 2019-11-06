@@ -363,6 +363,13 @@ namespace Field
 		//アトランティス作成地の取得
 		auto getAtlantis = std::bind(&FieldController::GetAtlantisPlace, this);
 		handler.functerPlaceReturn[Handler::FuncterID_PlaceReturn::Atlantis] = getAtlantis;
+
+		//アトランティス出現
+		handler.functerPlace[Handler::FuncterID_Place::SetAtlantis] = [&](auto place)
+		{
+			placeContainer->CreateTown(place);
+			placeActController->SetAtlantis(place);
+		};
 	}
 
 	/**************************************

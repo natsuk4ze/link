@@ -101,6 +101,14 @@ void FieldEventHandler::DestroyTown(const Field::Model::PlaceModel * place)
 }
 
 /**************************************
+アトランティス作成処理
+***************************************/
+void FieldEventHandler::CreateAtlantis(const Field::Model::PlaceModel * place)
+{
+	functerPlace[FuncterID_Place::SetAtlantis](place);
+}
+
+/**************************************
 操作反転処理
 ***************************************/
 void FieldEventHandler::ReverseOperation(bool isReverse)

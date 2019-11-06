@@ -320,6 +320,20 @@ namespace Field::Actor
 	}
 
 	/**************************************
+	アトランティス出現
+	***************************************/
+	void PlaceActorController::SetAtlantis(const Model::PlaceModel * place)
+	{
+		//
+		SetTown(place);
+		WorldBackGroundContainer *worldBgContainer = dynamic_cast<WorldBackGroundContainer*>(bgContainer);
+		worldBgContainer->CreateAtlantis(place->GetPosition());
+
+		//パッセンジャー側に地形の変化を通知
+
+	}
+
+	/**************************************
 	ロードセット処理
 	***************************************/
 	void PlaceActorController::SetRoad(const Model::PlaceModel * place, int delay)

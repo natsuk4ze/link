@@ -181,4 +181,14 @@ namespace Field::Actor
 
 		return true;
 	}
+
+	/**************************************
+	アトランティスセット処理
+	***************************************/
+	void WorldBackGroundContainer::CreateAtlantis(const FieldPosition & position)
+	{
+		D3DXVECTOR3 worldPosition = position.ConvertToWorldPosition();
+		PlaceActor * actor = new NoneActor(worldPosition, FieldLevel::City);
+		groundContainer.push_back(actor);
+	}
 }
