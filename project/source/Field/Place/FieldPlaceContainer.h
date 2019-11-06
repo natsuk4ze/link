@@ -80,7 +80,7 @@ namespace Field::Model
 		const PlaceModel* GetDestroyTarget();
 
 		//ŠX‚ğì‚ê‚éƒvƒŒƒCƒXæ“¾
-		const PlaceModel* GetNonePlace();
+		const PlaceModel* GetNonePlace(std::vector<PlaceModel*>* ignoreList = nullptr);
 
 		//ŠX”j‰óˆ—
 		void DestroyTown(const PlaceModel* target);

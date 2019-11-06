@@ -320,22 +320,38 @@ namespace Field::Model
 	/**************************************
 	街を作れるプレイス取得処理
 	***************************************/
-	const PlaceModel * Field::Model::PlaceContainer::GetNonePlace()
+	const PlaceModel * Field::Model::PlaceContainer::GetNonePlace(std::vector<PlaceModel*> *ignoreList)
 	{
 		using cpplinq::from;
 		using cpplinq::where;
 		using cpplinq::to_vector;
+		using cpplinq::except;
 
-		//NOTE:取り急ぎ作った。あとできれいに治す
-		auto noneVector = from(placeVector)
-			>> where([](auto& place)
+		if (ignoreList == nullptr)
 		{
-			return place->IsType(PlaceType::None);
-		})
-			>> to_vector();
+			auto noneVector = from(placeVector)
+				>> where([](auto& place)
+			{
+				return place->IsType(PlaceType::None);
+			})
+				>> to_vector();
 
-		int randomIndex = Math::RandomRange(0, (int)(noneVector.size() - 1));
-		return noneVector[randomIndex];
+			int randomIndex = Math::RandomRange(0, (int)(noneVector.size() - 1));
+			return noneVector[randomIndex];
+		}
+		else
+		{
+			auto noneVector = from(placeVector)
+				>> where([](auto& place)
+			{
+				return place->IsType(PlaceType::None);
+			})
+				>> except(from(*ignoreList))		//無視リストのプレイスを除外
+				>> to_vector();
+
+			int randomIndex = Math::RandomRange(0, (int)(noneVector.size() - 1));
+			return noneVector[randomIndex];
+		}
 	}
 
 	/**************************************

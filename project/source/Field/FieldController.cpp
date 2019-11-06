@@ -417,12 +417,16 @@ namespace Field
 	***************************************/
 	const Model::PlaceModel * FieldController::GetAtlantisPlace()
 	{
-		for (int cntLoop = 0; cntLoop < 2000; cntLoop++)
+		std::vector<Model::PlaceModel*> ignoreList;
+
+		while(true)
 		{
 			const Model::PlaceModel* target = placeContainer->GetNonePlace();
 
 			if (placeActController->IsSeaPlace(target->GetPosition()))
 				return target;
+
+			ignoreList.push_back(const_cast<Model::PlaceModel*>(target));
 		}
 
 		return nullptr;
