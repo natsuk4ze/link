@@ -94,7 +94,7 @@ namespace Field::Model
 	***************************************/
 	int TownModel::LinkLevel()
 	{
-		return linkLevel;
+		return linkLevel + biasLinkLevel;
 	}
 
 	/**************************************
@@ -110,7 +110,7 @@ namespace Field::Model
 	***************************************/
 	void TownModel::FindLinkedTown()
 	{
-		linkLevel = biasLinkLevel;
+		linkLevel = 0;
 
 		std::vector<unsigned> searchedRoute;
 
