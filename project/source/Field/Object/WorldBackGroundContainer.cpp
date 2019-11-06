@@ -187,8 +187,14 @@ namespace Field::Actor
 	***************************************/
 	void WorldBackGroundContainer::CreateAtlantis(const FieldPosition & position)
 	{
-		D3DXVECTOR3 worldPosition = position.ConvertToWorldPosition();
-		PlaceActor * actor = new NoneActor(worldPosition, FieldLevel::City);
-		groundContainer.push_back(actor);
+		for (int x = -1; x <= 1; x++)
+		{
+			for (int z = -1; z <= 1; z++)
+			{
+				D3DXVECTOR3 worldPosition = (position + FieldPosition(x, z)).ConvertToWorldPosition();
+				PlaceActor * actor = new NoneActor(worldPosition, FieldLevel::City);
+				groundContainer.push_back(actor);
+			}
+		}
 	}
 }
