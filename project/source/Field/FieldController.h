@@ -151,10 +151,14 @@ namespace Field
 		//AI発展レベルの計算、加算
 		void CalcDevelopmentLevelAI();
 
+		//街が繋がった
 		void OnConnectedTown(const Model::PlaceModel *town, const Model::PlaceModel *gate);
 
 		//アトランティス予定地の取得
 		const Model::PlaceModel* GetAtlantisPlace();
+
+		//リンクレベル情報をInfo側にセット
+		void SetLinkLevelInfo();
 
 		//各ステートクラスの前方宣言
 		class IdleState;
