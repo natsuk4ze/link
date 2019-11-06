@@ -121,12 +121,14 @@ void PassengerController::CheckPassengerMesh()
 		// フィールドのタイプが陸、アクターのタイプが舟の場合
 		if (type == 0 && model->GetType() == PassengerActor::Ship)
 		{
-			//model->ChangeMesh("Train");
+			model->ChangeMesh("Train");
+			model->SetType(PassengerActor::Train);
 		}
 		// フィールドのタイプが海、アクターのタイプが電車の場合
 		else if (type == -1 && model->GetType() == PassengerActor::Train)
 		{
-			//model->ChangeMesh("Ship");
+			model->ChangeMesh("Ship");
+			model->SetType(PassengerActor::Ship);
 		}
 	}
 }

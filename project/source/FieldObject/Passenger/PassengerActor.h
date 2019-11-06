@@ -45,6 +45,7 @@ public:
 	};
 
 	State GetType();						// 現在のメッシュの状態を取得
+	void SetType(State next);				// 次のメッシュの状態にタグをセット
 	void ChangeMesh(const char* nextTag);	// メッシュ切り替え
 	void MoveDest(const D3DXVECTOR3 dest, std::function<void(void)> callback = nullptr);	// 目的地までの移動(到達したらcallbackを返す)
 
