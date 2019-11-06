@@ -87,13 +87,5 @@ namespace Field::Model
 			return (Adjacency)Math::WrapAround(Adjacency::Back, Adjacency::Max, adjacency + 2);
 
 	}
-
-	// 各PlaceActorごとのデータを取得するための構造体
-	struct PlaceData
-	{
-		Field::FieldPosition key;
-		int townLevel;
-	};
-
 }
 #endif
