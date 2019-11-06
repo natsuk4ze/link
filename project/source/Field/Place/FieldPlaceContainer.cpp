@@ -154,7 +154,7 @@ namespace Field::Model
 		//初期化済みであればリターン
 		if (initialized)
 			return;
-		
+
 		//CSVファイルを読み込み
 		std::ifstream stream(filePath);
 
@@ -169,7 +169,7 @@ namespace Field::Model
 			//1行分読み込んだデータを区切り文字で分割する
 			std::vector<std::string> subStr;
 			String::Split(subStr, line, Delim);
-		
+
 			x = 0;
 
 			//分割したデータ毎にPlaceModelを作成
@@ -327,31 +327,23 @@ namespace Field::Model
 		using cpplinq::to_vector;
 		using cpplinq::except;
 
-		if (ignoreList == nullptr)
+		auto noneVector = from(placeVector)
+			>> where([](auto& place)
 		{
-			auto noneVector = from(placeVector)
-				>> where([](auto& place)
-			{
-				return place->IsType(PlaceType::None);
-			})
-				>> to_vector();
+			return place->IsVacant();
+		})
+			>> to_vector();
 
-			int randomIndex = Math::RandomRange(0, (int)(noneVector.size() - 1));
-			return noneVector[randomIndex];
-		}
-		else
+		if (ignoreList != nullptr)
 		{
-			auto noneVector = from(placeVector)
-				>> where([](auto& place)
-			{
-				return place->IsType(PlaceType::None);
-			})
-				>> except(from(*ignoreList))		//無視リストのプレイスを除外
+			//無視リストを除外
+			noneVector = from(noneVector)
+				>> except(from(*ignoreList))
 				>> to_vector();
-
-			int randomIndex = Math::RandomRange(0, (int)(noneVector.size() - 1));
-			return noneVector[randomIndex];
 		}
+
+		int randomIndex = Math::RandomRange(0, (int)(noneVector.size() - 1));
+		return noneVector[randomIndex];
 	}
 
 	/**************************************
