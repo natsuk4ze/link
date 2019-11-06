@@ -184,7 +184,7 @@ void PassengerController::LoadResource()
 //=====================================
 // 陸or海のデータが書き換わった場合こちらを呼び出す
 //=====================================
-void PassengerController::RewriteMap(const Field::FieldPosition& pos, const int& data)
+void PassengerController::RewriteMap(const Field::FieldPosition& pos, const Geography& data)
 {
 	continentMap[pos] = data;
 }
