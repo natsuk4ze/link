@@ -29,6 +29,7 @@ namespace Field::Actor
 
 		riverContainer.reserve(ReserveSizeSea);
 		groundContainer.reserve(ReserveSizeGround);
+		seaMap.reserve(ReserveSizeSea);
 
 		groundMesh = new InstancingMeshContainer(ReserveSizeGround);
 		groundMesh->Load("data/MODEL/PlaceActor/ground.x");
@@ -123,6 +124,9 @@ namespace Field::Actor
 				{
 					actor = new RiverActor(position, FieldLevel::City);		//Cityと同じなのでとりあえず
 					riverContainer.push_back(actor);
+
+					//seaMapに追加
+					seaMap.push_back(FieldPosition(x, z));
 				}
 				else
 				{
@@ -156,5 +160,25 @@ namespace Field::Actor
 			}
 		}
 #endif
+	}
+
+	/**************************************
+	海判定	
+	***************************************/
+	bool WorldBackGroundContainer::IsSeaPlace(const FieldPosition & position) const
+	{
+		//周囲8マスを含めた範囲を確認
+		for (int x = -1; x <= 1; x++)
+		{
+			for (int z = -1; z <= 1; z++)
+			{
+				FieldPosition SearchPosition = FieldPosition(x, z) + position;
+
+				if (!Utility::IsContain(seaMap, SearchPosition))
+					return false;
+			}
+		}
+
+		return true;
 	}
 }

@@ -122,4 +122,13 @@ namespace Field::Actor
 			z++;
 		}
 	}
+
+	/**************************************
+	ŠC”»’è
+	***************************************/
+	bool SpaceBackGroundContainer::IsSeaPlace(const FieldPosition& position) const
+	{
+		//ŠC‚Í‘¶İ‚µ‚È‚¢‚Ì‚Å–³ğŒ‚Åfalse
+		return false;
+	}
 }
