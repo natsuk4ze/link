@@ -181,3 +181,11 @@ const Field::Model::PlaceModel * FieldEventHandler::GetNewTownPosition()
 {
 	return functerPlaceReturn[FuncterID_PlaceReturn::PlacePosition]();
 }
+
+/**************************************
+アトランティスとなるPlaceの取得
+***************************************/
+const Field::Model::PlaceModel * FieldEventHandler::GetAtlantisPlace()
+{
+	return functerPlaceReturn[FuncterID_PlaceReturn::Atlantis]();
+}

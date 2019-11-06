@@ -53,6 +53,7 @@ public:
 	void ResumeGame();											//ゲーム再開処理
 	const Field::Model::PlaceModel* GetDestroyTarget();			//破壊対象の街取得処理
 	const Field::Model::PlaceModel* GetNewTownPosition();		//新しく街を作る予定のPlace取得
+	const Field::Model::PlaceModel* GetAtlantisPlace();			//アトランティスとなるPlaceの取得
 
 private:
 	//float型を引数にとるファンクタの通し番号
@@ -104,6 +105,7 @@ private:
 	{
 		DestroyTarget,
 		PlacePosition,
+		Atlantis,
 		FuncterPlaceReturnMax
 	};
 
