@@ -359,6 +359,21 @@ namespace Field
 		{
 			return placeContainer->GetNonePlace();
 		};
+
+		//アトランティス作成地の取得
+		handler.functerPlaceReturn[Handler::FuncterID_PlaceReturn::Atlantis] = [&]()
+		{
+			//試行回数200回で強制終了
+			for (int cntLoop = 0; cntLoop < 2000; cntLoop++)
+			{
+				const Model::PlaceModel* target = placeContainer->GetNonePlace();
+
+				if (placeActController->IsSeaPlace(target->GetPosition()))
+					return target;
+			}
+
+			return placeContainer->GetNonePlace();
+		};
 	}
 
 	/**************************************

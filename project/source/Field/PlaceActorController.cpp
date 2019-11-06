@@ -312,6 +312,14 @@ namespace Field::Actor
 	}
 
 	/**************************************
+	海かどうかの判定
+	***************************************/
+	bool PlaceActorController::IsSeaPlace(const FieldPosition & position) const
+	{
+		return bgContainer->IsSeaPlace(position);
+	}
+
+	/**************************************
 	ロードセット処理
 	***************************************/
 	void PlaceActorController::SetRoad(const Model::PlaceModel * place, int delay)
