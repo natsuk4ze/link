@@ -202,10 +202,10 @@ void GameScene::Draw()
 	particleManager->Draw();
 	ProfilerCPU::Instance()->End("Draw Particle");
 
-	// イベントビューア描画
-	eventController->DrawEventViewer();
 
 	//ビュアー描画
+	field->DrawViewer();
+	eventController->DrawEventViewer();
 	gameViewer->Draw();
 
 	ProfilerCPU::Instance()->EndLabel();

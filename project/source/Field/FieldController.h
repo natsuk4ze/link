@@ -19,6 +19,8 @@
 
 class FieldEventHandler;
 class InfoController;
+class FieldViewer;
+
 namespace Field
 {
 	/**************************************
@@ -72,6 +74,7 @@ namespace Field
 
 		//描画処理
 		void Draw();
+		void DrawViewer();
 
 		//データ読み込み処理
 		//TODO:読み込むデータを選択できるようにする
@@ -119,6 +122,7 @@ namespace Field
 		Model::RouteProcessor *routeProcessor;				//ルートプロセッサ
 		Actor::PlaceActorController* placeActController;	//プレイスアクターコントローラ
 		InfoController* infoController;						//インフォメーションコントローラ
+		FieldViewer *viewer;								//フィールド情報を表示するビューワ
 
 		FieldDevelopper *developper;
 		FieldInput *input;

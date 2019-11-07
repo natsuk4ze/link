@@ -19,6 +19,7 @@
 #include "Controller\FieldDevelopper.h"
 #include "Controller\FieldInput.h"
 #include "../FieldObject/InfoController.h"
+#include "../Viewer/GameScene/FieldViewer/FieldViewer.h"
 
 #include "State/BuildRoad.h"
 #include "State/FieldControllerIdle.h"
@@ -73,6 +74,7 @@ namespace Field
 		input = new FieldInput(this);
 		placeContainer = new Model::PlaceContainer();
 		infoController = new InfoController();
+		viewer = new FieldViewer();
 
 		//ステートマシン作成
 		fsm.resize(State::Max, NULL);
@@ -116,6 +118,7 @@ namespace Field
 		SAFE_DELETE(developper);
 		SAFE_DELETE(input);
 		SAFE_DELETE(infoController);
+		SAFE_DELETE(viewer);
 
 		//デリゲート削除
 		SAFE_DELETE(onConnectTown);
@@ -140,6 +143,8 @@ namespace Field
 		placeActController->Update();
 
 		infoController->Update();
+
+		viewer->Update();
 	}
 
 	/**************************************
@@ -180,6 +185,14 @@ namespace Field
 		//カーソルには透過オブジェクトが含まれるので最後に描画
 		cursor->Draw();
 		operateContainer->Draw();
+	}
+
+	/**************************************
+	UI描画処理
+	***************************************/
+	void FieldController::DrawViewer()
+	{
+		viewer->Draw();
 	}
 
 	/**************************************
