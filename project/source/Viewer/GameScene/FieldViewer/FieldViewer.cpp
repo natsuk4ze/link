@@ -63,10 +63,13 @@ void FieldViewer::Update()
 		SetFieldErroMessage(fieldErroMessage->NotConnection);
 	}
 
-	SetOperationExplanation(
-		operationExplanation->Z_Cancel,
-		operationExplanation->Z_None,
-		operationExplanation->X_Develop);
+	if (Keyboard::GetPress(DIK_O))
+	{
+		SetOperationExplanation(
+			operationExplanation->Z_Cancel,
+			operationExplanation->Z_None,
+			operationExplanation->X_Develop);
+	}
 
 #endif
 

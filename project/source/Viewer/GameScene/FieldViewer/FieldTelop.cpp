@@ -104,14 +104,6 @@ void FieldTelop::Update()
 {
 	//テロップ再生処理
 	Play();
-
-#ifdef _DEBUG
-
-	Debug::Text("currentAnim:%d", currentAnim);
-	Debug::Text("α値:%d", alpha);
-
-#endif
-
 }
 
 //=============================================================================

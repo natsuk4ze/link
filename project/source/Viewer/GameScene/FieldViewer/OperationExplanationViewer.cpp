@@ -72,7 +72,7 @@ void OperationExplanationViewer::Draw(void)
 void OperationExplanationViewer::PassTexture(OperationID id0, OperationID id1, OperationID id2)
 {
 	//idを格納しておく配列
-	int wk[textMax] = {
+	OperationID id[textMax] = {
 		id0,
 		id1,
 		id2
@@ -82,12 +82,12 @@ void OperationExplanationViewer::PassTexture(OperationID id0, OperationID id1, O
 	{
 		//IDの種類数ではなく実際のテクスチャ内のテキストの種類でセット
 		//表示しないオペレーションなら透明にしておく
-		if (wk[i] < Z_None)
+		if (id[i] < Z_None)
 		{
 			const int textTypeMax = 5;
 
 			//テキストのテクスチャUVを変更
-			text[i]->SetTexture(1, textTypeMax, wk[i]);
+			text[i]->SetTexture(1, textTypeMax, id[i]);
 
 			//表示する
 			text[i]->SetAlpha(1.0f);
