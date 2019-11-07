@@ -106,6 +106,9 @@ private:
 	//イベントハンドラ設定処理
 	void SetEventHandler();
 
+	//デバッグ機能
+	void DebugTool();
+
 	//static定数メンバ
 	static const float BloomPower[3];
 	static const float BloomThrethold[3];

@@ -156,6 +156,9 @@ void GameScene::Update()
 	particleManager->Update();
 	ProfilerCPU::Instance()->End("Update Particle");
 
+	//デバッグ機能
+	DebugTool();
+
 	Debug::Begin("EventHandler");
 	if (Debug::Button("Pause"))
 		eventHandler->PauseGame();
@@ -280,4 +283,45 @@ void GameScene::SetEventHandler()
 
 	//フィールドコントローラの方でもハンドラ作成
 	field->SetEventHandler(*eventHandler);
+}
+
+/**************************************
+デバッグ機能
+***************************************/
+void GameScene::DebugTool()
+{
+	//デバッグ機能
+	Debug::Begin("DebugTool");
+	Debug::Text("Level");
+	if (Debug::Button("CityLevel"))
+	{
+		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::City);
+		SceneManager::ChangeScene(GameConfig::SceneID::Game);
+	}
+	if (Debug::Button("WorldLevel"))
+	{
+		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::World);
+		SceneManager::ChangeScene(GameConfig::SceneID::Game);
+	}
+	if (Debug::Button("SpaceLevel"))
+	{
+		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::Space);
+		SceneManager::ChangeScene(GameConfig::SceneID::Game);
+	}
+
+	Debug::NewLine();
+	if (Debug::Button("All Reset"))
+	{
+		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::City);
+		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_RemainTime), 30 * 180);
+		SceneManager::ChangeScene(GameConfig::SceneID::Game);
+	}
+
+	Debug::NewLine();
+	if (Debug::Button("Add Time"))
+	{
+		remainTime += 30 * 10;
+	}
+
+	Debug::End();
 }
