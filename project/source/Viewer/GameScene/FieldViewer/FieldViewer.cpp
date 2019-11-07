@@ -6,6 +6,7 @@
 //=============================================================================
 #include "../../../../main.h"
 #include "FieldTelop.h"
+#include "FieldErrorMessage.h"
 #include "FieldViewer.h"
 
 #ifdef _DEBUG
@@ -19,6 +20,7 @@
 FieldViewer::FieldViewer()
 {
 	fieldViewer.push_back(fieldTelop = new FieldTelop());
+	fieldViewer.push_back(fieldErroMessage = new FieldErrorMessage());
 }
 
 //*****************************************************************************
@@ -54,6 +56,11 @@ void FieldViewer::Update()
 		SetFieldTelop(fieldTelop->City, nullptr);
 	}
 
+	if (Keyboard::GetTrigger(DIK_E))
+	{
+		SetFieldErroMessage(fieldErroMessage->NotConnection);
+	}
+
 #endif
 
 }
@@ -85,4 +92,12 @@ void FieldViewer::Draw(void)
 void FieldViewer::SetFieldTelop(FieldTelop::TelopID id, std::function<void(void)> Callback)
 {
 	fieldTelop->Set(id, Callback);
+}
+
+//=============================================================================
+// フィールドエラーメッセージを設置
+//=============================================================================
+void FieldViewer::SetFieldErroMessage(FieldErrorMessage::ErroID id)
+{
+	fieldErroMessage->Set(id);
 }

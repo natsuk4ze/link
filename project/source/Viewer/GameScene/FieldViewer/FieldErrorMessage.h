@@ -1,12 +1,12 @@
 
 //=============================================================================
 //
-// イベントテロップ処理 [EventTelop.h]
+// イベントテロップ処理 [FieldErrorMessage.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _EVENT_TELOP_H_
-#define _EVENT_TELOP_H_
+#ifndef _FIELD_ERRO_MESSAGE_H_
+#define _FIELD_ERRO_MESSAGE_H_
 
 #include "../../Framework/BaseViewer.h"
 #include "../../../../Framework/Pattern/Delegate.h"
@@ -21,65 +21,45 @@ class BaseViewerDrawer;
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class EventTelop :public BaseViewer
+class FieldErrorMessage :public BaseViewer
 {
 public:
-	EventTelop();
-	~EventTelop();
+	FieldErrorMessage();
+	~FieldErrorMessage();
 
 	//テロップの種類
-	enum TelopID
+	enum ErroID
 	{
-		//シンギュラリティ到達！！
-		Singularity,
-		//アトランティス登場！！
-		Atlantis,
-		//新惑星を発見！！
-		NewPlanet,
-		//隕石が接近中！！
-		Meteorite,
-		//宇宙人が襲来！！
-		Alien,
-		//AIストライキ発生！！
-		AI_Strike,
+		//街／道とつなっがていません
+		NotConnection,
+		//ストックが足りません
+		StockShortage,
+		//橋と橋は繋げられません
+		BridgeConnection,
+		//橋はカーブにできません
+		CurveBridge,
 		//種類数
 		Max
 	};
 
 	void Update();
 	void Draw(void);
-	void Set(TelopID id, std::function<void(void)> Callback = nullptr);
+	void Set(ErroID id);
 
 private:
 	BaseViewerDrawer *text;
-	BaseViewerDrawer *bg;
-
-	//再生終了通知
-	std::function<void(void)> Callback;
 
 	//再生
 	void Play();
 
 	//テクスチャ情報受け渡し
-	void PassTexture(TelopID id);
-
-	//背景をオープン
-	void OpenBG(void);
-
-	//背景をクローズ
-	void CloseBG(void);
+	void PassTexture(ErroID id);
 
 	//再生中かどうか
 	bool isPlaying;
 
 	//フレームカウント
 	int countFrame;
-
-	//現在のアニメーション
-	int currentAnim;
-
-	//アニメーション時間
-	float animTime;
 };
 
 #endif
