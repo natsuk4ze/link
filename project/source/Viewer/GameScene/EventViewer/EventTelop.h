@@ -30,10 +30,11 @@ public:
 	//テロップの種類
 	enum TelopID
 	{
-		PositiveEvent01,
-		PositiveEvent02,
-		NegativeEvent01,
-		NegativeEvent02,
+		Singularity,
+		Atlantis,
+		NewPlanet,
+		Meteorite,
+		Alien,
 		Max
 	};
 
@@ -47,12 +48,6 @@ private:
 
 	//再生終了通知
 	std::function<void(void)> Callback;
-
-	//テキストのテクスチャ情報コンテナ
-	std::vector <LPDIRECT3DTEXTURE9> textTexContainer;
-
-	//背景のテクスチャ情報コンテナ
-	std::vector <LPDIRECT3DTEXTURE9> bgTexContainer;
 
 	//再生
 	void Play();

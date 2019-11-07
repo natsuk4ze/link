@@ -45,17 +45,8 @@ private:
 	//再生終了通知
 	std::function<void(void)> Callback;
 
-	//テキストのテクスチャ情報コンテナ
-	std::vector <LPDIRECT3DTEXTURE9> textTexContainer;
-
-	//背景のテクスチャ情報コンテナ
-	std::vector <LPDIRECT3DTEXTURE9> bgTexContainer;
-
 	//再生
 	void Play();
-
-	//テクスチャ情報受け渡し
-	void PassTexture(TelopID id);
 
 	//線を引く
 	void DrawLine(void);

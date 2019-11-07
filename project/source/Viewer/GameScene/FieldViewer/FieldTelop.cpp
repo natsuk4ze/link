@@ -21,12 +21,6 @@
 // グローバル変数
 //*****************************************************************************
 
-//テキストのテクスチャパス
-static const char *textTexPath[FieldTelop::Max]
-{
-	"data/TEXTURE/Viewer/FieldViewer/FieldTelop/TextCity.png",
-};
-
 //アニメーションの数
 static const int animMax = 4;
 
@@ -79,6 +73,7 @@ FieldTelop::FieldTelop()
 {
 	//テキスト
 	text = new BaseViewerDrawer();
+	text->LoadTexture("data/TEXTURE/Viewer/FieldViewer/FieldTelop/TextCity.png");
 	text->size = D3DXVECTOR3(512, 128.0f, 0.0f);
 	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	text->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_CENTER_Y/1.5, 0.0f);
@@ -91,20 +86,6 @@ FieldTelop::FieldTelop()
 	line->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	line->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_CENTER_Y/2, 0.0f);
 	line->MakeVertex();
-
-	//コンテナにテクスチャ情報をロードする
-	for (int i = 0; i < Max; i++)
-	{
-		LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-		LPDIRECT3DTEXTURE9 tTex;
-
-		D3DXCreateTextureFromFile(pDevice,
-			textTexPath[i],
-			&tTex);
-
-		textTexContainer.push_back(tTex);
-	}
 }
 
 //*****************************************************************************
@@ -153,7 +134,7 @@ void FieldTelop::Draw(void)
 //=============================================================================
 void FieldTelop::Play()
 {
-	//再生中なら描画
+	//再生中なら実行
 	if (!isPlaying) return;
 
 	//フレーム更新
@@ -290,21 +271,10 @@ void FieldTelop::DrawTelopText(void)
 }
 
 //=============================================================================
-// テクスチャ情報受け渡し処理
-//=============================================================================
-void FieldTelop::PassTexture(TelopID id)
-{
-	text->texture = textTexContainer[id];
-}
-
-//=============================================================================
 // テロップセット処理
 //=============================================================================
 void FieldTelop::Set(TelopID id, std::function<void(void)> Callback)
 {
-	//テクスチャ情報受け渡し
-	PassTexture(id);
-
 	//再生状態にする
 	isPlaying = true;
 

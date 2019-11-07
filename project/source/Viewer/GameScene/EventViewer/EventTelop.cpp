@@ -20,24 +20,6 @@
 // グローバル変数
 //*****************************************************************************
 
-//テキストのテクスチャパス
-static const char *textTexPath[EventTelop::Max]
-{
-	"data/TEXTURE/Viewer/EventViewer/EventTelop/Text/PositiveText01.png",
-	"data/TEXTURE/Viewer/EventViewer/EventTelop/Text/PositiveText02.png",
-	"data/TEXTURE/Viewer/EventViewer/EventTelop/Text/NegativeText01.png",
-	"data/TEXTURE/Viewer/EventViewer/EventTelop/Text/NegativeText02.png",
-};
-
-//背景のテクスチャパス
-static const char *bgTexPath[EventTelop::Max]
-{
-	"data/TEXTURE/Viewer/EventViewer/EventTelop/BG/PositiveBG.png",
-	"data/TEXTURE/Viewer/EventViewer/EventTelop/BG/PositiveBG.png",
-	"data/TEXTURE/Viewer/EventViewer/EventTelop/BG/NegativeBG.png",
-	"data/TEXTURE/Viewer/EventViewer/EventTelop/BG/NegativeBG.png",
-};
-
 //アニメーションの数
 static const int animMax = 5;
 
@@ -95,44 +77,19 @@ EventTelop::EventTelop()
 {
 	//テキスト
 	text = new BaseViewerDrawer();
-	text->size = D3DXVECTOR3(1024, 256.0f, 0.0f);
+	text->LoadTexture("data/TEXTURE/Viewer/EventViewer/EventTelop/Text/telopText.png");
+	text->size = D3DXVECTOR3(1024, 128.0f, 0.0f);
 	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	text->position = D3DXVECTOR3(SCREEN_WIDTH*1.2, SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
 	text->MakeVertex();
 
 	//背景
 	bg = new BaseViewerDrawer();
+	bg->LoadTexture("data/TEXTURE/Viewer/EventViewer/EventTelop/BG/telopBG.png");
 	bg->size = D3DXVECTOR3(SCREEN_WIDTH, 0.0f, 0.0f);
 	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	bg->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 5), SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
 	bg->MakeVertex();
-
-	//背景のUV座標を変更
-	bg->vertexWk[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-	bg->vertexWk[1].tex = D3DXVECTOR2(3.0, 0.0f);
-	bg->vertexWk[2].tex = D3DXVECTOR2(0.0f, 1.0f);
-	bg->vertexWk[3].tex = D3DXVECTOR2(3.0f, 1.0f);
-
-	//コンテナにテクスチャ情報をロードする
-	for (int i = 0; i < Max; i++)
-	{
-		LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-		LPDIRECT3DTEXTURE9 tTex;
-		LPDIRECT3DTEXTURE9 bgTex;
-
-		D3DXCreateTextureFromFile(pDevice,
-			textTexPath[i],
-			&tTex);
-
-		textTexContainer.push_back(tTex);
-
-		D3DXCreateTextureFromFile(pDevice,
-			bgTexPath[i],
-			&bgTex);
-
-		bgTexContainer.push_back(bgTex);
-	}
 }
 
 //*****************************************************************************
@@ -230,7 +187,7 @@ void EventTelop::OpenBG(void)
 {
 	//イージングのスタートとゴールを設定
 	float bgEasingStart = 0.0f;
-	float bgEasingGoal = 120.0f;
+	float bgEasingGoal = 128.0f;
 
 	//背景のYサイズを更新
 	bg->size.y = Easing::EaseValue(animTime, bgEasingStart, bgEasingGoal, animType[BG_Open]);
@@ -245,7 +202,7 @@ void EventTelop::OpenBG(void)
 void EventTelop::CloseBG(void)
 {
 	//イージングのスタートとゴールを設定
-	float bgEasingStart = 120.0f;
+	float bgEasingStart = 128.0f;
 	float bgEasingGoal = 0.0f;
 
 	//背景のYサイズを更新
@@ -260,8 +217,24 @@ void EventTelop::CloseBG(void)
 //=============================================================================
 void EventTelop::PassTexture(TelopID id)
 {
-	text->texture = textTexContainer[id];
-	bg->texture = bgTexContainer[id];
+	//テキストのUVを変更
+	text->SetTexture(1, Max, id);
+
+	bool isNegative;
+
+	if (id > Meteorite)
+	{
+		isNegative = true;
+	}
+	else
+	{
+		isNegative = false;
+	}
+
+	//背景のUVを変更
+	bg->SetTexture(1, 2, isNegative);
+	bg->vertexWk[1].tex.x = 3.0f;
+	bg->vertexWk[3].tex.x = 3.0f;
 }
 
 //=============================================================================
