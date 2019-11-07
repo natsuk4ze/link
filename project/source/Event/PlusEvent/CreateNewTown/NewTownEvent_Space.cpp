@@ -8,6 +8,7 @@
 #include "NewTownEvent_Space.h"
 #include "../../EventActor/PlanetActor.h"
 #include "../../../../Framework/Camera/CameraTranslationPlugin.h"
+#include "../../../Viewer/GameScene/EventViewer/EventTelop.h"
 #include "../../../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../../../Effect/GameParticleManager.h"
 #include "../../../../Framework/Task/TaskManager.h"
@@ -74,7 +75,7 @@ void NewTownEvent_Space::Init()
 	fieldEventHandler->PauseGame();
 
 	// テロップ設置
-	eventViewer->SetEventTelop(PositiveEvent01, [=]()
+	eventViewer->SetEventTelop(TelopID::NewPlanet, [=]()
 	{
 		// 予定地にカメラを移動させる
 		Camera::TranslationPlugin::Instance()->Move(PlanetPos, 30, [&]() {FallenStart(); });
