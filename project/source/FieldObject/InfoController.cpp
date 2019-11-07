@@ -10,9 +10,9 @@
 //=====================================
 // コンストラクタ
 //=====================================
-InfoController::InfoController()
+InfoController::InfoController(Field::FieldLevel currentLevel)
 {
-	
+	current = currentLevel;
 }
 
 //=====================================
@@ -57,7 +57,7 @@ void InfoController::SetLinkLevel(const Field::PlaceData& data)
 		// 一致する要素がMap内に存在しない場合
 		if (LinkInfoMap.count(data.key) == 0)
 		{
-			LinkInfoActor* link = new LinkInfoActor(data.key.ConvertToWorldPosition(), data.townLevel);
+			LinkInfoActor* link = new LinkInfoActor(data.key.ConvertToWorldPosition(), data.townLevel, current);
 			LinkInfoMap.emplace(data.key, link);
 		}
 		// 存在する場合、レベルを更新するだけ

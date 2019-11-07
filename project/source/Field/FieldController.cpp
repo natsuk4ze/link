@@ -73,7 +73,7 @@ namespace Field
 		developper = new FieldDevelopper(this);
 		input = new FieldInput(this);
 		placeContainer = new Model::PlaceContainer();
-		infoController = new InfoController();
+		infoController = new InfoController(level);
 		viewer = new FieldViewer();
 
 		//ステートマシン作成
@@ -177,8 +177,6 @@ namespace Field
 
 		placeActController->Draw();
 
-		infoController->Draw();
-
 #ifdef DEBUG_PLACEMODEL
 		placeContainer->DrawDebug();
 #endif
@@ -192,6 +190,7 @@ namespace Field
 	***************************************/
 	void FieldController::DrawViewer()
 	{
+		infoController->Draw();
 		viewer->Draw();
 	}
 

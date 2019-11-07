@@ -10,6 +10,7 @@
 
 #include "InfoActor.h"
 #include "InfoDigit.h"
+#include "../../Field/FieldConfig.h"
 
 //**************************************
 // クラス定義
@@ -31,10 +32,10 @@ private:
 	static const D3DXVECTOR2 logoSize;
 
 	// ビューアの表示場所調整
-	static const D3DXVECTOR3 upPos;
+	static const D3DXVECTOR3 upPos[];
 
 public:
-	LinkInfoActor(const D3DXVECTOR3& townPos, const int& townLevel);
+	LinkInfoActor(const D3DXVECTOR3& townPos, const int& townLevel, Field::FieldLevel current);
 	~LinkInfoActor();
 
 	// 更新、描画
