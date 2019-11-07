@@ -219,8 +219,10 @@
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldTelop.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\LevelViewer.h" />
@@ -411,8 +413,10 @@
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventMessage.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventTelop.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.cpp" />
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldTelop.cpp" />
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\GameViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\LevelViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\ItemStockViewer.cpp" />
@@ -506,6 +510,9 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Effect</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">2.0</ShaderModel>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\HF素材\FieldViewer素材\fieldErrorMessage.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

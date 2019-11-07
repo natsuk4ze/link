@@ -30,12 +30,19 @@ public:
 	//テロップの種類
 	enum TelopID
 	{
+		//シンギュラリティ到達！！
 		Singularity,
+		//アトランティス登場！！
 		Atlantis,
+		//新惑星を発見！！
 		NewPlanet,
+		//隕石が接近中！！
 		Meteorite,
+		//宇宙人が襲来！！
 		Alien,
+		//AIストライキ発生！！
 		AI_Strike,
+		//種類数
 		Max
 	};
 

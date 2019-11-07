@@ -208,6 +208,8 @@
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldTelop.h" />
     <ClInclude Include="source\Field\Object\SpaceBackGroundContainer.h" />
     <ClInclude Include="source\Effect\Game\SpaceTear.h" />
+    <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.h" />
+    <ClInclude Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -399,6 +401,8 @@
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldTelop.cpp" />
     <ClCompile Include="source\Field\Object\SpaceBackGroundContainer.cpp" />
     <ClCompile Include="source\Effect\Game\SpaceTear.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
@@ -418,5 +422,8 @@
     <FxCompile Include="Shaders\StrongBlurFilter.fx" />
     <FxCompile Include="Shaders\Sprite.fx" />
     <FxCompile Include="Shaders\InstancingMesh.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\HF素材\FieldViewer素材\fieldErrorMessage.png" />
   </ItemGroup>
 </Project>

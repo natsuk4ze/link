@@ -77,7 +77,7 @@ EventTelop::EventTelop()
 {
 	//ƒeƒLƒXƒg
 	text = new BaseViewerDrawer();
-	text->LoadTexture("data/TEXTURE/Viewer/EventViewer/EventTelop/Text/telopText.png");
+	text->LoadTexture("data/TEXTURE/Viewer/EventViewer/EventTelop/Text/Text.png");
 	text->size = D3DXVECTOR3(1024, 128.0f, 0.0f);
 	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	text->position = D3DXVECTOR3(SCREEN_WIDTH*1.5, SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
@@ -85,7 +85,7 @@ EventTelop::EventTelop()
 
 	//”wŒi
 	bg = new BaseViewerDrawer();
-	bg->LoadTexture("data/TEXTURE/Viewer/EventViewer/EventTelop/BG/telopBG.png");
+	bg->LoadTexture("data/TEXTURE/Viewer/EventViewer/EventTelop/BG/BG.png");
 	bg->size = D3DXVECTOR3(SCREEN_WIDTH, 0.0f, 0.0f);
 	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	bg->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 5), SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
