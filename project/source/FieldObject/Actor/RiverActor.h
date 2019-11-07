@@ -10,9 +10,12 @@
 
 #include "PlaceActor.h"
 //**************************************
-// マクロ定義
+// 前方宣言
 //**************************************
-
+namespace Field::Actor
+{
+	class RiverEffect;
+}
 //**************************************
 // クラス定義
 //**************************************
@@ -33,6 +36,7 @@ public:
 	~RiverActor();
 
 	void Update() override;
+	void Draw() override;
 
 	void SetDirection(FlowDirection direction);
 
@@ -45,6 +49,8 @@ private:
 	static int cntWaveAnimation;
 
 	FlowDirection direction;
+	D3DXVECTOR2 uv;
+	Field::Actor::RiverEffect *effect;
 };
 
 #endif

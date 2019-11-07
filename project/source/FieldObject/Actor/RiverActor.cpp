@@ -8,6 +8,7 @@
 #include "RiverActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../../../Framework/Math/Easing.h"
+#include "../../Shader/RiverEffect.h"
 
 //=====================================
 // staticメンバ
@@ -22,7 +23,8 @@ int RiverActor::cntWaveAnimation = 0;
 //=====================================
 RiverActor::RiverActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
 	: PlaceActor(pos, currentLevel),
-	direction(Forward)
+	direction(Forward),
+	effect(nullptr)
 {
 	// モデルデータ参照
 	switch (currentLevel)
@@ -40,6 +42,7 @@ RiverActor::RiverActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
 	}
 
 	type = Field::Model::River;
+	effect = new Field::Actor::RiverEffect();
 }
 
 //=====================================
@@ -47,6 +50,7 @@ RiverActor::RiverActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
 //=====================================
 RiverActor::~RiverActor()
 {
+	SAFE_DELETE(effect);
 }
 
 //=====================================
@@ -57,6 +61,28 @@ void RiverActor::Update()
 	PlaceActor::Update();
 
 	transform->Move(Vector3::Up * heightWave);
+
+	uv.y += 0.005f;
+}
+
+//=====================================
+// 描画処理
+//=====================================
+void RiverActor::Draw()
+{
+	if (!onCamera)
+		return;
+
+	effect->SetWorld(*transform);
+	effect->SetUV(uv);
+	
+	effect->Begin();
+	effect->BeginPass(0);
+
+	mesh->Draw(*effect);
+
+	effect->EndPass();
+	effect->End();
 }
 
 //=====================================

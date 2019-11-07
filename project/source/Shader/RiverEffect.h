@@ -25,11 +25,11 @@ namespace Field::Actor
 		void SetWorld(const Transform& transform);
 		void SetUV(const D3DXVECTOR2& uv);
 
+		void SetMaterial(const D3DMATERIAL9& material);
+
 		void CommitCameraParameter();
 
 	private:
-		LPD3DXEFFECT effect;
-
 		D3DXHANDLE hWorld;
 		D3DXHANDLE hView;
 		D3DXHANDLE hProjection;
