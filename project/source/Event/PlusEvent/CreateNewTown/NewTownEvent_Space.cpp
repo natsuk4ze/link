@@ -6,7 +6,7 @@
 //=============================================================================
 #include "../../../../main.h"
 #include "NewTownEvent_Space.h"
-#include "../../EventActor.h"
+#include "../../EventActor/PlanetActor.h"
 #include "../../../../Framework/Camera/CameraTranslationPlugin.h"
 #include "../../../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../../../Effect/GameParticleManager.h"
@@ -68,7 +68,7 @@ void NewTownEvent_Space::Init()
 	D3DXVec3Normalize(&MoveDirection, &MoveDirection);
 
 	// ˜f¯ƒƒbƒVƒ…ì¬
-	PlanetModel = new EventActor(PlanetPos, Scale, "Town-Space");
+	PlanetModel = new PlanetActor(PlanetPos, Scale, "Town-Space");
 
 	// ƒQ[ƒ€is’âŽ~
 	fieldEventHandler->PauseGame();

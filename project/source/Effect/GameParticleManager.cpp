@@ -17,6 +17,7 @@
 #include "Game/AngryFace.h"
 #include "Game/Darkness.h"
 #include "Game/Bubble.h"
+#include "Game/MoveTail.h"
 
 /**************************************
 staticメンバ
@@ -42,6 +43,7 @@ void GameParticleManager::Init()
 	controllers[GameParticle::MeteorExplosion] = new Effect::Game::MeteorExplosionController();
 	controllers[GameParticle::Darkness] = new Effect::Game::DarknessController();
 	controllers[GameParticle::Bubble] = new Effect::Game::BubbleController();
+	controllers[GameParticle::MoveTail] = new Effect::Game::MoveTailController();
 
 	crossFilter->SetPower(BloomPower[0], BloomPower[1], BloomPower[2]);
 	crossFilter->SetThrethold(BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]);
@@ -101,4 +103,12 @@ void GameParticleManager::SetDarknessEffect(const D3DXVECTOR3 & position, std::f
 void GameParticleManager::SetArtlantisEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback)
 {
 	controllers[GameParticle::Bubble]->SetEmitter(position, nullptr);
+}
+
+/**************************************
+移動の軌跡のエフェクトセット処理
+***************************************/
+BaseEmitter* GameParticleManager::SetMoveTailEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback)
+{
+	return controllers[GameParticle::MoveTail]->SetEmitter(position, nullptr);
 }

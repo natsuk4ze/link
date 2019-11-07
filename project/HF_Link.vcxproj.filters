@@ -187,7 +187,6 @@
     <ClInclude Include="source\FieldObject\Infomation\InfoDigit.h" />
     <ClInclude Include="source\FieldObject\InfoController.h" />
     <ClInclude Include="source\Effect\Game\BanIcon.h" />
-    <ClInclude Include="source\Event\EventActor.h" />
     <ClInclude Include="source\Effect\Game\MeteorFire.h" />
     <ClInclude Include="source\Field\AStar\AStarController.h" />
     <ClInclude Include="source\Effect\Game\Darkness.h" />
@@ -208,7 +207,10 @@
     <ClInclude Include="source\Event\PlusEvent\CreateNewTown\NewTownEvent_Space.h" />
     <ClInclude Include="source\Effect\Game\Bubble.h" />
     <ClInclude Include="source\Effect\Game\WaterSmog.h" />
-    <ClInclude Include="source\Effect\Game\Tail.h" />
+    <ClInclude Include="source\Effect\Game\MoveTail.h" />
+    <ClInclude Include="source\Event\EventActor\EventActorBase.h" />
+    <ClInclude Include="source\Event\EventActor\UFOActor.h" />
+    <ClInclude Include="source\Event\EventActor\PlanetActor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -380,7 +382,6 @@
     <ClCompile Include="source\FieldObject\Infomation\InfoDigit.cpp" />
     <ClCompile Include="source\FieldObject\InfoController.cpp" />
     <ClCompile Include="source\Effect\Game\BanIcon.cpp" />
-    <ClCompile Include="source\Event\EventActor.cpp" />
     <ClCompile Include="source\Effect\Game\MeteorFire.cpp" />
     <ClCompile Include="source\Field\AStar\AStarController.cpp" />
     <ClCompile Include="source\Effect\Game\Drakness.cpp" />
@@ -400,7 +401,10 @@
     <ClCompile Include="source\Event\PlusEvent\CreateNewTown\NewTownEvent_Space.cpp" />
     <ClCompile Include="source\Effect\Game\Bubble.cpp" />
     <ClCompile Include="source\Effect\Game\WaterSmog.cpp" />
-    <ClCompile Include="source\Effect\Game\Tail.cpp" />
+    <ClCompile Include="source\Effect\Game\MoveTail.cpp" />
+    <ClCompile Include="source\Event\EventActor\EventActorBase.cpp" />
+    <ClCompile Include="source\Event\EventActor\UFOActor.cpp" />
+    <ClCompile Include="source\Event\EventActor\PlanetActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

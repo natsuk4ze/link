@@ -1,11 +1,11 @@
 //=============================================================================
 //
-// 移動の残像エフェクトクラス [Tail.h]
+// 移動の残像エフェクトクラス [MoveTail.h]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#ifndef _Tail_H_
-#define _Tail_H_
+#ifndef _MoveTail_H_
+#define _MoveTail_H_
 
 #include "../../../main.h"
 #include "../../../Framework/Particle/BaseParticleController.h"
@@ -18,25 +18,26 @@
 namespace Effect::Game
 {
 	/**************************************
-	TailControllerクラス
+	MoveTailControllerクラス
 	***************************************/
-	class TailController : public BaseParticleController
+	class MoveTailController : public BaseParticleController
 	{
 	public:
-		TailController();
+		MoveTailController();
+		void SetEmitterPos(D3DXVECTOR3 Pos);
+		bool Draw() override;
 	};
 
 	/**************************************
-	Tailクラス
+	MoveTailクラス
 	***************************************/
-	class Tail : public Particle3D
+	class MoveTail : public Particle3D
 	{
 	public:
-		Tail();
+		MoveTail();
 
 		void Init() override;
 		void Update() override;
-
 	private:
 		static const int Life;
 	};

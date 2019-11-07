@@ -14,7 +14,7 @@
 //*****************************************************************************
 class BeatGame;
 class EventViewer;
-class EventActor;
+class EventActorBase;
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -30,7 +30,7 @@ private:
 
 	BeatGame *beatGame;
 	EventViewer* eventViewer;
-	EventActor *Meteor;
+	EventActorBase *Meteor;
 
 public:
 	CityDestroyEvent(EventViewer* eventViewer);

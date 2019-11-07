@@ -18,7 +18,7 @@
 #include "Game/Darkness.h"
 #include "Game/Bubble.h"
 #include "Game/WaterSmog.h"
-#include "Game/Tail.h"
+#include "Game/MoveTail.h"
 
 /**************************************
 èâä˙âªèàóù
@@ -39,7 +39,7 @@ void TestParticleManager::Init()
 	controllers[TestParticle::Darkness] = new Effect::Game::DarknessController();
 	controllers[TestParticle::Bubble] = new Effect::Game::BubbleController();
 	controllers[TestParticle::WaterSmog] = new Effect::Game::WaterSmogController();
-	controllers[TestParticle::Tail] = new Effect::Game::TailController();
+	controllers[TestParticle::MoveTail] = new Effect::Game::MoveTailController();
 }
 
 /**************************************
@@ -71,8 +71,6 @@ void TestParticleManager::Update()
 		Generate(TestParticle::Bubble, Vector3::Zero);
 	else if (Debug::Button("WaterSmog"))
 		Generate(TestParticle::WaterSmog, Vector3::Zero);
-	else if (Debug::Button("Tail"))
-		Generate(TestParticle::Tail, Vector3::Up * 10.0f);
 
 	Debug::NewLine();
 

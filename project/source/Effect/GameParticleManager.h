@@ -29,6 +29,7 @@ namespace GameParticle
 		MeteorExplosion,//ミサイル命中
 		Darkness,		//闇の粒子(AIレベル減少イベント)
 		Bubble,			//水の泡
+		MoveTail,		//移動の軌跡
 		Max
 	};
 }
@@ -55,6 +56,8 @@ public:
 	void SetDarknessEffect(const D3DXVECTOR3 & position,std::function<void(void)> callback = nullptr);
 	//アトランティスのエフェクトセット処理
 	void SetArtlantisEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback = nullptr);
+	//移動の軌跡のエフェクトセット処理
+	BaseEmitter* SetMoveTailEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback = nullptr);
 
 private:
 	static const float BloomPower[3];

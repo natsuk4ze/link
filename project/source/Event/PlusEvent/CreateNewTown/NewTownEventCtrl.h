@@ -28,7 +28,7 @@ public:
 	void Update(void) override;
 	void Draw(void) override;
 	string GetEventMessage(int FieldLevel) override;
-	void CreateNewTown(void);
+	//void CreateNewTown(void);
 	void EventOver(void);
 };
 

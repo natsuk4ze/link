@@ -7,7 +7,7 @@
 #include "../../../main.h"
 #include "CityDestroyEvent.h"
 #include "BeatGame.h"
-#include "../EventActor.h"
+#include "../EventActor/EventActorBase.h"
 #include "../../Field/Place/FieldPlaceModel.h"
 #include "../../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../../Effect/GameParticleManager.h"
@@ -76,7 +76,7 @@ void CityDestroyEvent::Init()
 	D3DXVec3Normalize(&MoveDirection, &MoveDirection);
 
 	// 隕石メッシュ作成
-	Meteor = new EventActor(MeteoritePos, Scale, "Meteor");
+	Meteor = new EventActorBase(MeteoritePos, Scale, "Meteor");
 
 	// ゲーム進行停止
 	fieldEventHandler->PauseGame();

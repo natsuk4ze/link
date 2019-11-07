@@ -11,7 +11,7 @@
 #include "../../../Field/Place/FieldPlaceModel.h"
 
 class EventViewer;
-class EventActor;
+class PlanetActor;
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -20,7 +20,7 @@ class NewTownEvent_Space : public EventBase
 {
 private:
 	EventViewer *eventViewer;
-	EventActor *PlanetModel;
+	PlanetActor *PlanetModel;
 	D3DXVECTOR3 PlanetPos;
 	D3DXVECTOR3 BuildPos;
 	D3DXVECTOR3 MoveDirection;

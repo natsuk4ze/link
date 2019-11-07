@@ -30,7 +30,7 @@ namespace TestParticle
 		Darkness,
 		Bubble,
 		WaterSmog,
-		Tail,
+		MoveTail,
 		Max
 	};
 }

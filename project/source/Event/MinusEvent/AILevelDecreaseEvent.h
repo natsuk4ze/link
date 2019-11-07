@@ -14,7 +14,7 @@
 //*****************************************************************************
 class BeatGame;
 class EventViewer;
-class EventActor;
+class UFOActor;
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -30,7 +30,7 @@ private:
 
 	BeatGame *beatGame;
 	EventViewer* eventViewer;
-	EventActor *UFO;
+	UFOActor *UFO;
 
 public:
 	AILevelDecreaseEvent(EventViewer* eventViewer);

@@ -18,9 +18,10 @@
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
 #include "../Field/Object/FieldSkyBox.h"
-#include "../Event/EventActor.h"
+#include "../Event/EventActor/UFOActor.h"
+#include "../Event/EventActor/PlanetActor.h"
 
-const D3DXVECTOR3 UFOScale = D3DXVECTOR3(0.15f, 0.15f, 0.15f);
+const D3DXVECTOR3 EventActorScale = D3DXVECTOR3(0.15f, 0.15f, 0.15f);
 
 /**************************************
 初期化処理
@@ -34,23 +35,25 @@ void ParticleTestScene::Init()
 	particleManager = TestParticleManager::Instance();
 	bloom = new BloomController();
 
+	//パーティクル初期化
+	particleManager->Init();
+
 	//アクターのモデルをロード
 	ResourceManager::Instance()->LoadMesh("Town-City", "data/MODEL/PlaceActor/Town.x");
 	ResourceManager::Instance()->LoadMesh("Mountain-City", "data/MODEL/PlaceActor/mountain.x");
 	ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
 	ResourceManager::Instance()->LoadMesh("UFO", "data/MODEL/UFO/UFO.x");
+	ResourceManager::Instance()->LoadMesh("Town-Space", "data/Model/PlaceActor/earth.x");
 	actor = new CityActor(Vector3::Zero, Field::FieldLevel::City);
 	//actor = new MountainActor(Vector3::Zero, Field::FieldLevel::City);
 	//actor = new RiverActor(Vector3::Zero, Field::FieldLevel::City);
 	//actor->SetScale(Vector3::One * 1.0f);
-	eventActor = new EventActor(Vector3::Up * 10.0f, UFOScale, "UFO");
-	eventActor->SetHoverMotion(true);
+	UFO = new UFOActor(Vector3::Up * 10.0f, EventActorScale, "UFO");
+	UFO->SetHoverMotion(true);
+	Planet = new PlanetActor(Vector3::Up * 10.0f, EventActorScale, "Town-Space");
 
 	//カメラ設定
 	Camera::SetMainCamera(sceneCamera);
-
-	//パーティクル初期化
-	particleManager->Init();
 
 	//ブルーム初期化
 	bloom->SetPower(0.25f, 0.25f, 0.25f);
@@ -67,7 +70,8 @@ void ParticleTestScene::Uninit()
 	SAFE_DELETE(ground);
 	SAFE_DELETE(sceneCamera);
 	SAFE_DELETE(actor);
-	SAFE_DELETE(eventActor);
+	SAFE_DELETE(UFO);
+	SAFE_DELETE(Planet);
 	SAFE_DELETE(bloom);
 
 	//パーティクル削除
@@ -85,7 +89,8 @@ void ParticleTestScene::Update()
 	actor->SetRotatition(Vector3::Up * angle);
 	Debug::End();
 
-	eventActor->Update();
+	//UFO->Update();
+	Planet->Update();
 
 	sceneCamera->Update();
 
@@ -119,7 +124,10 @@ void ParticleTestScene::Draw()
 		actor->Draw();
 
 	if (DrawEventActor)
-		eventActor->Draw();
+	{
+		Planet->Draw();
+		//UFO->Draw();
+	}
 
 	bloom->Draw(renderTexture);
 
