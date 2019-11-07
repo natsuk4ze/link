@@ -25,8 +25,7 @@ public:
 	MeshContainer();					//コンストラクタ
 	~MeshContainer();					//デストラクタ
 
-	static MeshContainer* Create();
-	void Release();
+	//混乱の原因になるのでCreate()とReleaseは削除
 
 	void Draw();						//モデルを描画
 
@@ -43,6 +42,9 @@ protected:
 
 private:
 	MeshResource * resource;						//リソースの参照元
+	bool initialized;								//メッシュが初期化済みかどうか
+
+	void ReleaseResource();							//リソース解放処理
 };
 
 #endif

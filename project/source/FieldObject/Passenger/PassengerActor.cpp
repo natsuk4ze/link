@@ -20,19 +20,22 @@ const D3DXVECTOR3 PassengerActor::InitForward = Vector3::Back;
 //=====================================
 PassengerActor::PassengerActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
 {
-	mesh = MeshContainer::Create();
+	mesh = new MeshContainer();
 
 	// レベルに合わせてモデル読み込み
 	switch (currentLevel)
 	{
 	case Field::City:
 		ResourceManager::Instance()->GetMesh("Car", mesh);
+		current = Car;
 		break;
 	case Field::World:
 		ResourceManager::Instance()->GetMesh("Train", mesh);
+		current = Train;
 		break;
 	case Field::Space:
 		ResourceManager::Instance()->GetMesh("Rocket", mesh);
+		current = SpaceShip;
 		break;
 	default:
 		break;
@@ -48,7 +51,7 @@ PassengerActor::PassengerActor(const D3DXVECTOR3& pos, Field::FieldLevel current
 //=====================================
 PassengerActor::~PassengerActor()
 {
-	SAFE_RELEASE(mesh);
+	SAFE_DELETE(mesh);
 }
 
 //=====================================
@@ -77,7 +80,6 @@ void PassengerActor::Draw()
 //=====================================
 void PassengerActor::ChangeMesh(const char* nextTag)
 {
-	mesh = NULL;
 	ResourceManager::Instance()->GetMesh(nextTag, mesh);
 }
 
@@ -101,4 +103,20 @@ void PassengerActor::MoveDest(const D3DXVECTOR3 dest, std::function<void(void)> 
 		Tween::Move(*this, pos, this->dest, frame, InOutCirc, callback);
 	});
 
+}
+
+//=====================================
+// 現在のメッシュの種類を取得
+//=====================================
+PassengerActor::State PassengerActor::GetType()
+{
+	return current;
+}
+
+//=====================================
+// タグを次のメッシュの種類に変更
+//=====================================
+void PassengerActor::SetType(PassengerActor::State next)
+{
+	current = next;
 }

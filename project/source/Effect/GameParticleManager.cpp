@@ -18,6 +18,7 @@
 #include "Game/Darkness.h"
 #include "Game/Bubble.h"
 #include "Game/MoveTail.h"
+#include "Game/SpaceTear.h"
 
 /**************************************
 staticƒƒ“ƒo
@@ -44,6 +45,7 @@ void GameParticleManager::Init()
 	controllers[GameParticle::Darkness] = new Effect::Game::DarknessController();
 	controllers[GameParticle::Bubble] = new Effect::Game::BubbleController();
 	controllers[GameParticle::MoveTail] = new Effect::Game::MoveTailController();
+	controllers[GameParticle::SpaceTear] = new Effect::Game::SpaceTearController();
 
 	crossFilter->SetPower(BloomPower[0], BloomPower[1], BloomPower[2]);
 	crossFilter->SetThrethold(BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]);

@@ -12,6 +12,7 @@
 #include "../../Framework/Core/SceneManager.h"
 #include "../../Framework/Tool/ProfilerCPU.h"
 #include "../../Framework/Core/PlayerPrefs.h"
+#include "../../Framework/Serial/SerialWrapper.h"
 
 #include "../GameConfig.h"
 #include "../Field/Object/FieldSkyBox.h"
@@ -63,6 +64,7 @@ void GameScene::Init()
 	eventController->ReceiveFieldEventHandler(eventHandler);
 	particleManager = GameParticleManager::Instance();
 	bloomController = new BloomController();
+	//serial = new SerialWrapper(3);								//TODO:ポート番号を変えられるようにする
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
@@ -101,6 +103,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(eventController);
 	SAFE_DELETE(bloomController);
 	SAFE_DELETE(eventHandler);
+	//SAFE_DELETE(serial);
 
 	//パーティクル終了
 	particleManager->Uninit();
@@ -202,10 +205,9 @@ void GameScene::Draw()
 	particleManager->Draw();
 	ProfilerCPU::Instance()->End("Draw Particle");
 
-	// イベントビューア描画
-	eventController->DrawEventViewer();
-
 	//ビュアー描画
+	field->DrawViewer();
+	eventController->DrawEventViewer();
 	gameViewer->Draw();
 
 	ProfilerCPU::Instance()->EndLabel();

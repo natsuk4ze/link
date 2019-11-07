@@ -22,19 +22,19 @@ CountViewerDrawer::~CountViewerDrawer()
 }
 
 //=============================================================================
-// オブジェクトの頂点座標の設定　（カウンター専用）
+// 頂点座標の設定　（カウンター専用）
 //=============================================================================
-void CountViewerDrawer::SetVertex(int placeCount, float placeInterval)
+void CountViewerDrawer::SetVertexPos(int placeCount, float placeInterval)
 {
 	// 頂点座標の設定
 	vertexWk[0].vtx = D3DXVECTOR3(position.x + placeCount * placeInterval, position.y, 0.0f) 
-		+ D3DXVECTOR3(-size.x, -size.y, 0.0f);
+		+ D3DXVECTOR3(-size.x/2, -size.y/2, 0.0f);
 	vertexWk[1].vtx = D3DXVECTOR3(position.x + placeCount * placeInterval, position.y, 0.0f) 
-		+ D3DXVECTOR3(size.x, -size.y, 0.0f);
+		+ D3DXVECTOR3(size.x/2, -size.y/2, 0.0f);
 	vertexWk[2].vtx = D3DXVECTOR3(position.x + placeCount * placeInterval, position.y, 0.0f) 
-		+ D3DXVECTOR3(-size.x, size.y, 0.0f);
+		+ D3DXVECTOR3(-size.x/2, size.y/2, 0.0f);
 	vertexWk[3].vtx = D3DXVECTOR3(position.x + placeCount * placeInterval, position.y, 0.0f) 
-		+ D3DXVECTOR3(size.x, size.y, 0.0f);
+		+ D3DXVECTOR3(size.x/2, size.y/2, 0.0f);
 }
 
 //=============================================================================
@@ -66,8 +66,8 @@ void CountViewerDrawer::DrawCounter(int baseNumber, int parameterBox, int placeM
 		num = parameterBox % (int)(pow(baseNumber, (placeMax - nCntPlace)))
 			/ (int)(pow(baseNumber, (placeMax - nCntPlace - 1)));
 
-		Draw();
-		SetVertex(nCntPlace, intervalNumberScr);
+		this->Draw();
+		this->SetVertexPos(nCntPlace, intervalNumberScr);
 		SetTexture(num, intervalNumberTex);
 	}
 }
@@ -89,4 +89,21 @@ float CountViewerDrawer::HopNumber(float sizeY, float initSizeY, float hopValue)
 	}
 
 	return sizeY;
+}
+
+//=============================================================================
+// 描画処理
+//=============================================================================
+void CountViewerDrawer::Draw()
+{
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+	// 頂点フォーマットの設定
+	pDevice->SetFVF(FVF_VERTEX_2D);
+
+	// テクスチャの設定
+	pDevice->SetTexture(0, texture);
+
+	// ポリゴンの描画
+	pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_POLYGON, vertexWk, sizeof(VERTEX_2D));
 }

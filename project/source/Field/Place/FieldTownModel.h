@@ -39,17 +39,8 @@ namespace Field::Model
 		//出口追加処理
 		void AddGate(const PlaceModel* gate);
 
-		//出てくる人数の取得処理
-		float DepatureNum();
-
-		//出口数取得処理
-		int GateNum();
-
 		//リンクレベル取得処理
 		int LinkLevel();
-
-		//発展度取得処理
-		float DevelopmentLevel();
 
 		//繋がっている街を探す処理
 		void FindLinkedTown();
@@ -62,6 +53,9 @@ namespace Field::Model
 		
 		//経路追加処理
 		void AddLinkedTown(const PlaceModel *place);
+
+		// 情報取得処理
+		PlaceData GetPlaceData();
 
 	private:
 		static const float BaseDepatureNum;		//基準となる出発数
@@ -78,9 +72,6 @@ namespace Field::Model
 
 		//リンクレベルバイアス
 		int biasLinkLevel;
-
-		//発展度
-		float developmentLevel;
 
 		//フレームカウンタ
 		int cntFrame;

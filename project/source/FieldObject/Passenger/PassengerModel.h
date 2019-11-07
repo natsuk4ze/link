@@ -29,7 +29,7 @@ private:
 	std::function<void(const D3DXVECTOR3&)> *callbackToAlong;
 
 public:
-	PassengerModel(const std::deque<D3DXVECTOR3>& root, std::function<void(const D3DXVECTOR3&)> *callback);
+	PassengerModel(const std::deque<D3DXVECTOR3>& root, Field::FieldLevel level, std::function<void(const D3DXVECTOR3&)> *callback);
 	~PassengerModel();
 
 	// 更新、描画
@@ -40,9 +40,23 @@ public:
 	bool IsActive();
 
 	// アクターのセット
-	void SetActor(const std::deque<D3DXVECTOR3>& root);
+	void SetActor(const std::deque<D3DXVECTOR3>& root, Field::FieldLevel level);
 
+	// 曲がり角の検索
 	D3DXVECTOR3 FindDestination();
+
+	// アクターの座標をフィールド座標に変換して返す
+	Field::FieldPosition GetFieldPosition();
+
+	// アクターのメッシュ切り替え
+	void ChangeMesh(const char* tag);
+
+	// アクターのメッシュのタイプを取得
+	PassengerActor::State GetType();
+
+	// アクターのタグを変更
+	void SetType(PassengerActor::State next);
+
 };
 
 #endif

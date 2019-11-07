@@ -5,6 +5,7 @@
 //
 //=============================================================================
 #include "../../../../main.h"
+#include "../../../../Framework/Math/TMath.h"
 #include "EventMessage.h"
 #include "EventTelop.h"
 #include "EventViewer.h"
@@ -21,14 +22,12 @@
 //*****************************************************************************
 EventViewer::EventViewer()
 {
-	eventViewer.push_back(eventTelop = new EventTelop());
-
 	for (int i = 0; i < messageMax; i++)
 	{
 		eventViewer.push_back(eventMessage[i] = new EventMessage());
 	}
 
-	eventViewerMax = eventViewer.size();
+	eventViewer.push_back(eventTelop = new EventTelop());
 }
 
 //*****************************************************************************
@@ -36,6 +35,12 @@ EventViewer::EventViewer()
 //*****************************************************************************
 EventViewer::~EventViewer()
 {
+	//メモリを解放
+	for (unsigned int i = 0; i < eventViewer.size(); i++)
+	{
+		SAFE_DELETE(eventViewer[i]);
+	}
+
 	//インスタンスを入れた配列をクリア
 	eventViewer.clear();
 }
@@ -45,16 +50,29 @@ EventViewer::~EventViewer()
 //=============================================================================
 void EventViewer::Update()
 {
-	for (int i = 0; i < eventViewerMax; i++)
+	for (unsigned int i = 0; i < eventViewer.size(); i++)
 	{
 		eventViewer[i]->Update();
 	}
+
+	PlayMessage();
 
 #ifdef _DEBUG
 
 	if (Keyboard::GetTrigger(DIK_M))
 	{
 		SetEventMessage("イベント発生！");
+	}
+
+
+	if (Keyboard::GetTrigger(DIK_T))
+	{
+		SetEventTelop(eventTelop->Singularity, nullptr);
+	}
+
+	if (Keyboard::GetTrigger(DIK_Y))
+	{
+		SetEventTelop(eventTelop->AI_Strike, nullptr);
 	}
 
 	Debug::Begin("EventViewer");
@@ -76,7 +94,7 @@ void EventViewer::Draw(void)
 	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 
-	for (int i = 0; i < eventViewerMax; i++)
+	for (unsigned int i = 0; i < eventViewer.size(); i++)
 	{
 		eventViewer[i]->Draw();
 	}
@@ -90,43 +108,59 @@ void EventViewer::Draw(void)
 //=============================================================================
 void EventViewer::CountMessage(void)
 {
-	//セットカウントをカウントアップ
-	messageSetCnt++;
+	//メッセージカウンターを0からmessageMexまででラップアラウンド
+	Math::WrapAround(0, messageMax, messageSetCnt);
 
-	if (messageSetCnt != 1)
+	if (messageSetCnt != 0)
 	{
 		//ひとつ前のメッセージが再生終了してたならカウントリセット
-		if (!eventMessage[messageSetCnt - 2]->isPlaying)
+		if (!eventMessage[messageSetCnt - 1]->isPlaying)
 		{
-			messageSetCnt = 1;
+			messageSetCnt = 0;
 		}
 	}
 
-	if (messageSetCnt > messageMax)
-	{
-		messageSetCnt = 1;
-	}
+	//セットカウントをカウントアップ
+	messageSetCnt++;
 }
 
 //=============================================================================
-// イベント発生メッセージを設置(*仮実装)
+// メッセージ再生
 //=============================================================================
-void EventViewer::SetEventMessage(const std::string Message)
+void EventViewer::PlayMessage(void)
+{
+	//メッセージがなかったらリターン
+	if (messageContainer.empty()) return;
+
+	//最後のメッセージがプレイ中なら終わるまでリターン
+	if (eventMessage[messageMax - 1]->isPlaying) return;
+
+	//メッセージをカウント
+	CountMessage();
+
+	//イベントメッセージをセット
+	eventMessage[messageSetCnt - 1]->SetEventMessage(messageContainer[0], messageSetCnt);
+
+	//メッセージコンテナの先頭を削除
+	messageContainer.erase(messageContainer.begin());
+}
+
+//=============================================================================
+// イベント発生メッセージを設置
+//=============================================================================
+void EventViewer::SetEventMessage(const std::string message)
 {
 	// イベントメッセージがない
-	if (Message.empty())
-	{
-		return;
-	}
+	if (message.empty()) return;
 
-	CountMessage();
-	eventMessage[messageSetCnt - 1]->SetEventMessage(Message, messageSetCnt);
+	//メッセージをコンテナの末尾に追加
+	messageContainer.push_back(message);
 }
 
 //=============================================================================
 // イベント発生テロップを設置
 //=============================================================================
-void EventViewer::SetEventTelop(TelopID id, std::function<void(void)> Callback)
+void EventViewer::SetEventTelop(EventTelop::TelopID id, std::function<void(void)> Callback)
 {
 	eventTelop->Set(id, Callback);
 }

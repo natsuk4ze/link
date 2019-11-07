@@ -83,7 +83,7 @@ void AILevelDecreaseEvent::Init()
 	UFO = new UFOActor(UFOPos, Scale, "UFO");
 
 	// テロップ設置
-	eventViewer->SetEventTelop(NegativeEvent01, [&]()
+	eventViewer->SetEventTelop(EventTelop::Alien, [&]()
 	{
 		Camera::TranslationPlugin::Instance()->Move(TownPos, 30, [&]() {UFODebutStart(); });
 	});

@@ -120,7 +120,6 @@
     <ClInclude Include="source\Scene\ResultScene.h" />
     <ClInclude Include="source\Scene\TitleScene.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.h" />
-    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\countviewerdrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\BaseViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h" />
@@ -211,6 +210,12 @@
     <ClInclude Include="source\Event\EventActor\EventActorBase.h" />
     <ClInclude Include="source\Event\EventActor\UFOActor.h" />
     <ClInclude Include="source\Event\EventActor\PlanetActor.h" />
+    <ClInclude Include="source\Field\Object\WorldBackGroundContainer.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.h" />
+    <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldTelop.h" />
+    <ClInclude Include="source\Field\Object\SpaceBackGroundContainer.h" />
+    <ClInclude Include="source\Effect\Game\SpaceTear.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -405,6 +410,11 @@
     <ClCompile Include="source\Event\EventActor\EventActorBase.cpp" />
     <ClCompile Include="source\Event\EventActor\UFOActor.cpp" />
     <ClCompile Include="source\Event\EventActor\PlanetActor.cpp" />
+    <ClCompile Include="source\Field\Object\WorldBackGroundContainer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldTelop.cpp" />
+    <ClCompile Include="source\Field\Object\SpaceBackGroundContainer.cpp" />
+    <ClCompile Include="source\Effect\Game\SpaceTear.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

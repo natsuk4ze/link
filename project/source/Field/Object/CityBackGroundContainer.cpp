@@ -51,11 +51,6 @@ namespace Field::Actor
 	***************************************/
 	void CityBackGroundContainer::Update()
 	{
-		for (auto&& ground : groundContainer)
-		{
-			ground->Update();
-		}
-
 		for (auto&& river : riverContainer)
 		{
 			river->Update();
@@ -155,5 +150,14 @@ namespace Field::Actor
 			}
 		}
 #endif
+	}
+
+	/**************************************
+	ŠC”»’è
+	***************************************/
+	bool CityBackGroundContainer::IsSeaPlace(const FieldPosition& position) const
+	{
+		//ŠC‚Í‘¶İ‚µ‚È‚¢‚Ì‚Å–³ğŒ‚Åfalse
+		return false;
 	}
 }

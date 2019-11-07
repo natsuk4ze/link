@@ -25,7 +25,7 @@ static const int DefaultDebuffCount = 270;
 static const float hopNumValue = 30.0f;
 
 //数字の初期サイズ
-static const D3DXVECTOR3 initNumSize = D3DXVECTOR3(42.0f, 42.0f, 0.0f);
+static const D3DXVECTOR3 initNumSize = D3DXVECTOR3(84.0f, 84.0f, 0.0f);
 
 //*****************************************************************************
 // コンストラクタ
@@ -36,43 +36,39 @@ ItemStockViewer::ItemStockViewer() :
 	//数字
 	num = new CountViewerDrawer();
 	num->LoadTexture("data/TEXTURE/Viewer/GameViewer/StockViewer/Number.png");
-	num->MakeVertex();
 	num->size = initNumSize;
 	num->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	num->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.21f, SCREEN_HEIGHT / 10 * 3.5f, 0.0f);
-	num->SetColor(SET_COLOR_NOT_COLORED);
-	num->intervalNumberScr = 42.0f;
-	num->intervalNumberTex = 0.10f;
+	num->intervalPosScr = 42.0f;
+	num->intervalPosTex = 0.10f;
 	num->placeMax = 2;
 	num->baseNumber = 10;
 	num->isHopped = false;
 	num->radian = 0;
+	num->MakeVertex();
 
 	//ストックアイコン
 	icon = new BaseViewerDrawer();
 	icon->LoadTexture("data/TEXTURE/Viewer/GameViewer/StockViewer/Drill.png");
-	icon->MakeVertex();
-	icon->size = D3DXVECTOR3(180.0f, 135.0f, 0.0f);
+	icon->size = D3DXVECTOR3(360.0f, 300.0f, 0.0f);
 	icon->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	icon->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.7f, SCREEN_HEIGHT / 10 * 3.5f, 0.0f);
-	icon->SetColor(SET_COLOR_NOT_COLORED);
+	icon->MakeVertex();
 
 	//バツアイコン
 	BanIcon = new BaseViewerDrawer();
 	BanIcon->LoadTexture("data/TEXTURE/Viewer/GameViewer/StockViewer/BanStock.png");
-	BanIcon->size = D3DXVECTOR3(200.0f, 200.0f, 0.0f);
+	BanIcon->size = D3DXVECTOR3(400.0f, 400.0f, 0.0f);
 	BanIcon->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	BanIcon->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.5f, SCREEN_HEIGHT / 10 * 3.5f, 0.0f);
-	BanIcon->SetColor(SET_COLOR_NOT_COLORED);
 	BanIcon->MakeVertex();
 
 	//バツアイコン
 	BanIcon_White = new BaseViewerDrawer();
 	BanIcon_White->LoadTexture("data/TEXTURE/Viewer/GameViewer/StockViewer/BanStock_White.png");
-	BanIcon_White->size = D3DXVECTOR3(200.0f, 200.0f, 0.0f);
+	BanIcon_White->size = D3DXVECTOR3(400.0f, 400.0f, 0.0f);
 	BanIcon_White->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	BanIcon_White->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.5f, SCREEN_HEIGHT / 10 * 3.5f, 0.0f);
-	BanIcon_White->SetColor(SET_COLOR_NOT_COLORED);
 	BanIcon_White->MakeVertex();
 }
 
@@ -102,12 +98,11 @@ void ItemStockViewer::Update(void)
 void ItemStockViewer::Draw(void)
 {
 	//アイコン
-	icon->SetVertex();
 	icon->Draw();
 
 	//数字
 	num->DrawCounter(num->baseNumber, parameterBox, num->placeMax,
-		num->intervalNumberScr, num->intervalNumberTex);
+		num->intervalPosScr, num->intervalPosTex);
 
 	// バツアイコン
 	if (InBanStock)
@@ -152,8 +147,8 @@ void ItemStockViewer::Hop(void)
 			BanIcon->size = D3DXVECTOR3(Size, Size, 0.0f);
 			BanIcon_White->size = D3DXVECTOR3(Size, Size, 0.0f);
 			// BaseViewerDrawerの頂点設置関数
-			BanIcon->SetVertex();
-			BanIcon_White->SetVertex();
+			BanIcon->SetVertexPos();
+			BanIcon_White->SetVertexPos();
 		}
 		else
 		{

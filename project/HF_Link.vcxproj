@@ -128,7 +128,11 @@
     <ClInclude Include="source\Effect\Game\ColorfulDebris.h" />
     <ClInclude Include="source\Effect\Game\Darkness.h" />
     <ClInclude Include="source\Effect\Game\MeteorFire.h" />
+<<<<<<< HEAD
     <ClInclude Include="source\Effect\Game\MoveTail.h" />
+=======
+    <ClInclude Include="source\Effect\Game\SpaceTear.h" />
+>>>>>>> e968d1fe6e1d9811e2658465fdf1f19208ca0410
     <ClInclude Include="source\Effect\Game\TownExplosion.h" />
     <ClInclude Include="source\Effect\Game\ExplosionFlare.h" />
     <ClInclude Include="source\Effect\Game\MeteorExplosion.h" />
@@ -192,6 +196,8 @@
     <ClInclude Include="source\Field\Object\FieldGround.h" />
     <ClInclude Include="source\Field\Controller\FieldInput.h" />
     <ClInclude Include="source\Field\Object\FieldSkyBox.h" />
+    <ClInclude Include="source\Field\Object\SpaceBackGroundContainer.h" />
+    <ClInclude Include="source\Field\Object\WorldBackGroundContainer.h" />
     <ClInclude Include="source\Field\PlaceActorController.h" />
     <ClInclude Include="source\Field\Place\FieldJunctionModel.h" />
     <ClInclude Include="source\Field\Place\FieldPlaceContainer.h" />
@@ -218,12 +224,14 @@
     <ClInclude Include="source\Scene\TitleScene.h" />
     <ClInclude Include="source\Viewer\Framework\BaseViewer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.h" />
-    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\countviewerdrawer.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\BeatGameViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldTelop.h" />
+    <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\LevelViewer.h" />
@@ -327,7 +335,11 @@
     <ClCompile Include="source\Effect\Game\ColorfulDebris.cpp" />
     <ClCompile Include="source\Effect\Game\Drakness.cpp" />
     <ClCompile Include="source\Effect\Game\MeteorFire.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="source\Effect\Game\MoveTail.cpp" />
+=======
+    <ClCompile Include="source\Effect\Game\SpaceTear.cpp" />
+>>>>>>> e968d1fe6e1d9811e2658465fdf1f19208ca0410
     <ClCompile Include="source\Effect\Game\TownExplosion.cpp" />
     <ClCompile Include="source\Effect\Game\ExplosionFlare.cpp" />
     <ClCompile Include="source\Effect\Game\MeteorExplosion.cpp" />
@@ -390,6 +402,8 @@
     <ClCompile Include="source\Field\Object\FieldGround.cpp" />
     <ClCompile Include="source\Field\Controller\FieldInput.cpp" />
     <ClCompile Include="source\Field\Object\FieldSkyBox.cpp" />
+    <ClCompile Include="source\Field\Object\SpaceBackGroundContainer.cpp" />
+    <ClCompile Include="source\Field\Object\WorldBackGroundContainer.cpp" />
     <ClCompile Include="source\Field\PlaceActorController.cpp" />
     <ClCompile Include="source\Field\Place\FieldJunctionModel.cpp" />
     <ClCompile Include="source\Field\Place\FieldPlaceContainer.cpp" />
@@ -419,6 +433,8 @@
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventMessage.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventTelop.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldTelop.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\GameViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\LevelViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\ItemStockViewer.cpp" />

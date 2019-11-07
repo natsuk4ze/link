@@ -12,8 +12,7 @@
 ***************************************/
 Field::Actor::BackGroundContainer::BackGroundContainer()
 {
-	groundContainer.reserve(2000);
-	riverContainer.reserve(500);
+
 }
 
 /**************************************

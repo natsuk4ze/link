@@ -38,15 +38,16 @@ public:
 	D3DXVECTOR3	position;
 	D3DXVECTOR3	rotation;
 	D3DXVECTOR3	size;
-	D3DXVECTOR3	colliderSize;
 
 	void LoadTexture(const char *path);
 	void Draw();
+	//前のフレームワークならこっちを使う
+	void DrawOrigin();
 	void SetAlpha(float alpha);
 	void SetColor(D3DXCOLOR color);
 
 	virtual void MakeVertex();
-	virtual void SetVertex();
+	virtual void SetVertexPos();
 	virtual void SetTexture(int divX, int divY, int pattern);
 };
 

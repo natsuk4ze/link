@@ -19,7 +19,7 @@ public:
 	~RotateViewerDrawer();
 
 	void MakeVertex();
-	void SetVertex();
+	void SetVertexPos();
 	void CreateCircle();
 
 private:

@@ -19,7 +19,8 @@ namespace Field
 	class Const
 	{
 	public:
-		static const char* FieldDataFile[];
+		static const char* FieldDataFile[];		//PlaceデータのCSVファイル名
+		static const char* FieldLayerFile[];	//陸地、海データのCSVファイル名
 
 	private:
 		Const() {}
@@ -34,6 +35,15 @@ namespace Field
 		City,	// 都市レベル
 		World,	// 国レベル
 		Space,	// 星レベル
+	};
+
+	/**************************************
+	陸、海列挙子
+	***************************************/
+	enum FieldLayer
+	{
+		Ground = 0,		//陸
+		Sea = -1		//海
 	};
 
 	/**************************************
@@ -52,6 +62,11 @@ namespace Field
 			return { x * 10.0f, 0.0f, z * -10.0f };
 		}
 
+		static FieldPosition ConvertToFieldPosition(const D3DXVECTOR3& pos)
+		{
+			return { (int)pos.x / 10, abs((int)pos.z / 10) };
+		}
+
 		bool operator <(const FieldPosition& rhs) const
 		{
 			return std::tie(x, z) < std::tie(rhs.x, rhs.z);
@@ -60,6 +75,11 @@ namespace Field
 		FieldPosition operator + (const FieldPosition& rhs) const
 		{
 			return FieldPosition(x + rhs.x, z + rhs.z);
+		}
+
+		bool operator ==(const FieldPosition& rhs) const
+		{
+			return x == rhs.x && z == rhs.z;
 		}
 
 	};
@@ -182,6 +202,14 @@ namespace Field
 
 		return TjunctionType::ExceptRight;
 	}
+
+	// 各PlaceActorごとのデータを取得するための構造体
+	struct PlaceData
+	{
+		FieldPosition key;
+		int townLevel;
+	};
+
 }
 
 #endif

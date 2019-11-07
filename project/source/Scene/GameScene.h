@@ -43,6 +43,7 @@ class GameParticleManager;
 class FieldEventHandler;
 class BloomController;
 class PlaceActor;
+class SerialWrapper;
 
 /**************************************
 クラス定義
@@ -86,6 +87,7 @@ private:
 	EventController *eventController;			//イベントコントローラー
 	GameParticleManager *particleManager;		//パーティクルマネージャ
 	FieldEventHandler* eventHandler;			//イベントハンドラ
+	SerialWrapper *serial;						//シリアル通信
 
 	int remainTime;								//制限時間
 
