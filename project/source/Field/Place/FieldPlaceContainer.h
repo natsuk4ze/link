@@ -80,7 +80,7 @@ namespace Field::Model
 		const PlaceModel* GetDestroyTarget();
 
 		//街を作れるプレイス取得
-		const PlaceModel* GetNonePlace();
+		const PlaceModel* GetNonePlace(std::vector<PlaceModel*>* ignoreList = nullptr);
 
 		//街破壊処理
 		void DestroyTown(const PlaceModel* target);
@@ -90,6 +90,9 @@ namespace Field::Model
 
 		//パッセンジャー出発ファンクタ設定
 		void SetDepartPassengerFanctor(const TownAction& action);
+
+		//すべての町の発展レベルを取得する
+		std::vector<PlaceData> GetAllTownLevel();
 
 #ifdef DEBUG_PLACEMODEL
 		void DrawDebug();

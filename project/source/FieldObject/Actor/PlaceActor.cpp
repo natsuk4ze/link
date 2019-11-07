@@ -24,7 +24,7 @@ PlaceActor::PlaceActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel) :
 	onCamera(true)
 {
 	// メッシュコンテナの作成
-	mesh = MeshContainer::Create();
+	mesh = new MeshContainer();
 
 	// ステータスセット
 	transform->SetPosition(pos);
@@ -37,7 +37,7 @@ PlaceActor::PlaceActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel) :
 //=====================================
 PlaceActor::~PlaceActor()
 {
-	SAFE_RELEASE(mesh);
+	SAFE_DELETE(mesh);
 }
 
 //=====================================

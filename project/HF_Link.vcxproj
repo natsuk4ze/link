@@ -127,6 +127,7 @@
     <ClInclude Include="source\Effect\Game\ColorfulDebris.h" />
     <ClInclude Include="source\Effect\Game\Darkness.h" />
     <ClInclude Include="source\Effect\Game\MeteorFire.h" />
+    <ClInclude Include="source\Effect\Game\SpaceTear.h" />
     <ClInclude Include="source\Effect\Game\TownExplosion.h" />
     <ClInclude Include="source\Effect\Game\ExplosionFlare.h" />
     <ClInclude Include="source\Effect\Game\MeteorExplosion.h" />
@@ -184,6 +185,7 @@
     <ClInclude Include="source\Field\Object\FieldGround.h" />
     <ClInclude Include="source\Field\Controller\FieldInput.h" />
     <ClInclude Include="source\Field\Object\FieldSkyBox.h" />
+    <ClInclude Include="source\Field\Object\SpaceBackGroundContainer.h" />
     <ClInclude Include="source\Field\Object\WorldBackGroundContainer.h" />
     <ClInclude Include="source\Field\PlaceActorController.h" />
     <ClInclude Include="source\Field\Place\FieldJunctionModel.h" />
@@ -321,6 +323,7 @@
     <ClCompile Include="source\Effect\Game\ColorfulDebris.cpp" />
     <ClCompile Include="source\Effect\Game\Drakness.cpp" />
     <ClCompile Include="source\Effect\Game\MeteorFire.cpp" />
+    <ClCompile Include="source\Effect\Game\SpaceTear.cpp" />
     <ClCompile Include="source\Effect\Game\TownExplosion.cpp" />
     <ClCompile Include="source\Effect\Game\ExplosionFlare.cpp" />
     <ClCompile Include="source\Effect\Game\MeteorExplosion.cpp" />
@@ -377,6 +380,7 @@
     <ClCompile Include="source\Field\Object\FieldGround.cpp" />
     <ClCompile Include="source\Field\Controller\FieldInput.cpp" />
     <ClCompile Include="source\Field\Object\FieldSkyBox.cpp" />
+    <ClCompile Include="source\Field\Object\SpaceBackGroundContainer.cpp" />
     <ClCompile Include="source\Field\Object\WorldBackGroundContainer.cpp" />
     <ClCompile Include="source\Field\PlaceActorController.cpp" />
     <ClCompile Include="source\Field\Place\FieldJunctionModel.cpp" />

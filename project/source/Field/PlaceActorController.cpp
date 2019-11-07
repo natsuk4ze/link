@@ -18,6 +18,7 @@
 
 #include "Object/CityBackGroundContainer.h"
 #include "Object/WorldBackGroundContainer.h"
+#include "Object/SpaceBackGroundContainer.h"
 
 #include "../FieldObject/Actor/CityActor.h"
 #include "../FieldObject/Actor/CrossJunctionActor.h"
@@ -65,6 +66,10 @@ namespace Field::Actor
 
 		case FieldLevel::World:
 			bgContainer = new WorldBackGroundContainer();
+			break;
+
+		case FieldLevel::Space:
+			bgContainer = new SpaceBackGroundContainer();
 			break;
 
 		default:
@@ -126,8 +131,6 @@ namespace Field::Actor
 	***************************************/
 	void PlaceActorController::Draw()
 	{
-		//NOTE:インスタンシングで描画するために結構いじるかも
-		bgContainer->Draw();
 
 		for (auto&& actor : actorContainer)
 		{
@@ -141,6 +144,8 @@ namespace Field::Actor
 
 		alongController->Draw();
 		passengerController->Draw();
+
+		bgContainer->Draw();
 	}
 
 	/**************************************
@@ -160,19 +165,20 @@ namespace Field::Actor
 		ResourceManager::Instance()->LoadMesh("Bridge-City", "data/MODEL/PlaceActor/bridge.x");
 		ResourceManager::Instance()->LoadMesh("Mountain-City", "data/MODEL/PlaceActor/mountain.x");
 		ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
-		ResourceManager::Instance()->LoadMesh("Car", "data/MODEL/PassengerActor/ToonCar.x");
 		ResourceManager::Instance()->LoadMesh("AlongCity", "data/MODEL/AlongActor/AlongActorCity.x");
 	
 		// FieldLevel = World
-		ResourceManager::Instance()->LoadMesh("Train", "data/MODEL/PassengerActor/ToonCar.x");
-		ResourceManager::Instance()->LoadMesh("Ship", "data/MODEL/PassengerActor/Boad.x");
 
 		// FieldLevel = Space
 		ResourceManager::Instance()->LoadMesh("Town-Space", "data/Model/PlaceActor/earth.x");
-		ResourceManager::Instance()->LoadMesh("SpaceShip", "data/MODEL/PassengerActor/Rocket.x");
+		ResourceManager::Instance()->LoadMesh("River-Space", "data/Model/PlaceActor/spaceTear.x");
 
 		//背景アクターをロード
 		bgContainer->Load();
+
+		// パッセンジャー
+		passengerController->LoadResource();
+		passengerController->LoadCSV(Field::Const::FieldLayerFile[0]);
 	}
 
 	/**************************************
@@ -303,6 +309,51 @@ namespace Field::Actor
 	float PlaceActorController::GetSideWayBonus() const
 	{
 		return bonusSideWay;
+	}
+
+	/**************************************
+	海かどうかの判定
+	***************************************/
+	bool PlaceActorController::IsSeaPlace(const FieldPosition & position) const
+	{
+		return bgContainer->IsSeaPlace(position);
+	}
+
+	/**************************************
+	新しい街作成
+	***************************************/
+	PlaceActor* PlaceActorController::CreateNewTown(const Model::PlaceModel * place)
+	{
+		//アクター生成
+		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
+		PlaceActor* actor = new CityActor(actorPos, currentLevel);
+
+		AddContainer(place->ID(), actor);
+		aStarController->OnChangePlace(place);
+
+		Tween::Scale(*actor, { 0.25f, 0.0f, 0.25f }, { 0.25f, 0.25f, 0.25f }, 60, EaseType::InCubic);
+
+		return actor;
+	}
+
+	/**************************************
+	アトランティス出現
+	***************************************/
+	void PlaceActorController::SetAtlantis(const Model::PlaceModel * place)
+	{
+		//街作成
+		const D3DXVECTOR3 InitOffset = Vector3::Down * 10.0f;
+		PlaceActor* townActor = CreateNewTown(place);
+
+		D3DXVECTOR3 actorPos = townActor->GetPosition();
+		Tween::Move(*townActor, actorPos + InitOffset, actorPos, 60, EaseType::InOutCirc);
+
+		//地面生成
+		WorldBackGroundContainer *worldBgContainer = dynamic_cast<WorldBackGroundContainer*>(bgContainer);
+		worldBgContainer->CreateAtlantis(place->GetPosition());
+
+		//パッセンジャー側に地形の変化を通知
+		passengerController->RewriteMap(place->GetPosition(), PassengerController::Geography::Ground);
 	}
 
 	/**************************************

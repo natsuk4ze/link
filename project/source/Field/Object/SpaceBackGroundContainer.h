@@ -1,22 +1,19 @@
 //=====================================
 //
-//WorldBackGroundContainer.h
-//機能:ワールドレベルの背景コンテナ
+//SpaceBackGroundContainer.h
+//機能:
 //Author:GP12B332 21 立花雄太
 //
 //=====================================
-#ifndef _WORLDBACKGROUNDCONTAINER_H_
-#define _WORLDBACKGROUNDCONTAINER_H_
+#ifndef _SPACEBACKGROUNDCONTAINER_H_
+#define _SPACEBACKGROUNDCONTAINER_H_
 
-#include "../../../main.h"
+#include "../.././GameMain.h"
 #include "BackGroundContainer.h"
-
-#include <vector>
 
 /**************************************
 前方宣言
 ***************************************/
-class PlaceActor;
 class InstancingMeshContainer;
 
 namespace Field::Actor
@@ -24,11 +21,11 @@ namespace Field::Actor
 	/**************************************
 	クラス定義
 	***************************************/
-	class WorldBackGroundContainer : public BackGroundContainer
+	class SpaceBackGroundContainer : public BackGroundContainer
 	{
 	public:
-		WorldBackGroundContainer();
-		~WorldBackGroundContainer();
+		SpaceBackGroundContainer();
+		~SpaceBackGroundContainer();
 
 		void Update();
 		void Draw();
@@ -37,13 +34,8 @@ namespace Field::Actor
 
 		bool IsSeaPlace(const FieldPosition& position) const;
 
-		void CreateAtlantis(const FieldPosition& position);
-
 	private:
-		InstancingMeshContainer *groundMesh;
-		InstancingMeshContainer *seaMesh;
-
-		std::vector<FieldPosition> seaMap;
+		InstancingMeshContainer * tearMesh;		//時空の裂け目のメッシュ
 	};
 }
 #endif

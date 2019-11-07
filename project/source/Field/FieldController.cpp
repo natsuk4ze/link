@@ -18,6 +18,7 @@
 #include "FieldEventHandler.h"
 #include "Controller\FieldDevelopper.h"
 #include "Controller\FieldInput.h"
+#include "../FieldObject/InfoController.h"
 
 #include "State/BuildRoad.h"
 #include "State/FieldControllerIdle.h"
@@ -71,6 +72,7 @@ namespace Field
 		developper = new FieldDevelopper(this);
 		input = new FieldInput(this);
 		placeContainer = new Model::PlaceContainer();
+		infoController = new InfoController();
 
 		//ステートマシン作成
 		fsm.resize(State::Max, NULL);
@@ -88,9 +90,6 @@ namespace Field
 
 		//ルートプロセッサ作成
 		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
-
-		//リソース読み込み
-		placeActController->LoadResource();
 
 		//制限時間初期化
 		//TODO:シーンを跨いで引き継げるようにする
@@ -116,6 +115,7 @@ namespace Field
 		SAFE_DELETE(placeActController);
 		SAFE_DELETE(developper);
 		SAFE_DELETE(input);
+		SAFE_DELETE(infoController);
 
 		//デリゲート削除
 		SAFE_DELETE(onConnectTown);
@@ -138,6 +138,8 @@ namespace Field
 		operateContainer->Update();
 
 		placeActController->Update();
+
+		infoController->Update();
 	}
 
 	/**************************************
@@ -170,6 +172,8 @@ namespace Field
 
 		placeActController->Draw();
 
+		infoController->Draw();
+
 #ifdef DEBUG_PLACEMODEL
 		placeContainer->DrawDebug();
 #endif
@@ -184,6 +188,9 @@ namespace Field
 	***************************************/
 	void FieldController::Load()
 	{
+		//リソース読み込み
+		placeActController->LoadResource();
+
 		placeContainer->LoadCSV(Const::FieldDataFile[currentLevel]);
 
 		//アクター生成
@@ -284,12 +291,14 @@ namespace Field
 		handler.functerInt[Handler::FuncterID_int::AdjustLinkAll] = [&](int num)
 		{
 			placeContainer->AddAllLinkLevel(num);
+			SetLinkLevelInfo();
 		};
 
 		//単体リンクレベル調整ファンクタ
 		handler.functerInt[Handler::FuncterID_int::AdjustLink] = [&](int num)
 		{
 			placeContainer->AddLinkLevel(num);
+			SetLinkLevelInfo();
 		};
 
 		//アイテムストック加算ファンクタ
@@ -308,7 +317,7 @@ namespace Field
 		handler.functerPlace[Handler::FuncterID_Place::Create] = [&](auto place)
 		{
 			placeContainer->CreateTown(place);
-			placeActController->SetActor(place);
+			placeActController->CreateNewTown(place);
 		};
 
 		//街破壊ファンクタ
@@ -359,6 +368,17 @@ namespace Field
 		{
 			return placeContainer->GetNonePlace();
 		};
+
+		//アトランティス作成地の取得
+		auto getAtlantis = std::bind(&FieldController::GetAtlantisPlace, this);
+		handler.functerPlaceReturn[Handler::FuncterID_PlaceReturn::Atlantis] = getAtlantis;
+
+		//アトランティス出現
+		handler.functerPlace[Handler::FuncterID_Place::SetAtlantis] = [&](auto place)
+		{
+			placeContainer->CreateTown(place);
+			placeActController->SetAtlantis(place);
+		};
 	}
 
 	/**************************************
@@ -406,5 +426,34 @@ namespace Field
 	{
 		placeContainer->OnConnectedTown(town, gate);
 		placeActController->OnConnectedTown(town);
+	}
+
+	/**************************************
+	アトランティス予定地取得
+	***************************************/
+	const Model::PlaceModel * FieldController::GetAtlantisPlace()
+	{
+		std::vector<Model::PlaceModel*> ignoreList;
+
+		while(true)
+		{
+			const Model::PlaceModel* target = placeContainer->GetNonePlace();
+
+			if (placeActController->IsSeaPlace(target->GetPosition()))
+				return target;
+
+			ignoreList.push_back(const_cast<Model::PlaceModel*>(target));
+		}
+
+		return nullptr;
+	}
+
+	/**************************************
+	リンクレベル情報をInfoControllerにセットする
+	***************************************/
+	void FieldController::SetLinkLevelInfo()
+	{
+		auto infoLinkLevel = placeContainer->GetAllTownLevel();
+		infoController->SetAllLinkLevel(infoLinkLevel);
 	}
 }

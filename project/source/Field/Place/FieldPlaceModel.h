@@ -67,6 +67,9 @@ namespace Field::Model
 		//同じルートに属しているか
 		bool IsSameRoute(PlaceModel* place) const;
 
+		//空き地（Noneかつ周囲4マスに街がない
+		bool IsVacant() const;
+
 		//連結対象の取得
 		std::vector<PlaceModel*> GetConnectTargets() const;		//TODO:連結対象の複数化
 

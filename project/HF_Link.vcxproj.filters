@@ -206,6 +206,8 @@
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldTelop.h" />
+    <ClInclude Include="source\Field\Object\SpaceBackGroundContainer.h" />
+    <ClInclude Include="source\Effect\Game\SpaceTear.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -395,6 +397,8 @@
     <ClCompile Include="source\Field\Object\WorldBackGroundContainer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldTelop.cpp" />
+    <ClCompile Include="source\Field\Object\SpaceBackGroundContainer.cpp" />
+    <ClCompile Include="source\Effect\Game\SpaceTear.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

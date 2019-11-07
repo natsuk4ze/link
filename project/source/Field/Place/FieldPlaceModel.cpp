@@ -250,6 +250,27 @@ namespace Field::Model
 	}
 
 	/**************************************
+	空き地判定
+	***************************************/
+	bool PlaceModel::IsVacant() const
+	{
+		if (type != PlaceType::None)
+			return false;
+
+		//周囲4マスに街がある場合はfalse
+		for (auto&& adjacency : adjacencies)
+		{
+			if (adjacency == nullptr)
+				continue;
+
+			if (adjacency->IsType(PlaceType::Town))
+				return false;
+		}
+
+		return true;
+	}
+
+	/**************************************
 	連結相手の取得
 	***************************************/
 	std::vector<PlaceModel*> PlaceModel::GetConnectTargets() const

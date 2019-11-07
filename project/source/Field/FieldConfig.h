@@ -77,6 +77,11 @@ namespace Field
 			return FieldPosition(x + rhs.x, z + rhs.z);
 		}
 
+		bool operator ==(const FieldPosition& rhs) const
+		{
+			return x == rhs.x && z == rhs.z;
+		}
+
 	};
 
 	/**************************************
@@ -197,6 +202,14 @@ namespace Field
 
 		return TjunctionType::ExceptRight;
 	}
+
+	// 各PlaceActorごとのデータを取得するための構造体
+	struct PlaceData
+	{
+		FieldPosition key;
+		int townLevel;
+	};
+
 }
 
 #endif

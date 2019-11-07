@@ -54,6 +54,9 @@ public:
 	// アクターのメッシュのタイプを取得
 	PassengerActor::State GetType();
 
+	// アクターのタグを変更
+	void SetType(PassengerActor::State next);
+
 };
 
 #endif

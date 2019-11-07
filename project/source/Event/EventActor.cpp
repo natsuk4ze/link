@@ -17,7 +17,7 @@
 EventActor::EventActor(D3DXVECTOR3 Pos, D3DXVECTOR3 Scale, const char* MeshTag)
 {
 	// メッシュコンテナの作成
-	mesh = MeshContainer::Create();
+	mesh = new MeshContainer();
 	ResourceManager::Instance()->GetMesh(MeshTag, mesh);
 
 	// ステータスセット

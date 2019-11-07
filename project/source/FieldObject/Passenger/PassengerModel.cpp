@@ -173,3 +173,11 @@ PassengerActor::State PassengerModel::GetType()
 {
 	return actor->GetType();
 }
+
+//=====================================
+// アクターのタグを変更
+//=====================================
+void PassengerModel::SetType(PassengerActor::State next)
+{
+	actor->SetType(next);
+}
