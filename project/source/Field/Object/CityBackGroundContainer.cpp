@@ -111,7 +111,7 @@ namespace Field::Actor
 			for (auto&& str : subStr)
 			{
 				PlaceType type = Model::IntToPlaceType(std::stoi(str));
-				
+
 				FieldPosition position = Field::FieldPosition(x, z);
 
 				if (type == PlaceType::River)
@@ -194,12 +194,11 @@ namespace Field::Actor
 			{
 				int flowDir = std::stoi(str);
 
-				if (flowDir == -1)
-					continue;
-
-				FieldPosition position = Field::FieldPosition(x, z);
-				out.emplace(position, flowDir);
-
+				if (flowDir != -1)
+				{
+					FieldPosition position = Field::FieldPosition(x, z);
+					out.emplace(position, flowDir);
+				}
 				x++;
 			}
 

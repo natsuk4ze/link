@@ -25,8 +25,8 @@ class RiverActor :
 public:
 	enum FlowDirection
 	{
-		None,
-		Forward = 1,
+		None = -1,
+		Forward,
 		Right,
 		Back,
 		Left
@@ -45,6 +45,8 @@ public:
 private:
 	static const int AnimationPeriod;
 	static const float MaxWaveHeight;
+	static const float FlowSpeed;
+
 	static float heightWave;
 	static int cntWaveAnimation;
 

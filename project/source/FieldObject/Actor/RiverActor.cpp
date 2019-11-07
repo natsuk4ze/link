@@ -15,6 +15,8 @@
 //=====================================
 const int RiverActor::AnimationPeriod = 360;
 const float RiverActor::MaxWaveHeight = 0.015f;
+const float RiverActor::FlowSpeed = 0.02f;
+
 float RiverActor::heightWave = 0.0f;
 int RiverActor::cntWaveAnimation = 0;
 
@@ -62,7 +64,25 @@ void RiverActor::Update()
 
 	transform->Move(Vector3::Up * heightWave);
 
-	uv.y += 0.005f;
+	switch (direction)
+	{
+	case FlowDirection::Back:
+		uv.y = Math::WrapAround(0.0f, 1.0f, uv.y + FlowSpeed);
+		break;
+
+	case FlowDirection::Forward:
+		uv.y = Math::WrapAround(0.0f, 1.0f, uv.y - FlowSpeed);
+		break;
+
+	case FlowDirection::Right:
+		uv.x = Math::WrapAround(0.0f, 1.0f, uv.x + FlowSpeed);
+		break;
+
+	case FlowDirection::Left:
+		uv.x = Math::WrapAround(0.0f, 1.0f, uv.x - FlowSpeed);
+		break;
+	}
+
 }
 
 //=====================================
