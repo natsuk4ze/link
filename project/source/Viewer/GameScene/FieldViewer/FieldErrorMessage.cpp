@@ -5,8 +5,6 @@
 //
 //=============================================================================
 #include "../../../../main.h"
-#include "../../../../Framework/Math/Easing.h"
-#include "../../../../Framework/Math/TMath.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "FieldErrorMessage.h"
 

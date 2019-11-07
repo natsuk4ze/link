@@ -10,12 +10,14 @@
 #include <vector>
 #include "FieldTelop.h"
 #include "FieldErrorMessage.h"
+#include "OperationExplanationViewer.h"
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
 class FieldTelop;
 class FieldErrorMessage;
+class OperationExplanationViewer;
 class BaseViewer;
 
 //*****************************************************************************
@@ -36,11 +38,21 @@ public:
 	//フィールドエラーメッセージをセット
 	void SetFieldErroMessage(FieldErrorMessage::ErroID id);
 
+	//操作説明ビューアをセット
+	void SetOperationExplanation(
+		//Zキーの操作に表示する説明ID
+		OperationExplanationViewer::OperationID id0, 
+		//Xキーの操作に表示する説明ID
+		OperationExplanationViewer::OperationID id1, 
+		//Spaceキーの操作に表示する説明ID
+		OperationExplanationViewer::OperationID id2);
+
 	std::vector <BaseViewer*> fieldViewer;
 
 private:
 	FieldTelop * fieldTelop;
 	FieldErrorMessage * fieldErroMessage;
+	OperationExplanationViewer *operationExplanation;
 };
 
 #endif

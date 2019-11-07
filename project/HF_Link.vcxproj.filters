@@ -209,6 +209,7 @@
     <ClInclude Include="source\Field\Object\SpaceBackGroundContainer.h" />
     <ClInclude Include="source\Effect\Game\SpaceTear.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.h" />
+    <ClInclude Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -401,6 +402,7 @@
     <ClCompile Include="source\Field\Object\SpaceBackGroundContainer.cpp" />
     <ClCompile Include="source\Effect\Game\SpaceTear.cpp" />
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

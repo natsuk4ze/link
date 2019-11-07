@@ -1,7 +1,7 @@
 
 //=============================================================================
 //
-// イベントテロップ処理 [FieldErrorMessage.h]
+// フィールドエラーメッセージ処理 [FieldErrorMessage.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
@@ -9,9 +9,6 @@
 #define _FIELD_ERRO_MESSAGE_H_
 
 #include "../../Framework/BaseViewer.h"
-#include "../../../../Framework/Pattern/Delegate.h"
-#include <vector>
-#include <functional>
 
 //*****************************************************************************
 // 前方宣言
@@ -27,7 +24,7 @@ public:
 	FieldErrorMessage();
 	~FieldErrorMessage();
 
-	//テロップの種類
+	//メッセージの種類
 	enum ErroID
 	{
 		//街／道とつなっがていません
@@ -47,6 +44,8 @@ public:
 	void Set(ErroID id);
 
 private:
+
+	//テキスト
 	BaseViewerDrawer *text;
 
 	//再生

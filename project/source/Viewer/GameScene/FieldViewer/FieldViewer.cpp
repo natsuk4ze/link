@@ -7,6 +7,7 @@
 #include "../../../../main.h"
 #include "FieldTelop.h"
 #include "FieldErrorMessage.h"
+#include "OperationExplanationViewer.h"
 #include "FieldViewer.h"
 
 #ifdef _DEBUG
@@ -21,6 +22,7 @@ FieldViewer::FieldViewer()
 {
 	fieldViewer.push_back(fieldTelop = new FieldTelop());
 	fieldViewer.push_back(fieldErroMessage = new FieldErrorMessage());
+	fieldViewer.push_back(operationExplanation = new OperationExplanationViewer());
 }
 
 //*****************************************************************************
@@ -61,6 +63,11 @@ void FieldViewer::Update()
 		SetFieldErroMessage(fieldErroMessage->NotConnection);
 	}
 
+	SetOperationExplanation(
+		operationExplanation->Z_Cancel,
+		operationExplanation->Z_None,
+		operationExplanation->X_Develop);
+
 #endif
 
 }
@@ -100,4 +107,15 @@ void FieldViewer::SetFieldTelop(FieldTelop::TelopID id, std::function<void(void)
 void FieldViewer::SetFieldErroMessage(FieldErrorMessage::ErroID id)
 {
 	fieldErroMessage->Set(id);
+}
+
+//=============================================================================
+// 操作説明ビューアを設置
+//=============================================================================
+void FieldViewer::SetOperationExplanation(
+	OperationExplanationViewer::OperationID id1,
+	OperationExplanationViewer::OperationID id2,
+	OperationExplanationViewer::OperationID id3)
+{
+	operationExplanation->Set(id1,id2,id3);
 }
