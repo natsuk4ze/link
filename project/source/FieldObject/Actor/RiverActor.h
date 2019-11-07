@@ -20,10 +20,21 @@ class RiverActor :
 	public PlaceActor
 {
 public:
+	enum FlowDirection
+	{
+		None,
+		Forward = 1,
+		Right,
+		Back,
+		Left
+	};
+
 	RiverActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	~RiverActor();
 
 	void Update() override;
+
+	void SetDirection(FlowDirection direction);
 
 	static void UpdateHeight();
 
@@ -32,6 +43,8 @@ private:
 	static const float MaxWaveHeight;
 	static float heightWave;
 	static int cntWaveAnimation;
+
+	FlowDirection direction;
 };
 
 #endif

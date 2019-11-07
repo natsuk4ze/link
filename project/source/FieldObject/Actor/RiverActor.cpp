@@ -21,7 +21,8 @@ int RiverActor::cntWaveAnimation = 0;
 // コンストラクタ
 //=====================================
 RiverActor::RiverActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
-	: PlaceActor(pos, currentLevel)
+	: PlaceActor(pos, currentLevel),
+	direction(Forward)
 {
 	// モデルデータ参照
 	switch (currentLevel)
@@ -56,6 +57,14 @@ void RiverActor::Update()
 	PlaceActor::Update();
 
 	transform->Move(Vector3::Up * heightWave);
+}
+
+//=====================================
+// 流れる方向のセット処理
+//=====================================
+void RiverActor::SetDirection(FlowDirection direction)
+{
+	this->direction = direction;
 }
 
 //=====================================
