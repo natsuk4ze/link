@@ -55,7 +55,7 @@ void NewTownEvent_World::Init()
 	fieldEventHandler->PauseGame();
 
 	// テロップ設置
-	eventViewer->SetEventTelop(PositiveEvent01, [=]()
+	eventViewer->SetEventTelop(EventTelop::Atlantis, [=]()
 	{
 		// 予定地にカメラを移動させる
 		Camera::TranslationPlugin::Instance()->Move(TownPos, 30, [&]() {CreateNewTown(); });
@@ -100,7 +100,7 @@ void NewTownEvent_World::CreateNewTown(void)
 
 	Camera::ShakePlugin::Instance()->Set(Amplitude, 300);
 	fieldEventHandler->CreateNewTown(NewTown);
-	GameParticleManager::Instance()->SetArtlantisEffect(TownPos);
+	GameParticleManager::Instance()->SetAtlantisEffect(TownPos);
 	TaskManager::Instance()->CreateDelayedTask(180, [&]() {EventOverFunc(); });
 }
 

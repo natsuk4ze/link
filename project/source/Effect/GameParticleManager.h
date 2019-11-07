@@ -56,7 +56,7 @@ public:
 	//闇の粒子のエフェクトセット処理
 	void SetDarknessEffect(const D3DXVECTOR3 & position,std::function<void(void)> callback = nullptr);
 	//アトランティスのエフェクトセット処理
-	void SetArtlantisEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback = nullptr);
+	void SetAtlantisEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback = nullptr);
 	//移動の軌跡のエフェクトセット処理
 	BaseEmitter* SetMoveTailEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback = nullptr);
 

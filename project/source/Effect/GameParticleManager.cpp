@@ -102,7 +102,7 @@ void GameParticleManager::SetDarknessEffect(const D3DXVECTOR3 & position, std::f
 /**************************************
 アトランティスのエフェクトセット処理
 ***************************************/
-void GameParticleManager::SetArtlantisEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback)
+void GameParticleManager::SetAtlantisEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback)
 {
 	controllers[GameParticle::Bubble]->SetEmitter(position, nullptr);
 }
