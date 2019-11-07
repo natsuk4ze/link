@@ -1,11 +1,11 @@
 //=============================================================================
 //
-// AIレベル減少エフェクトクラス [Darkness.cpp]
+// 水の霧エフェクトクラス [WaterSmog.h]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#ifndef _Darkness_H_
-#define _Darkness_H_
+#ifndef _WaterSmog_H_
+#define _WaterSmog_H_
 
 #include "../../../main.h"
 #include "../../../Framework/Particle/BaseParticleController.h"
@@ -14,31 +14,29 @@
 namespace Effect::Game
 {
 	/**************************************
-	DarknessControllerクラス
+	WaterSmogControllerクラス
 	***************************************/
-	class DarknessController : public BaseParticleController
+	class WaterSmogController : public BaseParticleController
 	{
 	public:
-		DarknessController();
+		WaterSmogController();
+		void Update(void) override;
+		static int FrameCount;
 	};
 
 	/**************************************
-	Darknessクラス
+	WaterSmogクラス
 	***************************************/
-	class Darkness : public Particle3D
+	class WaterSmog : public AnimationParticle3D
 	{
 	public:
-
-		Darkness();
+		WaterSmog();
 
 		void Init() override;
 		void Update() override;
 
 	private:
-		static const int MinLife, MaxLife;
-		static const float MinSpeed, MaxSpeed;
-		static const int TexDiv;
-		const float Speed;
+		static const int MaxLife, MinLife;
 	};
 }
 #endif

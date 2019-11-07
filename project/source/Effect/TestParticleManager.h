@@ -28,6 +28,9 @@ namespace TestParticle
 		MeteorExplosion,
 		MeteorFire,
 		Darkness,
+		Bubble,
+		WaterSmog,
+		MoveTail,
 		Max
 	};
 }

@@ -1,43 +1,30 @@
 //=====================================
 //
-// イベントアクター[EventActor.cpp]
+// UFOアクター[UFOActor.cpp]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=====================================
-#include "EventActor.h"
-#include "../../Framework/Camera/ViewFrustum.h"
-#include "../../Framework/Camera/Camera.h"
-#include "../../Framework/Tool/DebugWindow.h"
-#include "../../Framework/Resource/ResourceManager.h"
-
+#include "UFOActor.h"
 
 //=====================================
 // コンストラクタ
 //=====================================
-EventActor::EventActor(D3DXVECTOR3 Pos, D3DXVECTOR3 Scale, const char* MeshTag)
+UFOActor::UFOActor(D3DXVECTOR3 Pos, D3DXVECTOR3 Scale, const char* MeshTag) :
+	EventActorBase(Pos, Scale, MeshTag)
 {
-	// メッシュコンテナの作成
-	mesh = new MeshContainer();
-	ResourceManager::Instance()->GetMesh(MeshTag, mesh);
-
-	// ステータスセット
-	transform->SetPosition(Pos);
-	transform->SetScale(Scale);
-	SetActive(true);
 }
 
 //=====================================
 // デストラクタ
 //=====================================
-EventActor::~EventActor()
+UFOActor::~UFOActor()
 {
-	SAFE_DELETE(mesh);
 }
 
 //=====================================
 // 更新
 //=====================================
-void EventActor::Update()
+void UFOActor::Update()
 {
 	if (InHoverMotion)
 	{
@@ -47,37 +34,9 @@ void EventActor::Update()
 }
 
 //=====================================
-// 描画
-//=====================================
-void EventActor::Draw()
-{
-	if (!this->IsActive())
-		return;
-
-	transform->SetWorld();
-	mesh->Draw();
-}
-
-//=====================================
-// Y軸回転
-//=====================================
-void EventActor::Rotate(float y)
-{
-	transform->Rotate(0.0f, y, 0.0f);
-}
-
-//=====================================
-// 座標のセット
-//=====================================
-void EventActor::SetPosition(const D3DXVECTOR3& Pos)
-{
-	transform->SetPosition(Pos);
-}
-
-//=====================================
 // ホバリング運動の移動計算
 //=====================================
-void EventActor::HoverMotion(void)
+void UFOActor::HoverMotion(void)
 {
 	// 運動範囲
 	D3DXVECTOR3 Radius = D3DXVECTOR3(0.6f, 0.6f, 0.5f);
@@ -104,7 +63,7 @@ void EventActor::HoverMotion(void)
 //=====================================
 // ホバリング運動フラグ設置
 //=====================================
-void EventActor::SetHoverMotion(bool Flag)
+void UFOActor::SetHoverMotion(bool Flag)
 {
 	InHoverMotion = Flag;
 	if (InHoverMotion)

@@ -64,7 +64,6 @@ void EventViewer::Update()
 		SetEventMessage("イベント発生！");
 	}
 
-
 	if (Keyboard::GetTrigger(DIK_T))
 	{
 		SetEventTelop(eventTelop->Singularity, nullptr);

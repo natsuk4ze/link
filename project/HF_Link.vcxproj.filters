@@ -135,7 +135,6 @@
     <ClInclude Include="source\FieldObject\Animation\ActorAnimation.h" />
     <ClInclude Include="source\Scene\GameState\GameFinish.h" />
     <ClInclude Include="source\Scene\GameState\GameLevelUp.h" />
-    <ClInclude Include="source\Event\PlusEvent\NewCityEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\StockRecoveryEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\FamousPeopleEvent.h" />
     <ClInclude Include="source\Event\PlusEvent\AILevelUpEvent.h" />
@@ -187,7 +186,6 @@
     <ClInclude Include="source\FieldObject\Infomation\InfoDigit.h" />
     <ClInclude Include="source\FieldObject\InfoController.h" />
     <ClInclude Include="source\Effect\Game\BanIcon.h" />
-    <ClInclude Include="source\Event\EventActor.h" />
     <ClInclude Include="source\Effect\Game\MeteorFire.h" />
     <ClInclude Include="source\Field\AStar\AStarController.h" />
     <ClInclude Include="source\Effect\Game\Darkness.h" />
@@ -202,6 +200,16 @@
     <ClInclude Include="Framework\Effect\InstancingMeshEffect.h" />
     <ClInclude Include="Framework\Effect\RendererEffect.h" />
     <ClInclude Include="Framework\Renderer3D\InstancingMeshContainer.h" />
+    <ClInclude Include="source\Event\PlusEvent\CreateNewTown\NewTownEventCtrl.h" />
+    <ClInclude Include="source\Event\PlusEvent\CreateNewTown\NewTownEvent_City.h" />
+    <ClInclude Include="source\Event\PlusEvent\CreateNewTown\NewTownEvent_World.h" />
+    <ClInclude Include="source\Event\PlusEvent\CreateNewTown\NewTownEvent_Space.h" />
+    <ClInclude Include="source\Effect\Game\Bubble.h" />
+    <ClInclude Include="source\Effect\Game\WaterSmog.h" />
+    <ClInclude Include="source\Effect\Game\MoveTail.h" />
+    <ClInclude Include="source\Event\EventActor\EventActorBase.h" />
+    <ClInclude Include="source\Event\EventActor\UFOActor.h" />
+    <ClInclude Include="source\Event\EventActor\PlanetActor.h" />
     <ClInclude Include="source\Field\Object\WorldBackGroundContainer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldViewer.h" />
@@ -209,6 +217,8 @@
     <ClInclude Include="source\Field\Object\SpaceBackGroundContainer.h" />
     <ClInclude Include="source\Effect\Game\SpaceTear.h" />
     <ClInclude Include="source\Shader\RiverEffect.h" />
+    <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.h" />
+    <ClInclude Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -328,7 +338,6 @@
     <ClCompile Include="source\FieldObject\Animation\ActorAnimation.cpp" />
     <ClCompile Include="source\Scene\GameState\GameFinish.cpp" />
     <ClCompile Include="source\Scene\GameState\GameLevelUp.cpp" />
-    <ClCompile Include="source\Event\PlusEvent\NewCityEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\StockRecoveryEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\FamousPeopleEvent.cpp" />
     <ClCompile Include="source\Event\PlusEvent\AILevelUpEvent.cpp" />
@@ -381,7 +390,6 @@
     <ClCompile Include="source\FieldObject\Infomation\InfoDigit.cpp" />
     <ClCompile Include="source\FieldObject\InfoController.cpp" />
     <ClCompile Include="source\Effect\Game\BanIcon.cpp" />
-    <ClCompile Include="source\Event\EventActor.cpp" />
     <ClCompile Include="source\Effect\Game\MeteorFire.cpp" />
     <ClCompile Include="source\Field\AStar\AStarController.cpp" />
     <ClCompile Include="source\Effect\Game\Drakness.cpp" />
@@ -395,12 +403,24 @@
     <ClCompile Include="Framework\Effect\RendererEffect.cpp" />
     <ClCompile Include="Framework\Renderer3D\InstancingMeshContainer.cpp" />
     <ClCompile Include="source\Field\FieldConfig.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\CreateNewTown\NewTownEventCtrl.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\CreateNewTown\NewTownEvent_City.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\CreateNewTown\NewTownEvent_World.cpp" />
+    <ClCompile Include="source\Event\PlusEvent\CreateNewTown\NewTownEvent_Space.cpp" />
+    <ClCompile Include="source\Effect\Game\Bubble.cpp" />
+    <ClCompile Include="source\Effect\Game\WaterSmog.cpp" />
+    <ClCompile Include="source\Effect\Game\MoveTail.cpp" />
+    <ClCompile Include="source\Event\EventActor\EventActorBase.cpp" />
+    <ClCompile Include="source\Event\EventActor\UFOActor.cpp" />
+    <ClCompile Include="source\Event\EventActor\PlanetActor.cpp" />
     <ClCompile Include="source\Field\Object\WorldBackGroundContainer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldTelop.cpp" />
     <ClCompile Include="source\Field\Object\SpaceBackGroundContainer.cpp" />
     <ClCompile Include="source\Effect\Game\SpaceTear.cpp" />
     <ClCompile Include="source\Shader\RiverEffect.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
@@ -421,5 +441,8 @@
     <FxCompile Include="Shaders\Sprite.fx" />
     <FxCompile Include="Shaders\InstancingMesh.fx" />
     <FxCompile Include="source\Shader\RiverRenderer.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\HF素材\FieldViewer素材\fieldErrorMessage.png" />
   </ItemGroup>
 </Project>

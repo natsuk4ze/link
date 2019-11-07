@@ -18,7 +18,7 @@ private:
 	int RemainTime;
 
 public:
-	FamousPeopleEvent(int RemainTime);
+	FamousPeopleEvent();
 	~FamousPeopleEvent();
 	void Update(void) override;
 	void Draw(void) override;

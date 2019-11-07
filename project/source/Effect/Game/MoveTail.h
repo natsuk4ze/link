@@ -1,44 +1,47 @@
 //=============================================================================
 //
-// AIレベル減少エフェクトクラス [Darkness.cpp]
+// 移動の残像エフェクトクラス [MoveTail.h]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#ifndef _Darkness_H_
-#define _Darkness_H_
+#ifndef _MoveTail_H_
+#define _MoveTail_H_
 
 #include "../../../main.h"
 #include "../../../Framework/Particle/BaseParticleController.h"
-#include "../../../Framework/Particle/3D/AnimationParticle3D.h"
+#include "../../../Framework/Particle/3D/Particle3D.h"
+
+/**************************************
+前方宣言
+***************************************/
 
 namespace Effect::Game
 {
 	/**************************************
-	DarknessControllerクラス
+	MoveTailControllerクラス
 	***************************************/
-	class DarknessController : public BaseParticleController
+	class MoveTailController : public BaseParticleController
 	{
 	public:
-		DarknessController();
+		MoveTailController();
+		void SetEmitterPos(D3DXVECTOR3 Pos);
+		bool Draw() override;
 	};
 
 	/**************************************
-	Darknessクラス
+	MoveTailクラス
 	***************************************/
-	class Darkness : public Particle3D
+	class MoveTail : public Particle3D
 	{
 	public:
-
-		Darkness();
+		MoveTail();
 
 		void Init() override;
 		void Update() override;
-
 	private:
-		static const int MinLife, MaxLife;
-		static const float MinSpeed, MaxSpeed;
-		static const int TexDiv;
-		const float Speed;
+		static const int Life;
 	};
 }
+
+
 #endif

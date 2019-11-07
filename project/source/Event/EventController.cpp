@@ -12,7 +12,7 @@
 #include "PlusEvent/TimeRecoveryEvent.h"
 #include "PlusEvent/LinkLevelUpEvent.h"
 #include "PlusEvent/FamousPeopleEvent.h"
-#include "PlusEvent/NewCityEvent.h"
+#include "PlusEvent/CreateNewTown/NewTownEventCtrl.h"
 #include "PlusEvent/StockRecoveryEvent.h"
 #include "MinusEvent/AILevelDecreaseEvent.h"
 #include "MinusEvent/BanStockUseEvent.h"
@@ -42,20 +42,28 @@ using namespace EventConfig;
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-// 使用していないイベントを削除
-//bool RemoveCondition(EventBase *Event) { return Event == nullptr ? true : false; }
-
-//*****************************************************************************
-// グローバル変数
-//*****************************************************************************
+const char* EventCSVPath_City = "data/FIELD/City/City_Event.csv";
+const char* EventCSVPath_World = "data/FIELD/World/World_Event.csv";
+const char* EventCSVPath_Space = "data/FIELD/Space/Space_Event.csv";
 
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-EventController::EventController(int FieldLevel) : FieldLevel(FieldLevel)
+EventController::EventController(int FieldLevel)
 {
-	LoadCSV("data/FIELD/sample01_Event.csv");
+	if (FieldLevel == Field::City)
+	{
+		LoadCSV(EventCSVPath_City);
+	}
+	else if (FieldLevel == Field::World)
+	{
+		LoadCSV(EventCSVPath_World);
+	}
+	else if (FieldLevel == Field::Space)
+	{
+		LoadCSV(EventCSVPath_Space);
+	}
 
 	eventViewer = new EventViewer();
 
@@ -75,8 +83,6 @@ EventController::~EventController()
 	// イベントベクトル削除
 	Utility::DeleteContainer(EventVec);
 	EventCSVData.clear();
-
-	fieldController = nullptr;
 
 	SAFE_DELETE(eventViewer);
 
@@ -164,7 +170,7 @@ void EventController::DrawDebug()
 
 	for (auto& Object : EventCSVData)
 	{
-		////テスト描画
+		// テスト描画
 		Transform transform = Transform(
 			Object.Pos.ConvertToWorldPosition() + Vector3::Up,
 			{ D3DXToRadian(90.0f), 0.0f, 0.0f },
@@ -184,10 +190,6 @@ void EventController::DrawDebug()
 //=============================================================================
 void EventController::LoadCSV(const char* FilePath)
 {
-	//初期化済みであればリターン
-	//if (initialized)
-	//	return;
-
 	//CSVファイルを読み込み
 	std::ifstream stream(FilePath);
 
@@ -217,9 +219,6 @@ void EventController::LoadCSV(const char* FilePath)
 		}
 		z++;
 	}
-
-	//初期化完了
-	//initialized = true;
 }
 
 //=============================================================================
@@ -244,13 +243,13 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					Ptr = new LinkLevelUpEvent();
 					break;
 				case NewCity:
-					Ptr = new NewCityEvent(eventViewer);
+					Ptr = new NewTownEventCtrl(eventViewer, FieldLevel);
 					break;
 				case StockRecovery:
 					Ptr = new StockRecoveryEvent();
 					break;
 				case FamousPeople:
-					Ptr = new FamousPeopleEvent(150);
+					Ptr = new FamousPeopleEvent();
 					break;
 				case AllLinkLevelUp:
 					Ptr = new AllLinkLevelUpEvent();

@@ -7,7 +7,7 @@
 #include "../../../main.h"
 #include "AILevelDecreaseEvent.h"
 #include "BeatGame.h"
-#include "../EventActor.h"
+#include "../EventActor/UFOActor.h"
 #include "../../Field/Place/FieldPlaceModel.h"
 #include "../../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../../Effect/GameParticleManager.h"
@@ -80,7 +80,7 @@ void AILevelDecreaseEvent::Init()
 	UFOPos = TownPos + Vector3::Up * DefaultHeight;
 
 	// UFOメッシュ作成
-	UFO = new EventActor(UFOPos, Scale, "UFO");
+	UFO = new UFOActor(UFOPos, Scale, "UFO");
 
 	// テロップ設置
 	eventViewer->SetEventTelop(EventTelop::Alien, [&]()
