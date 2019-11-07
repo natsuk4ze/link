@@ -12,6 +12,7 @@
 #include "BackGroundContainer.h"
 
 #include <vector>
+#include <map>
 
 #include "../FieldConfig.h"
 
@@ -45,6 +46,8 @@ namespace Field::Actor
 
 	private:
 		InstancingMeshContainer *groundMesh;
+
+		std::map<FieldPosition, int> LoadRiverFlowData();
 	};
 }
 #endif

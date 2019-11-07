@@ -25,6 +25,9 @@ public:
 	static void SetView(const D3DXMATRIX& viewMatrix);
 	static void SetProjection(const D3DXMATRIX& projectionMatrix);
 	
+	//マテリアル設定処理
+	virtual void SetMaterial(const D3DMATERIAL9& material) = 0;
+	
 	//変更反映処理
 	void Commit(); 
 	virtual void CommitCameraParameter() = 0;
