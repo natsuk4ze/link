@@ -14,6 +14,7 @@
 前方宣言
 ***************************************/
 class MeshResource;
+class RendererEffect;
 
 /**************************************
 クラス定義
@@ -27,7 +28,8 @@ public:
 
 	//混乱の原因になるのでCreate()とReleaseは削除
 
-	void Draw();						//モデルを描画
+	void Draw();							//モデルを描画
+	void Draw(RendererEffect& effect);	//モデルを描画（シェーダ使用)
 
 	UINT GetMaterialNum();
 	void GetMaterial(UINT index, D3DMATERIAL9& out);

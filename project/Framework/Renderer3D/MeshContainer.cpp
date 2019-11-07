@@ -6,6 +6,7 @@
 //=====================================
 #include "MeshContainer.h"
 #include "../Resource/MeshResource.h"
+#include "../Effect/RendererEffect.h"
 
 /**************************************
 マクロ定義
@@ -56,6 +57,27 @@ void MeshContainer::Draw()
 
 	//マテリアル復元
 	pDevice->SetMaterial(&matDef);
+}
+
+/**************************************
+描画処理
+***************************************/
+void MeshContainer::Draw(RendererEffect & effect)
+{
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+	for (DWORD i = 0; i < materialNum; i++)
+	{
+		//テクスチャの設定
+		pDevice->SetTexture(0, textures[i]);
+
+		//マテリアル設定
+		effect.SetMaterial(materials[i]);
+		effect.Commit();
+
+		//描画
+		mesh->DrawSubset(i);
+	}
 }
 
 /**************************************
