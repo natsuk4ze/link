@@ -80,12 +80,12 @@ public:
 	virtual BaseEmitter* SetEmitter(const Transform& transform, std::function<void(void)> callback = nullptr);
 
 	virtual void Uninit();				//終了処理
-	void Update();						//更新処理
-	bool Draw();						//描画処理
+	virtual void Update();				//更新処理
+	virtual bool Draw();				//描画処理
 
 	//描画開始・終了処理
-	static void BeginDraw();		
-	static void EndDraw();			
+	static void BeginDraw();
+	static void EndDraw();
 
 	//描画パーティクル数取得処理
 	unsigned GetParticleCount() const;

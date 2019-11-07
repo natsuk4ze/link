@@ -28,6 +28,8 @@ namespace GameParticle
 		TownExplosion,	//隕石爆発
 		MeteorExplosion,//ミサイル命中
 		Darkness,		//闇の粒子(AIレベル減少イベント)
+		Bubble,			//水の泡
+		MoveTail,		//移動の軌跡
 		SpaceTear,		//時空断裂のスパーク
 		Max
 	};
@@ -53,6 +55,10 @@ public:
 	void SetAngryFaceEffect(std::function<void(void)> callback = nullptr);
 	//闇の粒子のエフェクトセット処理
 	void SetDarknessEffect(const D3DXVECTOR3 & position,std::function<void(void)> callback = nullptr);
+	//アトランティスのエフェクトセット処理
+	void SetAtlantisEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback = nullptr);
+	//移動の軌跡のエフェクトセット処理
+	BaseEmitter* SetMoveTailEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback = nullptr);
 
 private:
 	static const float BloomPower[3];

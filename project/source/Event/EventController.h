@@ -34,11 +34,9 @@ private:
 	std::vector<EventInfo> EventCSVData;
 	std::vector<EventBase*> EventVec;
 	EventViewer *eventViewer;
-	Field::FieldController *fieldController;
 
 	bool InBanStock;
 	bool InPauseEvent;
-	int FieldLevel;
 
 	void LoadCSV(const char* FilePath);
 

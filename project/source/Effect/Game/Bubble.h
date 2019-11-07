@@ -1,35 +1,38 @@
 //=============================================================================
 //
-// AIレベル減少エフェクトクラス [Darkness.cpp]
+// 泡エフェクトクラス [Bubble.h]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#ifndef _Darkness_H_
-#define _Darkness_H_
+#ifndef _Bubble_H_
+#define _Bubble_H_
 
 #include "../../../main.h"
 #include "../../../Framework/Particle/BaseParticleController.h"
-#include "../../../Framework/Particle/3D/AnimationParticle3D.h"
+#include "../../../Framework/Particle/3D/Particle3D.h"
+
+/**************************************
+前方宣言
+***************************************/
 
 namespace Effect::Game
 {
 	/**************************************
-	DarknessControllerクラス
+	BubbleControllerクラス
 	***************************************/
-	class DarknessController : public BaseParticleController
+	class BubbleController : public BaseParticleController
 	{
 	public:
-		DarknessController();
+		BubbleController();
 	};
 
 	/**************************************
-	Darknessクラス
+	Bubbleクラス
 	***************************************/
-	class Darkness : public Particle3D
+	class Bubble : public Particle3D
 	{
 	public:
-
-		Darkness();
+		Bubble();
 
 		void Init() override;
 		void Update() override;
@@ -37,8 +40,11 @@ namespace Effect::Game
 	private:
 		static const int MinLife, MaxLife;
 		static const float MinSpeed, MaxSpeed;
-		static const int TexDiv;
+
 		const float Speed;
+		const float Scale;
 	};
 }
+
+
 #endif

@@ -7,7 +7,7 @@
 #include "../../../main.h"
 #include "CityDestroyEvent.h"
 #include "BeatGame.h"
-#include "../EventActor.h"
+#include "../EventActor/EventActorBase.h"
 #include "../../Field/Place/FieldPlaceModel.h"
 #include "../../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../../Effect/GameParticleManager.h"
@@ -26,8 +26,11 @@ enum State
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
+// 隕石の初期位置と予定地の距離
 const float MeteoriteDistance = 200.0f;
+// 落下速度
 const float FallSpeed = 4.0f;
+// 隕石モデルのスケール
 const D3DXVECTOR3 Scale = D3DXVECTOR3(0.15f, 0.15f, 0.15f);
 
 //*****************************************************************************
@@ -73,7 +76,7 @@ void CityDestroyEvent::Init()
 	D3DXVec3Normalize(&MoveDirection, &MoveDirection);
 
 	// 隕石メッシュ作成
-	Meteor = new EventActor(MeteoritePos, Scale, "Meteor");
+	Meteor = new EventActorBase(MeteoritePos, Scale, "Meteor");
 
 	// ゲーム進行停止
 	fieldEventHandler->PauseGame();

@@ -16,6 +16,8 @@
 #include "Game/MeteorExplosion.h"
 #include "Game/AngryFace.h"
 #include "Game/Darkness.h"
+#include "Game/Bubble.h"
+#include "Game/MoveTail.h"
 #include "Game/SpaceTear.h"
 
 /**************************************
@@ -41,6 +43,8 @@ void GameParticleManager::Init()
 	controllers[GameParticle::TownExplosion] = new Effect::Game::TownExplosionController();
 	controllers[GameParticle::MeteorExplosion] = new Effect::Game::MeteorExplosionController();
 	controllers[GameParticle::Darkness] = new Effect::Game::DarknessController();
+	controllers[GameParticle::Bubble] = new Effect::Game::BubbleController();
+	controllers[GameParticle::MoveTail] = new Effect::Game::MoveTailController();
 	controllers[GameParticle::SpaceTear] = new Effect::Game::SpaceTearController();
 
 	crossFilter->SetPower(BloomPower[0], BloomPower[1], BloomPower[2]);
@@ -95,3 +99,18 @@ void GameParticleManager::SetDarknessEffect(const D3DXVECTOR3 & position, std::f
 	controllers[GameParticle::Darkness]->SetEmitter(position, nullptr);
 }
 
+/**************************************
+アトランティスのエフェクトセット処理
+***************************************/
+void GameParticleManager::SetAtlantisEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback)
+{
+	controllers[GameParticle::Bubble]->SetEmitter(position, nullptr);
+}
+
+/**************************************
+移動の軌跡のエフェクトセット処理
+***************************************/
+BaseEmitter* GameParticleManager::SetMoveTailEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback)
+{
+	return controllers[GameParticle::MoveTail]->SetEmitter(position, nullptr);
+}
