@@ -21,7 +21,7 @@
 //*****************************************************************************
 
 //”Žš‚Ì‰ŠúƒTƒCƒY
-static const D3DXVECTOR3 initNumSize = D3DXVECTOR3(70.0f, 70.0f, 0.0f);
+static const D3DXVECTOR3 initNumSize = D3DXVECTOR3(140.0f, 140.0f, 0.0f);
 
 //*****************************************************************************
 // ƒRƒ“ƒXƒgƒ‰ƒNƒ^
@@ -31,12 +31,11 @@ LevelViewer::LevelViewer()
 	//”Žš
 	num = new CountViewerDrawer();
 	num->LoadTexture("data/TEXTURE/Viewer/GameViewer/LevelViewer/Number.png");
-	num->size = D3DXVECTOR3(70.0f, 70.0f, 0.0f);
+	num->size = initNumSize;
 	num->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	num->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 8.80f, SCREEN_HEIGHT / 10 * 1.30f, 0.0f);
-	num->SetColor(SET_COLOR_NOT_COLORED);
-	num->intervalNumberScr = 65.0f;
-	num->intervalNumberTex = 0.1f;
+	num->intervalPosScr = 65.0f;
+	num->intervalPosTex = 0.1f;
 	num->placeMax = 4;
 	num->baseNumber = 10;
 	num->MakeVertex();
@@ -44,16 +43,15 @@ LevelViewer::LevelViewer()
 	//”wŒi
 	bg = new BaseViewerDrawer();
 	bg->LoadTexture("data/TEXTURE/Viewer/GameViewer/LevelViewer/BG.png");
-	bg->size = D3DXVECTOR3(125.0f, 125.0f, 0.0f);
+	bg->size = D3DXVECTOR3(250.0f, 250.0f, 0.0f);
 	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	bg->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 9.30f, SCREEN_HEIGHT / 10 * 1.2f, 0.0f);
-	bg->SetColor(SET_COLOR_NOT_COLORED);
 	bg->MakeVertex();
 
 	//‰~ƒQ[ƒW
-	circleGuage = new CircleGauge(D3DXVECTOR2(125.0f, 125.0f));
+	circleGuage = new CircleGauge(D3DXVECTOR2(250.0f, 250.0f));
 	circleGuage->LoadTexture("data/TEXTURE/Viewer/GameViewer/LevelViewer/CircleGuage.png");
-	circleGuage->SetScale(D3DXVECTOR3(2.0f, 2.0f, 0.0f));
+	circleGuage->SetScale(D3DXVECTOR3(1.0f, 1.0f, 0.0f));
 	circleGuage->SetRotation(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	circleGuage->SetPosition(D3DXVECTOR3(SCREEN_WIDTH / 10 * 9.30f, SCREEN_HEIGHT / 10 * 1.2f, 0.0f));
 	circleGuage->SetFillStart(circleGuage->Top);
@@ -93,7 +91,6 @@ void LevelViewer::Update(void)
 void LevelViewer::Draw(void)
 {
 	//”wŒi‚ðæ‚É•`‰æ
-	bg->SetVertex();
 	bg->Draw();
 
 	//‰~ƒQ[ƒW
@@ -102,7 +99,7 @@ void LevelViewer::Draw(void)
 
 	//”‰F
 	num->DrawCounter(num->baseNumber, (int)parameterBox[LevelAI], num->placeMax,
-		num->intervalNumberScr, num->intervalNumberTex);
+		num->intervalPosScr, num->intervalPosTex);
 }
 
 //=============================================================================

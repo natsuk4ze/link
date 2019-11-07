@@ -21,11 +21,11 @@ public:
 	void DrawCounter(int baseNumber, int parameterBox, int placeMax,
 		float intervalNumberScr, float intervalNumberTex);
 
-	//スクリーン上の表示間隔
-	float intervalNumberScr;
+	//スクリーン上の表示座標間隔
+	float intervalPosScr;
 
-	//テクスチャ素材の表示間隔
-	float intervalNumberTex;
+	//テクスチャ素材の表示座標間隔
+	float intervalPosTex;
 
 	//桁数
 	int placeMax;
@@ -37,10 +37,12 @@ public:
 	float HopNumber(float sizeY, float initSizeY, float hopValue);
 	bool isHopped;
 	float radian;
-	const float hopSpeed = D3DX_PI/10;
+	const float hopSpeed = D3DX_PI / 10;
 
 private:
-	void SetVertex(int placeCount, float placeInterval);
+	void Draw();
+
+	void SetVertexPos(int placeCount, float placeInterval);
 	void SetTexture(int number, float placeInterval);
 
 	int texDivX = 4;

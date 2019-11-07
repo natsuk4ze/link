@@ -79,7 +79,7 @@ void CityDestroyEvent::Init()
 	fieldEventHandler->PauseGame();
 
 	// テロップ設置
-	eventViewer->SetEventTelop(EventTelop::NegativeEvent01, [&]()
+	eventViewer->SetEventTelop(EventTelop::Meteorite, [&]()
 	{
 		Camera::TranslationPlugin::Instance()->Move(TownPos, 30, [&]() {MeteorFallStart(); });
 	});

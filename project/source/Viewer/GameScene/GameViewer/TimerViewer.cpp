@@ -17,46 +17,42 @@ TimerViewer::TimerViewer()
 	//®”•”
 	intNum = new CountViewerDrawer();
 	intNum->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Number.png");
-	intNum->MakeVertex();
-	intNum->size = D3DXVECTOR3(60.0f, 60.0f, 0.0f);
+	intNum->size = D3DXVECTOR3(120.0f, 120.0f, 0.0f);
 	intNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	intNum->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.3f, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
-	intNum->SetColor(SET_COLOR_NOT_COLORED);
-	intNum->intervalNumberScr = 80.0f;
-	intNum->intervalNumberTex = 0.1f;
+	intNum->intervalPosScr = 80.0f;
+	intNum->intervalPosTex = 0.1f;
 	intNum->placeMax = 3;
 	intNum->baseNumber = 10;
+	intNum->MakeVertex();
 
 	//¬”•”
 	fewNum = new CountViewerDrawer();
 	fewNum->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Number.png");
-	fewNum->MakeVertex();
-	fewNum->size = D3DXVECTOR3(60.0f, 60.0f, 0.0f);
+	fewNum->size = D3DXVECTOR3(120.0f, 120.0f, 0.0f);
 	fewNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	fewNum->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.7f, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
-	fewNum->SetColor(SET_COLOR_NOT_COLORED);
-	fewNum->intervalNumberScr = 80.0f;
-	fewNum->intervalNumberTex = 0.1f;
+	fewNum->intervalPosScr = 80.0f;
+	fewNum->intervalPosTex = 0.1f;
 	fewNum->placeMax = 2;
 	fewNum->baseNumber = 10;
+	fewNum->MakeVertex();
 
 	//¬”“_
 	point = new BaseViewerDrawer();
 	point->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Point.png");
-	point->MakeVertex();
-	point->size = D3DXVECTOR3(60.0f, 60.0f, 0.0f);
+	point->size = D3DXVECTOR3(120.0f, 120.0f, 0.0f);
 	point->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	point->position = D3DXVECTOR3(intNum->position.x + intNum->intervalNumberScr*2.8f, SCREEN_HEIGHT / 10 * 1.0f,0.0f);
-	point->SetColor(SET_COLOR_NOT_COLORED);
+	point->position = D3DXVECTOR3(intNum->position.x + intNum->intervalPosScr*2.8f, SCREEN_HEIGHT / 10 * 1.0f,0.0f);
+	point->MakeVertex();
 
 	//”wŒi
 	bg = new BaseViewerDrawer();
 	bg->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/BG.png");
-	bg->MakeVertex();
-	bg->size = D3DXVECTOR3(230.0f, 100.0f, 0.0f);
+	bg->size = D3DXVECTOR3(460.0f, 200.0f, 0.0f);
 	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	bg->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 1.25), SCREEN_HEIGHT / 10 * 0.920f, 0.0f);
-	bg->SetColor(SET_COLOR_NOT_COLORED);
+	bg->MakeVertex();
 }
 
 //*****************************************************************************
@@ -84,19 +80,17 @@ void TimerViewer::Draw(void)
 {
 	//”wŒi‚ðæ‚É•`‰æ
 	bg->Draw();
-	bg->SetVertex();
 
 	//¬”“_
 	point->Draw();
-	point->SetVertex();
 
 	//®”•”
 	intNum->DrawCounter(intNum->baseNumber,
 		(int)parameterBox, intNum->placeMax,
-		intNum->intervalNumberScr, intNum->intervalNumberTex);
+		intNum->intervalPosScr, intNum->intervalPosTex);
 
 	//¬”•”
 	fewNum->DrawCounter(fewNum->baseNumber, 
 		(int)((parameterBox - (int)parameterBox)*pow(fewNum->baseNumber, fewNum->placeMax)), fewNum->placeMax,
-		fewNum->intervalNumberScr, fewNum->intervalNumberTex);
+		fewNum->intervalPosScr, fewNum->intervalPosTex);
 }

@@ -1,12 +1,12 @@
 
 //=============================================================================
 //
-// イベントテロップ処理 [EventTelop.h]
+// フィールドテロップ処理 [FieldTelop.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _EVENT_TELOP_H_
-#define _EVENT_TELOP_H_
+#ifndef _FIELD_TELOP_H_
+#define _FIELD_TELOP_H_
 
 #include "../../Framework/BaseViewer.h"
 #include "../../../../Framework/Pattern/Delegate.h"
@@ -21,20 +21,16 @@ class BaseViewerDrawer;
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class EventTelop :public BaseViewer
+class FieldTelop :public BaseViewer
 {
 public:
-	EventTelop();
-	~EventTelop();
+	FieldTelop();
+	~FieldTelop();
 
 	//テロップの種類
 	enum TelopID
 	{
-		Singularity,
-		Atlantis,
-		NewPlanet,
-		Meteorite,
-		Alien,
+		City,
 		Max
 	};
 
@@ -44,7 +40,7 @@ public:
 
 private:
 	BaseViewerDrawer *text;
-	BaseViewerDrawer *bg;
+	BaseViewerDrawer *line;
 
 	//再生終了通知
 	std::function<void(void)> Callback;
@@ -52,14 +48,13 @@ private:
 	//再生
 	void Play();
 
-	//テクスチャ情報受け渡し
-	void PassTexture(TelopID id);
+	//線を引く
+	void DrawLine(void);
 
-	//背景をオープン
-	void OpenBG(void);
+	void DrawTelopText(void);
 
-	//背景をクローズ
-	void CloseBG(void);
+	//フェードアウト
+	void FadeOut(void);
 
 	//再生中かどうか
 	bool isPlaying;
@@ -69,6 +64,9 @@ private:
 
 	//現在のアニメーション
 	int currentAnim;
+
+	//テクスチャのα値
+	float alpha;
 
 	//アニメーション時間
 	float animTime;

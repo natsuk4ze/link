@@ -67,9 +67,13 @@ void EventViewer::Update()
 
 	if (Keyboard::GetTrigger(DIK_T))
 	{
-		SetEventTelop(eventTelop->PositiveEvent01, nullptr);
+		SetEventTelop(eventTelop->Singularity, nullptr);
 	}
 
+	if (Keyboard::GetTrigger(DIK_Y))
+	{
+		SetEventTelop(eventTelop->Alien, nullptr);
+	}
 
 	Debug::Begin("EventViewer");
 	Debug::Text("MessageSetCnt:%d", messageSetCnt);

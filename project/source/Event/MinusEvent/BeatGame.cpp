@@ -55,12 +55,12 @@ BeatGame::BeatGame(std::function<void(bool)> Callback) :
 	intNum = new CountViewerDrawer();
 	intNum->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Number.png");
 	intNum->MakeVertex();
-	intNum->size = D3DXVECTOR3(60.0f, 60.0f, 0.0f);
+	intNum->size = D3DXVECTOR3(120.0f, 120.0f, 0.0f);
 	intNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	intNum->position = D3DXVECTOR3(SCREEN_WIDTH / 2 - 140.0f, SCREEN_HEIGHT / 10 * 2.0f + 20.0f, 0.0f);
 	intNum->SetColor(SET_COLOR_NOT_COLORED);
-	intNum->intervalNumberScr = 80.0f;
-	intNum->intervalNumberTex = 0.1f;
+	intNum->intervalPosScr = 80.0f;
+	intNum->intervalPosTex = 0.1f;
 	intNum->placeMax = 2;
 	intNum->baseNumber = 10;
 
@@ -68,12 +68,12 @@ BeatGame::BeatGame(std::function<void(bool)> Callback) :
 	fewNum = new CountViewerDrawer();
 	fewNum->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Number.png");
 	fewNum->MakeVertex();
-	fewNum->size = D3DXVECTOR3(30.0f, 30.0f, 0.0f);
+	fewNum->size = D3DXVECTOR3(60.0f, 60.0f, 0.0f);
 	fewNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	fewNum->position = D3DXVECTOR3(SCREEN_WIDTH / 2 + 40.0f, SCREEN_HEIGHT / 10 * 2.0f + 30.0f, 0.0f);
 	fewNum->SetColor(SET_COLOR_NOT_COLORED);
-	fewNum->intervalNumberScr = 40.0f;
-	fewNum->intervalNumberTex = 0.1f;
+	fewNum->intervalPosScr = 40.0f;
+	fewNum->intervalPosTex = 0.1f;
 	fewNum->placeMax = 2;
 	fewNum->baseNumber = 10;
 
@@ -187,18 +187,18 @@ void BeatGame::Draw()
 		Device->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 
 		// ¬”“_
-		point->Draw();
-		point->SetVertex();
+		point->DrawOrigin();
+		point->SetVertexPos();
 
 		float RemainTime = RemainFrame / 30.0f;
 
 		// ®”•”
 		intNum->DrawCounter(intNum->baseNumber, (int)RemainTime, intNum->placeMax,
-			intNum->intervalNumberScr, intNum->intervalNumberTex);
+			intNum->intervalPosScr, intNum->intervalPosTex);
 
 		// ¬”•”
 		fewNum->DrawCounter(fewNum->baseNumber, (int)((RemainTime - (int)RemainTime)*pow(fewNum->baseNumber, fewNum->placeMax)), fewNum->placeMax,
-			fewNum->intervalNumberScr, fewNum->intervalNumberTex);
+			fewNum->intervalPosScr, fewNum->intervalPosTex);
 
 		Device->SetRenderState(D3DRS_ALPHATESTENABLE, false);
 		Device->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
