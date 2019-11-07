@@ -72,7 +72,7 @@ void EventViewer::Update()
 
 	if (Keyboard::GetTrigger(DIK_Y))
 	{
-		SetEventTelop(eventTelop->Alien, nullptr);
+		SetEventTelop(eventTelop->AI_Strike, nullptr);
 	}
 
 	Debug::Begin("EventViewer");

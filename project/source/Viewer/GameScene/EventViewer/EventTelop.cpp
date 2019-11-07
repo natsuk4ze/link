@@ -25,20 +25,20 @@ static const int animMax = 5;
 
 //テキストアニメーション開始位置
 static const float textStartPositionX[animMax] = {
-	SCREEN_WIDTH*1.2,
-	SCREEN_WIDTH*1.2,
+	SCREEN_WIDTH*1.5,
+	SCREEN_WIDTH*1.5,
 	SCREEN_CENTER_X,
 	SCREEN_CENTER_X,
-	-SCREEN_WIDTH * 1.2
+	-SCREEN_WIDTH * 1.5
 };
 
 //テキストアニメーション終了位置
 static const float textEndPositionX[animMax] = {
-	SCREEN_WIDTH*1.2,
+	SCREEN_WIDTH*1.5,
 	SCREEN_CENTER_X,
 	SCREEN_CENTER_X,
-	-SCREEN_WIDTH * 1.2,
-	-SCREEN_WIDTH * 1.2
+	-SCREEN_WIDTH * 1.5,
+	-SCREEN_WIDTH * 1.5
 };
 
 //テキストアニメーション種類
@@ -80,7 +80,7 @@ EventTelop::EventTelop()
 	text->LoadTexture("data/TEXTURE/Viewer/EventViewer/EventTelop/Text/telopText.png");
 	text->size = D3DXVECTOR3(1024, 128.0f, 0.0f);
 	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	text->position = D3DXVECTOR3(SCREEN_WIDTH*1.2, SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
+	text->position = D3DXVECTOR3(SCREEN_WIDTH*1.5, SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
 	text->MakeVertex();
 
 	//背景

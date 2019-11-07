@@ -35,6 +35,7 @@ public:
 		NewPlanet,
 		Meteorite,
 		Alien,
+		AI_Strike,
 		Max
 	};
 

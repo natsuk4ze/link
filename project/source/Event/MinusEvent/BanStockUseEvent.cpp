@@ -58,10 +58,8 @@ void BanStockUseEvent::Init()
 	// ゲーム進行停止
 	fieldEventHandler->PauseGame();
 
-	//ストック封印イベントはテロップが無いので一旦コメントアウトしておきました（おおはま）
-
-	//// テロップ設置
-	//eventViewer->SetEventTelop(EventTelop::NegativeEvent01, nullptr);
+	// テロップ設置
+	eventViewer->SetEventTelop(EventTelop::AI_Strike, nullptr);
 
 	// 怒り顔エフェクト設置
 	GameParticleManager::Instance()->SetAngryFaceEffect();
