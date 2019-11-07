@@ -23,4 +23,11 @@ namespace Field
 	const char* Const::FieldLayerFile[] = {
 		"data/FIELD/World/World_Continent.csv",
 	};
+
+	/**************************************
+	ì‚Ì—¬‚ê‚éŒü‚«‚ÌCSVƒtƒ@ƒCƒ‹–¼
+	***************************************/
+	const char* Const::RiverFlowFile[] = {
+		"data/FIELD/City/City_Flow.csv",
+	};
 }

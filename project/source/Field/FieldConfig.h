@@ -21,6 +21,7 @@ namespace Field
 	public:
 		static const char* FieldDataFile[];		//PlaceデータのCSVファイル名
 		static const char* FieldLayerFile[];	//陸地、海データのCSVファイル名
+		static const char* RiverFlowFile[];		//川の流れる向きのCSVファイル名
 
 	private:
 		Const() {}

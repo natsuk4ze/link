@@ -87,6 +87,9 @@ namespace Field::Actor
 	{
 		using Model::PlaceType;
 
+		//川の流れる方向のデータを読み込み
+		std::map<FieldPosition, int> flowMap = LoadRiverFlowData();
+
 		//CSVファイルを読み込み
 		std::ifstream stream(Const::FieldDataFile[0]);
 
@@ -109,20 +112,21 @@ namespace Field::Actor
 			{
 				PlaceType type = Model::IntToPlaceType(std::stoi(str));
 				
-				D3DXVECTOR3 position = Field::FieldPosition(x, z).ConvertToWorldPosition();
-				PlaceActor *actor = nullptr;
+				FieldPosition position = Field::FieldPosition(x, z);
 
 				if (type == PlaceType::River)
 				{
-					actor = new RiverActor(position, FieldLevel::City);
+					RiverActor *actor = new RiverActor(position.ConvertToWorldPosition(), FieldLevel::City);
 					riverContainer.push_back(actor);
+
+					actor->SetDirection((RiverActor::FlowDirection)flowMap[position]);
 				}
 				else
 				{
 					//真っ平らだと不自然なので高さに少し凹凸をつける
-					position.y += Math::RandomRange(-2.0f, 0.0f);
+					D3DXVECTOR3 offset = { 0.0f, Math::RandomRange(-2.0f, 0.0f), 0.0f };
 
-					actor = new NoneActor(position, FieldLevel::City);
+					NoneActor *actor = new NoneActor(position.ConvertToWorldPosition() + offset, FieldLevel::City);
 					groundContainer.push_back(actor);
 				}
 
@@ -159,5 +163,49 @@ namespace Field::Actor
 	{
 		//海は存在しないので無条件でfalse
 		return false;
+	}
+
+	/**************************************
+	川データ読み込み
+	***************************************/
+	std::map<FieldPosition, int> CityBackGroundContainer::LoadRiverFlowData()
+	{
+		std::map<FieldPosition, int> out;
+
+		//CSVファイルを読み込み
+		std::ifstream stream(Const::RiverFlowFile[0]);
+
+		std::string line;			//CSVを1行ずつ読むバッファ
+		const char Delim = ',';		//区切り文字
+		int x = 0;					//PlaceのX位置
+		int z = 0;					//PlaceのZ位置
+
+		//CSVの終わりまで読み込み続ける
+		while (std::getline(stream, line))
+		{
+			//1行分読み込んだデータを区切り文字で分割する
+			std::vector<std::string> subStr;
+			String::Split(subStr, line, Delim);
+
+			x = 0;
+
+			//分割したデータ毎にPlaceModelを作成
+			for (auto&& str : subStr)
+			{
+				int flowDir = std::stoi(str);
+
+				if (flowDir == -1)
+					continue;
+
+				FieldPosition position = Field::FieldPosition(x, z);
+				out.emplace(position, flowDir);
+
+				x++;
+			}
+
+			z++;
+		}
+
+		return out;
 	}
 }
