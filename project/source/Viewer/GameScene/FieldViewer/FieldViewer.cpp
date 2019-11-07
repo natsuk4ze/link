@@ -58,19 +58,6 @@ void FieldViewer::Update()
 		SetFieldTelop(fieldTelop->City, nullptr);
 	}
 
-	if (Keyboard::GetTrigger(DIK_E))
-	{
-		SetFieldErroMessage(fieldErroMessage->NotConnection);
-	}
-
-	if (Keyboard::GetPress(DIK_O))
-	{
-		SetOperationExplanation(
-			operationExplanation->Z_Cancel,
-			operationExplanation->Z_None,
-			operationExplanation->X_Develop);
-	}
-
 #endif
 
 }
