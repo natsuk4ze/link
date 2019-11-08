@@ -219,6 +219,8 @@
     <ClInclude Include="source\Shader\RiverEffect.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.h" />
+    <ClInclude Include="source\Scene\ModelViewScene.h" />
+    <ClInclude Include="source\ModelView\ModelViewCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -421,6 +423,8 @@
     <ClCompile Include="source\Shader\RiverEffect.cpp" />
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.cpp" />
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.cpp" />
+    <ClCompile Include="source\Scene\ModelViewScene.cpp" />
+    <ClCompile Include="source\ModelView\ModelViewCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

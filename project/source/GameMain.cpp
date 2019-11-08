@@ -14,6 +14,7 @@
 
 #include "Scene\GameScene.h"
 #include "Scene/ParticleTestScene.h"
+#include "Scene/ModelViewScene.h"
 
 /**************************************
 コンストラクタ
@@ -24,13 +25,14 @@ GameMain::GameMain(HINSTANCE hInstance, HWND hWnd) :
 	//シーンマネージャにシーンのインスタンスを追加
 	sceneManager->Add(GameConfig::SceneID::Game, new GameScene(renderTexture, renderSurface));
 	sceneManager->Add(GameConfig::SceneID::ParticleTest, new ParticleTestScene(renderTexture, renderSurface));
+	sceneManager->Add(GameConfig::SceneID::ModelView, new ModelViewScene(renderTexture, renderSurface));
 
 	//タイトルがまだ無いのでここでパラメータを初期化してしまう
 	PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_RemainTime), 30 * 180);
 	PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), 0);
 
 	//初期シーンに遷移
-	const int InitScene = GameConfig::SceneID::Game;
+	const int InitScene = GameConfig::SceneID::ModelView;
 	sceneManager->ChangeScene(InitScene);
 }
 

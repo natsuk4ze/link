@@ -19,6 +19,7 @@ namespace GameConfig
 		Game,
 		Result,
 		ParticleTest,
+		ModelView,
 		Max
 	};
 
