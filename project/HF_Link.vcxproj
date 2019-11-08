@@ -535,9 +535,6 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">2.0</ShaderModel>
     </FxCompile>
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\HF素材\FieldViewer素材\fieldErrorMessage.png" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{996B903E-F0F3-45AE-BEBF-C0FD8C48906F}</ProjectGuid>

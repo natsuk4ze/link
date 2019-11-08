@@ -442,7 +442,4 @@
     <FxCompile Include="Shaders\InstancingMesh.fx" />
     <FxCompile Include="source\Shader\RiverRenderer.fx" />
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\HF素材\FieldViewer素材\fieldErrorMessage.png" />
-  </ItemGroup>
 </Project>
