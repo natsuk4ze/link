@@ -57,17 +57,12 @@ public:
 	//視錐台取得処理
 	ViewFrustum GetViewFrustrum() const;
 
+	//Transform取得処理
+	Transform GetTransform() const;
+
 protected:
 	//SRT情報
 	Transform transform;
-
-	//注視点
-	D3DXVECTOR3 target;
-
-	//視点、注視点、上方向（作業用領域）
-	D3DXVECTOR3 eyeWork;
-	D3DXVECTOR3 targetWork;
-	D3DXVECTOR3 upWork;
 
 	//視野角、アスペクト比、ニア値、ファー値
 	float viewAngle;
@@ -93,12 +88,7 @@ protected:
 	static Camera* mainCamera;
 
 	//視錐台計算処理
-	void CalculateFrustrum();
-
-public:
-	class ShakePlugin;				//カメラを揺らすプラグイン
-	class TranslationPlugin;		//カメラを指定した位置に平行移動させるプラグイン
-	
+	void CalculateFrustrum();	
 };
 
 /**************************************
@@ -108,7 +98,7 @@ class BaseCameraPlugin
 {
 public:
 	virtual void Update() = 0;
-	virtual void Apply(Camera& camera) = 0;
+	virtual void Apply(Transform& transformWork) = 0;
 };
 
 #endif
