@@ -17,12 +17,12 @@
 /**************************************
 ƒNƒ‰ƒX’è‹`
 ***************************************/
-class Camera::ShakePlugin : public BaseCameraPlugin, public BaseSingleton<ShakePlugin>
+class CameraShakePlugin : public BaseCameraPlugin, public BaseSingleton<CameraShakePlugin>
 {
-	friend class BaseSingleton<ShakePlugin>;
+	friend class BaseSingleton<CameraShakePlugin>;
 public:
 	void Update();
-	void Apply(Camera& camera);
+	void Apply(Transform& work);
 	void Set(const D3DXVECTOR3& amplitude, int duration = 30);
 
 private:
@@ -30,10 +30,10 @@ private:
 	D3DXVECTOR3 amplitude;
 	int duration;
 	bool active;
-
-	ShakePlugin();
-	ShakePlugin(const ShakePlugin&) {}
-	~ShakePlugin() {}
+	
+	CameraShakePlugin();
+	CameraShakePlugin(const CameraShakePlugin&) {}
+	~CameraShakePlugin() {}
 };
 
 #endif
