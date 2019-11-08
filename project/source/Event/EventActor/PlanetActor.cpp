@@ -40,7 +40,7 @@ void PlanetActor::Update()
 #endif
 }
 
-
+#if _DEBUG
 //=====================================
 // ƒzƒoƒŠƒ“ƒO‰^“®‚ÌˆÚ“®ŒvŽZ
 //=====================================
@@ -59,3 +59,4 @@ void PlanetActor::HoverMotion(void)
 	MoveTailEmitter->SetPosition(Pos);
 	transform->SetPosition(Pos);
 }
+#endif
