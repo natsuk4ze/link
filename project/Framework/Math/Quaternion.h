@@ -34,6 +34,11 @@ public:
 	static D3DXQUATERNION ToQuaternion(const D3DXVECTOR3& euler);
 
 	/**************************************
+	変換行列からクォータニオンへの変換
+	***************************************/
+	static D3DXQUATERNION GetRotation(const D3DXMATRIX& mtx);
+
+	/**************************************
 	等価比較処理（浮動小数点の誤差を考慮）
 	***************************************/
 	static bool Equal(const D3DXQUATERNION& q1, const D3DXQUATERNION& q2);

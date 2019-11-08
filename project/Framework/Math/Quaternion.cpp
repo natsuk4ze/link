@@ -97,6 +97,61 @@ D3DXQUATERNION Quaternion::ToQuaternion(const D3DXVECTOR3& euler)
 }
 
 /**************************************
+âÒì]çsóÒÇ©ÇÁÇÃäpìxÇÃéÊìæ
+***************************************/
+D3DXQUATERNION Quaternion::GetRotation(const D3DXMATRIX & m)
+{
+	float elem[4];
+	elem[0] = m._11 - m._22 - m._33 + 1.0f;
+	elem[1] = -m._11 + m._22 - m._33 + 1.0f;
+	elem[2] = -m._11 - m._22 + m._33 + 1.0f;
+	elem[3] = m._11 + m._22 + m._33 + 1.0f;
+
+	int biggestIndex = 0;
+	for (int i = 0; i < 4; i++)
+	{
+		if (elem[i] > elem[biggestIndex])
+		{
+			biggestIndex = i;
+		}
+	}
+
+	float q[4];
+	float v = sqrtf(elem[biggestIndex]) * 0.5f;
+	q[biggestIndex] = v;
+	float mult = 0.25f / v;
+
+	switch (biggestIndex)
+	{
+	case 0:
+		q[1] = (m._21 + m._12) * mult;
+		q[2] = (m._13 + m._31) * mult;
+		q[3] = (m._32 - m._23) * mult;
+		break;
+
+	case 1:
+		q[0] = (m._21 + m._12) * mult;
+		q[2] = (m._32 + m._23) * mult;
+		q[3] = (m._13 - m._31) * mult;
+		break;
+
+	case 2:
+		q[0] = (m._13 + m._31) * mult;
+		q[1] = (m._32 + m._23) * mult;
+		q[3] = (m._21 + m._12) * mult;
+		break;
+
+	case 3:
+		q[0] = (m._32 - m._23) * mult;
+		q[1] = (m._13 - m._31) * mult;
+		q[2] = (m._21 - m._12) * mult;
+		break;
+	}
+
+	return D3DXQUATERNION(q);
+}
+
+/**************************************
 ==î‰ärèàóù
 ***************************************/
 bool Quaternion::Equal(const D3DXQUATERNION & q1, const D3DXQUATERNION & q2)

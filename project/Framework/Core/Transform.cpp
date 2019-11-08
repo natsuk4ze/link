@@ -246,3 +246,29 @@ D3DXMATRIX Transform::GetMatrix() const
 
 	return world;
 }
+
+/**************************************
+éwíËÇÃç¿ïWÇå¸Ç©ÇπÇÈèàóù
+***************************************/
+void Transform::LookAt(const D3DXVECTOR3 & target)
+{
+	D3DXVECTOR3 z = (target - position);
+	D3DXVec3Normalize(&z, &z);
+
+	D3DXVECTOR3 x;
+	D3DXVec3Cross(&x, &Vector3::Up, &z);
+	D3DXVec3Normalize(&x, &x);
+
+	D3DXVECTOR3 y;
+	D3DXVec3Cross(&y, &z, &x);
+	D3DXVec3Normalize(&y, &y);
+
+	D3DXMATRIX m;
+	D3DXMatrixIdentity(&m);
+	m._11 = x.x; m._12 = y.x; m._13 = z.x;
+	m._21 = x.y; m._22 = y.y; m._23 = z.y;
+	m._31 = x.z; m._32 = y.z; m._33 = z.z;
+
+	D3DXQUATERNION rot = Quaternion::GetRotation(m);
+	rotation = rot;
+}

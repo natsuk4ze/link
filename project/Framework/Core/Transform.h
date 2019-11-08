@@ -55,6 +55,9 @@ public:
 	//ワールド変換設定処理
 	virtual void SetWorld(const D3DXMATRIX* parent = NULL) const;
 	virtual D3DXMATRIX GetMatrix() const;
+
+	//指定の位置を向かせる処理
+	void LookAt(const D3DXVECTOR3& target);
 	
 protected:
 	D3DXVECTOR3 position;	//座標
