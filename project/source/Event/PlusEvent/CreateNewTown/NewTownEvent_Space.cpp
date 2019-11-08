@@ -78,7 +78,7 @@ void NewTownEvent_Space::Init()
 	eventViewer->SetEventTelop(EventTelop::NewPlanet, [=]()
 	{
 		// 予定地にカメラを移動させる
-		Camera::TranslationPlugin::Instance()->Move(PlanetPos, 30, [&]() {FallenStart(); });
+		CameraTranslationPlugin::Instance()->Move(PlanetPos, 30, [&]() {FallenStart(); });
 	});
 
 	// 初期化終了
@@ -113,7 +113,7 @@ void NewTownEvent_Space::Update()
 			EventState = State::PlanetArrive;
 		}
 
-		Camera::TranslationPlugin::Instance()->Move(PlanetPos, 1, nullptr);
+		CameraTranslationPlugin::Instance()->Move(PlanetPos, 1, nullptr);
 
 		break;
 
@@ -162,7 +162,7 @@ void NewTownEvent_Space::FallenStart(void)
 //void NewTownEvent_Space::EventOver(void)
 //{
 //	// イベント終了、ゲーム続行
-//	Camera::TranslationPlugin::Instance()->Restore(30, nullptr);
+//	CameraTranslationPlugin::Instance()->Restore(30, nullptr);
 //	fieldEventHandler->ResumeGame();
 //	UseFlag = false;
 //}

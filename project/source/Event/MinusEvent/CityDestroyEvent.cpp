@@ -84,7 +84,7 @@ void CityDestroyEvent::Init()
 	// テロップ設置
 	eventViewer->SetEventTelop(EventTelop::Meteorite, [&]()
 	{
-		Camera::TranslationPlugin::Instance()->Move(TownPos, 30, [&]() {MeteorFallStart(); });
+		CameraTranslationPlugin::Instance()->Move(TownPos, 30, [&]() {MeteorFallStart(); });
 	});
 
 	// 初期化終了
@@ -134,7 +134,7 @@ void CityDestroyEvent::Update()
 		// 30フレームの遅延を設置
 		TaskManager::Instance()->CreateDelayedTask(30, [&]()
 		{
-			Camera::TranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
+			CameraTranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
 		});
 		EventState = EffectHappend;
 		break;
@@ -155,7 +155,7 @@ void CityDestroyEvent::Update()
 			// 30フレームの遅延を設置
 			TaskManager::Instance()->CreateDelayedTask(30, [&]()
 			{
-				Camera::TranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
+				CameraTranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
 			});
 			// 町消滅処理
 			fieldEventHandler->DestroyTown(Target);

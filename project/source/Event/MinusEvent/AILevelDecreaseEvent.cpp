@@ -85,7 +85,7 @@ void AILevelDecreaseEvent::Init()
 	// テロップ設置
 	eventViewer->SetEventTelop(EventTelop::Alien, [&]()
 	{
-		Camera::TranslationPlugin::Instance()->Move(TownPos, 30, [&]() {UFODebutStart(); });
+		CameraTranslationPlugin::Instance()->Move(TownPos, 30, [&]() {UFODebutStart(); });
 	});
 
 	// ゲーム進行停止
@@ -141,7 +141,7 @@ void AILevelDecreaseEvent::Update()
 		// 30フレームの遅延を設置
 		TaskManager::Instance()->CreateDelayedTask(30, [&]()
 		{
-			Camera::TranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
+			CameraTranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
 		});
 		EventState = EffectHappend;
 		break;
@@ -171,7 +171,7 @@ void AILevelDecreaseEvent::Update()
 		}
 		else
 		{
-			Camera::TranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
+			CameraTranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
 			EventState = EffectHappend;
 		}
 		break;

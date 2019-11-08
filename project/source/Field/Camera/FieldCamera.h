@@ -46,7 +46,6 @@ public:
 private:
 	GameObject *targetObject;						//追従目標
 	D3DXVECTOR3 startPosition, goalPosition;		//イージング用座標
-	D3DXVECTOR3 startTarget;						//イージング用注視点
 
 	int cntFrame;									//フレームカウント
 

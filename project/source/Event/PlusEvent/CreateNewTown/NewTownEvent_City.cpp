@@ -57,7 +57,7 @@ void NewTownEvent_City::Init()
 	eventViewer->SetEventTelop(EventTelop::NewPlanet, [=]()
 	{
 		// 予定地にカメラを移動させる
-		Camera::TranslationPlugin::Instance()->Move(TownPos, 30, [&]() {CreateNewTown(); });
+		CameraTranslationPlugin::Instance()->Move(TownPos, 30, [&]() {CreateNewTown(); });
 	});
 
 	// 初期化終了
@@ -107,7 +107,7 @@ void NewTownEvent_City::CreateNewTown(void)
 //void NewTownEvent_City::EventOver(void)
 //{
 //	// イベント終了、ゲーム続行
-//	Camera::TranslationPlugin::Instance()->Restore(30, nullptr);
+//	CameraTranslationPlugin::Instance()->Restore(30, nullptr);
 //	fieldEventHandler->ResumeGame();
 //	UseFlag = false;
 //}
