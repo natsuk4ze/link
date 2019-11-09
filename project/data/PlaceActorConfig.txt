@@ -21,10 +21,10 @@
 	"City-Mountain":"data/MODEL/PlaceActor/mountain.x",
 
 	"World-Town":"フィールドレベル国の街モデル",
-	"World-Town":"",
+	"World-Town":"data/MODEL/PlaceActor/town.x",
 
-	"World-Straight":"data/MODEL/PlaceActor/Straight.x",
-	"World-Straight":"",
+	"World-Straight":"フィールドレベル国の直線道モデル",
+	"World-Straight":"data/MODEL/PlaceActor/Straight track.x",
 
 	"World-Curve":"フィールドレベル国のカーブモデル",
 	"World-Curve":"data/MODEL/PlaceActor/Curved track.x",
@@ -36,16 +36,16 @@
 	"World-Cross":"data/MODEL/PlaceActor/Crossroad track.x",
 
 	"World-StraightSea":"フィールドレベル国の直線道モデル（海）",
-	"World-StraightSea":"",
+	"World-StraightSea":"data/MODEL/PlaceActor/Straight.x",
 
 	"World-CurveSea":"フィールドレベル国カーブモデル（海）",
-	"World-CurveSea":"",
+	"World-CurveSea":"data/MODEL/PlaceActor/Curve.x",
 
 	"World-TSea":"フィールドレベル国のT字路（海）",
-	"World-TSea":"",
+	"World-TSea":"data/MODEL/PlaceActor/Curve.x",
 
 	"World-Cross":"フィールドレベル国の十字路モデル（海）",
-	"World-Cross":"",
+	"World-Cross":"data/MODEL/PlaceActor/Cross-Junction.x",
 
 	"World-Mountain":"フィールドレベル国の山モデル",
 	"World-Mountain":"data/MODEL/PlaceActor/mountain.x",
@@ -54,20 +54,20 @@
 	"Space-Town":"data/MODEL/PlaceActor/earth.x",
 
 	"Space-Straight":"フィールドレベル宇宙の直線道モデル",
-	"Space-Straight":"",
+	"Space-Straight":"data/MODEL/PlaceActor/Straight.x",
 
 	"Space-Curve":"フィールドレベル宇宙のカーブモデル",
-	"Space-Curve":"",
+	"Space-Curve":"data/MODEL/PlaceActor/Curve.x",
 
 	"Space-T":"フィールドレベル宇宙のT字路",
-	"Space-T":"",
+	"Space-T":"data/MODEL/PlaceActor/T-Junction.x",
 
 	"Space-Cross":"フィールドレベル宇宙の十字路",
-	"Space-Cross":"",
+	"Space-Cross":"data/MODEL/PlaceActor/Cross-Junction.x",
 
 	"Space-Bridge":"フィールドレベル宇宙の橋モデル",
-	"Space-Bridge":"",
+	"Space-Bridge":"data/MODEL/PlaceActor/bridge.x",
 
 	"Space-Mountain":"フィールドレベル宇宙の山モデル",
-	"Space-Mountain":""
+	"Space-Mountain":"data/MODEL/PlaceActor/mountain.x"
 }
