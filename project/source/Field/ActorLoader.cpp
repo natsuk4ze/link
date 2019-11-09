@@ -17,7 +17,7 @@ namespace Field::Actor
 	/**************************************
 	タウンモデルのタグ
 	***************************************/
-	const std::string ActorLoader::TownTag[] = {
+	const std::string ActorLoader::CityTag[] = {
 		"City-Town",
 		"World-Town",
 		"Space-Town"
@@ -116,7 +116,7 @@ namespace Field::Actor
 		//データをパース
 		for (int i = 0; i <= Field::FieldLevel::Space; i++)
 		{
-			modelFileName[TownTag[i]] = data[TownTag[i]].string_value();
+			modelFileName[CityTag[i]] = data[CityTag[i]].string_value();
 			modelFileName[StraightTag[i]] = data[StraightTag[i]].string_value();
 			modelFileName[CurveTag[i]] = data[CurveTag[i]].string_value();
 			modelFileName[TJunctionTag[i]] = data[TJunctionTag[i]].string_value();

@@ -24,7 +24,7 @@ namespace Field::Actor
 	class ActorLoader
 	{
 	public:
-		const static std::string TownTag[];			//街モデルのリソースタグ
+		const static std::string CityTag[];			//街モデルのリソースタグ
 		const static std::string StraightTag[];		//直線道のリソースタグ
 		const static std::string CurveTag[];		//カーブ道のリソースタグ
 		const static std::string TJunctionTag[];	//T字路のリソースタグ

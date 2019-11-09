@@ -47,6 +47,7 @@ namespace Field::Actor
 	using ActorContainer = std::unordered_map<unsigned, std::unique_ptr<PlaceActor>>;
 
 	class BackGroundContainer;
+	class ActorLoader;
 
 	/**************************************
 	ƒNƒ‰ƒX’è‹`

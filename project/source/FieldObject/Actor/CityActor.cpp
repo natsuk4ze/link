@@ -8,6 +8,7 @@
 #include "CityActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../Animation/ActorAnimation.h"
+#include "../../Field/ActorLoader.h"
 
 //=====================================
 // コンストラクタ
@@ -15,20 +16,8 @@
 CityActor::CityActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
 	: PlaceActor(pos, currentLevel)
 {
-	// モデルデータ参照
-	switch (currentLevel)
-	{
-	case Field::City:
-		ResourceManager::Instance()->GetMesh("Town-City", mesh);
-		break;
-	case Field::World:
-		break;
-	case Field::Space:
-		ResourceManager::Instance()->GetMesh("Town-Space", mesh);
-		break;
-	default:
-		break;
-	}
+	using Field::Actor::ActorLoader;
+	ResourceManager::Instance()->GetMesh(ActorLoader::CityTag[currentLevel].c_str(), mesh);
 
 	type = Field::Model::Town;
 }

@@ -85,6 +85,9 @@ void MeshResource::Clone(MeshContainer * container)
 	if (container == NULL)
 		return;
 
+	if (mesh == NULL)
+		return;
+
 	//‰Šú‰»Ï‚Ý‚Å‚ ‚ê‚ÎƒŠƒŠ[ƒX‚·‚é
 	if (container->initialized)
 	{

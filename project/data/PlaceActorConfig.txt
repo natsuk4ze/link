@@ -6,7 +6,7 @@
 	"City-Straight":"data/MODEL/PlaceActor/Straight.x",
 
 	"City-Curve":"フィールドレベル街のカーブモデル",
-	"City-Curve":"data/MODEL/PlacaeActor/Curve.x",
+	"City-Curve":"data/MODEL/PlaceActor/Curve.x",
 
 	"City-T":"フィールドレベル街のT字路モデル",
 	"City-T":"data/MODEL/PlaceActor/T-Junction.x",
