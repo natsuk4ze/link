@@ -49,6 +49,8 @@ void GameMain::Update()
 		sceneManager->ChangeScene(GameConfig::Game);
 	else if (Debug::Button("ParticleTest"))
 		sceneManager->ChangeScene(GameConfig::ParticleTest);
+	else if (Debug::Button("ModelView"))
+		sceneManager->ChangeScene(GameConfig::ModelView);
 
 	Debug::End();
 

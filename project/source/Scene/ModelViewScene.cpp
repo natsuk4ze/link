@@ -79,6 +79,7 @@ void ModelViewScene::Uninit()
 	{
 		SAFE_DELETE(actor);
 	}
+	actorContainer.clear();
 
 	SAFE_DELETE(skybox);
 
