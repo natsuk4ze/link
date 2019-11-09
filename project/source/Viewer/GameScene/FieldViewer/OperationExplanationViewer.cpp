@@ -61,7 +61,6 @@ void OperationExplanationViewer::Draw(void)
 {
 	for (int i = 0; i < textMax; i++)
 	{
-		//”wŒi‚ðæ‚É•`‰æ
 		text[i]->Draw();
 	}
 }

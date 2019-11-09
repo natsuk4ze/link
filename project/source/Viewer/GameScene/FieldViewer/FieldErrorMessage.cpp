@@ -82,7 +82,7 @@ void FieldErrorMessage::Play(void)
 //=============================================================================
 void FieldErrorMessage::PassTexture(ErroID id)
 {
-	//テキストのUVを変更
+	//テキストのテクスチャUVを変更
 	text->SetTexture(1, Max, id);
 }
 
