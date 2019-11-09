@@ -55,9 +55,10 @@ void CountViewerDrawer::SetTexture(int number, float placeInterval)
 }
 
 //=============================================================================
-//カウンター描画処理
+//0を表示するカウンター描画処理（引数注意）
 //=============================================================================
-void CountViewerDrawer::DrawCounter(int baseNumber, int parameterBox, int placeMax, float intervalNumberScr, float intervalNumberTex)
+void CountViewerDrawer::DrawCounter(int baseNumber, int parameterBox, int placeMax,
+	float intervalNumberScr, float intervalNumberTex)
 {
 	for (int nCntPlace = 0; nCntPlace < placeMax; nCntPlace++)
 	{
@@ -66,9 +67,29 @@ void CountViewerDrawer::DrawCounter(int baseNumber, int parameterBox, int placeM
 		num = parameterBox % (int)(pow(baseNumber, (placeMax - nCntPlace)))
 			/ (int)(pow(baseNumber, (placeMax - nCntPlace - 1)));
 
-		this->Draw();
 		this->SetVertexPos(nCntPlace, intervalNumberScr);
 		SetTexture(num, intervalNumberTex);
+		this->Draw();
+	}
+}
+
+//=============================================================================
+//0を表示しないカウンター描画処理（引数注意）
+//=============================================================================
+void CountViewerDrawer::DrawCounter(int baseNumber, int parameterBox,
+	float intervalNumberScr, float intervalNumberTex)
+{
+	int param = parameterBox;
+	int placeMax = (param == 0) ? 1 : (int)log10f((float)param) + 1;
+	int num = 0;
+
+	for (int nCntPlace = 0; nCntPlace < placeMax; nCntPlace++,param/=10)
+	{
+		num = param % 10;
+
+		this->SetVertexPos(nCntPlace, intervalNumberScr);
+		SetTexture(num, intervalNumberTex);
+		this->Draw();
 	}
 }
 
