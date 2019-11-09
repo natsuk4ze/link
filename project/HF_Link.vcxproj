@@ -175,6 +175,7 @@
     <ClInclude Include="source\FieldObject\Infomation\LinkInfoActor.h" />
     <ClInclude Include="source\FieldObject\PassengerController.h" />
     <ClInclude Include="source\FieldObject\Passenger\PassengerActor.h" />
+    <ClInclude Include="source\Field\ActorLoader.h" />
     <ClInclude Include="source\Field\Along\AlongActor.h" />
     <ClInclude Include="source\Field\Along\AlongController.h" />
     <ClInclude Include="source\Field\Along\AlongModel.h" />
@@ -383,6 +384,7 @@
     <ClCompile Include="source\FieldObject\Infomation\LinkInfoActor.cpp" />
     <ClCompile Include="source\FieldObject\PassengerController.cpp" />
     <ClCompile Include="source\FieldObject\Passenger\PassengerActor.cpp" />
+    <ClCompile Include="source\Field\ActorLoader.cpp" />
     <ClCompile Include="source\Field\Along\AlongActor.cpp" />
     <ClCompile Include="source\Field\Along\AlongController.cpp" />
     <ClCompile Include="source\Field\Along\AlongModel.cpp" />
