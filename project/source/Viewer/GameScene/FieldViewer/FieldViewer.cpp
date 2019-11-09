@@ -67,7 +67,7 @@ void FieldViewer::Update()
 
 	if (Keyboard::GetTrigger(DIK_L))
 	{
-		linkLevelUpViewer->Set(5);
+		linkLevelUpViewer->Set(88);
 	}
 
 #endif

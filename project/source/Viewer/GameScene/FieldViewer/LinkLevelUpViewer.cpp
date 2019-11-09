@@ -87,25 +87,25 @@ LinkLevelUpViewer::LinkLevelUpViewer()
 	laurel->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_HEIGHT/2/1.5, 0.0f);
 	laurel->MakeVertex();
 
-	//{
-	plus = new BaseViewerDrawer();
-	plus->LoadTexture("data/TEXTURE/Viewer/FieldViewer/LinkLevelUpViewer/Plus.png");
-	plus->size = D3DXVECTOR3(120.0f, 120.0f, 0.0f);
-	plus->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	plus->position = D3DXVECTOR3(SCREEN_CENTER_X-80.0f, SCREEN_HEIGHT / 2/1.5, 0.0f);
-	plus->MakeVertex();
-
 	//”Žš
 	num = new CountViewerDrawer();
 	num->LoadTexture("data/TEXTURE/Viewer/FieldViewer/LinkLevelUpViewer/Number.png");
 	num->size = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	num->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	num->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_HEIGHT / 2/1.5, 0.0f);
-	num->intervalPosScr = 80.0f;
+	num->intervalPosScr = 70.0f;
 	num->intervalPosTex = 0.1f;
 	num->placeMax = 2;
 	num->baseNumber = 10;
 	num->MakeVertex();
+
+	//{
+	plus = new BaseViewerDrawer();
+	plus->LoadTexture("data/TEXTURE/Viewer/FieldViewer/LinkLevelUpViewer/Plus.png");
+	plus->size = D3DXVECTOR3(100.0f, 100.0f, 0.0f);
+	plus->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	plus->position = D3DXVECTOR3(SCREEN_CENTER_X - num->intervalPosScr, SCREEN_HEIGHT / 2 / 1.5, 0.0f);
+	plus->MakeVertex();
 }
 
 //*****************************************************************************
@@ -141,8 +141,8 @@ void LinkLevelUpViewer::Draw(void)
 		//ŒŽŒjŽ÷‚ðæ‚É•`‰æ
 		laurel->Draw();
 
-		//”‰F
-		num->DrawCounter(num->baseNumber, parameterBox,num->placeMax,
+		//”‰Fi0‚ð•`‰æ‚µ‚È‚¢‚Å‚¨‚­j
+		num->DrawCounter(num->baseNumber, parameterBox,
 			num->intervalPosScr, num->intervalPosTex);
 
 		//{
@@ -246,7 +246,7 @@ void LinkLevelUpViewer::InNum()
 {
 	//ƒC[ƒWƒ“ƒO‚ÌƒXƒ^[ƒg‚ÆƒS[ƒ‹‚ðÝ’è
 	float easingStart = 0.0f;
-	float easingGoal = 120.0f;
+	float easingGoal = 100.0f;
 
 	num->size.x = Easing::EaseValue(animTime, easingStart, easingGoal, animType[Num_Laurel_In]);
 	num->size.y = Easing::EaseValue(animTime, easingStart, easingGoal, animType[Num_Laurel_In]);
