@@ -222,7 +222,7 @@ void EventTelop::PassTexture(TelopID id)
 
 	bool isNegative;
 
-	if (id > Meteorite)
+	if (id >= Meteorite)
 	{
 		isNegative = true;
 	}

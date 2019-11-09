@@ -21,6 +21,9 @@ public:
 	void DrawCounter(int baseNumber, int parameterBox, int placeMax,
 		float intervalNumberScr, float intervalNumberTex);
 
+	void DrawCounter(int baseNumber, int parameterBox,
+		float intervalNumberScr, float intervalNumberTex);
+
 	//スクリーン上の表示座標間隔
 	float intervalPosScr;
 

@@ -26,15 +26,15 @@ static const int animMax = 4;
 
 //テキストアニメーション開始位置
 static const float textStartPositionY[animMax] = {
-	SCREEN_CENTER_Y/1.5,
-	SCREEN_CENTER_Y/1.5,
+	SCREEN_CENTER_Y/1.9f,
+	SCREEN_CENTER_Y/1.9f,
 	SCREEN_CENTER_Y/2.7,
 	SCREEN_CENTER_Y/2.7
 };
 
 //テキストアニメーション終了位置
 static const float textEndPositionY[animMax] = {
-	SCREEN_CENTER_Y/1.5,
+	SCREEN_CENTER_Y/1.9f,
 	SCREEN_CENTER_Y/2.7,
 	SCREEN_CENTER_Y/2.7,
 	SCREEN_CENTER_Y/2.7 
@@ -52,9 +52,9 @@ static const EaseType animType[animMax] = {
 //*注意(0を入れると無限大になるからアニメーションそのものを削除すること)
 static const float animDuration[animMax] = {
 	30,
-	90,
-	20,
-	100
+	50,
+	10,
+	80
 };
 
 //アニメーションシーン
@@ -76,7 +76,7 @@ FieldTelop::FieldTelop()
 	text->LoadTexture("data/TEXTURE/Viewer/FieldViewer/FieldTelop/TextCity.png");
 	text->size = D3DXVECTOR3(512, 128.0f, 0.0f);
 	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	text->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_CENTER_Y/1.5, 0.0f);
+	text->position = D3DXVECTOR3(SCREEN_CENTER_X, textStartPositionY[0], 0.0f);
 	text->MakeVertex();
 
 	//ライン
