@@ -23,8 +23,8 @@
 	"World-Town":"フィールドレベル国の街モデル",
 	"World-Town":"",
 
+	"World-Straight":"フィールドレベル国の直線道モデル",
 	"World-Straight":"data/MODEL/PlaceActor/Straight.x",
-	"World-Straight":"",
 
 	"World-Curve":"フィールドレベル国のカーブモデル",
 	"World-Curve":"data/MODEL/PlaceActor/Curved track.x",
