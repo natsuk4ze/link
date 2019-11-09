@@ -1,0 +1,143 @@
+//=====================================
+//
+//アクターローダー処理[ActorLoader.cpp]
+//Author:GP12A332 21 立花雄太
+//
+//=====================================
+#include "ActorLoader.h"
+#include "../../Library/json11/json11.hpp"
+#include "../Field/FieldConfig.h"
+#include "../../Framework/Resource/ResourceManager.h"
+
+#include <string>
+#include <fstream>
+
+namespace Field::Actor
+{
+	/**************************************
+	タウンモデルのタグ
+	***************************************/
+	const std::string ActorLoader::CityTag[] = {
+		"City-Town",
+		"World-Town",
+		"Space-Town"
+	};
+
+	/**************************************
+	カーブ道のタグ
+	***************************************/
+	const std::string ActorLoader::StraightTag[] = {
+		"City-Straight",
+		"World-Straight",
+		"Space-Straight"
+	};
+
+	/**************************************
+	直線道のタグ
+	***************************************/
+	const std::string ActorLoader::CurveTag[] = {
+		"City-Curve",
+		"World-Curve",
+		"Space-Curve",
+	};
+
+	/**************************************
+	T字路のタグ
+	***************************************/
+	const std::string ActorLoader::TJunctionTag[] = {
+		"City-T",
+		"World-T",
+		"Space-T"
+	};
+
+	/**************************************
+	十字路のタグ
+	***************************************/
+	const std::string ActorLoader::CrossTag[] = {
+		"City-Cross",
+		"World-Cross",
+		"Space-Cross"
+	};
+
+	/**************************************
+	橋のタグ
+	**************************************/
+	const std::string ActorLoader::BridgeTag[] = {
+		"City-Bridge",
+		"World-Bridge",
+		"Space-Bridge"
+	};
+
+	/**************************************
+	山のタグ
+	***************************************/
+	const std::string ActorLoader::MountainTag[] = {
+		"City-Mountain",
+		"World-Mountain",
+		"Space-Mountain"
+	};
+
+	/**************************************
+	コンストラクタ
+	***************************************/
+	ActorLoader::ActorLoader()
+	{
+
+	}
+
+	/**************************************
+	デストラクタ
+	***************************************/
+	ActorLoader::~ActorLoader()
+	{
+		modelFileName.clear();
+	}
+
+	/**************************************
+	設定ファイルの読み込み	
+	***************************************/
+	void ActorLoader::LoadConfig()
+	{
+		//設定ファイルを開く
+		std::string filePath = "data/PlaceActorConfig.txt";
+		std::ifstream ifs;
+		ifs.open(filePath, std::ios::in);
+
+		//成功確認
+		assert(ifs.is_open());
+
+		//JSONデータを読み込み
+		const std::string json((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
+		ifs.close();
+
+		std::string err;
+		json11::Json data = json11::Json::parse(json, err);
+
+		//データをパース
+		for (int i = 0; i <= Field::FieldLevel::Space; i++)
+		{
+			modelFileName[CityTag[i]] = data[CityTag[i]].string_value();
+			modelFileName[StraightTag[i]] = data[StraightTag[i]].string_value();
+			modelFileName[CurveTag[i]] = data[CurveTag[i]].string_value();
+			modelFileName[TJunctionTag[i]] = data[TJunctionTag[i]].string_value();
+			modelFileName[CrossTag[i]] = data[CrossTag[i]].string_value();
+			modelFileName[BridgeTag[i]] = data[BridgeTag[i]].string_value();
+			modelFileName[MountainTag[i]] = data[MountainTag[i]].string_value();
+		}
+	}
+
+	/**************************************
+	リソース読み込み
+	***************************************/
+	void ActorLoader::LoadResource()
+	{
+		//リソースを読み込み
+		for (auto&& pair : modelFileName)
+		{
+			if (pair.second == "")
+				continue;
+
+			ResourceManager::Instance()->LoadMesh(pair.first.c_str(), pair.second.c_str());
+		}
+	}
+}
