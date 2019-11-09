@@ -1,0 +1,53 @@
+//=====================================
+//
+// ActorLoader.h
+// 機能:アクターのモデルローダ
+// Author:GP12B332 21 立花雄太
+//
+//=====================================
+#ifndef _ACTORLOADER_H_
+#define _ACTORLOADER_H_
+
+#include "../../main.h"
+
+#include <map>
+
+namespace Field::Actor
+{
+	/**************************************
+	前方宣言
+	***************************************/
+
+	/**************************************
+	クラス定義
+	***************************************/
+	class ActorLoader
+	{
+	public:
+		const static std::string CityTag[];			//街モデルのリソースタグ
+		const static std::string StraightTag[];		//直線道のリソースタグ
+		const static std::string CurveTag[];		//カーブ道のリソースタグ
+		const static std::string TJunctionTag[];	//T字路のリソースタグ
+		const static std::string CrossTag[];		//十字路のリソースタグ
+		const static std::string BridgeTag[];		//橋のリソースタグ
+		const static std::string MountainTag[];		//山のリソースタグ
+
+		//コンストラクタ、デストラクタ
+		ActorLoader();
+		~ActorLoader();
+
+		//設定ファイルの読み込み
+		void LoadConfig();
+
+		//リソースの読み込み
+		void LoadResource();
+
+	private:
+		std::map<std::string, std::string> modelFileName;	//タグとファイル名の対応マップ
+
+	};
+}
+
+
+
+#endif

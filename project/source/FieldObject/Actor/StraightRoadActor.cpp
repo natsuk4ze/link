@@ -8,6 +8,7 @@
 #include "StraightRoadActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../Animation/ActorAnimation.h"
+#include "../../Field/ActorLoader.h"
 
 //=====================================
 // コンストラクタ
@@ -15,19 +16,8 @@
 StraightRoadActor::StraightRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
 	: PlaceActor(pos, currentLevel)
 {
-	// モデルデータ参照
-	switch (currentLevel)
-	{
-	case Field::City:
-		ResourceManager::Instance()->GetMesh("StraightRoad-City", mesh);
-		break;
-	case Field::World:
-		break;
-	case Field::Space:
-		break;
-	default:
-		break;
-	}
+	using Field::Actor::ActorLoader;
+	ResourceManager::Instance()->GetMesh(ActorLoader::StraightTag[currentLevel].c_str(), mesh);
 
 	type = Field::Model::Road;
 }
