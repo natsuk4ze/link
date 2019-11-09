@@ -1,0 +1,73 @@
+{
+	"City-Town":"フィールドレベル街の街モデル",
+	"City-Town":"data/MODEL/PlaceActor/town.x",
+
+	"City-Straight":"フィールドレベル街の直線道モデル",
+	"City-Straight":"data/MODEL/PlaceActor/Straight.x",
+
+	"City-Curve":"フィールドレベル街のカーブモデル",
+	"City-Curve":"data/MODEL/PlacaeActor/Curve.x",
+
+	"City-T":"フィールドレベル街のT字路モデル",
+	"City-T":"data/MODEL/PlaceActor/T-Junction.x",
+
+	"City-Cross":"フィールドレベル街の十字路モデル",
+	"City-Cross":"data/MODEL/PlaceActor/Cross-Junction.x",
+
+	"City-Bridge":"フィールドレベル街の橋モデル",
+	"City-Bridge":"data/MODEL/PlaceActor/bridge.x",
+
+	"City-Mountain":"フィールドレベル街の山モデル",
+	"City-Mountain":"data/MODEL/PlaceActor/mountain.x",
+
+	"World-Town":"フィールドレベル国の街モデル",
+	"World-Town":0,
+
+	"World-Straight":"data/MODEL/PlaceActor/Straight.x",
+	"World-Straight":0,
+
+	"World-Curve":"フィールドレベル国のカーブモデル",
+	"World-Curve":"data/MODEL/PlaceActor/Curved track.x",
+
+	"World-T":"フィールドレベル国のT字路モデル",
+	"World-T":"data/MODEL/PlaceActor/T-Junction track.x",
+
+	"World-Cross":"フィールドレベル国の十字路モデル"
+	"World-Cross":"data/MODEL/PlaceActor/Crossroad track.x",
+
+	"World-StraightSea":"フィールドレベル国の直線道モデル（海）"
+	"World-StraightSea":0,
+
+	"World-CurveSea":"フィールドレベル国カーブモデル（海）",
+	"World-CurveSea":0,
+
+	"World-TSea":"フィールドレベル国のT字路（海）",
+	"World-TSea"0,
+
+	"World-Cross":"フィールドレベル国の十字路モデル（海）",
+	"World-Cross":0
+
+	"World-Mountain":"フィールドレベル国の山モデル",
+	"World-Mountain":"data/MODEL/PlaceActor/mountain.x",
+
+	"Space-Town":"フィールドレベル宇宙の街モデル",
+	"Space-Town":"data/MODEL/PlaceActor/earth.x",
+
+	"Space-Straight":"フィールドレベル宇宙の直線道モデル",
+	"Space-Straight":0,
+
+	"Space-Curve":"フィールドレベル宇宙のカーブモデル",
+	"Space-Curve":0,
+
+	"Space-T":"フィールドレベル宇宙のT字路",
+	"Space-T":0,
+
+	"Space-Cross":"フィールドレベル宇宙の十字路",
+	"Space-Cross":0,
+
+	"Space-Bridge":"フィールドレベル宇宙の橋モデル",
+	"Space-Bridge":0,
+
+	"Space-Mountain":"フィールドレベル宇宙の山モデル",
+	"Space-Mountain":0,
+}
