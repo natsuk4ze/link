@@ -35,22 +35,22 @@ void ModelViewCamera::Update()
 	if (Keyboard::GetPress(DIK_LEFT))
 	{
 		transform.Move(Vector3::Left * MoveSpeed);
-		target += Vector3::Left* MoveSpeed;
+		transform.LookAt(transform.GetPosition() + Vector3::Down);
 	}
 	if (Keyboard::GetPress(DIK_RIGHT))
 	{
 		transform.Move(Vector3::Right * MoveSpeed);
-		target += Vector3::Right * MoveSpeed;
+		transform.LookAt(transform.GetPosition() + Vector3::Down);
 	}
 	if (Keyboard::GetPress(DIK_UP))
 	{
 		transform.Move(Vector3::Forward * MoveSpeed);
-		target += Vector3::Forward * MoveSpeed;
+		transform.LookAt(transform.GetPosition() + Vector3::Down);
 	}
 	if (Keyboard::GetPress(DIK_DOWN))
 	{
 		transform.Move(Vector3::Back * MoveSpeed);
-		target += Vector3::Back * MoveSpeed;
+		transform.LookAt(transform.GetPosition() + Vector3::Down);
 	}
 
 	Camera::Update();
