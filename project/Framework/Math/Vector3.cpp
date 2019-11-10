@@ -25,6 +25,16 @@ const D3DXVECTOR3 Vector3::One = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 const D3DXVECTOR3 Vector3::Zero = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 /**************************************
+ê≥ãKâªä÷êî
+***************************************/
+D3DXVECTOR3 Vector3::Normalize(const D3DXVECTOR3& vec)
+{
+	D3DXVECTOR3 out;
+	D3DXVec3Normalize(&out, &vec);
+	return out;
+}
+
+/**************************************
 Maxä÷êî
 ***************************************/
 D3DXVECTOR3 Vector3::Max(const D3DXVECTOR3& arg1, const D3DXVECTOR3& arg2)
