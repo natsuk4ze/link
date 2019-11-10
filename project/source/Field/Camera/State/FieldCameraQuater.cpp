@@ -28,7 +28,7 @@ void FieldCamera::FieldCameraQuater::OnStart(FieldCamera & entity)
 		sinf(CameraAngleY),
 		cosf(CameraAngleY) * sinf(CameraAngleXZ)) * CameraLength;
 
-	entity.transform.SetRotation(D3DXVECTOR3(CameraAngleY, CameraAngleXZ, 0.0f));
+	entity.startEyeVector = entity.transform.GetPosition() + entity.transform.Forward() * 70.0f;
 }
 
 /**************************************
@@ -45,7 +45,9 @@ FieldCamera::Mode FieldCamera::FieldCameraQuater::OnUpdate(FieldCamera & entity)
 
 	D3DXVECTOR3 targetPosition = entity.targetObject->GetPosition();
 	entity.transform.SetPosition(position + targetPosition);
-	entity.transform.LookAt(targetPosition);
+
+	D3DXVECTOR3 reference = Easing::EaseValue(t, entity.startEyeVector, targetPosition, EaseType::OutCubic);
+	entity.transform.LookAt(reference);
 
 	return FieldCamera::QuaterView;
 }

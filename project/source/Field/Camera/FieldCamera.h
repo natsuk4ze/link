@@ -52,9 +52,11 @@ private:
 	D3DXVECTOR3 startPosition, goalPosition;		//イージング用座標
 	int cntFrame;									//フレームカウント
 
-	float cameraAngle;
-	float startAngle, endAngle;
-	int cntRotate;
+	float cameraAngle;								//カメラのXZ平面の角度
+	float startAngle, endAngle;						//イージング用角度
+	int cntRotate;									//回転フレームカウント
+
+	D3DXVECTOR3 startEyeVector;						//遷移開始時の視線ベクトル
 
 	Mode currentMode;								//現在のモード
 	std::vector<BaseState<FieldCamera, Mode>*> fsm;	//ステートマシン
