@@ -6,6 +6,7 @@
 //=============================================================================
 #include "../../../../main.h"
 #include "FieldTelop.h"
+#include "LinkLevelUpViewer.h"
 #include "FieldErrorMessage.h"
 #include "OperationExplanationViewer.h"
 #include "FieldViewer.h"
@@ -21,6 +22,7 @@
 FieldViewer::FieldViewer()
 {
 	fieldViewer.push_back(fieldTelop = new FieldTelop());
+	fieldViewer.push_back(linkLevelUpViewer = new LinkLevelUpViewer());
 	fieldViewer.push_back(fieldErroMessage = new FieldErrorMessage());
 	fieldViewer.push_back(operationExplanation = new OperationExplanationViewer());
 }
@@ -52,10 +54,20 @@ void FieldViewer::Update()
 
 #ifdef _DEBUG
 
-	//お試しでテロップを実装
+	//お試しでフィールドが変わった時のテロップを実装
 	if (Keyboard::GetTrigger(DIK_F))
 	{
 		SetFieldTelop(fieldTelop->City, nullptr);
+	}
+
+	if (Keyboard::GetTrigger(DIK_O))
+	{
+		SetOperationExplanation(operationExplanation->X_Cancel, operationExplanation->X_Develop, operationExplanation->X_None);
+	}
+
+	if (Keyboard::GetTrigger(DIK_L))
+	{
+		linkLevelUpViewer->Set(88);
 	}
 
 #endif
@@ -97,6 +109,14 @@ void FieldViewer::SetFieldTelop(FieldTelop::TelopID id, std::function<void(void)
 void FieldViewer::SetFieldErroMessage(FieldErrorMessage::ErroID id)
 {
 	fieldErroMessage->Set(id);
+}
+
+//=============================================================================
+// 上昇した分のリンクレベルを表示する
+//=============================================================================
+void FieldViewer::ViewLinkLevelUp(int level)
+{
+	linkLevelUpViewer->Set(level);
 }
 
 //=============================================================================

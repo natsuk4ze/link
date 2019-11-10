@@ -16,6 +16,7 @@
 // 前方宣言
 //*****************************************************************************
 class FieldTelop;
+class LinkLevelUpViewer;
 class FieldErrorMessage;
 class OperationExplanationViewer;
 class BaseViewer;
@@ -47,10 +48,14 @@ public:
 		//Spaceキーの操作に表示する説明ID
 		OperationExplanationViewer::OperationID id2);
 
-	std::vector <BaseViewer*> fieldViewer;
+	//上昇した分のリンクレベルを表示する
+	void ViewLinkLevelUp(int level);
 
 private:
+	std::vector <BaseViewer*> fieldViewer;
+
 	FieldTelop * fieldTelop;
+	LinkLevelUpViewer *linkLevelUpViewer;
 	FieldErrorMessage * fieldErroMessage;
 	OperationExplanationViewer *operationExplanation;
 };

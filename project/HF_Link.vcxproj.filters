@@ -221,6 +221,10 @@
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraRotate.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraIdle.h" />
+    <ClInclude Include="source\Viewer\GameScene\FieldViewer\LinkLevelUpViewer.h" />
+    <ClInclude Include="source\Scene\ModelViewScene.h" />
+    <ClInclude Include="source\ModelView\ModelViewCamera.h" />
+    <ClInclude Include="source\Field\ActorLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -425,6 +429,10 @@
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraRotate.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraIdle.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\FieldViewer\LinkLevelUpViewer.cpp" />
+    <ClCompile Include="source\Scene\ModelViewScene.cpp" />
+    <ClCompile Include="source\ModelView\ModelViewCamera.cpp" />
+    <ClCompile Include="source\Field\ActorLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

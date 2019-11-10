@@ -24,7 +24,7 @@ void ResourceManager::LoadMesh(const char* tag, const char* path)
 
 	//タグの重複確認
 	if (meshPool.count(tagStr) != 0)
-		SAFE_DELETE(meshPool[tagStr]);
+		return;
 
 	//メッシュリソースを生成
 	meshPool[tagStr] = new MeshResource(path);
