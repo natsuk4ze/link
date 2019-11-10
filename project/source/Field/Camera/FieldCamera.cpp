@@ -27,21 +27,21 @@ FieldCamera::FieldCamera() :
 	startPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	goalPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f)), 
 	cntFrame(0),
-	cameraAngle(45.0f),
+	cameraAngle(-45.0f),
 	startAngle(45.0f),
 	endAngle(45.0f),
 	cntRotate(DurationRotate),
 	currentMode(Mode::FarView)
 {
 	//パラメータ設定
-	const float CameraAngleXZ = D3DXToRadian(45.0f);
+	const float CameraAngleXZ = D3DXToRadian(cameraAngle);
 	const float CameraAngleY = D3DXToRadian(60.0f);
 	const float CameraLength = 50.0f;
 
 	const D3DXVECTOR3 InitPos = D3DXVECTOR3(
 		cosf(CameraAngleY) * cosf(CameraAngleXZ),
 		sinf(CameraAngleY),
-		cosf(CameraAngleY) * -sinf(CameraAngleXZ)) * CameraLength;
+		cosf(CameraAngleY) * sinf(CameraAngleXZ)) * CameraLength;
 
 	//ステートマシン作成
 	fsm.resize(Mode::Max);
