@@ -98,6 +98,8 @@ namespace Field
 		//カメラを切り替えるべきかどうか
 		bool ShouldSwicthCamera() const;
 
+		bool ShouldRotateCamera() const;
+
 		//イベントハンドラ設定処理
 		void SetEventHandler(::FieldEventHandler& handler);
 

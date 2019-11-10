@@ -53,6 +53,12 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 		entity.ChangeState(State::FarView);
 	}
 
+	//ƒJƒƒ‰‚ð‰ñ“]‚³‚¹‚é‚©
+	if (entity.field->ShouldRotateCamera())
+	{
+		entity.fieldCamera->ChangeMode(FieldCamera::AngleRotate);
+	}
+
 	return State::Idle;
 }
 

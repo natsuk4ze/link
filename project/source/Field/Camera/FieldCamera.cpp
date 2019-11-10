@@ -6,8 +6,11 @@
 //
 //=====================================
 #include "FieldCamera.h"
+
 #include "State/FieldCameraQuater.h"
 #include "State/FieldCameraFar.h"
+#include "State/FieldCameraRotate.h"
+
 #include "../../../Framework/Input/input.h"
 
 /**************************************
@@ -44,6 +47,7 @@ FieldCamera::FieldCamera() :
 	fsm.resize(Mode::Max);
 	fsm[Mode::QuaterView] = new FieldCameraQuater();
 	fsm[Mode::FarView] = new FieldCameraFar();
+	fsm[Mode::AngleRotate] = new FieldCameraRotate();
 }
 
 /**************************************

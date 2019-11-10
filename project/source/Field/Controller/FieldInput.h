@@ -40,6 +40,9 @@ namespace Field
 		//ƒJƒƒ‰‚Ì“ü—ÍØ‚è‘Ö‚¦
 		bool CheckSwicthCameraMode();
 
+		//ƒJƒƒ‰‚Ì‰ñ“]Ø‚è‘Ö‚¦
+		bool CheckRotateCamera();
+
 		//‘€ì”½“]ˆ—
 		void ReverseOperate(bool isReverse);
 

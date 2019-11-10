@@ -14,10 +14,15 @@
 void FieldCamera::FieldCameraRotate::OnStart(FieldCamera & entity)
 {
 	entity.startAngle = D3DXToRadian(entity.cameraAngle);
-	
-	entity.cameraAngle = Math::WrapAround(0.0f, 360.0f, entity.cameraAngle + entity.AnglePeriod);
-
+	entity.cameraAngle += entity.AnglePeriod;
 	entity.endAngle = D3DXToRadian(entity.cameraAngle);
+
+	if (entity.cameraAngle >= 360.0f)
+	{
+		entity.cameraAngle -= 360.0f;
+		entity.startAngle -= D3DXToRadian(360.0f);
+		entity.endAngle -= D3DXToRadian(360.0f);
+	}
 
 	entity.cntRotate = 0;
 }

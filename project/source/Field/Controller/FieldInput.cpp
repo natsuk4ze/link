@@ -136,6 +136,15 @@ namespace Field
 	}
 
 	/**************************************
+	ƒJƒƒ‰‚Ì‰ñ“]Ø‚è‘Ö‚¦
+	***************************************/
+	bool FieldController::FieldInput::CheckRotateCamera()
+	{
+		//‚Æ‚è‚ ‚¦‚¸CƒL[‚ÅØ‚è‘Ö‚¦
+		return Keyboard::GetTrigger(DIK_C);
+	}
+
+	/**************************************
 	‘€ì”½“]ˆ—
 	***************************************/
 	void FieldController::FieldInput::ReverseOperate(bool isReverse)

@@ -280,6 +280,14 @@ namespace Field
 	}
 
 	/**************************************
+	カメラを回転させるかどうかの判定
+	***************************************/
+	bool FieldController::ShouldRotateCamera() const
+	{
+		return input->CheckRotateCamera();
+	}
+
+	/**************************************
 	イベントハンドラ作成処理
 	***************************************/
 	void FieldController::SetEventHandler(::FieldEventHandler& handler)
