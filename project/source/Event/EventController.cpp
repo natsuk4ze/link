@@ -233,7 +233,7 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 		{
 			if (PlacePos.x == EventPlace->Pos.x && PlacePos.z == EventPlace->Pos.z)
 			{
-				Camera::TranslationPlugin* Test = Camera::TranslationPlugin::Instance();
+				CameraTranslationPlugin* Test = CameraTranslationPlugin::Instance();
 				EventBase* Ptr = nullptr;
 
 				// イベントインスタンス作成

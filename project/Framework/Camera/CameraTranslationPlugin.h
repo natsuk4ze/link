@@ -17,7 +17,7 @@
 /**************************************
 クラス定義
 ***************************************/
-class Camera::TranslationPlugin : public BaseCameraPlugin, public BaseSingleton<TranslationPlugin>
+class CameraTranslationPlugin : public BaseCameraPlugin, public BaseSingleton<CameraTranslationPlugin>
 {
 public:
 	//初期化処理
@@ -27,7 +27,7 @@ public:
 	void Update();
 
 	//プラグイン適用処理
-	void Apply(Camera& camera);
+	void Apply(Transform& work);
 
 	//移動開始処理
 	//引数 position : 移動先のカメラ注視点

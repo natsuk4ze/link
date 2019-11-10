@@ -102,7 +102,7 @@ string NewTownEventCtrl::GetEventMessage(int FieldLevel)
 void NewTownEventCtrl::EventOver(void)
 {
 	// イベント終了、ゲーム続行
-	Camera::TranslationPlugin::Instance()->Restore(30, nullptr);
+	CameraTranslationPlugin::Instance()->Restore(30, nullptr);
 	fieldEventHandler->ResumeGame();
 	UseFlag = false;
 }

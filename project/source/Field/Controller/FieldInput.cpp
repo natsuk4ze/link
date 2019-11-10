@@ -7,6 +7,8 @@
 #include "FieldInput.h"
 #include "../../../Framework/Input/input.h"
 #include "../Object/FieldCursor.h"
+#include "../../../Framework/Camera/Camera.h"
+#include "../../../Framework/Tool/DebugWindow.h"
 
 namespace Field
 {
@@ -107,10 +109,20 @@ namespace Field
 			cntInputRepeat = 0;
 		}
 
+		//移動方向決定
+		D3DXVECTOR3 direction = { Math::Clamp(-1.0f, 1.0f, triggerX + repeatX) , 0.0f,  Math::Clamp(-1.0f, 1.0f, triggerZ + repeatZ) };
+
+		//カメラの向きに合わせて移動方向を回転
+		D3DXQUATERNION cameraQuaternion = Camera::MainCamera()->GetTransform().GetRotation();
+		float cameraAngle = 360.0f - Quaternion::ToEuler(cameraQuaternion).y;
+		float rotateAngle = 90.0f * ((int)roundf(cameraAngle) / 90);
+
+		D3DXMATRIX mtxRot;
+		D3DXMatrixRotationAxis(&mtxRot, &Vector3::Up, D3DXToRadian(rotateAngle));
+		D3DXVec3TransformCoord(&direction, &direction, &mtxRot);
+
 		//カーソルを移動
-		float x = Math::Clamp(-1.0f, 1.0f, triggerX + repeatX);
-		float z = Math::Clamp(-1.0f, 1.0f, triggerZ + repeatZ);
-		entity->cursor->Move((int)x, (int)z);
+		entity->cursor->Move((int)roundf(direction.x), (int)roundf(direction.z));
 
 		//現在のステートの更新処理を実行
 		State next = entity->state->OnUpdate(*entity);
@@ -133,6 +145,15 @@ namespace Field
 			return true;
 
 		return false;
+	}
+
+	/**************************************
+	カメラの回転切り替え
+	***************************************/
+	bool FieldController::FieldInput::CheckRotateCamera()
+	{
+		//とりあえずCキーで切り替え
+		return Keyboard::GetTrigger(DIK_C);
 	}
 
 	/**************************************

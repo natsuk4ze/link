@@ -10,7 +10,7 @@
 /**************************************
 初期化処理
 ***************************************/
-void Camera::TranslationPlugin::Init()
+void CameraTranslationPlugin::Init()
 {
 	cntFrame = 0;
 	durationMove = 0;
@@ -22,7 +22,7 @@ void Camera::TranslationPlugin::Init()
 /**************************************
 更新処理
 ***************************************/
-void Camera::TranslationPlugin::Update()
+void CameraTranslationPlugin::Update()
 {
 	if (cntFrame >= durationMove || state == Idle)
 		return;
@@ -36,7 +36,7 @@ void Camera::TranslationPlugin::Update()
 /**************************************
 適用処理
 ***************************************/
-void Camera::TranslationPlugin::Apply(Camera & camera)
+void CameraTranslationPlugin::Apply(Transform& work)
 {
 	if (state == Idle)
 		return;
@@ -46,24 +46,17 @@ void Camera::TranslationPlugin::Apply(Camera & camera)
 	if (state == RestoreBase)
 		t = 1.0f - t;
 
-	//注視点から視点へのオフセット値を計算
-	D3DXVECTOR3 offsetEye = camera.eyeWork - camera.targetWork;
-
 	//イージングによる移動値を計算
 	EaseType type = state == MoveTowards ? EaseType::OutCubic : EaseType::InCubic;
-	D3DXVECTOR3 offsetPosition = Easing::EaseValue(t, Vector3::Zero, targetPosition - camera.targetWork, type);
+	D3DXVECTOR3 offsetPosition = Easing::EaseValue(t, Vector3::Zero, targetPosition - work.GetPosition(), type);
 
-	//注視点を移動
-	camera.targetWork += offsetPosition;
-
-	//注視点を基に視点を設定
-	camera.eyeWork = camera.targetWork + offsetEye;
+	work.Move(offsetPosition);
 }
 
 /**************************************
 平行移動セット処理
 ***************************************/
-void Camera::TranslationPlugin::Move(const D3DXVECTOR3 & position, int duration, std::function<void(void)> callback)
+void CameraTranslationPlugin::Move(const D3DXVECTOR3 & position, int duration, std::function<void(void)> callback)
 {
 	targetPosition = position;
 	cntFrame = 0;
@@ -76,7 +69,7 @@ void Camera::TranslationPlugin::Move(const D3DXVECTOR3 & position, int duration,
 /**************************************
 平行移動復元処理
 ***************************************/
-void Camera::TranslationPlugin::Restore(int duration, std::function<void(void)> callback)
+void CameraTranslationPlugin::Restore(int duration, std::function<void(void)> callback)
 {
 	cntFrame = 0;
 	durationMove = duration;

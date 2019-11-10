@@ -47,7 +47,9 @@ FieldCamera::Mode FieldCamera::FieldCameraFar::OnUpdate(FieldCamera & entity)
 		D3DXVECTOR3 position = Easing::EaseValue(t, entity.startPosition, entity.goalPosition, EaseType::OutCubic);
 
 		//’Ç]–Ú•W‚É‡‚í‚¹‚ÄŽ‹“_‚ðÝ’è
-		entity.transform.SetPosition(position + entity.targetObject->GetPosition());
+		D3DXVECTOR3 targetPosition = entity.targetObject->GetPosition();
+		entity.transform.SetPosition(position + targetPosition);
+		entity.transform.LookAt(targetPosition);
 	}
 	else
 	{
@@ -62,19 +64,12 @@ FieldCamera::Mode FieldCamera::FieldCameraFar::OnUpdate(FieldCamera & entity)
 
 		D3DXVec3Normalize(&directionMove, &directionMove);
 
-		D3DXVECTOR3 position = entity.target;
+		D3DXVECTOR3 position = entity.transform.GetPosition();
 		position += directionMove * MoveSpeed;
 		position.x = Math::Clamp(0.0f, 50 * 10.0f, position.x);
 		position.z = Math::Clamp(-50 * 10.0f, 0.0f, position.z);
 
-		entity.target = position;
-
-		D3DXVECTOR3 eyePosition = D3DXVECTOR3(
-			cosf(CameraAngleY) * cosf(CameraAngleXZ),
-			sinf(CameraAngleY),
-			cosf(CameraAngleY) * -sinf(CameraAngleXZ)) * CameraLength;
-
-		entity.transform.SetPosition(position + eyePosition);
+		entity.transform.SetPosition(position);
 	}
 
 	return FieldCamera::FarView;

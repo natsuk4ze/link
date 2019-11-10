@@ -184,6 +184,7 @@
     <ClInclude Include="source\Field\Camera\FieldCamera.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraFar.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraQuater.h" />
+    <ClInclude Include="source\Field\Camera\State\FieldCameraRotate.h" />
     <ClInclude Include="source\Field\Controller\FieldDevelopper.h" />
     <ClInclude Include="source\Field\FieldConfig.h" />
     <ClInclude Include="source\Field\FieldController.h" />
@@ -394,6 +395,7 @@
     <ClCompile Include="source\Field\Camera\FieldCamera.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraFar.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraQuater.cpp" />
+    <ClCompile Include="source\Field\Camera\State\FieldCameraRotate.cpp" />
     <ClCompile Include="source\Field\Controller\FieldDevelopper.cpp" />
     <ClCompile Include="source\Field\FieldConfig.cpp" />
     <ClCompile Include="source\Field\FieldController.cpp" />

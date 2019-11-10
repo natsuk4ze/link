@@ -15,21 +15,21 @@
 void FieldCamera::FieldCameraQuater::OnStart(FieldCamera & entity)
 {
 	//パラメータ初期化
-	entity.startPosition = entity.transform.GetPosition() - entity.target;
+	entity.cameraAngle = -45.0f;
+	entity.startPosition = entity.transform.GetPosition() - entity.targetObject->GetPosition();
 	entity.cntFrame = 0;
-	entity.startTarget = entity.target;
 
 	//移動先の座標を設定
-	const float CameraAngleXZ = D3DXToRadian(45.0f);
+	const float CameraAngleXZ = D3DXToRadian(entity.cameraAngle);
 	const float CameraAngleY = D3DXToRadian(45.0f);
 	const float CameraLength = 70.0f;
 
 	entity.goalPosition = D3DXVECTOR3(
 		cosf(CameraAngleY) * cosf(CameraAngleXZ),
 		sinf(CameraAngleY),
-		cosf(CameraAngleY) * -sinf(CameraAngleXZ)) * CameraLength;
+		cosf(CameraAngleY) * sinf(CameraAngleXZ)) * CameraLength;
 
-	entity.transform.SetRotation(D3DXVECTOR3(CameraAngleY, CameraAngleXZ, 0.0f));
+	entity.startEyeVector = entity.transform.GetPosition() + entity.transform.Forward() * 70.0f;
 }
 
 /**************************************
@@ -44,12 +44,11 @@ FieldCamera::Mode FieldCamera::FieldCameraQuater::OnUpdate(FieldCamera & entity)
 	float t = entity.cntFrame / MoveDuration;
 	D3DXVECTOR3 position = Easing::EaseValue(t, entity.startPosition, entity.goalPosition, EaseType::OutCubic);
 
-	//追従目標の座標を注視点に設定
-	D3DXVECTOR3 target = Easing::EaseValue(t, entity.startTarget, entity.targetObject->GetPosition(), EaseType::OutCubic);
-	entity.target = target;
+	D3DXVECTOR3 targetPosition = entity.targetObject->GetPosition();
+	entity.transform.SetPosition(position + targetPosition);
 
-	//追従目標に合わせて視点を設定
-	entity.transform.SetPosition(position + target);
+	D3DXVECTOR3 reference = Easing::EaseValue(t, entity.startEyeVector, targetPosition, EaseType::OutCubic);
+	entity.transform.LookAt(reference);
 
 	return FieldCamera::QuaterView;
 }

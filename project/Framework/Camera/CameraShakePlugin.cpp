@@ -1,6 +1,6 @@
 //=====================================
 //
-//テンプレート処理[ShakePlugin.cpp]
+//テンプレート処理[CameraShakePlugin.cpp]
 //Author:GP12A332 21 立花雄太
 //
 //=====================================
@@ -12,9 +12,9 @@
 ***************************************/
 
 /**************************************
-ShakePluginコンストラクタ
+CameraShakePluginコンストラクタ
 ***************************************/
-Camera::ShakePlugin::ShakePlugin()
+CameraShakePlugin::CameraShakePlugin()
 {
 	cntFrame = 0;
 	ZeroMemory(&amplitude, sizeof(amplitude));
@@ -23,9 +23,9 @@ Camera::ShakePlugin::ShakePlugin()
 }
 
 /**************************************
-ShakePlugin更新処理
+CameraShakePlugin更新処理
 ***************************************/
-void Camera::ShakePlugin::Update()
+void CameraShakePlugin::Update()
 {
 	if (!active)
 		return;
@@ -40,9 +40,9 @@ void Camera::ShakePlugin::Update()
 }
 
 /**************************************
-ShakePlugin反映処理
+CameraShakePlugin反映処理
 ***************************************/
-void Camera::ShakePlugin::Apply(Camera& camera)
+void CameraShakePlugin::Apply(Transform& work)
 {
 	if (!active)
 		return;
@@ -55,14 +55,13 @@ void Camera::ShakePlugin::Apply(Camera& camera)
 	offset.y = Math::RandomRange(-range, range) * amplitude.y;
 	offset.z = Math::RandomRange(-range, range) * amplitude.z;
 
-	camera.eyeWork += offset;
-	camera.targetWork += offset;
+	work.Move(offset);
 }
 
 /**************************************
-ShakePluginセット処理
+CameraShakePluginセット処理
 ***************************************/
-void Camera::ShakePlugin::Set(const D3DXVECTOR3& amplitude, int duration)
+void CameraShakePlugin::Set(const D3DXVECTOR3& amplitude, int duration)
 {
 	cntFrame = 0;
 	this->amplitude = amplitude;

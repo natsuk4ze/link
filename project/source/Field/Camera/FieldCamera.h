@@ -27,6 +27,7 @@ public:
 	{
 		QuaterView,				//クォータービューモード
 		FarView,				//遠景モード
+		AngleRotate,			//回転ステート
 		Max
 	};
 
@@ -43,12 +44,19 @@ public:
 	//追従目標設定処理
 	void SetFollowTarget(GameObject* object);
 
+	static const int DurationRotate;
+	static const float AnglePeriod;
+
 private:
 	GameObject *targetObject;						//追従目標
 	D3DXVECTOR3 startPosition, goalPosition;		//イージング用座標
-	D3DXVECTOR3 startTarget;						//イージング用注視点
-
 	int cntFrame;									//フレームカウント
+
+	float cameraAngle;								//カメラのXZ平面の角度
+	float startAngle, endAngle;						//イージング用角度
+	int cntRotate;									//回転フレームカウント
+
+	D3DXVECTOR3 startEyeVector;						//遷移開始時の視線ベクトル
 
 	Mode currentMode;								//現在のモード
 	std::vector<BaseState<FieldCamera, Mode>*> fsm;	//ステートマシン
@@ -56,6 +64,7 @@ private:
 	//ステートクラス
 	class FieldCameraQuater;
 	class FieldCameraFar;
+	class FieldCameraRotate;
 };
 
 #endif

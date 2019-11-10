@@ -26,7 +26,7 @@ Camera::Camera()
 	const float InitViewFar = 50000.0f;
 
 	transform.SetPosition(InitPos);
-	target = InitTarget;
+	transform.LookAt(InitTarget);
 	viewAngle = InitViewAngle;
 	viewAspect = InitViewAspect;
 	viewNear = InitViewNear;
@@ -61,24 +61,25 @@ void Camera::Update()
 	{
 		plugin->Update();
 	}
-
-	//作業領域に現在のパラメータを設定
-	eyeWork = transform.GetPosition();
-	targetWork = target;
-	upWork = transform.Up();
+	
+	Transform workTransform = transform;
 
 	//プラグイン反映
 	for (auto& plugin : pluginList)
 	{
-		plugin->Apply(*this);
+		plugin->Apply(workTransform);
 	}
+
+	D3DXVECTOR3 eyePosition = workTransform.GetPosition();
+	D3DXVECTOR3 targetPosition = eyePosition + workTransform.Forward();
+	D3DXVECTOR3 upVector = workTransform.Up();
 
 	//ビュー行列作成
 	D3DXMatrixIdentity(&view);
 	D3DXMatrixLookAtLH(&view,
-		&eyeWork,
-		&targetWork,
-		&upWork);
+		&eyePosition,
+		&targetPosition,
+		&upVector);
 
 	//プロジェクション行列作成
 	D3DXMatrixIdentity(&projection);
@@ -196,6 +197,14 @@ D3DXMATRIX Camera::GetProjectionMtx() const
 ViewFrustum Camera::GetViewFrustrum() const
 {
 	return viewFrustrum;
+}
+
+/**************************************
+Transform取得処理
+***************************************/
+Transform Camera::GetTransform() const
+{
+	return transform;
 }
 
 /**************************************

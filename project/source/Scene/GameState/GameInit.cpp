@@ -31,9 +31,9 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	entity.particleManager->Init();
 
 	//カメラにプラグインを追加して初期化
-	entity.fieldCamera->AddPlugin(Camera::TranslationPlugin::Instance());
-	entity.fieldCamera->AddPlugin(Camera::ShakePlugin::Instance());
-	Camera::TranslationPlugin::Instance()->Init();
+	entity.fieldCamera->AddPlugin(CameraTranslationPlugin::Instance());
+	entity.fieldCamera->AddPlugin(CameraShakePlugin::Instance());
+	CameraTranslationPlugin::Instance()->Init();
 
 	//カメラの追従目標にカーソルを設定してモード切替
 	entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
