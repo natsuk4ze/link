@@ -11,6 +11,12 @@
 #include "../../../Framework/Input/input.h"
 
 /**************************************
+staticメンバ
+***************************************/
+const int FieldCamera::DurationRotate = 15;
+const float FieldCamera::AnglePeriod = 45.0f;
+
+/**************************************
 コンストラクタ
 ***************************************/
 FieldCamera::FieldCamera() :
@@ -18,6 +24,10 @@ FieldCamera::FieldCamera() :
 	startPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f)),
 	goalPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f)), 
 	cntFrame(0),
+	cameraAngle(45.0f),
+	startAngle(45.0f),
+	endAngle(45.0f),
+	cntRotate(DurationRotate),
 	currentMode(Mode::FarView)
 {
 	//パラメータ設定
