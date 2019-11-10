@@ -220,6 +220,7 @@
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraRotate.h" />
+    <ClInclude Include="source\Field\Camera\State\FieldCameraIdle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -423,6 +424,7 @@
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.cpp" />
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraRotate.cpp" />
+    <ClCompile Include="source\Field\Camera\State\FieldCameraIdle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

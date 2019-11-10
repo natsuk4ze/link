@@ -15,11 +15,12 @@
 void FieldCamera::FieldCameraQuater::OnStart(FieldCamera & entity)
 {
 	//パラメータ初期化
+	entity.cameraAngle = -45.0f;
 	entity.startPosition = entity.transform.GetPosition() - entity.targetObject->GetPosition();
 	entity.cntFrame = 0;
 
 	//移動先の座標を設定
-	const float CameraAngleXZ = D3DXToRadian(-45.0f);
+	const float CameraAngleXZ = D3DXToRadian(entity.cameraAngle);
 	const float CameraAngleY = D3DXToRadian(45.0f);
 	const float CameraLength = 70.0f;
 
