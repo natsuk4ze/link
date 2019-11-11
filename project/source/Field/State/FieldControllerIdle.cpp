@@ -7,6 +7,8 @@
 #include "FieldControllerIdle.h"
 #include "../Controller/FieldInput.h"
 #include "../Object/FieldCursor.h"
+#include "../../Viewer/GameScene/FieldViewer/OperationExplanationViewer.h"
+#include "../Place/FieldPlaceModel.h"
 
 namespace Field
 {
@@ -24,6 +26,17 @@ namespace Field
 	FieldController::State FieldController::IdleState::OnUpdate(FieldController & entity)
 	{
 		State next = State::Idle;
+
+		//操作説明を更新
+		entity.operationZ = entity.GetPlace()->CanStartRoute() ?
+			OperationExplanationViewer::OperationID::Z_Build :
+			OperationExplanationViewer::OperationID::Z_None;
+
+		entity.operationX = entity.enableDevelop ?
+			OperationExplanationViewer::OperationID::X_Develop :
+			OperationExplanationViewer::OperationID::X_None;
+
+		entity.operationSpace = OperationExplanationViewer::OperationID::Space_Change;
 
 		//Zキーが押されたらBuildへ遷移
 		if (entity.input->GetBuildTrigger())

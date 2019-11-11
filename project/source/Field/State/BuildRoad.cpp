@@ -1,6 +1,6 @@
 //=====================================
 //
-//テンプレート処理[BuildRoad.cpp]
+//フィールドの道建設ステート処理[BuildRoad.cpp]
 //Author:GP12A332 21 立花雄太
 //
 //=====================================
@@ -10,6 +10,9 @@
 #include "../Place/FieldPlaceContainer.h"
 #include "../Object/FieldCursor.h"
 #include "../Controller/FieldDevelopper.h"
+#include "../Place/FieldPlaceModel.h"
+#include "../../Viewer/GameScene/FieldViewer/OperationExplanationViewer.h"
+#include "../../Viewer/GameScene/FieldViewer/FieldViewer.h"
 
 namespace Field
 {
@@ -32,7 +35,7 @@ namespace Field
 	}
 
 	/**************************************
-	入場処理
+	更新処理
 	***************************************/
 	FieldController::State FieldController::BuildRoadState::OnUpdate(FieldController & entity)
 	{
@@ -43,6 +46,15 @@ namespace Field
 		Model::PlaceModel* place = entity.GetPlace();
 		entity.operateContainer->AddRoute(place);
 
+		//操作説明を更新
+		entity.operationZ = entity.operateContainer->EndRoute() ?
+			OperationExplanationViewer::OperationID::Z_Build :
+			OperationExplanationViewer::OperationID::Z_None;
+
+		entity.operationX = OperationExplanationViewer::OperationID::X_Cancel;
+
+		entity.operationSpace = OperationExplanationViewer::OperationID::Space_Change;
+
 		//Zキーが押されたら操作対象のプレイスを道に変える
 		//TODO：キーボード以外の入力にも対応
 		if (entity.input->GetBuildTrigger())
@@ -50,11 +62,14 @@ namespace Field
 			if (entity.operateContainer->EndRoute())
 			{
 				entity.developper->BuildRoad();
+				entity.operateContainer->Clear();
+				next = State::Idle;
 			}
-
-			entity.operateContainer->Clear();
-
-			next = State::Idle;
+			else
+			{
+				//エラーメッセージの表示
+				entity.viewer->SetFieldErroMessage(FieldErrorMessage::ErroID::NotConnection);
+			}
 		}
 
 		//Xキーが押されたらIdleステートへ遷移

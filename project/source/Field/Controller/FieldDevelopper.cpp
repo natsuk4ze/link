@@ -14,6 +14,7 @@
 #include "../Place/FieldPlaceContainer.h"
 #include "../Place/FieldPlaceContainer.h"
 #include "../../FieldObject/InfoController.h"
+#include "../../Viewer/GameScene/FieldViewer/FieldViewer.h"
 
 #include "../../../Library/cppLinq/cpplinq.hpp"
 
@@ -95,7 +96,14 @@ namespace Field
 		entity->placeActController->SetActor(ptr);
 
 		//リンクレベルを計算
+		int prevLinkLevel = entity->placeContainer->GetLinkLevel();
 		entity->placeContainer->CalcLinkLevel();
+
+		//増加したリンクレベルを表示
+		int currentLinkLevel = entity->placeContainer->GetLinkLevel();
+		int diff = currentLinkLevel - prevLinkLevel;
+		if (diff > 0)
+			entity->viewer->ViewLinkLevelUp(diff);
 
 		// 接続されている全ての町のリンクレベルをセット
 		entity->SetLinkLevelInfo();
@@ -192,6 +200,7 @@ namespace Field
 		else
 		{
 			//エラーメッセージを再生
+			entity->viewer->SetFieldErroMessage(FieldErrorMessage::ErroID::StockShortage);
 		}
 
 		return end + 1;
@@ -222,7 +231,10 @@ namespace Field
 
 			//隣接方向が直線になっていなければ早期リターン
 			if (adjacency != startAdjacency)
+			{
+				entity->viewer->SetFieldErroMessage(FieldErrorMessage::ErroID::CurveBridge);
 				return itr;
+			}
 
 			//山が出てきたら早期リターン
 			if (place->IsType(PlaceType::Mountain))
@@ -235,6 +247,8 @@ namespace Field
 
 				if (!Utility::IsContain(direction, adjacency))
 				{
+					//エラーメッセージを表示
+					entity->viewer->SetFieldErroMessage(FieldErrorMessage::ErroID::BridgeConnection);
 					return itr;
 				}
 			}
@@ -273,7 +287,8 @@ namespace Field
 		}
 		else
 		{
-			//エラーメッセージの再生
+			//エラーメッセージを再生
+			entity->viewer->SetFieldErroMessage(FieldErrorMessage::ErroID::StockShortage);
 		}
 
 		return end;

@@ -56,6 +56,9 @@ namespace Field
 		realDevelopmentLevelAI(0),
 		developSpeedBonus(1.0f),
 		currentLevel(level),
+		operationZ(OperationExplanationViewer::OperationID::Z_None),
+		operationX(OperationExplanationViewer::OperationID::X_None),
+		operationSpace(OperationExplanationViewer::OperationID::Space_None),
 		enableDevelop(true),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
@@ -191,6 +194,8 @@ namespace Field
 	void FieldController::DrawViewer()
 	{
 		infoController->Draw();
+
+		SetOperationExplanation();
 		viewer->Draw();
 	}
 
@@ -475,5 +480,17 @@ namespace Field
 	{
 		auto infoLinkLevel = placeContainer->GetAllTownLevel();
 		infoController->SetAllLinkLevel(infoLinkLevel);
+	}
+
+	/**************************************
+	‘€ìà–¾‚ÌƒZƒbƒg
+	***************************************/
+	void FieldController::SetOperationExplanation()
+	{
+		viewer->SetOperationExplanation(
+			(OperationExplanationViewer::OperationID)operationZ,
+			(OperationExplanationViewer::OperationID)operationX,
+			(OperationExplanationViewer::OperationID)operationSpace
+		);
 	}
 }
