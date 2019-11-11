@@ -43,7 +43,7 @@ static const EaseType animType[animMax] = {
 //*注意(0を入れると無限大になるからアニメーションそのものを削除すること)
 static const float animDuration[animMax] = {
 	15,
-	60,
+	30,
 	15,
 };
 
