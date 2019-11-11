@@ -32,6 +32,7 @@ BoardPolygon::~BoardPolygon()
 {
 	SAFE_RELEASE(vtxBuff);
 	SAFE_RELEASE(texture);
+	SAFE_DELETE(effect);
 
 	if (resource != NULL)
 		resource->OnRelease();
