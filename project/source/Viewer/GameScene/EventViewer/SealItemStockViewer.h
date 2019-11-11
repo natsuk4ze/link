@@ -1,11 +1,11 @@
 //=============================================================================
 //
-// ストックビュアー処理 [ItemStockViewer.h]
-// Author : Yu Oohama (bnban987@gmail.com)
+// ストック封印ビュアー処理 [SealItemStockViewer.h]
+// Author : Yu Oohama (bnSeal987@gmail.com)
 //
 //=============================================================================
-#ifndef _STOCK_VIEWER_H_
-#define _STOCK_VIEWER_H_
+#ifndef _SEAL_STOCK_VIEWER_H_
+#define _SEAL_STOCK_VIEWER_H_
 
 #include "../../Framework/BaseViewer.h"
 
@@ -13,39 +13,59 @@
 // 前方宣言
 //*****************************************************************************
 class BaseViewerDrawer;
-class CountViewerDrawer;
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class ItemStockViewer :public BaseViewer
+class SealItemStockViewer :public BaseViewer
 {
 public:
-	ItemStockViewer();
-	~ItemStockViewer();
+	SealItemStockViewer();
+	~SealItemStockViewer();
 
 	void Update(void);
 	void Draw(void);
 
 	//パラメータを受けとる箱
-	int parameterBox;
+	bool parameterBox;
 
 private:
 
 	//アイコン
-	BaseViewerDrawer *icon;
+	BaseViewerDrawer *icon;		
 
-	//数字
-	CountViewerDrawer *num;
+	//再生処理
+	void Play(void);
 
-	//アニメーション
-	void Hop(void);
+	//封印アニメーションを再生
+	void PlaySealAnim(void);
+
+	//封印解除アニメーションを再生
+	void PlayUnSealAnim(void);
+
+	//アニメーション制御処理
+	void HandlePlayAnim(void);
 
 	//現在のパラメータ
-	int currentParam;
+	bool currentParam;
 
 	//１フレーム前のパラメータ
-	int lastParam;
+	bool lastParam;
+
+	//再生中かどうか
+	bool isPlaying;
+
+	//封印されたか
+	bool isSealed;
+
+	//封印が解かれたか
+	bool isUnSealed;
+
+	//アニメーション時間
+	float animTime;
+
+	//フレームカウント
+	int countFrame;
 };
 
 

@@ -142,11 +142,13 @@ void GameScene::Update()
 	//testInfoController->Update();
 
 	//ビューワパラメータをビューワに渡す
-	GameViewerParam param;
-	param.remainTime = remainTime / 30.0f;
-	field->EmbedViewerParam(param);
-	eventController->EmbedViewerParam(param);
-	gameViewer->ReceiveParam(param);
+	GameViewerParam gameParam;
+	gameParam.remainTime = remainTime / 30.0f;
+	field->EmbedViewerParam(gameParam);
+	gameViewer->ReceiveParam(gameParam);
+
+	EventViewerParam eventParam;
+	eventController->EmbedViewerParam(eventParam);
 
 	//ビュアー更新
 	gameViewer->Update();
@@ -210,8 +212,8 @@ void GameScene::Draw()
 
 	//ビュアー描画
 	field->DrawViewer();
-	eventController->DrawEventViewer();
 	gameViewer->Draw();
+	eventController->DrawEventViewer();
 
 	ProfilerCPU::Instance()->EndLabel();
 }

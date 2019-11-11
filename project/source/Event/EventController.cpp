@@ -27,7 +27,7 @@
 
 #include "../Field/Place/FieldPlaceModel.h"
 #include "../Viewer/GameScene/EventViewer/EventViewer.h"
-#include "../Viewer/GameScene/GameViewer/GameViewerParam.h"
+#include "../Viewer/GameScene/EventViewer/EventViewerParam.h"
 
 #include <fstream>
 
@@ -321,10 +321,9 @@ void EventController::ReceiveFieldEventHandler(FieldEventHandler *Ptr)
 //=============================================================================
 // ビューワパラメータ埋め込み処理
 //=============================================================================
-void EventController::EmbedViewerParam(GameViewerParam& param)
+void EventController::EmbedViewerParam(EventViewerParam& param)
 {
-	param.InBanStock = this->InBanStock;
-	param.InPauseEvent = this->InPauseEvent;
+	param.isStockSealed = this->InBanStock;
 }
 
 //=============================================================================

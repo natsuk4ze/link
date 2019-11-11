@@ -145,8 +145,8 @@ void EventMessage::Play(void)
 		currentAnim++;
 	}
 
-	//Outシーン中はフェードアウトを実行
-	if (currentAnim == Out)
+	//Outシーン以降はフェードアウトを実行
+	if (currentAnim >= Out)
 	{
 		FadeOut();
 	}
@@ -184,39 +184,10 @@ void EventMessage::FadeOut(void)
 }
 
 //=============================================================================
-// メッセージリセット処理
-//=============================================================================
-void EventMessage::Reset(void)
-{
-	//再生状態をリセット
-	isPlaying = false;
-
-	//ポジション
-	D3DXVECTOR2 position;
-
-	//ポジションを開始位置に初期化
-	position = animStartPosition[0];
-
-	//ポジションをセット(*後に変更予定)
-	text->SetPos((int)position.x, (int)position.y);
-	bg->position = D3DXVECTOR3(position.x, position.y, 0.0f);
-
-	countFrame = 0;
-	currentAnim = 0;
-	animTime = 0;
-	alpha = 1.0f;
-	text->SetColor(SET_COLOR_NOT_COLORED);
-	bg->SetColor(SET_COLOR_NOT_COLORED);
-}
-
-//=============================================================================
 // メッセージセット処理
 //=============================================================================
 void EventMessage::SetEventMessage(const std::string &message, int &cnt)
 {
-	//一度リセットする
-	Reset();
-
 	//メッセージカウントをセット
 	messageSetCnt = cnt;
 

@@ -8,7 +8,7 @@
 #define _EVENTCONTROLLER_H_
 
 #include "EventBase.h"
-#include "../Viewer/GameScene/EventViewer/EventViewer.h"
+#include "../Viewer/GameScene/EventViewer/EventViewerParam.h"
 #include "../Field/FieldConfig.h"
 #include "../Field/FieldEventHandler.h"
 
@@ -17,7 +17,7 @@
 //*****************************************************************************
 class EventViewer;
 class BoardPolygon;
-class GameViewerParam;
+class EventViewerParam;
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -53,7 +53,7 @@ public:
 	void DrawEventViewer(void);
 	void CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& route, int FieldLevel);
 	void ReceiveFieldEventHandler(FieldEventHandler *Ptr);
-	void EmbedViewerParam(GameViewerParam& param);
+	void EmbedViewerParam(EventViewerParam& param);
 	void SetBanStock(bool Flag);
 	void SetInPause(bool Flag);
 	bool GetInPause(void);

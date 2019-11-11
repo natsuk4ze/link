@@ -1,29 +1,20 @@
 //=============================================================================
 //
-// ゲームビュアーパラメータ [GameViewerParam.h]
+// イベントビュアーパラメータ [EventViewerParam.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _GAME_VIEWER_PARAM_H_
-#define _GAME_VIEWER_PARAM_H_
+#ifndef _EVENT_VIEWER_PARAM_H_
+#define _EVENT_VIEWER_PARAM_H_
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class GameViewerParam
+class EventViewerParam
 {
 public:
-	//AIレベル
-	int levelAI;
-
-	//レベル割合
-	float ratioLevel;
-
-	//残り時間
-	float remainTime;
-
-	//ストック数
-	int stockNum;
+	//ストックが禁止されたか
+	bool isStockSealed;
 };
 
 #endif

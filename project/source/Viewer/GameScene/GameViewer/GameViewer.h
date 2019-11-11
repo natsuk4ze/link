@@ -15,7 +15,6 @@
 class ItemStockViewer;
 class TimerViewer;
 class LevelViewer;
-class GameViewerParam;
 class BaseViewer;
 
 //*****************************************************************************
@@ -39,7 +38,6 @@ private:
 	ItemStockViewer *stockViewer;
 	TimerViewer *timerViewer;
 	LevelViewer *levelViewer;
-	GameViewerParam *gameViewerParam;
 };
 
 #endif

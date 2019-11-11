@@ -6,15 +6,8 @@
 //=============================================================================
 #include "../../../../main.h"
 #include"../../../../Framework/Math/Easing.h"
-#include "../../../../Framework/Math/TMath.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "EventTelop.h"
-
-#ifdef _DEBUG
-
-#include "../../../../Framework/Input/input.h"
-
-#endif
 
 //*****************************************************************************
 // グローバル変数
@@ -192,9 +185,6 @@ void EventTelop::OpenBG(void)
 
 	//背景のYサイズを更新
 	bg->size.y = Easing::EaseValue(animTime, bgEasingStart, bgEasingGoal, animType[BG_Open]);
-
-	//bg->size.yの最大をbgEasingGoalに設定
-	Math::WrapAround(bg->size.y, bgEasingGoal, bg->size.y);
 }
 
 //=============================================================================
@@ -208,9 +198,6 @@ void EventTelop::CloseBG(void)
 
 	//背景のYサイズを更新
 	bg->size.y = Easing::EaseValue(animTime, bgEasingStart, bgEasingGoal, animType[BG_Close]);
-
-	//bg->size.yの最小をbgEasingGoalに設定
-	Math::WrapAround(bg->size.y, bgEasingGoal, bg->size.y);
 }
 
 //=============================================================================

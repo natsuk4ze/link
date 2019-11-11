@@ -80,13 +80,6 @@ void GameViewer::ReceiveParam(GameViewerParam &param)
 {
 	//ストックビュアー
 	stockViewer->parameterBox = param.stockNum;
-	if (stockViewer->InBanStock == false && stockViewer->InBanStock != param.InBanStock)
-	{
-		stockViewer->BanIconDebut = true;
-		stockViewer->InitBanIcon();
-	}
-	stockViewer->InBanStock = param.InBanStock;
-	stockViewer->InPauseEvent = param.InPauseEvent;
 
 	//タイマービュアー
 	timerViewer->parameterBox = param.remainTime;
