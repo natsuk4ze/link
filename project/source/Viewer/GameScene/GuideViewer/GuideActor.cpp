@@ -1,7 +1,9 @@
 #include "GuideActor.h"
+#include "../../../../Framework/Tool/DebugWindow.h"
 
 const GuideActor::AnimData GuideActor::data[] = {
-	{"Idle", 1.0f, 0.1f, 0.1f},
+	{"Idle", 1.0f, 0.1f, 1 / 30.0f},
+	{"Running", 1.0f, 0.1f, 1 / 30.0f}
 };
 
 GuideActor::GuideActor()
@@ -13,28 +15,38 @@ GuideActor::GuideActor()
 
 	// アニメーションの作成
 	anim = new AnimationManager();
-	//anim->LoadXFile();
+	anim->LoadXFile("data/MODEL/Boy.x", "Guide");
 
 	// アニメーションセットの作成
 	for (int i = 0; i < AnimMax; i++)
 	{
-		anim->LoadAnimation(data[i].tag, AnimState(i), data[i].shiftTime);
-		anim->SetPlaySpeed(i, data[i].playSpeed);
-		anim->SetDeltaTime(i, data[i].deltaTime);
+		anim->LoadAnimation(data[AnimState(i)].tag, i, data[AnimState(i)].shiftTime);
+		anim->SetPlaySpeed(i, data[AnimState(i)].playSpeed);
+		anim->SetDeltaTime(i, data[AnimState(i)].deltaTime);
 	}
 
 	// アニメーション遷移のセット
-	//anim->SetFinishTransition();
+	anim->SetFinishTransition(Running, Idle);
+	anim->SetFinishTransition(Idle, Idle);
 }
 
 GuideActor::~GuideActor()
 {
-	SAFE_DELETE(anim);
+	//animのデストラクタは不要
 }
 
 void GuideActor::Update()
 {
 	anim->Update();
+
+	Debug::Begin("GuideActor");
+
+	if (Debug::Button("ChangeAnim:Running"))
+	{
+		anim->ChangeAnim(Running);
+	}
+
+	Debug::End();
 }
 
 void GuideActor::Draw()

@@ -12,6 +12,7 @@ public:
 	enum AnimState
 	{
 		Idle,
+		Running,
 		AnimMax
 	};
 
