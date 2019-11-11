@@ -155,7 +155,7 @@ namespace Field
 		{
 			viewer->ViewLinkLevelUp(5);
 		}
-		Debug::SameLine();
+		Debug::SameLine(); 
 		if (Debug::Button("LinkUp 15"))
 		{
 			viewer->ViewLinkLevelUp(15);

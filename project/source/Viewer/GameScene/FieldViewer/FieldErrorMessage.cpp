@@ -13,7 +13,7 @@
 //*****************************************************************************
 
 //描画時間
-static const float DrawTime = 90;
+static const float DrawTime = 60;
 
 //*****************************************************************************
 // コンストラクタ
@@ -23,7 +23,7 @@ FieldErrorMessage::FieldErrorMessage()
 	//テキスト
 	text = new BaseViewerDrawer();
 	text->LoadTexture("data/TEXTURE/Viewer/FieldViewer/FieldErroMessage/Text.png");
-	text->size = D3DXVECTOR3(420.0f, 80.0f, 0.0f);
+	text->size = D3DXVECTOR3(640.0f, 80.0f, 0.0f);
 	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	text->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_CENTER_Y*1.3f, 0.0f);
 	text->MakeVertex();
