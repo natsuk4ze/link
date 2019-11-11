@@ -61,7 +61,7 @@ void ProfilerCPU::Draw()
 		Debug::Begin(profiler.first.c_str());
 
 		//FPSï\é¶
-		Debug::Log("FPS:%d", cntFPS);
+		Debug::Text("FPS:%d", cntFPS);
 
 		//ëçåoâﬂéûä‘ï\é¶
 		double progress = 0.0;
