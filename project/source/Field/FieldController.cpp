@@ -148,6 +148,18 @@ namespace Field
 		infoController->Update();
 
 		viewer->Update();
+
+		//デバッグツール
+		Debug::Begin("DebugTool");
+		if (Debug::Button("LinkUp 5"))
+		{
+			viewer->ViewLinkLevelUp(5);
+		}
+		if (Debug::Button("LinkUp 15"))
+		{
+			viewer->ViewLinkLevelUp(15);
+		}
+		Debug::End();
 	}
 
 	/**************************************

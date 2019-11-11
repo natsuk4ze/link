@@ -298,11 +298,13 @@ void GameScene::DebugTool()
 		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::City);
 		SceneManager::ChangeScene(GameConfig::SceneID::Game);
 	}
+	Debug::SameLine();
 	if (Debug::Button("WorldLevel"))
 	{
 		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::World);
 		SceneManager::ChangeScene(GameConfig::SceneID::Game);
 	}
+	Debug::SameLine();
 	if (Debug::Button("SpaceLevel"))
 	{
 		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::Space);
