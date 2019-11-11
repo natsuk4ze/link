@@ -7,6 +7,8 @@
 #include "FieldControllerIdle.h"
 #include "../Controller/FieldInput.h"
 #include "../Object/FieldCursor.h"
+#include "../../Viewer/GameScene/FieldViewer/OperationExplanationViewer.h"
+#include "../Place/FieldPlaceModel.h"
 
 namespace Field
 {
@@ -38,6 +40,17 @@ namespace Field
 			entity.cursor->SetMode(FieldCursor::Mode::Develop);
 			next = State::Develop;
 		}
+
+		//‘€ìà–¾‚ðXV
+		entity.operationZ = entity.GetPlace()->CanStartRoute() ?
+			OperationExplanationViewer::OperationID::Z_Build :
+			OperationExplanationViewer::OperationID::Z_None;
+
+		entity.operationX = entity.enableDevelop ?
+			OperationExplanationViewer::OperationID::X_Develop :
+			OperationExplanationViewer::OperationID::X_None;
+
+		entity.operationSpace = OperationExplanationViewer::OperationID::Space_Change;
 
 		return next;
 	}
