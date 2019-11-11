@@ -50,11 +50,9 @@ namespace Field
 			if (entity.operateContainer->EndRoute())
 			{
 				entity.developper->BuildRoad();
+				entity.operateContainer->Clear();
+				next = State::Idle;
 			}
-
-			entity.operateContainer->Clear();
-
-			next = State::Idle;
 		}
 
 		//Xキーが押されたらIdleステートへ遷移

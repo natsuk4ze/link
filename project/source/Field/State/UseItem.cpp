@@ -51,11 +51,10 @@ namespace Field
 			{
 				PlaceVector vector = entity.operateContainer->GetPlaces();
 				entity.developper->DevelopPlace(vector, vector.begin());
+				entity.operateContainer->Clear();
+
+				next = State::Idle;
 			}
-
-			entity.operateContainer->Clear();
-
-			next = State::Idle;
 		}
 
 		//Zキーが押されたらIdleステートへ遷移

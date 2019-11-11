@@ -138,8 +138,6 @@ namespace Field::Model
 			PlaceModel* last = *container.rbegin();
 			if (!last->CanStartRoute())
 			{
-				container.clear();
-				actorContainer.clear();
 				return false;
 			}
 			else
@@ -164,8 +162,6 @@ namespace Field::Model
 
 		if (cntNonDevelopable < 2)
 		{
-			container.clear();
-			actorContainer.clear();
 			return false;
 		}
 
