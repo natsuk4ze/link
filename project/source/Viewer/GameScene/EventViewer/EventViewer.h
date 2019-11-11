@@ -19,6 +19,8 @@
 class EventTelop;
 class EventMessage;
 class BaseViewer;
+class BanItemStockViewer;
+class EventViewerParam;
 
 //*****************************************************************************
 // クラス定義
@@ -38,6 +40,8 @@ public:
 	//テロップをセット
 	void SetEventTelop(EventTelop::TelopID id, std::function<void(void)> Callback = nullptr);
 
+	void ReceiveParam(EventViewerParam &param);
+
 private:
 	static const int messageMax = 5;
 
@@ -46,6 +50,7 @@ private:
 
 	EventTelop * eventTelop;
 	EventMessage *eventMessage[messageMax];
+	BanItemStockViewer *banStockViewer;
 
 	void CountMessage(void);
 	void PlayMessage(void);

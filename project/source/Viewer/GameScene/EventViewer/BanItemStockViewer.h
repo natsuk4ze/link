@@ -1,11 +1,11 @@
 //=============================================================================
 //
-// ストックビュアー処理 [ItemStockViewer.h]
+// バンストックビュアー処理 [BanItemStockViewer.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _STOCK_VIEWER_H_
-#define _STOCK_VIEWER_H_
+#ifndef _BAN_STOCK_VIEWER_H_
+#define _BAN_STOCK_VIEWER_H_
 
 #include "../../Framework/BaseViewer.h"
 
@@ -13,39 +13,35 @@
 // 前方宣言
 //*****************************************************************************
 class BaseViewerDrawer;
-class CountViewerDrawer;
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class ItemStockViewer :public BaseViewer
+class BanItemStockViewer :public BaseViewer
 {
 public:
-	ItemStockViewer();
-	~ItemStockViewer();
+	BanItemStockViewer();
+	~BanItemStockViewer();
 
 	void Update(void);
 	void Draw(void);
 
 	//パラメータを受けとる箱
-	int parameterBox;
+	bool parameterBox;
 
 private:
 
 	//アイコン
-	BaseViewerDrawer *icon;
-
-	//数字
-	CountViewerDrawer *num;
+	BaseViewerDrawer *icon;		
 
 	//アニメーション
-	void Hop(void);
+	void Play(void);
 
 	//現在のパラメータ
-	int currentParam;
+	bool currentParam;
 
 	//１フレーム前のパラメータ
-	int lastParam;
+	bool lastParam;
 };
 
 
