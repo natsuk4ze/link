@@ -27,6 +27,17 @@ namespace Field
 	{
 		State next = State::Idle;
 
+		//操作説明を更新
+		entity.operationZ = entity.GetPlace()->CanStartRoute() ?
+			OperationExplanationViewer::OperationID::Z_Build :
+			OperationExplanationViewer::OperationID::Z_None;
+
+		entity.operationX = entity.enableDevelop ?
+			OperationExplanationViewer::OperationID::X_Develop :
+			OperationExplanationViewer::OperationID::X_None;
+
+		entity.operationSpace = OperationExplanationViewer::OperationID::Space_Change;
+
 		//Zキーが押されたらBuildへ遷移
 		if (entity.input->GetBuildTrigger())
 		{
@@ -40,17 +51,6 @@ namespace Field
 			entity.cursor->SetMode(FieldCursor::Mode::Develop);
 			next = State::Develop;
 		}
-
-		//操作説明を更新
-		entity.operationZ = entity.GetPlace()->CanStartRoute() ?
-			OperationExplanationViewer::OperationID::Z_Build :
-			OperationExplanationViewer::OperationID::Z_None;
-
-		entity.operationX = entity.enableDevelop ?
-			OperationExplanationViewer::OperationID::X_Develop :
-			OperationExplanationViewer::OperationID::X_None;
-
-		entity.operationSpace = OperationExplanationViewer::OperationID::Space_Change;
 
 		return next;
 	}
