@@ -12,6 +12,7 @@
 #include "../Controller/FieldDevelopper.h"
 #include "../Place/FieldPlaceModel.h"
 #include "../../Viewer/GameScene/FieldViewer/OperationExplanationViewer.h"
+#include "../../Viewer/GameScene/FieldViewer/FieldViewer.h"
 
 namespace Field
 {
@@ -63,6 +64,11 @@ namespace Field
 				entity.developper->BuildRoad();
 				entity.operateContainer->Clear();
 				next = State::Idle;
+			}
+			else
+			{
+				//エラーメッセージの表示
+				entity.viewer->SetFieldErroMessage(FieldErrorMessage::ErroID::NotConnection);
 			}
 		}
 

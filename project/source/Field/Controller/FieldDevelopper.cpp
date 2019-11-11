@@ -200,6 +200,7 @@ namespace Field
 		else
 		{
 			//エラーメッセージを再生
+			entity->viewer->SetFieldErroMessage(FieldErrorMessage::ErroID::StockShortage);
 		}
 
 		return end + 1;
@@ -230,7 +231,10 @@ namespace Field
 
 			//隣接方向が直線になっていなければ早期リターン
 			if (adjacency != startAdjacency)
+			{
+				entity->viewer->SetFieldErroMessage(FieldErrorMessage::ErroID::CurveBridge);
 				return itr;
+			}
 
 			//山が出てきたら早期リターン
 			if (place->IsType(PlaceType::Mountain))
@@ -243,6 +247,8 @@ namespace Field
 
 				if (!Utility::IsContain(direction, adjacency))
 				{
+					//エラーメッセージを表示
+					entity->viewer->SetFieldErroMessage(FieldErrorMessage::ErroID::BridgeConnection);
 					return itr;
 				}
 			}
@@ -281,7 +287,8 @@ namespace Field
 		}
 		else
 		{
-			//エラーメッセージの再生
+			//エラーメッセージを再生
+			entity->viewer->SetFieldErroMessage(FieldErrorMessage::ErroID::StockShortage);
 		}
 
 		return end;
