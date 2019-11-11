@@ -69,7 +69,8 @@ enum TelopAnimScene
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-FieldTelop::FieldTelop()
+FieldTelop::FieldTelop() :
+	currentAnim(0)
 {
 	//テキスト
 	text = new BaseViewerDrawer();

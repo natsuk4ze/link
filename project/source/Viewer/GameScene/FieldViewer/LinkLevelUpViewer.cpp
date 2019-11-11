@@ -68,7 +68,8 @@ enum TelopAnimScene
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-LinkLevelUpViewer::LinkLevelUpViewer()
+LinkLevelUpViewer::LinkLevelUpViewer() :
+	currentAnim(0)
 {
 	//テキスト
 	text = new BaseViewerDrawer();

@@ -65,7 +65,8 @@ enum animScene
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-EventMessage::EventMessage()
+EventMessage::EventMessage() :
+	currentAnim(0)
 {
 	//テキスト
 	text = new TextViewer("data/TEXTURE/Viewer/EventViewer/EventMessage/Text_cinecaption226.ttf",40);
