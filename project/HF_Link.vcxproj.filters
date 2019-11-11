@@ -224,7 +224,7 @@
     <ClInclude Include="source\ModelView\ModelViewCamera.h" />
     <ClInclude Include="source\Field\ActorLoader.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventViewerParam.h" />
-    <ClInclude Include="source\Viewer\GameScene\EventViewer\BanItemStockViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -431,7 +431,7 @@
     <ClCompile Include="source\Scene\ModelViewScene.cpp" />
     <ClCompile Include="source\ModelView\ModelViewCamera.cpp" />
     <ClCompile Include="source\Field\ActorLoader.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\EventViewer\BanItemStockViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

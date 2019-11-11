@@ -13,8 +13,8 @@
 class EventViewerParam
 {
 public:
-	// ストック使用禁止中
-	bool InBanStock = false;
+	//ストックが禁止されたか
+	bool isStockSealed;
 };
 
 #endif

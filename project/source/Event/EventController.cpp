@@ -323,8 +323,7 @@ void EventController::ReceiveFieldEventHandler(FieldEventHandler *Ptr)
 //=============================================================================
 void EventController::EmbedViewerParam(EventViewerParam& param)
 {
-	param.InBanStock = this->InBanStock;
-	param.InPauseEvent = this->InPauseEvent;
+	param.isStockSealed = this->InBanStock;
 }
 
 //=============================================================================

@@ -8,7 +8,7 @@
 #define _EVENTCONTROLLER_H_
 
 #include "EventBase.h"
-#include "../Viewer/GameScene/EventViewer/EventViewer.h"
+#include "../Viewer/GameScene/EventViewer/EventViewerParam.h"
 #include "../Field/FieldConfig.h"
 #include "../Field/FieldEventHandler.h"
 

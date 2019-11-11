@@ -227,7 +227,7 @@
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.h" />
-    <ClInclude Include="source\Viewer\GameScene\EventViewer\BanItemStockViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\BeatGameViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h" />
@@ -436,7 +436,7 @@
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\EventViewer\BanItemStockViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\BeatGameViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventMessage.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventTelop.cpp" />
