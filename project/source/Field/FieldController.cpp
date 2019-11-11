@@ -148,6 +148,23 @@ namespace Field
 		infoController->Update();
 
 		viewer->Update();
+
+		//デバッグツール
+		Debug::Begin("DebugTool");
+		if (Debug::Button("LinkUp 5"))
+		{
+			viewer->ViewLinkLevelUp(5);
+		}
+		Debug::SameLine(); 
+		if (Debug::Button("LinkUp 15"))
+		{
+			viewer->ViewLinkLevelUp(15);
+		}
+		if (Debug::Button("Field Error"))
+		{
+			viewer->SetFieldErroMessage(FieldErrorMessage::ErroID::NotConnection);
+		}
+		Debug::End();
 	}
 
 	/**************************************

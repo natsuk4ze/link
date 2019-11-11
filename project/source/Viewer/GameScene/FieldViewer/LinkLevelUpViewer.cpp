@@ -74,7 +74,7 @@ LinkLevelUpViewer::LinkLevelUpViewer() :
 	//テキスト
 	text = new BaseViewerDrawer();
 	text->LoadTexture("data/TEXTURE/Viewer/FieldViewer/LinkLevelUpViewer/Text.png");
-	text->size = D3DXVECTOR3(750.0f, 100.0f, 0.0f);
+	text->size = D3DXVECTOR3(750.0f, 140.0f, 0.0f);
 	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	text->position = D3DXVECTOR3(SCREEN_CENTER_X, textStartPositionY[0], 0.0f);
 	text->MakeVertex();
