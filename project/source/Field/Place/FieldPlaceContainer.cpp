@@ -239,9 +239,12 @@ namespace Field::Model
 	***************************************/
 	void Field::Model::PlaceContainer::CalcLinkLevel()
 	{
+		fieldLinkLevel = 0;
+
 		for (auto&& town : townContainer)
 		{
 			town.second->FindLinkedTown();
+			fieldLinkLevel += town.second->LinkLevel();
 		}
 	}
 
@@ -426,6 +429,8 @@ namespace Field::Model
 	std::vector<PlaceData> PlaceContainer::GetAllTownLevel()
 	{
 		std::vector<PlaceData> ret;
+		ret.reserve(townContainer.size());
+
 		PlaceData data;
 		int i = 0;
 		for (auto& model : townContainer)
@@ -435,5 +440,13 @@ namespace Field::Model
 		}
 
 		return ret;
+	}
+
+	/**************************************
+	ƒŠƒ“ƒNƒŒƒxƒ‹Žæ“¾
+	***************************************/
+	int Field::Model::PlaceContainer::GetLinkLevel()
+	{
+		return fieldLinkLevel;
 	}
 }

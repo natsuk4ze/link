@@ -14,6 +14,7 @@
 #include "../Place/FieldPlaceContainer.h"
 #include "../Place/FieldPlaceContainer.h"
 #include "../../FieldObject/InfoController.h"
+#include "../../Viewer/GameScene/FieldViewer/FieldViewer.h"
 
 #include "../../../Library/cppLinq/cpplinq.hpp"
 
@@ -95,7 +96,14 @@ namespace Field
 		entity->placeActController->SetActor(ptr);
 
 		//リンクレベルを計算
+		int prevLinkLevel = entity->placeContainer->GetLinkLevel();
 		entity->placeContainer->CalcLinkLevel();
+
+		//増加したリンクレベルを表示
+		int currentLinkLevel = entity->placeContainer->GetLinkLevel();
+		int diff = currentLinkLevel - prevLinkLevel;
+		if (diff > 0)
+			entity->viewer->ViewLinkLevelUp(diff);
 
 		// 接続されている全ての町のリンクレベルをセット
 		entity->SetLinkLevelInfo();
