@@ -13,6 +13,9 @@
 class BaseViewer
 {
 public:
+	BaseViewer() {};
+	virtual ~BaseViewer() {}
+
 	virtual void Update(void) = 0;
 	virtual void Draw(void) = 0;
 };

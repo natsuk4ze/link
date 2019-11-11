@@ -73,7 +73,8 @@ enum TelopAnimScene
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-EventTelop::EventTelop()
+EventTelop::EventTelop() :
+	currentAnim(0)
 {
 	//テキスト
 	text = new BaseViewerDrawer();
