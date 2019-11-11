@@ -157,22 +157,7 @@ namespace Field::Actor
 		// 3Dオブジェクトのリソースをロード
 		ResourceManager::Instance()->LoadMesh("NoneActor", "data/MODEL/PlaceActor/ground.x");
 		ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
-
-		//// FieldLevel = City
-		//ResourceManager::Instance()->LoadMesh("CrossJunction-City", "data/MODEL/PlaceActor/Cross-Junction.x");
-		//ResourceManager::Instance()->LoadMesh("TJunction-City", "data/MODEL/PlaceActor/T-Junction.x");
-		//ResourceManager::Instance()->LoadMesh("StraightRoad-City", "data/MODEL/PlaceActor/Straight.x");
-		//ResourceManager::Instance()->LoadMesh("CurveRoad-City", "data/MODEL/PlaceActor/Curve.x");
-		//ResourceManager::Instance()->LoadMesh("Town-City", "data/MODEL/PlaceActor/Town.x");
-		//ResourceManager::Instance()->LoadMesh("Bridge-City", "data/MODEL/PlaceActor/bridge.x");
-		//ResourceManager::Instance()->LoadMesh("Mountain-City", "data/MODEL/PlaceActor/mountain.x");
-		//ResourceManager::Instance()->LoadMesh("AlongCity", "data/MODEL/AlongActor/AlongActorCity.x");
-	
-		//// FieldLevel = World
-
-		//// FieldLevel = Space
-		//ResourceManager::Instance()->LoadMesh("Town-Space", "data/Model/PlaceActor/earth.x");
-		//ResourceManager::Instance()->LoadMesh("River-Space", "data/Model/PlaceActor/spaceTear.x");
+		ResourceManager::Instance()->LoadMesh("AlongCity", "data/MODEL/AlongActor/AlongActorCity.x");
 
 		//アクターのリソースをロード
 		ActorLoader loader;
