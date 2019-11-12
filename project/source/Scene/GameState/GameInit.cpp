@@ -12,7 +12,7 @@
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../../../Framework/Transition/TransitionController.h"
 #include "../../Effect/GameParticleManager.h"
-#include "../../../Framework/Camera/CameraTranslationPlugin.h"
+#include "../../Field/Camera/Plugin/FieldCameraTranslationPlugin.h"
 #include "../../../Framework/Camera/CameraShakePlugin.h"
 #include "../../../Framework/PostEffect/BloomController.h"
 #include "../../../Framework/Core/PlayerPrefs.h"
@@ -31,9 +31,9 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	entity.particleManager->Init();
 
 	//カメラにプラグインを追加して初期化
-	entity.fieldCamera->AddPlugin(CameraTranslationPlugin::Instance());
+	entity.fieldCamera->AddPlugin(FieldCameraTranslationPlugin::Instance());
 	entity.fieldCamera->AddPlugin(CameraShakePlugin::Instance());
-	CameraTranslationPlugin::Instance()->Init();
+	FieldCameraTranslationPlugin::Instance()->Init();
 
 	//カメラの追従目標にカーソルを設定してモード切替
 	entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());

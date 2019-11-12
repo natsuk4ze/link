@@ -228,6 +228,8 @@
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.h" />
+    <ClInclude Include="source\Field\Camera\Plugin\FieldCameraTranslationPlugin.h" />
+    <ClInclude Include="source\Field\Camera\EventCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -438,6 +440,8 @@
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideActor.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.cpp" />
+    <ClCompile Include="source\Field\Camera\Plugin\FieldCameraTranslationPlugin.cpp" />
+    <ClCompile Include="source\Field\Camera\EventCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

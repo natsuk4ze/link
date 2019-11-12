@@ -29,7 +29,7 @@ public:
 	virtual ~Camera();			//デストラクタ
 
 	virtual void Update();		//更新
-	virtual void Set();			//カメラ情報反映処理
+	virtual void Set() const;	//カメラ情報反映処理
 
 	//プラグイン追加処理
 	virtual void AddPlugin(BaseCameraPlugin* plugin);
@@ -59,6 +59,9 @@ public:
 
 	//Transform取得処理
 	Transform GetTransform() const;
+
+	//代入演算子
+	Camera& operator=(const Camera& rhs);
 
 protected:
 	//SRT情報
@@ -97,8 +100,24 @@ protected:
 class BaseCameraPlugin
 {
 public:
+	BaseCameraPlugin() : active(true) {};
+	virtual ~BaseCameraPlugin() {};
+
 	virtual void Update() = 0;
 	virtual void Apply(Transform& transformWork) = 0;
+
+	virtual bool IsActive() const
+	{
+		return active;
+	}
+
+	virtual void SetEnable(bool state)
+	{
+		active = state;
+	}
+
+protected:
+	bool active;
 };
 
 #endif

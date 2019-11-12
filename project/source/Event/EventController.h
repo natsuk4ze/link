@@ -18,6 +18,7 @@
 class EventViewer;
 class BoardPolygon;
 class EventViewerParam;
+class EventCamera;
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -34,6 +35,7 @@ private:
 	std::vector<EventInfo> EventCSVData;
 	std::vector<EventBase*> EventVec;
 	EventViewer *eventViewer;
+	EventCamera *camera;
 
 	bool InBanStock;
 	bool InPauseEvent;

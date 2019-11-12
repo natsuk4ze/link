@@ -11,8 +11,8 @@
 #include "../../Field/Place/FieldPlaceModel.h"
 #include "../../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../../Effect/GameParticleManager.h"
-#include "../../../Framework/Camera/CameraTranslationPlugin.h"
 #include "../../../Framework/Task/TaskManager.h"
+#include "../../Field/Camera/EventCamera.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -45,10 +45,11 @@ enum State
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-AILevelDecreaseEvent::AILevelDecreaseEvent(EventViewer* eventViewer) :
+AILevelDecreaseEvent::AILevelDecreaseEvent(EventViewer* eventViewer, EventCamera *camera) :
 	EventBase(true),
 	EventState(State::TelopExpanding),
-	eventViewer(eventViewer)
+	eventViewer(eventViewer),
+	camera(camera)
 {
 
 }
@@ -69,6 +70,9 @@ AILevelDecreaseEvent::~AILevelDecreaseEvent()
 //=============================================================================
 void AILevelDecreaseEvent::Init()
 {
+	//カメラをイベントカメラに切り替え
+	camera->Init();
+
 	// 連打ゲームインスタンス
 	beatGame = new BeatGame([&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
 
@@ -85,7 +89,7 @@ void AILevelDecreaseEvent::Init()
 	// テロップ設置
 	eventViewer->SetEventTelop(EventTelop::Alien, [&]()
 	{
-		CameraTranslationPlugin::Instance()->Move(TownPos, 30, [&]() {UFODebutStart(); });
+		camera->Translation(TownPos, 30, [&]() {UFODebutStart(); });
 	});
 
 	// ゲーム進行停止
@@ -141,7 +145,7 @@ void AILevelDecreaseEvent::Update()
 		// 30フレームの遅延を設置
 		TaskManager::Instance()->CreateDelayedTask(30, [&]()
 		{
-			CameraTranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
+			camera->Return(30, [&]() { EventOver(); });
 		});
 		EventState = EffectHappend;
 		break;
@@ -171,7 +175,7 @@ void AILevelDecreaseEvent::Update()
 		}
 		else
 		{
-			CameraTranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
+			camera->Return(30, [&]() { EventOver(); });
 			EventState = EffectHappend;
 		}
 		break;
@@ -221,6 +225,7 @@ void AILevelDecreaseEvent::UFODebutStart(void)
 void AILevelDecreaseEvent::EventOver(void)
 {
 	// イベント終了、ゲーム続行
+	camera->Restore();
 	fieldEventHandler->ResumeGame();
 	UseFlag = false;
 }

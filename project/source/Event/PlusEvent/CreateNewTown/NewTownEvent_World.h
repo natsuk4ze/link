@@ -11,6 +11,7 @@
 #include "../../../Field/Place/FieldPlaceModel.h"
 
 class EventViewer;
+class EventCamera;
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -21,9 +22,10 @@ private:
 	EventViewer *eventViewer;
 	const Field::Model::PlaceModel* NewTown;
 	std::function<void(void)> EventOverFunc;
+	EventCamera* camera;
 
 public:
-	NewTownEvent_World(EventViewer *Ptr, std::function<void(void)> EventOverFunc);
+	NewTownEvent_World(EventViewer *Ptr, std::function<void(void)> EventOverFunc, EventCamera* camera);
 	~NewTownEvent_World();
 	void Init(void) override;
 	void Update(void) override;
