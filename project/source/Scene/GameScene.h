@@ -123,7 +123,7 @@ private:
 	class GameFarView;
 
 	//InfoController* testInfoController;
-	GuideViewer* testGuide;
+	//GuideViewer* testGuide;
 
 	//デバッグ用フィールドレベル
 	static int level;
