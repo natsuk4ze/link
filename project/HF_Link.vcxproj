@@ -182,6 +182,7 @@
     <ClInclude Include="source\FieldObject\Passenger\PassengerModel.h" />
     <ClInclude Include="source\Field\AStar\AStarController.h" />
     <ClInclude Include="source\Field\Camera\FieldCamera.h" />
+    <ClInclude Include="source\Field\Camera\Plugin\FieldCameraTranslationPlugin.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraFar.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraQuater.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraRotate.h" />
@@ -395,6 +396,7 @@
     <ClCompile Include="source\FieldObject\Passenger\PassengerModel.cpp" />
     <ClCompile Include="source\Field\AStar\AStarController.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCamera.cpp" />
+    <ClCompile Include="source\Field\Camera\Plugin\FieldCameraTranslationPlugin.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraFar.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraQuater.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraRotate.cpp" />
