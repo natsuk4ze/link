@@ -67,7 +67,8 @@ void Camera::Update()
 	//ƒvƒ‰ƒOƒCƒ“”½‰f
 	for (auto& plugin : pluginList)
 	{
-		plugin->Apply(workTransform);
+		if(plugin->IsActive())
+			plugin->Apply(workTransform);
 	}
 
 	D3DXVECTOR3 eyePosition = workTransform.GetPosition();

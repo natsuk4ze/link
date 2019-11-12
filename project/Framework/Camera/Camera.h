@@ -97,8 +97,24 @@ protected:
 class BaseCameraPlugin
 {
 public:
+	BaseCameraPlugin() : active(true) {};
+	virtual ~BaseCameraPlugin() {};
+
 	virtual void Update() = 0;
 	virtual void Apply(Transform& transformWork) = 0;
+
+	virtual bool IsActive() const
+	{
+		return active;
+	}
+
+	virtual void SetEnable(bool state)
+	{
+		active = state;
+	}
+
+protected:
+	bool active;
 };
 
 #endif
