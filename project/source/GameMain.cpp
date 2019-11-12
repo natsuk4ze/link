@@ -22,6 +22,10 @@
 GameMain::GameMain(HINSTANCE hInstance, HWND hWnd) :
 	BaseGame(hInstance, hWnd)
 {
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+	Debug::Init(hWnd, pDevice);
+
 	//シーンマネージャにシーンのインスタンスを追加
 	sceneManager->Add(GameConfig::SceneID::Game, new GameScene(renderTexture, renderSurface));
 	sceneManager->Add(GameConfig::SceneID::ParticleTest, new ParticleTestScene(renderTexture, renderSurface));
