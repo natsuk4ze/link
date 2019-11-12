@@ -6,6 +6,7 @@
 //
 //=====================================
 #include "EventCamera.h"
+#include "FieldCamera.h"
 #include "../../../Framework/Math/Easing.h"
 
 /**************************************
@@ -75,6 +76,26 @@ void EventCamera::Move(const D3DXVECTOR3 & position, int duration, std::function
 	durationMove = duration;
 	startPosition = transform.GetPosition();
 	endPosition = position;
+	this->callback = callback;
+}
+
+/**************************************
+•½sˆÚ“®ˆ—
+***************************************/
+void EventCamera::Translation(const D3DXVECTOR3 & position, int duration, std::function<void()> callback)
+{
+	float angleY = D3DXToRadian(FieldCamera::CameraAngleY);
+	float angleXZ = D3DXToRadian(FieldCamera::InitCameraAngle);
+
+	D3DXVECTOR3 offset = D3DXVECTOR3(
+		cosf(angleY) * cosf(angleXZ),
+		sinf(angleY),
+		cosf(angleY) * sinf(angleXZ)) * FieldCamera::LengthFromTarget;
+
+	cntMove = 0;
+	durationMove = duration;
+	startPosition = transform.GetPosition();
+	endPosition = position + offset;
 	this->callback = callback;
 }
 

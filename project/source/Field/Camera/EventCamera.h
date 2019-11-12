@@ -39,6 +39,9 @@ public:
 	//ˆÚ“®ˆ—
 	void Move(const D3DXVECTOR3& position, int duration, std::function<void()> callback = nullptr);
 
+	//•½sˆÚ“®ˆ—
+	void Translation(const D3DXVECTOR3& position, int duration, std::function<void()> callback = nullptr);
+
 	//Œ³‚ÌƒJƒƒ‰‚ÌˆÊ’u‚É–ß‚·
 	void Return(int duration, std::function<void()> callback = nullptr);
 
