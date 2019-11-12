@@ -11,7 +11,7 @@
 #include "../../Field/Place/FieldPlaceModel.h"
 #include "../../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../../Effect/GameParticleManager.h"
-#include "../../../Framework/Camera/CameraTranslationPlugin.h"
+#include "../../Field/Camera/Plugin/FieldCameraTranslationPlugin.h"
 #include "../../../Framework/Task/TaskManager.h"
 
 //*****************************************************************************
@@ -85,7 +85,7 @@ void AILevelDecreaseEvent::Init()
 	// テロップ設置
 	eventViewer->SetEventTelop(EventTelop::Alien, [&]()
 	{
-		CameraTranslationPlugin::Instance()->Move(TownPos, 30, [&]() {UFODebutStart(); });
+		FieldCameraTranslationPlugin::Instance()->Move(TownPos, 30, [&]() {UFODebutStart(); });
 	});
 
 	// ゲーム進行停止
@@ -141,7 +141,7 @@ void AILevelDecreaseEvent::Update()
 		// 30フレームの遅延を設置
 		TaskManager::Instance()->CreateDelayedTask(30, [&]()
 		{
-			CameraTranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
+			FieldCameraTranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
 		});
 		EventState = EffectHappend;
 		break;
@@ -171,7 +171,7 @@ void AILevelDecreaseEvent::Update()
 		}
 		else
 		{
-			CameraTranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
+			FieldCameraTranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
 			EventState = EffectHappend;
 		}
 		break;

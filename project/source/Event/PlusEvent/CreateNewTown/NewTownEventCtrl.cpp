@@ -9,7 +9,7 @@
 #include "NewTownEvent_City.h"
 #include "NewTownEvent_World.h"
 #include "NewTownEvent_Space.h"
-#include "../../../../Framework/Camera/CameraTranslationPlugin.h"
+#include "../../../Field/Camera/Plugin/FieldCameraTranslationPlugin.h"
 #include "../../../Viewer/GameScene/EventViewer/EventViewer.h"
 
 //*****************************************************************************
@@ -102,7 +102,7 @@ string NewTownEventCtrl::GetEventMessage(int FieldLevel)
 void NewTownEventCtrl::EventOver(void)
 {
 	// イベント終了、ゲーム続行
-	CameraTranslationPlugin::Instance()->Restore(30, nullptr);
+	FieldCameraTranslationPlugin::Instance()->Restore(30, nullptr);
 	fieldEventHandler->ResumeGame();
 	UseFlag = false;
 }

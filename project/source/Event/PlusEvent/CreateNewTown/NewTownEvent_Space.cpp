@@ -7,7 +7,7 @@
 #include "../../../../main.h"
 #include "NewTownEvent_Space.h"
 #include "../../EventActor/PlanetActor.h"
-#include "../../../../Framework/Camera/CameraTranslationPlugin.h"
+#include "../../../Field/Camera/Plugin/FieldCameraTranslationPlugin.h"
 #include "../../../Viewer/GameScene/EventViewer/EventTelop.h"
 #include "../../../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../../../Effect/GameParticleManager.h"
@@ -78,7 +78,7 @@ void NewTownEvent_Space::Init()
 	eventViewer->SetEventTelop(EventTelop::NewPlanet, [=]()
 	{
 		// —\’è’n‚ÉƒJƒƒ‰‚ðˆÚ“®‚³‚¹‚é
-		CameraTranslationPlugin::Instance()->Move(PlanetPos, 30, [&]() {FallenStart(); });
+		FieldCameraTranslationPlugin::Instance()->Move(PlanetPos, 30, [&]() {FallenStart(); });
 	});
 
 	// ‰Šú‰»I—¹
@@ -113,7 +113,7 @@ void NewTownEvent_Space::Update()
 			EventState = State::PlanetArrive;
 		}
 
-		CameraTranslationPlugin::Instance()->Move(PlanetPos, 1, nullptr);
+		FieldCameraTranslationPlugin::Instance()->Move(PlanetPos, 1, nullptr);
 
 		break;
 

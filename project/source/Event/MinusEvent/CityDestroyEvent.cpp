@@ -11,7 +11,7 @@
 #include "../../Field/Place/FieldPlaceModel.h"
 #include "../../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../../Effect/GameParticleManager.h"
-#include "../../../Framework/Camera/CameraTranslationPlugin.h"
+#include "../../Field/Camera/Plugin/FieldCameraTranslationPlugin.h"
 #include "../../../Framework/Task/TaskManager.h"
 
 enum State
@@ -84,7 +84,7 @@ void CityDestroyEvent::Init()
 	// テロップ設置
 	eventViewer->SetEventTelop(EventTelop::Meteorite, [&]()
 	{
-		CameraTranslationPlugin::Instance()->Move(TownPos, 30, [&]() {MeteorFallStart(); });
+		FieldCameraTranslationPlugin::Instance()->Move(TownPos, 30, [&]() {MeteorFallStart(); });
 	});
 
 	// 初期化終了
@@ -134,7 +134,7 @@ void CityDestroyEvent::Update()
 		// 30フレームの遅延を設置
 		TaskManager::Instance()->CreateDelayedTask(30, [&]()
 		{
-			CameraTranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
+			FieldCameraTranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
 		});
 		EventState = EffectHappend;
 		break;
@@ -155,7 +155,7 @@ void CityDestroyEvent::Update()
 			// 30フレームの遅延を設置
 			TaskManager::Instance()->CreateDelayedTask(30, [&]()
 			{
-				CameraTranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
+				FieldCameraTranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
 			});
 			// 町消滅処理
 			fieldEventHandler->DestroyTown(Target);

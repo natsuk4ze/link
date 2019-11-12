@@ -6,7 +6,7 @@
 //=============================================================================
 #include "../../../../main.h"
 #include "NewTownEvent_World.h"
-#include "../../../../Framework/Camera/CameraTranslationPlugin.h"
+#include "../../../Field/Camera/Plugin/FieldCameraTranslationPlugin.h"
 #include "../../../../Framework/Camera/CameraShakePlugin.h"
 #include "../../../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../../../Effect/GameParticleManager.h"
@@ -58,7 +58,7 @@ void NewTownEvent_World::Init()
 	eventViewer->SetEventTelop(EventTelop::Atlantis, [=]()
 	{
 		// —\’è’n‚ÉƒJƒƒ‰‚ğˆÚ“®‚³‚¹‚é
-		CameraTranslationPlugin::Instance()->Move(TownPos, 30, [&]() {CreateNewTown(); });
+		FieldCameraTranslationPlugin::Instance()->Move(TownPos, 30, [&]() {CreateNewTown(); });
 	});
 
 	// ‰Šú‰»I—¹

@@ -59,10 +59,13 @@ void FieldCameraTranslationPlugin::Apply(Transform& work)
 ***************************************/
 void FieldCameraTranslationPlugin::Move(const D3DXVECTOR3 & position, int duration, std::function<void(void)> callback)
 {
+	float angleY = D3DXToRadian(FieldCamera::CameraAngleY);
+	float angleXZ = D3DXToRadian(FieldCamera::InitCameraAngle);
+
 	D3DXVECTOR3 offset = D3DXVECTOR3(
-		cosf(FieldCamera::CameraAngleY) * cosf(FieldCamera::InitCameraAngle),
-		sinf(FieldCamera::CameraAngleY),
-		cosf(FieldCamera::CameraAngleY) * sinf(FieldCamera::InitCameraAngle)) * FieldCamera::LengthFromTarget;
+		cosf(angleY) * cosf(angleXZ),
+		sinf(angleY),
+		cosf(angleY) * sinf(angleXZ)) * FieldCamera::LengthFromTarget;
 
 	targetPosition = position + offset;
 	cntFrame = 0;
