@@ -62,6 +62,9 @@ void EventCamera::Update()
 		float t = (float)cntMove / durationMove;
 		D3DXVECTOR3 position = Easing::EaseValue(t, startPosition, endPosition, EaseType::OutCubic);
 		transform.SetPosition(position);
+
+		if (cntMove == durationMove && callback != nullptr)
+			callback();
 	}
 
 	Camera::Update();
