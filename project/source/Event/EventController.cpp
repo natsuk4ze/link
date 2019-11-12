@@ -252,7 +252,7 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					Ptr = new LinkLevelUpEvent();
 					break;
 				case NewCity:
-					Ptr = new NewTownEventCtrl(eventViewer, FieldLevel);
+					Ptr = new NewTownEventCtrl(eventViewer, FieldLevel, camera);
 					break;
 				case StockRecovery:
 					Ptr = new StockRecoveryEvent();

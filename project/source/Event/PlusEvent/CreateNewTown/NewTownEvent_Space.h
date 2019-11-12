@@ -12,6 +12,7 @@
 
 class EventViewer;
 class PlanetActor;
+class EventCamera;
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -27,10 +28,10 @@ private:
 	const Field::Model::PlaceModel* NewPlanet;
 	int EventState;
 	std::function<void(void)> EventOverFunc;
-
+	EventCamera *camera;
 
 public:
-	NewTownEvent_Space(EventViewer *Ptr, std::function<void(void)> EventOverFunc);
+	NewTownEvent_Space(EventViewer *Ptr, std::function<void(void)> EventOverFunc, EventCamera* camera);
 	~NewTownEvent_Space();
 	void Init(void) override;
 	void Update(void) override;

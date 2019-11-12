@@ -25,21 +25,21 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-NewTownEventCtrl::NewTownEventCtrl(EventViewer *Ptr, int FieldLevel) :
+NewTownEventCtrl::NewTownEventCtrl(EventViewer *Ptr, int FieldLevel, EventCamera *camera) :
 	EventBase(true),
 	eventViewer(Ptr)
 {
 	if (FieldLevel == Field::City)
 	{
-		NewTownEvent = new NewTownEvent_City(Ptr, [&]() {EventOver(); });
+		NewTownEvent = new NewTownEvent_City(Ptr, [&]() {EventOver(); }, camera);
 	}
 	else if (FieldLevel == Field::World)
 	{
-		NewTownEvent = new NewTownEvent_World(Ptr, [&]() {EventOver(); });
+		NewTownEvent = new NewTownEvent_World(Ptr, [&]() {EventOver(); }, camera);
 	}
 	else if (FieldLevel == Field::Space)
 	{
-		NewTownEvent = new NewTownEvent_Space(Ptr, [&]() {EventOver(); });
+		NewTownEvent = new NewTownEvent_Space(Ptr, [&]() {EventOver(); }, camera);
 	}
 }
 

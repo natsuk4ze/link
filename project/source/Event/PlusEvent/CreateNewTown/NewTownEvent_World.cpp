@@ -6,11 +6,11 @@
 //=============================================================================
 #include "../../../../main.h"
 #include "NewTownEvent_World.h"
-#include "../../../Field/Camera/Plugin/FieldCameraTranslationPlugin.h"
 #include "../../../../Framework/Camera/CameraShakePlugin.h"
 #include "../../../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../../../Effect/GameParticleManager.h"
 #include "../../../../Framework/Task/TaskManager.h"
+#include "../../../Field/Camera/EventCamera.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -25,10 +25,11 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-NewTownEvent_World::NewTownEvent_World(EventViewer *Ptr, std::function<void(void)> EventOverFunc) :
+NewTownEvent_World::NewTownEvent_World(EventViewer *Ptr, std::function<void(void)> EventOverFunc, EventCamera* camera) :
 	EventBase(true),
 	eventViewer(Ptr),
-	EventOverFunc(EventOverFunc)
+	EventOverFunc(EventOverFunc),
+	camera(camera)
 {
 
 }
@@ -58,7 +59,7 @@ void NewTownEvent_World::Init()
 	eventViewer->SetEventTelop(EventTelop::Atlantis, [=]()
 	{
 		// 予定地にカメラを移動させる
-		FieldCameraTranslationPlugin::Instance()->Move(TownPos, 30, [&]() {CreateNewTown(); });
+		camera->Translation(TownPos, 30, [&]() {CreateNewTown(); });
 	});
 
 	// 初期化終了
