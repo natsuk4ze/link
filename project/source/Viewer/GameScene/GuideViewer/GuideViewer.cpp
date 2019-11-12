@@ -7,8 +7,8 @@
 //=====================================
 #include "GuideViewer.h"
 
-const D3DXVECTOR2 GuideViewer::SubScreenSize = D3DXVECTOR2(240.0f, 360.0f);
-const D3DXVECTOR3 GuideViewer::SubScreenPosition = D3DXVECTOR3(0.0f, 720.0f, 0.0f);
+const D3DXVECTOR2 GuideViewer::SubScreenSize = D3DXVECTOR2(360.0f, 240.0f);
+const D3DXVECTOR3 GuideViewer::SubScreenPosition = D3DXVECTOR3(30.0f, 810.0f, 0.0f);
 
 //=====================================
 // コンストラクタ
