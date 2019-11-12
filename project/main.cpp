@@ -8,6 +8,7 @@
 #include <time.h>
 #include "Framework\Tool\DebugWindow.h"
 #include "source\GameMain.h"
+#include "source/SubWindow/GameSub.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -38,6 +39,7 @@ int					g_nCountFPS;			// FPSカウンタ
 bool				g_bDispDebug = true;	// デバッグ表示ON/OFF
 static bool flgPause = false;
 static GameMain* game;
+static GameSub* sub;
 
 //=============================================================================
 // メイン関数
@@ -290,6 +292,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	g_pD3DDevice->SetRenderState(D3DRS_SPECULARENABLE, true);
 
 	game = new GameMain(hInstance, hWnd);
+	sub = new GameSub(hInstance, hWnd);
 
 	return S_OK;
 }
