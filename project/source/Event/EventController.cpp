@@ -273,7 +273,7 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					Ptr = new LinkLevelDecreaseEvent();
 					break;
 				case CityDestroy:
-					Ptr = new CityDestroyEvent(eventViewer);
+					Ptr = new CityDestroyEvent(eventViewer, camera);
 					break;
 				case AILevelDecrease:
 					Ptr = new AILevelDecreaseEvent(eventViewer, camera);

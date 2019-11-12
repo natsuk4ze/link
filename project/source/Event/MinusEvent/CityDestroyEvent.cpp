@@ -11,8 +11,8 @@
 #include "../../Field/Place/FieldPlaceModel.h"
 #include "../../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../../Effect/GameParticleManager.h"
-#include "../../Field/Camera/Plugin/FieldCameraTranslationPlugin.h"
 #include "../../../Framework/Task/TaskManager.h"
+#include "../../Field/Camera/EventCamera.h"
 
 enum State
 {
@@ -41,10 +41,11 @@ const D3DXVECTOR3 Scale = D3DXVECTOR3(0.15f, 0.15f, 0.15f);
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer) :
+CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer, EventCamera* camera) :
 	EventBase(true),
 	EventState(State::TelopExpanding),
-	eventViewer(eventViewer)
+	eventViewer(eventViewer),
+	camera(camera)
 {
 }
 
@@ -63,6 +64,9 @@ CityDestroyEvent::~CityDestroyEvent()
 //=============================================================================
 void CityDestroyEvent::Init()
 {
+	//カメラをイベントカメラに切り替え
+	camera->Init();
+
 	// 連打ゲームインスタンス
 	beatGame = new BeatGame([&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
 
@@ -84,7 +88,7 @@ void CityDestroyEvent::Init()
 	// テロップ設置
 	eventViewer->SetEventTelop(EventTelop::Meteorite, [&]()
 	{
-		FieldCameraTranslationPlugin::Instance()->Move(TownPos, 30, [&]() {MeteorFallStart(); });
+		camera->Translation(TownPos, 30, [&]() {MeteorFallStart(); });
 	});
 
 	// 初期化終了
@@ -134,7 +138,7 @@ void CityDestroyEvent::Update()
 		// 30フレームの遅延を設置
 		TaskManager::Instance()->CreateDelayedTask(30, [&]()
 		{
-			FieldCameraTranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
+			camera->Return(30, [&]() { EventOver(); });
 		});
 		EventState = EffectHappend;
 		break;
@@ -155,7 +159,7 @@ void CityDestroyEvent::Update()
 			// 30フレームの遅延を設置
 			TaskManager::Instance()->CreateDelayedTask(30, [&]()
 			{
-				FieldCameraTranslationPlugin::Instance()->Restore(30, [&]() { EventOver(); });
+				camera->Return(30, [&]() { EventOver(); });
 			});
 			// 町消滅処理
 			fieldEventHandler->DestroyTown(Target);
@@ -201,6 +205,7 @@ string CityDestroyEvent::GetEventMessage(int FieldLevel)
 void CityDestroyEvent::EventOver(void)
 {
 	// イベント終了、ゲーム続行
+	camera->Restore();
 	fieldEventHandler->ResumeGame();
 	UseFlag = false;
 }
