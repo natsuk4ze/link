@@ -105,7 +105,7 @@ void Camera::Update()
 /**************************************
 ÉZÉbÉgèàóù
 ***************************************/
-void Camera::Set()
+void Camera::Set() const
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 

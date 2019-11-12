@@ -29,7 +29,7 @@ public:
 	virtual ~Camera();			//デストラクタ
 
 	virtual void Update();		//更新
-	virtual void Set();			//カメラ情報反映処理
+	virtual void Set() const;	//カメラ情報反映処理
 
 	//プラグイン追加処理
 	virtual void AddPlugin(BaseCameraPlugin* plugin);

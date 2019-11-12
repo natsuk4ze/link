@@ -181,7 +181,7 @@ void GameScene::Update()
 void GameScene::Draw()
 {
 	//カメラセット
-	fieldCamera->Set();
+	Camera::MainCamera()->Set();
 
 	// テスト用
 
