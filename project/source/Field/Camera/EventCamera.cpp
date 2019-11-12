@@ -12,7 +12,11 @@
 /**************************************
 コンストラクタ
 ***************************************/
-EventCamera::EventCamera()
+EventCamera::EventCamera() :
+	referencePosition(Vector3::Zero),
+	cntMove(0),
+	durationMove(0),
+	flgLookAt(false)
 {
 }
 
@@ -67,6 +71,11 @@ void EventCamera::Update()
 			callback();
 	}
 
+	if (flgLookAt)
+	{
+		transform.LookAt(referencePosition);
+	}
+
 	Camera::Update();
 }
 
@@ -75,11 +84,14 @@ void EventCamera::Update()
 ***************************************/
 void EventCamera::Move(const D3DXVECTOR3 & position, int duration, std::function<void()> callback)
 {
+	flgLookAt = true;
 	cntMove = 0;
 	durationMove = duration;
 	startPosition = transform.GetPosition();
 	endPosition = position;
 	this->callback = callback;
+
+	referencePosition = transform.Forward() * FieldCamera::LengthFromTarget;
 }
 
 /**************************************
@@ -95,6 +107,7 @@ void EventCamera::Translation(const D3DXVECTOR3 & position, int duration, std::f
 		sinf(angleY),
 		cosf(angleY) * sinf(angleXZ)) * FieldCamera::LengthFromTarget;
 
+	flgLookAt = false;
 	cntMove = 0;
 	durationMove = duration;
 	startPosition = transform.GetPosition();
@@ -107,6 +120,7 @@ void EventCamera::Translation(const D3DXVECTOR3 & position, int duration, std::f
 ***************************************/
 void EventCamera::Return(int duration, std::function<void()> callback)
 {
+	flgLookAt = false;
 	cntMove = 0;
 	durationMove = duration;
 	startPosition = transform.GetPosition();

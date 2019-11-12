@@ -37,9 +37,11 @@ public:
 	void Update();
 
 	//移動処理
+	//現在の注視点を向き続けるように移動する
 	void Move(const D3DXVECTOR3& position, int duration, std::function<void()> callback = nullptr);
 
 	//平行移動処理
+	//注視点も一緒に平行移動する
 	void Translation(const D3DXVECTOR3& position, int duration, std::function<void()> callback = nullptr);
 
 	//元のカメラの位置に戻す
@@ -57,5 +59,9 @@ private:
 	int durationMove;
 	D3DXVECTOR3 startPosition, endPosition;
 	std::function<void()> callback;
+
+	//注視点
+	D3DXVECTOR3 referencePosition;
+	bool flgLookAt;
 };
 #endif
