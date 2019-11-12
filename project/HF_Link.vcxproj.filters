@@ -228,7 +228,6 @@
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.h" />
-    <ClInclude Include="source\SubWindow\GameSub.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -439,7 +438,6 @@
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideActor.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.cpp" />
-    <ClCompile Include="source\SubWindow\GameSub.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

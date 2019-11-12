@@ -87,7 +87,7 @@ void GameScene::Init()
 	//testInfoController->SetLinkLevel(Field::FieldPosition(16, 16), 100);
 	//testInfoController->SetLinkLevel(Field::FieldPosition(17, 17), 90);
 	//testInfoController->SetLinkLevel(Field::FieldPosition(29, 29), 99);
-	//testGuide = new GuideViewer();
+	testGuide = new GuideViewer();
 }
 
 /**************************************
@@ -114,7 +114,7 @@ void GameScene::Uninit()
 
 	// テスト用
 	//SAFE_DELETE(testInfoController);
-	//SAFE_DELETE(testGuide);
+	SAFE_DELETE(testGuide);
 
 	//デリゲート削除
 	SAFE_DELETE(onBuildRoad);
@@ -142,7 +142,7 @@ void GameScene::Update()
 
 	// テスト用
 	//testInfoController->Update();
-	//testGuide->Update();
+	testGuide->Update();
 
 	//ビューワパラメータをビューワに渡す
 	GameViewerParam gameParam;
@@ -187,7 +187,7 @@ void GameScene::Draw()
 	fieldCamera->Set();
 
 	// テスト用
-	//testGuide->Draw();
+	testGuide->Draw();
 
 	//オブジェクト描画
 	ProfilerCPU::Instance()->Begin("Draw Object");

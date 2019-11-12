@@ -1,11 +1,24 @@
+//=====================================
+//
+// ガイドアクター[GuideViewer.h]
+// 機能：ガイド役キャラクター
+// Author:GP12B332 19 染谷武志
+//
+//=====================================
 #include "GuideActor.h"
 #include "../../../../Framework/Tool/DebugWindow.h"
 
+//=====================================
+// スタティックメンバ初期化
+//=====================================
 const GuideActor::AnimData GuideActor::data[] = {
 	{"Idle", 1.0f, 0.1f, 1 / 30.0f},
 	{"Running", 1.0f, 0.1f, 1 / 30.0f}
 };
 
+//=====================================
+// コンストラクタ
+//=====================================
 GuideActor::GuideActor()
 {
 	transform->SetPosition(D3DXVECTOR3(150.0f, 0.0f, -150.0f));
@@ -30,11 +43,17 @@ GuideActor::GuideActor()
 	anim->SetFinishTransition(Idle, Idle);
 }
 
+//=====================================
+// デストラクタ
+//=====================================
 GuideActor::~GuideActor()
 {
 	//animのデストラクタは不要
 }
 
+//=====================================
+// 更新
+//=====================================
 void GuideActor::Update()
 {
 	anim->Update();
@@ -49,6 +68,9 @@ void GuideActor::Update()
 	Debug::End();
 }
 
+//=====================================
+// 描画
+//=====================================
 void GuideActor::Draw()
 {
 	if (!IsActive())
@@ -60,6 +82,9 @@ void GuideActor::Draw()
 	anim->Draw(&mtxWorld);
 }
 
+//=====================================
+// アニメーション切り替え
+//=====================================
 void GuideActor::ChangeAnim(AnimState next)
 {
 	anim->ChangeAnim((UINT)next, true);

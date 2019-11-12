@@ -1,9 +1,19 @@
+//=====================================
+//
+// ガイドアクター[GuideViewer.h]
+// 機能：ガイド役キャラクター
+// Author:GP12B332 19 染谷武志
+//
+//=====================================
 #ifndef _GUIDEACTOR_H_
 #define _GUIDEACTOR_H_
 
 #include "../../../../Framework/Core/GameObject.h"
 #include "../../../../Framework/Animation/AnimationManager.h"
 
+//**************************************
+// クラス定義
+//**************************************
 class GuideActor :
 	public GameObject
 {
