@@ -60,6 +60,9 @@ public:
 	//Transformæ“¾ˆ—
 	Transform GetTransform() const;
 
+	//‘ã“ü‰‰Zq
+	Camera& operator=(const Camera& rhs);
+
 protected:
 	//SRTî•ñ
 	Transform transform;

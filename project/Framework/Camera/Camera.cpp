@@ -209,6 +209,19 @@ Transform Camera::GetTransform() const
 }
 
 /**************************************
+‘ã“ü‰‰Zq
+***************************************/
+Camera & Camera::operator=(const Camera & rhs)
+{
+	this->transform = rhs.transform;
+	this->viewAngle = rhs.viewAngle;
+	this->viewAspect = rhs.viewAspect;
+	this->viewNear = rhs.viewNear;
+	this->viewFar = rhs.viewFar;
+	return *this;
+}
+
+/**************************************
 ‹‘äZoˆ—
 ***************************************/
 void Camera::CalculateFrustrum()
