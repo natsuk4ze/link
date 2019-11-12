@@ -87,8 +87,8 @@ namespace Field::Actor
 		});
 
 		//国レベルのモデルが無いので一旦、街レベルに落とす
-		if (currentLevel == FieldLevel::World)
-			currentLevel = FieldLevel::City;
+		//if (currentLevel == FieldLevel::World)
+		//	currentLevel = FieldLevel::City;
 	}
 
 	/**************************************
