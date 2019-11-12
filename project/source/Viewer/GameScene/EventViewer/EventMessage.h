@@ -59,9 +59,6 @@ private:
 
 	//フェードアウト処理
 	void FadeOut(void);
-
-	//リセットする
-	void Reset(void);
 };
 
 #endif

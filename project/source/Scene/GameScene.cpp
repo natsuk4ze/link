@@ -145,11 +145,13 @@ void GameScene::Update()
 	//testGuide->Update();
 
 	//ビューワパラメータをビューワに渡す
-	GameViewerParam param;
-	param.remainTime = remainTime / 30.0f;
-	field->EmbedViewerParam(param);
-	eventController->EmbedViewerParam(param);
-	gameViewer->ReceiveParam(param);
+	GameViewerParam gameParam;
+	gameParam.remainTime = remainTime / 30.0f;
+	field->EmbedViewerParam(gameParam);
+	gameViewer->ReceiveParam(gameParam);
+
+	EventViewerParam eventParam;
+	eventController->EmbedViewerParam(eventParam);
 
 	//ビュアー更新
 	gameViewer->Update();
@@ -214,8 +216,8 @@ void GameScene::Draw()
 
 	//ビュアー描画
 	field->DrawViewer();
-	eventController->DrawEventViewer();
 	gameViewer->Draw();
+	eventController->DrawEventViewer();
 
 	ProfilerCPU::Instance()->EndLabel();
 }
@@ -302,11 +304,13 @@ void GameScene::DebugTool()
 		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::City);
 		SceneManager::ChangeScene(GameConfig::SceneID::Game);
 	}
+	Debug::SameLine();
 	if (Debug::Button("WorldLevel"))
 	{
 		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::World);
 		SceneManager::ChangeScene(GameConfig::SceneID::Game);
 	}
+	Debug::SameLine();
 	if (Debug::Button("SpaceLevel"))
 	{
 		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::Space);

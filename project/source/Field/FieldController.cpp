@@ -56,6 +56,9 @@ namespace Field
 		realDevelopmentLevelAI(0),
 		developSpeedBonus(1.0f),
 		currentLevel(level),
+		operationZ(OperationExplanationViewer::OperationID::Z_None),
+		operationX(OperationExplanationViewer::OperationID::X_None),
+		operationSpace(OperationExplanationViewer::OperationID::Space_None),
 		enableDevelop(true),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
@@ -145,6 +148,23 @@ namespace Field
 		infoController->Update();
 
 		viewer->Update();
+
+		//デバッグツール
+		Debug::Begin("DebugTool");
+		if (Debug::Button("LinkUp 5"))
+		{
+			viewer->ViewLinkLevelUp(5);
+		}
+		Debug::SameLine(); 
+		if (Debug::Button("LinkUp 15"))
+		{
+			viewer->ViewLinkLevelUp(15);
+		}
+		if (Debug::Button("Field Error"))
+		{
+			viewer->SetFieldErroMessage(FieldErrorMessage::ErroID::NotConnection);
+		}
+		Debug::End();
 	}
 
 	/**************************************
@@ -191,6 +211,8 @@ namespace Field
 	void FieldController::DrawViewer()
 	{
 		infoController->Draw();
+
+		SetOperationExplanation();
 		viewer->Draw();
 	}
 
@@ -475,5 +497,17 @@ namespace Field
 	{
 		auto infoLinkLevel = placeContainer->GetAllTownLevel();
 		infoController->SetAllLinkLevel(infoLinkLevel);
+	}
+
+	/**************************************
+	操作説明のセット
+	***************************************/
+	void FieldController::SetOperationExplanation()
+	{
+		viewer->SetOperationExplanation(
+			(OperationExplanationViewer::OperationID)operationZ,
+			(OperationExplanationViewer::OperationID)operationX,
+			(OperationExplanationViewer::OperationID)operationSpace
+		);
 	}
 }

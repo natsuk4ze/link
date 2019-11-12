@@ -94,6 +94,9 @@ namespace Field::Model
 		//すべての町の発展レベルを取得する
 		std::vector<PlaceData> GetAllTownLevel();
 
+		//リンクレベル取得
+		int GetLinkLevel();
+
 #ifdef DEBUG_PLACEMODEL
 		void DrawDebug();
 #endif
@@ -107,6 +110,8 @@ namespace Field::Model
 
 		int placeRowMax;						//1行あたりのプレイス最大数
 		int placeColumMax;						//1列あたりのプレイス最大数
+
+		int fieldLinkLevel;						//全Townのリンクレベルの合計
 
 		bool initialized;						//初期化フラグ
 

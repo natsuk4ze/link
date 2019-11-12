@@ -18,6 +18,8 @@
 //*****************************************************************************
 class EventTelop;
 class EventMessage;
+class SealItemStockViewer;
+class EventViewerParam;
 class BaseViewer;
 
 //*****************************************************************************
@@ -38,6 +40,9 @@ public:
 	//テロップをセット
 	void SetEventTelop(EventTelop::TelopID id, std::function<void(void)> Callback = nullptr);
 
+	//パラメータ受け取り
+	void ReceiveParam(EventViewerParam &param);
+
 private:
 	static const int messageMax = 5;
 
@@ -46,6 +51,7 @@ private:
 
 	EventTelop * eventTelop;
 	EventMessage *eventMessage[messageMax];
+	SealItemStockViewer *sealStockViewer;
 
 	void CountMessage(void);
 	void PlayMessage(void);

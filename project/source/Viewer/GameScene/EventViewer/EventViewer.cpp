@@ -8,6 +8,8 @@
 #include "../../../../Framework/Math/TMath.h"
 #include "EventMessage.h"
 #include "EventTelop.h"
+#include "SealItemStockViewer.h"
+#include "EventViewerParam.h"
 #include "EventViewer.h"
 
 #ifdef _DEBUG
@@ -27,6 +29,7 @@ EventViewer::EventViewer()
 		eventViewer.push_back(eventMessage[i] = new EventMessage());
 	}
 
+	eventViewer.push_back(sealStockViewer = new SealItemStockViewer());
 	eventViewer.push_back(eventTelop = new EventTelop());
 }
 
@@ -72,6 +75,16 @@ void EventViewer::Update()
 	if (Keyboard::GetTrigger(DIK_Y))
 	{
 		SetEventTelop(eventTelop->AI_Strike, nullptr);
+	}
+
+	if (Keyboard::GetTrigger(DIK_1))
+	{
+		sealStockViewer->parameterBox = true;
+	}
+
+	if (Keyboard::GetTrigger(DIK_2))
+	{
+		sealStockViewer->parameterBox = false;
 	}
 
 	Debug::Begin("EventViewer");
@@ -162,4 +175,12 @@ void EventViewer::SetEventMessage(const std::string message)
 void EventViewer::SetEventTelop(EventTelop::TelopID id, std::function<void(void)> Callback)
 {
 	eventTelop->Set(id, Callback);
+}
+
+//=============================================================================
+// ƒpƒ‰ƒ[ƒ^Žó‚¯Žæ‚èˆ—
+//=============================================================================
+void EventViewer::ReceiveParam(EventViewerParam &param)
+{
+	sealStockViewer->parameterBox = param.isStockSealed;
 }

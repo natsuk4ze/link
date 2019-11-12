@@ -138,6 +138,11 @@ namespace Field
 
 		FieldLevel currentLevel;				//現在のフィールドレベル
 
+		//操作説明
+		int operationZ;
+		int operationX;
+		int operationSpace;
+
 		State current;
 		ControllerState *state;					//現在のステート
 		std::vector<ControllerState*> fsm;		//ステートマシン
@@ -165,6 +170,9 @@ namespace Field
 
 		//リンクレベル情報をInfo側にセット
 		void SetLinkLevelInfo();
+
+		//操作説明のセット
+		void SetOperationExplanation();
 
 		//各ステートクラスの前方宣言
 		class IdleState;

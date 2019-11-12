@@ -193,9 +193,6 @@ void FieldTelop::DrawLine(void)
 
 	//線のXサイズを更新
 	line->size.x = Easing::EaseValue(animTime, lineEasingStart, lineEasingGoal, animType[Line_Draw]);
-
-	//line->size.xの最大をlineEasingGoalに設定
-	Math::WrapAround(line->size.x, lineEasingGoal, line->size.x);
 }
 
 //=============================================================================
@@ -209,9 +206,6 @@ void FieldTelop::FadeOut(void)
 
 	//α値を更新
 	alpha = Easing::EaseValue(animTime, alphaEasingStart, alphaEasingGoal, animType[Telop_FadeOut]);
-
-	//alpha->size.xの最大をalphaEasingGoalに設定
-	Math::WrapAround(alpha, alphaEasingGoal, alpha);
 
 	text->SetAlpha(alpha);
 	line->SetAlpha(alpha);

@@ -46,11 +46,11 @@ private:
 	//ビュアー再生
 	void Play();
 
-	//テキストフェードイン
-	void FadeInText();
+	//フェードイン
+	void FadeIn();
 
-	//テキストフェードアウト
-	void FadeOutText();
+	//フェードアウト
+	void FadeOut();
 
 	//数字出現処理
 	void InNum();

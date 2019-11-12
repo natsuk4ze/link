@@ -10,6 +10,7 @@
 #include "../Place/FieldPlaceContainer.h"
 #include "../Object/FieldCursor.h"
 #include "../Controller/FieldDevelopper.h"
+#include "../../Viewer/GameScene/FieldViewer/OperationExplanationViewer.h"
 
 namespace Field
 {
@@ -43,6 +44,15 @@ namespace Field
 		Model::PlaceModel* place = entity.GetPlace();
 		entity.operateContainer->AddDevelop(place);
 
+		//操作説明を更新
+		entity.operationZ = OperationExplanationViewer::OperationID::Z_Cancel;
+
+		entity.operationX = entity.enableDevelop ?
+			OperationExplanationViewer::OperationID::X_Develop :
+			OperationExplanationViewer::OperationID::X_None;
+
+		entity.operationSpace = OperationExplanationViewer::OperationID::Space_Change;
+
 		//Xキーが押されたら操作対象のプレイスを道に変える
 		//TODO：キーボード以外の入力にも対応
 		if (entity.input->GetDevelopTrigger())
@@ -51,11 +61,10 @@ namespace Field
 			{
 				PlaceVector vector = entity.operateContainer->GetPlaces();
 				entity.developper->DevelopPlace(vector, vector.begin());
+				entity.operateContainer->Clear();
+
+				next = State::Idle;
 			}
-
-			entity.operateContainer->Clear();
-
-			next = State::Idle;
 		}
 
 		//Zキーが押されたらIdleステートへ遷移

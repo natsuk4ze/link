@@ -16,23 +16,19 @@
 //*****************************************************************************
 
 //アニメーションの数
-static const int animMax = 5;
+static const int animMax = 3;
 
 //テキストアニメーション開始位置
 static const float textStartPositionY[animMax] = {
 	SCREEN_HEIGHT/3*2,
 	SCREEN_CENTER_Y,
-	SCREEN_CENTER_Y,
-	SCREEN_CENTER_Y,
-	SCREEN_HEIGHT/3
+	SCREEN_CENTER_Y
 };
 
 //テキストアニメーション終了位置
 static const float textEndPositionY[animMax] = {
 	SCREEN_CENTER_Y,
 	SCREEN_CENTER_Y,
-	SCREEN_CENTER_Y,
-	SCREEN_HEIGHT/3,
 	SCREEN_HEIGHT/3
 };
 
@@ -40,29 +36,23 @@ static const float textEndPositionY[animMax] = {
 static const EaseType animType[animMax] = {
 	OutCubic,
 	OutBack,
-	InOutCubic,
 	InCubic,
-	InOutCubic
 };
 
 //アニメーション間隔(ここを変更するとアニメーションの速さを調整できる)
 //*注意(0を入れると無限大になるからアニメーションそのものを削除すること)
 static const float animDuration[animMax] = {
 	15,
-	20,
-	40,
+	30,
 	15,
-	10
 };
 
 //アニメーションシーン
-enum TelopAnimScene
+enum AnimScene
 {
-	Text_FadeIn_PopIn,
-	Num_Laurel_In,
+	FadeIn_Text_PopIn,
 	Wait,
-	Text_FadeOut_PopOut,
-	Num_Laurel_Out
+	FadeOut_Text_PopOut,
 };
 
 //*****************************************************************************
@@ -74,7 +64,7 @@ LinkLevelUpViewer::LinkLevelUpViewer() :
 	//テキスト
 	text = new BaseViewerDrawer();
 	text->LoadTexture("data/TEXTURE/Viewer/FieldViewer/LinkLevelUpViewer/Text.png");
-	text->size = D3DXVECTOR3(750.0f, 100.0f, 0.0f);
+	text->size = D3DXVECTOR3(750.0f, 140.0f, 0.0f);
 	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	text->position = D3DXVECTOR3(SCREEN_CENTER_X, textStartPositionY[0], 0.0f);
 	text->MakeVertex();
@@ -87,6 +77,7 @@ LinkLevelUpViewer::LinkLevelUpViewer() :
 	laurel->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	laurel->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_HEIGHT/2/1.5, 0.0f);
 	laurel->MakeVertex();
+	laurel->SetAlpha(0.0f);
 
 	//数字
 	num = new CountViewerDrawer();
@@ -99,6 +90,7 @@ LinkLevelUpViewer::LinkLevelUpViewer() :
 	num->placeMax = 2;
 	num->baseNumber = 10;
 	num->MakeVertex();
+	num->SetAlpha(0.0f);
 
 	//＋
 	plus = new BaseViewerDrawer();
@@ -107,6 +99,7 @@ LinkLevelUpViewer::LinkLevelUpViewer() :
 	plus->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	plus->position = D3DXVECTOR3(SCREEN_CENTER_X - num->intervalPosScr, SCREEN_HEIGHT / 2 / 1.5, 0.0f);
 	plus->MakeVertex();
+	plus->SetAlpha(0.0f);
 }
 
 //*****************************************************************************
@@ -137,19 +130,16 @@ void LinkLevelUpViewer::Draw(void)
 	//再生中なら描画
 	if (!isPlaying) return;
 
-	if (currentAnim >= Num_Laurel_In)
-	{
-		//月桂樹を先に描画
-		laurel->Draw();
+	//月桂樹を先に描画
+	laurel->Draw();
 
-		//数宇（0を描画しないでおく）
-		num->DrawCounter(num->baseNumber, parameterBox,
-			num->intervalPosScr, num->intervalPosTex);
+	//数宇（0を描画しないでおく）
+	num->DrawCounter(num->baseNumber, parameterBox,
+		num->intervalPosScr, num->intervalPosTex);
 
-		//＋
-		plus->Draw();
-	}
-
+	//＋
+	plus->Draw();
+	
 	//テキスト
 	text->Draw();
 }
@@ -171,14 +161,12 @@ void LinkLevelUpViewer::Play()
 	//シーン毎に実行するサブアニメーション
 	switch (currentAnim)
 	{
-	case(Text_FadeIn_PopIn):
-		FadeInText();
-		break;
-	case(Text_FadeOut_PopOut):
-		FadeOutText();
-		break;
-	case(Num_Laurel_In):
+	case(FadeIn_Text_PopIn):
+		FadeIn();
 		InNum();
+		break;
+	case(FadeOut_Text_PopOut):
+		FadeOut();
 		break;
 	default:
 		break;
@@ -211,7 +199,7 @@ void LinkLevelUpViewer::Play()
 //=============================================================================
 // テキストフェードイン処理
 //=============================================================================
-void LinkLevelUpViewer::FadeInText(void)
+void LinkLevelUpViewer::FadeIn(void)
 {
 	//イージングのスタートとゴールを設定
 	float easingStart = 0.0f;
@@ -220,14 +208,19 @@ void LinkLevelUpViewer::FadeInText(void)
 	//テクスチャのα値
 	float alpha;
 
-	alpha = Easing::EaseValue(animTime, easingStart, easingGoal, animType[Text_FadeIn_PopIn]);
+	alpha = Easing::EaseValue(animTime, easingStart, easingGoal, animType[FadeIn_Text_PopIn]);
+
+	//α値をセット
 	text->SetAlpha(alpha);
+	laurel->SetAlpha(alpha);
+	num->SetAlpha(alpha);
+	plus->SetAlpha(alpha);
 }
 
 //=============================================================================
 // テキストフェードアウト処理
 //=============================================================================
-void LinkLevelUpViewer::FadeOutText(void)
+void LinkLevelUpViewer::FadeOut(void)
 {
 	//イージングのスタートとゴールを設定
 	float easingStart = 1.0f;
@@ -236,8 +229,13 @@ void LinkLevelUpViewer::FadeOutText(void)
 	//テクスチャのα値
 	float alpha;
 
-	alpha = Easing::EaseValue(animTime, easingStart, easingGoal, animType[Text_FadeOut_PopOut]);
+	alpha = Easing::EaseValue(animTime, easingStart, easingGoal, animType[FadeOut_Text_PopOut]);
+
+	//α値をセット
 	text->SetAlpha(alpha);
+	laurel->SetAlpha(alpha);
+	num->SetAlpha(alpha);
+	plus->SetAlpha(alpha);
 }
 
 //=============================================================================
@@ -249,8 +247,8 @@ void LinkLevelUpViewer::InNum()
 	float easingStart = 0.0f;
 	float easingGoal = 100.0f;
 
-	num->size.x = Easing::EaseValue(animTime, easingStart, easingGoal, animType[Num_Laurel_In]);
-	num->size.y = Easing::EaseValue(animTime, easingStart, easingGoal, animType[Num_Laurel_In]);
+	num->size.x = Easing::EaseValue(animTime, easingStart, easingGoal, OutBack);
+	num->size.y = Easing::EaseValue(animTime, easingStart, easingGoal, OutBack);
 }
 
 //=============================================================================
