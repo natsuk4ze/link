@@ -21,6 +21,7 @@
 #include "../FieldObject/Infomation/InfoActor.h"
 #include "../FieldObject/Infomation/LinkInfoActor.h"
 #include "../FieldObject/InfoController.h"
+#include "../Viewer/GameScene/GuideViewer/GuideViewer.h"
 
 /**************************************
 前方宣言
@@ -122,6 +123,7 @@ private:
 	class GameFarView;
 
 	//InfoController* testInfoController;
+	//GuideViewer* testGuide;
 
 	//デバッグ用フィールドレベル
 	static int level;
