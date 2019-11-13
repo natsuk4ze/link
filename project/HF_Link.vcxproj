@@ -93,6 +93,10 @@
     <ClInclude Include="Framework\Resource\MeshResource.h" />
     <ClInclude Include="Framework\Resource\PolygonResource.h" />
     <ClInclude Include="Framework\Resource\ResourceManager.h" />
+    <ClInclude Include="Framework\Sound\BackgroundMusic.h" />
+    <ClInclude Include="Framework\Sound\MusicClip.h" />
+    <ClInclude Include="Framework\Sound\sound.h" />
+    <ClInclude Include="Framework\Sound\SoundEffect.h" />
     <ClInclude Include="Framework\String\String.h" />
     <ClInclude Include="Framework\Task\DelayedTask.h" />
     <ClInclude Include="Framework\Task\PeriodicTask.h" />
@@ -317,6 +321,10 @@
     <ClCompile Include="Framework\Resource\MeshResource.cpp" />
     <ClCompile Include="Framework\Resource\PolygonResource.cpp" />
     <ClCompile Include="Framework\Resource\ResourceManager.cpp" />
+    <ClCompile Include="Framework\Sound\BackgroundMusic.cpp" />
+    <ClCompile Include="Framework\Sound\MusicClip.cpp" />
+    <ClCompile Include="Framework\Sound\sound.cpp" />
+    <ClCompile Include="Framework\Sound\SoundEffect.cpp" />
     <ClCompile Include="Framework\String\String.cpp" />
     <ClCompile Include="Framework\Task\DelayedTask.cpp" />
     <ClCompile Include="Framework\Task\PeriodicTask.cpp" />
