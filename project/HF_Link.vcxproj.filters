@@ -230,6 +230,7 @@
     <ClInclude Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.h" />
     <ClInclude Include="source\Field\Camera\Plugin\FieldCameraTranslationPlugin.h" />
     <ClInclude Include="source\Field\Camera\EventCamera.h" />
+    <ClInclude Include="source\Effect\Game\LinkLevelUp.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -442,6 +443,7 @@
     <ClCompile Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.cpp" />
     <ClCompile Include="source\Field\Camera\Plugin\FieldCameraTranslationPlugin.cpp" />
     <ClCompile Include="source\Field\Camera\EventCamera.cpp" />
+    <ClCompile Include="source\Effect\Game\LinkLevelUp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

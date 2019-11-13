@@ -19,6 +19,7 @@
 #include "Game/Bubble.h"
 #include "Game/MoveTail.h"
 #include "Game/SpaceTear.h"
+#include "Game/LinkLevelUp.h"
 
 /**************************************
 staticƒƒ“ƒo
@@ -46,6 +47,7 @@ void GameParticleManager::Init()
 	controllers[GameParticle::Bubble] = new Effect::Game::BubbleController();
 	controllers[GameParticle::MoveTail] = new Effect::Game::MoveTailController();
 	controllers[GameParticle::SpaceTear] = new Effect::Game::SpaceTearController();
+	controllers[GameParticle::LinkLevelUp] = new Effect::Game::LinkLevelUpController();
 
 	crossFilter->SetPower(BloomPower[0], BloomPower[1], BloomPower[2]);
 	crossFilter->SetThrethold(BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]);

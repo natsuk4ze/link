@@ -30,7 +30,8 @@ namespace GameParticle
 		Darkness,		//闇の粒子(AIレベル減少イベント)
 		Bubble,			//水の泡
 		MoveTail,		//移動の軌跡
-		SpaceTear,		//時空断裂のスパーク
+		SpaceTear,		//時空断裂のスパーク,
+		LinkLevelUp,	//リンクレベルアップ時エフェクト
 		Max
 	};
 }
