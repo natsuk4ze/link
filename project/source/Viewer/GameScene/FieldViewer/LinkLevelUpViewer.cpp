@@ -261,4 +261,9 @@ void LinkLevelUpViewer::Set(int level)
 
 	//Ä¶ó‘Ô‚É‚·‚é
 	isPlaying = true;
+
+	countFrame = 0;
+	currentAnim = 0;
+	text->position.y = textStartPositionY[0];
+	num->size = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }

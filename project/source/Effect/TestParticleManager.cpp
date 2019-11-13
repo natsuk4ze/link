@@ -19,6 +19,7 @@
 #include "Game/Bubble.h"
 #include "Game/WaterSmog.h"
 #include "Game/MoveTail.h"
+#include "Game/LinkLevelUp.h"
 
 /**************************************
 èâä˙âªèàóù
@@ -40,6 +41,7 @@ void TestParticleManager::Init()
 	controllers[TestParticle::Bubble] = new Effect::Game::BubbleController();
 	controllers[TestParticle::WaterSmog] = new Effect::Game::WaterSmogController();
 	controllers[TestParticle::MoveTail] = new Effect::Game::MoveTailController();
+	controllers[TestParticle::LinkLevelUp] = new Effect::Game::LinkLevelUpController();
 }
 
 /**************************************
@@ -71,6 +73,8 @@ void TestParticleManager::Update()
 		Generate(TestParticle::Bubble, Vector3::Zero);
 	else if (Debug::Button("WaterSmog"))
 		Generate(TestParticle::WaterSmog, Vector3::Zero);
+	else if (Debug::Button("LinkLevelUp"))
+		Generate(TestParticle::LinkLevelUp, { SCREEN_CENTER_X, SCREEN_CENTER_Y, 0.0f });
 
 	Debug::NewLine();
 

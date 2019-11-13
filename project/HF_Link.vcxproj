@@ -127,6 +127,7 @@
     <ClInclude Include="source\Effect\Game\Bubble.h" />
     <ClInclude Include="source\Effect\Game\ColorfulDebris.h" />
     <ClInclude Include="source\Effect\Game\Darkness.h" />
+    <ClInclude Include="source\Effect\Game\LinkLevelUp.h" />
     <ClInclude Include="source\Effect\Game\MeteorFire.h" />
     <ClInclude Include="source\Effect\Game\MoveTail.h" />
     <ClInclude Include="source\Effect\Game\SpaceTear.h" />
@@ -345,6 +346,7 @@
     <ClCompile Include="source\Effect\Game\Bubble.cpp" />
     <ClCompile Include="source\Effect\Game\ColorfulDebris.cpp" />
     <ClCompile Include="source\Effect\Game\Drakness.cpp" />
+    <ClCompile Include="source\Effect\Game\LinkLevelUp.cpp" />
     <ClCompile Include="source\Effect\Game\MeteorFire.cpp" />
     <ClCompile Include="source\Effect\Game\MoveTail.cpp" />
     <ClCompile Include="source\Effect\Game\SpaceTear.cpp" />

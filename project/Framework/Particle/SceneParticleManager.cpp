@@ -10,6 +10,7 @@
 #include "BaseParticleController.h"
 #include "../PostEffect/CrossFilterController.h"
 #include "../Tool/DebugWindow.h"
+#include "../../Library/cppLinq/cpplinq.hpp"
 
 /**************************************
 マクロ定義
@@ -79,6 +80,10 @@ void SceneParticleManager::Update()
 ***************************************/
 void SceneParticleManager::Draw()
 {
+	using cpplinq::from;
+	using cpplinq::where;
+	using cpplinq::to_vector;
+
 	//レンダーパラメータ切り替え
 	ChangeRenderParameter();
 
@@ -87,7 +92,29 @@ void SceneParticleManager::Draw()
 
 	//描画
 	bool isDrewd = false;
-	for (auto& controller : controllers)
+
+	//3Dを先に描画
+	auto controller3D = from(controllers)
+		>> where([](BaseParticleController* controller)
+	{
+		return controller->GetType() == BaseParticleController::Particle_3D;
+	})
+		>> to_vector();
+
+	for (auto& controller : controller3D)
+	{
+		isDrewd |= controller->Draw();
+	}
+
+	//2Dを後に描画
+	auto controller2D = from(controllers)
+		>> where([](BaseParticleController* controller)
+	{
+		return controller->GetType() == BaseParticleController::Particle_2D;
+	})
+		>> to_vector();
+
+	for (auto& controller : controller2D)
 	{
 		isDrewd |= controller->Draw();
 	}
