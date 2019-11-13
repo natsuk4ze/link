@@ -231,6 +231,10 @@
     <ClInclude Include="source\Field\Camera\Plugin\FieldCameraTranslationPlugin.h" />
     <ClInclude Include="source\Field\Camera\EventCamera.h" />
     <ClInclude Include="source\Effect\Game\LinkLevelUp.h" />
+    <ClInclude Include="Framework\Sound\BackgroundMusic.h" />
+    <ClInclude Include="Framework\Sound\MusicClip.h" />
+    <ClInclude Include="Framework\Sound\sound.h" />
+    <ClInclude Include="Framework\Sound\SoundEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -444,6 +448,10 @@
     <ClCompile Include="source\Field\Camera\Plugin\FieldCameraTranslationPlugin.cpp" />
     <ClCompile Include="source\Field\Camera\EventCamera.cpp" />
     <ClCompile Include="source\Effect\Game\LinkLevelUp.cpp" />
+    <ClCompile Include="Framework\Sound\BackgroundMusic.cpp" />
+    <ClCompile Include="Framework\Sound\MusicClip.cpp" />
+    <ClCompile Include="Framework\Sound\sound.cpp" />
+    <ClCompile Include="Framework\Sound\SoundEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

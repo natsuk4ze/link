@@ -9,6 +9,8 @@
 #include "../Resource/ResourceManager.h"
 #include "../Tool/ProfilerCPU.h"
 #include "../Tween/Tween.h"
+#include "../Sound/SoundEffect.h"
+#include "../Sound/BackgroundMusic.h"
 
 using namespace std;
 /**************************************
@@ -70,6 +72,10 @@ void SceneManager::_ChengeScene(const int sceneID)
 		ResourceManager::Instance()->AllRelease();
 		ProfilerCPU::Instance()->Clear();
 		Tween::mInstance->ClearAll();
+
+		//NOTE:d‚¢‚©‚àH
+		BGM::Clear();
+		SE::Clear();
 	}
 
 	//Ø‚è‘Ö‚¦
