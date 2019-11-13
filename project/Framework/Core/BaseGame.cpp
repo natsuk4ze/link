@@ -14,6 +14,10 @@
 #include "../Transition/TransitionController.h"
 #include "../Effect/RendererEffect.h"
 
+#include "../Sound/sound.h"
+#include "../Sound/BackgroundMusic.h"
+#include "../Sound/SoundEffect.h"
+
 Tween* Tween::mInstance = NULL;
 /**************************************
 コンストラクタ
@@ -33,7 +37,9 @@ BaseGame::BaseGame(HINSTANCE hInstance, HWND hWnd)
 	//各種初期化
 	Input::Init(hInstance, hWnd);
 	Light::Init();
+	Sound::Init(hWnd);
 	Debug::Init(hWnd, pDevice);
+	BGM::Init();
 }
 
 /**************************************
@@ -44,6 +50,8 @@ BaseGame::~BaseGame()
 	sceneManager->Uninit();
 	sceneManager->Clear();
 
+	SE::Clear();
+
 	SAFE_RELEASE(renderTexture);
 	SAFE_RELEASE(renderSurface);
 	SAFE_RELEASE(screenVtx);
@@ -52,6 +60,8 @@ BaseGame::~BaseGame()
 	SAFE_DELETE(Tween::mInstance);
 
 	Debug::Uninit();
+	BGM::Uninit();
+	Sound::Uninit();
 	Input::Uninit();
 }
 
