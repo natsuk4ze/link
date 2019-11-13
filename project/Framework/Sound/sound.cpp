@@ -200,7 +200,7 @@ namespace Sound
 		return false;
 	}
 
-	//ボリュームの設定(volume:100 ～ 0[%])
+	//ボリュームの設定(volume:1.0f ～ 0.0f)
 	void SetVolume(LPDIRECTSOUNDBUFFER8 pBuffer, float volume)
 	{
 		if (pBuffer == NULL)
@@ -209,7 +209,7 @@ namespace Sound
 		}
 
 		//ボリュームの単位をデシベルに変換
-		LONG decibel = (LONG)(2000.0f * log10(volume / 100.0f));
+		LONG decibel = (LONG)(2000.0f * log10(volume));
 
 		if (decibel < DSBVOLUME_MIN)
 		{

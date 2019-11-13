@@ -36,6 +36,7 @@ public:
 	static void Clear();
 
 	//Ä¶ˆ—
+	//ƒ{ƒŠƒ…[ƒ€‚Í1.0f ~ 0.0f
 	static void Play(int tag, float volume);
 
 	//’â~ˆ—

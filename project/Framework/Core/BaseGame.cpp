@@ -83,6 +83,7 @@ void BaseGame::Update()
 
 		sceneManager->Update();
 
+		BGM::Update();
 		Tween::mInstance->Update();
 		TaskManager::Instance()->Update();
 		TransitionController::Instance()->Update();
