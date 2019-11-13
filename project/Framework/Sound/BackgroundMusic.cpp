@@ -146,6 +146,15 @@ void BGM::Resume()
 }
 
 /**************************************
+フェードイン処理
+***************************************/
+void BGM::FadeIn(int tag, float volume, int duration)
+{
+	Play(tag, 0.0f);
+	Fade(tag, volume, duration, false);
+}
+
+/**************************************
 フェード処理
 ***************************************/
 void BGM::Fade(int tag, float volume, int duration, bool flgStop)
