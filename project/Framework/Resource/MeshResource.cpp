@@ -7,6 +7,7 @@
 //=====================================
 #include "MeshResource.h"
 #include "../Renderer3D/MeshContainer.h"
+#include "ResourceManager.h"
 
 /**************************************
 コンストラクタ
@@ -55,7 +56,8 @@ MeshResource::MeshResource(const std::string & path) :
 			continue;
 
 		std::string fileName = DirectoryName + "/" + std::string(matBuffer[i].pTextureFilename);
-		D3DXCreateTextureFromFile(pDevice, fileName.c_str(), &textures[i]);
+		ResourceManager::Instance()->LoadTexture(fileName.c_str());
+		ResourceManager::Instance()->GetTexture(fileName.c_str(), textures[i]);
 	}
 
 	SAFE_RELEASE(tmpMaterial);

@@ -44,8 +44,8 @@
 	"World-TSea":"フィールドレベル国のT字路（海）",
 	"World-TSea":"data/MODEL/PlaceActor/Curve.x",
 
-	"World-Cross":"フィールドレベル国の十字路モデル（海）",
-	"World-Cross":"data/MODEL/PlaceActor/Cross-Junction.x",
+	"World-CrossSea":"フィールドレベル国の十字路モデル（海）",
+	"World-CrossSea":"data/MODEL/PlaceActor/Cross-Junction.x",
 
 	"World-Mountain":"フィールドレベル国の山モデル",
 	"World-Mountain":"data/MODEL/PlaceActor/mountain.x",

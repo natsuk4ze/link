@@ -21,6 +21,7 @@
 
 #include "../../Framework/Resource/ResourceManager.h"
 #include "../Field/ActorLoader.h"
+#include "../../Framework/Renderer3D/MeshContainer.h"
 
 /**************************************
 ƒOƒ[ƒoƒ‹•Ï”
@@ -70,6 +71,12 @@ void ModelViewScene::Init()
 	skybox = new Field::FieldSkyBox(Field::FieldLevel::World);
 	sceneCamera = new ModelViewCamera();
 	Camera::SetMainCamera(sceneCamera);
+
+	//ResourceManager::Instance()->LoadMesh("TestRobo", "data/Robot.x");
+	//mesh = new MeshContainer();
+	//ResourceManager::Instance()->GetMesh("TestRobo", mesh);
+	//meshTransform = new Transform();
+	//meshTransform->SetPosition({ -150.0f, 0.0f, 0.0f });
 }
 
 /**************************************
@@ -86,6 +93,9 @@ void ModelViewScene::Uninit()
 	SAFE_DELETE(skybox);
 
 	SAFE_DELETE(sceneCamera);
+
+	//SAFE_DELETE(mesh);
+	//SAFE_DELETE(meshTransform);
 }
 
 /**************************************
@@ -109,4 +119,7 @@ void ModelViewScene::Draw()
 	{
 		actor->Draw();
 	}
+
+	//meshTransform->SetWorld();
+	//mesh->Draw();
 }
