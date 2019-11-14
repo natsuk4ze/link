@@ -67,7 +67,7 @@ void FieldViewer::Update()
 
 	if (Keyboard::GetTrigger(DIK_L))
 	{
-		linkLevelUpViewer->Set(88);
+		linkLevelUpViewer->Set(88, nullptr);
 	}
 
 #endif
@@ -114,9 +114,9 @@ void FieldViewer::SetFieldErroMessage(FieldErrorMessage::ErroID id)
 //=============================================================================
 // ã¸‚µ‚½•ª‚ÌƒŠƒ“ƒNƒŒƒxƒ‹‚ğ•\¦‚·‚é
 //=============================================================================
-void FieldViewer::ViewLinkLevelUp(int level)
+void FieldViewer::ViewLinkLevelUp(int level, std::function<void()> callback)
 {
-	linkLevelUpViewer->Set(level);
+	linkLevelUpViewer->Set(level, callback);
 }
 
 //=============================================================================

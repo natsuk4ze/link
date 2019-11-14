@@ -59,7 +59,8 @@ enum AnimScene
 // コンストラクタ
 //*****************************************************************************
 LinkLevelUpViewer::LinkLevelUpViewer() :
-	currentAnim(0)
+	currentAnim(0),
+	callback(nullptr)
 {
 	//テキスト
 	text = new BaseViewerDrawer();
@@ -193,6 +194,9 @@ void LinkLevelUpViewer::Play()
 		text->position.y = textStartPositionY[0];
 		num->size = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		isPlaying = false;
+
+		if (callback != nullptr)
+			callback();
 	}
 }
 
@@ -254,7 +258,7 @@ void LinkLevelUpViewer::InNum()
 //=============================================================================
 // リンクレベルアップビュアーセット処理
 //=============================================================================
-void LinkLevelUpViewer::Set(int level)
+void LinkLevelUpViewer::Set(int level, std::function<void()> callback)
 {
 	//パラメータを受け取る
 	parameterBox = level;
@@ -266,4 +270,6 @@ void LinkLevelUpViewer::Set(int level)
 	currentAnim = 0;
 	text->position.y = textStartPositionY[0];
 	num->size = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+	this->callback = callback;
 }
