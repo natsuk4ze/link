@@ -128,9 +128,6 @@ void EventController::Update()
 		}
 	}
 
-	// イベントビューア更新
-	eventViewer->Update();
-
 	EventVec.erase(std::remove_if(std::begin(EventVec), std::end(EventVec), [&](EventBase *Event)
 	{
 		return Event == nullptr ? true : false;
@@ -138,6 +135,15 @@ void EventController::Update()
 
 	//イベントカメラ更新
 	camera->Update();
+}
+
+//=============================================================================
+// イベントビューワ更新
+//=============================================================================
+void EventController::UpdateViewer(void)
+{
+	// イベントビューア更新
+	eventViewer->Update();
 }
 
 //=============================================================================
@@ -233,8 +239,10 @@ void EventController::LoadCSV(const char* FilePath)
 //=============================================================================
 // イベント発生の確認
 //=============================================================================
-void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& RoutePtr, int FieldLevel)
+bool EventController::CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& RoutePtr, int FieldLevel)
 {
+	bool flgPause = false;
+
 	for (auto &place : RoutePtr)
 	{
 		Field::FieldPosition PlacePos = place->GetPosition();
@@ -253,6 +261,7 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					break;
 				case NewCity:
 					Ptr = new NewTownEventCtrl(eventViewer, FieldLevel, camera);
+					flgPause = true;
 					break;
 				case StockRecovery:
 					Ptr = new StockRecoveryEvent();
@@ -274,9 +283,11 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					break;
 				case CityDestroy:
 					Ptr = new CityDestroyEvent(eventViewer, camera);
+					flgPause = true;
 					break;
 				case AILevelDecrease:
 					Ptr = new AILevelDecreaseEvent(eventViewer, camera);
+					flgPause = true;
 					break;
 				case BanStockUse:
 					if (InBanStock)
@@ -290,6 +301,7 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 						Ptr = new BanStockUseEvent(eventViewer,
 							[&](bool Flag) {SetBanStock(Flag); },
 							[&]() {return GetInPause(); });
+						flgPause = true;
 					}
 					break;
 				default:
@@ -312,6 +324,8 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 				++EventPlace;
 		}
 	}
+
+	return flgPause;
 }
 
 //=============================================================================

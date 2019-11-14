@@ -74,6 +74,7 @@ namespace Field
 
 		//描画処理
 		void Draw();
+		void DrawInfo();
 		void DrawViewer();
 
 		//データ読み込み処理
@@ -97,8 +98,10 @@ namespace Field
 
 		//カメラを切り替えるべきかどうか
 		bool ShouldSwicthCamera() const;
-
 		bool ShouldRotateCamera() const;
+
+		//ポップアップの待機判定
+		bool ShouldWaitPopup() const;
 
 		//イベントハンドラ設定処理
 		void SetEventHandler(::FieldEventHandler& handler);
@@ -135,6 +138,7 @@ namespace Field
 		float realDevelopmentLevelAI;			//実際のAI発展レベル
 		float developSpeedBonus;				//発展スピード増加ボーナス
 		bool enableDevelop;						//開拓可能かどうか
+		bool flgWaitPopup;						//ポップアップ待機状態
 
 		FieldLevel currentLevel;				//現在のフィールドレベル
 

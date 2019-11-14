@@ -60,6 +60,7 @@ namespace Field
 		operationX(OperationExplanationViewer::OperationID::X_None),
 		operationSpace(OperationExplanationViewer::OperationID::Space_None),
 		enableDevelop(true),
+		flgWaitPopup(false),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
 		onChangePlaceType(nullptr)
@@ -206,12 +207,18 @@ namespace Field
 	}
 
 	/**************************************
+	Info描画処理
+	***************************************/
+	void FieldController::DrawInfo()
+	{
+		infoController->Draw();
+	}
+
+	/**************************************
 	UI描画処理
 	***************************************/
 	void FieldController::DrawViewer()
 	{
-		infoController->Draw();
-
 		SetOperationExplanation();
 		viewer->Draw();
 	}
@@ -307,6 +314,14 @@ namespace Field
 	bool FieldController::ShouldRotateCamera() const
 	{
 		return input->CheckRotateCamera();
+	}
+
+	/*************************************
+	ポップアップを待機するかどうか
+	***************************************/
+	bool FieldController::ShouldWaitPopup() const
+	{
+		return flgWaitPopup;
 	}
 
 	/**************************************

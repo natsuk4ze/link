@@ -10,6 +10,8 @@
 
 #include "../../Framework/BaseViewer.h"
 
+#include <functional>
+
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
@@ -27,7 +29,7 @@ public:
 
 	void Update();
 	void Draw(void);
-	void Set(int level);
+	void Set(int level, std::function<void()> callback);
 
 private:
 
@@ -42,6 +44,9 @@ private:
 
 	//＋
 	BaseViewerDrawer *plus;
+
+	//コールバック
+	std::function<void()> callback;
 
 	//ビュアー再生
 	void Play();

@@ -105,7 +105,12 @@ namespace Field
 		int diff = currentLinkLevel - prevLinkLevel;
 		if (diff > 0)
 		{
-			entity->viewer->ViewLinkLevelUp(diff);
+			entity->flgWaitPopup = true;
+			entity->viewer->ViewLinkLevelUp(diff, [&]()
+			{
+				entity->flgWaitPopup = false;
+			});
+
 			GameParticleManager::Instance()->Generate(GameParticle::LinkLevelUp, { SCREEN_CENTER_X, SCREEN_CENTER_Y, 0.0f });
 		}
 

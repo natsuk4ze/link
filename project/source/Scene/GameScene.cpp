@@ -210,6 +210,9 @@ void GameScene::Draw()
 	ProfilerCPU::Instance()->End("Draw PostEffect");
 #endif
 
+	//フィールドの情報表示
+	field->DrawInfo();
+
 	//パーティクル描画
 	ProfilerCPU::Instance()->Begin("Draw Particle");
 	particleManager->Draw();
@@ -243,7 +246,10 @@ void GameScene::ChangeState(State next)
 ***************************************/
 void GameScene::OnBuildRoad(Route& route)
 {
-	eventController->CheckEventHappen(route, Field::FieldLevel::City);
+	bool flgPause = eventController->CheckEventHappen(route, Field::FieldLevel::City);
+
+	if (flgPause)
+		ChangeState(State::Pause);
 }
 
 /**************************************

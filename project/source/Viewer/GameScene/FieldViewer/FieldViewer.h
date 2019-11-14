@@ -49,7 +49,7 @@ public:
 		OperationExplanationViewer::OperationID id2);
 
 	//ã¸‚µ‚½•ª‚ÌƒŠƒ“ƒNƒŒƒxƒ‹‚ğ•\¦‚·‚é
-	void ViewLinkLevelUp(int level);
+	void ViewLinkLevelUp(int level, std::function<void()> callback = nullptr);
 
 private:
 	std::vector <BaseViewer*> fieldViewer;
