@@ -128,9 +128,6 @@ void EventController::Update()
 		}
 	}
 
-	// イベントビューア更新
-	eventViewer->Update();
-
 	EventVec.erase(std::remove_if(std::begin(EventVec), std::end(EventVec), [&](EventBase *Event)
 	{
 		return Event == nullptr ? true : false;
@@ -138,6 +135,15 @@ void EventController::Update()
 
 	//イベントカメラ更新
 	camera->Update();
+}
+
+//=============================================================================
+// イベントビューワ更新
+//=============================================================================
+void EventController::UpdateViewer(void)
+{
+	// イベントビューア更新
+	eventViewer->Update();
 }
 
 //=============================================================================

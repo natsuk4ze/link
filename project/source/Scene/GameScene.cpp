@@ -210,6 +210,9 @@ void GameScene::Draw()
 	ProfilerCPU::Instance()->End("Draw PostEffect");
 #endif
 
+	//フィールドの情報表示
+	field->DrawInfo();
+
 	//パーティクル描画
 	ProfilerCPU::Instance()->Begin("Draw Particle");
 	particleManager->Draw();

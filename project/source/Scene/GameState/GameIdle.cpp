@@ -20,13 +20,10 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 	//入力確認
 	entity.field->CheckInput();
 
-	//イベント更新
-	if (!entity.field->ShouldWaitPopup())
-	{
-		ProfilerCPU::Instance()->Begin("Update Event");
-		entity.eventController->Update();
-		ProfilerCPU::Instance()->End("Update Event");
-	}
+	ProfilerCPU::Instance()->Begin("Update Event");
+	entity.eventController->Update();
+	entity.eventController->UpdateViewer();
+	ProfilerCPU::Instance()->End("Update Event");
 
 	//フィールド更新
 	ProfilerCPU::Instance()->Begin("Update Logic");
