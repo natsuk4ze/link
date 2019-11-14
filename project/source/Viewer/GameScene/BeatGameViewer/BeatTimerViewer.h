@@ -1,50 +1,55 @@
 //=============================================================================
 //
-// Gameシーンビュアー管理処理 [GameViewer.h]
+// 連打ゲームタイマービュアー処理 [BeatTimerViewer.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _GAME_VIEWER_H_
-#define _GAME_VIEWER_H_
+#ifndef _BEAT_TIMER_VIEWER_H_
+#define _BEAT_TIMER_VIEWER_H_
 
-#include <vector>
+#include "../../Framework/BaseViewer.h"
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
-class ItemStockViewer;
-class TimerViewer;
-class LevelViewer;
-class BaseViewer;
-
-/////テスト/////
-class BeatGameViewer;
+class BaseViewerDrawer;
+class CountViewerDrawer;
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class GameViewer
+class BeatTimerViewer :public BaseViewer
 {
 public:
-	GameViewer();
-	~GameViewer();
+	BeatTimerViewer();
+	~BeatTimerViewer();
 
 	void Update(void);
 	void Draw(void);
-
-	//パラメータ受け取り
-	void ReceiveParam(GameViewerParam&param);
-
-	std::vector <BaseViewer*> gameViewer;
+	void Set(float time);
 
 private:
-	ItemStockViewer *stockViewer;
-	TimerViewer *timerViewer;
-	LevelViewer *levelViewer;
 
-	/////////////テスト/////////
-	BeatGameViewer *beatGameViewer;
+	//前のテキスト(”あと”)
+	BaseViewerDrawer * frontText;
+
+	//後ろのテキスト(”秒”)
+	BaseViewerDrawer * backText;
+
+	//小数点
+	BaseViewerDrawer *point;
+
+	//少数部
+	CountViewerDrawer *fewNum;
+
+	//整数部
+	CountViewerDrawer *intNum;
+
+	//時間
+	float time;
+
+	//再生中かどうか
+	bool isPlaying;
 };
 
 #endif
-

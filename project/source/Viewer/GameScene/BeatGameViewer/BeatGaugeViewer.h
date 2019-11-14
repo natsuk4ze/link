@@ -1,17 +1,14 @@
 
 //=============================================================================
 //
-// フィールドテロップ処理 [FieldTelop.h]
+// 連打ゲームゲージビュアー処理 [BeatGaugeViewer.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _FIELD_TELOP_H_
-#define _FIELD_TELOP_H_
+#ifndef _BEAT_GAUGE_VIEWER_H_
+#define _BEAT_GAUGE_VIEWER_H_
 
 #include "../../Framework/BaseViewer.h"
-#include "../../../../Framework/Pattern/Delegate.h"
-#include <vector>
-#include <functional>
 
 //*****************************************************************************
 // 前方宣言
@@ -21,41 +18,22 @@ class BaseViewerDrawer;
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class FieldTelop :public BaseViewer
+class BeatGaugeViewer :public BaseViewer
 {
 public:
-	FieldTelop();
-	~FieldTelop();
-
-	//テロップの種類
-	enum TelopID
-	{
-		City,
-		Max
-	};
+	BeatGaugeViewer();
+	~BeatGaugeViewer();
 
 	void Update();
 	void Draw(void);
-	void Set(TelopID id, std::function<void(void)> Callback = nullptr);
+	void Set(float percent);
 
 private:
-	BaseViewerDrawer *text;
-	BaseViewerDrawer *line;
+	BaseViewerDrawer *bar;
+	BaseViewerDrawer *frame;
 
-	//再生終了通知
-	std::function<void(void)> Callback;
-
-	//再生
-	void Play();
-
-	//線を引く
-	void DrawLine(void);
-
-	//テキストを描画する
-	void DrawTelopText(void);
-
-	//フェードアウト
-	void FadeOut(void);
+	//震わせる
+	void Shake(void);
 
 	//再生中かどうか
 	bool isPlaying;
@@ -63,14 +41,14 @@ private:
 	//フレームカウント
 	int countFrame;
 
-	//現在のアニメーション
-	int currentAnim;
-
-	//テクスチャのα値
-	float alpha;
-
 	//アニメーション時間
 	float animTime;
+
+	//ゲージパーセント
+	float gaugePer;
+
+	//ゲージバー描画処理
+	void DrawBar(void);
 };
 
 #endif

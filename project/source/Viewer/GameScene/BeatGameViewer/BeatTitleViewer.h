@@ -1,50 +1,52 @@
+
 //=============================================================================
-//
-// Gameシーンビュアー管理処理 [GameViewer.h]
+// 
+// 連打ゲームタイトルビュアー処理 [BeatTitleViewer.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _GAME_VIEWER_H_
-#define _GAME_VIEWER_H_
+#ifndef _BEAT_TITLE_VIEWER_H_
+#define _BEAT_TITLE_VIEWER_H_
 
-#include <vector>
+#include "../../Framework/BaseViewer.h"
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
-class ItemStockViewer;
-class TimerViewer;
-class LevelViewer;
-class BaseViewer;
-
-/////テスト/////
-class BeatGameViewer;
+class BaseViewerDrawer;
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class GameViewer
+class BeatTitleViewer :public BaseViewer
 {
 public:
-	GameViewer();
-	~GameViewer();
+	BeatTitleViewer();
+	~BeatTitleViewer();
 
-	void Update(void);
+	//タイトルの種類
+	enum TitleID
+	{
+		//ボタンを連打して街を守れ！
+		ProtectCity,
+		//ボタンを連打してAIを鎮めろ！
+		CalmAI,
+		//種類数
+		Max
+	};
+
+	void Update();
 	void Draw(void);
-
-	//パラメータ受け取り
-	void ReceiveParam(GameViewerParam&param);
-
-	std::vector <BaseViewer*> gameViewer;
+	void Set(TitleID id);
 
 private:
-	ItemStockViewer *stockViewer;
-	TimerViewer *timerViewer;
-	LevelViewer *levelViewer;
+	BaseViewerDrawer *title;
 
-	/////////////テスト/////////
-	BeatGameViewer *beatGameViewer;
+	//テクスチャ情報受け渡し
+	void PassTexture(TitleID id);
+
+	//再生中かどうか
+	bool isPlaying;
 };
 
 #endif
-

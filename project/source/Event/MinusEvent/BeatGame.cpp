@@ -8,7 +8,7 @@
 #include "BeatGame.h"
 #include "../../Viewer/Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Viewer/Framework/ViewerDrawer/countviewerdrawer.h"
-#include "../../Viewer/GameScene/EventViewer/BeatGameViewer.h"
+#include "../../Viewer/GameScene/EventViewer/BeatGameViewerOrigin.h"
 #include "../../../Framework/Renderer2D/TextViewer.h"
 #include "../../../Framework/Input/input.h"
 
@@ -38,7 +38,7 @@ BeatGame::BeatGame(std::function<void(bool)> Callback) :
 	IsSuccess(false),
 	Callback(Callback)
 {
-	Viewer = new BeatGameViewer();
+	Viewer = new BeatGameViewerOrigin();
 
 	// テキスト
 	Text = new TextViewer("data/TEXTURE/Viewer/EventViewer/EventMessage/Text_cinecaption226.ttf", 80);

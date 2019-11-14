@@ -62,30 +62,30 @@ void EventViewer::Update()
 
 #ifdef _DEBUG
 
-	if (Keyboard::GetTrigger(DIK_M))
-	{
-		SetEventMessage("イベント発生！");
-	}
+	//if (Keyboard::GetTrigger(DIK_M))
+	//{
+	//	SetEventMessage("イベント発生！");
+	//}
 
-	if (Keyboard::GetTrigger(DIK_T))
-	{
-		SetEventTelop(eventTelop->Singularity, nullptr);
-	}
+	//if (Keyboard::GetTrigger(DIK_T))
+	//{
+	//	SetEventTelop(eventTelop->Singularity, nullptr);
+	//}
 
-	if (Keyboard::GetTrigger(DIK_Y))
-	{
-		SetEventTelop(eventTelop->AI_Strike, nullptr);
-	}
+	//if (Keyboard::GetTrigger(DIK_Y))
+	//{
+	//	SetEventTelop(eventTelop->AI_Strike, nullptr);
+	//}
 
-	if (Keyboard::GetTrigger(DIK_1))
-	{
-		sealStockViewer->parameterBox = true;
-	}
+	//if (Keyboard::GetTrigger(DIK_1))
+	//{
+	//	sealStockViewer->parameterBox = true;
+	//}
 
-	if (Keyboard::GetTrigger(DIK_2))
-	{
-		sealStockViewer->parameterBox = false;
-	}
+	//if (Keyboard::GetTrigger(DIK_2))
+	//{
+	//	sealStockViewer->parameterBox = false;
+	//}
 
 	Debug::Begin("EventViewer");
 	Debug::Text("MessageSetCnt:%d", messageSetCnt);

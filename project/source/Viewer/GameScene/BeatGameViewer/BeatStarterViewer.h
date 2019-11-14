@@ -1,17 +1,14 @@
 
 //=============================================================================
 //
-// フィールドテロップ処理 [FieldTelop.h]
+// 連打ゲームスタータービュアー処理 [BeatStarterViewer.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _FIELD_TELOP_H_
-#define _FIELD_TELOP_H_
+#ifndef _BEAT_STARTER_VIEWER_H_
+#define _BEAT_STARTER_VIEWER_H_
 
 #include "../../Framework/BaseViewer.h"
-#include "../../../../Framework/Pattern/Delegate.h"
-#include <vector>
-#include <functional>
 
 //*****************************************************************************
 // 前方宣言
@@ -21,53 +18,35 @@ class BaseViewerDrawer;
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class FieldTelop :public BaseViewer
+class BeatStarterViewer :public BaseViewer
 {
 public:
-	FieldTelop();
-	~FieldTelop();
-
-	//テロップの種類
-	enum TelopID
-	{
-		City,
-		Max
-	};
+	BeatStarterViewer();
+	~BeatStarterViewer();
 
 	void Update();
 	void Draw(void);
-	void Set(TelopID id, std::function<void(void)> Callback = nullptr);
+	void SetReady(void);
+	void SetGo(void);
 
 private:
-	BaseViewerDrawer *text;
-	BaseViewerDrawer *line;
+	BaseViewerDrawer *readyText;
+	BaseViewerDrawer *goText;
 
-	//再生終了通知
-	std::function<void(void)> Callback;
+	//レディーテキストをスクリーンイン
+	void InReady(void);
 
-	//再生
-	void Play();
+	//ゴーテキストを出現させる処理
+	void InGo(void);
 
-	//線を引く
-	void DrawLine(void);
+	//レディーすべきか
+	bool shouldReady;
 
-	//テキストを描画する
-	void DrawTelopText(void);
-
-	//フェードアウト
-	void FadeOut(void);
-
-	//再生中かどうか
-	bool isPlaying;
+	//ゴーすべきか
+	bool shouldGo;
 
 	//フレームカウント
 	int countFrame;
-
-	//現在のアニメーション
-	int currentAnim;
-
-	//テクスチャのα値
-	float alpha;
 
 	//アニメーション時間
 	float animTime;
