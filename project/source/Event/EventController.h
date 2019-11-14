@@ -53,7 +53,7 @@ public:
 	void Update(void);
 	void DrawEventObject(void);
 	void DrawEventViewer(void);
-	void CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& route, int FieldLevel);
+	bool CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& route, int FieldLevel);
 	void ReceiveFieldEventHandler(FieldEventHandler *Ptr);
 	void EmbedViewerParam(EventViewerParam& param);
 	void SetBanStock(bool Flag);

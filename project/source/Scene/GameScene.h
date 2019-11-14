@@ -121,6 +121,7 @@ private:
 	class GameLevelUp;
 	class GamePause;
 	class GameFarView;
+	class GameWaitPopup;
 
 	//InfoController* testInfoController;
 	//GuideViewer* testGuide;
