@@ -31,13 +31,28 @@ namespace Field::Along
 	/**************************************
 	コンストラクタ
 	***************************************/
-	AlongActor::AlongActor()
+	AlongActor::AlongActor(FieldLevel level)
 	{
 		mesh = new MeshContainer();
-		ResourceManager::Instance()->GetMesh("AlongCity", mesh);
-
 		int colorIndex = Math::RandomRange(0, 3);
-		mesh->SetMaterialColor(MaterialColor[colorIndex], 1);
+
+		switch (level)
+		{
+		case FieldLevel::City:
+			ResourceManager::Instance()->GetMesh("AlongCity", mesh);
+			mesh->SetMaterialColor(MaterialColor[colorIndex], 1);
+			break;
+
+		case FieldLevel::World:
+			ResourceManager::Instance()->GetMesh("AlongWorld", mesh);
+			break;
+
+		case FieldLevel::Space:
+			ResourceManager::Instance()->GetMesh("AlongSpace", mesh);
+			mesh->SetMaterialColor(MaterialColor[colorIndex], 0);
+			break;
+		}
+
 	}
 
 	/**************************************

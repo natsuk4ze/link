@@ -16,7 +16,8 @@ namespace Field::Along
 	/**************************************
 	コンストラクタ
 	***************************************/
-	AlongController::AlongController()
+	AlongController::AlongController(FieldLevel level) :
+		currentLevel(level)
 	{
 
 	}
@@ -85,7 +86,7 @@ namespace Field::Along
 
 		if (modelMap.count(key) == 0)
 		{
-			AlongModel *model = new AlongModel();
+			AlongModel *model = new AlongModel(currentLevel);
 			modelMap.emplace(key, std::unique_ptr<AlongModel>(model));
 		}
 

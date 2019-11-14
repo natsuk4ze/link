@@ -9,6 +9,7 @@
 #define _ALONGACTOR_H_
 
 #include "../../../main.h"
+#include "../FieldConfig.h"
 
 /**************************************
 ëOï˚êÈåæ
@@ -23,7 +24,7 @@ namespace Field::Along
 	class AlongActor : public GameObject
 	{
 	public:
-		AlongActor();
+		AlongActor(FieldLevel level);
 		~AlongActor();
 
 		void Update();
