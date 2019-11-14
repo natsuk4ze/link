@@ -9,6 +9,7 @@
 #include "BeatGaugeViewer.h"
 #include "BeatTimerViewer.h"
 #include "BeatStarterViewer.h"
+#include "BeatResultViewer.h"
 #include "BeatGameViewer.h"
 
 #ifdef _DEBUG
@@ -25,6 +26,7 @@ BeatGameViewer::BeatGameViewer()
 	beatGameViewer.push_back(gaugeViewer = new BeatGaugeViewer);
 	beatGameViewer.push_back(timerViewer = new BeatTimerViewer);
 	beatGameViewer.push_back(starterViewer = new BeatStarterViewer);
+	beatGameViewer.push_back(resultViewer = new BeatResultViewer);
 }
 
 //*****************************************************************************
@@ -54,7 +56,7 @@ void BeatGameViewer::Update()
 
 #ifdef _DEBUG
 
-	SetGameTitle(titleViewer->ProtectCity);
+	SetGameTitle(titleViewer->CalmAI);
 	SetRemainTime(0);
 
 	if (Keyboard::GetTrigger(DIK_R))
@@ -65,6 +67,11 @@ void BeatGameViewer::Update()
 	if (Keyboard::GetTrigger(DIK_G))
 	{
 		SetGo();
+	}
+
+	if (Keyboard::GetTrigger(DIK_3))
+	{
+		SetResult(resultViewer->Failed, nullptr);
 	}
 
 #endif
@@ -130,4 +137,12 @@ void BeatGameViewer::SetReady(void)
 void BeatGameViewer::SetGo(void)
 {
 	starterViewer->SetGo();
+}
+
+//=============================================================================
+// Œ‹‰Ê‚ğ•\¦‚·‚éˆ—
+//=============================================================================
+void BeatGameViewer::SetResult(BeatResultViewer::ResultID id, std::function<void(void)> Callback)
+{
+	resultViewer->Set(id, Callback);
 }

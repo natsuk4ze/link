@@ -8,7 +8,10 @@
 #define _BEAT_GAME_VIEWER_H_
 
 #include <vector>
+#include <functional>
+#include "../../../../Framework/Pattern/Delegate.h"
 #include "BeatTitleViewer.h"
+#include "BeatResultViewer.h"
 
 //*****************************************************************************
 // 前方宣言
@@ -18,6 +21,7 @@ class BeatTitleViewer;
 class BeatGaugeViewer;
 class BeatTimerViewer;
 class BeatStarterViewer;
+class BeatResultViewer;
 
 //*****************************************************************************
 // クラス定義
@@ -46,12 +50,16 @@ public:
 	//「GO」を表示する
 	void SetGo(void);
 
+	//結果を表示する
+	void SetResult(BeatResultViewer::ResultID id, std::function<void(void)> Callback = nullptr);
+
 private:
 	std::vector <BaseViewer*> beatGameViewer;
 	BeatTitleViewer *titleViewer;
 	BeatGaugeViewer *gaugeViewer;
 	BeatTimerViewer *timerViewer;
 	BeatStarterViewer *starterViewer;
+	BeatResultViewer *resultViewer;
 };
 
 #endif
