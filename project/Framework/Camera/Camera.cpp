@@ -18,8 +18,8 @@ Camera* Camera::mainCamera = NULL;
 ***************************************/
 Camera::Camera()
 {
-	const D3DXVECTOR3 InitPos = D3DXVECTOR3(0.0f, 50.0f, 50.0f);
-	const D3DXVECTOR3 InitTarget = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	const D3DXVECTOR3 InitPos = D3DXVECTOR3(0.0f, 68.0f, -33.0f);
+	const D3DXVECTOR3 InitTarget = D3DXVECTOR3(0.0f, 68.0f, 0.0f);
 	const float InitViewAngle = D3DXToRadian(60.0f);
 	const float InitViewAspect = (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT;
 	const float InitViewNear = 10.0f;

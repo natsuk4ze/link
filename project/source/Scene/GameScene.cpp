@@ -186,9 +186,6 @@ void GameScene::Draw()
 	//カメラセット
 	fieldCamera->Set();
 
-	// テスト用
-	testGuide->Draw();
-
 	//オブジェクト描画
 	ProfilerCPU::Instance()->Begin("Draw Object");
 	field->Draw();
@@ -218,6 +215,9 @@ void GameScene::Draw()
 	field->DrawViewer();
 	gameViewer->Draw();
 	eventController->DrawEventViewer();
+
+	// テスト用
+	testGuide->Draw();
 
 	ProfilerCPU::Instance()->EndLabel();
 }
