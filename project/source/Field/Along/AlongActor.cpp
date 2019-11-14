@@ -53,6 +53,20 @@ namespace Field::Along
 			break;
 		}
 
+		if (level == FieldLevel::City)
+		{
+			int rotation = Math::RandomRange(0, 8);
+			transform->Rotate(rotation * 45.0f, Vector3::Up);
+		}
+		else if (level == FieldLevel::Space)
+		{
+			const float AngleRange = 20.0f;
+
+			float angleX = Math::RandomRange(-AngleRange, AngleRange);
+			transform->Rotate(angleX, Vector3::Right);
+			float angleZ = Math::RandomRange(-AngleRange, AngleRange);
+			transform->Rotate(angleZ, Vector3::Forward);
+		}
 	}
 
 	/**************************************
@@ -88,9 +102,6 @@ namespace Field::Along
 		float scaleY = Math::RandomRange(MinScaleY, MaxScaleY);
 
 		Tween::Scale(*this, Vector3::Zero, { scale, scaleY, scale }, 15, InCubic);
-
-		int rotation = Math::RandomRange(0, 8);
-		transform->Rotate(rotation * 45.0f, Vector3::Up);
 	}
 
 	/**************************************
