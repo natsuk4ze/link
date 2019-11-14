@@ -7,8 +7,8 @@
 //=====================================
 #include "GuideViewer.h"
 
-const D3DXVECTOR2 GuideViewer::SubScreenSize = D3DXVECTOR2(360.0f, 240.0f);
-const D3DXVECTOR3 GuideViewer::SubScreenPosition = D3DXVECTOR3(30.0f, 810.0f, 0.0f);
+const D3DXVECTOR2 GuideViewer::SubScreenSize = D3DXVECTOR2(320.0f, 180.0f);
+const D3DXVECTOR3 GuideViewer::SubScreenPosition = D3DXVECTOR3(30.0f, 870.0f, 0.0f);
 
 //=====================================
 // コンストラクタ
@@ -20,6 +20,7 @@ GuideViewer::GuideViewer()
 	MakeRenderTarget();
 
 	actor = new GuideActor();
+	subCamera = new Camera();
 }
 
 //=====================================
@@ -32,6 +33,7 @@ GuideViewer::~GuideViewer()
 	SAFE_RELEASE(screenVtx);
 
 	SAFE_DELETE(actor);
+	SAFE_DELETE(subCamera);
 }
 
 //=====================================
@@ -39,6 +41,7 @@ GuideViewer::~GuideViewer()
 //=====================================
 void GuideViewer::Update()
 {
+	subCamera->Update();
 	actor->Update();
 }
 
@@ -55,6 +58,8 @@ void GuideViewer::Draw()
 	pDevice->GetRenderTarget(0, &oldSuf);
 	pDevice->SetRenderTarget(0, renderSurface);
 	pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BackColor, 1.0f, 0);
+
+	subCamera->Set();
 
 	// アクターの描画
 	actor->Draw();
@@ -91,7 +96,7 @@ void GuideViewer::MakeRenderTarget()
 		(UINT)SubScreenSize.y,
 		1,
 		D3DUSAGE_RENDERTARGET,
-		D3DFMT_X8R8G8B8,
+		D3DFMT_A8R8G8B8,
 		D3DPOOL_DEFAULT,
 		&renderTexture,
 		0);

@@ -9,6 +9,7 @@
 #define _GUIDEVIEWER_H_
 
 #include "GuideActor.h"
+#include "../../../../Framework/Camera/Camera.h"
 
 //**************************************
 // クラス定義
@@ -17,6 +18,7 @@ class GuideViewer
 {
 private:
 	GuideActor* actor;
+	Camera* subCamera;
 
 	// 描画用サブスクリーンを作成
 	LPDIRECT3DTEXTURE9 renderTexture;

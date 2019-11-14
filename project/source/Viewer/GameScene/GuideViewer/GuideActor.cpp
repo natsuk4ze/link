@@ -12,23 +12,41 @@
 // スタティックメンバ初期化
 //=====================================
 const GuideActor::AnimData GuideActor::data[] = {
-	{"Idle", 1.0f, 0.1f, 1 / 30.0f},
-	{"Running", 1.0f, 0.1f, 1 / 30.0f}
+	{"Idle", 1.0f, 0.3f, 1 / 30.0f},
+	{"Cheering", 1.0f, 0.3f, 1 / 30.0f},
+	{"Clapping", 1.0f, 0.3f, 1 / 30.0f}, 
+	{"Excited", 1.0f, 0.3f, 1 / 30.0f}, 
+	{"FistPump", 1.0f, 0.3f, 1 / 30.0f},
+	{"Pain", 1.0f, 0.3f, 1 / 30.0f},
+	{"Waving", 1.0f, 0.3f, 1 / 30.0f},
+	{"Yeah", 1.0f, 0.3f, 1 / 30.0f},
+	{"ShakeFist", 1.0f, 0.3f, 1 / 30.0f},
+	{"Salute", 1.0f, 0.3f, 1 / 30.0f},
+	{"Change", 1.0f, 0.3f, 1 / 30.0f},
+	{"WaveHand", 1.0f, 0.3f, 1 / 30.0f},
+	{"Defeat", 1.0f, 0.3f, 1 / 30.0f},
+	{"Surprised", 1.0f, 0.3f, 1 / 30.0f},
+	{"TalkingTypeA", 1.0f, 0.3f, 1 / 30.0f},
+	{"TalkingTypeB", 1.0f, 0.3f, 1 / 30.0f},
+	{"SecretTalk", 1.0f, 0.3f, 1 / 30.0f},
+	{"ThumbsUp", 1.0f, 0.3f, 1 / 30.0f},
 };
+
+const char* GuideActor::FileName = "data/MODEL/Robot.X";
 
 //=====================================
 // コンストラクタ
 //=====================================
 GuideActor::GuideActor()
 {
-	transform->SetPosition(D3DXVECTOR3(150.0f, 0.0f, -150.0f));
+	transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	transform->SetScale(Vector3::One);
 	transform->SetRotation(Vector3::Zero);
 	SetActive(true);
 
 	// アニメーションの作成
 	anim = new AnimationManager();
-	anim->LoadXFile("data/MODEL/Boy.x", "Guide");
+	anim->LoadXFile(FileName, "Guide");
 
 	// アニメーションセットの作成
 	for (int i = 0; i < AnimMax; i++)
@@ -39,8 +57,11 @@ GuideActor::GuideActor()
 	}
 
 	// アニメーション遷移のセット
-	anim->SetFinishTransition(Running, Idle);
-	anim->SetFinishTransition(Idle, Idle);
+	for (int i = 0; i < AnimMax; i++)
+	{
+		// とりあえず全部アニメーション終了したらアイドルに戻す
+		anim->SetFinishTransition(AnimState(i), AnimState(0));
+	}
 }
 
 //=====================================
@@ -58,14 +79,7 @@ void GuideActor::Update()
 {
 	anim->Update();
 
-	Debug::Begin("GuideActor");
-
-	if (Debug::Button("ChangeAnim:Running"))
-	{
-		anim->ChangeAnim(Running);
-	}
-
-	Debug::End();
+	Debug();
 }
 
 //=====================================
@@ -88,4 +102,84 @@ void GuideActor::Draw()
 void GuideActor::ChangeAnim(AnimState next)
 {
 	anim->ChangeAnim((UINT)next, true);
+}
+
+//=====================================
+// デバッグ
+//=====================================
+void GuideActor::Debug()
+{
+	Debug::Begin("GuideActorAnimation");
+
+	if (Debug::Button("Cheering"))
+	{
+		anim->ChangeAnim(Cheering);
+	}
+	if (Debug::Button("Clapping"))
+	{
+		anim->ChangeAnim(Clapping);
+	}
+	if (Debug::Button("Excited"))
+	{
+		anim->ChangeAnim(Excited);
+	}
+	if (Debug::Button("FistPump"))
+	{
+		anim->ChangeAnim(FistPump);
+	}
+	if (Debug::Button("Pain"))
+	{
+		anim->ChangeAnim(Pain);
+	}
+	if (Debug::Button("Waving"))
+	{
+		anim->ChangeAnim(Waving);
+	}
+	if (Debug::Button("Yeah"))
+	{
+		anim->ChangeAnim(Yeah);
+	}
+	if (Debug::Button("ShakeFist"))
+	{
+		anim->ChangeAnim(ShakeFist);
+	}
+	if (Debug::Button("Salute"))
+	{
+		anim->ChangeAnim(Salute);
+	}
+	if (Debug::Button("Change"))
+	{
+		anim->ChangeAnim(Change);
+	}
+	if (Debug::Button("WaveHand"))
+	{
+		anim->ChangeAnim(WaveHand);
+	}
+	if (Debug::Button("Defeat"))
+	{
+		anim->ChangeAnim(Defeat);
+	}
+	if (Debug::Button("Surprised"))
+	{
+		anim->ChangeAnim(Surprised);
+	}
+	if (Debug::Button("TalkingTypeA"))
+	{
+		anim->ChangeAnim(TalkingTypeA);
+	}
+	if (Debug::Button("TalkingTypeB"))
+	{
+		anim->ChangeAnim(TalkingTypeB);
+	}
+	if (Debug::Button("SecretTalk"))
+	{
+		anim->ChangeAnim(SecretTalk);
+	}
+	if (Debug::Button("ThumbsUp"))
+	{
+		anim->ChangeAnim(ThumbsUp);
+	}
+
+	Debug::End();
+
 }
