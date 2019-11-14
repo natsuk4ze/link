@@ -24,7 +24,12 @@ GameScene::State GameScene::GamePause::OnUpdate(GameScene & entity)
 {
 	//ロジック以外を更新
 	entity.field->UpdateObject();
-	entity.eventController->Update();
+
+	//ポップアップ終了の待機中はイベントを更新させない
+	if (!entity.field->ShouldWaitPopup())
+	{
+		entity.eventController->Update();
+	}
 
 	//中断解除はイベントハンドラ側に任せる
 	return State::Pause;

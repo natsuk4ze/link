@@ -60,6 +60,7 @@ namespace Field
 		operationX(OperationExplanationViewer::OperationID::X_None),
 		operationSpace(OperationExplanationViewer::OperationID::Space_None),
 		enableDevelop(true),
+		flgWaitPopup(false),
 		onConnectTown(nullptr),
 		onCreateJunction(nullptr),
 		onChangePlaceType(nullptr)
@@ -307,6 +308,14 @@ namespace Field
 	bool FieldController::ShouldRotateCamera() const
 	{
 		return input->CheckRotateCamera();
+	}
+
+	/*************************************
+	ポップアップを待機するかどうか
+	***************************************/
+	bool FieldController::ShouldWaitPopup() const
+	{
+		return flgWaitPopup;
 	}
 
 	/**************************************
