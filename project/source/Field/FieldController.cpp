@@ -207,12 +207,18 @@ namespace Field
 	}
 
 	/**************************************
+	Info•`‰æˆ—
+	***************************************/
+	void FieldController::DrawInfo()
+	{
+		infoController->Draw();
+	}
+
+	/**************************************
 	UI•`‰æˆ—
 	***************************************/
 	void FieldController::DrawViewer()
 	{
-		infoController->Draw();
-
 		SetOperationExplanation();
 		viewer->Draw();
 	}

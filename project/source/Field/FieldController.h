@@ -74,6 +74,7 @@ namespace Field
 
 		//•`‰æˆ—
 		void Draw();
+		void DrawInfo();
 		void DrawViewer();
 
 		//ƒf[ƒ^“Ç‚İ‚İˆ—
