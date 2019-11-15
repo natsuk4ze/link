@@ -203,7 +203,7 @@ void BeatResultViewer::CloseBG(void)
 //=============================================================================
 // テクスチャ情報受け渡し処理
 //=============================================================================
-void BeatResultViewer::PassTexture(ResultID id)
+void BeatResultViewer::SetTexture(ResultID id)
 {
 	//テキストのUVを変更
 	text->SetTexture(1, ResultID::Max, id);
@@ -220,7 +220,7 @@ void BeatResultViewer::PassTexture(ResultID id)
 void BeatResultViewer::Set(ResultID id, std::function<void(void)> Callback)
 {
 	//テクスチャ情報受け渡し
-	PassTexture(id);
+	SetTexture(id);
 
 	//再生状態にする
 	isPlaying = true;

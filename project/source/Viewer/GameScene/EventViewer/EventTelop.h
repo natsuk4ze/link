@@ -60,7 +60,7 @@ private:
 	void Play();
 
 	//テクスチャ情報受け渡し
-	void PassTexture(TelopID id);
+	void SetTexture(TelopID id);
 
 	//背景をオープン
 	void OpenBG(void);

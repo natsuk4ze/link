@@ -89,8 +89,6 @@ void BeatTimerViewer::Update(void)
 //=============================================================================
 void BeatTimerViewer::Draw(void)
 {
-	if (!isPlaying) return;
-
 	//背景を先に描画
 	frontText->Draw();
 
@@ -118,7 +116,4 @@ void BeatTimerViewer::Set(float time)
 {
 	//タイマーをセット
 	this->time = time;
-
-	//再生状態に移行
-	isPlaying = true;
 }

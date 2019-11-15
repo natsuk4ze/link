@@ -52,7 +52,7 @@ private:
 	void Play();
 
 	//テクスチャ情報受け渡し
-	void PassTexture(ErroID id);
+	void SetTexture(ErroID id);
 
 	//再生中かどうか
 	bool isPlaying;

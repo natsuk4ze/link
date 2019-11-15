@@ -49,7 +49,7 @@ private:
 	void Play();
 
 	//テクスチャ情報受け渡し
-	void PassTexture(ResultID id);
+	void SetTexture(ResultID id);
 
 	//背景をオープン
 	void OpenBG(void);

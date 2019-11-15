@@ -39,8 +39,6 @@ BeatGaugeViewer::BeatGaugeViewer()
 	frame->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_HEIGHT/3*2.40f, 0.0f);
 	frame->MakeVertex();
 	frame->SetTexture(1, 2, 2);
-
-	gaugePer = 1.0f;
 }
 
 //*****************************************************************************
@@ -57,24 +55,8 @@ BeatGaugeViewer::~BeatGaugeViewer()
 //=============================================================================
 void BeatGaugeViewer::Update()
 {
-	if (Keyboard::GetTrigger(DIK_1))
-	{
-		gaugePer -= 0.10f;
-	}
-
-	if (Keyboard::GetTrigger(DIK_2))
-	{
-		gaugePer += 0.10f;
-	}
-
-	////再生中なら実行
-	//if (!isPlaying) return;
-
 	//振動制御
 	HandleShake();
-
-	//振動
-	Shake();
 }
 
 //=============================================================================
@@ -82,9 +64,6 @@ void BeatGaugeViewer::Update()
 //=============================================================================
 void BeatGaugeViewer::Draw(void)
 {
-	////再生中なら描画
-	//if (!isPlaying) return;
-
 	//バーを先に描画
 	DrawBar();
 
@@ -97,6 +76,8 @@ void BeatGaugeViewer::Draw(void)
 //=============================================================================
 void BeatGaugeViewer::HandleShake()
 {
+	//とりあえずパラメータの差で実装
+	//後でキー入力での実装に変える？
 	currentParam = gaugePer;
 
 	if (currentParam < lastParam)
@@ -105,6 +86,12 @@ void BeatGaugeViewer::HandleShake()
 	}
 
 	lastParam = gaugePer;
+
+	//振動させるべきなら実行
+	if (shouldShake)
+	{
+		Shake();
+	}
 }
 
 //=============================================================================
@@ -113,31 +100,36 @@ void BeatGaugeViewer::HandleShake()
 void BeatGaugeViewer::Shake()
 {
 	//何回振動させるか
-	const int shakeNum = 6;
+	const int shakeNum = 20;
 	//どのくらいの振れ幅か
-	const float shakeValue = 10.0f;
-	//どのくらいの振動スピードか
-	const float shakeSpeed = 10.0f / D3DX_PI;
+	const float shakeValue = 7.0f;
+	//どのくらいの時間振動させるか
+	const float shakeTime = 10.0f;
 	//初期座標
 	const float initPosX = SCREEN_CENTER_X;
 	const float initPosY = SCREEN_HEIGHT / 3 * 2.40f;
+	//イージングのスタートとゴールを設定
+	float easingStart = 0.0f;
+	float easingGoal = D3DX_PI * shakeNum;
 
-	//振動すべきなら実行
-	if (shouldShake)
+	countFrame++;
+	animTime = countFrame / shakeTime;
+
+	radian = Easing::EaseValue(animTime, easingStart, easingGoal, OutCirc);
+
+	frame->position.x = initPosX + shakeValue* sinf(radian);
+	frame->position.y = initPosY + shakeValue * sinf(radian);
+
+	if (radian >= easingGoal)
 	{
-		frame->position.x = (initPosX + shakeValue* sinf(radian));
-		frame->position.y = (initPosY + shakeValue * sinf(radian));
+		//座標を初期化
+		frame->position.x = initPosX;
+		frame->position.y = initPosY;
 
-		if (radian >= D3DX_PI*shakeNum)
-		{
-			//座標を初期化
-			frame->position.x = initPosX;
-			frame->position.y = initPosY;
-
-			radian = 0.0f;
-			shouldShake = false;
-		}
-		radian += shakeSpeed;
+		radian = 0.0f;
+		countFrame = 0;
+		animTime = 0;
+		shouldShake = false;
 	}
 }
 
@@ -171,7 +163,4 @@ void BeatGaugeViewer::Set(float percent)
 {
 	//ゲージ割合をセット
 	gaugePer = percent;
-
-	//再生状態にする
-	isPlaying = true;
 }

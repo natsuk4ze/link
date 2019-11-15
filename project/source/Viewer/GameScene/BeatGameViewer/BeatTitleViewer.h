@@ -42,11 +42,8 @@ public:
 private:
 	BaseViewerDrawer *title;
 
-	//テクスチャ情報受け渡し
-	void PassTexture(TitleID id);
-
-	//再生中かどうか
-	bool isPlaying;
+	//テクスチャをセット
+	void SetTexture(TitleID id);
 };
 
 #endif

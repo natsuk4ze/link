@@ -44,9 +44,6 @@ private:
 	//震わせるべきか
 	bool shouldShake;
 
-	//再生中かどうか
-	bool isPlaying;
-
 	//フレームカウント
 	int countFrame;
 
@@ -62,6 +59,7 @@ private:
 	//前フレームのパラメータ
 	float lastParam;
 
+	//振動用のラジアン
 	float radian;
 };
 

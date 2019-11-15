@@ -47,9 +47,6 @@ private:
 
 	//ŠÔ
 	float time;
-
-	//Ä¶’†‚©‚Ç‚¤‚©
-	bool isPlaying;
 };
 
 #endif

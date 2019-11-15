@@ -43,9 +43,6 @@ void BeatTitleViewer::Update()
 //=============================================================================
 void BeatTitleViewer::Draw(void)
 {
-	//再生中なら描画
-	if (!isPlaying) return;
-
 	//タイトル
 	title->Draw();
 }
@@ -53,9 +50,9 @@ void BeatTitleViewer::Draw(void)
 //=============================================================================
 // テクスチャ情報受け渡し処理
 //=============================================================================
-void BeatTitleViewer::PassTexture(TitleID id)
+void BeatTitleViewer::SetTexture(TitleID id)
 {
-	//テキストのUVを変更
+	//テキストをセット
 	title->SetTexture(1, Max, id);
 }
 
@@ -64,9 +61,6 @@ void BeatTitleViewer::PassTexture(TitleID id)
 //=============================================================================
 void BeatTitleViewer::Set(TitleID id)
 {
-	//テクスチャ情報受け渡し
-	PassTexture(id);
-
-	//再生状態にする
-	isPlaying = true;
+	//テクスチャをセット
+	SetTexture(id);
 }
