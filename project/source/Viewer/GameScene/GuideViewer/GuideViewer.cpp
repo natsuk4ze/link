@@ -7,7 +7,7 @@
 //=====================================
 #include "GuideViewer.h"
 
-const D3DXVECTOR2 GuideViewer::SubScreenSize = D3DXVECTOR2(320.0f, 180.0f);
+const D3DXVECTOR2 GuideViewer::SubScreenSize = D3DXVECTOR2(480.0f, 480.0f);
 const D3DXVECTOR3 GuideViewer::SubScreenPosition = D3DXVECTOR3(30.0f, 870.0f, 0.0f);
 
 //=====================================
@@ -20,7 +20,7 @@ GuideViewer::GuideViewer()
 	MakeRenderTarget();
 
 	actor = new GuideActor();
-	subCamera = new Camera();
+	camera = new GuideCamera();
 }
 
 //=====================================
@@ -33,7 +33,7 @@ GuideViewer::~GuideViewer()
 	SAFE_RELEASE(screenVtx);
 
 	SAFE_DELETE(actor);
-	SAFE_DELETE(subCamera);
+	SAFE_DELETE(camera);
 }
 
 //=====================================
@@ -41,7 +41,7 @@ GuideViewer::~GuideViewer()
 //=====================================
 void GuideViewer::Update()
 {
-	subCamera->Update();
+	camera->Update();
 	actor->Update();
 }
 
@@ -59,7 +59,7 @@ void GuideViewer::Draw()
 	pDevice->SetRenderTarget(0, renderSurface);
 	pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BackColor, 1.0f, 0);
 
-	subCamera->Set();
+	camera->Set();
 
 	// アクターの描画
 	actor->Draw();
