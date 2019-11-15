@@ -38,3 +38,17 @@ StraightRoadActor::~StraightRoadActor()
 	if (emitter != nullptr)
 		emitter->SetActive(false);
 }
+
+//=====================================
+// ‰ñ“]ˆ—
+//=====================================
+void StraightRoadActor::Rotate(float y)
+{
+	PlaceActor::Rotate(y);
+
+	if (emitter != nullptr)
+	{
+		D3DXVECTOR3 euler = Quaternion::ToEuler(transform->GetRotation());
+		emitter->SetRotatition(euler);
+	}
+}

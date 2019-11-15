@@ -24,6 +24,8 @@ public:
 	StraightRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	~StraightRoadActor();
 
+	void Rotate(float y) override;
+
 private:
 	BaseEmitter * emitter;
 };

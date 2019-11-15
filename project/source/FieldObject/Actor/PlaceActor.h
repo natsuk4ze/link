@@ -37,7 +37,7 @@ public:
 	virtual void Draw();
 
 	// インターフェース
-	void Rotate(float y);								// Y軸回転
+	virtual void Rotate(float y);								// Y軸回転
 	void SetPosition(const D3DXVECTOR3&pos);			// 座標セット
 	void SetColor(const D3DXCOLOR& color);	// メッシュの色変更
 	void ResetTransform();								// 座標、回転、大きさをリセットする
