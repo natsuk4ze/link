@@ -32,8 +32,17 @@ private:
 	BaseViewerDrawer *bar;
 	BaseViewerDrawer *frame;
 
+	//ゲージバー描画処理
+	void DrawBar(void);
+
 	//震わせる
 	void Shake(void);
+
+	//振動制御処理
+	void HandleShake(void);
+
+	//震わせるべきか
+	bool shouldShake;
 
 	//再生中かどうか
 	bool isPlaying;
@@ -47,8 +56,13 @@ private:
 	//ゲージパーセント
 	float gaugePer;
 
-	//ゲージバー描画処理
-	void DrawBar(void);
+	//現在フレームのパラメータ
+	float currentParam;
+
+	//前フレームのパラメータ
+	float lastParam;
+
+	float radian;
 };
 
 #endif

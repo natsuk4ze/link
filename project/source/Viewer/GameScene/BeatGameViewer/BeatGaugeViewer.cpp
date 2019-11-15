@@ -24,8 +24,8 @@ BeatGaugeViewer::BeatGaugeViewer()
 {
 	//バー
 	bar = new BaseViewerDrawer();
-	bar->LoadTexture("data/TEXTURE/Viewer/BeatGameViewer/BeatGaugeViewer/Gauge.png");
-	bar->size = D3DXVECTOR3(1600.0f, 120.0f, 0.0f);
+	bar->LoadTexture("data/TEXTURE/Viewer/BeatGameViewer/BeatGaugeViewer/Gauge01.png");
+	bar->size = D3DXVECTOR3(1300.0f, 120.0f, 0.0f);
 	bar->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	bar->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_HEIGHT/3*2.40f, 0.0f);
 	bar->MakeVertex();
@@ -33,7 +33,7 @@ BeatGaugeViewer::BeatGaugeViewer()
 
 	//フレーム
 	frame = new BaseViewerDrawer();
-	frame->LoadTexture("data/TEXTURE/Viewer/BeatGameViewer/BeatGaugeViewer/Gauge.png");
+	frame->LoadTexture("data/TEXTURE/Viewer/BeatGameViewer/BeatGaugeViewer/Gauge01.png");
 	frame->size = D3DXVECTOR3(1600.0f, 120.0f, 0.0f);
 	frame->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	frame->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_HEIGHT/3*2.40f, 0.0f);
@@ -67,8 +67,11 @@ void BeatGaugeViewer::Update()
 		gaugePer += 0.10f;
 	}
 
-	//再生中なら実行
-	if (!isPlaying) return;
+	////再生中なら実行
+	//if (!isPlaying) return;
+
+	//振動制御
+	HandleShake();
 
 	//振動
 	Shake();
@@ -90,10 +93,52 @@ void BeatGaugeViewer::Draw(void)
 }
 
 //=============================================================================
+// 振動制御処理
+//=============================================================================
+void BeatGaugeViewer::HandleShake()
+{
+	currentParam = gaugePer;
+
+	if (currentParam < lastParam)
+	{
+		shouldShake = true;
+	}
+
+	lastParam = gaugePer;
+}
+
+//=============================================================================
 // 振動処理
 //=============================================================================
 void BeatGaugeViewer::Shake()
 {
+	//何回振動させるか
+	const int shakeNum = 6;
+	//どのくらいの振れ幅か
+	const float shakeValue = 10.0f;
+	//どのくらいの振動スピードか
+	const float shakeSpeed = 10.0f / D3DX_PI;
+	//初期座標
+	const float initPosX = SCREEN_CENTER_X;
+	const float initPosY = SCREEN_HEIGHT / 3 * 2.40f;
+
+	//振動すべきなら実行
+	if (shouldShake)
+	{
+		frame->position.x = (initPosX + shakeValue* sinf(radian));
+		frame->position.y = (initPosY + shakeValue * sinf(radian));
+
+		if (radian >= D3DX_PI*shakeNum)
+		{
+			//座標を初期化
+			frame->position.x = initPosX;
+			frame->position.y = initPosY;
+
+			radian = 0.0f;
+			shouldShake = false;
+		}
+		radian += shakeSpeed;
+	}
 }
 
 //=============================================================================
