@@ -48,7 +48,7 @@ void StraightRoadActor::Rotate(float y)
 
 	if (emitter != nullptr)
 	{
-		D3DXVECTOR3 euler = Quaternion::ToEuler(transform->GetRotation());
+		D3DXVECTOR3 euler = transform->GetEulerAngle();
 		emitter->SetRotatition(euler);
 	}
 }
