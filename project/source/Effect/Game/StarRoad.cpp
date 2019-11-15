@@ -6,6 +6,7 @@
 //
 //=====================================
 #include "StarRoad.h"
+#include "../../../Framework/Camera/Camera.h"
 
 namespace Effect::Game
 {
@@ -30,7 +31,7 @@ namespace Effect::Game
 		LoadTexture("data/TEXTURE/Particle/star.png");
 
 		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 1024; 
+		const unsigned MaxParticle = 2048; 
 		particleContainer.resize(MaxParticle);
 		for (auto&& particle : particleContainer)
 		{
@@ -38,7 +39,7 @@ namespace Effect::Game
 		}
 
 		//エミッターコンテナ作成
-		const unsigned MaxEmitter = 32;
+		const unsigned MaxEmitter = 1024;
 		emitterContainer.resize(MaxEmitter);
 		for (auto&& emitter : emitterContainer)
 		{
@@ -109,6 +110,11 @@ namespace Effect::Game
 	bool StarRoadEmitter::Emit(std::vector<BaseParticle*>& container)
 	{
 		if (!IsActive())
+			return true;
+
+		//描画領域外だったら放出しない
+		D3DXVECTOR3 screenPos = Camera::MainCamera()->Projection(transform->GetPosition());
+		if (screenPos.x < 0.0f || screenPos.x >(float)SCREEN_WIDTH || screenPos.y < 0.0f || screenPos.y >(float)SCREEN_HEIGHT)
 			return true;
 
 		UINT cntEmit = 0;
