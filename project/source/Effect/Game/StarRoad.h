@@ -33,6 +33,15 @@ namespace Effect::Game
 
 		void Init();
 		void Update();
+
+		void Toward(const D3DXVECTOR3& direction);
+
+	private:
+		static const float RangeX;
+		static const float RangeY;
+		static const float RangeZ;
+
+		D3DXVECTOR3 direction;
 	};
 
 	/**************************************
@@ -43,6 +52,7 @@ namespace Effect::Game
 	public:
 		StarRoadEmitter();
 
+		bool Emit(std::vector<BaseParticle*>& container) override;
 		bool IsActive() const override;
 	};
 }
