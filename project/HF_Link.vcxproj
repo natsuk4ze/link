@@ -245,6 +245,7 @@
     <ClInclude Include="source\Viewer\GameScene\GameViewer\ItemStockViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\TimerViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideActor.h" />
+    <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCamera.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -455,6 +456,7 @@
     <ClCompile Include="source\Viewer\GameScene\GameViewer\ItemStockViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideActor.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideCamera.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewer.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -70,6 +70,7 @@ GuideActor::GuideActor()
 GuideActor::~GuideActor()
 {
 	//animのデストラクタは不要
+	SAFE_DELETE(anim);
 }
 
 //=====================================
