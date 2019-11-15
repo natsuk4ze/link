@@ -43,10 +43,15 @@ void InfoController::Update()
 //=====================================
 void InfoController::Draw()
 {
+	LPDIRECT3DDEVICE9 device = GetDevice();
+	device->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+
 	for (auto& map : LinkInfoMap)
 	{
 		map.second->Draw();
 	}
+
+	device->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 }
 
 //=====================================
