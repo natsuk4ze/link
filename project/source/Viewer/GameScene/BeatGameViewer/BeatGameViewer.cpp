@@ -74,6 +74,11 @@ void BeatGameViewer::Update()
 		SetResult(resultViewer->Failed, nullptr);
 	}
 
+	if (Keyboard::GetTrigger(DIK_4))
+	{
+		SetResult(resultViewer->Success, nullptr);
+	}
+
 #endif
 
 }

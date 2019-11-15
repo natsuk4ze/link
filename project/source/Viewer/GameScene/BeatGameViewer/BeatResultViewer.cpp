@@ -72,9 +72,9 @@ BeatResultViewer::BeatResultViewer() :
 	//ƒeƒLƒXƒg
 	text = new BaseViewerDrawer();
 	text->LoadTexture("data/TEXTURE/Viewer/BeatGameViewer/BeatResultViewer/Text.png");
-	text->size = D3DXVECTOR3(1024, 128.0f, 0.0f);
+	text->size = D3DXVECTOR3(512.0f, 128.0f, 0.0f);
 	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	text->position = D3DXVECTOR3(-SCREEN_WIDTH*1.5, SCREEN_CENTER_Y, 0.0f);
+	text->position = D3DXVECTOR3(-SCREEN_WIDTH * 1.5, SCREEN_CENTER_Y, 0.0f);
 	text->MakeVertex();
 
 	//”wŒi
