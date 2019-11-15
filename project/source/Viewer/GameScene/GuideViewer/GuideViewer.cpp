@@ -19,8 +19,10 @@ GuideViewer::GuideViewer()
 	MakeScreen();
 	MakeRenderTarget();
 
+	// 各種インスタンスの作成
 	actor = new GuideActor();
 	camera = new GuideCamera();
+	effect = new GuideViewerEffect();
 }
 
 //=====================================
@@ -34,6 +36,7 @@ GuideViewer::~GuideViewer()
 
 	SAFE_DELETE(actor);
 	SAFE_DELETE(camera);
+	SAFE_DELETE(effect);
 }
 
 //=====================================
@@ -43,6 +46,7 @@ void GuideViewer::Update()
 {
 	camera->Update();
 	actor->Update();
+	effect->Update();
 }
 
 //=====================================
@@ -54,7 +58,7 @@ void GuideViewer::Draw()
 
 	//レンダーターゲット切り替え
 	LPDIRECT3DSURFACE9 oldSuf;
-	const D3DXCOLOR BackColor = D3DXCOLOR(0.615f, 0.800f, 0.878f, 0.700f);
+	const D3DXCOLOR BackColor = D3DXCOLOR(0.615f, 0.800f, 0.878f, 0.00f);
 	pDevice->GetRenderTarget(0, &oldSuf);
 	pDevice->SetRenderTarget(0, renderSurface);
 	pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BackColor, 1.0f, 0);
@@ -64,6 +68,8 @@ void GuideViewer::Draw()
 
 	// アクターの描画
 	actor->Draw();
+
+	effect->Draw();
 
 	//レンダーターゲット復元
 	pDevice->SetRenderTarget(0, oldSuf);
@@ -75,7 +81,6 @@ void GuideViewer::Draw()
 	pDevice->SetFVF(FVF_VERTEX_2D);
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
-
 }
 
 //=====================================
