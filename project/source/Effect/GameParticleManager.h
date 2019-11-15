@@ -32,6 +32,7 @@ namespace GameParticle
 		MoveTail,		//移動の軌跡
 		SpaceTear,		//時空断裂のスパーク,
 		LinkLevelUp,	//リンクレベルアップ時エフェクト
+		StarRoad,
 		Max
 	};
 }

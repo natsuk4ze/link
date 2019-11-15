@@ -235,6 +235,7 @@
     <ClInclude Include="Framework\Sound\MusicClip.h" />
     <ClInclude Include="Framework\Sound\sound.h" />
     <ClInclude Include="Framework\Sound\SoundEffect.h" />
+    <ClInclude Include="source\Effect\Game\StarRoad.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -452,6 +453,7 @@
     <ClCompile Include="Framework\Sound\MusicClip.cpp" />
     <ClCompile Include="Framework\Sound\sound.cpp" />
     <ClCompile Include="Framework\Sound\SoundEffect.cpp" />
+    <ClCompile Include="source\Effect\Game\StarRoad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
