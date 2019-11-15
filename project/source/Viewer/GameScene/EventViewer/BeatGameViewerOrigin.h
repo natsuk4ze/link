@@ -1,24 +1,24 @@
-//=============================================================================
+ï»¿//=============================================================================
 //
-// ˜A‘ÅƒQ[ƒ€ƒrƒ…[ƒAƒNƒ‰ƒX [BeatGameViewer.cpp]
-// Author : HAL“Œ‹ GP12B332 41 —ŠŠM‹»
+//
+//
 //
 //=============================================================================
-#ifndef _BeatGameViewer_H_
-#define _BeatGameViewer_H_
+#ifndef _BeatGameViewerOrigin_H_
+#define _BeatGameViewerOrigin_H_
 
 #include <functional>
 
 //*****************************************************************************
-// ‘O•ûéŒ¾
+// 
 //*****************************************************************************
 class BaseViewerDrawer;
 
 
 //*****************************************************************************
-// ƒNƒ‰ƒX’è‹`
+// 
 //*****************************************************************************
-class BeatGameViewer 
+class BeatGameViewerOrigin
 {
 private:
 	int CountFrame;
@@ -34,12 +34,11 @@ private:
 	void TextureExpand();
 
 public:
-	BeatGameViewer();
-	~BeatGameViewer();
+	BeatGameViewerOrigin();
+	~BeatGameViewerOrigin();
 	void Update(void);
 	void Draw(void);
-	void DrawStart(bool IsSuccess,std::function<void(void)> Callback);
+	void DrawStart(bool IsSuccess, std::function<void(void)> Callback);
 };
 
 #endif
-

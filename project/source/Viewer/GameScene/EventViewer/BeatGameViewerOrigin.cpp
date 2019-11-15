@@ -1,11 +1,11 @@
 //=============================================================================
 //
-// 連打ゲームビューアクラス [BeatGameViewer.cpp]
-// Author : HAL東京 GP12B332 41 頼凱興
+// 
+// 
 //
 //=============================================================================
 #include "../../../../main.h"
-#include "BeatGameViewer.h"
+#include "BeatGameViewerOrigin.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include"../../../../Framework/Math/Easing.h"
 
@@ -24,14 +24,14 @@ static const char* TexturePath[2]
 };
 
 //*****************************************************************************
-// コンストラクタ
+// 
 //*****************************************************************************
-BeatGameViewer::BeatGameViewer() :
+BeatGameViewerOrigin::BeatGameViewerOrigin() :
 	ExpandPercent(0.0f)
 {
 	LPDIRECT3DDEVICE9 Device = GetDevice();
 
-	// テクスチャの読み込み
+	// 
 	D3DXCreateTextureFromFile(Device, TexturePath[0], &SuccessTexture);
 	D3DXCreateTextureFromFile(Device, TexturePath[1], &FailTexture);
 
@@ -46,9 +46,9 @@ BeatGameViewer::BeatGameViewer() :
 }
 
 //*****************************************************************************
-// デストラクタ
+// 
 //*****************************************************************************
-BeatGameViewer::~BeatGameViewer()
+BeatGameViewerOrigin::~BeatGameViewerOrigin()
 {
 	if (Viewer->texture == SuccessTexture)
 	{
@@ -62,9 +62,9 @@ BeatGameViewer::~BeatGameViewer()
 }
 
 //=============================================================================
-// 更新処理
+//
 //=============================================================================
-void BeatGameViewer::Update()
+void BeatGameViewerOrigin::Update()
 {
 	if (!DrawFlag)
 		return;
@@ -74,9 +74,9 @@ void BeatGameViewer::Update()
 }
 
 //=============================================================================
-// 描画処理
+//
 //=============================================================================
-void BeatGameViewer::Draw(void)
+void BeatGameViewerOrigin::Draw(void)
 {
 	if (!DrawFlag)
 		return;
@@ -88,7 +88,7 @@ void BeatGameViewer::Draw(void)
 	Device->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 
-	// 描画
+	//
 	Viewer->Draw();
 
 	Device->SetRenderState(D3DRS_ALPHATESTENABLE, false);
@@ -96,9 +96,9 @@ void BeatGameViewer::Draw(void)
 }
 
 //=============================================================================
-// 頂点座標を設定
+// 
 //=============================================================================
-void BeatGameViewer::SetVertex()
+void BeatGameViewerOrigin::SetVertex()
 {
 	Viewer->vertexWk[0].vtx = D3DXVECTOR3(0.0f, Viewer->position.y - Viewer->size.y, 0.0f);
 	Viewer->vertexWk[1].vtx = D3DXVECTOR3(SCREEN_WIDTH * ExpandPercent, Viewer->position.y - Viewer->size.y, 0.0f);
@@ -107,9 +107,9 @@ void BeatGameViewer::SetVertex()
 }
 
 //=============================================================================
-// 背景を開く処理
+// 
 //=============================================================================
-void BeatGameViewer::TextureExpand(void)
+void BeatGameViewerOrigin::TextureExpand(void)
 {
 	CountFrame++;
 
@@ -120,8 +120,7 @@ void BeatGameViewer::TextureExpand(void)
 		ExpandPercent = 1.0f;
 	}
 
-	// 60フレームの表示後、描画終了
-	if (CountFrame >= 60)
+	//
 	{
 		Callback();
 		DrawFlag = false;
@@ -129,9 +128,9 @@ void BeatGameViewer::TextureExpand(void)
 }
 
 //=============================================================================
-// 描画開始
+// 
 //=============================================================================
-void BeatGameViewer::DrawStart(bool IsSuccess, std::function<void(void)> Callback)
+void BeatGameViewerOrigin::DrawStart(bool IsSuccess, std::function<void(void)> Callback)
 {
 	DrawFlag = true;
 	this->Callback = Callback;

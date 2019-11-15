@@ -1,12 +1,12 @@
 
 //=============================================================================
-//
-// フィールドエラーメッセージ処理 [FieldErrorMessage.h]
+// 
+// 連打ゲームタイトルビュアー処理 [BeatTitleViewer.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _FIELD_ERRO_MESSAGE_H_
-#define _FIELD_ERRO_MESSAGE_H_
+#ifndef _BEAT_TITLE_VIEWER_H_
+#define _BEAT_TITLE_VIEWER_H_
 
 #include "../../Framework/BaseViewer.h"
 
@@ -18,47 +18,32 @@ class BaseViewerDrawer;
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class FieldErrorMessage :public BaseViewer
+class BeatTitleViewer :public BaseViewer
 {
 public:
-	FieldErrorMessage();
-	~FieldErrorMessage();
+	BeatTitleViewer();
+	~BeatTitleViewer();
 
-	//メッセージの種類
-	enum ErroID
+	//タイトルの種類
+	enum TitleID
 	{
-		//街／道とつなっがていません
-		NotConnection,
-		//ストックが足りません
-		StockShortage,
-		//橋と橋は繋げられません
-		BridgeConnection,
-		//橋はカーブにできません
-		CurveBridge,
+		//ボタンを連打して街を守れ！
+		ProtectCity,
+		//ボタンを連打してAIを鎮めろ！
+		CalmAI,
 		//種類数
 		Max
 	};
 
 	void Update();
 	void Draw(void);
-	void Set(ErroID id);
+	void Set(TitleID id);
 
 private:
+	BaseViewerDrawer *title;
 
-	//テキスト
-	BaseViewerDrawer *text;
-
-	//再生
-	void Play();
-
-	//テクスチャ情報受け渡し
-	void SetTexture(ErroID id);
-
-	//再生中かどうか
-	bool isPlaying;
-
-	//フレームカウント
-	int countFrame;
+	//テクスチャをセット
+	void SetTexture(TitleID id);
 };
 
 #endif

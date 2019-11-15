@@ -1,12 +1,12 @@
 
 //=============================================================================
 //
-// イベントテロップ処理 [EventTelop.h]
+// 連打ゲーム結果ビュアー処理 [BeatResultViewer.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _EVENT_TELOP_H_
-#define _EVENT_TELOP_H_
+#ifndef _BEAT_RESULT_VIEWER_H_
+#define _BEAT_RESULT_VIEWER_H_
 
 #include "../../Framework/BaseViewer.h"
 #include "../../../../Framework/Pattern/Delegate.h"
@@ -20,37 +20,26 @@ class BaseViewerDrawer;
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class EventTelop :public BaseViewer
+class BeatResultViewer :public BaseViewer
 {
 public:
-	EventTelop();
-	~EventTelop();
+	BeatResultViewer();
+	~BeatResultViewer();
 
-	//テロップの種類
-	enum TelopID
+	//結果の種類
+	enum ResultID
 	{
-		//シンギュラリティ到達！！
-		Singularity,
-		//アトランティス登場！！
-		Atlantis,
-		//新惑星を発見！！
-		NewPlanet,
-		//隕石が接近中！！
-		Meteorite,
-		//宇宙人が襲来！！
-		Alien,
-		//AIストライキ発生！！
-		AI_Strike,
-		//種類数
+		Success,
+		Failed,
 		Max
 	};
 
 	void Update();
 	void Draw(void);
-	void Set(TelopID id, std::function<void(void)> Callback = nullptr);
+	void Set(ResultID id, std::function<void(void)> Callback = nullptr);
 
 private:
-	BaseViewerDrawer *text;
+	BaseViewerDrawer * text;
 	BaseViewerDrawer *bg;
 
 	//再生終了通知
@@ -60,7 +49,7 @@ private:
 	void Play();
 
 	//テクスチャ情報受け渡し
-	void SetTexture(TelopID id);
+	void SetTexture(ResultID id);
 
 	//背景をオープン
 	void OpenBG(void);

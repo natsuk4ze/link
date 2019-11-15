@@ -51,6 +51,7 @@ private:
 	//線を引く
 	void DrawLine(void);
 
+	//テキストを描画する
 	void DrawTelopText(void);
 
 	//フェードアウト

@@ -80,7 +80,7 @@ void FieldErrorMessage::Play(void)
 //=============================================================================
 // テクスチャ情報受け渡し処理
 //=============================================================================
-void FieldErrorMessage::PassTexture(ErroID id)
+void FieldErrorMessage::SetTexture(ErroID id)
 {
 	//テキストのテクスチャUVを変更
 	text->SetTexture(1, Max, id);
@@ -92,7 +92,7 @@ void FieldErrorMessage::PassTexture(ErroID id)
 void FieldErrorMessage::Set(ErroID id)
 {
 	//テクスチャ情報受け渡し処理
-	PassTexture(id);
+	SetTexture(id);
 
 	//再生状態に移行
 	isPlaying = true;

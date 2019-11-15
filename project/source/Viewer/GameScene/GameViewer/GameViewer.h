@@ -17,6 +17,9 @@ class TimerViewer;
 class LevelViewer;
 class BaseViewer;
 
+/////テスト/////
+class BeatGameViewer;
+
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
@@ -38,6 +41,9 @@ private:
 	ItemStockViewer *stockViewer;
 	TimerViewer *timerViewer;
 	LevelViewer *levelViewer;
+
+	/////////////テスト/////////
+	BeatGameViewer *beatGameViewer;
 };
 
 #endif

@@ -17,7 +17,7 @@
 class BaseViewerDrawer;
 class CountViewerDrawer;
 class TextViewer;
-class BeatGameViewer;
+class BeatGameViewerOrigin;
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -30,7 +30,7 @@ private:
 	bool TelopOver;
 	bool IsDrawingViewer;
 	bool IsSuccess;
-	BeatGameViewer *Viewer;
+	BeatGameViewerOrigin *Viewer;
 	std::function<void(bool)> Callback;
 
 	void EventOver(void);
