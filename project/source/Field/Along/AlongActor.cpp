@@ -21,6 +21,7 @@ namespace Field::Along
 	const float AlongActor::MaxScale = 1.25f;
 	const float AlongActor::MinScaleY = 1.0f;
 	const float AlongActor::MaxScaleY = 1.5f;
+	const float AlongActor::SpeedRotate = 1.0f;
 
 	const D3DXCOLOR AlongActor::MaterialColor[] = {
 		{ 1.0f, 0.4f, 0.4f, 1.0f },
@@ -31,7 +32,8 @@ namespace Field::Along
 	/**************************************
 	コンストラクタ
 	***************************************/
-	AlongActor::AlongActor(FieldLevel level)
+	AlongActor::AlongActor(FieldLevel level) :
+		level(level)
 	{
 		mesh = new MeshContainer();
 		int colorIndex = Math::RandomRange(0, 3);
@@ -82,6 +84,10 @@ namespace Field::Along
 	***************************************/
 	void AlongActor::Update()
 	{
+		if (level == FieldLevel::Space)
+		{
+			transform->Rotate(SpeedRotate, Vector3::Up);
+		}
 	}
 
 	/**************************************

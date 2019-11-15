@@ -40,9 +40,12 @@ namespace Field::Along
 		static const float MaxScale;
 		static const float MinScaleY;
 		static const float MaxScaleY;
+		static const float SpeedRotate;
 		static const D3DXCOLOR MaterialColor[];
 
 		MeshContainer * mesh;
+
+		FieldLevel level;
 	};
 }
 
