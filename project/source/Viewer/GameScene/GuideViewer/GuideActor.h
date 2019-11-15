@@ -31,14 +31,12 @@ public:
 		Yeah,		// 両手でグッとガッツポーズ
 		ShakeFist,	// 右手を上げて振る
 		Salute,		// 敬礼
-		Change,		// 指を指してチェーンジ！
 		WaveHand,	// 顔の前で手をふる（いやいやないない、みたいな）
 		Defeat,		// 顔を手で覆ってああーって感じ
 		Surprised,	// えぇー！？
 		TalkingTypeA,	// 両手を広げてアピールしながら話す
 		TalkingTypeB,	// 電話してる感じ
 		SecretTalk,		// 内緒話
-		ThumbsUp,		// サムズアップ
 
 		// 最大数
 		AnimMax

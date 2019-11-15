@@ -7,8 +7,8 @@
 //=====================================
 #include "GuideViewer.h"
 
-const D3DXVECTOR2 GuideViewer::SubScreenSize = D3DXVECTOR2(480.0f, 480.0f);
-const D3DXVECTOR3 GuideViewer::SubScreenPosition = D3DXVECTOR3(30.0f, 870.0f, 0.0f);
+const D3DXVECTOR2 GuideViewer::SubScreenSize = D3DXVECTOR2(360.0f, 360.0f);
+const D3DXVECTOR3 GuideViewer::SubScreenPosition = D3DXVECTOR3(30.0f, 690.0f, 0.0f);
 
 //=====================================
 // コンストラクタ
@@ -54,10 +54,11 @@ void GuideViewer::Draw()
 
 	//レンダーターゲット切り替え
 	LPDIRECT3DSURFACE9 oldSuf;
-	const D3DXCOLOR BackColor = D3DXCOLOR(0.0f, 0.0f, 0.05f, 1.0f);
+	const D3DXCOLOR BackColor = D3DXCOLOR(0.615f, 0.800f, 0.878f, 0.700f);
 	pDevice->GetRenderTarget(0, &oldSuf);
 	pDevice->SetRenderTarget(0, renderSurface);
 	pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BackColor, 1.0f, 0);
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 
 	camera->Set();
 
@@ -73,6 +74,7 @@ void GuideViewer::Draw()
 	pDevice->SetStreamSource(0, screenVtx, 0, sizeof(VERTEX_2D));
 	pDevice->SetFVF(FVF_VERTEX_2D);
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 
 }
 

@@ -22,14 +22,12 @@ const GuideActor::AnimData GuideActor::data[] = {
 	{"Yeah", 1.0f, 0.3f, 1 / 30.0f},
 	{"ShakeFist", 1.0f, 0.3f, 1 / 30.0f},
 	{"Salute", 1.0f, 0.3f, 1 / 30.0f},
-	{"Change", 1.0f, 0.3f, 1 / 30.0f},
 	{"WaveHand", 1.0f, 0.3f, 1 / 30.0f},
 	{"Defeat", 1.0f, 0.3f, 1 / 30.0f},
 	{"Surprised", 1.0f, 0.3f, 1 / 30.0f},
 	{"TalkingTypeA", 1.0f, 0.3f, 1 / 30.0f},
 	{"TalkingTypeB", 1.0f, 0.3f, 1 / 30.0f},
 	{"SecretTalk", 1.0f, 0.3f, 1 / 30.0f},
-	{"ThumbsUp", 1.0f, 0.3f, 1 / 30.0f},
 };
 
 const char* GuideActor::FileName = "data/MODEL/Robot.X";
@@ -148,10 +146,6 @@ void GuideActor::Debug()
 	{
 		anim->ChangeAnim(Salute);
 	}
-	if (Debug::Button("Change"))
-	{
-		anim->ChangeAnim(Change);
-	}
 	if (Debug::Button("WaveHand"))
 	{
 		anim->ChangeAnim(WaveHand);
@@ -175,10 +169,6 @@ void GuideActor::Debug()
 	if (Debug::Button("SecretTalk"))
 	{
 		anim->ChangeAnim(SecretTalk);
-	}
-	if (Debug::Button("ThumbsUp"))
-	{
-		anim->ChangeAnim(ThumbsUp);
 	}
 
 	Debug::End();
