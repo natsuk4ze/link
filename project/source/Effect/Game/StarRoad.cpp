@@ -25,7 +25,8 @@ namespace Effect::Game
 	{
 		//単位頂点バッファ作成
 		const D3DXVECTOR2 SizeParticle = { 6.0f, 6.0f };
-		MakeUnitBuffer(SizeParticle);
+		const D3DXVECTOR2 TexDiv = { 2.0f, 2.0f };
+		MakeUnitBuffer(SizeParticle, TexDiv);
 
 		//テクスチャ読み込み
 		LoadTexture("data/TEXTURE/Particle/star.png");
@@ -70,6 +71,10 @@ namespace Effect::Game
 		transform->Move(offset);
 
 		transform->SetRotation(Vector3::Zero);
+
+		uv.u = Math::RandomRange(0, 2) * 0.5f;
+		uv.v = Math::RandomRange(0, 2) * 0.5f;
+
 
 		cntFrame = 0;
 		active = true;
