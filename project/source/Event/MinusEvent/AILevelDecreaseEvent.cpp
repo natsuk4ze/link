@@ -74,7 +74,7 @@ void AILevelDecreaseEvent::Init()
 	camera->Init();
 
 	// 連打ゲームインスタンス
-	beatGame = new BeatGame([&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
+	beatGame = new BeatGame(BeatGame::AILevelDecrease,[&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
 
 	// 目標町の予定地を取得
 	Target = fieldEventHandler->GetDestroyTarget();

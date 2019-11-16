@@ -17,13 +17,13 @@
 ***************************************/
 GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 {
-	//入力確認
-	entity.field->CheckInput();
-
 	ProfilerCPU::Instance()->Begin("Update Event");
 	entity.eventController->Update();
 	entity.eventController->UpdateViewer();
 	ProfilerCPU::Instance()->End("Update Event");
+
+	//入力確認
+	entity.field->CheckInput();
 
 	//フィールド更新
 	ProfilerCPU::Instance()->Begin("Update Logic");

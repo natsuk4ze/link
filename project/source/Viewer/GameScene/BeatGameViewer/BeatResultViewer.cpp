@@ -1,13 +1,13 @@
 //=============================================================================
 //
-// イベントテロップ処理 [EventTelop.cpp]
+// 連打ゲーム結果ビュアー処理 [BeatResultViewer.cpp]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
 #include "../../../../main.h"
 #include"../../../../Framework/Math/Easing.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
-#include "EventTelop.h"
+#include "BeatResultViewer.h"
 
 //*****************************************************************************
 // グローバル変数
@@ -19,10 +19,10 @@ static const int animMax = 5;
 //テキストアニメーション開始位置
 static const float textStartPositionX[animMax] = {
 	SCREEN_WIDTH*1.5,
-	SCREEN_WIDTH*1.5,
+	-SCREEN_WIDTH*1.5,
 	SCREEN_CENTER_X,
 	SCREEN_CENTER_X,
-	-SCREEN_WIDTH * 1.5
+	+SCREEN_WIDTH * 1.5
 };
 
 //テキストアニメーション終了位置
@@ -30,8 +30,8 @@ static const float textEndPositionX[animMax] = {
 	SCREEN_WIDTH*1.5,
 	SCREEN_CENTER_X,
 	SCREEN_CENTER_X,
-	-SCREEN_WIDTH * 1.5,
-	-SCREEN_WIDTH * 1.5
+	+SCREEN_WIDTH * 1.5,
+	+SCREEN_WIDTH * 1.5
 };
 
 //テキストアニメーション種類
@@ -66,30 +66,30 @@ enum TelopAnimScene
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-EventTelop::EventTelop() :
+BeatResultViewer::BeatResultViewer() :
 	currentAnim(0)
 {
 	//テキスト
 	text = new BaseViewerDrawer();
-	text->LoadTexture("data/TEXTURE/Viewer/EventViewer/EventTelop/Text/Text.png");
-	text->size = D3DXVECTOR3(1024, 128.0f, 0.0f);
+	text->LoadTexture("data/TEXTURE/Viewer/BeatGameViewer/BeatResultViewer/Text.png");
+	text->size = D3DXVECTOR3(512.0f, 128.0f, 0.0f);
 	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	text->position = D3DXVECTOR3(SCREEN_WIDTH*1.5, SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
+	text->position = D3DXVECTOR3(-SCREEN_WIDTH * 1.5, SCREEN_CENTER_Y, 0.0f);
 	text->MakeVertex();
 
 	//背景
 	bg = new BaseViewerDrawer();
-	bg->LoadTexture("data/TEXTURE/Viewer/EventViewer/EventTelop/BG/BG.png");
+	bg->LoadTexture("data/TEXTURE/Viewer/BeatGameViewer/BeatResultViewer/BG.png");
 	bg->size = D3DXVECTOR3(SCREEN_WIDTH, 0.0f, 0.0f);
 	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	bg->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 5), SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
+	bg->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_CENTER_Y, 0.0f);
 	bg->MakeVertex();
 }
 
 //*****************************************************************************
 // デストラクタ
 //*****************************************************************************
-EventTelop::~EventTelop()
+BeatResultViewer::~BeatResultViewer()
 {
 	SAFE_DELETE(text);
 	SAFE_DELETE(bg);
@@ -98,7 +98,7 @@ EventTelop::~EventTelop()
 //=============================================================================
 // 更新処理
 //=============================================================================
-void EventTelop::Update()
+void BeatResultViewer::Update()
 {
 	//テロップ再生処理
 	Play();
@@ -107,7 +107,7 @@ void EventTelop::Update()
 //=============================================================================
 // 描画処理
 //=============================================================================
-void EventTelop::Draw(void)
+void BeatResultViewer::Draw(void)
 {
 	//再生中なら描画
 	if (!isPlaying) return;
@@ -122,7 +122,7 @@ void EventTelop::Draw(void)
 //=============================================================================
 // テロップ再生処理
 //=============================================================================
-void EventTelop::Play()
+void BeatResultViewer::Play()
 {
 	//再生中なら描画
 	if (!isPlaying) return;
@@ -177,7 +177,7 @@ void EventTelop::Play()
 //=============================================================================
 // 背景を開く処理
 //=============================================================================
-void EventTelop::OpenBG(void)
+void BeatResultViewer::OpenBG(void)
 {
 	//イージングのスタートとゴールを設定
 	float bgEasingStart = 0.0f;
@@ -190,7 +190,7 @@ void EventTelop::OpenBG(void)
 //=============================================================================
 // 背景を閉じる処理
 //=============================================================================
-void EventTelop::CloseBG(void)
+void BeatResultViewer::CloseBG(void)
 {
 	//イージングのスタートとゴールを設定
 	float bgEasingStart = 128.0f;
@@ -203,32 +203,21 @@ void EventTelop::CloseBG(void)
 //=============================================================================
 // テクスチャ情報受け渡し処理
 //=============================================================================
-void EventTelop::SetTexture(TelopID id)
+void BeatResultViewer::SetTexture(ResultID id)
 {
 	//テキストのUVを変更
-	text->SetTexture(1, Max, id);
-
-	bool isNegative;
-
-	if (id >= Meteorite)
-	{
-		isNegative = true;
-	}
-	else
-	{
-		isNegative = false;
-	}
+	text->SetTexture(1, ResultID::Max, id);
 
 	//背景のUVを変更
-	bg->SetTexture(1, 2, isNegative);
+	bg->SetTexture(1, ResultID::Max, id);
 	bg->vertexWk[1].tex.x = 3.0f;
 	bg->vertexWk[3].tex.x = 3.0f;
 }
 
 //=============================================================================
-// テロップセット処理
+// 結果ビュアーセット処理
 //=============================================================================
-void EventTelop::Set(TelopID id, std::function<void(void)> Callback)
+void BeatResultViewer::Set(ResultID id, std::function<void(void)> Callback)
 {
 	//テクスチャ情報受け渡し
 	SetTexture(id);

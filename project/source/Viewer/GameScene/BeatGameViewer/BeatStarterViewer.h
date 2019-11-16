@@ -1,12 +1,12 @@
 
 //=============================================================================
 //
-// フィールドエラーメッセージ処理 [FieldErrorMessage.h]
+// 連打ゲームスタータービュアー処理 [BeatStarterViewer.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _FIELD_ERRO_MESSAGE_H_
-#define _FIELD_ERRO_MESSAGE_H_
+#ifndef _BEAT_STARTER_VIEWER_H_
+#define _BEAT_STARTER_VIEWER_H_
 
 #include "../../Framework/BaseViewer.h"
 
@@ -18,47 +18,38 @@ class BaseViewerDrawer;
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class FieldErrorMessage :public BaseViewer
+class BeatStarterViewer :public BaseViewer
 {
 public:
-	FieldErrorMessage();
-	~FieldErrorMessage();
-
-	//メッセージの種類
-	enum ErroID
-	{
-		//街／道とつなっがていません
-		NotConnection,
-		//ストックが足りません
-		StockShortage,
-		//橋と橋は繋げられません
-		BridgeConnection,
-		//橋はカーブにできません
-		CurveBridge,
-		//種類数
-		Max
-	};
+	BeatStarterViewer();
+	~BeatStarterViewer();
 
 	void Update();
 	void Draw(void);
-	void Set(ErroID id);
+	void SetReady(void);
+	void SetGo(void);
 
 private:
+	BaseViewerDrawer *readyText;
+	BaseViewerDrawer *goText;
 
-	//テキスト
-	BaseViewerDrawer *text;
+	//レディーテキストをスクリーンイン
+	void InReady(void);
 
-	//再生
-	void Play();
+	//ゴーテキストを出現させる処理
+	void InGo(void);
 
-	//テクスチャ情報受け渡し
-	void SetTexture(ErroID id);
+	//レディーすべきか
+	bool shouldReady;
 
-	//再生中かどうか
-	bool isPlaying;
+	//ゴーすべきか
+	bool shouldGo;
 
 	//フレームカウント
 	int countFrame;
+
+	//アニメーション時間
+	float animTime;
 };
 
 #endif

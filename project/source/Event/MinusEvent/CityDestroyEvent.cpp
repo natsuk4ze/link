@@ -68,7 +68,7 @@ void CityDestroyEvent::Init()
 	camera->Init();
 
 	// 連打ゲームインスタンス
-	beatGame = new BeatGame([&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
+	beatGame = new BeatGame(BeatGame::CityDestroyEvent,[&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
 
 	// 破壊する町の予定地を取得
 	Target = fieldEventHandler->GetDestroyTarget();

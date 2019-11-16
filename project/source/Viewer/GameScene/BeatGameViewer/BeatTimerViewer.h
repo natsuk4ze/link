@@ -1,12 +1,11 @@
-
 //=============================================================================
 //
-// フィールドエラーメッセージ処理 [FieldErrorMessage.h]
+// 連打ゲームタイマービュアー処理 [BeatTimerViewer.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _FIELD_ERRO_MESSAGE_H_
-#define _FIELD_ERRO_MESSAGE_H_
+#ifndef _BEAT_TIMER_VIEWER_H_
+#define _BEAT_TIMER_VIEWER_H_
 
 #include "../../Framework/BaseViewer.h"
 
@@ -14,51 +13,40 @@
 // 前方宣言
 //*****************************************************************************
 class BaseViewerDrawer;
+class CountViewerDrawer;
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class FieldErrorMessage :public BaseViewer
+class BeatTimerViewer :public BaseViewer
 {
 public:
-	FieldErrorMessage();
-	~FieldErrorMessage();
+	BeatTimerViewer();
+	~BeatTimerViewer();
 
-	//メッセージの種類
-	enum ErroID
-	{
-		//街／道とつなっがていません
-		NotConnection,
-		//ストックが足りません
-		StockShortage,
-		//橋と橋は繋げられません
-		BridgeConnection,
-		//橋はカーブにできません
-		CurveBridge,
-		//種類数
-		Max
-	};
-
-	void Update();
+	void Update(void);
 	void Draw(void);
-	void Set(ErroID id);
+	void Set(float time);
 
 private:
 
-	//テキスト
-	BaseViewerDrawer *text;
+	//前のテキスト(”あと”)
+	BaseViewerDrawer * frontText;
 
-	//再生
-	void Play();
+	//後ろのテキスト(”秒”)
+	BaseViewerDrawer * backText;
 
-	//テクスチャ情報受け渡し
-	void SetTexture(ErroID id);
+	//小数点
+	BaseViewerDrawer *point;
 
-	//再生中かどうか
-	bool isPlaying;
+	//少数部
+	CountViewerDrawer *fewNum;
 
-	//フレームカウント
-	int countFrame;
+	//整数部
+	CountViewerDrawer *intNum;
+
+	//時間
+	float time;
 };
 
 #endif

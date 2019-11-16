@@ -1,12 +1,12 @@
 
 //=============================================================================
 //
-// フィールドエラーメッセージ処理 [FieldErrorMessage.h]
+// 連打ゲームゲージビュアー処理 [BeatGaugeViewer.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _FIELD_ERRO_MESSAGE_H_
-#define _FIELD_ERRO_MESSAGE_H_
+#ifndef _BEAT_GAUGE_VIEWER_H_
+#define _BEAT_GAUGE_VIEWER_H_
 
 #include "../../Framework/BaseViewer.h"
 
@@ -18,47 +18,49 @@ class BaseViewerDrawer;
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class FieldErrorMessage :public BaseViewer
+class BeatGaugeViewer :public BaseViewer
 {
 public:
-	FieldErrorMessage();
-	~FieldErrorMessage();
-
-	//メッセージの種類
-	enum ErroID
-	{
-		//街／道とつなっがていません
-		NotConnection,
-		//ストックが足りません
-		StockShortage,
-		//橋と橋は繋げられません
-		BridgeConnection,
-		//橋はカーブにできません
-		CurveBridge,
-		//種類数
-		Max
-	};
+	BeatGaugeViewer();
+	~BeatGaugeViewer();
 
 	void Update();
 	void Draw(void);
-	void Set(ErroID id);
+	void Set(float percent);
 
 private:
+	BaseViewerDrawer *bar;
+	BaseViewerDrawer *frame;
 
-	//テキスト
-	BaseViewerDrawer *text;
+	//ゲージバー描画処理
+	void DrawBar(void);
 
-	//再生
-	void Play();
+	//震わせる
+	void Shake(void);
 
-	//テクスチャ情報受け渡し
-	void SetTexture(ErroID id);
+	//振動制御処理
+	void HandleShake(void);
 
-	//再生中かどうか
-	bool isPlaying;
+	//震わせるべきか
+	bool shouldShake;
 
 	//フレームカウント
 	int countFrame;
+
+	//アニメーション時間
+	float animTime;
+
+	//ゲージパーセント
+	float gaugePer;
+
+	//現在フレームのパラメータ
+	float currentParam;
+
+	//前フレームのパラメータ
+	float lastParam;
+
+	//振動用のラジアン
+	float radian;
 };
 
 #endif

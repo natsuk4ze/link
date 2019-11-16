@@ -59,7 +59,7 @@ private:
 	BaseViewerDrawer * text[textMax];
 
 	//テクスチャ情報受け渡し
-	void PassTexture(OperationID id0, OperationID id1, OperationID id2);
+	void SetTexture(OperationID id0, OperationID id1, OperationID id2);
 
 	//再生中かどうか
 	bool isPlaying;

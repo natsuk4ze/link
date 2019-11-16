@@ -68,7 +68,7 @@ void OperationExplanationViewer::Draw(void)
 //=============================================================================
 // テクスチャ情報受け渡し処理
 //=============================================================================
-void OperationExplanationViewer::PassTexture(OperationID id0, OperationID id1, OperationID id2)
+void OperationExplanationViewer::SetTexture(OperationID id0, OperationID id1, OperationID id2)
 {
 	//idを格納しておく配列
 	OperationID id[textMax] = {
@@ -105,5 +105,5 @@ void OperationExplanationViewer::PassTexture(OperationID id0, OperationID id1, O
 void OperationExplanationViewer::Set(OperationID id0, OperationID id1, OperationID id2)
 {
 	//テクスチャ情報受け渡し処理
-	PassTexture(id0,id1,id2);
+	SetTexture(id0,id1,id2);
 }
