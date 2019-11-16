@@ -145,7 +145,8 @@ void SceneParticleManager::Draw()
 ***************************************/
 BaseEmitter* SceneParticleManager::Generate(UINT id, const D3DXVECTOR3& pos, std::function<void(void)> callback)
 {
-	assert(id >= 0 && id < controllers.size());
+	if (id < 0 || id >= controllers.size())
+		return nullptr;
 
 	return controllers[id]->SetEmitter(pos, callback);
 }
@@ -155,7 +156,8 @@ BaseEmitter* SceneParticleManager::Generate(UINT id, const D3DXVECTOR3& pos, std
 ***************************************/
 BaseEmitter* SceneParticleManager::Generate(UINT id, const Transform& transform, std::function<void(void)> callback)
 {
-	assert(id >= 0 && id < controllers.size());
+	if (id < 0 || id >= controllers.size())
+		return nullptr;
 
 	return controllers[id]->SetEmitter(transform, callback);
 }

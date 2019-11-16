@@ -13,6 +13,7 @@
 //**************************************
 // マクロ定義
 //**************************************
+class BaseEmitter;
 
 //**************************************
 // クラス定義
@@ -25,6 +26,11 @@ private:
 public:
 	CrossJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	~CrossJunctionActor();
+
+	void Rotate(float y) override;
+
+private:
+	std::vector<BaseEmitter*> emitterContainer;
 };
 
 #endif

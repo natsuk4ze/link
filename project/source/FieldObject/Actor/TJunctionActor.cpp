@@ -23,26 +23,20 @@ TJunctionActor::TJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel current
 
 	type = Field::Model::Junction;
 
-	emitterContainer.resize(2, nullptr);
+	emitterContainer.resize(3, nullptr);
 
 	D3DXVECTOR3 euler = transform->GetEulerAngle();
-	euler.y += 90.0f;
 
-	//直線側のエミッターをセット
-	BaseEmitter* emitter = GameParticleManager::Instance()->Generate(GameParticle::StarRoad, *transform);
-	if (emitter != nullptr)
+	if (currentLevel == Field::FieldLevel::Space)
 	{
-		emitter->SetRotatition(euler);
-		emitterContainer[0] = emitter;
-	}
+		for (auto&& emitter : emitterContainer)
+		{
+			euler.y += 90.0f;
 
-	//横道側のエミッターをセット
-	euler.y += 90.0f;
-	emitter = GameParticleManager::Instance()->Generate(GameParticle::StarRoad, *transform);
-	if (emitter != nullptr)
-	{
-		emitter->SetRotatition(euler);
-		emitterContainer[1] = emitter;
+			emitter = GameParticleManager::Instance()->Generate(GameParticle::StarRoad, *transform);
+			if(emitter != nullptr)
+				emitter->SetRotatition(euler);
+		}
 	}
 }
 

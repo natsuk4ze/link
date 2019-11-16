@@ -9,6 +9,8 @@
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../Animation/ActorAnimation.h"
 #include "../../Field/ActorLoader.h"
+#include "../../Effect/GameParticleManager.h"
+#include "../../../Framework/Particle/BaseEmitter.h"
 
 //=====================================
 // コンストラクタ
@@ -20,6 +22,19 @@ CrossJunctionActor::CrossJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel
 	ResourceManager::Instance()->GetMesh(ActorLoader::CrossTag[currentLevel].c_str(), mesh);
 
 	type = Field::Model::Junction;
+
+	D3DXVECTOR3 euler = transform->GetEulerAngle();
+	emitterContainer.resize(4, nullptr);
+	for (auto&& emitter : emitterContainer)
+	{
+		emitter = GameParticleManager::Instance()->Generate(GameParticle::StarRoad, *transform);
+		if (emitter != nullptr)
+		{
+			emitter->SetRotatition(euler);
+		}
+
+		euler.y += 90.0f;
+	}
 }
 
 //=====================================
@@ -27,4 +42,29 @@ CrossJunctionActor::CrossJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel
 //=====================================
 CrossJunctionActor::~CrossJunctionActor()
 {
+	for (auto&& emitter : emitterContainer)
+	{
+		if (emitter == nullptr)
+			continue;
+
+		emitter->SetActive(false);
+	}
+}
+
+//=====================================
+// 回転処理
+//=====================================
+void CrossJunctionActor::Rotate(float y)
+{
+	PlaceActor::Rotate(y);
+
+	D3DXVECTOR3 euler = transform->GetEulerAngle();
+	for (auto&& emitter : emitterContainer)
+	{
+		if (emitter == nullptr)
+			continue;
+
+		emitter->SetRotatition(euler);
+		euler.y += 90.0f;
+	}
 }
