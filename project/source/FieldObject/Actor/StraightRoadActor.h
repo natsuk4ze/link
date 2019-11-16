@@ -12,6 +12,7 @@
 //**************************************
 // マクロ定義
 //**************************************
+class BaseEmitter;
 
 //**************************************
 // クラス定義
@@ -22,6 +23,11 @@ class StraightRoadActor :
 public:
 	StraightRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	~StraightRoadActor();
+
+	void Rotate(float y) override;
+
+private:
+	BaseEmitter * emitter;
 };
 
 #endif

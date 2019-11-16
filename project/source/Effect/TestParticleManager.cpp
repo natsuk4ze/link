@@ -20,6 +20,7 @@
 #include "Game/WaterSmog.h"
 #include "Game/MoveTail.h"
 #include "Game/LinkLevelUp.h"
+#include "Game\StarRoad.h"
 
 /**************************************
 èâä˙âªèàóù
@@ -42,6 +43,7 @@ void TestParticleManager::Init()
 	controllers[TestParticle::WaterSmog] = new Effect::Game::WaterSmogController();
 	controllers[TestParticle::MoveTail] = new Effect::Game::MoveTailController();
 	controllers[TestParticle::LinkLevelUp] = new Effect::Game::LinkLevelUpController();
+	controllers[TestParticle::StarRoad] = new Effect::Game::StarRoadController();
 }
 
 /**************************************
@@ -75,6 +77,8 @@ void TestParticleManager::Update()
 		Generate(TestParticle::WaterSmog, Vector3::Zero);
 	else if (Debug::Button("LinkLevelUp"))
 		Generate(TestParticle::LinkLevelUp, { SCREEN_CENTER_X, SCREEN_CENTER_Y, 0.0f });
+	else if (Debug::Button("StarRoad"))
+		Generate(TestParticle::StarRoad, Vector3::Up * 20.0f);
 
 	Debug::NewLine();
 

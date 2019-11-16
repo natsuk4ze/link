@@ -234,6 +234,7 @@
     <ClInclude Include="Framework\Sound\MusicClip.h" />
     <ClInclude Include="Framework\Sound\sound.h" />
     <ClInclude Include="Framework\Sound\SoundEffect.h" />
+    <ClInclude Include="source\Effect\Game\StarRoad.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatGameViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatTitleViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatTimerViewer.h" />
@@ -456,6 +457,7 @@
     <ClCompile Include="Framework\Sound\MusicClip.cpp" />
     <ClCompile Include="Framework\Sound\sound.cpp" />
     <ClCompile Include="Framework\Sound\SoundEffect.cpp" />
+    <ClCompile Include="source\Effect\Game\StarRoad.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatGameViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatTitleViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatTimerViewer.cpp" />

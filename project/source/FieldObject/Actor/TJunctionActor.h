@@ -12,6 +12,7 @@
 //**************************************
 // マクロ定義
 //**************************************
+class BaseEmitter;
 
 //**************************************
 // クラス定義
@@ -22,6 +23,11 @@ class TJunctionActor :
 public:
 	TJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	~TJunctionActor();
+
+	void Rotate(float y) override;
+
+private:
+	std::vector<BaseEmitter*> emitterContainer;
 };
 
 #endif

@@ -6,6 +6,7 @@
 //=====================================
 #include "GameParticleManager.h"
 #include "../../Framework/PostEffect/CrossFilterController.h"
+#include "../../Framework/Tool/DebugWindow.h"
 
 #include "Game/BlueSpark.h"
 #include "Game/BlueDebris.h"
@@ -20,6 +21,7 @@
 #include "Game/MoveTail.h"
 #include "Game/SpaceTear.h"
 #include "Game/LinkLevelUp.h"
+#include "Game\StarRoad.h"
 
 /**************************************
 staticƒƒ“ƒo
@@ -48,9 +50,22 @@ void GameParticleManager::Init()
 	controllers[GameParticle::MoveTail] = new Effect::Game::MoveTailController();
 	controllers[GameParticle::SpaceTear] = new Effect::Game::SpaceTearController();
 	controllers[GameParticle::LinkLevelUp] = new Effect::Game::LinkLevelUpController();
+	controllers[GameParticle::StarRoad] = new Effect::Game::StarRoadController();
 
 	crossFilter->SetPower(BloomPower[0], BloomPower[1], BloomPower[2]);
 	crossFilter->SetThrethold(BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]);
+}
+
+/**************************************
+•`‰æˆ—
+***************************************/
+void GameParticleManager::Draw()
+{
+	SceneParticleManager::Draw();
+
+	Debug::Begin("GameParticle");
+	Debug::Text("starroad : %d", controllers[GameParticle::StarRoad]->GetParticleCount());
+	Debug::End();
 }
 
 /**************************************

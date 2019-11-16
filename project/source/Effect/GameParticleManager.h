@@ -32,6 +32,7 @@ namespace GameParticle
 		MoveTail,		//移動の軌跡
 		SpaceTear,		//時空断裂のスパーク,
 		LinkLevelUp,	//リンクレベルアップ時エフェクト
+		StarRoad,
 		Max
 	};
 }
@@ -45,6 +46,9 @@ class GameParticleManager : public SceneParticleManager, public BaseSingleton<Ga
 public:
 	//初期化処理
 	void Init() override;
+
+	//描画処理
+	void Draw() override;
 
 	//シンギュラリティイベントのエフェクトセット処理
 	void SetSingularityEffect(const D3DXVECTOR3& position, std::function<void(void)> callback = nullptr);

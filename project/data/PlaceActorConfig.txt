@@ -54,16 +54,16 @@
 	"Space-Town":"data/MODEL/PlaceActor/earth.x",
 
 	"Space-Straight":"フィールドレベル宇宙の直線道モデル",
-	"Space-Straight":"data/MODEL/PlaceActor/Straight.x",
+	"Space-Straight":"data/MODEL/PlaceActor/SpaceStraight.x",
 
 	"Space-Curve":"フィールドレベル宇宙のカーブモデル",
-	"Space-Curve":"data/MODEL/PlaceActor/Curve.x",
+	"Space-Curve":"data/MODEL/PlaceActor/SpaceCurve.x",
 
 	"Space-T":"フィールドレベル宇宙のT字路",
-	"Space-T":"data/MODEL/PlaceActor/T-Junction.x",
+	"Space-T":"data/MODEL/PlaceActor/SpaceT.x",
 
 	"Space-Cross":"フィールドレベル宇宙の十字路",
-	"Space-Cross":"data/MODEL/PlaceActor/Cross-Junction.x",
+	"Space-Cross":"data/MODEL/PlaceActor/SpaceCross.x",
 
 	"Space-Bridge":"フィールドレベル宇宙の橋モデル",
 	"Space-Bridge":"data/MODEL/PlaceActor/bridge.x",

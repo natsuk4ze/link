@@ -135,6 +135,7 @@
     <ClInclude Include="source\Effect\Game\MeteorFire.h" />
     <ClInclude Include="source\Effect\Game\MoveTail.h" />
     <ClInclude Include="source\Effect\Game\SpaceTear.h" />
+    <ClInclude Include="source\Effect\Game\StarRoad.h" />
     <ClInclude Include="source\Effect\Game\TownExplosion.h" />
     <ClInclude Include="source\Effect\Game\ExplosionFlare.h" />
     <ClInclude Include="source\Effect\Game\MeteorExplosion.h" />
@@ -363,6 +364,7 @@
     <ClCompile Include="source\Effect\Game\MeteorFire.cpp" />
     <ClCompile Include="source\Effect\Game\MoveTail.cpp" />
     <ClCompile Include="source\Effect\Game\SpaceTear.cpp" />
+    <ClCompile Include="source\Effect\Game\StarRoad.cpp" />
     <ClCompile Include="source\Effect\Game\TownExplosion.cpp" />
     <ClCompile Include="source\Effect\Game\ExplosionFlare.cpp" />
     <ClCompile Include="source\Effect\Game\MeteorExplosion.cpp" />

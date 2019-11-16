@@ -9,6 +9,8 @@
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../Animation/ActorAnimation.h"
 #include "../../Field/ActorLoader.h"
+#include "../../Effect/GameParticleManager.h"
+#include "../../../Framework/Particle/BaseEmitter.h"
 
 //=====================================
 // コンストラクタ
@@ -20,6 +22,24 @@ CurveRoadActor::CurveRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel current
 	ResourceManager::Instance()->GetMesh(ActorLoader::CurveTag[currentLevel].c_str(), mesh);
 
 	type = Field::Model::Road;
+
+	if (currentLevel == Field::FieldLevel::Space)
+	{
+		emitterContainer.resize(2, nullptr);
+		D3DXVECTOR3 euler = transform->GetEulerAngle();
+
+		for (auto&& emitter : emitterContainer)
+		{
+			//エミッターセット
+			emitter = GameParticleManager::Instance()->Generate(GameParticle::StarRoad, *transform);
+
+			if (emitter != nullptr)
+				emitter->SetRotatition(euler);
+
+			euler.y -= 90.0f;
+		}
+	}
+
 }
 
 //=====================================
@@ -27,4 +47,27 @@ CurveRoadActor::CurveRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel current
 //=====================================
 CurveRoadActor::~CurveRoadActor()
 {
+	for (auto&& emitter : emitterContainer)
+	{
+		if (emitter != nullptr)
+			emitter->SetActive(false);
+	}
+}
+
+//=====================================
+// 回転処理
+//=====================================
+void CurveRoadActor::Rotate(float y)
+{
+	PlaceActor::Rotate(y);
+
+	D3DXVECTOR3 euler = transform->GetEulerAngle();
+	for (auto&& emitter : emitterContainer)
+	{
+		if (emitter != nullptr)
+		{
+			emitter->SetRotatition(euler);
+			euler.y -= 90.0f;
+		}
+	}
 }

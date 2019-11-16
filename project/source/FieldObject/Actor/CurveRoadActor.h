@@ -12,6 +12,7 @@
 //**************************************
 // マクロ定義
 //**************************************
+class BaseEmitter;
 
 //**************************************
 // クラス定義
@@ -22,6 +23,11 @@ class CurveRoadActor :
 public:
 	CurveRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	~CurveRoadActor();
+
+	void Rotate(float y);
+
+private:
+	std::vector<BaseEmitter*> emitterContainer;
 };
 
 #endif

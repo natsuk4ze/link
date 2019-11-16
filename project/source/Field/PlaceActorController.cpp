@@ -55,7 +55,7 @@ namespace Field::Actor
 		currentLevel(level),
 		bonusSideWay(0.0f)
 	{
-		alongController = new Along::AlongController();
+		alongController = new Along::AlongController(level);
 		aStarController = new Route::AStarController();
 		passengerController = new PassengerController(currentLevel);
 
@@ -158,6 +158,7 @@ namespace Field::Actor
 		ResourceManager::Instance()->LoadMesh("NoneActor", "data/MODEL/PlaceActor/ground.x");
 		ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
 		ResourceManager::Instance()->LoadMesh("AlongCity", "data/MODEL/AlongActor/AlongActorCity.x");
+		ResourceManager::Instance()->LoadMesh("AlongSpace", "data/MODEL/AlongActor/AlongSpace.x");
 
 		//アクターのリソースをロード
 		ActorLoader loader;
