@@ -240,7 +240,6 @@
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatStarterViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatTimerViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatTitleViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\EventViewer\BeatGameViewerOrigin.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatGameViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h" />
@@ -465,7 +464,6 @@
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatStarterViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatTimerViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatTitleViewer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\EventViewer\BeatGameViewerOrigin.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatGameViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventMessage.cpp" />
