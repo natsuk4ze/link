@@ -116,6 +116,12 @@ void BeatStarterViewer::InGo(void)
 
 	//ゴーテキストのサイズを更新
 	goText->size.y = Easing::EaseValue(animTime, goTextEasingStart, goTextEasingGoal, OutCirc);
+
+	//一定時間経過で消す
+	if (countFrame == 50.0f)
+	{
+		shouldGo = false;
+	}
 }
 
 //=============================================================================

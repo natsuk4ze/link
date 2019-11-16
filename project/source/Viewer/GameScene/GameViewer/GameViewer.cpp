@@ -16,9 +16,6 @@
 #include "../../../../Framework/Tool/DebugWindow.h"
 #endif
 
-////////////////テスト///////////
-#include "../BeatGameViewer/BeatGameViewer.h"
-
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
@@ -27,9 +24,6 @@ GameViewer::GameViewer()
 	gameViewer.push_back(stockViewer = new ItemStockViewer());
 	gameViewer.push_back(timerViewer = new TimerViewer());
 	gameViewer.push_back(levelViewer = new LevelViewer());
-
-	//テスト
-	beatGameViewer = new BeatGameViewer();
 }
 
 //*****************************************************************************
@@ -45,9 +39,6 @@ GameViewer::~GameViewer()
 
 	//インスタンスを入れた配列をクリア
 	gameViewer.clear();
-
-	////テスト/////
-	SAFE_DELETE(beatGameViewer);
 }
 
 //=============================================================================
@@ -59,9 +50,6 @@ void GameViewer::Update()
 	{
 		gameViewer[i]->Update();
 	}
-
-	////テスト
-	beatGameViewer->Update();
 }
 
 //=============================================================================
@@ -80,9 +68,6 @@ void GameViewer::Draw(void)
 	{
 		gameViewer[i]->Draw();
 	}
-
-	/////teat
-	beatGameViewer->Draw();
 
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);

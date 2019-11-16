@@ -56,9 +56,6 @@ void BeatGameViewer::Update()
 
 #ifdef _DEBUG
 
-	SetGameTitle(titleViewer->CalmAI);
-	SetRemainTime(0);
-
 	if (Keyboard::GetTrigger(DIK_R))
 	{
 		SetReady();

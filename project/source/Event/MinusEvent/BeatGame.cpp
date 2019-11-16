@@ -1,3 +1,7 @@
+//*****************************************************************************
+// 11/15(金)～おおはま改変
+//*****************************************************************************
+
 //=============================================================================
 //
 // 連打ゲームイベントクラス [BeatGame.cpp]
@@ -6,85 +10,49 @@
 //=============================================================================
 #include "../../../main.h"
 #include "BeatGame.h"
-#include "../../Viewer/Framework/ViewerDrawer/BaseViewerDrawer.h"
-#include "../../Viewer/Framework/ViewerDrawer/countviewerdrawer.h"
-#include "../../Viewer/GameScene/EventViewer/BeatGameViewerOrigin.h"
-#include "../../../Framework/Renderer2D/TextViewer.h"
+#include <mutex>
+#include <iostream>
+#include "../../Viewer/GameScene/BeatGameViewer/BeatGameViewer.h"
 #include "../../../Framework/Input/input.h"
-
-
-//*****************************************************************************
-// マクロ定義
-//*****************************************************************************
-// 連打ゲームの時間
-const int DefaultInputFrame = 90;
-// 連打の回数
-const int InputGoal = 20;
 
 //*****************************************************************************
 // スタティック変数宣言
 //*****************************************************************************
 
+//連打の回数
+static const int goalInput = 20;
+
+//準備時間
+static const float readyTime = 3.0f;
+
+//ゲーム時間
+static const float gameTime = 5.0f;
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-BeatGame::BeatGame(std::function<void(bool)> Callback) :
+BeatGame::BeatGame(BeatGame::GameType type, std::function<void(bool)> Callback) :
 	EventBase(false),
-	RemainFrame(DefaultInputFrame),
-	InputCount(0),
 	TelopOver(false),
-	IsDrawingViewer(false),
-	IsSuccess(false),
+	isSuccess(false),
+	isReady(false),
+	isFinished(false),
+	canSetReady(true),
+	canSetGo(true),
+	countInput(0),
+	countFrame(0),
 	Callback(Callback)
 {
-	Viewer = new BeatGameViewerOrigin();
+	beatGameViewer = new BeatGameViewer();
 
-	// テキスト
-	Text = new TextViewer("data/TEXTURE/Viewer/EventViewer/EventMessage/Text_cinecaption226.ttf", 80);
-	Text->SetColor(SET_COLOR_NOT_COLORED);
-	Text->SetPos((int)(SCREEN_WIDTH / 2), (int)(SCREEN_HEIGHT / 10 * 2.0f + 120.0f));
-	Text->SetText("Cボタン連打！　残り 20 回");
+	//再生中のイベントえおセット
+	playingEvent = type;
 
-	CountdownText = new TextViewer("data/TEXTURE/Viewer/EventViewer/EventMessage/Text_cinecaption226.ttf", 160);
-	CountdownText->SetColor(SET_COLOR_NOT_COLORED);
-	CountdownText->SetPos((int)(SCREEN_WIDTH / 2), (int)(SCREEN_HEIGHT / 2));
-	CountdownText->SetText("Ready");
-
-	// 整数部
-	intNum = new CountViewerDrawer();
-	intNum->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Number.png");
-	intNum->MakeVertex();
-	intNum->size = D3DXVECTOR3(120.0f, 120.0f, 0.0f);
-	intNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	intNum->position = D3DXVECTOR3(SCREEN_WIDTH / 2 - 140.0f, SCREEN_HEIGHT / 10 * 2.0f + 20.0f, 0.0f);
-	intNum->SetColor(SET_COLOR_NOT_COLORED);
-	intNum->intervalPosScr = 80.0f;
-	intNum->intervalPosTex = 0.1f;
-	intNum->placeMax = 2;
-	intNum->baseNumber = 10;
-
-	// 小数部
-	fewNum = new CountViewerDrawer();
-	fewNum->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Number.png");
-	fewNum->MakeVertex();
-	fewNum->size = D3DXVECTOR3(60.0f, 60.0f, 0.0f);
-	fewNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	fewNum->position = D3DXVECTOR3(SCREEN_WIDTH / 2 + 40.0f, SCREEN_HEIGHT / 10 * 2.0f + 30.0f, 0.0f);
-	fewNum->SetColor(SET_COLOR_NOT_COLORED);
-	fewNum->intervalPosScr = 40.0f;
-	fewNum->intervalPosTex = 0.1f;
-	fewNum->placeMax = 2;
-	fewNum->baseNumber = 10;
-
-	// 小数点
-	point = new BaseViewerDrawer();
-	point->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Point.png");
-	point->MakeVertex();
-	point->size = D3DXVECTOR3(100.0f, 100.0f, 0.0f);
-	point->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	point->position = D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 10 * 2.0f, 0.0f);
-	point->SetColor(SET_COLOR_NOT_COLORED);
+	//ゲームタイトルをセット
+	beatGameViewer->SetGameTitle(GetGameTitle());
+	//パラメータを初期値にセット
+	beatGameViewer->SetGameGauge(1.0f);
+	beatGameViewer->SetRemainTime(gameTime);
 }
 
 //=============================================================================
@@ -92,12 +60,7 @@ BeatGame::BeatGame(std::function<void(bool)> Callback) :
 //=============================================================================
 BeatGame::~BeatGame()
 {
-	SAFE_DELETE(Text);
-	SAFE_DELETE(CountdownText);
-	SAFE_DELETE(point);
-	SAFE_DELETE(fewNum);
-	SAFE_DELETE(intNum);
-	SAFE_DELETE(Viewer);
+	SAFE_DELETE(beatGameViewer);
 }
 
 //=============================================================================
@@ -106,58 +69,70 @@ BeatGame::~BeatGame()
 void BeatGame::Update()
 {
 	// テロップ再生中またゲーム終了
-	if (!TelopOver || !UseFlag)
+	if (!TelopOver || !UseFlag) return;
+
+	if (!isReady)
 	{
-		return;
+		//レディーテキストをセット
+		SetReadyText();
+
+		//フレームカウント更新
+		countFrame++;
+
+		//準備時間に達したら
+		if (countFrame / 30.0f >= readyTime)
+		{
+			//フレームカウントリセット
+			countFrame = 0;
+
+			//準備完了状態に移行
+			isReady = true;
+		}
 	}
 	else
 	{
-		// ビューア描画していない
-		if (!IsDrawingViewer)
+		//ゴーテキストをセット
+		SetGoText();
+
+		//フレームカウント更新
+		countFrame++;
+
+		//入力カウントを更新(*注意：本番はどのキー入力でもOKにする？)
+		if (Keyboard::GetTrigger(DIK_C))
 		{
-			RemainFrame--;
-
-			// カウント計算
-			if (Keyboard::GetTrigger(DIK_C))
-			{
-				InputCount++;
-			}
-
-			char Message[64];
-			sprintf(Message, "Cボタン連打！　残り %d 回", InputGoal - InputCount);
-			Text->SetText(Message);
-
-			if (DefaultInputFrame - RemainFrame >= 30)
-			{
-				CountdownText->SetText("");
-			}
-			else
-			{
-				CountdownText->SetText("START!!!");
-			}
-
-			if (InputCount >= 20)
-			{
-				// 成功
-				Viewer->DrawStart(true, [&]() {EventOver(); });
-				IsSuccess = true;
-				IsDrawingViewer = true;
-			}
-
-			if (RemainFrame <= 0)
-			{
-				// 失敗
-				Viewer->DrawStart(false, [&]() {EventOver(); });
-				IsSuccess = false;
-				IsDrawingViewer = true;
-			}
+			countInput++;
 		}
-		// ビューア描画中
-		else
+
+		//ビュアーのパラメータをセット
+		SetViewerParam();
+
+		//成功したか判定
+		if (IsSuccess())
 		{
-			Viewer->Update();
+			//成功リザルトを表示
+			beatGameViewer->SetResult(BeatResultViewer::Success, [&]() {EventOver(); });
+
+			//成功
+			isSuccess = true;
+
+			//終了
+			isFinished = true;
+		}
+
+		//失敗したか判定
+		if (IsFailed())
+		{
+			//失敗リザルトを表示
+			beatGameViewer->SetResult(BeatResultViewer::Failed, [&]() {EventOver(); });
+
+			//失敗
+			isSuccess = false;
+
+			//終了
+			isFinished = true;
 		}
 	}
+	beatGameViewer->Update();
 }
 
 //=============================================================================
@@ -168,45 +143,94 @@ void BeatGame::Draw()
 	if (!UseFlag)
 		return;
 
-	LPDIRECT3DDEVICE9 Device = GetDevice();
+	if (!TelopOver) return;
 
-	if (TelopOver)
+	beatGameViewer->Draw();
+}
+
+//=============================================================================
+// レディーテキストセット処理(一度だけ実行)
+//=============================================================================
+void BeatGame::SetReadyText(void)
+{
+	if (!canSetReady) return;
+
+	beatGameViewer->SetReady();
+	canSetReady = false;
+}
+
+//=============================================================================
+// ゴーテキストセット処理(一度だけ実行)
+//=============================================================================
+void BeatGame::SetGoText(void)
+{
+	if (!canSetGo) return;
+
+	beatGameViewer->SetGo();
+	canSetGo = false;
+}
+
+//=============================================================================
+// ビュアーパラメータのセット処理
+//=============================================================================
+void BeatGame::SetViewerParam(void)
+{
+	if (isFinished) return;
+
+	float remainTime = gameTime - countFrame / 30.0f;
+	float gaugeRatio = 1.0f - (float)((float)countInput / (float)goalInput);
+
+	beatGameViewer->SetRemainTime(remainTime);
+	beatGameViewer->SetGameGauge(gaugeRatio);
+}
+
+//=============================================================================
+// 連打ゲームタイトル取得処理
+//=============================================================================
+BeatTitleViewer::TitleID BeatGame::GetGameTitle(void)
+{
+	BeatTitleViewer::TitleID id;
+
+	//id振り分け
+	switch (playingEvent)
 	{
-		CountdownText->Draw();
+	case BeatGame::AILevelDecrease:
+		id = BeatTitleViewer::CalmAI;
+		break;
+
+	case BeatGame::BanStockUse:
+		id = BeatTitleViewer::CalmAI;
+		break;
+
+	case BeatGame::CityDestroyEvent:
+		id = BeatTitleViewer::ProtectCity;
+		break;
+
+	default:
+		break;
 	}
 
-	if (!IsDrawingViewer)
-	{
-		// テキスト
-		Text->Draw();
-		CountdownText->Draw();
+	return id;
+}
 
-		Device->SetRenderState(D3DRS_ALPHATESTENABLE, true);
-		Device->SetRenderState(D3DRS_ALPHAREF, 0);
-		Device->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-		Device->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+//=============================================================================
+// 成功したか判定処理
+//=============================================================================
+bool BeatGame::IsSuccess(void)
+{
+	if (isFinished) return false;
 
-		// 小数点
-		point->DrawOrigin();
-		point->SetVertexPos();
+	return 	countInput >= goalInput;
+}
 
-		float RemainTime = RemainFrame / 30.0f;
+//=============================================================================
+// 失敗したか判定処理
+//=============================================================================
+bool BeatGame::IsFailed(void)
+{
+	if (isFinished) return false;
 
-		// 整数部
-		intNum->DrawCounter(intNum->baseNumber, (int)RemainTime, intNum->placeMax,
-			intNum->intervalPosScr, intNum->intervalPosTex);
-
-		// 小数部
-		fewNum->DrawCounter(fewNum->baseNumber, (int)((RemainTime - (int)RemainTime)*pow(fewNum->baseNumber, fewNum->placeMax)), fewNum->placeMax,
-			fewNum->intervalPosScr, fewNum->intervalPosTex);
-
-		Device->SetRenderState(D3DRS_ALPHATESTENABLE, false);
-		Device->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
-	}
-	else
-	{
-		Viewer->Draw();
-	}
+	return countFrame >= gameTime * 30;
 }
 
 //=============================================================================
@@ -231,6 +255,6 @@ void BeatGame::CountdownStart(void)
 //=============================================================================
 void BeatGame::EventOver(void)
 {
-	Callback(IsSuccess);
+	Callback(isSuccess);
 	UseFlag = false;
 }
