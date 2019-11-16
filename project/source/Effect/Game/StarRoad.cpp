@@ -15,7 +15,8 @@ namespace Effect::Game
 	***************************************/
 	const float StarRoad::RangeX = 2.0f;
 	const float StarRoad::RangeY = 1.0f;
-	const float StarRoad::RangeZ = 8.0f;
+	const float StarRoad::MaxRangeZ = 8.0f;
+	const float StarRoad::MinRangeZ = -2.0f;
 
 	/**************************************	
 	StarRoadControllerコンストラクタ
@@ -66,7 +67,7 @@ namespace Effect::Game
 		D3DXVECTOR3 offset = Vector3::Zero;
 		offset += transform->Right() * Math::RandomRange(-RangeX, RangeX);
 		offset += transform->Up() * Math::RandomRange(-RangeY, RangeY);
-		offset += transform->Forward() * Math::RandomRange(-RangeZ, RangeZ);
+		offset += transform->Forward() * Math::RandomRange(MinRangeZ, MaxRangeZ);
 
 		transform->Move(offset);
 
@@ -119,7 +120,7 @@ namespace Effect::Game
 
 		//描画領域外だったら放出しない
 		D3DXVECTOR3 screenPos = Camera::MainCamera()->Projection(transform->GetPosition());
-		if (screenPos.x < 0.0f || screenPos.x >(float)SCREEN_WIDTH || screenPos.y < 0.0f || screenPos.y >(float)SCREEN_HEIGHT)
+		if (screenPos.x < 0.0f || screenPos.x >(float)SCREEN_WIDTH * 1.2f || screenPos.y < 0.0f || screenPos.y >(float)SCREEN_HEIGHT * 1.2f)
 			return true;
 
 		UINT cntEmit = 0;

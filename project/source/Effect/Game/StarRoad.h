@@ -39,7 +39,8 @@ namespace Effect::Game
 	private:
 		static const float RangeX;
 		static const float RangeY;
-		static const float RangeZ;
+		static const float MaxRangeZ;
+		static const float MinRangeZ;
 
 		D3DXVECTOR3 direction;
 	};
