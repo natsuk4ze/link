@@ -118,7 +118,7 @@ void BeatStarterViewer::InGo(void)
 	goText->size.y = Easing::EaseValue(animTime, goTextEasingStart, goTextEasingGoal, OutCirc);
 
 	//ˆê’èŠÔŒo‰ß‚ÅÁ‚·
-	if (countFrame == 100.0f)
+	if (countFrame == 50.0f)
 	{
 		shouldGo = false;
 	}

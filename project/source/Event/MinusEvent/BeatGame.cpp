@@ -12,7 +12,6 @@
 #include "BeatGame.h"
 #include <mutex>
 #include <iostream>
-#include "../../Viewer/GameScene/BeatGameViewer/BeatTitleViewer.h"
 #include "../../Viewer/GameScene/BeatGameViewer/BeatGameViewer.h"
 #include "../../../Framework/Input/input.h"
 
@@ -45,8 +44,13 @@ BeatGame::BeatGame(BeatGame::GameType type, std::function<void(bool)> Callback) 
 	Callback(Callback)
 {
 	beatGameViewer = new BeatGameViewer();
+
+	//再生中のイベントえおセット
 	playingEvent = type;
+
+	//ゲームタイトルをセット
 	beatGameViewer->SetGameTitle(GetGameTitle());
+	//パラメータを初期値にセット
 	beatGameViewer->SetGameGauge(1.0f);
 	beatGameViewer->SetRemainTime(gameTime);
 }
@@ -93,11 +97,14 @@ void BeatGame::Update()
 		//フレームカウント更新
 		countFrame++;
 
-		//入力カウントを更新
+		//入力カウントを更新(*注意：本番はどのキー入力でもOKにする？)
 		if (Keyboard::GetTrigger(DIK_C))
 		{
 			countInput++;
 		}
+
+		//ビュアーのパラメータをセット
+		SetViewerParam();
 
 		//成功したか判定
 		if (IsSuccess())
@@ -138,21 +145,6 @@ void BeatGame::Draw()
 
 	if (!TelopOver) return;
 
-	//終了してたら残り時間とゲージを0にセット
-	if (isFinished)
-	{
-		beatGameViewer->SetRemainTime(0.0f);
-		beatGameViewer->SetGameGauge(0.0f);
-	}
-	//ゲーム中で準備完了状態なら残り時間とゲージにパラメータをセット
-	else if(isReady)
-	{
-		float remainTime = gameTime - countFrame / 30.0f;
-		float gaugeRatio = 1.0f - (float)((float)countInput / (float)goalInput);
-
-		beatGameViewer->SetRemainTime(remainTime);
-		beatGameViewer->SetGameGauge(gaugeRatio);
-	}
 	beatGameViewer->Draw();
 }
 
@@ -176,6 +168,20 @@ void BeatGame::SetGoText(void)
 
 	beatGameViewer->SetGo();
 	canSetGo = false;
+}
+
+//=============================================================================
+// 	//ビュアーパラメータのセット処理
+//=============================================================================
+void BeatGame::SetViewerParam(void)
+{
+	if (isFinished) return;
+
+	float remainTime = gameTime - countFrame / 30.0f;
+	float gaugeRatio = 1.0f - (float)((float)countInput / (float)goalInput);
+
+	beatGameViewer->SetRemainTime(remainTime);
+	beatGameViewer->SetGameGauge(gaugeRatio);
 }
 
 //=============================================================================

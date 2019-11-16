@@ -27,6 +27,22 @@ class BeatTitleViewer;
 //*****************************************************************************
 class BeatGame : public EventBase
 {
+public:
+	//ゲームタイトルの種類
+	enum GameType
+	{
+		AILevelDecrease,
+		BanStockUse,
+		CityDestroyEvent,
+	};
+
+	BeatGame(BeatGame::GameType type, std::function<void(bool)> CallBack = nullptr);
+	~BeatGame();
+	void Update(void) override;
+	void Draw(void) override;
+	string GetEventMessage(int FieldLevel) override;
+	void CountdownStart(void);
+
 private:
 	int countInput;
 	float countFrame;
@@ -52,30 +68,17 @@ private:
 	//ゴーテキストセット処理
 	void SetGoText(void);
 
-	//連打ゲームビュアー
-	BeatGameViewer *beatGameViewer;
+	//ビュアーパラメータのセット処理
+	void SetViewerParam(void);
 
-	//ゲームタイトル取得
+	//ゲームタイトル取得処理
 	BeatTitleViewer::TitleID GetGameTitle(void);
-
-public:
-
-	enum GameType
-	{
-		AILevelDecrease,
-		BanStockUse,
-		CityDestroyEvent,
-	};
 
 	//再生中のイベント
 	GameType playingEvent;
 
-	BeatGame(BeatGame::GameType type,std::function<void(bool)> CallBack = nullptr);
-	~BeatGame();
-	void Update(void) override;
-	void Draw(void) override;
-	string GetEventMessage(int FieldLevel) override;
-	void CountdownStart(void);
+	//連打ゲームビュアー
+	BeatGameViewer *beatGameViewer;
 };
 
 #endif
