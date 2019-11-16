@@ -47,6 +47,9 @@ public:
 	//初期化処理
 	void Init() override;
 
+	//描画処理
+	void Draw() override;
+
 	//シンギュラリティイベントのエフェクトセット処理
 	void SetSingularityEffect(const D3DXVECTOR3& position, std::function<void(void)> callback = nullptr);
 	//町消滅のエフェクトセット処理

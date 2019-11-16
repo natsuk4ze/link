@@ -6,6 +6,7 @@
 //=====================================
 #include "GameParticleManager.h"
 #include "../../Framework/PostEffect/CrossFilterController.h"
+#include "../../Framework/Tool/DebugWindow.h"
 
 #include "Game/BlueSpark.h"
 #include "Game/BlueDebris.h"
@@ -53,6 +54,18 @@ void GameParticleManager::Init()
 
 	crossFilter->SetPower(BloomPower[0], BloomPower[1], BloomPower[2]);
 	crossFilter->SetThrethold(BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]);
+}
+
+/**************************************
+•`‰æˆ—
+***************************************/
+void GameParticleManager::Draw()
+{
+	SceneParticleManager::Draw();
+
+	Debug::Begin("GameParticle");
+	Debug::Text("starroad : %d", controllers[GameParticle::StarRoad]->GetParticleCount());
+	Debug::End();
 }
 
 /**************************************

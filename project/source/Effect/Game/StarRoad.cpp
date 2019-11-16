@@ -33,7 +33,7 @@ namespace Effect::Game
 		LoadTexture("data/TEXTURE/Particle/star.png");
 
 		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 2048; 
+		const unsigned MaxParticle = 4096; 
 		particleContainer.resize(MaxParticle);
 		for (auto&& particle : particleContainer)
 		{
@@ -53,7 +53,7 @@ namespace Effect::Game
 	StarRoadコンストラクタ
 	***************************************/
 	StarRoad::StarRoad() :
-		Particle3D(15),
+		Particle3D(10),
 		direction(transform->Forward())
 	{
 
@@ -106,7 +106,7 @@ namespace Effect::Game
 	StarRoadEmitterコンストラクタ
 	***************************************/
 	StarRoadEmitter::StarRoadEmitter() :
-		BaseEmitter(3)
+		BaseEmitter(2)
 	{
 	}
 
@@ -120,7 +120,7 @@ namespace Effect::Game
 
 		//描画領域外だったら放出しない
 		D3DXVECTOR3 screenPos = Camera::MainCamera()->Projection(transform->GetPosition());
-		if (screenPos.x < 0.0f || screenPos.x >(float)SCREEN_WIDTH * 1.2f || screenPos.y < 0.0f || screenPos.y >(float)SCREEN_HEIGHT * 1.2f)
+		if (screenPos.x < 0.0f || screenPos.x >(float)SCREEN_WIDTH || screenPos.y < 0.0f || screenPos.y >(float)SCREEN_HEIGHT)
 			return true;
 
 		UINT cntEmit = 0;
