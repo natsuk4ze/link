@@ -124,9 +124,8 @@ void BeatGame::Update()
 			//I—¹
 			isFinished = true;
 		}
-
-		beatGameViewer->Update();
 	}
+	beatGameViewer->Update();
 }
 
 //=============================================================================
