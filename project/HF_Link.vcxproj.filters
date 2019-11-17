@@ -241,6 +241,7 @@
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatGaugeViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatStarterViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatResultViewer.h" />
+    <ClInclude Include="source\Field\Object\WaterHeightController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -464,6 +465,7 @@
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatGaugeViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatStarterViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatResultViewer.cpp" />
+    <ClCompile Include="source\Field\Object\WaterHeightController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

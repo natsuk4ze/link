@@ -32,6 +32,7 @@
 
 #include "../FieldObject/Animation/ActorAnimation.h"
 #include "ActorLoader.h"
+#include "../Field/Object/WaterHeightController.h"
 
 namespace Field::Actor
 {
@@ -112,7 +113,7 @@ namespace Field::Actor
 		alongController->Update();
 		passengerController->Update();
 
-		RiverActor::UpdateHeight();
+		WaterHeightController::UpdateHeight();
 	
 		bgContainer->Update();
 

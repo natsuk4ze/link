@@ -9,16 +9,12 @@
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../../../Framework/Math/Easing.h"
 #include "../../Shader/RiverEffect.h"
+#include "../../Field/Object/WaterHeightController.h"
 
 //=====================================
 // staticメンバ
 //=====================================
-const int RiverActor::AnimationPeriod = 360;
-const float RiverActor::MaxWaveHeight = 0.015f;
 const float RiverActor::FlowSpeed = 0.02f;
-
-float RiverActor::heightWave = 0.0f;
-int RiverActor::cntWaveAnimation = 0;
 
 //=====================================
 // コンストラクタ
@@ -62,7 +58,7 @@ void RiverActor::Update()
 {
 	PlaceActor::Update();
 
-	transform->Move(Vector3::Up * heightWave);
+	transform->Move(Vector3::Up * WaterHeightController::GetHeight());
 
 	switch (direction)
 	{
@@ -111,18 +107,4 @@ void RiverActor::Draw()
 void RiverActor::SetDirection(FlowDirection direction)
 {
 	this->direction = direction;
-}
-
-//=====================================
-// 高さの更新処理
-//=====================================
-void RiverActor::UpdateHeight()
-{
-	cntWaveAnimation = Math::WrapAround(0, AnimationPeriod, ++cntWaveAnimation);
-
-	float startHeight = (cntWaveAnimation < AnimationPeriod / 2) ? -MaxWaveHeight : MaxWaveHeight;
-	float goalHeight = startHeight * -1.0f;
-	float t = (cntWaveAnimation < AnimationPeriod / 2) ? cntWaveAnimation / (AnimationPeriod * 0.5f) : (cntWaveAnimation - AnimationPeriod * 0.5f) / (AnimationPeriod * 0.5f);
-
-	heightWave = Easing::EaseValue(t, startHeight, goalHeight, EaseType::InOutBack);
 }
