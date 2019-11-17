@@ -8,6 +8,7 @@
 #include "PassengerActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../../Field/PlaceActorController.h"
+#include "../../Field/Object/WaterHeightController.h"
 
 //**************************************
 // ƒNƒ‰ƒX‚Ìƒƒ“ƒo•Ï”‰Šú‰»
@@ -70,6 +71,14 @@ void PassengerActor::Draw()
 {
 	if (!this->IsActive())
 		return;
+
+	//Ship‚Ìê‡‚Í…–Ê‚Ì‚‚³‚É‡‚í‚¹‚é
+	if (current == State::Ship)
+	{
+		D3DXVECTOR3 position = transform->GetPosition();
+		position.y = WaterHeightController::GetHeight();
+		transform->SetPosition(position);
+	}
 
 	transform->SetWorld();
 	mesh->Draw();
