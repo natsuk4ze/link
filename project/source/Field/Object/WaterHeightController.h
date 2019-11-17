@@ -26,10 +26,19 @@ public:
 	}
 
 private:
+	enum State
+	{
+		Riseup,
+		Falldown,
+		Max
+	};
+
 	static const int AnimationPeriod;
 	static const float MaxWaveHeight;
+	static const float MinWaveHeight;
 
 	static float heightWave;
 	static int cntWaveAnimation;
+	static State state;
 };
 #endif

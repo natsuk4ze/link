@@ -58,7 +58,9 @@ void RiverActor::Update()
 {
 	PlaceActor::Update();
 
-	transform->Move(Vector3::Up * WaterHeightController::GetHeight());
+	D3DXVECTOR3 position = transform->GetPosition();
+	position.y = WaterHeightController::GetHeight();
+	transform->SetPosition(position);
 
 	switch (direction)
 	{
