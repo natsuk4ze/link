@@ -68,8 +68,9 @@ namespace Field::Along
 	/**************************************
 	コンストラクタ
 	***************************************/
-	AlongModel::AlongModel(FieldLevel level) :
-		currentLevel(level)
+	AlongModel::AlongModel(FieldLevel level, bool onWater) :
+		currentLevel(level),
+		onWater(onWater)
 	{
 		actorContainer.reserve(10);
 		transform = new Transform();
@@ -142,7 +143,7 @@ namespace Field::Along
 		D3DXVECTOR3 position = CalcActorPosition(actorContainer.size());
 
 		//アクターを生成して追加
-		AlongActor *actor = new AlongActor(currentLevel);
+		AlongActor *actor = new AlongActor(currentLevel, onWater);
 		actor->SetPosition(position);
 		actor->PlayAnimation();
 

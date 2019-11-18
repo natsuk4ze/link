@@ -9,6 +9,7 @@
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../../../Framework/Renderer3D/MeshContainer.h"
 #include "../../../Framework/Tween/Tween.h"
+#include "../../Field/Object/WaterHeightController.h"
 
 namespace Field::Along
 {
@@ -32,8 +33,9 @@ namespace Field::Along
 	/**************************************
 	コンストラクタ
 	***************************************/
-	AlongActor::AlongActor(FieldLevel level) :
-		level(level)
+	AlongActor::AlongActor(FieldLevel level, bool onWater) :
+		level(level),
+		onWater(onWater)
 	{
 		mesh = new MeshContainer();
 		int colorIndex = Math::RandomRange(0, 3);
@@ -55,7 +57,7 @@ namespace Field::Along
 			break;
 		}
 
-		if (level == FieldLevel::City)
+		if (level == FieldLevel::City || level == FieldLevel::World)
 		{
 			int rotation = Math::RandomRange(0, 8);
 			transform->Rotate(rotation * 45.0f, Vector3::Up);
@@ -115,10 +117,15 @@ namespace Field::Along
 	***************************************/
 	void AlongActor::SetPosition(const D3DXVECTOR3 & position)
 	{
-		float offsetX = Math::RandomRange(-RangePositionOffset, RangePositionOffset);
-		float offsetY = Math::RandomRange(-RangePositionOffset, RangePositionOffset);
-		float offsetZ = Math::RandomRange(-RangePositionOffset, RangePositionOffset);
+		D3DXVECTOR3 offset = Vector3::Zero;
+		offset.x = Math::RandomRange(-RangePositionOffset, RangePositionOffset);
+		offset.z = Math::RandomRange(-RangePositionOffset, RangePositionOffset);
 
-		transform->SetPosition(position + D3DXVECTOR3(offsetX, offsetY, offsetZ));
+		if (onWater)
+		{
+			offset.y = -15.0f;
+		}
+
+		transform->SetPosition(position + offset);
 	}
 }

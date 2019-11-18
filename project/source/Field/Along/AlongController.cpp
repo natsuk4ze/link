@@ -80,13 +80,13 @@ namespace Field::Along
 	/**************************************
 	“¹‚âŒğ·“_‚ªì‚ç‚ê‚½‚ÉŒÄ‚Î‚ê‚éˆ—
 	***************************************/
-	void AlongController::OnBuildRoad(const Transform & transform, RoadType type)
+	void AlongController::OnBuildRoad(const Transform & transform, RoadType type, bool onWater)
 	{
 		AlongPosition key = AlongPosition(transform.GetPosition());
 
 		if (modelMap.count(key) == 0)
 		{
-			AlongModel *model = new AlongModel(currentLevel);
+			AlongModel *model = new AlongModel(currentLevel, onWater);
 			modelMap.emplace(key, std::unique_ptr<AlongModel>(model));
 		}
 
