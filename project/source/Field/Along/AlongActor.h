@@ -24,7 +24,7 @@ namespace Field::Along
 	class AlongActor : public GameObject
 	{
 	public:
-		AlongActor(FieldLevel level);
+		AlongActor(FieldLevel level, bool onWater);
 		~AlongActor();
 
 		void Update();
@@ -46,6 +46,7 @@ namespace Field::Along
 		MeshContainer * mesh;
 
 		FieldLevel level;
+		bool onWater;
 	};
 }
 

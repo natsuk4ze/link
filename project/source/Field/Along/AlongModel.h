@@ -37,7 +37,7 @@ namespace Field::Along
 		};
 
 		//コンストラクタ、デストラクタ
-		AlongModel(FieldLevel level);
+		AlongModel(FieldLevel level, bool onWater);
 		~AlongModel();
 
 		//更新処理、描画処理
@@ -66,7 +66,8 @@ namespace Field::Along
 
 		D3DXVECTOR3 CalcActorPosition(int index);					//アクター座標計算処理
 
-		FieldLevel currentLevel;
+		FieldLevel currentLevel;									//フィールドレベル
+		bool onWater;												//水上かどうか
 	};
 }
 

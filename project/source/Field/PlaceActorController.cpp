@@ -86,10 +86,6 @@ namespace Field::Actor
 		{
 			bonusSideWay += 1.0f;
 		});
-
-		//国レベルのモデルが無いので一旦、街レベルに落とす
-		if (currentLevel == FieldLevel::World)
-			currentLevel = FieldLevel::City;
 	}
 
 	/**************************************
@@ -159,6 +155,7 @@ namespace Field::Actor
 		ResourceManager::Instance()->LoadMesh("NoneActor", "data/MODEL/PlaceActor/ground.x");
 		ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
 		ResourceManager::Instance()->LoadMesh("AlongCity", "data/MODEL/AlongActor/AlongActorCity.x");
+		ResourceManager::Instance()->LoadMesh("AlongWorld", "data/MODEL/AlongActor/AlongWorld.x");
 		ResourceManager::Instance()->LoadMesh("AlongSpace", "data/MODEL/AlongActor/AlongSpace.x");
 
 		//アクターのリソースをロード
@@ -373,7 +370,7 @@ namespace Field::Actor
 			if (straightType == StraightType::RightAndLeft)
 				actor->Rotate(90.0f);
 
-			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::Straight);
+			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::Straight, onWater);
 
 			// 生成アニメーション
 			actor->SetScale(Vector3::Zero);
@@ -399,7 +396,7 @@ namespace Field::Actor
 
 			actor->Rotate(rotAngle);
 
-			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::Curve);
+			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::Curve, onWater);
 
 			// 生成アニメーション
 			actor->SetScale(Vector3::Zero);
@@ -473,7 +470,7 @@ namespace Field::Actor
 		{
 			PlaceActor *actor = new CrossJunctionActor(actorPos, currentLevel, onWater);
 
-			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::CrossJunction);
+			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::CrossJunction, onWater);
 
 			// 生成アニメーション
 			ActorAnimation::RotateAndExpantion(*actor);
@@ -499,7 +496,7 @@ namespace Field::Actor
 
 			AddContainer(place->ID(), actor);
 			
-			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::T_Junction);
+			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::T_Junction, onWater);
 
 			// 生成アニメーション
 			ActorAnimation::RotateAndExpantion(*actor);

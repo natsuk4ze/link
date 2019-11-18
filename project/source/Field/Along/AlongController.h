@@ -53,7 +53,7 @@ namespace Field::Along
 		void Draw();
 
 		void OnReachPassenger(const D3DXVECTOR3& position);
-		void OnBuildRoad(const Transform& transform, RoadType type);
+		void OnBuildRoad(const Transform& transform, RoadType type, bool onWater);
 
 		void SetBuildBonusFunc(const std::function<void()>& functor);
 
