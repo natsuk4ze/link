@@ -243,6 +243,9 @@
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatResultViewer.h" />
     <ClInclude Include="source\Field\Object\WaterHeightController.h" />
     <ClInclude Include="source\Shader\WhirlPoolEffect.h" />
+    <ClInclude Include="Framework\Network\PacketConfig.h" />
+    <ClInclude Include="Framework\Network\UDPClient.h" />
+    <ClInclude Include="Framework\Network\UDPServer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -468,6 +471,8 @@
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatResultViewer.cpp" />
     <ClCompile Include="source\Field\Object\WaterHeightController.cpp" />
     <ClCompile Include="source\Shader\WhirlPoolEffect.cpp" />
+    <ClCompile Include="Framework\Network\UDPClient.cpp" />
+    <ClCompile Include="Framework\Network\UDPServer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

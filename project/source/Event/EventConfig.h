@@ -18,10 +18,10 @@ namespace EventConfig
 		AllLinkLevelUp,		// 道が繋がっている街全体のリンクレベル上昇
 		AILevelUp,			// スロットを回してAI発展レベルにボーナス
 		TimeRecovery,		// 制限時間の回復
-		LinkLevelDecrease,	// 町のリンクレベル減少
 		CityDestroy,		// 町消滅
 		AILevelDecrease,	// AI発展レベル減少
 		BanStockUse,		// 一定時間特殊チップ使用不可
+		LinkLevelDecrease,	// 町のリンクレベル減少
 		NoEvent = -1,		// イベントなし
 	};
 }

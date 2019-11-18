@@ -45,6 +45,7 @@ class FieldEventHandler;
 class BloomController;
 class PlaceActor;
 class SerialWrapper;
+class UDPClient;
 
 /**************************************
 クラス定義
@@ -89,6 +90,7 @@ private:
 	GameParticleManager *particleManager;		//パーティクルマネージャ
 	FieldEventHandler* eventHandler;			//イベントハンドラ
 	SerialWrapper *serial;						//シリアル通信
+	UDPClient *Client;							//クライアント
 
 	int remainTime;								//制限時間
 
