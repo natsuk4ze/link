@@ -25,25 +25,8 @@ public:
 	InstancingMeshEffect();
 	~InstancingMeshEffect();
 
-	void CommitCameraParameter();
-
-	//マテリアル設定処理
-	void SetMaterial(const D3DMATERIAL9& material);
-
 private:
 	//シェーダへのハンドル
-	D3DXHANDLE hMtxView;
-	D3DXHANDLE hMtxProjection;
-	
-	D3DXHANDLE hMaterialDiffuse;
-	D3DXHANDLE hMaterialAmbient;
-	D3DXHANDLE hMaterialSpecular;
-
-	D3DXHANDLE hLightDirection;
-	D3DXHANDLE hLightDiffuse;
-	D3DXHANDLE hLightAmbient;
-	D3DXHANDLE hLightSpecular;
-
 	D3DXHANDLE hTechnique;
 };
 
