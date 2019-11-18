@@ -10,6 +10,7 @@
 #include "../Animation/ActorAnimation.h"
 #include "../../Field/ActorLoader.h"
 #include "../../Shader/WhirlPoolEffect.h"
+#include "../../Field/Object/WaterHeightController.h"
 
 //=====================================
 // コンストラクタ
@@ -63,6 +64,12 @@ void MountainActor::Draw()
 {
 	if (effect != nullptr)
 	{
+		//高さを水面に合わせる
+		D3DXVECTOR3 position = transform->GetPosition();
+		position.y = WaterHeightController::GetHeight() + 0.01f;
+		transform->SetPosition(position);
+
+
 		effect->SetWorld(*transform);
 		effect->Begin();
 		effect->BeginPass(0);
