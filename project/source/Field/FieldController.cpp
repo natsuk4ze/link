@@ -496,7 +496,7 @@ namespace Field
 		{
 			const Model::PlaceModel* target = placeContainer->GetNonePlace();
 
-			if (placeActController->IsSeaPlace(target->GetPosition()))
+			if (placeActController->EnableAtlantis(target->GetPosition()))
 				return target;
 
 			ignoreList.push_back(const_cast<Model::PlaceModel*>(target));

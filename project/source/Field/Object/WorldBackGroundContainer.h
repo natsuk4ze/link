@@ -37,6 +37,8 @@ namespace Field::Actor
 
 		bool IsSeaPlace(const FieldPosition& position) const;
 
+		bool EnableAtlantis(const FieldPosition& position) const;
+
 		void CreateAtlantis(const FieldPosition& position);
 
 	private:
