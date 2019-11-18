@@ -29,17 +29,20 @@ CrossJunctionActor::CrossJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel
 
 	type = Field::Model::Junction;
 
-	D3DXVECTOR3 euler = transform->GetEulerAngle();
-	emitterContainer.resize(4, nullptr);
-	for (auto&& emitter : emitterContainer)
+	if (currentLevel == Field::FieldLevel::Space)
 	{
-		emitter = GameParticleManager::Instance()->Generate(GameParticle::StarRoad, *transform);
-		if (emitter != nullptr)
+		D3DXVECTOR3 euler = transform->GetEulerAngle();
+		emitterContainer.resize(4, nullptr);
+		for (auto&& emitter : emitterContainer)
 		{
-			emitter->SetRotatition(euler);
-		}
+			emitter = GameParticleManager::Instance()->Generate(GameParticle::StarRoad, *transform);
+			if (emitter != nullptr)
+			{
+				emitter->SetRotatition(euler);
+			}
 
-		euler.y += 90.0f;
+			euler.y += 90.0f;
+		}
 	}
 }
 

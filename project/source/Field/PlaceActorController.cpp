@@ -147,7 +147,7 @@ namespace Field::Actor
 		alongController->Draw();
 		passengerController->Draw();
 
-		//bgContainer->Draw();
+		bgContainer->Draw();
 	}
 
 	/**************************************
