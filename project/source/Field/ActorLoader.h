@@ -32,6 +32,11 @@ namespace Field::Actor
 		const static std::string BridgeTag[];		//橋のリソースタグ
 		const static std::string MountainTag[];		//山のリソースタグ
 
+		const static std::string WaterStraight;		//水上の直線道
+		const static std::string WaterCurve;		//水上のカーブ
+		const static std::string WaterT;			//水上のT字路
+		const static std::string WaterCross;		//水上の十字路
+
 		//コンストラクタ、デストラクタ
 		ActorLoader();
 		~ActorLoader();

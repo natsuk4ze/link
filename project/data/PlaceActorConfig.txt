@@ -36,16 +36,16 @@
 	"World-Cross":"data/MODEL/PlaceActor/Crossroad track.x",
 
 	"World-StraightSea":"フィールドレベル国の直線道モデル（海）",
-	"World-StraightSea":"data/MODEL/PlaceActor/Straight.x",
+	"World-StraightSea":"data/MODEL/PlaceActor/SpaceStraight.x",
 
 	"World-CurveSea":"フィールドレベル国カーブモデル（海）",
-	"World-CurveSea":"data/MODEL/PlaceActor/Curve.x",
+	"World-CurveSea":"data/MODEL/PlaceActor/SpaceCurve.x",
 
 	"World-TSea":"フィールドレベル国のT字路（海）",
-	"World-TSea":"data/MODEL/PlaceActor/Curve.x",
+	"World-TSea":"data/MODEL/PlaceActor/SpaceT.x",
 
 	"World-CrossSea":"フィールドレベル国の十字路モデル（海）",
-	"World-CrossSea":"data/MODEL/PlaceActor/Cross-Junction.x",
+	"World-CrossSea":"data/MODEL/PlaceActor/SpaceCross.x",
 
 	"World-Mountain":"フィールドレベル国の山モデル",
 	"World-Mountain":"data/MODEL/PlaceActor/mountain.x",

@@ -88,7 +88,7 @@ namespace Field::Actor
 		float GetSideWayBonus() const;
 
 		//ŠC‚©‚Ç‚¤‚©‚Ì”»’è
-		bool IsSeaPlace(const FieldPosition& position) const;
+		bool EnableAtlantis(const FieldPosition& position) const;
 
 		//V‚µ‚¢ŠXì¬
 		PlaceActor* CreateNewTown(const Model::PlaceModel* place);

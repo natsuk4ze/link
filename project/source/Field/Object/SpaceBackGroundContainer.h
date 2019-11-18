@@ -32,7 +32,7 @@ namespace Field::Actor
 
 		void Load();
 
-		bool IsSeaPlace(const FieldPosition& position) const;
+		bool EnableAtlantis(const FieldPosition& position) const;
 
 	private:
 		InstancingMeshContainer * tearMesh;		//‹ó‚Ì—ô‚¯–Ú‚ÌƒƒbƒVƒ…

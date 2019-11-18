@@ -159,7 +159,7 @@ namespace Field::Actor
 	/**************************************
 	ŠC”»’è
 	***************************************/
-	bool CityBackGroundContainer::IsSeaPlace(const FieldPosition& position) const
+	bool CityBackGroundContainer::EnableAtlantis(const FieldPosition& position) const
 	{
 		//ŠC‚Í‘¶İ‚µ‚È‚¢‚Ì‚Å–³ğŒ‚Åfalse
 		return false;

@@ -34,7 +34,8 @@ namespace Field::Actor
 
 		virtual void Load() = 0;
 
-		virtual bool IsSeaPlace(const FieldPosition& position) const = 0;
+		virtual bool IsSeaPlace(const FieldPosition& position) const;
+		virtual bool EnableAtlantis(const FieldPosition& position) const = 0;
 
 	protected:
 		std::vector<PlaceActor*> groundContainer;

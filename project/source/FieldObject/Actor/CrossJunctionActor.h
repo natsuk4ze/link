@@ -24,13 +24,15 @@ class CrossJunctionActor :
 private:
 
 public:
-	CrossJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
+	CrossJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater);
 	~CrossJunctionActor();
 
+	void Draw() override;
 	void Rotate(float y) override;
 
 private:
 	std::vector<BaseEmitter*> emitterContainer;
+	bool onWater;
 };
 
 #endif

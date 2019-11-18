@@ -70,5 +70,6 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 ***************************************/
 GameScene::State GameScene::GameInit::OnUpdate(GameScene & entity)
 {
+	entity.field->UpdateObject();
 	return GameScene::State::Initialize;
 }

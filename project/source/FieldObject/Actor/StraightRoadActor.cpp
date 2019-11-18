@@ -11,16 +11,22 @@
 #include "../../Field/ActorLoader.h"
 #include "../../Effect/GameParticleManager.h"
 #include "../../../Framework/Particle/BaseEmitter.h"
+#include "../../Field/Object/WaterHeightController.h"
 
 //=====================================
 // コンストラクタ
 //=====================================
-StraightRoadActor::StraightRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
+StraightRoadActor::StraightRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater)
 	: PlaceActor(pos, currentLevel),
-	emitter(nullptr)
+	emitter(nullptr),
+	onWater(onWater)
 {
 	using Field::Actor::ActorLoader;
-	ResourceManager::Instance()->GetMesh(ActorLoader::StraightTag[currentLevel].c_str(), mesh);
+
+	if (!onWater)
+		ResourceManager::Instance()->GetMesh(ActorLoader::StraightTag[currentLevel].c_str(), mesh);
+	else
+		ResourceManager::Instance()->GetMesh(ActorLoader::WaterStraight.c_str(), mesh);
 
 	type = Field::Model::Road;
 
@@ -37,6 +43,22 @@ StraightRoadActor::~StraightRoadActor()
 {
 	if (emitter != nullptr)
 		emitter->SetActive(false);
+}
+
+//=====================================
+// 描画処理
+//=====================================
+void StraightRoadActor::Draw()
+{
+	//水上なら高さを水面に合わせる
+	if (onWater)
+	{
+		D3DXVECTOR3 position = transform->GetPosition();
+		position.y = WaterHeightController::GetHeight();
+		transform->SetPosition(position);
+	}
+
+	PlaceActor::Draw();
 }
 
 //=====================================

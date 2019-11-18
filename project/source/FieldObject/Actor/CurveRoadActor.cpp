@@ -11,15 +11,20 @@
 #include "../../Field/ActorLoader.h"
 #include "../../Effect/GameParticleManager.h"
 #include "../../../Framework/Particle/BaseEmitter.h"
+#include "../../Field/Object/WaterHeightController.h"
 
 //=====================================
 // コンストラクタ
 //=====================================
-CurveRoadActor::CurveRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
-	: PlaceActor(pos, currentLevel)
+CurveRoadActor::CurveRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater)
+	: PlaceActor(pos, currentLevel),
+	onWater(onWater)
 {
 	using Field::Actor::ActorLoader;
-	ResourceManager::Instance()->GetMesh(ActorLoader::CurveTag[currentLevel].c_str(), mesh);
+	if (!onWater)
+		ResourceManager::Instance()->GetMesh(ActorLoader::CurveTag[currentLevel].c_str(), mesh);
+	else
+		ResourceManager::Instance()->GetMesh(ActorLoader::WaterCurve.c_str(), mesh);
 
 	type = Field::Model::Road;
 
@@ -52,6 +57,22 @@ CurveRoadActor::~CurveRoadActor()
 		if (emitter != nullptr)
 			emitter->SetActive(false);
 	}
+}
+
+//=====================================
+// 描画処理
+//=====================================
+void CurveRoadActor::Draw()
+{
+	//水上なら水位に高さを合わせる
+	if (onWater)
+	{
+		D3DXVECTOR3 position = transform->GetPosition();
+		position.y = WaterHeightController::GetHeight();
+		transform->SetPosition(position);
+	}
+
+	PlaceActor::Draw();
 }
 
 //=====================================

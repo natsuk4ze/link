@@ -23,3 +23,11 @@ Field::Actor::BackGroundContainer::~BackGroundContainer()
 	Utility::DeleteContainer(groundContainer);
 	Utility::DeleteContainer(riverContainer);
 }
+
+/**************************************
+ŠC”»’è
+***************************************/
+bool Field::Actor::BackGroundContainer::IsSeaPlace(const FieldPosition& position) const
+{
+	return false;
+}

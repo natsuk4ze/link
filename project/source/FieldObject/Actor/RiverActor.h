@@ -40,15 +40,8 @@ public:
 
 	void SetDirection(FlowDirection direction);
 
-	static void UpdateHeight();
-
 private:
-	static const int AnimationPeriod;
-	static const float MaxWaveHeight;
 	static const float FlowSpeed;
-
-	static float heightWave;
-	static int cntWaveAnimation;
 
 	FlowDirection direction;
 	D3DXVECTOR2 uv;

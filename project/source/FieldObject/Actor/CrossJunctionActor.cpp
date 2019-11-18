@@ -11,29 +11,38 @@
 #include "../../Field/ActorLoader.h"
 #include "../../Effect/GameParticleManager.h"
 #include "../../../Framework/Particle/BaseEmitter.h"
+#include "../../Field/Object/WaterHeightController.h"
 
 //=====================================
 // コンストラクタ
 //=====================================
-CrossJunctionActor::CrossJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
-	: PlaceActor(pos, currentLevel)
+CrossJunctionActor::CrossJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater)
+	: PlaceActor(pos, currentLevel),
+	onWater(onWater)
 {
 	using Field::Actor::ActorLoader;
-	ResourceManager::Instance()->GetMesh(ActorLoader::CrossTag[currentLevel].c_str(), mesh);
+	if (!onWater)
+		ResourceManager::Instance()->GetMesh(ActorLoader::CrossTag[currentLevel].c_str(), mesh);
+	else
+		ResourceManager::Instance()->GetMesh(ActorLoader::WaterCross.c_str(), mesh);
+
 
 	type = Field::Model::Junction;
 
-	D3DXVECTOR3 euler = transform->GetEulerAngle();
-	emitterContainer.resize(4, nullptr);
-	for (auto&& emitter : emitterContainer)
+	if (currentLevel == Field::FieldLevel::Space)
 	{
-		emitter = GameParticleManager::Instance()->Generate(GameParticle::StarRoad, *transform);
-		if (emitter != nullptr)
+		D3DXVECTOR3 euler = transform->GetEulerAngle();
+		emitterContainer.resize(4, nullptr);
+		for (auto&& emitter : emitterContainer)
 		{
-			emitter->SetRotatition(euler);
-		}
+			emitter = GameParticleManager::Instance()->Generate(GameParticle::StarRoad, *transform);
+			if (emitter != nullptr)
+			{
+				emitter->SetRotatition(euler);
+			}
 
-		euler.y += 90.0f;
+			euler.y += 90.0f;
+		}
 	}
 }
 
@@ -49,6 +58,22 @@ CrossJunctionActor::~CrossJunctionActor()
 
 		emitter->SetActive(false);
 	}
+}
+
+//=====================================
+// 描画処理
+//=====================================
+void CrossJunctionActor::Draw()
+{
+	//水面なら高さを合わせる
+	if (onWater)
+	{
+		D3DXVECTOR3 position = transform->GetPosition();
+		position.y = WaterHeightController::GetHeight();
+		transform->SetPosition(position);
+	}
+
+	PlaceActor::Draw();
 }
 
 //=====================================

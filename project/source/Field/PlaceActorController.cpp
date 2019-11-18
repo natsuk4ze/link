@@ -32,6 +32,7 @@
 
 #include "../FieldObject/Animation/ActorAnimation.h"
 #include "ActorLoader.h"
+#include "../Field/Object/WaterHeightController.h"
 
 namespace Field::Actor
 {
@@ -112,7 +113,7 @@ namespace Field::Actor
 		alongController->Update();
 		passengerController->Update();
 
-		RiverActor::UpdateHeight();
+		WaterHeightController::UpdateHeight();
 	
 		bgContainer->Update();
 
@@ -306,9 +307,9 @@ namespace Field::Actor
 	/**************************************
 	海かどうかの判定
 	***************************************/
-	bool PlaceActorController::IsSeaPlace(const FieldPosition & position) const
+	bool PlaceActorController::EnableAtlantis(const FieldPosition & position) const
 	{
-		return bgContainer->IsSeaPlace(position);
+		return bgContainer->EnableAtlantis(position);
 	}
 
 	/**************************************
@@ -359,11 +360,13 @@ namespace Field::Actor
 		std::vector<Adjacency> AdjacencyType = place->GetConnectingAdjacency();
 		StraightType straightType = IsStraight(AdjacencyType);
 
+		bool onWater = bgContainer->IsSeaPlace(place->GetPosition());
+
 		//直線タイプの場合
 		if (straightType != StraightType::NotStraight)
 		{
 			//アクター生成
-			PlaceActor* actor = new StraightRoadActor(actorPos, currentLevel);
+			PlaceActor* actor = new StraightRoadActor(actorPos, currentLevel, onWater);
 			AddContainer(place->ID(), actor);
 
 			//左右に繋がるタイプなら回転させる
@@ -380,7 +383,7 @@ namespace Field::Actor
 		else
 		{
 			//アクター生成
-			PlaceActor* actor = new CurveRoadActor(actorPos, currentLevel);
+			PlaceActor* actor = new CurveRoadActor(actorPos, currentLevel, onWater);
 			AddContainer(place->ID(), actor);
 
 			//回転角度を決定して回転
@@ -463,10 +466,12 @@ namespace Field::Actor
 
 		std::vector<Adjacency> adjacencyTypeList = place->GetConnectingAdjacency();
 
+		bool onWater = bgContainer->IsSeaPlace(place->GetPosition());
+
 		//十字路のアクター作成
 		if (adjacencyTypeList.size() == 4)
 		{
-			PlaceActor *actor = new CrossJunctionActor(actorPos, currentLevel);
+			PlaceActor *actor = new CrossJunctionActor(actorPos, currentLevel, onWater);
 
 			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::CrossJunction);
 
@@ -478,7 +483,7 @@ namespace Field::Actor
 		//T字路のアクター生成
 		else
 		{
-			PlaceActor* actor = new TJunctionActor(actorPos, currentLevel);
+			PlaceActor* actor = new TJunctionActor(actorPos, currentLevel, onWater);
 
 			TjunctionType junctionType = IsTjunction(adjacencyTypeList);
 			float rotAngle = 0.0f;
