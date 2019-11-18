@@ -108,6 +108,12 @@ void BaseGame::Draw()
 	RendererEffect::SetView(Camera::MainCamera()->GetViewMtx());
 	RendererEffect::SetProjection(Camera::MainCamera()->GetProjectionMtx());
 
+	unsigned numLight = Light::LightMax();
+	for (unsigned i = 0; i < numLight; i++)
+	{
+		RendererEffect::SetLight(i, Light::GetData(i));
+	}
+
 	//トランジションマスクを描画
 	TransitionController::Instance()->DrawMask();
 

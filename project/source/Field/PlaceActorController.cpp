@@ -512,8 +512,9 @@ namespace Field::Actor
 	void PlaceActorController::SetMountain(const Model::PlaceModel * place)
 	{
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
+		bool onWater = bgContainer->IsSeaPlace(place->GetPosition());
 
-		PlaceActor *actor = new MountainActor(actorPos, currentLevel);
+		PlaceActor *actor = new MountainActor(actorPos, currentLevel, onWater);
 
 		//‰ñ“]
 		float rotateAngle = Math::RandomRange(0, 4) * 90.0f;

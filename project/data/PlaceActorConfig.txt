@@ -50,6 +50,9 @@
 	"World-Mountain":"フィールドレベル国の山モデル",
 	"World-Mountain":"data/MODEL/PlaceActor/mountain.x",
 
+	"World-WhirlPool":"フィールドレベル国の渦潮モデル",
+	"World-WhirlPool":"data/MODEL/PlaceActor/WhirlPool.x",
+
 	"Space-Town":"フィールドレベル宇宙の街モデル",
 	"Space-Town":"data/MODEL/PlaceActor/earth.x",
 

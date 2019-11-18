@@ -236,6 +236,7 @@
     <ClInclude Include="source\Scene\ResultScene.h" />
     <ClInclude Include="source\Scene\TitleScene.h" />
     <ClInclude Include="source\Shader\RiverEffect.h" />
+    <ClInclude Include="source\Shader\WhirlPoolEffect.h" />
     <ClInclude Include="source\Viewer\Framework\BaseViewer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.h" />
@@ -465,6 +466,7 @@
     <ClCompile Include="source\Scene\ResultScene.cpp" />
     <ClCompile Include="source\Scene\TitleScene.cpp" />
     <ClCompile Include="source\Shader\RiverEffect.cpp" />
+    <ClCompile Include="source\Shader\WhirlPoolEffect.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.cpp" />
@@ -492,6 +494,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
+    <FxCompile Include="source\Shader\WhirlPoolRenderer.fx">
+      <FileType>Document</FileType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">2.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">2.0</ShaderModel>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\BloomFilter.fx">

@@ -1,12 +1,12 @@
 //=====================================
 //
-//RiverEffect.h
-//機能:RiverActor描画シェーダ
+//WhirlPool.h
+//機能:渦潮レンダラー
 //Author:GP12B332 21 立花雄太
 //
 //=====================================
-#ifndef _RIVEREFFECT_H_
-#define _RIVEREFFECT_H_
+#ifndef _WHIRLPOOL_H_
+#define _WHIRLPOOL_H_
 
 #include "../../main.h"
 #include "../../Framework/Effect/RendererEffect.h"
@@ -16,18 +16,21 @@ namespace Field::Actor
 	/**************************************
 	クラス定義
 	***************************************/
-	class RiverEffect : public RendererEffect
+	class WhirlPoolEffect : public RendererEffect
 	{
 	public:
-		RiverEffect();
-		~RiverEffect();
+		WhirlPoolEffect();
+		~WhirlPoolEffect();
 
 		void SetWorld(const Transform& transform);
-		void SetUV(const D3DXVECTOR2& uv);
+
+		void SetTime(float t);
 
 	private:
-		D3DXHANDLE hTexUV;
+		D3DXHANDLE hTime;
+
 	};
 }
+
 
 #endif

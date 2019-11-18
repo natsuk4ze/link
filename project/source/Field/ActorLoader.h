@@ -37,6 +37,8 @@ namespace Field::Actor
 		const static std::string WaterT;			//水上のT字路
 		const static std::string WaterCross;		//水上の十字路
 
+		const static std::string WhirlPoolTag;		//渦潮のリソースタグ
+
 		//コンストラクタ、デストラクタ
 		ActorLoader();
 		~ActorLoader();

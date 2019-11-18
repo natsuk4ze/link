@@ -86,6 +86,11 @@ namespace Field::Actor
 	const std::string ActorLoader::WaterCross = "World-CrossSea";
 
 	/**************************************
+	渦潮のリソースタグ
+	***************************************/
+	const std::string ActorLoader::WhirlPoolTag = "World-WhirlPool";
+
+	/**************************************
 	コンストラクタ
 	***************************************/
 	ActorLoader::ActorLoader()
@@ -135,6 +140,7 @@ namespace Field::Actor
 			modelFileName[WaterCurve] = data[WaterCurve].string_value();
 			modelFileName[WaterT] = data[WaterT].string_value();
 			modelFileName[WaterCross] = data[WaterCross].string_value();
+			modelFileName[WhirlPoolTag] = data[WhirlPoolTag].string_value();
 		}
 	}
 
