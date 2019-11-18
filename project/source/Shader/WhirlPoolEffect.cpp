@@ -16,7 +16,7 @@ namespace Field::Actor
 	WhirlPoolEffect::WhirlPoolEffect()
 	{
 		//エフェクト読み込み
-		ResourceManager::Instance()->GetEffect("data/EFFECT/WhirlPool.cfx", effect);
+		ResourceManager::Instance()->GetEffect("data/EFFECT/WhirlPoolRenderer.cfx", effect);
 
 		//ハンドル取得
 		hWorld = effect->GetParameterByName(0, "mtxWorld");

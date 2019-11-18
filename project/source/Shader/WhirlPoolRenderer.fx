@@ -31,7 +31,7 @@ sampler s0 : register(s0);
 /**************************************
 *頂点シェーダ出力構造体
 ***************************************/
-struct VS_OUTPUT {
+struct VS_OUT {
 	float4 pos : POSITION;
 	float2 uv : TEXCOORD0;
 	float4 color : COLOR0;
@@ -40,18 +40,18 @@ struct VS_OUTPUT {
 /**************************************
 *頂点シェーダ
 ***************************************/
-VS_OUTPUT VS(
+VS_OUT VS(
 	float3 pos : POSITION,
 	float3 normal : NORMAL,
 	float2 uv : TEXCOORD0)
 {
-	VS_OUTPUT Out = (VS_OUTPUT)0;
+	VS_OUT Out = (VS_OUT)0;
 
 	Out.pos = mul(float4(pos, 1.0f), mtxWorld);
 	Out.pos = mul(Out.pos, mtxView);
 	Out.pos = mul(Out.pos, mtxProjection);
 
-	Out.uv = float2(0.5f, 0.5f) - uv;
+	Out.uv = uv;
 
 	float3 N = mul(normal, (float3x3)mtxWorld);
 	N = normalize(N);
@@ -66,7 +66,8 @@ VS_OUTPUT VS(
 		ambient += lightAmbient[i];
 	}
 
-	Out.color = saturate(diffuse * materialDiffuse + ambient * materialAmbient);
+	Out.color = saturate(diffuse
+		* materialDiffuse + ambient * materialAmbient);
 
 	Out.color.a = 1.0f;
 
@@ -76,7 +77,7 @@ VS_OUTPUT VS(
 /**************************************
 *ピクセルシェーダ
 ***************************************/
-float4 PS(VS_OUTPUT In) : COLOR0
+float4 PS(VS_OUT In) : COLOR0
 {
 	float distance = length(In.uv) + time;
 	float angle = (atan2(In.uv.x, In.uv.y) - 3.141592f) * (1.0f / 6.283814f) + time;

@@ -64,7 +64,7 @@ void ModelViewScene::Init()
 		actorContainer.push_back(new BridgeActor(position, (Field::FieldLevel)i));
 		position.x += OffsetX * 2.0f;
 
-		actorContainer.push_back(new MountainActor(position, (Field::FieldLevel)i));
+		actorContainer.push_back(new MountainActor(position, (Field::FieldLevel)i, false));
 		position.x += OffsetX * 2.0f;
 	}
 
