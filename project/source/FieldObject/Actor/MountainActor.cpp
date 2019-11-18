@@ -17,7 +17,7 @@
 MountainActor::MountainActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater)
 	: PlaceActor(pos, currentLevel),
 	effect(nullptr),
-	speedWhirl(Math::RandomRange(0.01f, 0.05f))
+	speedWhirl(Math::RandomRange(0.03f, 0.08f))
 {
 	using Field::Actor::ActorLoader;
 	if (!onWater)

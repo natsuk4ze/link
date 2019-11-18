@@ -78,10 +78,11 @@ VS_OUT VS(
 ***************************************/
 float4 PS(VS_OUT In) : COLOR0
 {
-	float distance = length(In.uv) + time;
-	float angle = (atan2(In.uv.y, In.uv.x) - 3.141592f) * (1.0f / 6.283814f) + time;
+	float distance = length(In.uv);
+	float angle = (atan2(In.uv.y, In.uv.x) - 3.141592f) * (1.0f / 6.283814f);
 
-	return tex2D(s0, float2(angle, distance)) * In.color;
+	float4 color = tex2D(s0, float2(angle + time, distance + time)) * In.color;
+	return color;
 }
 
 /**************************************
@@ -91,6 +92,8 @@ technique tech
 {
 	pass p0
 	{
+		ALPHABLENDENABLE = true;
+
 		VertexShader = compile vs_2_0 VS();
 		PixelShader = compile ps_2_0 PS();
 	}
