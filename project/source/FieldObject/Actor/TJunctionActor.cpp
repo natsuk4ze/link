@@ -71,6 +71,8 @@ void TJunctionActor::Draw()
 		position.y = WaterHeightController::GetHeight();
 		transform->SetPosition(position);
 	}
+
+	PlaceActor::Draw();
 }
 
 //=====================================
