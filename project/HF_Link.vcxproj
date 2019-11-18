@@ -49,6 +49,9 @@
     <ClInclude Include="Framework\Math\Quaternion.h" />
     <ClInclude Include="Framework\Math\TMath.h" />
     <ClInclude Include="Framework\Math\Vector3.h" />
+    <ClInclude Include="Framework\Network\PacketConfig.h" />
+    <ClInclude Include="Framework\Network\UDPClient.h" />
+    <ClInclude Include="Framework\Network\UDPServer.h" />
     <ClInclude Include="Framework\Particle\2D\AnimationParticle2D.h" />
     <ClInclude Include="Framework\Particle\2D\Particle2D.h" />
     <ClInclude Include="Framework\Particle\3D\AnimationParticle3D.h" />
@@ -288,6 +291,8 @@
     <ClCompile Include="Framework\Light\Light.cpp" />
     <ClCompile Include="Framework\Math\Quaternion.cpp" />
     <ClCompile Include="Framework\Math\Vector3.cpp" />
+    <ClCompile Include="Framework\Network\UDPClient.cpp" />
+    <ClCompile Include="Framework\Network\UDPServer.cpp" />
     <ClCompile Include="Framework\Particle\2D\AnimationParticle2D.cpp" />
     <ClCompile Include="Framework\Particle\2D\Particle2D.cpp" />
     <ClCompile Include="Framework\Particle\3D\AnimationParticle3D.cpp" />
