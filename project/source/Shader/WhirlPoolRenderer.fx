@@ -51,7 +51,7 @@ VS_OUT VS(
 	Out.pos = mul(Out.pos, mtxView);
 	Out.pos = mul(Out.pos, mtxProjection);
 
-	Out.uv = uv;
+	Out.uv = float2(0.5f, 0.5f) - uv;
 
 	float3 N = mul(normal, (float3x3)mtxWorld);
 	N = normalize(N);
@@ -66,8 +66,7 @@ VS_OUT VS(
 		ambient += lightAmbient[i];
 	}
 
-	Out.color = saturate(diffuse
-		* materialDiffuse + ambient * materialAmbient);
+	Out.color = saturate(diffuse * materialDiffuse + ambient * materialAmbient);
 
 	Out.color.a = 1.0f;
 
@@ -80,7 +79,7 @@ VS_OUT VS(
 float4 PS(VS_OUT In) : COLOR0
 {
 	float distance = length(In.uv) + time;
-	float angle = (atan2(In.uv.x, In.uv.y) - 3.141592f) * (1.0f / 6.283814f) + time;
+	float angle = (atan2(In.uv.y, In.uv.x) - 3.141592f) * (1.0f / 6.283814f) + time;
 
 	return tex2D(s0, float2(angle, distance)) * In.color;
 }
