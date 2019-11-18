@@ -78,6 +78,14 @@ namespace Field::Actor
 	};
 
 	/**************************************
+	水上のアクターのタグ
+	***************************************/
+	const std::string ActorLoader::WaterStraight = "World-StraightSea";
+	const std::string ActorLoader::WaterCurve = "World-CurveSea";
+	const std::string ActorLoader::WaterT = "World-TSea";
+	const std::string ActorLoader::WaterCross = "World-CrossSea";
+
+	/**************************************
 	コンストラクタ
 	***************************************/
 	ActorLoader::ActorLoader()
@@ -123,6 +131,10 @@ namespace Field::Actor
 			modelFileName[CrossTag[i]] = data[CrossTag[i]].string_value();
 			modelFileName[BridgeTag[i]] = data[BridgeTag[i]].string_value();
 			modelFileName[MountainTag[i]] = data[MountainTag[i]].string_value();
+			modelFileName[WaterStraight] = data[WaterStraight].string_value();
+			modelFileName[WaterCurve] = data[WaterCurve].string_value();
+			modelFileName[WaterT] = data[WaterT].string_value();
+			modelFileName[WaterCross] = data[WaterCross].string_value();
 		}
 	}
 

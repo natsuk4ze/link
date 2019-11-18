@@ -44,18 +44,18 @@ void ModelViewScene::Init()
 		const float OffsetX = 10.0f;
 		D3DXVECTOR3 position = { -80.0f, 0.0f, -20.0f * i + 20.0f};
 
-		PlaceActor *actor = new StraightRoadActor(position, (Field::FieldLevel)i);
+		PlaceActor *actor = new StraightRoadActor(position, (Field::FieldLevel)i, false);
 		actorContainer.push_back(actor);
 		actor->Rotate(90.0f);
 		position.x += OffsetX;
 
-		actorContainer.push_back(new CurveRoadActor(position, (Field::FieldLevel)i));
+		actorContainer.push_back(new CurveRoadActor(position, (Field::FieldLevel)i, false));
 		position.x += OffsetX;
 
-		actorContainer.push_back(new TJunctionActor(position, (Field::FieldLevel)i));
+		actorContainer.push_back(new TJunctionActor(position, (Field::FieldLevel)i, false));
 		position.x += OffsetX;
 
-		actorContainer.push_back(new CrossJunctionActor(position, (Field::FieldLevel)i));
+		actorContainer.push_back(new CrossJunctionActor(position, (Field::FieldLevel)i, false));
 		position.x += OffsetX * 2.0f;
 
 		actorContainer.push_back(new CityActor(position, (Field::FieldLevel)i));

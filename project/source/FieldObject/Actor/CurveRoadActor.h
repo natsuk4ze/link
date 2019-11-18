@@ -21,13 +21,15 @@ class CurveRoadActor :
 	public PlaceActor
 {
 public:
-	CurveRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
+	CurveRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater);
 	~CurveRoadActor();
 
+	void Draw() override;
 	void Rotate(float y);
 
 private:
 	std::vector<BaseEmitter*> emitterContainer;
+	bool onWater;
 };
 
 #endif
