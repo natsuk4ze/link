@@ -1,22 +1,22 @@
 //=====================================
 //
-//RiverEffect.cpp
-//機能:RiverActor描画エフェクト
+//WhirlPoolEffect.cpp
+//機能:
 //Author:GP12B332 21 立花雄太
 //
 //=====================================
-#include "RiverEffect.h"
+#include "WhirlPoolEffect.h"
 #include "../../Framework/Resource/ResourceManager.h"
 
 namespace Field::Actor
 {
-	/**************************************
+	/**************************************	
 	コンストラクタ
 	***************************************/
-	RiverEffect::RiverEffect()
+	WhirlPoolEffect::WhirlPoolEffect()
 	{
-		//エフェクト
-		ResourceManager::Instance()->GetEffect("data/EFFECT/RiverRenderer.cfx", effect);
+		//エフェクト読み込み
+		ResourceManager::Instance()->GetEffect("data/EFFECT/WhirlPool.cfx", effect);
 
 		//ハンドル取得
 		hWorld = effect->GetParameterByName(0, "mtxWorld");
@@ -32,7 +32,7 @@ namespace Field::Actor
 		hLightAmbient = effect->GetParameterByName(0, "lightAmbient");
 		hLightSpecular = effect->GetParameterByName(0, "lightSpecular");
 
-		hTexUV = effect->GetParameterByName(0, "texUV");
+		hTime = effect->GetParameterByName(0, "time");
 
 		effect->SetTechnique("tech");
 	}
@@ -40,25 +40,25 @@ namespace Field::Actor
 	/**************************************
 	デストラクタ
 	***************************************/
-	RiverEffect::~RiverEffect()
+	WhirlPoolEffect::~WhirlPoolEffect()
 	{
 		SAFE_RELEASE(effect);
 	}
 
 	/**************************************
-	ワールド情報設定処理
+	ワールド変換行列設定処理
 	***************************************/
-	void RiverEffect::SetWorld(const Transform & transform)
+	void WhirlPoolEffect::SetWorld(const Transform & transform)
 	{
 		D3DXMATRIX mtx = transform.GetMatrix();
 		effect->SetMatrix(hWorld, &mtx);
 	}
 
 	/**************************************
-	テクスチャUV設定処理
+	経過時間設定処理
 	***************************************/
-	void RiverEffect::SetUV(const D3DXVECTOR2 & uv)
+	void WhirlPoolEffect::SetTime(float t)
 	{
-		effect->SetFloatArray(hTexUV, (float*)&uv, 2);
+		effect->SetFloat(hTime, t);
 	}
 }
