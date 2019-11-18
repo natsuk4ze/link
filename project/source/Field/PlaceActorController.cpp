@@ -86,10 +86,6 @@ namespace Field::Actor
 		{
 			bonusSideWay += 1.0f;
 		});
-
-		//国レベルのモデルが無いので一旦、街レベルに落とす
-		if (currentLevel == FieldLevel::World)
-			currentLevel = FieldLevel::City;
 	}
 
 	/**************************************
@@ -159,6 +155,7 @@ namespace Field::Actor
 		ResourceManager::Instance()->LoadMesh("NoneActor", "data/MODEL/PlaceActor/ground.x");
 		ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
 		ResourceManager::Instance()->LoadMesh("AlongCity", "data/MODEL/AlongActor/AlongActorCity.x");
+		ResourceManager::Instance()->LoadMesh("AlongWorld", "data/MODEL/AlongActor/AlongWorld.x");
 		ResourceManager::Instance()->LoadMesh("AlongSpace", "data/MODEL/AlongActor/AlongSpace.x");
 
 		//アクターのリソースをロード
