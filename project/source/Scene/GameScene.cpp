@@ -13,6 +13,8 @@
 #include "../../Framework/Tool/ProfilerCPU.h"
 #include "../../Framework/Core/PlayerPrefs.h"
 #include "../../Framework/Serial/SerialWrapper.h"
+#include "../../Framework/Network/UDPClient.h"
+#include "../../Framework/Network/PacketConfig.h"
 
 #include "../GameConfig.h"
 #include "../Field/Object/FieldSkyBox.h"
@@ -66,6 +68,7 @@ void GameScene::Init()
 	particleManager = GameParticleManager::Instance();
 	bloomController = new BloomController();
 	//serial = new SerialWrapper(3);								//TODO:ポート番号を変えられるようにする
+	Client = new UDPClient();
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
@@ -106,6 +109,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(bloomController);
 	SAFE_DELETE(eventHandler);
 	//SAFE_DELETE(serial);
+	SAFE_DELETE(Client);
 
 	//パーティクル終了
 	particleManager->Uninit();
@@ -339,6 +343,17 @@ void GameScene::DebugTool()
 	if (Debug::Button("Add Time"))
 	{
 		remainTime += 30 * 10;
+	}
+
+	Debug::NewLine();
+	if (Debug::Button("SendPacket"))
+	{
+		PacketConfig Packet;
+		GameViewerParam gameParam;
+		field->EmbedViewerParam(gameParam);
+		Packet.AILevel = gameParam.levelAI;
+		Client->ReceivePacketConfig(Packet);
+		Client->SendPacket();
 	}
 
 	Debug::End();

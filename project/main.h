@@ -8,10 +8,14 @@
 #define _MAIN_H_
 
 #define _CRT_SECURE_NO_WARNINGS
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
 
 //*****************************************************************************
 // インクルードファイル
 //*****************************************************************************
+// windows.hの中にwinsock.hをインクルードするので
+// WinSock2.hのインクルード順番はWindows.hの前じゃないとコンパイルエラーになる
+#include <WinSock2.h>	// Network用
 #include <windows.h>
 #include "d3dx9.h"
 #include "Framework\Core\Transform.h"
@@ -25,6 +29,7 @@
 #include <tchar.h>
 #include <stdio.h>
 #include <assert.h>
+#include <process.h>	// MultiThread用
 
 //*****************************************************************************
 // ライブラリのリンク
@@ -36,6 +41,7 @@
 #pragma comment (lib, "dxguid.lib")
 #pragma comment (lib, "winmm.lib")
 #pragma comment (lib, "dxerr.lib")
+#pragma comment (lib, "ws2_32.lib")	// WinSockで必要
 #endif
 
 //*****************************************************************************
