@@ -9,7 +9,7 @@
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../Animation/ActorAnimation.h"
 #include "../../Field/ActorLoader.h"
-#include "../../Effect/GameParticleManager.h"
+#include "../../Effect/SpaceParticleManager.h"
 #include "../../../Framework/Particle/BaseEmitter.h"
 #include "../../Field/Object/WaterHeightController.h"
 
@@ -32,7 +32,7 @@ StraightRoadActor::StraightRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel c
 
 	if (currentLevel == Field::FieldLevel::Space)
 	{
-		emitter = GameParticleManager::Instance()->Generate(GameParticle::StarRoad, *transform);
+		emitter = SpaceParticleManager::Instance()->Generate(SpaceParticle::StarRoad, *transform);
 	}
 }
 

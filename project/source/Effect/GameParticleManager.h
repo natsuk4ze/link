@@ -19,8 +19,6 @@ namespace GameParticle
 {
 	enum ID
 	{
-		BlueSpark,		//ブルースパーク
-		BlueDebris,		//ブルースパークの破片
 		WhiteSmog,		//白い煙
 		ColorfulDebis,	//カラフルデブリ
 		ExplosionFlare,	//火の粉
@@ -28,11 +26,8 @@ namespace GameParticle
 		TownExplosion,	//隕石爆発
 		MeteorExplosion,//ミサイル命中
 		Darkness,		//闇の粒子(AIレベル減少イベント)
-		Bubble,			//水の泡
 		MoveTail,		//移動の軌跡
-		SpaceTear,		//時空断裂のスパーク,
 		LinkLevelUp,	//リンクレベルアップ時エフェクト
-		StarRoad,
 		Max
 	};
 }
@@ -47,11 +42,6 @@ public:
 	//初期化処理
 	void Init() override;
 
-	//描画処理
-	void Draw() override;
-
-	//シンギュラリティイベントのエフェクトセット処理
-	void SetSingularityEffect(const D3DXVECTOR3& position, std::function<void(void)> callback = nullptr);
 	//町消滅のエフェクトセット処理
 	void SetTownExplosionEffect(const D3DXVECTOR3& position, std::function<void(void)> callback = nullptr);
 	//隕石爆発のエフェクトセット処理
@@ -60,8 +50,6 @@ public:
 	void SetAngryFaceEffect(std::function<void(void)> callback = nullptr);
 	//闇の粒子のエフェクトセット処理
 	void SetDarknessEffect(const D3DXVECTOR3 & position,std::function<void(void)> callback = nullptr);
-	//アトランティスのエフェクトセット処理
-	void SetAtlantisEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback = nullptr);
 	//移動の軌跡のエフェクトセット処理
 	BaseEmitter* SetMoveTailEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback = nullptr);
 

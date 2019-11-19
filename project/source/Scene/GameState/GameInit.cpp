@@ -30,6 +30,7 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 
 	//パーティクル初期化
 	entity.particleManager->Init();
+	entity.levelParticleManager->Init();
 
 	//カメラにプラグインを追加して初期化
 	entity.fieldCamera->AddPlugin(FieldCameraTranslationPlugin::Instance());

@@ -26,6 +26,9 @@
 #include "../Field/Place/PlaceConfig.h"
 #include "../Effect/GameParticleManager.h"
 #include "../Field/FieldEventHandler.h"
+#include "../Effect/CityParticleManager.h"
+#include "../Effect/WorldParticleManager.h"
+#include "../Effect/SpaceParticleManager.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
@@ -69,6 +72,24 @@ void GameScene::Init()
 	bloomController = new BloomController();
 	//serial = new SerialWrapper(3);								//TODO:ポート番号を変えられるようにする
 	Client = new UDPClient();
+
+	//レベル毎のパーティクルマネージャを選択
+	switch (level)
+	{
+	case Field::City:
+		levelParticleManager = CityParticleManager::Instance();
+		break;
+	case Field::World:
+		levelParticleManager = WorldParticleManager::Instance();
+		break;
+
+	case Field::Space:
+		levelParticleManager = SpaceParticleManager::Instance();
+		break;
+	default:
+		levelParticleManager = nullptr;
+		break;
+	}
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
@@ -163,6 +184,7 @@ void GameScene::Update()
 
 	//パーティクル更新
 	ProfilerCPU::Instance()->Begin("Update Particle");
+	levelParticleManager->Update();
 	particleManager->Update();
 	ProfilerCPU::Instance()->End("Update Particle");
 
@@ -219,6 +241,7 @@ void GameScene::Draw()
 
 	//パーティクル描画
 	ProfilerCPU::Instance()->Begin("Draw Particle");
+	levelParticleManager->Draw();
 	particleManager->Draw();
 	ProfilerCPU::Instance()->End("Draw Particle");
 

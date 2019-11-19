@@ -9,7 +9,7 @@
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../Animation/ActorAnimation.h"
 #include "../../Field/ActorLoader.h"
-#include "../../Effect/GameParticleManager.h"
+#include "../../Effect/SpaceParticleManager.h"
 #include "../../../Framework/Particle/BaseEmitter.h"
 #include "../../Field/Object/WaterHeightController.h"
 
@@ -36,7 +36,7 @@ CurveRoadActor::CurveRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel current
 		for (auto&& emitter : emitterContainer)
 		{
 			//エミッターセット
-			emitter = GameParticleManager::Instance()->Generate(GameParticle::StarRoad, *transform);
+			emitter = SpaceParticleManager::Instance()->Generate(SpaceParticle::StarRoad, *transform);
 
 			if (emitter != nullptr)
 				emitter->SetRotatition(euler);
