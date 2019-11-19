@@ -17,6 +17,8 @@ namespace Field::Actor
 	class WhirlPoolEffect;
 }
 
+class BaseEmitter;
+
 //**************************************
 // ƒNƒ‰ƒX’è‹`
 //**************************************
@@ -34,6 +36,8 @@ private:
 	Field::Actor::WhirlPoolEffect *effect;
 	float speedWhirl;
 	float cntWhirl;
+
+	BaseEmitter *emitter;
 };
 
 #endif

@@ -145,6 +145,7 @@
     <ClInclude Include="source\Effect\Game\General\MeteorExplosion.h" />
     <ClInclude Include="source\Effect\Game\World\WaterSmog.h" />
     <ClInclude Include="source\Effect\Game\General\WhiteSmog.h" />
+    <ClInclude Include="source\Effect\Game\World\WhirlPoolBubble.h" />
     <ClInclude Include="source\Effect\SpaceParticleManager.h" />
     <ClInclude Include="source\Effect\TestParticleCamera.h" />
     <ClInclude Include="source\Effect\TestParticleManager.h" />
@@ -368,6 +369,7 @@
     <ClCompile Include="source\Effect\Game\BanIcon.cpp" />
     <ClCompile Include="source\Effect\Game\City\BlueDebris.cpp" />
     <ClCompile Include="source\Effect\Game\City\BlueSpark.cpp" />
+    <ClCompile Include="source\Effect\Game\World\WhirlPoolBubble.cpp" />
     <ClCompile Include="source\Effect\SpaceParticleManager.cpp" />
     <ClCompile Include="source\Effect\WorldParticleManager.cpp" />
     <ClCompile Include="source\Effect\Game\World\Bubble.cpp" />

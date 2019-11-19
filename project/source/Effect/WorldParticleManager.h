@@ -19,7 +19,8 @@ namespace WorldParticle
 {
 	enum ID
 	{
-		Bubble,		//…‚Ì–A
+		Bubble,				//…‚Ì–A
+		WhirlPoolBubble,	//‰Q’ª‚Ì–A
 		Max
 	};
 }

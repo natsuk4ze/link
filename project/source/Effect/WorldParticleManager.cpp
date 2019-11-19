@@ -11,6 +11,7 @@
 
 #include "Game/World/Bubble.h"
 #include "Game\World\WaterSmog.h"
+#include "Game\World\WhirlPoolBubble.h"
 
 /**************************************
 staticƒƒ“ƒo
@@ -27,6 +28,7 @@ void WorldParticleManager::Init()
 
 	controllers.resize(WorldParticle::Max, nullptr);
 	controllers[WorldParticle::Bubble] = new Effect::Game::BubbleController();
+	controllers[WorldParticle::WhirlPoolBubble] = new Effect::Game::WhirlPoolController();
 
 	crossFilter->SetPower(BloomPower[0], BloomPower[1], BloomPower[2]);
 	crossFilter->SetThrethold(BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]);
