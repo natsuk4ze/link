@@ -35,8 +35,8 @@ void GameParticleManager::Init()
 	controllers.resize(GameParticle::Max, NULL);
 	controllers[GameParticle::WhiteSmog] = new Effect::Game::WhiteSmogController();
 	controllers[GameParticle::ColorfulDebis] = new Effect::Game::ColorfulDebrisController();
-	controllers[GameParticle::AngryFace] = new Effect::Game::AngryFaceController();
 	controllers[GameParticle::ExplosionFlare] = new Effect::Game::ExplosionFlareController();
+	controllers[GameParticle::AngryFace] = new Effect::Game::AngryFaceController();
 	controllers[GameParticle::TownExplosion] = new Effect::Game::TownExplosionController();
 	controllers[GameParticle::MeteorExplosion] = new Effect::Game::MeteorExplosionController();
 	controllers[GameParticle::Darkness] = new Effect::Game::DarknessController();

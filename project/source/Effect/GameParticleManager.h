@@ -26,7 +26,6 @@ namespace GameParticle
 		TownExplosion,	//隕石爆発
 		MeteorExplosion,//ミサイル命中
 		Darkness,		//闇の粒子(AIレベル減少イベント)
-		Bubble,			//水の泡
 		MoveTail,		//移動の軌跡
 		LinkLevelUp,	//リンクレベルアップ時エフェクト
 		Max

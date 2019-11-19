@@ -23,6 +23,9 @@ const float SpaceParticleManager::BloomThrethold[3] = { 0.46f, 0.35f, 0.18f };
 ***************************************/
 void SpaceParticleManager::Init()
 {
+	SceneParticleManager::Init();
+
+	controllers.resize(SpaceParticle::Max, nullptr);
 	controllers[SpaceParticle::SpaceTear] = new Effect::Game::SpaceTearController();
 	controllers[SpaceParticle::StarRoad] = new Effect::Game::StarRoadController();
 

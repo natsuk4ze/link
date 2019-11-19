@@ -23,6 +23,9 @@ const float WorldParticleManager::BloomThrethold[3] = { 0.46f, 0.35f, 0.18f };
 ***************************************/
 void WorldParticleManager::Init()
 {
+	SceneParticleManager::Init();
+
+	controllers.resize(WorldParticle::Max, nullptr);
 	controllers[WorldParticle::Bubble] = new Effect::Game::BubbleController();
 
 	crossFilter->SetPower(BloomPower[0], BloomPower[1], BloomPower[2]);
