@@ -8,7 +8,7 @@
 #include "NewTownEvent_World.h"
 #include "../../../../Framework/Camera/CameraShakePlugin.h"
 #include "../../../Viewer/GameScene/EventViewer/EventViewer.h"
-#include "../../../Effect/GameParticleManager.h"
+#include "../../../Effect/WorldParticleManager.h"
 #include "../../../../Framework/Task/TaskManager.h"
 #include "../../../Field/Camera/EventCamera.h"
 
@@ -101,7 +101,7 @@ void NewTownEvent_World::CreateNewTown(void)
 
 	CameraShakePlugin::Instance()->Set(Amplitude, 300);
 	fieldEventHandler->CreateNewTown(NewTown);
-	GameParticleManager::Instance()->SetAtlantisEffect(TownPos);
+	WorldParticleManager::Instance()->SetAtlantisEffect(TownPos);
 	TaskManager::Instance()->CreateDelayedTask(180, [&]() {EventOverFunc(); });
 }
 

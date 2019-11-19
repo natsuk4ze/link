@@ -15,7 +15,7 @@
 #include "../../../Framework/String/String.h"
 #include "../../../Framework/Renderer3D/InstancingMeshContainer.h"
 
-#include "../../Effect/GameParticleManager.h"
+#include "../../Effect/SpaceParticleManager.h"
 
 #include <fstream>
 #include <string>
@@ -114,7 +114,7 @@ namespace Field::Actor
 
 					//パーティクルのエミッタをセット
 					D3DXVECTOR3 position = FieldPosition(x, z).ConvertToWorldPosition();
-					GameParticleManager::Instance()->Generate(GameParticle::SpaceTear, position);
+					SpaceParticleManager::Instance()->Generate(SpaceParticle::SpaceTear, position);
 				}
 				x++;
 			}

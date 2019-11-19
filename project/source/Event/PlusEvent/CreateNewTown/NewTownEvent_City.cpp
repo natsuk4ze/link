@@ -7,7 +7,7 @@
 #include "../../../../main.h"
 #include "NewTownEvent_City.h"
 #include "../../../Viewer/GameScene/EventViewer/EventViewer.h"
-#include "../../../Effect/GameParticleManager.h"
+#include "../../../Effect/CityParticleManager.h"
 #include "../../../../Framework/Task/TaskManager.h"
 #include "../../../Field/Camera/EventCamera.h"
 
@@ -98,7 +98,7 @@ void NewTownEvent_City::CreateNewTown(void)
 	D3DXVECTOR3 TownPos = NewTown->GetPosition().ConvertToWorldPosition();
 
 	fieldEventHandler->CreateNewTown(NewTown);
-	GameParticleManager::Instance()->SetSingularityEffect(TownPos);
+	CityParticleManager::Instance()->SetSingularityEffect(TownPos);
 	TaskManager::Instance()->CreateDelayedTask(90, [&]() {EventOverFunc(); });
 }
 
