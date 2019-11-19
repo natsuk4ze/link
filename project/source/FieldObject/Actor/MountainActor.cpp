@@ -11,6 +11,8 @@
 #include "../../Field/ActorLoader.h"
 #include "../../Shader/WhirlPoolEffect.h"
 #include "../../Field/Object/WaterHeightController.h"
+#include "../../Effect/WorldParticleManager.h"
+#include "../../../Framework/Particle/BaseEmitter.h"
 
 //=====================================
 // コンストラクタ
@@ -18,7 +20,8 @@
 MountainActor::MountainActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater)
 	: PlaceActor(pos, currentLevel),
 	effect(nullptr),
-	speedWhirl(Math::RandomRange(0.03f, 0.08f))
+	speedWhirl(Math::RandomRange(0.02f, 0.05f)),
+	emitter(nullptr)
 {
 	using Field::Actor::ActorLoader;
 	if (!onWater)
@@ -30,6 +33,7 @@ MountainActor::MountainActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLe
 		ResourceManager::Instance()->GetMesh(ActorLoader::WhirlPoolTag.c_str(), mesh);
 
 		effect = new Field::Actor::WhirlPoolEffect();
+		emitter = WorldParticleManager::Instance()->Generate(WorldParticle::WhirlPoolBubble, transform->GetPosition());
 	}
 
 	type = Field::Model::Mountain;
@@ -41,6 +45,11 @@ MountainActor::MountainActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLe
 MountainActor::~MountainActor()
 {
 	SAFE_DELETE(effect);
+
+	if (emitter != nullptr)
+	{
+		emitter->SetActive(false);
+	}
 }
 
 //=====================================
@@ -52,6 +61,13 @@ void MountainActor::Update()
 	{
 		cntWhirl += speedWhirl;
 		effect->SetTime(cntWhirl);
+	}
+
+	if (emitter != nullptr)
+	{
+		D3DXVECTOR3 position = emitter->GetPosition();
+		position.y = WaterHeightController::GetHeight();
+		emitter->SetPosition(position);
 	}
 
 	PlaceActor::Update();
@@ -68,7 +84,6 @@ void MountainActor::Draw()
 		D3DXVECTOR3 position = transform->GetPosition();
 		position.y = WaterHeightController::GetHeight() + 0.01f;
 		transform->SetPosition(position);
-
 
 		effect->SetWorld(*transform);
 		effect->Begin();
