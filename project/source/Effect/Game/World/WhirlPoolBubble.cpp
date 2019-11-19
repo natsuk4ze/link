@@ -7,6 +7,7 @@
 //=====================================
 #include "WhirlPoolBubble.h"
 #include "../../../../Framework/Camera/Camera.h"
+#include "../../../../Framework/Math/Easing.h"
 
 namespace Effect::Game
 {
@@ -23,14 +24,14 @@ namespace Effect::Game
 		BaseParticleController(Particle_3D)
 	{
 		//単位頂点バッファ作成
-		const D3DXVECTOR2 SizeParticle = { 2.5f, 2.5f };
+		const D3DXVECTOR2 SizeParticle = { 1.5f, 1.5f };
 		MakeUnitBuffer(SizeParticle);
 
 		//テクスチャ読み込み
 		LoadTexture("data/TEXTURE/Particle/WhirlPoolBubble.png");
 
 		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 2048;
+		const unsigned MaxParticle = 4096;
 		particleContainer.resize(MaxParticle, nullptr);
 		for (auto&& particle : particleContainer)
 		{
@@ -50,7 +51,7 @@ namespace Effect::Game
 	WhirlPoolBubbleコンストラクタ
 	***************************************/
 	WhirlPoolBubble::WhirlPoolBubble() :
-		Particle3D(5),
+		Particle3D(20),
 		position(Vector3::Zero)
 	{
 
@@ -61,17 +62,12 @@ namespace Effect::Game
 	***************************************/
 	void WhirlPoolBubble::Init()
 	{
-
-		D3DXVECTOR3 offset = Vector3::Random();
-		offset.y = 0.0f;
-		offset = Vector3::Normalize(offset);
-
-		transform->Move(offset * 5.0f);
-
 		cntFrame = 0;
 		active = true;
 
 		position = transform->GetPosition();
+
+		initOffset = Math::RandomRange(-D3DX_PI, D3DX_PI);
 
 		transform->Rotate(Math::RandomRange(0.0f, 360.0f), Vector3::Forward);
 	}
@@ -85,10 +81,10 @@ namespace Effect::Game
 			return;
 
 		cntFrame++;
-		float t = (float)cntFrame / lifeFrame * D3DX_PI;
-		float popup = sinf(t) * LengthPopup;
+		float t = (float)cntFrame / lifeFrame * D3DX_PI * 0.2f;
+		float popup = sinf(t * 10.0f) * LengthPopup;
 
-		D3DXVECTOR3 currentPosition = position + Vector3::Up * popup;
+		D3DXVECTOR3 currentPosition = position + D3DXVECTOR3(cosf(t + initOffset) * LengthOffset, popup, sinf(t + initOffset) * LengthOffset);
 		transform->SetPosition(currentPosition);
 	}
 
@@ -96,7 +92,7 @@ namespace Effect::Game
 	WhirlPoolBubbleEmiterコンストラクタ
 	***************************************/
 	WhirlPoolBubbleEmitter::WhirlPoolBubbleEmitter() :
-		BaseEmitter(5)
+		BaseEmitter(3)
 	{
 	}
 

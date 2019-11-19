@@ -39,6 +39,7 @@ namespace Effect::Game
 		static const float LengthOffset;
 
 		D3DXVECTOR3 position;
+		float initOffset;
 	};
 
 	/**************************************
