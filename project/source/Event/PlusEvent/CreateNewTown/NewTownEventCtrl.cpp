@@ -10,7 +10,7 @@
 #include "NewTownEvent_World.h"
 #include "NewTownEvent_Space.h"
 #include "../../../Field/Camera/Plugin/FieldCameraTranslationPlugin.h"
-#include "../../../Viewer/GameScene/EventViewer/EventViewer.h"
+#include "../../../Viewer/GameScene/Controller/EventViewer.h"
 
 //*****************************************************************************
 // É}ÉNÉçíËã`

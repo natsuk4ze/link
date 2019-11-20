@@ -79,10 +79,6 @@ void LinkInfoActor::Draw()
 	if (!this->IsActive())
 		return;
 
-	// ‚ ‚Æ‚ÅƒRƒ“ƒgƒ[ƒ‰‚ÉˆÚ“®
-	LPDIRECT3DDEVICE9 device = GetDevice();
-	device->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
-
 	viewer->Begin2D();
 	logo->Draw();
 	for (int i = 0; i < MaxDigit; i++)
@@ -92,8 +88,6 @@ void LinkInfoActor::Draw()
 	viewer->End2D();
 
 	viewer->Draw3D();
-
-	device->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 
 }
 

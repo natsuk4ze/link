@@ -9,7 +9,7 @@
 #include "BeatGame.h"
 #include "../EventActor/EventActorBase.h"
 #include "../../Field/Place/FieldPlaceModel.h"
-#include "../../Viewer/GameScene/EventViewer/EventViewer.h"
+#include "../../Viewer/GameScene/Controller/EventViewer.h"
 #include "../../Effect/GameParticleManager.h"
 #include "../../../Framework/Task/TaskManager.h"
 #include "../../Field/Camera/EventCamera.h"

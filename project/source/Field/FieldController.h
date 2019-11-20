@@ -13,7 +13,7 @@
 #include "../../Framework/Pattern/Delegate.h"
 #include "Place\PlaceConfig.h"
 #include "FieldConfig.h"
-#include "../Viewer/GameScene/GameViewer/GameViewerParam.h"
+#include "../Viewer/GameScene/ParameterContainer/GameViewerParam.h"
 
 #include <vector>
 

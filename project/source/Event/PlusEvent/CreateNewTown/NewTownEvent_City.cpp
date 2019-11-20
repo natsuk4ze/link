@@ -6,7 +6,7 @@
 //=============================================================================
 #include "../../../../main.h"
 #include "NewTownEvent_City.h"
-#include "../../../Viewer/GameScene/EventViewer/EventViewer.h"
+#include "../../../Viewer/GameScene/Controller/EventViewer.h"
 #include "../../../Effect/CityParticleManager.h"
 #include "../../../../Framework/Task/TaskManager.h"
 #include "../../../Field/Camera/EventCamera.h"

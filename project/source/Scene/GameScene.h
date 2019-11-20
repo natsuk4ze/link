@@ -128,7 +128,7 @@ private:
 	class GameWaitPopup;
 
 	//InfoController* testInfoController;
-	//GuideViewer* testGuide;
+	GuideViewer* testGuide;
 
 	//デバッグ用フィールドレベル
 	static int level;

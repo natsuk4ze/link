@@ -307,6 +307,7 @@ HRESULT AnimContainer::LoadAnimation(LPCSTR setName, int setNo)
 ***************************************/
 AnimContainer::~AnimContainer()
 {
+	return;
 	D3DXFrameDestroy(rootFrame, allocater);
 
 	SAFE_DELETE(status);
