@@ -1,6 +1,16 @@
+//=====================================
+//
+// ガイドビュアーバックグラウンド[GuideViewerBG.cpp]
+// 機能：ガイドビュアーの背景
+// Author:GP12B332 19 染谷武志
+//
+//=====================================
 #include "GuideViewerBG.h"
 #include "../../../../Framework/Resource/ResourceManager.h"
 
+//=====================================
+// コンストラクタ
+//=====================================
 GuideViewerBG::GuideViewerBG()
 {
 	polygon = new BoardPolygon();
@@ -11,16 +21,25 @@ GuideViewerBG::GuideViewerBG()
 	transform->SetScale(Vector3::One);
 }
 
+//=====================================
+// デストラクタ
+//=====================================
 GuideViewerBG::~GuideViewerBG()
 {
 	SAFE_DELETE(polygon);
 }
 
+//=====================================
+// 更新
+//=====================================
 void GuideViewerBG::Update()
 {
 
 }
 
+//=====================================
+// 描画
+//=====================================
 void GuideViewerBG::Draw()
 {
 	polygon->Draw(transform->GetMatrix());
