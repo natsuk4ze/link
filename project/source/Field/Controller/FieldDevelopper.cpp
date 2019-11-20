@@ -14,7 +14,7 @@
 #include "../Place/FieldPlaceContainer.h"
 #include "../Place/FieldPlaceContainer.h"
 #include "../../FieldObject/InfoController.h"
-#include "../../Viewer/GameScene/FieldViewer/FieldViewer.h"
+#include "../../Viewer/GameScene/Controller/FieldViewer.h"
 #include "../../Effect/GameParticleManager.h"
 
 #include "../../../Library/cppLinq/cpplinq.hpp"

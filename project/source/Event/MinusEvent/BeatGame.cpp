@@ -12,7 +12,7 @@
 #include "BeatGame.h"
 #include <mutex>
 #include <iostream>
-#include "../../Viewer/GameScene/BeatGameViewer/BeatGameViewer.h"
+#include "../../Viewer/GameScene/Controller/BeatGameViewer.h"
 #include "../../../Framework/Input/input.h"
 
 //*****************************************************************************
@@ -45,11 +45,12 @@ BeatGame::BeatGame(BeatGame::GameType type, std::function<void(bool)> Callback) 
 {
 	beatGameViewer = new BeatGameViewer();
 
-	//再生中のイベントえおセット
+	//再生中のイベントをセット
 	playingEvent = type;
 
 	//ゲームタイトルをセット
 	beatGameViewer->SetGameTitle(GetGameTitle());
+
 	//パラメータを初期値にセット
 	beatGameViewer->SetGameGauge(1.0f);
 	beatGameViewer->SetRemainTime(gameTime);

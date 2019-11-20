@@ -124,9 +124,6 @@
     <ClInclude Include="source\Viewer\Framework\BaseViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h" />
-    <ClInclude Include="source\Viewer\GameScene\EventViewer\EventViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\GameViewer\GameViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\LevelViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\TimerViewer.h" />
     <ClInclude Include="source\GameConfig.h" />
@@ -198,7 +195,6 @@
     <ClInclude Include="source\Event\EventActor\PlanetActor.h" />
     <ClInclude Include="source\Field\Object\WorldBackGroundContainer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.h" />
-    <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldTelop.h" />
     <ClInclude Include="source\Field\Object\SpaceBackGroundContainer.h" />
     <ClInclude Include="source\Shader\RiverEffect.h" />
@@ -211,7 +207,6 @@
     <ClInclude Include="source\Field\ActorLoader.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideActor.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\EventViewer\EventViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.h" />
     <ClInclude Include="source\Field\Camera\Plugin\FieldCameraTranslationPlugin.h" />
     <ClInclude Include="source\Field\Camera\EventCamera.h" />
@@ -219,7 +214,6 @@
     <ClInclude Include="Framework\Sound\MusicClip.h" />
     <ClInclude Include="Framework\Sound\sound.h" />
     <ClInclude Include="Framework\Sound\SoundEffect.h" />
-    <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatGameViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatTitleViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatTimerViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatGaugeViewer.h" />
@@ -250,6 +244,12 @@
     <ClInclude Include="source\Effect\WorldParticleManager.h" />
     <ClInclude Include="source\Effect\SpaceParticleManager.h" />
     <ClInclude Include="source\Effect\Game\World\WhirlPoolBubble.h" />
+    <ClInclude Include="source\Viewer\GameScene\Controller\BeatGameViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\Controller\EventViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\Controller\FieldViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\Controller\GameViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\ParameterContainer\GameViewerParam.h" />
+    <ClInclude Include="source\Viewer\GameScene\ParameterContainer\EventViewerParam.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -360,8 +360,6 @@
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventMessage.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventTelop.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\EventViewer\EventViewer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\GameViewer\GameViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\LevelViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp" />
     <ClCompile Include="source\GameMain.cpp" />
@@ -431,7 +429,6 @@
     <ClCompile Include="source\Event\EventActor\UFOActor.cpp" />
     <ClCompile Include="source\Event\EventActor\PlanetActor.cpp" />
     <ClCompile Include="source\Field\Object\WorldBackGroundContainer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldTelop.cpp" />
     <ClCompile Include="source\Field\Object\SpaceBackGroundContainer.cpp" />
     <ClCompile Include="source\Shader\RiverEffect.cpp" />
@@ -451,7 +448,6 @@
     <ClCompile Include="Framework\Sound\MusicClip.cpp" />
     <ClCompile Include="Framework\Sound\sound.cpp" />
     <ClCompile Include="Framework\Sound\SoundEffect.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatGameViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatTitleViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatTimerViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatGaugeViewer.cpp" />
@@ -481,6 +477,10 @@
     <ClCompile Include="source\Effect\WorldParticleManager.cpp" />
     <ClCompile Include="source\Effect\SpaceParticleManager.cpp" />
     <ClCompile Include="source\Effect\Game\World\WhirlPoolBubble.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\Controller\BeatGameViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\Controller\EventViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\Controller\FieldViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\Controller\GameViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

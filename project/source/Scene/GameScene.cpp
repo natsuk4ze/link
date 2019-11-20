@@ -21,7 +21,7 @@
 #include "../FieldObject/Actor/PlaceActor.h"
 #include "../Field/FieldController.h"
 #include "../Field/Camera/FieldCamera.h"
-#include "../Viewer/GameScene/GameViewer/GameViewer.h"
+#include "../Viewer/GameScene/Controller/GameViewer.h"
 #include "../Event/EventController.h"
 #include "../Field/Place/PlaceConfig.h"
 #include "../Effect/GameParticleManager.h"

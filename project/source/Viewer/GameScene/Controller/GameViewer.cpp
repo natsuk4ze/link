@@ -5,10 +5,10 @@
 //
 //=============================================================================
 #include "../../../../main.h"
-#include "ItemStockViewer.h"
-#include "TimerViewer.h"
-#include "LevelViewer.h"
-#include "GameViewerParam.h"
+#include "../GameViewer/ItemStockViewer.h"
+#include "../GameViewer/TimerViewer.h"
+#include "../GameViewer/LevelViewer.h"
+#include "../ParameterContainer/GameViewerParam.h"
 #include "GameViewer.h"
 
 #ifdef _DEBUG
