@@ -71,11 +71,11 @@ void GuideViewer::Draw()
 
 	//レンダーターゲット切り替え
 	LPDIRECT3DSURFACE9 oldSuf;
-	const D3DXCOLOR BackColor = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
+	const D3DXCOLOR BackColor = D3DXCOLOR(0.6f, 0.6f, 1.0f, 0.8f);
 	pDevice->GetRenderTarget(0, &oldSuf);
 	pDevice->SetRenderTarget(0, renderSurface);
 	pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BackColor, 1.0f, 0);
-	//pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 
 	camera->Set();
 
@@ -86,11 +86,11 @@ void GuideViewer::Draw()
 	bg->Draw();
 	actor->Draw();
 
-	//for (int i = 0; i < 4; i++)
-	//{
-	//	pDevice->SetTexture(0, renderTexture);
-	//	filter->Draw(i);
-	//}
+	for (int i = 0; i < 4; i++)
+	{
+		pDevice->SetTexture(0, renderTexture);
+		filter->Draw(i);
+	}
 
 	//レンダーターゲット復元
 	pDevice->SetRenderTarget(0, oldSuf);
@@ -101,7 +101,7 @@ void GuideViewer::Draw()
 	pDevice->SetStreamSource(0, screenVtx, 0, sizeof(VERTEX_2D));
 	pDevice->SetFVF(FVF_VERTEX_2D);
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
-	//pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 }
 
 //=====================================
