@@ -178,7 +178,7 @@ void PassengerController::LoadResource()
 	ResourceManager::Instance()->LoadMesh("Car", "data/MODEL/PassengerActor/ToonCar.x");
 	ResourceManager::Instance()->LoadMesh("Train", "data/MODEL/PassengerActor/PassengerTrain.x");
 	ResourceManager::Instance()->LoadMesh("Ship", "data/MODEL/PassengerActor/Boat.x");
-	ResourceManager::Instance()->LoadMesh("Rocket", "data/MODEL/PassengerActor/Rocket.x");
+	ResourceManager::Instance()->LoadMesh("Rocket", "data/MODEL/PassengerActor/PassengerSpace.x");
 }
 
 //=====================================
