@@ -259,6 +259,7 @@ HRESULT MyAllocateHierarchy::DestroyFrame(THIS_
 HRESULT MyAllocateHierarchy::DestroyMeshContainer(THIS_
 	LPD3DXMESHCONTAINER pMeshContainerToFree)
 {
+	return S_OK;
 	if (pMeshContainerToFree == NULL)
 		return D3D_OK;
 
