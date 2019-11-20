@@ -10,7 +10,7 @@
 
 #include "GuideActor.h"
 #include "GuideCamera.h"
-#include "GuideViewerEffect.h"
+#include "../../../../Framework/PostEffect/Effect/CRTFilter.h"
 
 //**************************************
 // クラス定義
@@ -20,7 +20,7 @@ class GuideViewer
 private:
 	GuideActor* actor;
 	GuideCamera* camera;
-	GuideViewerEffect* effect;
+	CRTFilter* filter;
 
 	// 描画用サブスクリーンを作成
 	LPDIRECT3DTEXTURE9 renderTexture;

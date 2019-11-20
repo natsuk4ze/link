@@ -70,6 +70,7 @@
     <ClInclude Include="Framework\PostEffect\Effect\BloomFilter.h" />
     <ClInclude Include="Framework\PostEffect\Effect\BlurFilter.h" />
     <ClInclude Include="Framework\PostEffect\Effect\CrossBlurFilter.h" />
+    <ClInclude Include="Framework\PostEffect\Effect\CRTFilter.h" />
     <ClInclude Include="Framework\PostEffect\Effect\MonotoneFilter.h" />
     <ClInclude Include="Framework\PostEffect\Effect\ShockBlur.h" />
     <ClInclude Include="Framework\PostEffect\Effect\SpeedBlurFilter.h" />
@@ -293,6 +294,7 @@
     <ClCompile Include="Framework\PostEffect\Effect\BloomFilter.cpp" />
     <ClCompile Include="Framework\PostEffect\Effect\BlurFilter.cpp" />
     <ClCompile Include="Framework\PostEffect\Effect\CrossBlurFilter.cpp" />
+    <ClCompile Include="Framework\PostEffect\Effect\CRTFilter.cpp" />
     <ClCompile Include="Framework\PostEffect\Effect\MonotoneFilter.cpp" />
     <ClCompile Include="Framework\PostEffect\Effect\ShockBlur.cpp" />
     <ClCompile Include="Framework\PostEffect\Effect\SpeedBlurFilter.cpp" />
@@ -479,19 +481,21 @@
     </FxCompile>
     <FxCompile Include="Shaders\CrossBlur.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">2.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Effect</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">2.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Shaders\CRTFilter.fx">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">2.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">2.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+      <DisableOptimizations Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DisableOptimizations>
+      <EnableDebuggingInformation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</EnableDebuggingInformation>
     </FxCompile>
     <FxCompile Include="Shaders\DepthRenderer.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
