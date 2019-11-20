@@ -132,6 +132,7 @@
     <ClInclude Include="source\Effect\Game\BanIcon.h" />
     <ClInclude Include="source\Effect\Game\City\BlueDebris.h" />
     <ClInclude Include="source\Effect\Game\City\BlueSpark.h" />
+    <ClInclude Include="source\Effect\Game\Space\Blackhole.h" />
     <ClInclude Include="source\Effect\Game\World\Bubble.h" />
     <ClInclude Include="source\Effect\Game\General\ColorfulDebris.h" />
     <ClInclude Include="source\Effect\Game\General\Darkness.h" />
@@ -369,6 +370,7 @@
     <ClCompile Include="source\Effect\Game\BanIcon.cpp" />
     <ClCompile Include="source\Effect\Game\City\BlueDebris.cpp" />
     <ClCompile Include="source\Effect\Game\City\BlueSpark.cpp" />
+    <ClCompile Include="source\Effect\Game\Space\Blackhole.cpp" />
     <ClCompile Include="source\Effect\Game\World\WhirlPoolBubble.cpp" />
     <ClCompile Include="source\Effect\SpaceParticleManager.cpp" />
     <ClCompile Include="source\Effect\WorldParticleManager.cpp" />

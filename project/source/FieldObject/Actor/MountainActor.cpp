@@ -13,6 +13,7 @@
 #include "../../Field/Object/WaterHeightController.h"
 #include "../../Effect/WorldParticleManager.h"
 #include "../../../Framework/Particle/BaseEmitter.h"
+#include "../../Effect/SpaceParticleManager.h"
 
 //=====================================
 // コンストラクタ
@@ -20,7 +21,7 @@
 MountainActor::MountainActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater)
 	: PlaceActor(pos, currentLevel),
 	effect(nullptr),
-	speedWhirl(Math::RandomRange(0.02f, 0.05f)),
+	speedWhirl(0.0f),
 	emitter(nullptr)
 {
 	using Field::Actor::ActorLoader;
@@ -31,6 +32,8 @@ MountainActor::MountainActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLe
 		if (currentLevel == Field::FieldLevel::Space)
 		{
 			effect = new Field::Actor::WhirlPoolEffect();
+			emitter = SpaceParticleManager::Instance()->Generate(SpaceParticle::Blackhole, transform->GetPosition());
+			speedWhirl = Math::RandomRange(0.005f, 0.01f);
 		}
 	}
 	else
@@ -39,6 +42,7 @@ MountainActor::MountainActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLe
 
 		effect = new Field::Actor::WhirlPoolEffect();
 		emitter = WorldParticleManager::Instance()->Generate(WorldParticle::WhirlPoolBubble, transform->GetPosition());
+		speedWhirl = Math::RandomRange(0.02f, 0.05f);
 	}
 
 	type = Field::Model::Mountain;

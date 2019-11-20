@@ -11,6 +11,7 @@
 
 #include "Game/Space/SpaceTear.h"
 #include "Game/Space/StarRoad.h"
+#include "Game/Space/Blackhole.h"
 
 /**************************************
 staticƒƒ“ƒo
@@ -28,6 +29,7 @@ void SpaceParticleManager::Init()
 	controllers.resize(SpaceParticle::Max, nullptr);
 	controllers[SpaceParticle::SpaceTear] = new Effect::Game::SpaceTearController();
 	controllers[SpaceParticle::StarRoad] = new Effect::Game::StarRoadController();
+	controllers[SpaceParticle::Blackhole] = new Effect::Game::BlackholeController();
 
 	crossFilter->SetPower(BloomPower[0], BloomPower[1], BloomPower[2]);
 	crossFilter->SetThrethold(BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]);

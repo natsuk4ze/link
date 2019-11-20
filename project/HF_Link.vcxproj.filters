@@ -250,6 +250,7 @@
     <ClInclude Include="source\Effect\WorldParticleManager.h" />
     <ClInclude Include="source\Effect\SpaceParticleManager.h" />
     <ClInclude Include="source\Effect\Game\World\WhirlPoolBubble.h" />
+    <ClInclude Include="source\Effect\Game\Space\Blackhole.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -481,6 +482,7 @@
     <ClCompile Include="source\Effect\WorldParticleManager.cpp" />
     <ClCompile Include="source\Effect\SpaceParticleManager.cpp" />
     <ClCompile Include="source\Effect\Game\World\WhirlPoolBubble.cpp" />
+    <ClCompile Include="source\Effect\Game\Space\Blackhole.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
