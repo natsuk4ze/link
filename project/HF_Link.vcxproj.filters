@@ -213,6 +213,9 @@
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCamera.h" />
+    <ClInclude Include="Framework\PostEffect\Effect\CRTFilter.h" />
+    <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.h" />
     <ClInclude Include="source\Field\Camera\Plugin\FieldCameraTranslationPlugin.h" />
     <ClInclude Include="source\Field\Camera\EventCamera.h" />
     <ClInclude Include="Framework\Sound\BackgroundMusic.h" />
@@ -445,6 +448,9 @@
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideActor.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideCamera.cpp" />
+    <ClCompile Include="Framework\PostEffect\Effect\CRTFilter.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.cpp" />
     <ClCompile Include="source\Field\Camera\Plugin\FieldCameraTranslationPlugin.cpp" />
     <ClCompile Include="source\Field\Camera\EventCamera.cpp" />
     <ClCompile Include="Framework\Sound\BackgroundMusic.cpp" />
@@ -501,6 +507,7 @@
     <FxCompile Include="Shaders\Sprite.fx" />
     <FxCompile Include="Shaders\InstancingMesh.fx" />
     <FxCompile Include="source\Shader\RiverRenderer.fx" />
+    <FxCompile Include="Shaders\CRTFilter.fx" />
     <FxCompile Include="source\Shader\WhirlPoolRenderer.fx" />
   </ItemGroup>
 </Project>
