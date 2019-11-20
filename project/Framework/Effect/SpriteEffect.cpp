@@ -11,15 +11,12 @@
 /**************************************
 staticメンバ
 ***************************************/
-D3DXMATRIX SpriteEffect::mtxView;
-D3DXMATRIX SpriteEffect::mtxProjection;
 D3DXMATRIX SpriteEffect::mtxScreenProj;
 
 /**************************************
 コンストラクタ
 ***************************************/
 SpriteEffect::SpriteEffect(const D3DXVECTOR2 & texDiv) :
-	effect(nullptr),
 	diffuse(1.0f, 1.0f, 1.0f, 1.0f),
 	texDiv(texDiv),
 	texSize(1.0f / texDiv.x, 1.0f / texDiv.y),
@@ -29,9 +26,9 @@ SpriteEffect::SpriteEffect(const D3DXVECTOR2 & texDiv) :
 	ResourceManager::Instance()->GetEffect("data/EFFECT/Sprite.cfx", effect);
 
 	//ハンドル取得
-	hMtxWorld = effect->GetParameterByName(0, "mtxWorld");
-	hMtxView = effect->GetParameterByName(0, "mtxView");
-	hMtxProj = effect->GetParameterByName(0, "mtxProj");
+	hWorld = effect->GetParameterByName(0, "mtxWorld");
+	hView = effect->GetParameterByName(0, "mtxView");
+	hProjection = effect->GetParameterByName(0, "mtxProj");
 	hMtxScreenProj = effect->GetParameterByName(0, "mtxScreenProj");
 	hTexUV = effect->GetParameterByName(0, "texUV");
 	hDiffuse = effect->GetParameterByName(0, "diffuse");
@@ -46,44 +43,12 @@ SpriteEffect::~SpriteEffect()
 }
 
 /**************************************
-開始処理
-***************************************/
-void SpriteEffect::Begin()
-{
-	effect->Begin(0, 0);
-}
-
-/**************************************
-パス開始ショリ
-***************************************/
-void SpriteEffect::BeginPass(DWORD pass)
-{
-	effect->BeginPass(pass);
-}
-
-/**************************************
-パス終了処理
-***************************************/
-void SpriteEffect::EndPass()
-{
-	effect->EndPass();
-}
-
-/**************************************
-終了処理
-***************************************/
-void SpriteEffect::End()
-{
-	effect->End();
-}
-
-/**************************************
 変更反映処理
 ***************************************/
 void SpriteEffect::Commit()
 {	
-	effect->SetMatrix(hMtxView, &mtxView);
-	effect->SetMatrix(hMtxProj, &mtxProjection);
+	effect->SetMatrix(hView, &mtxView);
+	effect->SetMatrix(hProjection, &mtxProjection);
 	effect->SetMatrix(hMtxScreenProj, &mtxScreenProj);
 	effect->SetFloatArray(hDiffuse, (float*)&diffuse, 4);
 	effect->SetFloatArray(hTexUV, (float*)&uv, 2);
@@ -95,7 +60,7 @@ void SpriteEffect::Commit()
 ***************************************/
 void SpriteEffect::SetWorld(const D3DXMATRIX & mtxWorld)
 {
-	effect->SetMatrix(hMtxWorld, &mtxWorld);
+	effect->SetMatrix(hWorld, &mtxWorld);
 }
 
 /**************************************
@@ -126,22 +91,6 @@ void SpriteEffect::SetTextureIndex(int index)
 
 	uv.x = u * texSize.x;
 	uv.y = v * texSize.y;
-}
-
-/**************************************
-ビュー行列設定処理
-***************************************/
-void SpriteEffect::SetView(const D3DXMATRIX & mtx)
-{
-	mtxView = mtx;
-}
-
-/**************************************
-プロジェクション行列設定処理
-***************************************/
-void SpriteEffect::SetProjection(const D3DXMATRIX & mtx)
-{
-	mtxProjection = mtx;
 }
 
 /**************************************
