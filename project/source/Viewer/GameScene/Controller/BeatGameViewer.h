@@ -10,8 +10,8 @@
 #include <vector>
 #include <functional>
 #include "../../../../Framework/Pattern/Delegate.h"
-#include "BeatTitleViewer.h"
-#include "BeatResultViewer.h"
+#include "../BeatGameViewer/BeatTitleViewer.h"
+#include "../BeatGameViewer/BeatResultViewer.h"
 
 //*****************************************************************************
 // ‘O•ûéŒ¾

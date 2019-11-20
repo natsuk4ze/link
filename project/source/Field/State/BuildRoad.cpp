@@ -12,7 +12,7 @@
 #include "../Controller/FieldDevelopper.h"
 #include "../Place/FieldPlaceModel.h"
 #include "../../Viewer/GameScene/FieldViewer/OperationExplanationViewer.h"
-#include "../../Viewer/GameScene/FieldViewer/FieldViewer.h"
+#include "../../Viewer/GameScene/Controller/FieldViewer.h"
 
 namespace Field
 {

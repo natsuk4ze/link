@@ -5,10 +5,10 @@
 //
 //=============================================================================
 #include "../../../../main.h"
-#include "FieldTelop.h"
-#include "LinkLevelUpViewer.h"
-#include "FieldErrorMessage.h"
-#include "OperationExplanationViewer.h"
+#include "../FieldViewer/FieldTelop.h"
+#include "../FieldViewer/LinkLevelUpViewer.h"
+#include "../FieldViewer/FieldErrorMessage.h"
+#include "../FieldViewer/OperationExplanationViewer.h"
 #include "FieldViewer.h"
 
 #ifdef _DEBUG

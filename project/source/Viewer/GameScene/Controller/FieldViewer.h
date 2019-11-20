@@ -8,9 +8,9 @@
 #define _FIELD_VIEWER_H_
 
 #include <vector>
-#include "FieldTelop.h"
-#include "FieldErrorMessage.h"
-#include "OperationExplanationViewer.h"
+#include "../FieldViewer/FieldTelop.h"
+#include "../FieldViewer/FieldErrorMessage.h"
+#include "../FieldViewer/OperationExplanationViewer.h"
 
 //*****************************************************************************
 // ëOï˚êÈåæ

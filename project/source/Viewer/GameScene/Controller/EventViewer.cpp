@@ -6,10 +6,10 @@
 //=============================================================================
 #include "../../../../main.h"
 #include "../../../../Framework/Math/TMath.h"
-#include "EventMessage.h"
-#include "EventTelop.h"
-#include "SealItemStockViewer.h"
-#include "EventViewerParam.h"
+#include "../EventViewer/EventMessage.h"
+#include "../EventViewer/EventTelop.h"
+#include "../EventViewer/SealItemStockViewer.h"
+#include "../ParameterContainer/EventViewerParam.h"
 #include "EventViewer.h"
 
 #ifdef _DEBUG

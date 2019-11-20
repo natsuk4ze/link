@@ -7,7 +7,7 @@
 #include "../../../main.h"
 #include "BanStockUseEvent.h"
 #include "../MinusEvent/BeatGame.h"
-#include "../../Viewer/GameScene/EventViewer/EventViewer.h"
+#include "../../Viewer/GameScene/Controller/EventViewer.h"
 #include "../../Effect/GameParticleManager.h"
 #include "../../../Framework/Task/TaskManager.h"
 

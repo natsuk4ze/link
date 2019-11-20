@@ -26,8 +26,8 @@
 #include "../../Framework/Camera/CameraShakePlugin.h"
 
 #include "../Field/Place/FieldPlaceModel.h"
-#include "../Viewer/GameScene/EventViewer/EventViewer.h"
-#include "../Viewer/GameScene/EventViewer/EventViewerParam.h"
+#include "../Viewer/GameScene/Controller/EventViewer.h"
+#include "../Viewer/GameScene/ParameterContainer/EventViewerParam.h"
 
 #include "../Field/Camera/EventCamera.h"
 

@@ -5,11 +5,11 @@
 //
 //=============================================================================
 #include "../../../../main.h"
-#include "BeatTitleViewer.h"
-#include "BeatGaugeViewer.h"
-#include "BeatTimerViewer.h"
-#include "BeatStarterViewer.h"
-#include "BeatResultViewer.h"
+#include "../BeatGameViewer/BeatTitleViewer.h"
+#include "../BeatGameViewer/BeatGaugeViewer.h"
+#include "../BeatGameViewer/BeatTimerViewer.h"
+#include "../BeatGameViewer/BeatStarterViewer.h"
+#include "../BeatGameViewer/BeatResultViewer.h"
 #include "BeatGameViewer.h"
 
 #ifdef _DEBUG
