@@ -13,6 +13,8 @@
 #include "../../Framework/Tool/ProfilerCPU.h"
 #include "../../Framework/Core/PlayerPrefs.h"
 #include "../../Framework/Serial/SerialWrapper.h"
+#include "../../Framework/Network/UDPClient.h"
+#include "../../Framework/Network/PacketConfig.h"
 
 #include "../GameConfig.h"
 #include "../Field/Object/FieldSkyBox.h"
@@ -24,6 +26,9 @@
 #include "../Field/Place/PlaceConfig.h"
 #include "../Effect/GameParticleManager.h"
 #include "../Field/FieldEventHandler.h"
+#include "../Effect/CityParticleManager.h"
+#include "../Effect/WorldParticleManager.h"
+#include "../Effect/SpaceParticleManager.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
@@ -36,6 +41,7 @@
 #include "GameState/GameFarView.h"
 
 #include "../../Framework/Tool/DebugWindow.h"
+#include "../../Framework/Sound/BackgroundMusic.h"
 
 /**************************************
 staticメンバ
@@ -65,6 +71,25 @@ void GameScene::Init()
 	particleManager = GameParticleManager::Instance();
 	bloomController = new BloomController();
 	//serial = new SerialWrapper(3);								//TODO:ポート番号を変えられるようにする
+	Client = new UDPClient();
+
+	//レベル毎のパーティクルマネージャを選択
+	switch (level)
+	{
+	case Field::City:
+		levelParticleManager = CityParticleManager::Instance();
+		break;
+	case Field::World:
+		levelParticleManager = WorldParticleManager::Instance();
+		break;
+
+	case Field::Space:
+		levelParticleManager = SpaceParticleManager::Instance();
+		break;
+	default:
+		levelParticleManager = nullptr;
+		break;
+	}
 
 	//ステートマシン作成
 	fsm.resize(State::Max, NULL);
@@ -105,6 +130,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(bloomController);
 	SAFE_DELETE(eventHandler);
 	//SAFE_DELETE(serial);
+	SAFE_DELETE(Client);
 
 	//パーティクル終了
 	particleManager->Uninit();
@@ -158,6 +184,7 @@ void GameScene::Update()
 
 	//パーティクル更新
 	ProfilerCPU::Instance()->Begin("Update Particle");
+	levelParticleManager->Update();
 	particleManager->Update();
 	ProfilerCPU::Instance()->End("Update Particle");
 
@@ -184,7 +211,7 @@ void GameScene::Update()
 void GameScene::Draw()
 {
 	//カメラセット
-	fieldCamera->Set();
+	Camera::MainCamera()->Set();
 
 	//オブジェクト描画
 	ProfilerCPU::Instance()->Begin("Draw Object");
@@ -206,8 +233,12 @@ void GameScene::Draw()
 	ProfilerCPU::Instance()->End("Draw PostEffect");
 #endif
 
+	//フィールドの情報表示
+	field->DrawInfo();
+
 	//パーティクル描画
 	ProfilerCPU::Instance()->Begin("Draw Particle");
+	levelParticleManager->Draw();
 	particleManager->Draw();
 	ProfilerCPU::Instance()->End("Draw Particle");
 
@@ -242,7 +273,10 @@ void GameScene::ChangeState(State next)
 ***************************************/
 void GameScene::OnBuildRoad(Route& route)
 {
-	eventController->CheckEventHappen(route, Field::FieldLevel::City);
+	bool flgPause = eventController->CheckEventHappen(route, Field::FieldLevel::City);
+
+	if (flgPause)
+		ChangeState(State::Pause);
 }
 
 /**************************************
@@ -252,6 +286,9 @@ void GameScene::OnLevelUp()
 {
 	//現在の制限時間を保存
 	PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_RemainTime), remainTime);
+
+	//BGMをフェードアウト
+	BGM::Fade(0.0f, 30, true);
 
 	//テストなのでインクリメントしてしまう
 	//本番ではちゃんと制限する
@@ -329,6 +366,17 @@ void GameScene::DebugTool()
 	if (Debug::Button("Add Time"))
 	{
 		remainTime += 30 * 10;
+	}
+
+	Debug::NewLine();
+	if (Debug::Button("SendPacket"))
+	{
+		PacketConfig Packet;
+		GameViewerParam gameParam;
+		field->EmbedViewerParam(gameParam);
+		Packet.AILevel = gameParam.levelAI;
+		Client->ReceivePacketConfig(Packet);
+		Client->SendPacket();
 	}
 
 	Debug::End();

@@ -29,6 +29,8 @@
 #include "../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../Viewer/GameScene/EventViewer/EventViewerParam.h"
 
+#include "../Field/Camera/EventCamera.h"
+
 #include <fstream>
 
 #if _DEBUG
@@ -67,6 +69,8 @@ EventController::EventController(int FieldLevel)
 
 	eventViewer = new EventViewer();
 
+	camera = new EventCamera();
+
 #if _DEBUG
 	ResourceManager::Instance()->MakePolygon("Event", "data/TEXTURE/PlaceTest/Event.png", { 4.5f, 4.5f }, { 13.0f,1.0f });
 	polygon = new BoardPolygon();
@@ -85,6 +89,8 @@ EventController::~EventController()
 	EventCSVData.clear();
 
 	SAFE_DELETE(eventViewer);
+
+	SAFE_DELETE(camera);
 
 #if _DEBUG
 	SAFE_DELETE(polygon);
@@ -122,13 +128,22 @@ void EventController::Update()
 		}
 	}
 
-	// イベントビューア更新
-	eventViewer->Update();
-
 	EventVec.erase(std::remove_if(std::begin(EventVec), std::end(EventVec), [&](EventBase *Event)
 	{
 		return Event == nullptr ? true : false;
 	}), std::end(EventVec));
+
+	//イベントカメラ更新
+	camera->Update();
+}
+
+//=============================================================================
+// イベントビューワ更新
+//=============================================================================
+void EventController::UpdateViewer(void)
+{
+	// イベントビューア更新
+	eventViewer->Update();
 }
 
 //=============================================================================
@@ -224,8 +239,10 @@ void EventController::LoadCSV(const char* FilePath)
 //=============================================================================
 // イベント発生の確認
 //=============================================================================
-void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& RoutePtr, int FieldLevel)
+bool EventController::CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& RoutePtr, int FieldLevel)
 {
+	bool flgPause = false;
+
 	for (auto &place : RoutePtr)
 	{
 		Field::FieldPosition PlacePos = place->GetPosition();
@@ -243,7 +260,8 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					Ptr = new LinkLevelUpEvent();
 					break;
 				case NewCity:
-					Ptr = new NewTownEventCtrl(eventViewer, FieldLevel);
+					Ptr = new NewTownEventCtrl(eventViewer, FieldLevel, camera);
+					flgPause = true;
 					break;
 				case StockRecovery:
 					Ptr = new StockRecoveryEvent();
@@ -264,10 +282,12 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					Ptr = new LinkLevelDecreaseEvent();
 					break;
 				case CityDestroy:
-					Ptr = new CityDestroyEvent(eventViewer);
+					Ptr = new CityDestroyEvent(eventViewer, camera);
+					flgPause = true;
 					break;
 				case AILevelDecrease:
-					Ptr = new AILevelDecreaseEvent(eventViewer);
+					Ptr = new AILevelDecreaseEvent(eventViewer, camera);
+					flgPause = true;
 					break;
 				case BanStockUse:
 					if (InBanStock)
@@ -281,6 +301,7 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 						Ptr = new BanStockUseEvent(eventViewer,
 							[&](bool Flag) {SetBanStock(Flag); },
 							[&]() {return GetInPause(); });
+						flgPause = true;
 					}
 					break;
 				default:
@@ -303,6 +324,8 @@ void EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 				++EventPlace;
 		}
 	}
+
+	return flgPause;
 }
 
 //=============================================================================

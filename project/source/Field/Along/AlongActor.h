@@ -9,6 +9,7 @@
 #define _ALONGACTOR_H_
 
 #include "../../../main.h"
+#include "../FieldConfig.h"
 
 /**************************************
 ëOï˚êÈåæ
@@ -23,7 +24,7 @@ namespace Field::Along
 	class AlongActor : public GameObject
 	{
 	public:
-		AlongActor();
+		AlongActor(FieldLevel level, bool onWater);
 		~AlongActor();
 
 		void Update();
@@ -39,9 +40,13 @@ namespace Field::Along
 		static const float MaxScale;
 		static const float MinScaleY;
 		static const float MaxScaleY;
+		static const float SpeedRotate;
 		static const D3DXCOLOR MaterialColor[];
 
 		MeshContainer * mesh;
+
+		FieldLevel level;
+		bool onWater;
 	};
 }
 

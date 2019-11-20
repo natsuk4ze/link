@@ -6,10 +6,10 @@
 //=============================================================================
 #include "../../../../main.h"
 #include "NewTownEvent_City.h"
-#include "../../../../Framework/Camera/CameraTranslationPlugin.h"
 #include "../../../Viewer/GameScene/EventViewer/EventViewer.h"
-#include "../../../Effect/GameParticleManager.h"
+#include "../../../Effect/CityParticleManager.h"
 #include "../../../../Framework/Task/TaskManager.h"
+#include "../../../Field/Camera/EventCamera.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -24,10 +24,11 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-NewTownEvent_City::NewTownEvent_City(EventViewer *Ptr, std::function<void(void)> EventOverFunc) :
+NewTownEvent_City::NewTownEvent_City(EventViewer *Ptr, std::function<void(void)> EventOverFunc, EventCamera *camera) :
 	EventBase(true),
 	eventViewer(Ptr),
-	EventOverFunc(EventOverFunc)
+	EventOverFunc(EventOverFunc),
+	camera(camera)
 {
 
 }
@@ -57,7 +58,7 @@ void NewTownEvent_City::Init()
 	eventViewer->SetEventTelop(EventTelop::NewPlanet, [=]()
 	{
 		// 予定地にカメラを移動させる
-		CameraTranslationPlugin::Instance()->Move(TownPos, 30, [&]() {CreateNewTown(); });
+		camera->Translation(TownPos, 30, [&]() {CreateNewTown(); });
 	});
 
 	// 初期化終了
@@ -97,7 +98,7 @@ void NewTownEvent_City::CreateNewTown(void)
 	D3DXVECTOR3 TownPos = NewTown->GetPosition().ConvertToWorldPosition();
 
 	fieldEventHandler->CreateNewTown(NewTown);
-	GameParticleManager::Instance()->SetSingularityEffect(TownPos);
+	CityParticleManager::Instance()->SetSingularityEffect(TownPos);
 	TaskManager::Instance()->CreateDelayedTask(90, [&]() {EventOverFunc(); });
 }
 

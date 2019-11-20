@@ -25,24 +25,7 @@ namespace Field::Actor
 		void SetWorld(const Transform& transform);
 		void SetUV(const D3DXVECTOR2& uv);
 
-		void SetMaterial(const D3DMATERIAL9& material);
-
-		void CommitCameraParameter();
-
 	private:
-		D3DXHANDLE hWorld;
-		D3DXHANDLE hView;
-		D3DXHANDLE hProjection;
-
-		D3DXHANDLE hMatDiffuse;
-		D3DXHANDLE hMatAmbient;
-		D3DXHANDLE hMatSpecular;
-		
-		D3DXHANDLE hLightDiffuse;
-		D3DXHANDLE hLightAmbient;
-		D3DXHANDLE hLightSpecular;
-		D3DXHANDLE hLightDirection;
-
 		D3DXHANDLE hTexUV;
 	};
 }

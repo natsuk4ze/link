@@ -32,6 +32,7 @@
 
 #include "../FieldObject/Animation/ActorAnimation.h"
 #include "ActorLoader.h"
+#include "../Field/Object/WaterHeightController.h"
 
 namespace Field::Actor
 {
@@ -55,7 +56,7 @@ namespace Field::Actor
 		currentLevel(level),
 		bonusSideWay(0.0f)
 	{
-		alongController = new Along::AlongController();
+		alongController = new Along::AlongController(level);
 		aStarController = new Route::AStarController();
 		passengerController = new PassengerController(currentLevel);
 
@@ -85,10 +86,6 @@ namespace Field::Actor
 		{
 			bonusSideWay += 1.0f;
 		});
-
-		//国レベルのモデルが無いので一旦、街レベルに落とす
-		//if (currentLevel == FieldLevel::World)
-		//	currentLevel = FieldLevel::City;
 	}
 
 	/**************************************
@@ -112,7 +109,7 @@ namespace Field::Actor
 		alongController->Update();
 		passengerController->Update();
 
-		RiverActor::UpdateHeight();
+		WaterHeightController::UpdateHeight();
 	
 		bgContainer->Update();
 
@@ -158,6 +155,8 @@ namespace Field::Actor
 		ResourceManager::Instance()->LoadMesh("NoneActor", "data/MODEL/PlaceActor/ground.x");
 		ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
 		ResourceManager::Instance()->LoadMesh("AlongCity", "data/MODEL/AlongActor/AlongActorCity.x");
+		ResourceManager::Instance()->LoadMesh("AlongWorld", "data/MODEL/AlongActor/AlongWorld.x");
+		ResourceManager::Instance()->LoadMesh("AlongSpace", "data/MODEL/AlongActor/AlongSpace.x");
 
 		//アクターのリソースをロード
 		ActorLoader loader;
@@ -305,9 +304,9 @@ namespace Field::Actor
 	/**************************************
 	海かどうかの判定
 	***************************************/
-	bool PlaceActorController::IsSeaPlace(const FieldPosition & position) const
+	bool PlaceActorController::EnableAtlantis(const FieldPosition & position) const
 	{
-		return bgContainer->IsSeaPlace(position);
+		return bgContainer->EnableAtlantis(position);
 	}
 
 	/**************************************
@@ -358,18 +357,20 @@ namespace Field::Actor
 		std::vector<Adjacency> AdjacencyType = place->GetConnectingAdjacency();
 		StraightType straightType = IsStraight(AdjacencyType);
 
+		bool onWater = bgContainer->IsSeaPlace(place->GetPosition());
+
 		//直線タイプの場合
 		if (straightType != StraightType::NotStraight)
 		{
 			//アクター生成
-			PlaceActor* actor = new StraightRoadActor(actorPos, currentLevel);
+			PlaceActor* actor = new StraightRoadActor(actorPos, currentLevel, onWater);
 			AddContainer(place->ID(), actor);
 
 			//左右に繋がるタイプなら回転させる
 			if (straightType == StraightType::RightAndLeft)
 				actor->Rotate(90.0f);
 
-			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::Straight);
+			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::Straight, onWater);
 
 			// 生成アニメーション
 			actor->SetScale(Vector3::Zero);
@@ -379,7 +380,7 @@ namespace Field::Actor
 		else
 		{
 			//アクター生成
-			PlaceActor* actor = new CurveRoadActor(actorPos, currentLevel);
+			PlaceActor* actor = new CurveRoadActor(actorPos, currentLevel, onWater);
 			AddContainer(place->ID(), actor);
 
 			//回転角度を決定して回転
@@ -395,7 +396,7 @@ namespace Field::Actor
 
 			actor->Rotate(rotAngle);
 
-			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::Curve);
+			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::Curve, onWater);
 
 			// 生成アニメーション
 			actor->SetScale(Vector3::Zero);
@@ -462,12 +463,14 @@ namespace Field::Actor
 
 		std::vector<Adjacency> adjacencyTypeList = place->GetConnectingAdjacency();
 
+		bool onWater = bgContainer->IsSeaPlace(place->GetPosition());
+
 		//十字路のアクター作成
 		if (adjacencyTypeList.size() == 4)
 		{
-			PlaceActor *actor = new CrossJunctionActor(actorPos, currentLevel);
+			PlaceActor *actor = new CrossJunctionActor(actorPos, currentLevel, onWater);
 
-			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::CrossJunction);
+			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::CrossJunction, onWater);
 
 			// 生成アニメーション
 			ActorAnimation::RotateAndExpantion(*actor);
@@ -477,7 +480,7 @@ namespace Field::Actor
 		//T字路のアクター生成
 		else
 		{
-			PlaceActor* actor = new TJunctionActor(actorPos, currentLevel);
+			PlaceActor* actor = new TJunctionActor(actorPos, currentLevel, onWater);
 
 			TjunctionType junctionType = IsTjunction(adjacencyTypeList);
 			float rotAngle = 0.0f;
@@ -493,7 +496,7 @@ namespace Field::Actor
 
 			AddContainer(place->ID(), actor);
 			
-			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::T_Junction);
+			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::T_Junction, onWater);
 
 			// 生成アニメーション
 			ActorAnimation::RotateAndExpantion(*actor);
@@ -509,8 +512,9 @@ namespace Field::Actor
 	void PlaceActorController::SetMountain(const Model::PlaceModel * place)
 	{
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
+		bool onWater = bgContainer->IsSeaPlace(place->GetPosition());
 
-		PlaceActor *actor = new MountainActor(actorPos, currentLevel);
+		PlaceActor *actor = new MountainActor(actorPos, currentLevel, onWater);
 
 		//回転
 		float rotateAngle = Math::RandomRange(0, 4) * 90.0f;

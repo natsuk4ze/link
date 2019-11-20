@@ -15,6 +15,7 @@
 #include "../Place/FieldPlaceContainer.h"
 #include "../../FieldObject/InfoController.h"
 #include "../../Viewer/GameScene/FieldViewer/FieldViewer.h"
+#include "../../Effect/GameParticleManager.h"
 
 #include "../../../Library/cppLinq/cpplinq.hpp"
 
@@ -103,7 +104,15 @@ namespace Field
 		int currentLinkLevel = entity->placeContainer->GetLinkLevel();
 		int diff = currentLinkLevel - prevLinkLevel;
 		if (diff > 0)
-			entity->viewer->ViewLinkLevelUp(diff);
+		{
+			entity->flgWaitPopup = true;
+			entity->viewer->ViewLinkLevelUp(diff, [&]()
+			{
+				entity->flgWaitPopup = false;
+			});
+
+			GameParticleManager::Instance()->Generate(GameParticle::LinkLevelUp, { SCREEN_CENTER_X, SCREEN_CENTER_Y, 0.0f });
+		}
 
 		// 接続されている全ての町のリンクレベルをセット
 		entity->SetLinkLevelInfo();

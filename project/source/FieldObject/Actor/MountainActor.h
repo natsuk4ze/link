@@ -12,6 +12,12 @@
 //**************************************
 // マクロ定義
 //**************************************
+namespace Field::Actor
+{
+	class WhirlPoolEffect;
+}
+
+class BaseEmitter;
 
 //**************************************
 // クラス定義
@@ -20,8 +26,18 @@ class MountainActor :
 	public PlaceActor
 {
 public:
-	MountainActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
+	MountainActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater);
 	~MountainActor();
+
+	void Update() override;
+	void Draw() override;
+
+private:
+	Field::Actor::WhirlPoolEffect *effect;
+	float speedWhirl;
+	float cntWhirl;
+
+	BaseEmitter *emitter;
 };
 
 #endif

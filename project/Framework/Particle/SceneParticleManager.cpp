@@ -10,6 +10,7 @@
 #include "BaseParticleController.h"
 #include "../PostEffect/CrossFilterController.h"
 #include "../Tool/DebugWindow.h"
+#include "../../Library/cppLinq/cpplinq.hpp"
 
 /**************************************
 マクロ定義
@@ -79,6 +80,10 @@ void SceneParticleManager::Update()
 ***************************************/
 void SceneParticleManager::Draw()
 {
+	using cpplinq::from;
+	using cpplinq::where;
+	using cpplinq::to_vector;
+
 	//レンダーパラメータ切り替え
 	ChangeRenderParameter();
 
@@ -87,7 +92,29 @@ void SceneParticleManager::Draw()
 
 	//描画
 	bool isDrewd = false;
-	for (auto& controller : controllers)
+
+	//3Dを先に描画
+	auto controller3D = from(controllers)
+		>> where([](BaseParticleController* controller)
+	{
+		return controller->GetType() == BaseParticleController::Particle_3D;
+	})
+		>> to_vector();
+
+	for (auto& controller : controller3D)
+	{
+		isDrewd |= controller->Draw();
+	}
+
+	//2Dを後に描画
+	auto controller2D = from(controllers)
+		>> where([](BaseParticleController* controller)
+	{
+		return controller->GetType() == BaseParticleController::Particle_2D;
+	})
+		>> to_vector();
+
+	for (auto& controller : controller2D)
 	{
 		isDrewd |= controller->Draw();
 	}
@@ -118,7 +145,8 @@ void SceneParticleManager::Draw()
 ***************************************/
 BaseEmitter* SceneParticleManager::Generate(UINT id, const D3DXVECTOR3& pos, std::function<void(void)> callback)
 {
-	assert(id >= 0 && id < controllers.size());
+	if (id < 0 || id >= controllers.size())
+		return nullptr;
 
 	return controllers[id]->SetEmitter(pos, callback);
 }
@@ -128,7 +156,8 @@ BaseEmitter* SceneParticleManager::Generate(UINT id, const D3DXVECTOR3& pos, std
 ***************************************/
 BaseEmitter* SceneParticleManager::Generate(UINT id, const Transform& transform, std::function<void(void)> callback)
 {
-	assert(id >= 0 && id < controllers.size());
+	if (id < 0 || id >= controllers.size())
+		return nullptr;
 
 	return controllers[id]->SetEmitter(transform, callback);
 }

@@ -15,7 +15,7 @@
 #include "../../../Framework/String/String.h"
 #include "../../../Framework/Renderer3D/InstancingMeshContainer.h"
 
-#include "../../Effect/GameParticleManager.h"
+#include "../../Effect/SpaceParticleManager.h"
 
 #include <fstream>
 #include <string>
@@ -114,7 +114,7 @@ namespace Field::Actor
 
 					//パーティクルのエミッタをセット
 					D3DXVECTOR3 position = FieldPosition(x, z).ConvertToWorldPosition();
-					GameParticleManager::Instance()->Generate(GameParticle::SpaceTear, position);
+					SpaceParticleManager::Instance()->Generate(SpaceParticle::SpaceTear, position);
 				}
 				x++;
 			}
@@ -126,7 +126,7 @@ namespace Field::Actor
 	/**************************************
 	海判定
 	***************************************/
-	bool SpaceBackGroundContainer::IsSeaPlace(const FieldPosition& position) const
+	bool SpaceBackGroundContainer::EnableAtlantis(const FieldPosition& position) const
 	{
 		//海は存在しないので無条件でfalse
 		return false;

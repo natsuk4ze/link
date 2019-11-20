@@ -11,6 +11,7 @@
 #include "../../../Field/Place/FieldPlaceModel.h"
 
 class EventViewer;
+class EventCamera;
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -22,7 +23,7 @@ private:
 	EventViewer *eventViewer;
 
 public:
-	NewTownEventCtrl(EventViewer *Ptr, int FieldLevel);
+	NewTownEventCtrl(EventViewer *Ptr, int FieldLevel, EventCamera *camera);
 	~NewTownEventCtrl();
 	void Init(void) override;
 	void Update(void) override;

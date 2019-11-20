@@ -9,17 +9,40 @@
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../Animation/ActorAnimation.h"
 #include "../../Field/ActorLoader.h"
+#include "../../Effect/SpaceParticleManager.h"
+#include "../../../Framework/Particle/BaseEmitter.h"
+#include "../../Field/Object/WaterHeightController.h"
 
 //=====================================
 // コンストラクタ
 //=====================================
-TJunctionActor::TJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
-	: PlaceActor(pos, currentLevel)
+TJunctionActor::TJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater)
+	: PlaceActor(pos, currentLevel),
+	onWater(onWater)
 {
 	using Field::Actor::ActorLoader;
-	ResourceManager::Instance()->GetMesh(ActorLoader::TJunctionTag[currentLevel].c_str(), mesh);
+	if (!onWater)
+		ResourceManager::Instance()->GetMesh(ActorLoader::TJunctionTag[currentLevel].c_str(), mesh);
+	else
+		ResourceManager::Instance()->GetMesh(ActorLoader::WaterT.c_str(), mesh);
 
 	type = Field::Model::Junction;
+
+	emitterContainer.resize(3, nullptr);
+
+	D3DXVECTOR3 euler = transform->GetEulerAngle();
+
+	if (currentLevel == Field::FieldLevel::Space)
+	{
+		for (auto&& emitter : emitterContainer)
+		{
+			euler.y += 90.0f;
+
+			emitter = SpaceParticleManager::Instance()->Generate(SpaceParticle::StarRoad, *transform);
+			if(emitter != nullptr)
+				emitter->SetRotatition(euler);
+		}
+	}
 }
 
 //=====================================
@@ -27,4 +50,46 @@ TJunctionActor::TJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel current
 //=====================================
 TJunctionActor::~TJunctionActor()
 {
+	for (auto&& emitter : emitterContainer)
+	{
+		if (emitter == nullptr)
+			continue;
+
+		emitter->SetActive(false);
+	}
+}
+
+//=====================================
+// 描画処理
+//=====================================
+void TJunctionActor::Draw()
+{
+	//水上なら高さを合わせる
+	if (onWater)
+	{
+		D3DXVECTOR3 position = transform->GetPosition();
+		position.y = WaterHeightController::GetHeight();
+		transform->SetPosition(position);
+	}
+
+	PlaceActor::Draw();
+}
+
+//=====================================
+// 回転処理
+//=====================================
+void TJunctionActor::Rotate(float y)
+{
+	PlaceActor::Rotate(y);
+
+	D3DXVECTOR3 euler = transform->GetEulerAngle();
+	for (auto&& emitter : emitterContainer)
+	{
+		euler.y += 90.0f;
+
+		if (emitter == nullptr)
+			continue;
+
+		emitter->SetRotatition(euler);
+	}
 }

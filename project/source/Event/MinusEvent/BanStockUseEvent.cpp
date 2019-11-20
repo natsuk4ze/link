@@ -53,7 +53,7 @@ BanStockUseEvent::~BanStockUseEvent()
 void BanStockUseEvent::Init()
 {
 	// 連打ゲームインスタンス
-	beatGame = new BeatGame([&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
+	beatGame = new BeatGame(BeatGame::BanStockUse,[&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
 
 	// ゲーム進行停止
 	fieldEventHandler->PauseGame();

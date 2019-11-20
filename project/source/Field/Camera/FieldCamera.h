@@ -46,6 +46,9 @@ public:
 
 	static const int DurationRotate;
 	static const float AnglePeriod;
+	static const float LengthFromTarget;
+	static const float InitCameraAngle;
+	static const float CameraAngleY;
 
 private:
 	GameObject *targetObject;						//’Ç]–Ú•W

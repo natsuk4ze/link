@@ -9,6 +9,7 @@
 #define _ALONGMODEL_H_
 
 #include "../../../main.h"
+#include "../FieldConfig.h"
 
 #include <vector>
 
@@ -36,7 +37,7 @@ namespace Field::Along
 		};
 
 		//コンストラクタ、デストラクタ
-		AlongModel();
+		AlongModel(FieldLevel level, bool onWater);
 		~AlongModel();
 
 		//更新処理、描画処理
@@ -64,6 +65,9 @@ namespace Field::Along
 		Type type;													//道タイプ
 
 		D3DXVECTOR3 CalcActorPosition(int index);					//アクター座標計算処理
+
+		FieldLevel currentLevel;									//フィールドレベル
+		bool onWater;												//水上かどうか
 	};
 }
 

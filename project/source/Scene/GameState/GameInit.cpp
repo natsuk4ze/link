@@ -12,11 +12,12 @@
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../../../Framework/Transition/TransitionController.h"
 #include "../../Effect/GameParticleManager.h"
-#include "../../../Framework/Camera/CameraTranslationPlugin.h"
+#include "../../Field/Camera/Plugin/FieldCameraTranslationPlugin.h"
 #include "../../../Framework/Camera/CameraShakePlugin.h"
 #include "../../../Framework/PostEffect/BloomController.h"
 #include "../../../Framework/Core/PlayerPrefs.h"
 #include "../../GameConfig.h"
+#include "../../../Framework/Sound/BackgroundMusic.h"
 
 /**************************************
 入場処理
@@ -29,11 +30,12 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 
 	//パーティクル初期化
 	entity.particleManager->Init();
+	entity.levelParticleManager->Init();
 
 	//カメラにプラグインを追加して初期化
-	entity.fieldCamera->AddPlugin(CameraTranslationPlugin::Instance());
+	entity.fieldCamera->AddPlugin(FieldCameraTranslationPlugin::Instance());
 	entity.fieldCamera->AddPlugin(CameraShakePlugin::Instance());
-	CameraTranslationPlugin::Instance()->Init();
+	FieldCameraTranslationPlugin::Instance()->Init();
 
 	//カメラの追従目標にカーソルを設定してモード切替
 	entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
@@ -48,6 +50,11 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	//ブルームエフェクトのパラメータ設定
 	entity.bloomController->SetPower(entity.BloomPower[0], entity.BloomPower[1], entity.BloomPower[2]);
 	entity.bloomController->SetThrethold(entity.BloomThrethold[0], entity.BloomThrethold[1], entity.BloomThrethold[2]);
+
+	//サウンド読み込み
+	//NOTE : 今はお試し。本番ではちゃんとタグを用意する
+	BGM::Load("data/SOUND/BGM/Course_Select.wav", 0);
+	BGM::FadeIn(0, 0.1f, 30);
 
 	//制限時間読み込み
 	entity.remainTime = PlayerPrefs::GetNumber<int>(Utility::ToString(GameConfig::Key_RemainTime));
@@ -64,5 +71,6 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 ***************************************/
 GameScene::State GameScene::GameInit::OnUpdate(GameScene & entity)
 {
+	entity.field->UpdateObject();
 	return GameScene::State::Initialize;
 }

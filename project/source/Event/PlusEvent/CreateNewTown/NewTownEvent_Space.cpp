@@ -7,11 +7,11 @@
 #include "../../../../main.h"
 #include "NewTownEvent_Space.h"
 #include "../../EventActor/PlanetActor.h"
-#include "../../../../Framework/Camera/CameraTranslationPlugin.h"
 #include "../../../Viewer/GameScene/EventViewer/EventTelop.h"
 #include "../../../Viewer/GameScene/EventViewer/EventViewer.h"
 #include "../../../Effect/GameParticleManager.h"
 #include "../../../../Framework/Task/TaskManager.h"
+#include "../../../Field/Camera/EventCamera.h"
 
 enum State
 {
@@ -35,11 +35,12 @@ const D3DXVECTOR3 Scale = D3DXVECTOR3(0.15f, 0.15f, 0.15f);
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-NewTownEvent_Space::NewTownEvent_Space(EventViewer *Ptr, std::function<void(void)> EventOverFunc) :
+NewTownEvent_Space::NewTownEvent_Space(EventViewer *Ptr, std::function<void(void)> EventOverFunc, EventCamera *camera) :
 	EventBase(true),
 	eventViewer(Ptr),
 	EventState(TelopExpanding),
-	EventOverFunc(EventOverFunc)
+	EventOverFunc(EventOverFunc),
+	camera(camera)
 {
 
 }
@@ -78,7 +79,7 @@ void NewTownEvent_Space::Init()
 	eventViewer->SetEventTelop(EventTelop::NewPlanet, [=]()
 	{
 		// 予定地にカメラを移動させる
-		CameraTranslationPlugin::Instance()->Move(PlanetPos, 30, [&]() {FallenStart(); });
+		camera->Translation(PlanetPos, 30, [&]() {FallenStart(); });
 	});
 
 	// 初期化終了
@@ -113,7 +114,7 @@ void NewTownEvent_Space::Update()
 			EventState = State::PlanetArrive;
 		}
 
-		CameraTranslationPlugin::Instance()->Move(PlanetPos, 1, nullptr);
+		camera->Translation(PlanetPos, 1, nullptr);
 
 		break;
 

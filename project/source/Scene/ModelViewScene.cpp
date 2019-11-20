@@ -21,6 +21,7 @@
 
 #include "../../Framework/Resource/ResourceManager.h"
 #include "../Field/ActorLoader.h"
+#include "../../Framework/Renderer3D/MeshContainer.h"
 
 /**************************************
 ƒOƒ[ƒoƒ‹•Ï”
@@ -43,18 +44,18 @@ void ModelViewScene::Init()
 		const float OffsetX = 10.0f;
 		D3DXVECTOR3 position = { -80.0f, 0.0f, -20.0f * i + 20.0f};
 
-		PlaceActor *actor = new StraightRoadActor(position, (Field::FieldLevel)i);
+		PlaceActor *actor = new StraightRoadActor(position, (Field::FieldLevel)i, false);
 		actorContainer.push_back(actor);
 		actor->Rotate(90.0f);
 		position.x += OffsetX;
 
-		actorContainer.push_back(new CurveRoadActor(position, (Field::FieldLevel)i));
+		actorContainer.push_back(new CurveRoadActor(position, (Field::FieldLevel)i, false));
 		position.x += OffsetX;
 
-		actorContainer.push_back(new TJunctionActor(position, (Field::FieldLevel)i));
+		actorContainer.push_back(new TJunctionActor(position, (Field::FieldLevel)i, false));
 		position.x += OffsetX;
 
-		actorContainer.push_back(new CrossJunctionActor(position, (Field::FieldLevel)i));
+		actorContainer.push_back(new CrossJunctionActor(position, (Field::FieldLevel)i, false));
 		position.x += OffsetX * 2.0f;
 
 		actorContainer.push_back(new CityActor(position, (Field::FieldLevel)i));
@@ -63,13 +64,19 @@ void ModelViewScene::Init()
 		actorContainer.push_back(new BridgeActor(position, (Field::FieldLevel)i));
 		position.x += OffsetX * 2.0f;
 
-		actorContainer.push_back(new MountainActor(position, (Field::FieldLevel)i));
+		actorContainer.push_back(new MountainActor(position, (Field::FieldLevel)i, false));
 		position.x += OffsetX * 2.0f;
 	}
 
 	skybox = new Field::FieldSkyBox(Field::FieldLevel::World);
 	sceneCamera = new ModelViewCamera();
 	Camera::SetMainCamera(sceneCamera);
+
+	//ResourceManager::Instance()->LoadMesh("TestRobo", "data/Robot.x");
+	//mesh = new MeshContainer();
+	//ResourceManager::Instance()->GetMesh("TestRobo", mesh);
+	//meshTransform = new Transform();
+	//meshTransform->SetPosition({ -150.0f, 0.0f, 0.0f });
 }
 
 /**************************************
@@ -86,6 +93,9 @@ void ModelViewScene::Uninit()
 	SAFE_DELETE(skybox);
 
 	SAFE_DELETE(sceneCamera);
+
+	//SAFE_DELETE(mesh);
+	//SAFE_DELETE(meshTransform);
 }
 
 /**************************************
@@ -109,4 +119,7 @@ void ModelViewScene::Draw()
 	{
 		actor->Draw();
 	}
+
+	//meshTransform->SetWorld();
+	//mesh->Draw();
 }

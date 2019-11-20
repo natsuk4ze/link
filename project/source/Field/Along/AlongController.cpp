@@ -16,7 +16,8 @@ namespace Field::Along
 	/**************************************
 	コンストラクタ
 	***************************************/
-	AlongController::AlongController()
+	AlongController::AlongController(FieldLevel level) :
+		currentLevel(level)
 	{
 
 	}
@@ -79,13 +80,13 @@ namespace Field::Along
 	/**************************************
 	道や交差点が作られた時に呼ばれる処理
 	***************************************/
-	void AlongController::OnBuildRoad(const Transform & transform, RoadType type)
+	void AlongController::OnBuildRoad(const Transform & transform, RoadType type, bool onWater)
 	{
 		AlongPosition key = AlongPosition(transform.GetPosition());
 
 		if (modelMap.count(key) == 0)
 		{
-			AlongModel *model = new AlongModel();
+			AlongModel *model = new AlongModel(currentLevel, onWater);
 			modelMap.emplace(key, std::unique_ptr<AlongModel>(model));
 		}
 

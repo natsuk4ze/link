@@ -90,6 +90,9 @@ public:
 	//描画パーティクル数取得処理
 	unsigned GetParticleCount() const;
 
+	//2D or 3D
+	ParticleType GetType() const;
+
 protected:
 	LPDIRECT3DVERTEXBUFFER9 unitBuff;				//単位頂点バッファ
 	LPDIRECT3DTEXTURE9 texture;						//テクスチャ

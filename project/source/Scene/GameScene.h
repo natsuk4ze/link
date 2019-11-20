@@ -45,6 +45,8 @@ class FieldEventHandler;
 class BloomController;
 class PlaceActor;
 class SerialWrapper;
+class UDPClient;
+class SceneParticleManager;
 
 /**************************************
 クラス定義
@@ -87,8 +89,10 @@ private:
 	GameViewer *gameViewer;						//ゲームビュアー
 	EventController *eventController;			//イベントコントローラー
 	GameParticleManager *particleManager;		//パーティクルマネージャ
+	SceneParticleManager *levelParticleManager;	//レベル個別のパーティクルマネージャ
 	FieldEventHandler* eventHandler;			//イベントハンドラ
 	SerialWrapper *serial;						//シリアル通信
+	UDPClient *Client;							//クライアント
 
 	int remainTime;								//制限時間
 
@@ -121,6 +125,7 @@ private:
 	class GameLevelUp;
 	class GamePause;
 	class GameFarView;
+	class GameWaitPopup;
 
 	//InfoController* testInfoController;
 	GuideViewer* testGuide;

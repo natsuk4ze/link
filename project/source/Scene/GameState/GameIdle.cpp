@@ -17,6 +17,11 @@
 ***************************************/
 GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 {
+	ProfilerCPU::Instance()->Begin("Update Event");
+	entity.eventController->Update();
+	entity.eventController->UpdateViewer();
+	ProfilerCPU::Instance()->End("Update Event");
+
 	//入力確認
 	entity.field->CheckInput();
 
@@ -28,11 +33,6 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 	ProfilerCPU::Instance()->Begin("Update FieldObject");
 	entity.field->UpdateObject();
 	ProfilerCPU::Instance()->End("Update FieldObject");
-
-	//イベント更新
-	ProfilerCPU::Instance()->Begin("Update Event");
-	entity.eventController->Update();
-	ProfilerCPU::Instance()->End("Update Event");
 
 	//制限時間カウント
 	entity.remainTime = Math::Max(0, --entity.remainTime);

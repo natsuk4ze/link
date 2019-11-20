@@ -67,7 +67,8 @@ void Camera::Update()
 	//プラグイン反映
 	for (auto& plugin : pluginList)
 	{
-		plugin->Apply(workTransform);
+		if(plugin->IsActive())
+			plugin->Apply(workTransform);
 	}
 
 	D3DXVECTOR3 eyePosition = workTransform.GetPosition();
@@ -104,7 +105,7 @@ void Camera::Update()
 /**************************************
 セット処理
 ***************************************/
-void Camera::Set()
+void Camera::Set() const
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
@@ -205,6 +206,19 @@ Transform取得処理
 Transform Camera::GetTransform() const
 {
 	return transform;
+}
+
+/**************************************
+代入演算子
+***************************************/
+Camera & Camera::operator=(const Camera & rhs)
+{
+	this->transform = rhs.transform;
+	this->viewAngle = rhs.viewAngle;
+	this->viewAspect = rhs.viewAspect;
+	this->viewNear = rhs.viewNear;
+	this->viewFar = rhs.viewFar;
+	return *this;
 }
 
 /**************************************

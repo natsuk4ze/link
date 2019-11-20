@@ -9,6 +9,7 @@
 #define _ALONGCONTROLLER_H_
 
 #include "../../../main.h"
+#include "../FieldConfig.h"
 
 #include <map>
 #include <functional>
@@ -45,14 +46,14 @@ namespace Field::Along
 			CrossJunction,
 		};
 
-		AlongController();
+		AlongController(FieldLevel level);
 		~AlongController();
 
 		void Update();
 		void Draw();
 
 		void OnReachPassenger(const D3DXVECTOR3& position);
-		void OnBuildRoad(const Transform& transform, RoadType type);
+		void OnBuildRoad(const Transform& transform, RoadType type, bool onWater);
 
 		void SetBuildBonusFunc(const std::function<void()>& functor);
 
@@ -60,6 +61,8 @@ namespace Field::Along
 		using AlongModelMap = std::map<AlongPosition, std::unique_ptr<Along::AlongModel>>;
 
 		AlongModelMap modelMap;
+
+		FieldLevel currentLevel;
 
 		std::function<void(void)> addBuildBonus;
 	};

@@ -18,6 +18,7 @@
 class EventViewer;
 class BoardPolygon;
 class EventViewerParam;
+class EventCamera;
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -34,6 +35,7 @@ private:
 	std::vector<EventInfo> EventCSVData;
 	std::vector<EventBase*> EventVec;
 	EventViewer *eventViewer;
+	EventCamera *camera;
 
 	bool InBanStock;
 	bool InPauseEvent;
@@ -49,9 +51,10 @@ public:
 	EventController(int FieldLevel);
 	~EventController();
 	void Update(void);
+	void UpdateViewer(void);
 	void DrawEventObject(void);
 	void DrawEventViewer(void);
-	void CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& route, int FieldLevel);
+	bool CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& route, int FieldLevel);
 	void ReceiveFieldEventHandler(FieldEventHandler *Ptr);
 	void EmbedViewerParam(EventViewerParam& param);
 	void SetBanStock(bool Flag);

@@ -247,3 +247,11 @@ unsigned BaseParticleController::GetParticleCount() const
 {
 	return particleCount;
 }
+
+/**************************************
+パーティクルタイプ取得処理
+***************************************/
+BaseParticleController::ParticleType BaseParticleController::GetType() const
+{
+	return useType;
+}

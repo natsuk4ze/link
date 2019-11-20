@@ -12,6 +12,7 @@
 //**************************************
 // マクロ定義
 //**************************************
+class BaseEmitter;
 
 //**************************************
 // クラス定義
@@ -20,8 +21,15 @@ class TJunctionActor :
 	public PlaceActor
 {
 public:
-	TJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
+	TJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater);
 	~TJunctionActor();
+
+	void Draw() override;
+	void Rotate(float y) override;
+
+private:
+	std::vector<BaseEmitter*> emitterContainer;
+	bool onWater;
 };
 
 #endif

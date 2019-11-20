@@ -7,18 +7,20 @@
 #include "TestParticleManager.h"
 #include "../../Framework/Tool/DebugWindow.h"
 
-#include "Game/BlueSpark.h"
-#include "Game/BlueDebris.h"
-#include "Game/WhiteSmog.h"
-#include "Game/TownExplosion.h"
-#include "Game/ExplosionFlare.h"
-#include "Game/AngryFace.h"
-#include "Game/MeteorExplosion.h"
-#include "Game/MeteorFire.h"
-#include "Game/Darkness.h"
-#include "Game/Bubble.h"
-#include "Game/WaterSmog.h"
-#include "Game/MoveTail.h"
+#include "Game/City/BlueSpark.h"
+#include "Game/City/BlueDebris.h"
+#include "Game/General/WhiteSmog.h"
+#include "Game/General/TownExplosion.h"
+#include "Game/General/ExplosionFlare.h"
+#include "Game/General/AngryFace.h"
+#include "Game/General/MeteorExplosion.h"
+#include "Game/General/MeteorFire.h"
+#include "Game/General/Darkness.h"
+#include "Game/World/Bubble.h"
+#include "Game/World/WaterSmog.h"
+#include "Game/General/MoveTail.h"
+#include "Game/General/LinkLevelUp.h"
+#include "Game/Space/StarRoad.h"
 
 /**************************************
 èâä˙âªèàóù
@@ -40,6 +42,8 @@ void TestParticleManager::Init()
 	controllers[TestParticle::Bubble] = new Effect::Game::BubbleController();
 	controllers[TestParticle::WaterSmog] = new Effect::Game::WaterSmogController();
 	controllers[TestParticle::MoveTail] = new Effect::Game::MoveTailController();
+	controllers[TestParticle::LinkLevelUp] = new Effect::Game::LinkLevelUpController();
+	controllers[TestParticle::StarRoad] = new Effect::Game::StarRoadController();
 }
 
 /**************************************
@@ -71,6 +75,10 @@ void TestParticleManager::Update()
 		Generate(TestParticle::Bubble, Vector3::Zero);
 	else if (Debug::Button("WaterSmog"))
 		Generate(TestParticle::WaterSmog, Vector3::Zero);
+	else if (Debug::Button("LinkLevelUp"))
+		Generate(TestParticle::LinkLevelUp, { SCREEN_CENTER_X, SCREEN_CENTER_Y, 0.0f });
+	else if (Debug::Button("StarRoad"))
+		Generate(TestParticle::StarRoad, Vector3::Up * 20.0f);
 
 	Debug::NewLine();
 

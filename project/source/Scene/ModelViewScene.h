@@ -17,6 +17,7 @@
 ‘O•ûéŒ¾
 ***************************************/
 class PlaceActor;
+class MeshContainer;
 
 namespace Field
 {
@@ -41,6 +42,9 @@ public:
 private:
 	std::vector<PlaceActor*> actorContainer;
 	Field::FieldSkyBox *skybox;
+
+	//MeshContainer *mesh;
+	//Transform *meshTransform;
 };
 
 #endif

@@ -15,6 +15,7 @@
 class BeatGame;
 class EventViewer;
 class UFOActor;
+class EventCamera;
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -31,9 +32,10 @@ private:
 	BeatGame *beatGame;
 	EventViewer* eventViewer;
 	UFOActor *UFO;
+	EventCamera *camera;
 
 public:
-	AILevelDecreaseEvent(EventViewer* eventViewer);
+	AILevelDecreaseEvent(EventViewer* eventViewer, EventCamera* camera);
 	~AILevelDecreaseEvent();
 	void Init(void) override;
 	void Update(void) override;

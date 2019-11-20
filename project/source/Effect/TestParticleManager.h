@@ -31,6 +31,8 @@ namespace TestParticle
 		Bubble,
 		WaterSmog,
 		MoveTail,
+		LinkLevelUp,
+		StarRoad,
 		Max
 	};
 }

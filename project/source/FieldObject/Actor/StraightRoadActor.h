@@ -12,6 +12,7 @@
 //**************************************
 // マクロ定義
 //**************************************
+class BaseEmitter;
 
 //**************************************
 // クラス定義
@@ -20,8 +21,16 @@ class StraightRoadActor :
 	public PlaceActor
 {
 public:
-	StraightRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
+	StraightRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWataer);
 	~StraightRoadActor();
+
+	void Draw() override;
+
+	void Rotate(float y) override;
+
+private:
+	BaseEmitter * emitter;
+	bool onWater;
 };
 
 #endif

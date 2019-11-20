@@ -164,9 +164,17 @@ namespace Field::Actor
 	}
 
 	/**************************************
-	海判定	
+	海判定
 	***************************************/
 	bool WorldBackGroundContainer::IsSeaPlace(const FieldPosition & position) const
+	{
+		return Utility::IsContain(seaMap, position);
+	}
+
+	/**************************************
+	アトランティス判定	
+	***************************************/
+	bool WorldBackGroundContainer::EnableAtlantis(const FieldPosition & position) const
 	{
 		//周囲8マスを含めた範囲を確認
 		for (int x = -1; x <= 1; x++)

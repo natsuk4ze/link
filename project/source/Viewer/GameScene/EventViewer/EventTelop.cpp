@@ -203,7 +203,7 @@ void EventTelop::CloseBG(void)
 //=============================================================================
 // テクスチャ情報受け渡し処理
 //=============================================================================
-void EventTelop::PassTexture(TelopID id)
+void EventTelop::SetTexture(TelopID id)
 {
 	//テキストのUVを変更
 	text->SetTexture(1, Max, id);
@@ -231,7 +231,7 @@ void EventTelop::PassTexture(TelopID id)
 void EventTelop::Set(TelopID id, std::function<void(void)> Callback)
 {
 	//テクスチャ情報受け渡し
-	PassTexture(id);
+	SetTexture(id);
 
 	//再生状態にする
 	isPlaying = true;

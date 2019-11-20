@@ -23,6 +23,7 @@ ModelViewCamera::ModelViewCamera()
 		cosf(CameraAngleY) * -sinf(CameraAngleXZ)) * CameraLength;
 
 	transform.SetPosition(InitPos);
+	transform.LookAt(Vector3::Zero);
 }
 
 /**************************************
