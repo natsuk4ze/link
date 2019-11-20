@@ -72,5 +72,5 @@
 	"Space-Bridge":"data/MODEL/PlaceActor/bridge.x",
 
 	"Space-Mountain":"フィールドレベル宇宙の山モデル",
-	"Space-Mountain":"data/MODEL/PlaceActor/mountain.x"
+	"Space-Mountain":"data/MODEL/PlaceActor/blackhole.x"
 }

@@ -27,6 +27,11 @@ MountainActor::MountainActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLe
 	if (!onWater)
 	{
 		ResourceManager::Instance()->GetMesh(ActorLoader::MountainTag[currentLevel].c_str(), mesh);
+
+		if (currentLevel == Field::FieldLevel::Space)
+		{
+			effect = new Field::Actor::WhirlPoolEffect();
+		}
 	}
 	else
 	{
