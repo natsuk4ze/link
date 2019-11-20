@@ -6,8 +6,12 @@
 //
 //=====================================
 #include "GuideViewer.h"
-#include "../../../../Framework//Tool/DebugWindow.h"
+#include "../../../../Framework/Resource/ResourceManager.h"
+#include "../../../../Framework/Effect/RendererEffect.h"
 
+//**************************************
+// スタティックメンバ初期化
+//**************************************
 const D3DXVECTOR2 GuideViewer::SubScreenSize = D3DXVECTOR2(360.0f, 360.0f);
 const D3DXVECTOR3 GuideViewer::SubScreenPosition = D3DXVECTOR3(30.0f, 690.0f, 0.0f);
 
@@ -20,10 +24,15 @@ GuideViewer::GuideViewer()
 	MakeScreen();
 	MakeRenderTarget();
 
+	// リソース読み込み
+	ResourceManager::Instance()->MakePolygon("GuideViewerBG", "data/TEXTURE/VIewer/GameViewer/GuideViewer/Circuit.png", D3DXVECTOR2(500.0f, 500.0f));
+
 	// 各種インスタンスの作成
 	actor = new GuideActor();
 	camera = new GuideCamera();
+	bg = new GuideViewerBG();
 	filter = new CRTFilter((DWORD)SubScreenSize.x, (DWORD)SubScreenSize.y);
+
 }
 
 //=====================================
@@ -37,6 +46,7 @@ GuideViewer::~GuideViewer()
 
 	SAFE_DELETE(actor);
 	SAFE_DELETE(camera);
+	SAFE_DELETE(bg);
 	SAFE_DELETE(filter);
 }
 
@@ -47,6 +57,7 @@ void GuideViewer::Update()
 {
 	camera->Update();
 	actor->Update();
+	bg->Update();
 	filter->SetTime();
 	filter->SetScreenParam(SubScreenSize.x, SubScreenSize.y);
 }
@@ -60,22 +71,26 @@ void GuideViewer::Draw()
 
 	//レンダーターゲット切り替え
 	LPDIRECT3DSURFACE9 oldSuf;
-	const D3DXCOLOR BackColor = D3DXCOLOR(0.615f, 0.800f, 1.0f, 1.00f);
+	const D3DXCOLOR BackColor = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
 	pDevice->GetRenderTarget(0, &oldSuf);
 	pDevice->SetRenderTarget(0, renderSurface);
 	pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BackColor, 1.0f, 0);
-	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	//pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 
 	camera->Set();
 
-	// アクターの描画
+	RendererEffect::SetView(camera->GetViewMtx());
+	RendererEffect::SetProjection(camera->GetProjectionMtx());
+
+	// インスタンスの描画
+	bg->Draw();
 	actor->Draw();
 
-	for (int i = 0; i < 4; i++)
-	{
-		pDevice->SetTexture(0, renderTexture);
-		filter->Draw(i);
-	}
+	//for (int i = 0; i < 4; i++)
+	//{
+	//	pDevice->SetTexture(0, renderTexture);
+	//	filter->Draw(i);
+	//}
 
 	//レンダーターゲット復元
 	pDevice->SetRenderTarget(0, oldSuf);
@@ -86,7 +101,7 @@ void GuideViewer::Draw()
 	pDevice->SetStreamSource(0, screenVtx, 0, sizeof(VERTEX_2D));
 	pDevice->SetFVF(FVF_VERTEX_2D);
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
-	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+	//pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 }
 
 //=====================================

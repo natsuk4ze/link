@@ -229,8 +229,8 @@
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCamera.h" />
-    <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewerEffect.h" />
     <ClInclude Include="Framework\PostEffect\Effect\CRTFilter.h" />
+    <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -442,8 +442,8 @@
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideCamera.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewerEffect.cpp" />
     <ClCompile Include="Framework\PostEffect\Effect\CRTFilter.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

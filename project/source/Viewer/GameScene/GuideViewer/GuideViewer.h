@@ -8,9 +8,10 @@
 #ifndef _GUIDEVIEWER_H_
 #define _GUIDEVIEWER_H_
 
+#include "../../../../Framework/PostEffect/Effect/CRTFilter.h"
 #include "GuideActor.h"
 #include "GuideCamera.h"
-#include "../../../../Framework/PostEffect/Effect/CRTFilter.h"
+#include "GuideViewerBG.h"
 
 //**************************************
 // クラス定義
@@ -18,8 +19,10 @@
 class GuideViewer
 {
 private:
+	// 各種インスタンス用ポインタ
 	GuideActor* actor;
 	GuideCamera* camera;
+	GuideViewerBG* bg;
 	CRTFilter* filter;
 
 	// 描画用サブスクリーンを作成

@@ -248,7 +248,7 @@
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideActor.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCamera.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewerEffect.h" />
+    <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Animation\AnimationManager.cpp" />
@@ -461,7 +461,7 @@
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideActor.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideCamera.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewerEffect.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
