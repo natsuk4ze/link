@@ -36,7 +36,6 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	entity.guideViewer->SetActive(true);
 	// 使用しないUIの描画をOFF（タイトル、リザルト用など）
 
-
 	//パーティクル初期化
 	entity.particleManager->Init();
 	entity.levelParticleManager->Init();

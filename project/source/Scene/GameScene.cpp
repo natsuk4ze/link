@@ -373,5 +373,22 @@ void GameScene::DebugTool()
 		Client->SendPacket();
 	}
 
+	Debug::Text("State");
+	Debug::NewLine();
+	if (Debug::Button("Title"))
+	{
+		ChangeState(State::Title);
+	}
+	Debug::SameLine();
+	if (Debug::Button("Idle"))
+	{
+		ChangeState(State::Idle);
+	}
+	Debug::SameLine();
+	if (Debug::Button("Result"))
+	{
+		ChangeState(State::Result);
+	}
+
 	Debug::End();
 }

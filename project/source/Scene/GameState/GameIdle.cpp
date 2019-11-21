@@ -11,6 +11,8 @@
 #include "../../Event/EventController.h"
 #include "../../../Framework/Input/input.h"
 #include "../../../Framework/Tool/ProfilerCPU.h"
+#include "../../Viewer/GameScene/GameViewer/GameViewer.h"
+#include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 
 /**************************************
 更新処理
@@ -67,5 +69,10 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 ***************************************/
 void GameScene::GameIdle::OnStart(GameScene & entity)
 {
+	// ゲームシーンで使用するUIの描画をON
+	entity.field->SetActive(true);
+	entity.gameViewer->SetActive(true);
+	entity.guideViewer->SetActive(true);
+	// 使用しないUIの描画をOFF（タイトル、リザルト用など）
 
 }
