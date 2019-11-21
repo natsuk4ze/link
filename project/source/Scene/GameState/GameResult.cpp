@@ -7,7 +7,7 @@
 //=====================================
 #include "GameResult.h"
 #include "../../Field/FieldController.h"
-#include "../../Viewer/GameScene/GameViewer/GameViewer.h"
+#include "../../Viewer/GameScene/Controller/GameViewer.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 
 //=====================================
@@ -22,6 +22,9 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	entity.field->SetActive(false);
 	entity.gameViewer->SetActive(false);
 	entity.guideViewer->SetActive(false);
+
+	// リザルト用のUIにAI発展レベルを渡す
+
 
 }
 

@@ -11,7 +11,7 @@
 #include "../../Event/EventController.h"
 #include "../../../Framework/Input/input.h"
 #include "../../../Framework/Tool/ProfilerCPU.h"
-#include "../../Viewer/GameScene/GameViewer/GameViewer.h"
+#include "../../Viewer/GameScene/Controller/GameViewer.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 
 /**************************************

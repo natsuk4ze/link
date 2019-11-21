@@ -18,7 +18,7 @@
 #include "../../../Framework/Core/PlayerPrefs.h"
 #include "../../GameConfig.h"
 #include "../../../Framework/Sound/BackgroundMusic.h"
-#include "../../Viewer/GameScene/GameViewer/GameViewer.h"
+#include "../../Viewer/GameScene/Controller/GameViewer.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 
 /**************************************
