@@ -13,7 +13,7 @@ namespace Effect::Game
 	コンストラクタ
 	***************************************/
 	CloudController::CloudController() :
-		BaseParticleController(Particle_2D)
+		BaseParticleController(Particle_2D, false)
 	{
 		//単位頂点バッファ作成
 		const D3DXVECTOR2 SizeParticle = { 200.0f, -200.0f };
