@@ -88,11 +88,18 @@ float4 PS2(VS_OUTPUT In) : COLOR0
 ***************************************/
 technique tech {
 	pass P0 {
+		ZWRITEENABLE = false;
+
 		VertexShader = compile vs_2_0 VS();
 		PixelShader = compile ps_2_0 PS1();
 	}
 
 	pass P1 {
+		ZWRITEENABLE = false;
+		DESTBLEND = One;
+		ALPHABLENDENABLE = true;
+		ALPHATESTENABLE = true;
+
 		VertexShader = compile vs_2_0 VS();
 		PixelShader = compile ps_2_0 PS2();
 	}

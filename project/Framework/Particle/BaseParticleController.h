@@ -44,7 +44,7 @@ public:
 	};
 
 	//コンストラクタ、デストラクタ
-	BaseParticleController(ParticleType type);
+	BaseParticleController(ParticleType type, bool useCrossFilter = true);
 	virtual ~BaseParticleController();
 
 	template<class T>
@@ -93,6 +93,9 @@ public:
 	//2D or 3D
 	ParticleType GetType() const;
 
+	//クロスフィルタを適用するか
+	bool UseCrossFilter() const;
+
 protected:
 	LPDIRECT3DVERTEXBUFFER9 unitBuff;				//単位頂点バッファ
 	LPDIRECT3DTEXTURE9 texture;						//テクスチャ
@@ -111,6 +114,9 @@ protected:
 
 	//使用するパーティクルのタイプ
 	ParticleType useType;
+
+	//クロスフィルタ適用フラグ
+	bool useCrossFilter;
 
 private:
 	//インスタンシングに必要な静的メンバ
