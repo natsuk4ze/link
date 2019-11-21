@@ -6,9 +6,20 @@
 //
 //=====================================
 #include "Cloud.h"
+#include "../../../../Framework/Math/Easing.h"
 
 namespace Effect::Game
 {
+	/**************************************
+	staticメンバ
+	***************************************/
+	const float Cloud::MinSpeed = 10.0f;
+	const float Cloud::MaxSpeed = 40.0f;
+	const float Cloud::MinPositionX = -100.0f;
+	const float Cloud::MaxPositionX = SCREEN_WIDTH + 100.0f;
+	const float Cloud::MinPositionY = -100.0f;
+	const float Cloud::MaxPositionY = SCREEN_HEIGHT + 100.0f;
+
 	/**************************************
 	コンストラクタ
 	***************************************/
@@ -44,7 +55,7 @@ namespace Effect::Game
 	Cloudコンストラクタ
 	***************************************/
 	Cloud::Cloud() :
-		Particle2D(180)
+		Particle2D(60)
 	{
 
 	}
@@ -60,7 +71,8 @@ namespace Effect::Game
 
 		transform->Rotate(Math::RandomRange(0.0f, 360.0f), Vector3::Forward);
 
-		transform->SetScale(Vector3::One * Math::RandomRange(0.8f, 2.0f));
+		initScale = Math::RandomRange(0.8f, 2.0f);
+		transform->SetScale(Vector3::One * initScale);
 
 		cntFrame = 0;
 		active = true;
@@ -79,6 +91,10 @@ namespace Effect::Game
 		transform->Move(velocity);
 
 		transform->Rotate(0.5f, Vector3::Forward);
+
+		float t = (float)cntFrame / lifeFrame;
+		float scale = Easing::EaseValue(t, initScale, 0.0f, EaseType::InExpo);
+		transform->SetScale(Vector3::One * scale);
 	}
 
 	/**************************************
@@ -89,20 +105,20 @@ namespace Effect::Game
 		if (isDown)
 		{
 			D3DXVECTOR3 position = Vector3::Zero;
-			position.x = Math::RandomRange(-100.0f, 3000.0f);
-			position.y = -100.0f;
+			position.x = Math::RandomRange(MinPositionX, MaxPositionX);
+			position.y = MinPositionY;
 			transform->SetPosition(position);
 
-			velocity = Vector3::Normalize({ -1.0f, 1.0f, 0.0f }) * Math::RandomRange(20.0f, 75.0f);
+			velocity = Vector3::Normalize({ -1.0f, 1.0f, 0.0f }) * Math::RandomRange(MinSpeed, MaxSpeed);
 		}
 		else
 		{
 			D3DXVECTOR3 position = Vector3::Zero;
-			position.x = Math::RandomRange(-100.0f, 3000.0f);
-			position.y = SCREEN_HEIGHT + 100.0f;
+			position.x = Math::RandomRange(MinPositionX, MaxPositionX);
+			position.y = MaxPositionY;
 			transform->SetPosition(position);
 
-			velocity = Vector3::Normalize({ 1.0f, -1.0f, 0.0f }) * Math::RandomRange(20.0f, 75.0f);
+			velocity = Vector3::Normalize({ 1.0f, -1.0f, 0.0f }) * Math::RandomRange(MinSpeed, MaxSpeed);
 		}
 	}
 
@@ -110,7 +126,7 @@ namespace Effect::Game
 	CloudEmitterコンストラクタ
 	***************************************/
 	CloudEmitter::CloudEmitter() :
-		BaseEmitter(20, 120)
+		BaseEmitter(14, 90)
 	{
 
 	}

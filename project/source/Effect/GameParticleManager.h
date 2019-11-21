@@ -43,6 +43,9 @@ public:
 	//初期化処理
 	void Init() override;
 
+	//描画処理
+	void Draw() override;
+
 	//町消滅のエフェクトセット処理
 	void SetTownExplosionEffect(const D3DXVECTOR3& position, std::function<void(void)> callback = nullptr);
 	//隕石爆発のエフェクトセット処理

@@ -50,6 +50,18 @@ void GameParticleManager::Init()
 }
 
 /**************************************
+描画処理
+***************************************/
+void GameParticleManager::Draw()
+{
+	SceneParticleManager::Draw();
+
+	Debug::Begin("GameParticle");
+	Debug::Text("Cloud : %d", controllers[GameParticle::Cloud]->GetParticleCount());
+	Debug::End();
+}
+
+/**************************************
 町消滅のエフェクトセット処理
 ***************************************/
 void GameParticleManager::SetTownExplosionEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback)

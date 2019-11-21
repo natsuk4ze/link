@@ -36,8 +36,16 @@ namespace Effect::Game
 
 		void SetDirection(bool isDown);
 
+		static const float MinSpeed;
+		static const float MaxSpeed;
+		static const float MinPositionX;
+		static const float MaxPositionX;
+		static const float MinPositionY;
+		static const float MaxPositionY;
+
 	private:
 		D3DXVECTOR3 velocity;
+		float initScale;
 	};
 
 	/**************************************
