@@ -30,8 +30,8 @@ shared_ptr<ParticleRenderer> BaseParticleController::mRenderer = NULL;
 /**************************************
 コンストラクタ
 ***************************************/
-BaseParticleController::BaseParticleController(ParticleType type) :
-	unitBuff(NULL), texture(NULL), particleCount(0), useType(type)
+BaseParticleController::BaseParticleController(ParticleType type, bool useCorssFilter) :
+	unitBuff(NULL), texture(NULL), particleCount(0), useType(type), useCrossFilter(useCorssFilter)
 {
 	if (!mRenderer)
 	{
@@ -254,4 +254,12 @@ unsigned BaseParticleController::GetParticleCount() const
 BaseParticleController::ParticleType BaseParticleController::GetType() const
 {
 	return useType;
+}
+
+/**************************************
+クロスフィルタ適用判定
+***************************************/
+bool BaseParticleController::UseCrossFilter() const
+{
+	return useCrossFilter;
 }

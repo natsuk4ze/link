@@ -132,12 +132,6 @@ void SceneParticleManager::Draw()
 		crossFilter->Draw(renderTexture);
 #endif
 
-	//レンダーステート復元
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	pDevice->SetRenderState(D3DRS_LIGHTING, true);
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
-	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
-	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 }
 
 /**************************************
@@ -206,10 +200,6 @@ void SceneParticleManager::ChangeRenderParameter()
 	pDevice->SetRenderTarget(0, renderSurface);
 	pDevice->SetViewport(&viewPort);
 	pDevice->Clear(0, 0, D3DCLEAR_TARGET, 0, 0.0f, 0);
-
-	//レンダーステート切り替え
-	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
-	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
 }
 
 /**************************************

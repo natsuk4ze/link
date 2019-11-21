@@ -155,30 +155,40 @@ technique tech
 {
 	pass P0
 	{
+		ZWRITEENABLE = false;
+
 		VertexShader = compile vs_2_0 VS();
 		PixelShader = compile ps_2_0 PS1();
 	}
 
 	pass P1
 	{
+		ZWRITEENABLE = false;
+
 		VertexShader = compile vs_2_0 VS();
 		PixelShader = compile ps_2_0 PS2();
 	}
 
 	pass P2
 	{
+		ZWRITEENABLE = false;
+
 		VertexShader = compile vs_2_0 VS();
 		PixelShader = compile ps_2_0 PS3();
 	}
 
 	pass P3
 	{
+		ZWRITEENABLE = false;
+
 		VertexShader = compile vs_2_0 VS();
 		PixelShader = compile ps_2_0 PS4();
 	}
 
 	pass P4
 	{
+		ZWRITEENABLE = false;
+
 		VertexShader = compile vs_2_0 VS();
 		PixelShader = compile ps_2_0 PS5();
 	}
