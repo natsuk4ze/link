@@ -30,6 +30,7 @@
 #include "../Effect/WorldParticleManager.h"
 #include "../Effect/SpaceParticleManager.h"
 #include "../Viewer/GameScene/GuideViewer/GuideViewer.h"
+#include "../Viewer/TitleScene/TitleViewer.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
@@ -76,6 +77,7 @@ void GameScene::Init()
 	//serial = new SerialWrapper(3);								//TODO:ポート番号を変えられるようにする
 	Client = new UDPClient();
 	guideViewer = new GuideViewer();
+	titleViewer = new TitleViewer();
 
 	//レベル毎のパーティクルマネージャを選択
 	switch (level)
@@ -132,6 +134,7 @@ void GameScene::Uninit()
 	//SAFE_DELETE(serial);
 	SAFE_DELETE(Client);
 	SAFE_DELETE(guideViewer);
+	SAFE_DELETE(titleViewer);
 
 	//パーティクル終了
 	particleManager->Uninit();
@@ -175,6 +178,7 @@ void GameScene::Update()
 	//ビュアー更新
 	gameViewer->Update();
 	guideViewer->Update();
+	titleViewer->Update();
 
 	//パーティクル更新
 	ProfilerCPU::Instance()->Begin("Update Particle");
@@ -240,6 +244,7 @@ void GameScene::Draw()
 	field->DrawViewer();
 	gameViewer->Draw();
 	eventController->DrawEventViewer();
+	titleViewer->Draw();
 
 	//*******別ウインドウを作成するため最後*******
 	guideViewer->Draw();

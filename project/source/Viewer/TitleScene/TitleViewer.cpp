@@ -6,12 +6,14 @@
 //
 //=====================================
 #include "TitleViewer.h"
+#include "TitleLogo.h"
 
 //=====================================
 // コンストラクタ
 //=====================================
 TitleViewer::TitleViewer()
 {
+	logo = new TitleLogo();
 }
 
 //=====================================
@@ -19,6 +21,7 @@ TitleViewer::TitleViewer()
 //=====================================
 TitleViewer::~TitleViewer()
 {
+	SAFE_DELETE(logo)
 }
 
 //=====================================
@@ -26,6 +29,7 @@ TitleViewer::~TitleViewer()
 //=====================================
 void TitleViewer::Update()
 {
+	logo->Update();
 }
 
 //=====================================
@@ -36,11 +40,13 @@ void TitleViewer::Draw()
 	if (!isActive)
 		return;
 
+	logo->Draw();
 }
 
 //=====================================
 // 描画可否フラグのセット
 //=====================================
-void TitleViewer::SetActive()
+void TitleViewer::SetActive(bool flag)
 {
+	isActive = flag;
 }

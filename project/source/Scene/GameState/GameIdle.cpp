@@ -13,6 +13,7 @@
 #include "../../../Framework/Tool/ProfilerCPU.h"
 #include "../../Viewer/GameScene/Controller/GameViewer.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
+#include "../../Viewer/TitleScene/TitleViewer.h"
 
 /**************************************
 更新処理
@@ -74,5 +75,5 @@ void GameScene::GameIdle::OnStart(GameScene & entity)
 	entity.gameViewer->SetActive(true);
 	entity.guideViewer->SetActive(true);
 	// 使用しないUIの描画をOFF（タイトル、リザルト用など）
-
+	entity.titleViewer->SetActive(false);
 }

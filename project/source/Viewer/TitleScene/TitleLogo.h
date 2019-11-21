@@ -1,34 +1,31 @@
 //=====================================
 //
-// タイトルビュアー[TitleViewer.h]
-// 機能：タイトル画面UI表示
+// タイトルロゴ[TitleLogo.h]
+// 機能：タイトルロゴ表示
 // Author:GP12B332 19 染谷武志
 //
 //=====================================
-#ifndef _TITLEVIEWER_H_
-#define _TITLEVIEWER_H_
+#ifndef _TITLELOGO_H_
+#define _TITLELOGO_H_
 
-#include "../../../main.h"
-
-class TitleLogo;
+#include "../../../Framework/Renderer2D/Polygon2D.h"
 //**************************************
 // クラス定義
 //**************************************
-class TitleViewer
+class TitleLogo :
+	public Polygon2D
 {
 private:
-	TitleLogo* logo;
-
-	bool isActive;
+	static const D3DXVECTOR3 InitPos;
 
 public:
-	TitleViewer();
-	~TitleViewer();
+	TitleLogo();
+	~TitleLogo();
 
 	void Update();
 	void Draw();
 
-	void SetActive(bool flag);
 };
 
 #endif
+

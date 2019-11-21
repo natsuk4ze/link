@@ -258,6 +258,8 @@
     <ClInclude Include="source\Viewer\GameScene\ParameterContainer\EventViewerParam.h" />
     <ClInclude Include="source\Score\Score.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.h" />
+    <ClInclude Include="source\Viewer\TitleScene\TitleViewer.h" />
+    <ClInclude Include="source\Viewer\TitleScene\TitleLogo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -497,6 +499,8 @@
     <ClCompile Include="source\Viewer\GameScene\Controller\GameViewer.cpp" />
     <ClCompile Include="source\Score\Score.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.cpp" />
+    <ClCompile Include="source\Viewer\TitleScene\TitleViewer.cpp" />
+    <ClCompile Include="source\Viewer\TitleScene\TitleLogo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
