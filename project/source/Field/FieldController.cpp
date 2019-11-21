@@ -20,6 +20,7 @@
 #include "Controller\FieldInput.h"
 #include "../FieldObject/InfoController.h"
 #include "../Viewer/GameScene/Controller/FieldViewer.h"
+#include "../Score/Score.h"
 
 #include "State/BuildRoad.h"
 #include "State/FieldControllerIdle.h"
@@ -79,6 +80,7 @@ namespace Field
 		placeContainer = new Model::PlaceContainer();
 		infoController = new InfoController(level);
 		viewer = new FieldViewer();
+		score = new Score();
 
 		//ステートマシン作成
 		fsm.resize(State::Max, NULL);
@@ -123,6 +125,7 @@ namespace Field
 		SAFE_DELETE(input);
 		SAFE_DELETE(infoController);
 		SAFE_DELETE(viewer);
+		SAFE_DELETE(score);
 
 		//デリゲート削除
 		SAFE_DELETE(onConnectTown);
@@ -535,5 +538,14 @@ namespace Field
 	void FieldController::SetActive(bool flag)
 	{
 		isActive = flag;
+	}
+
+	/**************************************
+	スコアの取得
+	***************************************/
+	UINT FieldController::GetScore()
+	{
+		score->AddScore((UINT)realDevelopmentLevelAI, currentLevel);
+		return score->GetScore();
 	}
 }

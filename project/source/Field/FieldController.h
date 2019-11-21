@@ -29,6 +29,7 @@ namespace Field
 	class FieldCursor;
 	class FieldGround;
 	class FieldSkyBox;
+	class Score;
 
 	namespace Model
 	{
@@ -109,6 +110,9 @@ namespace Field
 		// UI描画可否判定
 		void SetActive(bool flag);
 
+		// スコア取得
+		UINT GetScore();
+
 	private:
 		//内部クラス前方宣言
 		class FieldDevelopper;
@@ -131,6 +135,7 @@ namespace Field
 		Actor::PlaceActorController* placeActController;	//プレイスアクターコントローラ
 		InfoController* infoController;						//インフォメーションコントローラ
 		FieldViewer *viewer;								//フィールド情報を表示するビューワ
+		Score* score;										//スコア管理
 
 		FieldDevelopper *developper;
 		FieldInput *input;
