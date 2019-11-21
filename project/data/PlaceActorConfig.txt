@@ -69,7 +69,7 @@
 	"Space-Cross":"data/MODEL/PlaceActor/SpaceCross.x",
 
 	"Space-Bridge":"フィールドレベル宇宙の橋モデル",
-	"Space-Bridge":"data/MODEL/PlaceActor/bridge.x",
+	"Space-Bridge":"data/MODEL/PlaceActor/rainbowRoad.x",
 
 	"Space-Mountain":"フィールドレベル宇宙の山モデル",
 	"Space-Mountain":"data/MODEL/PlaceActor/blackhole.x"
