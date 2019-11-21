@@ -71,6 +71,8 @@ public:
 		LevelUp,
 		Pause,
 		FarView,
+		Title,
+		Result,
 		Max
 	};
 
@@ -126,6 +128,8 @@ private:
 	class GamePause;
 	class GameFarView;
 	class GameWaitPopup;
+	class GameTitle;
+	class GameResult;
 
 	//InfoController* testInfoController;
 	GuideViewer* testGuide;

@@ -39,6 +39,8 @@
 #include "GameState/GameLevelUp.h"
 #include "GameState/GamePause.h"
 #include "GameState/GameFarView.h"
+#include "GameState/GameTitle.h"
+#include "GameState/GameResult.h"
 
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Sound/BackgroundMusic.h"
@@ -99,6 +101,8 @@ void GameScene::Init()
 	fsm[State::LevelUp] = new GameLevelUp();
 	fsm[State::Pause] = new GamePause();
 	fsm[State::FarView] = new GameFarView();
+	fsm[State::Title] = new GameTitle();
+	fsm[State::Result] = new GameResult();
 
 	//ƒfƒŠƒQ[ƒg‚ğì¬‚µ‚Äİ’è
 	onBuildRoad = DelegateObject<GameScene, void(Route&)>::Create(this, &GameScene::OnBuildRoad);
