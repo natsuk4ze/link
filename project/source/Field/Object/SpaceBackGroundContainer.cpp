@@ -114,6 +114,7 @@ namespace Field::Actor
 
 					//パーティクルのエミッタをセット
 					D3DXVECTOR3 position = FieldPosition(x, z).ConvertToWorldPosition();
+					position.y -= 2.5f;
 					SpaceParticleManager::Instance()->Generate(SpaceParticle::SpaceTear, position);
 				}
 				x++;

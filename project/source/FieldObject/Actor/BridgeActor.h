@@ -12,6 +12,10 @@
 //**************************************
 // マクロ定義
 //**************************************
+namespace Field::Actor
+{
+	class RiverEffect;
+}
 
 //**************************************
 // クラス定義
@@ -22,6 +26,13 @@ class BridgeActor :
 public:
 	BridgeActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	~BridgeActor();
+
+	virtual void Update() override;
+	virtual void Draw() override;
+
+private:
+	Field::Actor::RiverEffect *effect;
+	D3DXVECTOR2 uv;
 };
 
 #endif
