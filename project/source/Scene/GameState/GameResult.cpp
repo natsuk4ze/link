@@ -24,7 +24,7 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	entity.guideViewer->SetActive(false);
 
 	// ƒŠƒUƒ‹ƒg—p‚ÌUI‚ÉAI”­“WƒŒƒxƒ‹‚ð“n‚·
-
+	// entity.resultScore->SetScore(entity.field->GetScore());
 
 }
 
