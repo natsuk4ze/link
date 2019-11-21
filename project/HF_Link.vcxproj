@@ -255,6 +255,7 @@
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatStarterViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatTimerViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatTitleViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\Controller\ResultViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\Controller\BeatGameViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h" />
@@ -276,6 +277,8 @@
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCamera.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.h" />
+    <ClInclude Include="source\Viewer\GameScene\ParameterContainer\ResultViewerParam.h" />
+    <ClInclude Include="source\Viewer\GameScene\ResultViewer\ResultRankingViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Animation\AnimationManager.cpp" />
@@ -496,6 +499,7 @@
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatStarterViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatTimerViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatTitleViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\Controller\ResultViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\Controller\BeatGameViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventMessage.cpp" />
@@ -515,6 +519,7 @@
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideCamera.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\ResultViewer\ResultRankingViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

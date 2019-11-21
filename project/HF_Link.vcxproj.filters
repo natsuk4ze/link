@@ -258,6 +258,9 @@
     <ClInclude Include="source\Viewer\GameScene\ParameterContainer\EventViewerParam.h" />
     <ClInclude Include="source\Score\Score.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\Controller\ResultViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\ParameterContainer\ResultViewerParam.h" />
+    <ClInclude Include="source\Viewer\GameScene\ResultViewer\ResultRankingViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -497,6 +500,8 @@
     <ClCompile Include="source\Viewer\GameScene\Controller\GameViewer.cpp" />
     <ClCompile Include="source\Score\Score.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\Controller\ResultViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\ResultViewer\ResultRankingViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
