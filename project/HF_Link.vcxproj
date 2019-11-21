@@ -260,6 +260,7 @@
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h" />
     <ClInclude Include="source\Viewer\GameScene\Controller\EventViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\ParameterContainer\EventViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldTelop.h" />
@@ -510,6 +511,7 @@
     <ClCompile Include="source\Viewer\GameScene\GameViewer\ItemStockViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideActor.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideCamera.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.cpp" />
