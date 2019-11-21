@@ -57,6 +57,9 @@ void GameViewer::Update()
 //=============================================================================
 void GameViewer::Draw(void)
 {
+	if (!isActive)
+		return;
+
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
@@ -87,4 +90,12 @@ void GameViewer::ReceiveParam(GameViewerParam &param)
 	//AIレベルビュアー
 	levelViewer->parameterBox[levelViewer->LevelAI] = (float)param.levelAI;
 	levelViewer->parameterBox[levelViewer->RatioLevel] = param.ratioLevel;
+}
+
+//=============================================================================
+// 描画可否判定のセット
+//=============================================================================
+void GameViewer::SetActive(bool flag)
+{
+	isActive = flag;
 }

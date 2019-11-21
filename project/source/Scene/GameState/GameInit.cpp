@@ -18,6 +18,8 @@
 #include "../../../Framework/Core/PlayerPrefs.h"
 #include "../../GameConfig.h"
 #include "../../../Framework/Sound/BackgroundMusic.h"
+#include "../../Viewer/GameScene/GameViewer/GameViewer.h"
+#include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 
 /**************************************
 入場処理
@@ -27,6 +29,12 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	// イベント用モデル
 	ResourceManager::Instance()->LoadMesh("Meteor", "data/MODEL/Planet/Meteor.x");
 	ResourceManager::Instance()->LoadMesh("UFO", "data/MODEL/UFO/UFO.x");
+
+	// ゲームシーンで使用するUIの描画をON
+	entity.field->SetActive(true);
+	entity.gameViewer->SetActive(true);
+	entity.guideViewer->SetActive(true);
+	// 使用しないUIの描画をOFF（タイトル、リザルト用など）
 
 	//パーティクル初期化
 	entity.particleManager->Init();

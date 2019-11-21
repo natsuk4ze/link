@@ -32,12 +32,16 @@ public:
 	//ƒpƒ‰ƒ[ƒ^ó‚¯æ‚è
 	void ReceiveParam(GameViewerParam&param);
 
+	void SetActive(bool flag);
+
 	std::vector <BaseViewer*> gameViewer;
 
 private:
 	ItemStockViewer *stockViewer;
 	TimerViewer *timerViewer;
 	LevelViewer *levelViewer;
+
+	bool isActive;
 };
 
 #endif

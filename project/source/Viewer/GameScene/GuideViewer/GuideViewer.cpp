@@ -67,15 +67,18 @@ void GuideViewer::Update()
 //=====================================
 void GuideViewer::Draw()
 {
+	if (!isActive)
+		return;
+
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	//レンダーターゲット切り替え
 	LPDIRECT3DSURFACE9 oldSuf;
-	const D3DXCOLOR BackColor = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
+	const D3DXCOLOR BackColor = D3DXCOLOR(0.6f, 0.6f, 1.0f, 0.8f);
 	pDevice->GetRenderTarget(0, &oldSuf);
 	pDevice->SetRenderTarget(0, renderSurface);
 	pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BackColor, 1.0f, 0);
-	//pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 
 	const Camera *defaultCamera = Camera::MainCamera();
 	Camera::SetMainCamera(camera);
@@ -88,11 +91,11 @@ void GuideViewer::Draw()
 	bg->Draw();
 	actor->Draw();
 
-	//for (int i = 0; i < 4; i++)
-	//{
-	//	pDevice->SetTexture(0, renderTexture);
-	//	filter->Draw(i);
-	//}
+	for (int i = 0; i < 4; i++)
+	{
+		pDevice->SetTexture(0, renderTexture);
+		filter->Draw(i);
+	}
 
 	//レンダーターゲット復元
 	pDevice->SetRenderTarget(0, oldSuf);
@@ -103,7 +106,7 @@ void GuideViewer::Draw()
 	pDevice->SetStreamSource(0, screenVtx, 0, sizeof(VERTEX_2D));
 	pDevice->SetFVF(FVF_VERTEX_2D);
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
-	//pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 
 	//カメラを復元
 	Camera::SetMainCamera(const_cast<Camera*>(defaultCamera));
@@ -117,6 +120,14 @@ void GuideViewer::Draw()
 void GuideViewer::ChangeAnim(GuideActor::AnimState next)
 {
 	actor->ChangeAnim(next);
+}
+
+//=====================================
+// 描画可否判定のセット
+//=====================================
+void GuideViewer::SetActive(bool flag)
+{
+	isActive = flag;
 }
 
 //=====================================

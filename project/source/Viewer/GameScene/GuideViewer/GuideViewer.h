@@ -25,6 +25,8 @@ private:
 	GuideViewerBG* bg;
 	CRTFilter* filter;
 
+	bool isActive;	// 描画可否判定
+
 	// 描画用サブスクリーンを作成
 	LPDIRECT3DTEXTURE9 renderTexture;
 	LPDIRECT3DSURFACE9 renderSurface;
@@ -42,6 +44,7 @@ public:
 	void Draw();
 
 	void ChangeAnim(GuideActor::AnimState next);
+	void SetActive(bool flag);
 
 	static const D3DXVECTOR2 SubScreenSize;
 
