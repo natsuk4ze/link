@@ -19,7 +19,7 @@
 #include "Controller\FieldDevelopper.h"
 #include "Controller\FieldInput.h"
 #include "../FieldObject/InfoController.h"
-#include "../Viewer/GameScene/FieldViewer/FieldViewer.h"
+#include "../Viewer/GameScene/Controller/FieldViewer.h"
 
 #include "State/BuildRoad.h"
 #include "State/FieldControllerIdle.h"

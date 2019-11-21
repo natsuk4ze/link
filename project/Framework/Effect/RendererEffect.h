@@ -32,13 +32,13 @@ public:
 	virtual void SetMaterial(const D3DMATERIAL9& material);
 	
 	//変更反映処理
-	void Commit(); 
+	virtual void Commit(); 
 
 	//描画開始宣言、描画終了宣言
-	void Begin();
-	void BeginPass(DWORD pass);
-	void EndPass();
-	void End();
+	virtual void Begin();
+	virtual void BeginPass(DWORD pass);
+	virtual void EndPass();
+	virtual void End();
 
 protected:
 	LPD3DXEFFECT effect;

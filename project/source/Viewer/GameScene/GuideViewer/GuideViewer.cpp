@@ -80,6 +80,8 @@ void GuideViewer::Draw()
 	pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BackColor, 1.0f, 0);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 
+	const Camera *defaultCamera = Camera::MainCamera();
+	Camera::SetMainCamera(camera);
 	camera->Set();
 
 	RendererEffect::SetView(camera->GetViewMtx());
@@ -105,6 +107,11 @@ void GuideViewer::Draw()
 	pDevice->SetFVF(FVF_VERTEX_2D);
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+
+	//ƒJƒƒ‰‚ğ•œŒ³
+	Camera::SetMainCamera(const_cast<Camera*>(defaultCamera));
+	RendererEffect::SetView(defaultCamera->GetViewMtx());
+	RendererEffect::SetProjection(defaultCamera->GetProjectionMtx());
 }
 
 //=====================================

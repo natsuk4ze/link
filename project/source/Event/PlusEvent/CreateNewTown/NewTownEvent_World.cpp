@@ -7,7 +7,7 @@
 #include "../../../../main.h"
 #include "NewTownEvent_World.h"
 #include "../../../../Framework/Camera/CameraShakePlugin.h"
-#include "../../../Viewer/GameScene/EventViewer/EventViewer.h"
+#include "../../../Viewer/GameScene/Controller/EventViewer.h"
 #include "../../../Effect/WorldParticleManager.h"
 #include "../../../../Framework/Task/TaskManager.h"
 #include "../../../Field/Camera/EventCamera.h"

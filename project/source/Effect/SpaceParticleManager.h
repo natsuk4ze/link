@@ -21,6 +21,7 @@ namespace SpaceParticle
 	{
 		SpaceTear,		//時空断裂のスパーク,
 		StarRoad,		//銀河道
+		Blackhole,		//ブラックホール
 		Max
 	};
 }
