@@ -9,9 +9,15 @@
 #define _GUIDEVIEWER_H_
 
 #include "../../../../Framework/PostEffect/Effect/CRTFilter.h"
+#include <string>
 #include "GuideActor.h"
 #include "GuideCamera.h"
 #include "GuideViewerBG.h"
+
+//*****************************************************************************
+// 前方宣言
+//*****************************************************************************
+class GuideCallOutViewer;
 
 //**************************************
 // クラス定義
@@ -24,6 +30,7 @@ private:
 	GuideCamera* camera;
 	GuideViewerBG* bg;
 	CRTFilter* filter;
+	GuideCallOutViewer *callOutViewer;
 
 	// 描画用サブスクリーンを作成
 	LPDIRECT3DTEXTURE9 renderTexture;
@@ -45,6 +52,8 @@ public:
 
 	static const D3DXVECTOR2 SubScreenSize;
 
+	//ガイドビュアーセット
+	void SetGuideViewer(const std::string &message);
 };
 
 #endif

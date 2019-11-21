@@ -15,8 +15,9 @@ TextViewer::TextViewer(const char * fontName, int fontSize) :
 	fontSize(fontSize),
 	posX(10),
 	posY(10),
+	lineNum(1),
 	color(0xffffffff),
-	text("text")
+	text("")
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
@@ -38,9 +39,9 @@ void TextViewer::Draw()
 {
 	//テキストを中央寄せで表示するためのRectを計算
 	LONG left = posX - text.length() * fontSize / 2;
-	LONG top =  posY - fontSize / 2;
+	LONG top =  posY - fontSize / 2 *lineNum;
 	LONG right = left + text.length() * fontSize;
-	LONG bottom = top + fontSize;
+	LONG bottom = top + fontSize *lineNum;
 
 	//描画
 	RECT rect = { left, top, right, bottom};
@@ -69,6 +70,9 @@ void TextViewer::SetColor(const D3DXCOLOR & color)
 ***************************************/
 void TextViewer::SetText(const std::string & message)
 {
+	//改行を検索して行数をセット
+	lineNum = 1 + (std::count(message.cbegin(), message.cend(), '\n'));
+
 	text = message;
 }
 

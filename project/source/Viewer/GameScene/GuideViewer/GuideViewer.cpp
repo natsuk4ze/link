@@ -6,8 +6,16 @@
 //
 //=====================================
 #include "GuideViewer.h"
+#include "GuideCallOutViewer.h"
 #include "../../../../Framework/Resource/ResourceManager.h"
 #include "../../../../Framework/Effect/RendererEffect.h"
+
+#ifdef _DEBUG
+
+#include "../../../../Framework/Tool/DebugWindow.h"
+#include "../../../../Framework/Input/input.h"
+
+#endif
 
 //**************************************
 // スタティックメンバ初期化
@@ -32,7 +40,7 @@ GuideViewer::GuideViewer()
 	camera = new GuideCamera();
 	bg = new GuideViewerBG();
 	filter = new CRTFilter((DWORD)SubScreenSize.x, (DWORD)SubScreenSize.y);
-
+	callOutViewer = new GuideCallOutViewer();
 }
 
 //=====================================
@@ -48,6 +56,8 @@ GuideViewer::~GuideViewer()
 	SAFE_DELETE(camera);
 	SAFE_DELETE(bg);
 	SAFE_DELETE(filter);
+
+	SAFE_DELETE(callOutViewer);
 }
 
 //=====================================
@@ -55,11 +65,22 @@ GuideViewer::~GuideViewer()
 //=====================================
 void GuideViewer::Update()
 {
+
+#ifdef _DEBUG
+
+	if (Keyboard::GetTrigger(DIK_G))
+	{
+		SetGuideViewer("テストを再生中です～\n頑張って下さい～");
+	}
+
+#endif
+
 	camera->Update();
 	actor->Update();
 	bg->Update();
 	filter->SetTime();
 	filter->SetScreenParam(SubScreenSize.x, SubScreenSize.y);
+	callOutViewer->Update();
 }
 
 //=====================================
@@ -109,6 +130,17 @@ void GuideViewer::Draw()
 	Camera::SetMainCamera(const_cast<Camera*>(defaultCamera));
 	RendererEffect::SetView(defaultCamera->GetViewMtx());
 	RendererEffect::SetProjection(defaultCamera->GetProjectionMtx());
+
+	//////////////以下、ビュアー処理/////////////////////
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
+	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
+	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+
+	callOutViewer->Draw();
+
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 }
 
 //=====================================
@@ -177,4 +209,17 @@ void GuideViewer::MakeScreen()
 		pVtx[3].diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 	screenVtx->Unlock();
+}
+
+//=====================================
+// ガイドビュアーセット処理
+//=====================================
+void GuideViewer::SetGuideViewer(const std::string &message)
+{
+	// イベントメッセージがあったら実行
+	if (message.empty()) return;
+
+	ChangeAnim(GuideActor::AnimState::TalkingTypeB);
+
+	callOutViewer->Set(message);
 }
