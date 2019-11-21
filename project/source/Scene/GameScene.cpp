@@ -390,5 +390,12 @@ void GameScene::DebugTool()
 		ChangeState(State::Result);
 	}
 
+	Debug::NewLine();
+	Debug::Text("particle");
+	if (Debug::Button("Cloud"))
+	{
+		GameParticleManager::Instance()->Generate(GameParticle::Cloud, Vector3::Zero);
+	}
+
 	Debug::End();
 }

@@ -28,6 +28,7 @@ namespace GameParticle
 		Darkness,		//闇の粒子(AIレベル減少イベント)
 		MoveTail,		//移動の軌跡
 		LinkLevelUp,	//リンクレベルアップ時エフェクト
+		Cloud,			//雲
 		Max
 	};
 }
