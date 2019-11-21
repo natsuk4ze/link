@@ -62,10 +62,10 @@ void EventViewer::Update()
 
 #ifdef _DEBUG
 
-	//if (Keyboard::GetTrigger(DIK_M))
-	//{
-	//	SetEventMessage("イベント発生！");
-	//}
+	if (Keyboard::GetTrigger(DIK_M))
+	{
+		SetEventMessage("イベント発生！");
+	}
 
 	//if (Keyboard::GetTrigger(DIK_T))
 	//{

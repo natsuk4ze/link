@@ -63,6 +63,9 @@ private:
 	int posX;
 	int posY;
 
+	//行数
+	int lineNum;
+
 	//表示カラー
 	D3DXCOLOR color;
 

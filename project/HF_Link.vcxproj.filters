@@ -256,6 +256,7 @@
     <ClInclude Include="source\Viewer\GameScene\Controller\GameViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\ParameterContainer\GameViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\ParameterContainer\EventViewerParam.h" />
+    <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -493,6 +494,7 @@
     <ClCompile Include="source\Viewer\GameScene\Controller\EventViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\Controller\FieldViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\Controller\GameViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
