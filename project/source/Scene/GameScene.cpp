@@ -29,6 +29,7 @@
 #include "../Effect/CityParticleManager.h"
 #include "../Effect/WorldParticleManager.h"
 #include "../Effect/SpaceParticleManager.h"
+#include "../Viewer/GameScene/GuideViewer/GuideViewer.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
@@ -74,6 +75,7 @@ void GameScene::Init()
 	bloomController = new BloomController();
 	//serial = new SerialWrapper(3);								//TODO:ポート番号を変えられるようにする
 	Client = new UDPClient();
+	guideViewer = new GuideViewer();
 
 	//レベル毎のパーティクルマネージャを選択
 	switch (level)
@@ -111,12 +113,6 @@ void GameScene::Init()
 	//ステート初期化
 	ChangeState(State::Initialize);
 
-	// テスト用
-	//testInfoController = new InfoController();
-	//testInfoController->SetLinkLevel(Field::FieldPosition(16, 16), 100);
-	//testInfoController->SetLinkLevel(Field::FieldPosition(17, 17), 90);
-	//testInfoController->SetLinkLevel(Field::FieldPosition(29, 29), 99);
-	testGuide = new GuideViewer();
 }
 
 /**************************************
@@ -135,16 +131,13 @@ void GameScene::Uninit()
 	SAFE_DELETE(eventHandler);
 	//SAFE_DELETE(serial);
 	SAFE_DELETE(Client);
+	SAFE_DELETE(guideViewer);
 
 	//パーティクル終了
 	particleManager->Uninit();
 
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
-
-	// テスト用
-	//SAFE_DELETE(testInfoController);
-	SAFE_DELETE(testGuide);
 
 	//デリゲート削除
 	SAFE_DELETE(onBuildRoad);
@@ -170,10 +163,6 @@ void GameScene::Update()
 	SpriteEffect::SetView(fieldCamera->GetViewMtx());
 	SpriteEffect::SetProjection(fieldCamera->GetProjectionMtx());
 
-	// テスト用
-	//testInfoController->Update();
-	testGuide->Update();
-
 	//ビューワパラメータをビューワに渡す
 	GameViewerParam gameParam;
 	gameParam.remainTime = remainTime / 30.0f;
@@ -185,6 +174,7 @@ void GameScene::Update()
 
 	//ビュアー更新
 	gameViewer->Update();
+	guideViewer->Update();
 
 	//パーティクル更新
 	ProfilerCPU::Instance()->Begin("Update Particle");
@@ -251,8 +241,8 @@ void GameScene::Draw()
 	gameViewer->Draw();
 	eventController->DrawEventViewer();
 
-	// テスト用
-	testGuide->Draw();
+	//*******別ウインドウを作成するため最後*******
+	guideViewer->Draw();
 
 	ProfilerCPU::Instance()->EndLabel();
 }

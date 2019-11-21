@@ -106,6 +106,9 @@ namespace Field
 		//イベントハンドラ設定処理
 		void SetEventHandler(::FieldEventHandler& handler);
 
+		// UI描画可否判定
+		void SetActive(bool flag);
+
 	private:
 		//内部クラス前方宣言
 		class FieldDevelopper;
@@ -139,6 +142,7 @@ namespace Field
 		float developSpeedBonus;				//発展スピード増加ボーナス
 		bool enableDevelop;						//開拓可能かどうか
 		bool flgWaitPopup;						//ポップアップ待機状態
+		bool isActive;							//UI描画可否判定
 
 		FieldLevel currentLevel;				//現在のフィールドレベル
 

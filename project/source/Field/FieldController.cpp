@@ -219,6 +219,9 @@ namespace Field
 	***************************************/
 	void FieldController::DrawViewer()
 	{
+		if (!isActive)
+			return;
+
 		SetOperationExplanation();
 		viewer->Draw();
 	}
@@ -524,5 +527,13 @@ namespace Field
 			(OperationExplanationViewer::OperationID)operationX,
 			(OperationExplanationViewer::OperationID)operationSpace
 		);
+	}
+
+	/**************************************
+	UI•`‰æ‚Ì‰Â”Û”»’èƒZƒbƒg
+	***************************************/
+	void FieldController::SetActive(bool flag)
+	{
+		isActive = flag;
 	}
 }

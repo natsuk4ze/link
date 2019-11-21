@@ -67,6 +67,9 @@ void GuideViewer::Update()
 //=====================================
 void GuideViewer::Draw()
 {
+	if (!isActive)
+		return;
+
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	//レンダーターゲット切り替え
@@ -110,6 +113,14 @@ void GuideViewer::Draw()
 void GuideViewer::ChangeAnim(GuideActor::AnimState next)
 {
 	actor->ChangeAnim(next);
+}
+
+//=====================================
+// 描画可否判定のセット
+//=====================================
+void GuideViewer::SetActive(bool flag)
+{
+	isActive = flag;
 }
 
 //=====================================

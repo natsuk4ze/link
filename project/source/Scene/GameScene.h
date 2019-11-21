@@ -15,14 +15,6 @@
 
 #include <vector>
 
-// モデル表示テスト用
-#include "../FieldObject/Actor/PlaceActor.h"
-#include "../FieldObject/PassengerController.h"
-#include "../FieldObject/Infomation/InfoActor.h"
-#include "../FieldObject/Infomation/LinkInfoActor.h"
-#include "../FieldObject/InfoController.h"
-#include "../Viewer/GameScene/GuideViewer/GuideViewer.h"
-
 /**************************************
 前方宣言
 ***************************************/
@@ -47,6 +39,7 @@ class PlaceActor;
 class SerialWrapper;
 class UDPClient;
 class SceneParticleManager;
+class GuideViewer;
 
 /**************************************
 クラス定義
@@ -95,6 +88,7 @@ private:
 	FieldEventHandler* eventHandler;			//イベントハンドラ
 	SerialWrapper *serial;						//シリアル通信
 	UDPClient *Client;							//クライアント
+	GuideViewer* guideViewer;					//ガイドビュアー
 
 	int remainTime;								//制限時間
 
@@ -130,9 +124,6 @@ private:
 	class GameWaitPopup;
 	class GameTitle;
 	class GameResult;
-
-	//InfoController* testInfoController;
-	GuideViewer* testGuide;
 
 	//デバッグ用フィールドレベル
 	static int level;
