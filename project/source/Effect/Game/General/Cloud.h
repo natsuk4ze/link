@@ -34,8 +34,21 @@ namespace Effect::Game
 		void Init() override;
 		void Update() override;
 
+		void SetDirection(bool isDown);
+
 	private:
 		D3DXVECTOR3 velocity;
+	};
+
+	/**************************************
+	CloudEmitterƒNƒ‰ƒX
+	***************************************/
+	class CloudEmitter : public BaseEmitter
+	{
+	public:
+		CloudEmitter();
+
+		bool Emit(std::vector<BaseParticle*>& container) override;
 	};
 }
 
