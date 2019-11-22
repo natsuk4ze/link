@@ -231,6 +231,10 @@ namespace Field
 
 		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
+
+		onChangePlaceType = std::bind(&Actor::PlaceActorController::ChangeActor, placeActController, std::placeholders::_1);
+
+		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
 	}
 
 	/**************************************
@@ -248,6 +252,7 @@ namespace Field
 		SAFE_DELETE(skybox);
 		SAFE_DELETE(placeActController);
 		SAFE_DELETE(infoController);
+		SAFE_DELETE(routeProcessor);
 	}
 
 	/**************************************
