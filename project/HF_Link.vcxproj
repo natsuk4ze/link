@@ -245,7 +245,6 @@
     <ClInclude Include="source\Scene\GameState\GameTransitionOut.h" />
     <ClInclude Include="source\Scene\GameState\GameTransitionIn.h" />
     <ClInclude Include="source\Scene\ModelViewScene.h" />
-    <ClInclude Include="source\Scene\ParticleTestScene.h" />
     <ClInclude Include="source\Scene\ResultScene.h" />
     <ClInclude Include="source\Scene\TitleScene.h" />
     <ClInclude Include="source\Score\Score.h" />

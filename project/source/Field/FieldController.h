@@ -10,11 +10,11 @@
 
 #include "../../main.h"
 #include "../../Framework/Pattern/BaseState.h"
-#include "../../Framework/Pattern/Delegate.h"
 #include "Place\PlaceConfig.h"
 #include "FieldConfig.h"
 #include "../Viewer/GameScene/ParameterContainer/GameViewerParam.h"
 
+#include <functional>
 #include <vector>
 
 class FieldEventHandler;
@@ -78,8 +78,11 @@ namespace Field
 		void DrawInfo();
 		void DrawViewer();
 
+		//フィールドレベル設定処理
+		void SetLevel(Field::FieldLevel level);
+
 		//クリア処理
-		void ClearAll();
+		void Clear();
 
 		//データ読み込み処理
 		//TODO:読み込むデータを選択できるようにする
@@ -95,7 +98,7 @@ namespace Field
 		void EmbedViewerParam(GameViewerParam& param);
 
 		//道作成時のデリゲータ設定処理
-		void SetCallbackOnBuildRoad(Delegate<void(std::vector<Model::PlaceModel*>&)> *callback);
+		void SetCallbackBuildRoad(const std::function<void(std::vector<Model::PlaceModel*>&)>& callback);
 
 		//レベルアップするべきかどうか
 		bool ShouldLevelUp();
@@ -139,8 +142,17 @@ namespace Field
 		FieldViewer *viewer;								//フィールド情報を表示するビューワ
 		Score* score;										//スコア管理
 
-		FieldDevelopper *developper;
-		FieldInput *input;
+		FieldDevelopper *developper;						//フィールド開発の内部クラス
+		FieldInput *input;									//フィールド入力の内部クラス
+
+		//道作成時のコールバック
+		std::function<void(std::vector<Model::PlaceModel*>&)> onBuildRoad;
+
+		//街がつながったときのコールバック
+		std::function<void(const Model::PlaceModel*, const Model::PlaceModel*)> onConnectTown;
+
+		//プレイスタイプが切り替わったときのコールバック
+		std::function<void(const Model::PlaceModel*)> onChangePlaceType;
 
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int cntFrame;							//フレームカウント
@@ -161,12 +173,6 @@ namespace Field
 		State current;
 		ControllerState *state;					//現在のステート
 		std::vector<ControllerState*> fsm;		//ステートマシン
-
-		//デリゲータ
-		Delegate<void(const Model::PlaceModel*, const Model::PlaceModel*)> *onConnectTown;
-		Delegate<void(const Model::PlaceModel*)> *onCreateJunction;
-		Delegate<void(const Model::PlaceModel*)> *onChangePlaceType;
-		Delegate<void(std::vector<Model::PlaceModel*>&)> *onBuildRoad;
 
 		//ステート切り替え
 		void ChangeState(State next);

@@ -59,10 +59,7 @@ namespace Field::Model
 	***************************************/
 	PlaceContainer::~PlaceContainer()
 	{
-		Utility::DeleteContainer(placeVector);
-
-		Utility::DeleteMap(townContainer);
-		Utility::DeleteMap(junctionContainer);
+		Clear();
 	}
 
 	/**************************************
@@ -82,6 +79,16 @@ namespace Field::Model
 		Debug::Log("CntLinkedTown:%d", townContainer.size());
 		Debug::Log("CntJunction:%d", junctionContainer.size());
 		Debug::Log("TrafficJam: %f", trafficJamRate);
+	}
+
+	/**************************************
+	ÉNÉäÉAèàóù
+	***************************************/
+	void Field::Model::PlaceContainer::Clear()
+	{
+		Utility::DeleteContainer(placeVector);
+		Utility::DeleteMap(townContainer);
+		Utility::DeleteMap(junctionContainer);
 	}
 
 #ifdef DEBUG_PLACEMODEL

@@ -42,6 +42,9 @@ namespace Field::Model
 		//更新処理、描画処理
 		void Update();
 
+		//クリア処理
+		void Clear();
+
 		//指定したマス目のPlaceModelを取得
 		PlaceModel* GetPlace(int x, int z);
 		PlaceModel* GetPlace(const FieldPosition& position);

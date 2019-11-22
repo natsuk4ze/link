@@ -111,8 +111,8 @@ void GameScene::Init()
 	fsm[State::TransitionIn] = new GameTransitionIn();
 
 	//デリゲートを作成して設定
-	onBuildRoad = DelegateObject<GameScene, void(Route&)>::Create(this, &GameScene::OnBuildRoad);
-	field->SetCallbackOnBuildRoad(onBuildRoad);
+	auto onBuildRoad = std::bind(&GameScene::OnBuildRoad, this, std::placeholders::_1);
+	field->SetCallbackBuildRoad(onBuildRoad);
 
 	//ステート初期化
 	ChangeState(State::Initialize);
@@ -407,5 +407,5 @@ void GameScene::DebugTool()
 ***************************************/
 void GameScene::Clear()
 {
-	field->ClearAll();
+	field->Clear();
 }

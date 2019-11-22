@@ -60,25 +60,22 @@ namespace Field
 		operationX(OperationExplanationViewer::OperationID::X_None),
 		operationSpace(OperationExplanationViewer::OperationID::Space_None),
 		enableDevelop(true),
-		flgWaitPopup(false),
-		onConnectTown(nullptr),
-		onCreateJunction(nullptr),
-		onChangePlaceType(nullptr)
+		flgWaitPopup(false)
 	{
 		using Model::PlaceContainer;
 		using Model::PlaceModel;
 
 		//インスタンス作成
-		skybox = new FieldSkyBox(level);
 		cursor = new FieldCursor(PlaceOffset);
 		operateContainer = new Model::OperatePlaceContainer();
-		placeActController = new Actor::PlaceActorController(level);
 		developper = new FieldDevelopper(this);
 		input = new FieldInput(this);
 		placeContainer = new Model::PlaceContainer();
-		infoController = new InfoController(level);
 		viewer = new FieldViewer();
 		score = new Score();
+
+		//フィールドレベル設定
+		SetLevel(currentLevel);
 
 		//ステートマシン作成
 		fsm.resize(State::Max, NULL);
@@ -86,10 +83,9 @@ namespace Field
 		fsm[State::Idle] = new IdleState();
 		fsm[State::Develop] = new UseItemState();
 
-		//デリゲート作成
-		onConnectTown = DelegateObject<FieldController, void(const PlaceModel*, const PlaceModel*)>::Create(this, &FieldController::OnConnectedTown);
-		onCreateJunction = DelegateObject<PlaceContainer, void(const PlaceModel*)>::Create(placeContainer, &PlaceContainer::OnCreateJunction);
-		onChangePlaceType = DelegateObject<Actor::PlaceActorController, void(const PlaceModel*)>::Create(placeActController, &Actor::PlaceActorController::ChangeActor);
+		//コールバック作成
+		onConnectTown = std::bind(&FieldController::OnConnectedTown, this, std::placeholders::_1, std::placeholders::_2);
+		onChangePlaceType = std::bind(&Actor::PlaceActorController::ChangeActor, placeActController, std::placeholders::_1);
 
 		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
@@ -123,11 +119,6 @@ namespace Field
 		SAFE_DELETE(infoController);
 		SAFE_DELETE(viewer);
 		SAFE_DELETE(score);
-
-		//デリゲート削除
-		SAFE_DELETE(onConnectTown);
-		SAFE_DELETE(onCreateJunction);
-		SAFE_DELETE(onChangePlaceType);
 
 		//ステートマシン削除
 		Utility::DeleteContainer(fsm);
@@ -227,12 +218,33 @@ namespace Field
 	}
 
 	/**************************************
+	フィールドレベル設定処理
+	***************************************/
+	void FieldController::SetLevel(Field::FieldLevel level)
+	{
+		currentLevel = level;
+
+		//フィールドレベルが関係するインスタンスを作成
+		skybox = new FieldSkyBox(level);
+		placeActController = new Field::Actor::PlaceActorController(level);
+		infoController = new InfoController(level);
+	}
+
+	/**************************************
 	クリア処理
 	***************************************/
-	void FieldController::ClearAll()
+	void FieldController::Clear()
 	{
-		//カーソルリセット
+		//フィールドレベルに関係ないものをリセット
 		cursor->Reset();
+		operateContainer->Clear();
+		placeContainer->Clear();
+		routeContainer.clear();
+
+		//フィールドレベルが関係するインスタンスを削除
+		SAFE_DELETE(skybox);
+		SAFE_DELETE(placeActController);
+		SAFE_DELETE(infoController);
 	}
 
 	/**************************************
@@ -292,9 +304,9 @@ namespace Field
 	}
 
 	/**************************************
-	道作成時のデリゲータ設定処理
+	道作成時のコールバック設定処理
 	***************************************/
-	void FieldController::SetCallbackOnBuildRoad(Delegate<void(std::vector<Model::PlaceModel*>&)> *callback)
+	void FieldController::SetCallbackBuildRoad(const std::function<void(std::vector<Model::PlaceModel*>&)>& callback)
 	{
 		onBuildRoad = callback;
 	}
