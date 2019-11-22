@@ -8,6 +8,7 @@
 #include "GameTransitionIn.h"
 
 #include "../../Field/Camera/FieldCamera.h"
+#include "../../Field/FieldController.h"
 
 /**************************************
 入場処理
@@ -18,10 +19,10 @@ void GameScene::GameTransitionIn::OnStart(GameScene & entity)
 	entity.Clear();
 
 	//フィールドレベル切り替え
-
+	entity.SetFieldLevel(entity.level);
 
 	//マップ読み込み
-
+	entity.field->Load();
 
 	//アクター切り替え
 

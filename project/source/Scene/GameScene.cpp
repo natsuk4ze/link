@@ -182,8 +182,12 @@ void GameScene::Update()
 
 	//パーティクル更新
 	ProfilerCPU::Instance()->Begin("Update Particle");
-	levelParticleManager->Update();
+
+	if(levelParticleManager != nullptr)
+		levelParticleManager->Update();
+
 	particleManager->Update();
+
 	ProfilerCPU::Instance()->End("Update Particle");
 
 	//デバッグ機能
@@ -236,7 +240,10 @@ void GameScene::Draw()
 
 	//パーティクル描画
 	ProfilerCPU::Instance()->Begin("Draw Particle");
-	levelParticleManager->Draw();
+	
+	if(levelParticleManager != nullptr)
+		levelParticleManager->Draw();
+
 	particleManager->Draw();
 	ProfilerCPU::Instance()->End("Draw Particle");
 
@@ -396,6 +403,7 @@ void GameScene::DebugTool()
 	Debug::SameLine();
 	if (Debug::Button("Transition"))
 	{
+		level++;
 		ChangeState(State::TransitionOut);
 	}
 
@@ -403,9 +411,40 @@ void GameScene::DebugTool()
 }
 
 /**************************************
+フィールドレベル設定処理
+***************************************/
+void GameScene::SetFieldLevel(int level)
+{
+	field->SetLevel((Field::FieldLevel)level);
+
+	switch (level)
+	{
+	case Field::City:
+		levelParticleManager = CityParticleManager::Instance();
+		break;
+	case Field::World:
+		levelParticleManager = WorldParticleManager::Instance();
+		break;
+	case Field::Space:
+		levelParticleManager = SpaceParticleManager::Instance();
+		break;
+	default:
+		levelParticleManager = nullptr;
+		break;
+	}
+
+	levelParticleManager->Init();
+}
+
+/**************************************
 シーンクリア処理
 ***************************************/
 void GameScene::Clear()
 {
+	//フィールド側をクリア
 	field->Clear();
+
+	//レベル固有のパーティクルを終了
+	levelParticleManager->Uninit();
+	levelParticleManager = nullptr;
 }

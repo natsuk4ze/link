@@ -114,6 +114,9 @@ private:
 	//デバッグ機能
 	void DebugTool();
 
+	//フィールドレベル設定処理
+	void SetFieldLevel(int level);
+
 	//クリア処理
 	void Clear();
 

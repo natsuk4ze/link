@@ -89,6 +89,8 @@ namespace Field::Model
 		Utility::DeleteContainer(placeVector);
 		Utility::DeleteMap(townContainer);
 		Utility::DeleteMap(junctionContainer);
+
+		initialized = false;
 	}
 
 #ifdef DEBUG_PLACEMODEL
@@ -221,7 +223,7 @@ namespace Field::Model
 		//“o˜^Šm”F
 		if (townContainer.count(placeID) == 0)
 		{
-			townContainer.emplace(placeID, new TownModel(town, &onDepartPassenger));
+			townContainer.emplace(placeID, new TownModel(town, onDepartPassenger));
 		}
 
 		townContainer[placeID]->AddGate(gate);

@@ -228,6 +228,9 @@ namespace Field
 		skybox = new FieldSkyBox(level);
 		placeActController = new Field::Actor::PlaceActorController(level);
 		infoController = new InfoController(level);
+
+		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
 	}
 
 	/**************************************
