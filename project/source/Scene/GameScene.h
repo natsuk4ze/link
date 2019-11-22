@@ -66,7 +66,7 @@ public:
 		FarView,
 		Title,
 		Result,
-		Transition,
+		TransitionOut,
 		Max
 	};
 
@@ -125,7 +125,7 @@ private:
 	class GameWaitPopup;
 	class GameTitle;
 	class GameResult;
-	class GameTransition;
+	class GameTransitionOut;
 
 	//デバッグ用フィールドレベル
 	static int level;

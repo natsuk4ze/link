@@ -1,6 +1,6 @@
 //=====================================
 //
-//GameTransition.h
+//GameTransitionOut.h
 //機能:ゲームのレベルアップ遷移ステート
 //Author:GP12B332 21 立花雄太
 //
@@ -19,7 +19,7 @@
 /**************************************
 クラス定義
 ***************************************/
-class GameScene::GameTransition : public GameScene::SceneState
+class GameScene::GameTransitionOut : public GameScene::SceneState
 {
 public:
 	void OnStart(GameScene& entity);

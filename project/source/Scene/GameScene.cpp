@@ -106,7 +106,7 @@ void GameScene::Init()
 	fsm[State::FarView] = new GameFarView();
 	fsm[State::Title] = new GameTitle();
 	fsm[State::Result] = new GameResult();
-	fsm[State::Transition] = new GameTransition();
+	fsm[State::TransitionOut] = new GameTransitionOut();
 
 	//ƒfƒŠƒQ[ƒg‚ğì¬‚µ‚Äİ’è
 	onBuildRoad = DelegateObject<GameScene, void(Route&)>::Create(this, &GameScene::OnBuildRoad);
@@ -394,7 +394,7 @@ void GameScene::DebugTool()
 	Debug::SameLine();
 	if (Debug::Button("Transition"))
 	{
-		ChangeState(State::Transition);
+		ChangeState(State::TransitionOut);
 	}
 
 	Debug::End();
