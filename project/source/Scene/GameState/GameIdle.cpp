@@ -43,6 +43,7 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 	//残り時間が0になったら終了
 	if (entity.remainTime == 0)
 	{
+		entity.field->SetScore();
 		entity.ChangeState(State::Finish);
 	}
 	//AI発展レベルが最大に到達していたらレベルアップ

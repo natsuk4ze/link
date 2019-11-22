@@ -13,8 +13,8 @@ namespace Field
 	// コンストラクタ
 	//=====================================
 	Score::Score() :
-		developmentLevelAI(0),
-		current(FieldLevel::City)
+		current(FieldLevel::City),
+		score()
 	{
 	}
 
@@ -29,28 +29,16 @@ namespace Field
 	//=====================================
 	// スコアの取得
 	//=====================================
-	UINT Score::GetScore()
+	int Score::GetScore(FieldLevel level)
 	{
-		return developmentLevelAI;
+		return score[level];
 	}
 
 	//=====================================
-	// スコアの加算
+	// スコアのセット
 	//=====================================
-	void Score::AddScore(UINT score, FieldLevel current)
+	void Score::SetScore(int score, FieldLevel current)
 	{
-		this->current = current;
-		switch (this->current)
-		{
-		case Field::City:
-			developmentLevelAI += score;
-			break;
-		case Field::World:
-			developmentLevelAI += score * 10000 + 9999;
-			break;
-		case Field::Space:
-			developmentLevelAI += score * 100000000 + 99999999;
-			break;
-		}
+		this->score[current] = score;
 	}
 }

@@ -543,9 +543,16 @@ namespace Field
 	/**************************************
 	スコアの取得
 	***************************************/
-	UINT FieldController::GetScore()
+	int FieldController::GetScore(FieldLevel current)
 	{
-		score->AddScore((UINT)realDevelopmentLevelAI, currentLevel);
-		return score->GetScore();
+		return score->GetScore(current);
+	}
+
+	/**************************************
+	スコアのセット
+	***************************************/
+	void FieldController::SetScore()
+	{
+		score->SetScore((int)realDevelopmentLevelAI, currentLevel);
 	}
 }
