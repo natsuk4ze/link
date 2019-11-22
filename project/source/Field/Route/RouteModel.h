@@ -13,6 +13,7 @@
 #include "../Place/PlaceConfig.h"
 
 #include <vector>
+#include <functional>
 
 namespace Field::Model
 {
@@ -24,7 +25,8 @@ namespace Field::Model
 	class TownModel;
 
 	using RouteModelPtr = std::shared_ptr<RouteModel>;
-	using DelegatePlace = Delegate<void(const PlaceModel*)>;
+	using CallbackConnect = std::function<void(const PlaceModel*, const PlaceModel*)>;
+
 	
 	/**************************************
 	隣接ルート情報
@@ -48,13 +50,13 @@ namespace Field::Model
 		friend class RouteProcessor;
 	public:
 		//コンストラクタ
-		RouteModel(Delegate<void(const PlaceModel*, const PlaceModel*)> *onConnectTown, DelegatePlace *onCreateJunction);
+		RouteModel(CallbackConnect& onConnectTown);
 
 		bool operator ==(const RouteModel& rhs) const;
 
 		//Create関数でこのクラスのshared_ptrを作成させる
-		static RouteModelPtr Create(Delegate<void(const PlaceModel*, const PlaceModel*)> *onConnectTown, DelegatePlace *onCreateJunction);
-		static RouteModelPtr Create(Delegate<void(const PlaceModel*, const PlaceModel*)> *onConnectTown, DelegatePlace *onCreateJunction, const std::vector<PlaceModel*>& placeVector);
+		static RouteModelPtr Create(CallbackConnect& onConnectTown);
+		static RouteModelPtr Create(CallbackConnect& onConnectTown, const std::vector<PlaceModel*>& placeVector);
 
 		//デストラクタ
 		~RouteModel();		//所属を離脱
@@ -105,8 +107,7 @@ namespace Field::Model
 
 		bool isUnused;								//使用判定
 
-		Delegate<void(const PlaceModel*, const PlaceModel*)> *onConnectedTown;	//街と道が繋がったときのデリゲータ
-		Delegate<void(const PlaceModel*)> *onCreateJunction;	//交差点を作ったときのデリゲータ
+		CallbackConnect onConnectedTown;			//街と道が繋がったときのコールバック
 
 		void _SetEdge(PlaceModel* place);			//端点設定内部処理
 	};

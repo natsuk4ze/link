@@ -59,6 +59,9 @@ namespace Field
 		//移動中かどうか
 		bool IsMoving() const;
 
+		//リセット処理
+		void Reset();
+
 	private:
 		const int SquareMax = 5;			//四角形最大数
 		const int EmitInterval = 10;		//四角形生成インターバル

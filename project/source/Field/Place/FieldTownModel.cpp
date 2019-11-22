@@ -21,7 +21,7 @@ namespace Field::Model
 	/**************************************
 	コンストラクタ
 	***************************************/
-	TownModel::TownModel(const PlaceModel* place, std::function<void(const PlaceModel *start, const PlaceModel *goal, const PlaceModel* town)> *action) :
+	TownModel::TownModel(const PlaceModel* place, std::function<void(const PlaceModel *start, const PlaceModel *goal, const PlaceModel* town)>& action) :
 		uniqueID(incrementID++),
 		place(place),
 		linkLevel(0),
@@ -53,7 +53,7 @@ namespace Field::Model
 		if (cntFrame % Interval == 0)
 		{
 			indexDestination = Math::WrapAround(0, (int)linkedTown.size(), ++indexDestination);
-			(*departPassenger)(linkedTown[indexDestination].second, linkedTown[indexDestination].first, place);
+			departPassenger(linkedTown[indexDestination].second, linkedTown[indexDestination].first, place);
 		}
 
 		cntFrame++;

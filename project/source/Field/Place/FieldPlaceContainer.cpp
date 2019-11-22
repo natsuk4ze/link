@@ -59,10 +59,7 @@ namespace Field::Model
 	***************************************/
 	PlaceContainer::~PlaceContainer()
 	{
-		Utility::DeleteContainer(placeVector);
-
-		Utility::DeleteMap(townContainer);
-		Utility::DeleteMap(junctionContainer);
+		Clear();
 	}
 
 	/**************************************
@@ -82,6 +79,18 @@ namespace Field::Model
 		Debug::Log("CntLinkedTown:%d", townContainer.size());
 		Debug::Log("CntJunction:%d", junctionContainer.size());
 		Debug::Log("TrafficJam: %f", trafficJamRate);
+	}
+
+	/**************************************
+	ƒNƒŠƒAˆ—
+	***************************************/
+	void Field::Model::PlaceContainer::Clear()
+	{
+		Utility::DeleteContainer(placeVector);
+		Utility::DeleteMap(townContainer);
+		Utility::DeleteMap(junctionContainer);
+
+		initialized = false;
 	}
 
 #ifdef DEBUG_PLACEMODEL
@@ -214,7 +223,7 @@ namespace Field::Model
 		//“o˜^Šm”F
 		if (townContainer.count(placeID) == 0)
 		{
-			townContainer.emplace(placeID, new TownModel(town, &onDepartPassenger));
+			townContainer.emplace(placeID, new TownModel(town, onDepartPassenger));
 		}
 
 		townContainer[placeID]->AddGate(gate);

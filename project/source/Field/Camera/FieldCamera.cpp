@@ -10,8 +10,11 @@
 #include "State/FieldCameraQuater.h"
 #include "State/FieldCameraFar.h"
 #include "State/FieldCameraRotate.h"
+#include "State\FIeldCameraTransitionOut.h"
+#include "State\FIeldCameraTransitionIn.h"
 
 #include "../../../Framework/Input/input.h"
+#include "../../../Framework/Tool/DebugWindow.h"
 
 /**************************************
 staticメンバ
@@ -21,6 +24,7 @@ const float FieldCamera::AnglePeriod = 45.0f;
 const float FieldCamera::LengthFromTarget = 70.0f;
 const float FieldCamera::InitCameraAngle = -45.0f;
 const float FieldCamera::CameraAngleY = 60.0f;
+
 /**************************************
 コンストラクタ
 ***************************************/
@@ -50,6 +54,8 @@ FieldCamera::FieldCamera() :
 	fsm[Mode::QuaterView] = new FieldCameraQuater();
 	fsm[Mode::FarView] = new FieldCameraFar();
 	fsm[Mode::AngleRotate] = new FieldCameraRotate();
+	fsm[Mode::TransitionOut] = new FieldCameraTransitionOut();
+	fsm[Mode::TransitionIn] = new FieldCameraTransitionIn();
 }
 
 /**************************************

@@ -42,6 +42,8 @@
 #include "GameState/GameFarView.h"
 #include "GameState/GameTitle.h"
 #include "GameState/GameResult.h"
+#include "GameState\GameTransitionOut.h"
+#include "GameState\GameTransitionIn.h"
 
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Sound/BackgroundMusic.h"
@@ -105,14 +107,15 @@ void GameScene::Init()
 	fsm[State::FarView] = new GameFarView();
 	fsm[State::Title] = new GameTitle();
 	fsm[State::Result] = new GameResult();
+	fsm[State::TransitionOut] = new GameTransitionOut();
+	fsm[State::TransitionIn] = new GameTransitionIn();
 
 	//デリゲートを作成して設定
-	onBuildRoad = DelegateObject<GameScene, void(Route&)>::Create(this, &GameScene::OnBuildRoad);
-	field->SetCallbackOnBuildRoad(onBuildRoad);
+	auto onBuildRoad = std::bind(&GameScene::OnBuildRoad, this, std::placeholders::_1);
+	field->SetCallbackBuildRoad(onBuildRoad);
 
 	//ステート初期化
 	ChangeState(State::Initialize);
-
 }
 
 /**************************************
@@ -141,7 +144,6 @@ void GameScene::Uninit()
 
 	//デリゲート削除
 	SAFE_DELETE(onBuildRoad);
-
 }
 
 /**************************************
@@ -178,8 +180,12 @@ void GameScene::Update()
 
 	//パーティクル更新
 	ProfilerCPU::Instance()->Begin("Update Particle");
-	levelParticleManager->Update();
+
+	if(levelParticleManager != nullptr)
+		levelParticleManager->Update();
+
 	particleManager->Update();
+
 	ProfilerCPU::Instance()->End("Update Particle");
 
 	//デバッグ機能
@@ -232,7 +238,10 @@ void GameScene::Draw()
 
 	//パーティクル描画
 	ProfilerCPU::Instance()->Begin("Draw Particle");
-	levelParticleManager->Draw();
+	
+	if(levelParticleManager != nullptr)
+		levelParticleManager->Draw();
+
 	particleManager->Draw();
 	ProfilerCPU::Instance()->End("Draw Particle");
 
@@ -389,13 +398,61 @@ void GameScene::DebugTool()
 	{
 		ChangeState(State::Result);
 	}
-
-	Debug::NewLine();
-	Debug::Text("particle");
-	if (Debug::Button("Cloud"))
+	Debug::SameLine();
+	if (Debug::Button("Transition"))
 	{
-		GameParticleManager::Instance()->Generate(GameParticle::Cloud, Vector3::Zero);
+		level++;
+		ChangeState(State::TransitionOut);
 	}
 
 	Debug::End();
+}
+
+/**************************************
+フィールドレベル設定処理
+***************************************/
+void GameScene::SetFieldLevel(int level)
+{
+	field->SetLevel((Field::FieldLevel)level);
+
+	switch (level)
+	{
+	case Field::City:
+		levelParticleManager = CityParticleManager::Instance();
+		break;
+	case Field::World:
+		levelParticleManager = WorldParticleManager::Instance();
+		break;
+	case Field::Space:
+		levelParticleManager = SpaceParticleManager::Instance();
+		break;
+	default:
+		levelParticleManager = nullptr;
+		break;
+	}
+
+	//レベル固有のパーティクルマネージャ初期化
+	levelParticleManager->Init();
+
+	//イベントコントローラ作成
+	eventController = new EventController(level);
+
+	//イベントハンドラ設定
+	SetEventHandler();
+}
+
+/**************************************
+シーンクリア処理
+***************************************/
+void GameScene::Clear()
+{
+	//フィールド側をクリア
+	field->Clear();
+
+	//レベル固有のパーティクルを終了
+	levelParticleManager->Uninit();
+	levelParticleManager = nullptr;
+
+	//イベントコントローラ削除
+	SAFE_DELETE(eventController);
 }

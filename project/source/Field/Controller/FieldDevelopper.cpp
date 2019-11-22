@@ -84,7 +84,7 @@ namespace Field
 		}
 
 		//ルートモデル作成
-		RouteModelPtr ptr = RouteModel::Create(entity->onConnectTown, entity->onCreateJunction, route);
+		RouteModelPtr ptr = RouteModel::Create(entity->onConnectTown, route);
 
 		//端点設定
 		ptr->SetEdge();
@@ -118,7 +118,7 @@ namespace Field
 		entity->SetLinkLevelInfo();
 
 		//コールバック
-		(*entity->onBuildRoad)(route);
+		entity->onBuildRoad(route);
 	}
 
 	/**************************************
