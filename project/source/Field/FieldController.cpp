@@ -7,7 +7,6 @@
 //=====================================
 #include "FieldController.h"
 #include "Object/FieldCursor.h"
-#include "Object/FieldGround.h"
 #include "Object/FieldSkyBox.h"
 #include "Place\FieldPlaceContainer.h"
 #include "Place\OperatePlaceContainer.h"
@@ -72,7 +71,6 @@ namespace Field
 		//インスタンス作成
 		skybox = new FieldSkyBox(level);
 		cursor = new FieldCursor(PlaceOffset);
-		ground = new FieldGround();
 		operateContainer = new Model::OperatePlaceContainer();
 		placeActController = new Actor::PlaceActorController(level);
 		developper = new FieldDevelopper(this);
@@ -116,7 +114,6 @@ namespace Field
 		//インスタンス削除
 		SAFE_DELETE(skybox);
 		SAFE_DELETE(cursor);
-		SAFE_DELETE(ground);
 		SAFE_DELETE(placeContainer);
 		SAFE_DELETE(operateContainer);
 		SAFE_DELETE(routeProcessor);

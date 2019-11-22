@@ -128,7 +128,6 @@ namespace Field
 		static const float MaxDevelopmentLevelAI;		//AI発展レベルの最大値
 
 		FieldCursor *cursor;								//カーソル
-		FieldGround *ground;								//地面
 		FieldSkyBox *skybox;								//スカイボックス
 
 		Model::PlaceContainer *placeContainer;				//プレイスコンテナ
