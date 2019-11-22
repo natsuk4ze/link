@@ -17,7 +17,7 @@ GuideViewerBG::GuideViewerBG()
 	ResourceManager::Instance()->GetPolygon("GuideViewerBG", polygon);
 
 	transform->Rotate(0.0f, 0.0f, 0.0f);
-	transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	transform->SetPosition(D3DXVECTOR3(0.0f, 50.0f, 50.0f));
 	transform->SetScale(Vector3::One);
 }
 
