@@ -116,7 +116,6 @@ void GameScene::Init()
 
 	//ステート初期化
 	ChangeState(State::Initialize);
-
 }
 
 /**************************************
@@ -145,7 +144,6 @@ void GameScene::Uninit()
 
 	//デリゲート削除
 	SAFE_DELETE(onBuildRoad);
-
 }
 
 /**************************************
@@ -433,7 +431,14 @@ void GameScene::SetFieldLevel(int level)
 		break;
 	}
 
+	//レベル固有のパーティクルマネージャ初期化
 	levelParticleManager->Init();
+
+	//イベントコントローラ作成
+	eventController = new EventController(level);
+
+	//イベントハンドラ設定
+	SetEventHandler();
 }
 
 /**************************************
@@ -447,4 +452,7 @@ void GameScene::Clear()
 	//レベル固有のパーティクルを終了
 	levelParticleManager->Uninit();
 	levelParticleManager = nullptr;
+
+	//イベントコントローラ削除
+	SAFE_DELETE(eventController);
 }
