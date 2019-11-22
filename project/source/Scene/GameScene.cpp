@@ -42,7 +42,8 @@
 #include "GameState/GameFarView.h"
 #include "GameState/GameTitle.h"
 #include "GameState/GameResult.h"
-#include "GameState\GameTransition.h"
+#include "GameState\GameTransitionOut.h"
+#include "GameState\GameTransitionIn.h"
 
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Sound/BackgroundMusic.h"
@@ -107,6 +108,7 @@ void GameScene::Init()
 	fsm[State::Title] = new GameTitle();
 	fsm[State::Result] = new GameResult();
 	fsm[State::TransitionOut] = new GameTransitionOut();
+	fsm[State::TransitionIn] = new GameTransitionIn();
 
 	//デリゲートを作成して設定
 	onBuildRoad = DelegateObject<GameScene, void(Route&)>::Create(this, &GameScene::OnBuildRoad);
@@ -398,4 +400,12 @@ void GameScene::DebugTool()
 	}
 
 	Debug::End();
+}
+
+/**************************************
+シーンクリア処理
+***************************************/
+void GameScene::Clear()
+{
+	field->ClearAll();
 }

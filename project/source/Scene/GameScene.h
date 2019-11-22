@@ -67,6 +67,7 @@ public:
 		Title,
 		Result,
 		TransitionOut,
+		TransitionIn,
 		Max
 	};
 
@@ -93,6 +94,8 @@ private:
 
 	int remainTime;								//制限時間
 
+	int cntFrame;								//フレームカウンタ
+
 	//ポストエフェクト関連
 	BloomController *bloomController;			//ブルームエフェクトのコントローラ
 
@@ -111,6 +114,9 @@ private:
 	//デバッグ機能
 	void DebugTool();
 
+	//クリア処理
+	void Clear();
+
 	//static定数メンバ
 	static const float BloomPower[3];
 	static const float BloomThrethold[3];
@@ -126,6 +132,7 @@ private:
 	class GameTitle;
 	class GameResult;
 	class GameTransitionOut;
+	class GameTransitionIn;
 
 	//デバッグ用フィールドレベル
 	static int level;

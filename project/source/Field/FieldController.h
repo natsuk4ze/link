@@ -78,6 +78,9 @@ namespace Field
 		void DrawInfo();
 		void DrawViewer();
 
+		//クリア処理
+		void ClearAll();
+
 		//データ読み込み処理
 		//TODO:読み込むデータを選択できるようにする
 		void Load();
