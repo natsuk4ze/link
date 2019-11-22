@@ -73,14 +73,6 @@ void FieldCamera::Update()
 	fsm[currentMode]->OnUpdate(*this);
 
 	Camera::Update();
-
-	Debug::Begin("DebugTool");
-	Debug::Text("Camera");
-	if (Debug::Button("TransitionOut"))
-	{
-		ChangeMode(Mode::TransitionOut);
-	}
-	Debug::End();
 }
 
 /**************************************

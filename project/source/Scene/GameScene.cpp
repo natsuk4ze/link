@@ -42,6 +42,7 @@
 #include "GameState/GameFarView.h"
 #include "GameState/GameTitle.h"
 #include "GameState/GameResult.h"
+#include "GameState\GameTransition.h"
 
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Sound/BackgroundMusic.h"
@@ -105,6 +106,7 @@ void GameScene::Init()
 	fsm[State::FarView] = new GameFarView();
 	fsm[State::Title] = new GameTitle();
 	fsm[State::Result] = new GameResult();
+	fsm[State::Transition] = new GameTransition();
 
 	//ƒfƒŠƒQ[ƒg‚ğì¬‚µ‚Äİ’è
 	onBuildRoad = DelegateObject<GameScene, void(Route&)>::Create(this, &GameScene::OnBuildRoad);
@@ -389,12 +391,10 @@ void GameScene::DebugTool()
 	{
 		ChangeState(State::Result);
 	}
-
-	Debug::NewLine();
-	Debug::Text("particle");
-	if (Debug::Button("Cloud"))
+	Debug::SameLine();
+	if (Debug::Button("Transition"))
 	{
-		GameParticleManager::Instance()->Generate(GameParticle::Cloud, Vector3::Zero);
+		ChangeState(State::Transition);
 	}
 
 	Debug::End();

@@ -126,7 +126,7 @@ namespace Effect::Game
 	CloudEmitterコンストラクタ
 	***************************************/
 	CloudEmitter::CloudEmitter() :
-		BaseEmitter(14, 90)
+		BaseEmitter(14, 30)
 	{
 
 	}

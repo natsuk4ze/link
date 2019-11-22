@@ -260,6 +260,7 @@
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.h" />
     <ClInclude Include="source\Effect\Game\General\Cloud.h" />
     <ClInclude Include="source\Field\Camera\State\FIeldCameraTransitionOut.h" />
+    <ClInclude Include="source\Scene\GameState\GameTransition.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -501,6 +502,7 @@
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.cpp" />
     <ClCompile Include="source\Effect\Game\General\Cloud.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraTransitionOut.cpp" />
+    <ClCompile Include="source\Scene\GameState\GameTransition.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

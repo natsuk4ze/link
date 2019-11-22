@@ -241,6 +241,7 @@
     <ClInclude Include="source\Scene\GameState\GamePause.h" />
     <ClInclude Include="source\Scene\GameState\GameResult.h" />
     <ClInclude Include="source\Scene\GameState\GameTitle.h" />
+    <ClInclude Include="source\Scene\GameState\GameTransition.h" />
     <ClInclude Include="source\Scene\ModelViewScene.h" />
     <ClInclude Include="source\Scene\ParticleTestScene.h" />
     <ClInclude Include="source\Scene\ResultScene.h" />
@@ -485,6 +486,7 @@
     <ClCompile Include="source\Scene\GameState\GamePause.cpp" />
     <ClCompile Include="source\Scene\GameState\GameResult.cpp" />
     <ClCompile Include="source\Scene\GameState\GameTitle.cpp" />
+    <ClCompile Include="source\Scene\GameState\GameTransition.cpp" />
     <ClCompile Include="source\Scene\ModelViewScene.cpp" />
     <ClCompile Include="source\Scene\ParticleTestScene.cpp" />
     <ClCompile Include="source\Scene\ResultScene.cpp" />
