@@ -5,8 +5,8 @@
 //Author:GP12B332 21 —§‰Ô—Y‘¾
 //
 //=====================================
-#ifndef _GAMETRANSITION_H_
-#define _GAMETRANSITION_H_
+#ifndef _GAMETRANSITIONOUT_H_
+#define _GAMETRANSITIONOUT_H_
 
 #include "../../../main.h"
 #include "../../../Framework/Pattern/BaseState.h"

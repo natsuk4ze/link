@@ -5,7 +5,7 @@
 //Author:GP12B332 21 立花雄太
 //
 //=====================================
-#include "GameTransition.h"
+#include "GameTransitionOut.h"
 
 #include "../../Field/Camera/FieldCamera.h"
 #include "../../../Framework/Task/TaskManager.h"
@@ -18,14 +18,8 @@ void GameScene::GameTransitionOut::OnStart(GameScene & entity)
 {
 	//カメラの状態を遷移
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::TransitionOut);
-	
-	//雲パーティクル発生
-	TaskManager::Instance()->CreateDelayedTask(60, [&]()
-	{
-		GameParticleManager::Instance()->Generate(GameParticle::Cloud, Vector3::Zero);
-	});
 
-
+	entity.cntFrame = 0;
 }
 
 /**************************************
@@ -33,5 +27,19 @@ void GameScene::GameTransitionOut::OnStart(GameScene & entity)
 ***************************************/
 GameScene::State GameScene::GameTransitionOut::OnUpdate(GameScene & entity)
 {
+	entity.cntFrame++;
+
+	//雲パーティクル発生
+	if (entity.cntFrame == 60)
+	{
+		GameParticleManager::Instance()->Generate(GameParticle::Cloud, Vector3::Zero);
+	}
+
+	//遷移
+	if (entity.cntFrame == 90)
+	{
+		entity.ChangeState(GameScene::TransitionIn);
+	}
+
 	return State::TransitionOut;
 }
