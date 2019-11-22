@@ -39,11 +39,11 @@ FieldCamera::Mode FieldCamera::FieldCameraFar::OnUpdate(FieldCamera & entity)
 {
 	entity.cntFrame++;
 
-	const float MoveDuration = 30;
+	const int MoveDuration = 30;
 	if (entity.cntFrame <= MoveDuration)
 	{
 		//イージングで移動
-		float t = entity.cntFrame / MoveDuration;
+		float t = (float)entity.cntFrame / MoveDuration;
 		D3DXVECTOR3 position = Easing::EaseValue(t, entity.startPosition, entity.goalPosition, EaseType::OutCubic);
 
 		//追従目標に合わせて視点を設定
