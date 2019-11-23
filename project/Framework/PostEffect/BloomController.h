@@ -43,6 +43,7 @@ private:
 	void ProcessBlur();
 	void BlendBloom();
 
+	BloomFilter *bloomBlender;
 	BloomFilter *bloomFilter[NumReduction];
 	BlurFilter *blurFilter[NumReduction];
 
