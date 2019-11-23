@@ -52,8 +52,8 @@
 staticメンバ
 ***************************************/
 int GameScene::level = 0;		//デバッグ用フィールドレベル（本番では非staticメンバにする
-const float GameScene::BloomPower[] = {0.25f, 0.25f, 0.15f};		//ブルームの強さ
-const float GameScene::BloomThrethold[] = {0.45f, 0.5f, 0.55f};		//ブルームをかける輝度の閾値
+const float GameScene::BloomPower[] = {0.75f, 0.65f, 0.50f};		//ブルームの強さ
+const float GameScene::BloomThrethold[] = {0.6f, 0.35f, 0.21f};		//ブルームをかける輝度の閾値
 
 /**************************************
 初期化処理
@@ -226,12 +226,12 @@ void GameScene::Draw()
 	//testInfoController->Draw();
 
 	//ポストエフェクトは重いのでリリース版のみ適用する
-#ifndef _DEBUG
+//#ifndef _DEBUG
 	//ポストエフェクト適用
 	ProfilerCPU::Instance()->Begin("Draw PostEffect");
 	bloomController->Draw(renderTexture);
 	ProfilerCPU::Instance()->End("Draw PostEffect");
-#endif
+//#endif
 
 	//フィールドの情報表示
 	field->DrawInfo();
@@ -386,16 +386,19 @@ void GameScene::DebugTool()
 	Debug::NewLine();
 	if (Debug::Button("Title"))
 	{
+		level = 0;
 		ChangeState(State::Title);
 	}
 	Debug::SameLine();
 	if (Debug::Button("Idle"))
 	{
+		level = 1;
 		ChangeState(State::Idle);
 	}
 	Debug::SameLine();
 	if (Debug::Button("Result"))
 	{
+		level = 2;
 		ChangeState(State::Result);
 	}
 	Debug::SameLine();
@@ -404,6 +407,15 @@ void GameScene::DebugTool()
 		level++;
 		ChangeState(State::TransitionOut);
 	}
+
+	Debug::NewLine();
+	Debug::Text("Bloom");
+	static D3DXVECTOR3 power = {BloomPower[0], BloomPower[1], BloomPower[2]};
+	static D3DXVECTOR3 threthold = {BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]};
+	Debug::Slider("power", power, Vector3::Zero, Vector3::One);
+	Debug::Slider("threthold", threthold, Vector3::Zero, Vector3::One);
+	bloomController->SetPower(power.x, power.y, power.z);
+	bloomController->SetThrethold(threthold.x, threthold.y, threthold.z);
 
 	Debug::End();
 }
