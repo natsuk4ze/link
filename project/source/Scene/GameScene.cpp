@@ -52,8 +52,8 @@
 staticメンバ
 ***************************************/
 int GameScene::level = 0;		//デバッグ用フィールドレベル（本番では非staticメンバにする
-const float GameScene::BloomPower[] = {0.25f, 0.25f, 0.15f};		//ブルームの強さ
-const float GameScene::BloomThrethold[] = {0.45f, 0.5f, 0.55f};		//ブルームをかける輝度の閾値
+const float GameScene::BloomPower[] = {0.75f, 0.65f, 0.50f};		//ブルームの強さ
+const float GameScene::BloomThrethold[] = {0.6f, 0.35f, 0.21f};		//ブルームをかける輝度の閾値
 
 /**************************************
 初期化処理
@@ -410,8 +410,8 @@ void GameScene::DebugTool()
 
 	Debug::NewLine();
 	Debug::Text("Bloom");
-	static D3DXVECTOR3 power = Vector3::Zero;
-	static D3DXVECTOR3 threthold = Vector3::Zero;
+	static D3DXVECTOR3 power = {BloomPower[0], BloomPower[1], BloomPower[2]};
+	static D3DXVECTOR3 threthold = {BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]};
 	Debug::Slider("power", power, Vector3::Zero, Vector3::One);
 	Debug::Slider("threthold", threthold, Vector3::Zero, Vector3::One);
 	bloomController->SetPower(power.x, power.y, power.z);
