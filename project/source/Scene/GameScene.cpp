@@ -408,6 +408,15 @@ void GameScene::DebugTool()
 		ChangeState(State::TransitionOut);
 	}
 
+	Debug::NewLine();
+	Debug::Text("Bloom");
+	static D3DXVECTOR3 power = Vector3::Zero;
+	static D3DXVECTOR3 threthold = Vector3::Zero;
+	Debug::Slider("power", power, Vector3::Zero, Vector3::One);
+	Debug::Slider("threthold", threthold, Vector3::Zero, Vector3::One);
+	bloomController->SetPower(power.x, power.y, power.z);
+	bloomController->SetThrethold(threthold.x, threthold.y, threthold.z);
+
 	Debug::End();
 }
 
