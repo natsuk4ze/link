@@ -41,6 +41,8 @@ StraightRoadActor::~StraightRoadActor()
 //=====================================
 void StraightRoadActor::Init(const D3DXVECTOR3 & pos, Field::FieldLevel currentLevel, bool onWataer)
 {
+	PlaceActor::Init(pos, currentLevel);
+
 	using Field::Actor::ActorLoader;
 
 	this->onWater = onWataer;

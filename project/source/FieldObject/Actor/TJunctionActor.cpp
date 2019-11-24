@@ -45,6 +45,8 @@ TJunctionActor::~TJunctionActor()
 //=====================================
 void TJunctionActor::Init(const D3DXVECTOR3 & pos, Field::FieldLevel currentLevel, bool onWater)
 {
+	PlaceActor::Init(pos, currentLevel);
+
 	using Field::Actor::ActorLoader;
 	if (!onWater)
 		ResourceManager::Instance()->GetMesh(ActorLoader::TJunctionTag[currentLevel].c_str(), mesh);
