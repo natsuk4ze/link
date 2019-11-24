@@ -16,33 +16,13 @@
 //=====================================
 // コンストラクタ
 //=====================================
-TJunctionActor::TJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater)
-	: PlaceActor(pos, currentLevel),
-	onWater(onWater)
+TJunctionActor::TJunctionActor()
+	: PlaceActor(),
+	onWater(false)
 {
-	using Field::Actor::ActorLoader;
-	if (!onWater)
-		ResourceManager::Instance()->GetMesh(ActorLoader::TJunctionTag[currentLevel].c_str(), mesh);
-	else
-		ResourceManager::Instance()->GetMesh(ActorLoader::WaterT.c_str(), mesh);
-
 	type = Field::Model::Junction;
 
 	emitterContainer.resize(3, nullptr);
-
-	D3DXVECTOR3 euler = transform->GetEulerAngle();
-
-	if (currentLevel == Field::FieldLevel::Space)
-	{
-		for (auto&& emitter : emitterContainer)
-		{
-			euler.y += 90.0f;
-
-			emitter = SpaceParticleManager::Instance()->Generate(SpaceParticle::StarRoad, *transform);
-			if(emitter != nullptr)
-				emitter->SetRotatition(euler);
-		}
-	}
 }
 
 //=====================================
@@ -57,6 +37,54 @@ TJunctionActor::~TJunctionActor()
 
 		emitter->SetActive(false);
 	}
+	emitterContainer.clear();
+}
+
+//=====================================
+// 初期化処理
+//=====================================
+void TJunctionActor::Init(const D3DXVECTOR3 & pos, Field::FieldLevel currentLevel, bool onWater)
+{
+	PlaceActor::Init(pos, currentLevel);
+
+	using Field::Actor::ActorLoader;
+	if (!onWater)
+		ResourceManager::Instance()->GetMesh(ActorLoader::TJunctionTag[currentLevel].c_str(), mesh);
+	else
+		ResourceManager::Instance()->GetMesh(ActorLoader::WaterT.c_str(), mesh);
+
+	this->onWater = onWater;
+
+	emitterContainer.resize(3, nullptr);
+
+	D3DXVECTOR3 euler = transform->GetEulerAngle();
+
+	if (currentLevel == Field::FieldLevel::Space)
+	{
+		for (auto&& emitter : emitterContainer)
+		{
+			euler.y += 90.0f;
+
+			emitter = SpaceParticleManager::Instance()->Generate(SpaceParticle::StarRoad, *transform);
+			if (emitter != nullptr)
+				emitter->SetRotatition(euler);
+		}
+	}
+}
+
+//=====================================
+// 終了処理
+//=====================================
+void TJunctionActor::Uninit()
+{
+	for (auto&& emitter : emitterContainer)
+	{
+		if (emitter == nullptr)
+			continue;
+
+		emitter->SetActive(false);
+	}
+	emitterContainer.clear();
 }
 
 //=====================================

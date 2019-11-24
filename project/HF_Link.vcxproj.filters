@@ -262,6 +262,7 @@
     <ClInclude Include="source\Scene\GameState\GameTransitionIn.h" />
     <ClInclude Include="source\Scene\GameState\GameTransitionOut.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraTransitionIn.h" />
+    <ClInclude Include="Framework\Core\ObjectPool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

@@ -22,7 +22,7 @@ class NoneActor :
 {
 private:
 public:
-	NoneActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
+	NoneActor();
 	~NoneActor();
 
 	void Update() override;

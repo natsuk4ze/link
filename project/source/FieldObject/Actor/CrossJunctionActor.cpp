@@ -16,18 +16,41 @@
 //=====================================
 // コンストラクタ
 //=====================================
-CrossJunctionActor::CrossJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater)
-	: PlaceActor(pos, currentLevel),
-	onWater(onWater)
+CrossJunctionActor::CrossJunctionActor()
+	: PlaceActor(),
+	onWater(false)
 {
+	type = Field::Model::Junction;
+}
+
+//=====================================
+// デストラクタ（メッシュの開放は基底クラスで）
+//=====================================
+CrossJunctionActor::~CrossJunctionActor()
+{
+	for (auto&& emitter : emitterContainer)
+	{
+		if (emitter == nullptr)
+			continue;
+
+		emitter->SetActive(false);
+	}
+}
+
+//=====================================
+// 初期化処理
+//=====================================
+void CrossJunctionActor::Init(const D3DXVECTOR3 & pos, Field::FieldLevel currentLevel, bool onWater)
+{
+	PlaceActor::Init(pos, currentLevel);
+
+	this->onWater = onWater;
+
 	using Field::Actor::ActorLoader;
 	if (!onWater)
 		ResourceManager::Instance()->GetMesh(ActorLoader::CrossTag[currentLevel].c_str(), mesh);
 	else
 		ResourceManager::Instance()->GetMesh(ActorLoader::WaterCross.c_str(), mesh);
-
-
-	type = Field::Model::Junction;
 
 	if (currentLevel == Field::FieldLevel::Space)
 	{
@@ -47,10 +70,11 @@ CrossJunctionActor::CrossJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel
 }
 
 //=====================================
-// デストラクタ（メッシュの開放は基底クラスで）
+// 終了処理
 //=====================================
-CrossJunctionActor::~CrossJunctionActor()
+void CrossJunctionActor::Uninit()
 {
+	PlaceActor::Uninit();
 	for (auto&& emitter : emitterContainer)
 	{
 		if (emitter == nullptr)

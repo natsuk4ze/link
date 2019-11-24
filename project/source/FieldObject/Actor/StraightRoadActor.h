@@ -21,9 +21,11 @@ class StraightRoadActor :
 	public PlaceActor
 {
 public:
-	StraightRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWataer);
+	StraightRoadActor();
 	~StraightRoadActor();
 
+	void Init(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWataer);
+	void Uninit() override;
 	void Draw() override;
 
 	void Rotate(float y) override;

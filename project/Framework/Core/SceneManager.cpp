@@ -11,6 +11,7 @@
 #include "../Tween/Tween.h"
 #include "../Sound/SoundEffect.h"
 #include "../Sound/BackgroundMusic.h"
+#include "../Core/ObjectPool.h"
 
 using namespace std;
 /**************************************
@@ -69,6 +70,7 @@ void SceneManager::_ChengeScene(const int sceneID)
 	if (current != NULL)
 	{
 		current->Uninit();
+		ObjectPool::Instance()->ClearAll();
 		ResourceManager::Instance()->AllRelease();
 		ProfilerCPU::Instance()->Clear();
 		Tween::mInstance->ClearAll();
@@ -122,8 +124,14 @@ void SceneManager::Uninit()
 	if (current != NULL)
 	{
 		current->Uninit();
+		ObjectPool::Instance()->ClearAll();
 		ResourceManager::Instance()->AllRelease();
 		ProfilerCPU::Instance()->Clear();
+		Tween::mInstance->ClearAll();
+
+		//NOTE:èdÇ¢Ç©Ç‡ÅH
+		BGM::Clear();
+		SE::Clear();
 	}
 }
 

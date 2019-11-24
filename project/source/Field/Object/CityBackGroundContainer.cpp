@@ -14,6 +14,7 @@
 
 #include "../../../Framework/String/String.h"
 #include "../../../Framework/Renderer3D/InstancingMeshContainer.h"
+#include "../../../Framework/Core/ObjectPool.h"
 
 #include <fstream>
 #include <string>
@@ -40,9 +41,6 @@ namespace Field::Actor
 	***************************************/
 	CityBackGroundContainer::~CityBackGroundContainer()
 	{
-		Utility::DeleteContainer(groundContainer);
-		Utility::DeleteContainer(riverContainer);
-
 		SAFE_DELETE(groundMesh);
 	}
 
@@ -116,7 +114,7 @@ namespace Field::Actor
 
 				if (type == PlaceType::River)
 				{
-					RiverActor *actor = new RiverActor(position.ConvertToWorldPosition(), FieldLevel::City);
+					RiverActor *actor = ObjectPool::Instance()->Create<RiverActor>(position.ConvertToWorldPosition(), FieldLevel::City);
 					riverContainer.push_back(actor);
 
 					actor->SetDirection((RiverActor::FlowDirection)flowMap[position]);
@@ -126,7 +124,7 @@ namespace Field::Actor
 					//^‚Á•½‚ç‚¾‚Æ•sŽ©‘R‚È‚Ì‚Å‚‚³‚É­‚µ‰š“Ê‚ð‚Â‚¯‚é
 					D3DXVECTOR3 offset = { 0.0f, Math::RandomRange(-2.0f, 0.0f), 0.0f };
 
-					NoneActor *actor = new NoneActor(position.ConvertToWorldPosition() + offset, FieldLevel::City);
+					NoneActor *actor = ObjectPool::Instance()->Create<NoneActor>(position.ConvertToWorldPosition() + offset, FieldLevel::City);
 					groundContainer.push_back(actor);
 				}
 
@@ -149,7 +147,7 @@ namespace Field::Actor
 
 				D3DXVECTOR3 position = FieldPosition(outerX, outerZ).ConvertToWorldPosition();
 				position.y += Math::RandomRange(-2.0f, 0.0f);
-				PlaceActor * actor = new NoneActor(position, FieldLevel::City);
+				PlaceActor* actor = ObjectPool::Instance()->Create<NoneActor>(position, FieldLevel::City);
 				groundContainer.push_back(actor);
 			}
 		}
