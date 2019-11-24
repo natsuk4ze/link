@@ -12,11 +12,11 @@
 //=====================================
 SelectCamera::SelectCamera()
 {
-	const float ScreenHeight = 640.0f;
+	const float ScreenHeight = 320.0f;
 	const float ScreenWidth = 960.0f;
 	const float InitViewAspect = ScreenWidth / ScreenHeight;
-	const D3DXVECTOR3 InitPos = D3DXVECTOR3(0.0f, 30.0f, -100.0f);
-	const D3DXVECTOR3 InitTarget = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	const D3DXVECTOR3 InitPos = D3DXVECTOR3(0.0f, 10.0f, -100.0f);
+	const D3DXVECTOR3 InitTarget = D3DXVECTOR3(0.0f, -30.0f, 0.0f);
 
 	transform.SetPosition(InitPos);
 	transform.LookAt(InitTarget);

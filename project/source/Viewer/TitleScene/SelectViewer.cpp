@@ -11,11 +11,13 @@
 #include "../../../Framework/Effect/RendererEffect.h"
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "SelectLogo.h"
+#include "../../../Framework/Input/input.h"
 
+#include <algorithm>
 //**************************************
 // スタティックメンバ初期化
 //**************************************
-const D3DXVECTOR2 SelectViewer::SubScreenSize = D3DXVECTOR2(960.0f, 640.0f);
+const D3DXVECTOR2 SelectViewer::SubScreenSize = D3DXVECTOR2(960.0f, 320.0f);
 const D3DXVECTOR2 SelectViewer::SubScreenPos = D3DXVECTOR2((float)SCREEN_CENTER_X - 480.0f, (float)SCREEN_CENTER_Y);
 
 //=====================================
@@ -28,21 +30,19 @@ SelectViewer::SelectViewer()
 	camera = new SelectCamera();
 
 	// リソース読み込み
-	ResourceManager::Instance()->MakePolygon("ModeSelect", "data/TEXTURE/Title/ModeSelect.png", D3DXVECTOR2(50.0f, 16.7f), D3DXVECTOR2(1.0f, 3.0f));
+	ResourceManager::Instance()->MakePolygon("ModeSelect", "data/TEXTURE/Title/ModeSelect.png", D3DXVECTOR2(25.0f, 8.35f), D3DXVECTOR2(1.0f, 3.0f));
 
 	// 各種インスタンスの作成
-	logo[GameStart] = new SelectLogo();
-	logo[GameStart]->LoadResource("ModeSelect");
-	logo[GameStart]->SetTextureIndex(0);
-	logo[GameStart]->SetPosition(Vector3::Zero);
-	logo[TrophyCheck] = new SelectLogo();
-	logo[TrophyCheck]->LoadResource("ModeSelect");
-	logo[TrophyCheck]->SetPosition(Vector3::Zero);
-	logo[TrophyCheck]->SetTextureIndex(1);
-	logo[Exit] = new SelectLogo();
-	logo[Exit]->LoadResource("ModeSelect");
-	logo[Exit]->SetPosition(Vector3::Zero);
-	logo[Exit]->SetTextureIndex(2);
+	logo.reserve(Mode::Max);
+	for (int i = 0; i < Mode::Max; i++)
+	{
+		SelectLogo* p = new SelectLogo();
+		p->LoadResource("ModeSelect");
+		p->SetTextureIndex(i);
+		p->SetPosition(SelectLogo::InitLogoPos[i]);
+		p->SetAngle((float)(i * 120));
+		logo.push_back(p);
+	}
 }
 
 //=====================================
@@ -52,25 +52,47 @@ SelectViewer::~SelectViewer()
 {
 	SAFE_DELETE(subScreen);
 	SAFE_DELETE(camera);
-	for (int i = 0; i < Mode::Max; i++)
+	for (auto& p : logo)
 	{
-		SAFE_DELETE(logo[Mode(i)]);
+		SAFE_DELETE(p);
 	}
+	logo.clear();
 }
 
 //=====================================
-// コンストラクタ
+// 更新
 //=====================================
 void SelectViewer::Update()
 {
 	camera->Update();
 
-	for (int i = 0; i < Mode::Max; i++)
+	for (auto& p : logo)
 	{
-		logo[Mode(i)]->Update();
+		p->Update();
 	}
+	// 描画順をソート（奥のものから先に描画するように）
+	std::sort(logo.begin(), logo.end(), std::greater<>());
+
+	if (Keyboard::GetPress(DIK_RIGHT))
+	{
+		for (auto& p : logo)
+		{
+			p->TurnRight();
+		}
+	}
+	if (Keyboard::GetPress(DIK_LEFT))
+	{
+		for (auto& p : logo)
+		{
+			p->TurnLeft();
+		}
+	}
+
 }
 
+//=====================================
+// 描画
+//=====================================
 void SelectViewer::Draw()
 {
 	const D3DXCOLOR BackColor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
@@ -84,9 +106,9 @@ void SelectViewer::Draw()
 	RendererEffect::SetProjection(camera->GetProjectionMtx());
 
 	// インスタンスの描画
-	for (int i = 0; i < Mode::Max; i++)
+	for (auto& p : logo)
 	{
-		logo[Mode(0)]->Draw();
+		p->Draw();
 	}
 
 	subScreen->DrawTexture();

@@ -9,6 +9,7 @@
 #define _SELECTVIEWER_H_
 
 #include "../../../main.h"
+#include <vector>
 
 class SubScreen;
 class SelectCamera;
@@ -35,7 +36,7 @@ public:
 private:
 	SubScreen* subScreen;
 	SelectCamera* camera;
-	SelectLogo* logo[Max];
+	std::vector<SelectLogo*> logo;
 
 	static const D3DXVECTOR2 SubScreenSize;
 	static const D3DXVECTOR2 SubScreenPos;
