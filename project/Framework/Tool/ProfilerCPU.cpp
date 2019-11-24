@@ -42,8 +42,6 @@ void ProfilerCPU::Update()
 		std::chrono::milliseconds frame = std::chrono::milliseconds(PROFILER_CPU_COUNT_INTERBAL * 1000);
 		cntFPS = frame / deltaTime;
 	}
-
-	Debug::Log("FPS:%d", cntFPS);
 	cntFrame = Math::WrapAround(0, PROFILER_CPU_COUNT_INTERBAL, ++cntFrame);
 #endif
 }

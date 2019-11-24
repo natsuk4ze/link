@@ -74,11 +74,6 @@ namespace Field::Model
 		{
 			town.second->Update();
 		}
-
-		//デバッグ表示
-		Debug::Log("CntLinkedTown:%d", townContainer.size());
-		Debug::Log("CntJunction:%d", junctionContainer.size());
-		Debug::Log("TrafficJam: %f", trafficJamRate);
 	}
 
 	/**************************************
