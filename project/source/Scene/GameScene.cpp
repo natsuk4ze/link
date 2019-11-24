@@ -295,12 +295,7 @@ void GameScene::OnLevelUp()
 
 	//テストなのでインクリメントしてしまう
 	//本番ではちゃんと制限する
-	TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
-	{
-		level++;
-		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), level);
-		SceneManager::ChangeScene(GameConfig::SceneID::Game);
-	});
+	level++;
 }
 
 /**************************************

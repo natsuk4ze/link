@@ -13,9 +13,12 @@
 void GameScene::GameLevelUp::OnStart(GameScene & entity)
 {
 	//TODO:レベルアップ時の演出を再生する
-	
+	//本来は演出終了のコールバックで遷移させる
+
 	//レベルアップ処理
 	entity.OnLevelUp();
+
+	entity.ChangeState(GameScene::State::TransitionOut);
 }
 
 /**************************************

@@ -272,6 +272,13 @@ namespace Field
 		SAFE_DELETE(placeActController);
 		SAFE_DELETE(infoController);
 		SAFE_DELETE(routeProcessor);
+
+		//パラメータリセット
+		cntFrame = 0;
+		developmentLevelAI = 0;
+		developSpeedBonus = 1.0f;
+		enableDevelop = true;
+		flgWaitPopup = false;
 	}
 
 	/**************************************
