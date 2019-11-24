@@ -11,9 +11,10 @@
 #include "../../main.h"
 #include "../Pattern/BaseSingleton.h"
 
-#include <typeindex>
+#include <typeinfo>
 #include <unordered_map>
 #include <vector>
+#include <string>
 
 /**************************************
 ‘O•ûéŒ¾
@@ -47,16 +48,24 @@ public:
 	template<class T, class ...TArgs>
 	T* Create(TArgs... args)
 	{
-		std::type_index index = std::type_index(typeid(T));
-		std::vector<GameObject*>* container = &objectPool[index];
+		std::string key = typeid(T).name();
+		std::vector<GameObject*>* container = &objectPool[key];
 
+		T* ptr = nullptr;
+		
 		if (container->empty())
-			return new T(args...);
+		{
+			ptr = new T();
+		}
+		else
+		{
+			ptr = dynamic_cast<T*>(container->back());
+			container->pop_back();
+		}
 
-		GameObject* ptr = container->back();
-		container->pop_back();
+		ptr->Init(args...);
 
-		return static_cast<T*>(ptr);
+		return ptr;
 	}
 
 	template<class T>
@@ -65,8 +74,10 @@ public:
 		if (object == nullptr)
 			return;
 
-		std::type_index index = std::type_index(typeid(*object));
-		objectPool[index].push_back(object);
+		object->Uninit();
+
+		std::string key = typeid(*object).name();
+		objectPool[key].push_back(object);
 
 		object = nullptr;
 
@@ -74,6 +85,6 @@ public:
 	}
 
 private:
-	std::unordered_map<std::type_index, std::vector<GameObject*>> objectPool;
+	std::unordered_map<std::string, std::vector<GameObject*>> objectPool;
 };
 #endif
