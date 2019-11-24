@@ -19,10 +19,27 @@ const float RiverActor::FlowSpeed = 0.02f;
 //=====================================
 // コンストラクタ
 //=====================================
-RiverActor::RiverActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
-	: PlaceActor(pos, currentLevel),
+RiverActor::RiverActor()
+	: PlaceActor(),
 	direction(Forward),
 	effect(nullptr)
+{
+	type = Field::Model::River;
+	effect = new Field::Actor::RiverEffect();
+}
+
+//=====================================
+// デストラクタ
+//=====================================
+RiverActor::~RiverActor()
+{
+	SAFE_DELETE(effect);
+}
+
+//=====================================
+// 初期化処理
+//=====================================
+void RiverActor::Init(const D3DXVECTOR3 & pos, Field::FieldLevel currentLevel)
 {
 	// モデルデータ参照
 	switch (currentLevel)
@@ -38,17 +55,6 @@ RiverActor::RiverActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
 	default:
 		break;
 	}
-
-	type = Field::Model::River;
-	effect = new Field::Actor::RiverEffect();
-}
-
-//=====================================
-// デストラクタ
-//=====================================
-RiverActor::~RiverActor()
-{
-	SAFE_DELETE(effect);
 }
 
 //=====================================

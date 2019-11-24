@@ -32,9 +32,10 @@ public:
 		Left
 	};
 
-	RiverActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
+	RiverActor();
 	~RiverActor();
 
+	void Init(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	void Update() override;
 	void Draw() override;
 
