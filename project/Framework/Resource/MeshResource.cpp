@@ -22,7 +22,7 @@ MeshResource::MeshResource(const std::string & path) :
 
 	//XÉtÉ@ÉCÉãì«Ç›çûÇ›
 	HRESULT res = D3DXLoadMeshFromX(path.c_str(),
-		D3DXMESH_SYSTEMMEM,
+		D3DXMESH_MANAGED,
 		pDevice,
 		NULL,
 		&tmpMaterial,
