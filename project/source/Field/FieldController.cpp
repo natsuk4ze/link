@@ -238,11 +238,9 @@ namespace Field
 
 		Debug::Log("Create Skybox : %f", ProfilerCPU::CalcElapsed(start, end));
 
-		start = ProfilerCPU::GetCounter();
-		placeActController = new Field::Actor::PlaceActorController(level);
-		end = ProfilerCPU::GetCounter();
 
-		Debug::Log("Create Actor : %f", ProfilerCPU::CalcElapsed(start, end));
+		placeActController = new Field::Actor::PlaceActorController(level);
+
 
 		start = ProfilerCPU::GetCounter();
 		infoController = new InfoController(level);
@@ -285,11 +283,7 @@ namespace Field
 		LARGE_INTEGER start, end;
 
 		//アクターのデータ読み込み
-		start = ProfilerCPU::GetCounter();
 		placeActController->Load();
-		end = ProfilerCPU::GetCounter();
-
-		Debug::Log("Load ActorData : %f", ProfilerCPU::CalcElapsed(start, end));
 
 		//モデルのデータ読み込み
 		start = ProfilerCPU::GetCounter();

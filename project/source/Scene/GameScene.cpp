@@ -427,11 +427,8 @@ void GameScene::SetFieldLevel(int level)
 {
 	LARGE_INTEGER start, end;
 
-	start = ProfilerCPU::GetCounter();
+	//フィールドレベルを設定
 	field->SetLevel((Field::FieldLevel)level);
-	end = ProfilerCPU::GetCounter();
-
-	Debug::Log("Init Field : %f", ProfilerCPU::CalcElapsed(start, end));
 
 	//レベル固有のパーティクルマネージャ初期化
 	start = ProfilerCPU::GetCounter();
