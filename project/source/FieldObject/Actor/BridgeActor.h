@@ -24,15 +24,17 @@ class BridgeActor :
 	public PlaceActor
 {
 public:
-	BridgeActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
+	BridgeActor();
 	~BridgeActor();
 
+	virtual void Init(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
 	virtual void Update() override;
 	virtual void Draw() override;
 
 private:
 	Field::Actor::RiverEffect *effect;
 	D3DXVECTOR2 uv;
+	Field::FieldLevel level;
 };
 
 #endif
