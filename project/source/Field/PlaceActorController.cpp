@@ -15,6 +15,7 @@
 #include "AStar\AStarController.h"
 #include "../FieldObject/PassengerController.h"
 #include "../../Framework/Resource/ResourceManager.h"
+#include "../../Framework/Core/ObjectPool.h"
 
 #include "Object/CityBackGroundContainer.h"
 #include "Object/WorldBackGroundContainer.h"
@@ -316,7 +317,7 @@ namespace Field::Actor
 	{
 		//アクター生成
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
-		PlaceActor* actor = new CityActor(actorPos, currentLevel);
+		PlaceActor* actor = ObjectPool::Instance()->Create<CityActor>(actorPos, currentLevel);
 
 		AddContainer(place->ID(), actor);
 		aStarController->OnChangePlace(place);
@@ -363,7 +364,7 @@ namespace Field::Actor
 		if (straightType != StraightType::NotStraight)
 		{
 			//アクター生成
-			PlaceActor* actor = new StraightRoadActor(actorPos, currentLevel, onWater);
+			PlaceActor* actor = ObjectPool::Instance()->Create<StraightRoadActor>(actorPos, currentLevel, onWater);
 			AddContainer(place->ID(), actor);
 
 			//左右に繋がるタイプなら回転させる
@@ -380,7 +381,7 @@ namespace Field::Actor
 		else
 		{
 			//アクター生成
-			PlaceActor* actor = new CurveRoadActor(actorPos, currentLevel, onWater);
+			PlaceActor* actor = ObjectPool::Instance()->Create<CurveRoadActor>(actorPos, currentLevel, onWater);
 			AddContainer(place->ID(), actor);
 
 			//回転角度を決定して回転
@@ -415,7 +416,7 @@ namespace Field::Actor
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
 		//アクター生成
-		PlaceActor* actor = new CityActor(actorPos, currentLevel);
+		PlaceActor* actor = ObjectPool::Instance()->Create<CityActor>(actorPos, currentLevel);
 
 		// 生成アニメーション
 		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
@@ -434,7 +435,7 @@ namespace Field::Actor
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
 		//アクター生成
-		PlaceActor* actor = new BridgeActor(actorPos, currentLevel);
+		PlaceActor* actor = ObjectPool::Instance()->Create<BridgeActor>(actorPos, currentLevel);
 
 		//回転角度を決定
 		std::vector<Adjacency> AdjacencyType = place->GetConnectingAdjacency();
@@ -468,7 +469,7 @@ namespace Field::Actor
 		//十字路のアクター作成
 		if (adjacencyTypeList.size() == 4)
 		{
-			PlaceActor *actor = new CrossJunctionActor(actorPos, currentLevel, onWater);
+			PlaceActor *actor = ObjectPool::Instance()->Create<CrossJunctionActor>(actorPos, currentLevel, onWater);
 
 			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::CrossJunction, onWater);
 
@@ -480,7 +481,7 @@ namespace Field::Actor
 		//T字路のアクター生成
 		else
 		{
-			PlaceActor* actor = new TJunctionActor(actorPos, currentLevel, onWater);
+			PlaceActor* actor = ObjectPool::Instance()->Create<TJunctionActor>(actorPos, currentLevel, onWater);
 
 			TjunctionType junctionType = IsTjunction(adjacencyTypeList);
 			float rotAngle = 0.0f;
@@ -514,7 +515,7 @@ namespace Field::Actor
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 		bool onWater = bgContainer->IsSeaPlace(place->GetPosition());
 
-		PlaceActor *actor = new MountainActor(actorPos, currentLevel, onWater);
+		PlaceActor *actor = ObjectPool::Instance()->Create<MountainActor>(actorPos, currentLevel, onWater);
 
 		//回転
 		float rotateAngle = Math::RandomRange(0, 4) * 90.0f;
@@ -546,6 +547,8 @@ namespace Field::Actor
 			return false;
 
 		//アクターコンテナから
+		ObjectPool::Instance()->Destroy(actorContainer[key].get());
+		actorContainer[key].release();
 		actorContainer.erase(key);
 
 		return true;
