@@ -459,7 +459,7 @@ void GameScene::SetFieldLevel(int level)
 	start = ProfilerCPU::GetCounter();
 
 	//イベントコントローラ作成
-	eventController = new EventController(level);
+	eventController->Init(level);
 
 	//イベントハンドラ設定
 	SetEventHandler();
@@ -491,9 +491,9 @@ void GameScene::Clear()
 
 	Debug::Log("Clear Particle : %f", ProfilerCPU::CalcElapsed(start, end));
 
-	//イベントコントローラ削除
+	//イベントコントローラクリア
 	start = ProfilerCPU::GetCounter();
-	SAFE_DELETE(eventController);
+	eventController->Uninit();
 	end = ProfilerCPU::GetCounter();
 
 	Debug::Log("Clear Event : %f", ProfilerCPU::CalcElapsed(start, end));

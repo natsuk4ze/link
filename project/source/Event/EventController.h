@@ -50,6 +50,9 @@ private:
 public:
 	EventController(int FieldLevel);
 	~EventController();
+
+	void Init(int FieldLevel);
+	void Uninit(void);
 	void Update(void);
 	void UpdateViewer(void);
 	void DrawEventObject(void);
