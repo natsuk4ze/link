@@ -44,19 +44,19 @@ public:
 		objectPool.clear();
 	}
 
-	template<class T>
-	T* Create()
+	template<class T, class ...TArgs>
+	T* Create(TArgs... args)
 	{
 		std::type_index index = std::type_index(typeid(T));
 		std::vector<GameObject*>* container = &objectPool[index];
 
 		if (container->empty())
-			return new T;
+			return new T(args...);
 
-		T* ptr = container->back();
+		GameObject* ptr = container->back();
 		container->pop_back();
 
-		return ptr;
+		return static_cast<T*>(ptr);
 	}
 
 	template<class T>
