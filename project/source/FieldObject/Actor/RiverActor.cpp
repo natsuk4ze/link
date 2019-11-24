@@ -41,6 +41,8 @@ RiverActor::~RiverActor()
 //=====================================
 void RiverActor::Init(const D3DXVECTOR3 & pos, Field::FieldLevel currentLevel)
 {
+	PlaceActor::Init(pos, currentLevel);
+
 	// モデルデータ参照
 	switch (currentLevel)
 	{
