@@ -9,6 +9,11 @@
 
 #include "../../Field/Camera/FieldCamera.h"
 #include "../../Field/FieldController.h"
+#include "../../Event/EventController.h"
+#include "../../Field/FieldController.h"
+
+#include "../../../Framework/Tool/ProfilerCPU.h"
+#include "../../../Framework/Tool/DebugWindow.h"
 
 /**************************************
 “üêˆ—
@@ -39,6 +44,9 @@ void GameScene::GameTransitionIn::OnStart(GameScene & entity)
 GameScene::State GameScene::GameTransitionIn::OnUpdate(GameScene & entity)
 {
 	entity.cntFrame++;
+
+	entity.eventController->UpdateViewer();
+	entity.field->UpdateObject();
 
 	if (entity.cntFrame == 90)
 	{

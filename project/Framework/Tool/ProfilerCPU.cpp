@@ -42,8 +42,6 @@ void ProfilerCPU::Update()
 		std::chrono::milliseconds frame = std::chrono::milliseconds(PROFILER_CPU_COUNT_INTERBAL * 1000);
 		cntFPS = frame / deltaTime;
 	}
-
-	Debug::Log("FPS:%d", cntFPS);
 	cntFrame = Math::WrapAround(0, PROFILER_CPU_COUNT_INTERBAL, ++cntFrame);
 #endif
 }
@@ -144,6 +142,32 @@ void ProfilerCPU::End(const char* tag)
 
 	profilerMap[currentLabel][string(tag)].Count(false);
 #endif
+}
+
+/**************************************
+現在のカウンター取得処理
+***************************************/
+LARGE_INTEGER ProfilerCPU::GetCounter()
+{
+	LARGE_INTEGER frequency;
+	QueryPerformanceFrequency(&frequency);
+
+	LARGE_INTEGER counter;
+	QueryPerformanceCounter(&counter);
+
+	return counter;
+}
+
+/**************************************
+経過時間取得処理
+***************************************/
+double ProfilerCPU::CalcElapsed(LARGE_INTEGER & start, LARGE_INTEGER & end)
+{
+	LARGE_INTEGER frequency;
+	QueryPerformanceFrequency(&frequency);
+	LONGLONG span = end.QuadPart - start.QuadPart;
+	double elapsedTime = (double)span * 1000.0 / (double)frequency.QuadPart;
+	return elapsedTime;
 }
 
 /**************************************

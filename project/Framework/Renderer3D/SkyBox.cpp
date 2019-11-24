@@ -72,8 +72,10 @@ void SkyBox::Draw()
 ***************************************/
 void SkyBox::LoadTexture(const char * fileName, Surface surface)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	D3DXCreateTextureFromFile(pDevice, fileName, &textureContainer[surface]);
+	if (textureContainer[surface] != NULL)
+		SAFE_RELEASE(textureContainer[surface]);
+
+	ResourceManager::Instance()->GetTexture(fileName, textureContainer[surface]);
 }
 
 /**************************************

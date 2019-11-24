@@ -54,22 +54,11 @@ const char* EventCSVPath_Space = "data/FIELD/Space/Space_Event.csv";
 //=============================================================================
 EventController::EventController(int FieldLevel)
 {
-	if (FieldLevel == Field::City)
-	{
-		LoadCSV(EventCSVPath_City);
-	}
-	else if (FieldLevel == Field::World)
-	{
-		LoadCSV(EventCSVPath_World);
-	}
-	else if (FieldLevel == Field::Space)
-	{
-		LoadCSV(EventCSVPath_Space);
-	}
-
 	eventViewer = new EventViewer();
-
+	
 	camera = new EventCamera();
+
+	Init(FieldLevel);
 
 #if _DEBUG
 	ResourceManager::Instance()->MakePolygon("Event", "data/TEXTURE/PlaceTest/Event.png", { 4.5f, 4.5f }, { 13.0f,1.0f });
@@ -84,9 +73,7 @@ EventController::EventController(int FieldLevel)
 //=============================================================================
 EventController::~EventController()
 {
-	// イベントベクトル削除
-	Utility::DeleteContainer(EventVec);
-	EventCSVData.clear();
+	Uninit();
 
 	SAFE_DELETE(eventViewer);
 
@@ -95,6 +82,35 @@ EventController::~EventController()
 #if _DEBUG
 	SAFE_DELETE(polygon);
 #endif
+}
+
+//=============================================================================
+// 初期化
+//=============================================================================
+void EventController::Init(int FieldLevel)
+{
+	if (FieldLevel == Field::City)
+	{
+		LoadCSV(EventCSVPath_City);
+	}
+	else if (FieldLevel == Field::World)
+	{
+		LoadCSV(EventCSVPath_World);
+	}
+	else if (FieldLevel == Field::Space)
+	{
+		LoadCSV(EventCSVPath_Space);
+	}
+}
+
+//=============================================================================
+// 終了
+//=============================================================================
+void EventController::Uninit(void)
+{	
+	// イベントベクトル削除
+	Utility::DeleteContainer(EventVec);
+	EventCSVData.clear();
 }
 
 //=============================================================================

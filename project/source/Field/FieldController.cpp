@@ -27,6 +27,7 @@
 
 #include "../../Framework/Input/input.h"
 #include "../../Framework/Tool/DebugWindow.h"
+#include "../../Framework/Tool/ProfilerCPU.h"
 #include "../../Framework/Math//Easing.h"
 #include "../../Framework/Core/PlayerPrefs.h"
 #include "../GameConfig.h"
@@ -64,6 +65,10 @@ namespace Field
 	{
 		using Model::PlaceContainer;
 		using Model::PlaceModel;
+
+		//リソース読み込み
+		FieldSkyBox::LoadResource();
+		Actor::PlaceActorController::LoadResource();
 
 		//インスタンス作成
 		cursor = new FieldCursor(PlaceOffset);
@@ -222,12 +227,26 @@ namespace Field
 	***************************************/
 	void FieldController::SetLevel(Field::FieldLevel level)
 	{
+		LARGE_INTEGER start, end;
+
 		currentLevel = level;
 
 		//フィールドレベルが関係するインスタンスを作成
+		start = ProfilerCPU::GetCounter();
 		skybox = new FieldSkyBox(level);
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Create Skybox : %f", ProfilerCPU::CalcElapsed(start, end));
+
+
 		placeActController = new Field::Actor::PlaceActorController(level);
+
+
+		start = ProfilerCPU::GetCounter();
 		infoController = new InfoController(level);
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Create InfoController : %f", ProfilerCPU::CalcElapsed(start, end));
 
 		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
@@ -253,6 +272,13 @@ namespace Field
 		SAFE_DELETE(placeActController);
 		SAFE_DELETE(infoController);
 		SAFE_DELETE(routeProcessor);
+
+		//パラメータリセット
+		cntFrame = 0;
+		developmentLevelAI = 0;
+		developSpeedBonus = 1.0f;
+		enableDevelop = true;
+		flgWaitPopup = false;
 	}
 
 	/**************************************
@@ -261,17 +287,28 @@ namespace Field
 	***************************************/
 	void FieldController::Load()
 	{
-		//リソース読み込み
-		placeActController->LoadResource();
+		LARGE_INTEGER start, end;
 
+		//アクターのデータ読み込み
+		placeActController->Load();
+
+		//モデルのデータ読み込み
+		start = ProfilerCPU::GetCounter();
 		placeContainer->LoadCSV(Const::FieldDataFile[currentLevel]);
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Load ModelData : %f", ProfilerCPU::CalcElapsed(start, end));
 
 		//アクター生成
+		start = ProfilerCPU::GetCounter();
 		auto places = placeContainer->GetAllPlaces();
 		for (auto&& place : places)
 		{
 			placeActController->SetActor(place);
 		}
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Create Actor : %f", ProfilerCPU::CalcElapsed(start, end));
 
 		//カーソルのフィールドの中央へ設定
 		FieldPosition border = placeContainer->GetPlaceBorder();

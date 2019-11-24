@@ -10,6 +10,8 @@
 #include "../../Field/Camera/FieldCamera.h"
 #include "../../../Framework/Task/TaskManager.h"
 #include "../../Effect/GameParticleManager.h"
+#include "../../Event/EventController.h"
+#include "../../Field/FieldController.h"
 
 /**************************************
 入場処理
@@ -28,6 +30,9 @@ void GameScene::GameTransitionOut::OnStart(GameScene & entity)
 GameScene::State GameScene::GameTransitionOut::OnUpdate(GameScene & entity)
 {
 	entity.cntFrame++;
+
+	entity.eventController->UpdateViewer();
+	entity.field->UpdateObject();
 
 	//雲パーティクル発生
 	if (entity.cntFrame == 60)

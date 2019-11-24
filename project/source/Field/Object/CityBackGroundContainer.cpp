@@ -9,12 +9,14 @@
 #include "../../FieldObject/Actor/PlaceActor.h"
 #include "../../FieldObject/Actor/RiverActor.h"
 #include "../../FieldObject/Actor/NoneActor.h"
+#include "../ActorLoader.h"
 
 #include "../Place/PlaceConfig.h"
 
 #include "../../../Framework/String/String.h"
 #include "../../../Framework/Renderer3D/InstancingMeshContainer.h"
 #include "../../../Framework/Core/ObjectPool.h"
+#include "../../../Framework/Resource/ResourceManager.h"
 
 #include <fstream>
 #include <string>
@@ -33,7 +35,6 @@ namespace Field::Actor
 		riverContainer.reserve(ReserveSizeRiver);
 
 		groundMesh = new InstancingMeshContainer(ReserveSizeGround);
-		groundMesh->Load("data/MODEL/PlaceActor/ground.x");
 	}
 
 	/**************************************
@@ -152,6 +153,10 @@ namespace Field::Actor
 			}
 		}
 #endif
+
+		//メッシュコンテナ作成
+		ResourceManager::Instance()->GetMesh(ActorLoader::GroundTag.c_str(), groundMesh);
+		groundMesh->Init();
 	}
 
 	/**************************************

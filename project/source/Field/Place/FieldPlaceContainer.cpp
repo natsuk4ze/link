@@ -74,11 +74,6 @@ namespace Field::Model
 		{
 			town.second->Update();
 		}
-
-		//デバッグ表示
-		Debug::Log("CntLinkedTown:%d", townContainer.size());
-		Debug::Log("CntJunction:%d", junctionContainer.size());
-		Debug::Log("TrafficJam: %f", trafficJamRate);
 	}
 
 	/**************************************
@@ -148,10 +143,20 @@ namespace Field::Model
 	/**************************************
 	前プレイス取得処理
 	***************************************/
-	std::vector<const PlaceModel*> Field::Model::PlaceContainer::GetAllPlaces() const
+	std::vector<PlaceModel*> Field::Model::PlaceContainer::GetAllPlaces() const
 	{
-		std::vector<const PlaceModel*> out;
-		out.assign(placeVector.begin(), placeVector.end());
+		using cpplinq::from;
+		using cpplinq::where;
+		using cpplinq::to_vector;
+
+		std::vector<PlaceModel*> out = 
+			from(placeVector)
+			>> where([](PlaceModel* model)
+		{
+			return !model->IsType(PlaceType::None);
+		})
+			>> to_vector();
+
 		return out;
 	}
 

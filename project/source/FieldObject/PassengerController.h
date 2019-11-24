@@ -36,7 +36,7 @@ public:
 	void Draw();
 
 	// ƒŠƒ\[ƒX“Ç‚İ‚İ
-	void LoadResource();
+	static void LoadResource();
 
 	// CSV“Ç‚İ‚İ
 	void LoadCSV(const char* path);

@@ -139,11 +139,11 @@ void GameScene::Uninit()
 	//パーティクル終了
 	particleManager->Uninit();
 
+	if(levelParticleManager != nullptr)
+		levelParticleManager->Uninit();
+
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
-
-	//デリゲート削除
-	SAFE_DELETE(onBuildRoad);
 }
 
 /**************************************
@@ -295,12 +295,7 @@ void GameScene::OnLevelUp()
 
 	//テストなのでインクリメントしてしまう
 	//本番ではちゃんと制限する
-	TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
-	{
-		level++;
-		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), level);
-		SceneManager::ChangeScene(GameConfig::SceneID::Game);
-	});
+	level++;
 }
 
 /**************************************
@@ -425,8 +420,13 @@ void GameScene::DebugTool()
 ***************************************/
 void GameScene::SetFieldLevel(int level)
 {
+	LARGE_INTEGER start, end;
+
+	//フィールドレベルを設定
 	field->SetLevel((Field::FieldLevel)level);
 
+	//レベル固有のパーティクルマネージャ初期化
+	start = ProfilerCPU::GetCounter();
 	switch (level)
 	{
 	case Field::City:
@@ -442,15 +442,23 @@ void GameScene::SetFieldLevel(int level)
 		levelParticleManager = nullptr;
 		break;
 	}
-
-	//レベル固有のパーティクルマネージャ初期化
 	levelParticleManager->Init();
 
+	end = ProfilerCPU::GetCounter();
+
+	Debug::Log("Init Particle : %f", ProfilerCPU::CalcElapsed(start, end));
+
+	start = ProfilerCPU::GetCounter();
+
 	//イベントコントローラ作成
-	eventController = new EventController(level);
+	eventController->Init(level);
 
 	//イベントハンドラ設定
 	SetEventHandler();
+
+	end = ProfilerCPU::GetCounter();
+
+	Debug::Log("Init Event : %f", ProfilerCPU::CalcElapsed(start, end));
 }
 
 /**************************************
@@ -458,13 +466,27 @@ void GameScene::SetFieldLevel(int level)
 ***************************************/
 void GameScene::Clear()
 {
+	LARGE_INTEGER start, end;
+
 	//フィールド側をクリア
+	start = ProfilerCPU::GetCounter();
 	field->Clear();
+	end = ProfilerCPU::GetCounter();
+
+	Debug::Log("Clear Field : %f", ProfilerCPU::CalcElapsed(start, end));
 
 	//レベル固有のパーティクルを終了
+	start = ProfilerCPU::GetCounter();
 	levelParticleManager->Uninit();
 	levelParticleManager = nullptr;
+	end = ProfilerCPU::GetCounter();
 
-	//イベントコントローラ削除
-	SAFE_DELETE(eventController);
+	Debug::Log("Clear Particle : %f", ProfilerCPU::CalcElapsed(start, end));
+
+	//イベントコントローラクリア
+	start = ProfilerCPU::GetCounter();
+	eventController->Uninit();
+	end = ProfilerCPU::GetCounter();
+
+	Debug::Log("Clear Event : %f", ProfilerCPU::CalcElapsed(start, end));
 }

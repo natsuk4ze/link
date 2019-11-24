@@ -9,6 +9,8 @@
 #define _INSTANCINGMESHCONTAINER_H_
 
 #include "../../main.h"
+#include "MeshContainer.h"
+
 #include <vector>
 
 /**************************************
@@ -19,7 +21,7 @@ class InstancingMeshEffect;
 /**************************************
 クラス定義
 ***************************************/
-class InstancingMeshContainer
+class InstancingMeshContainer : public MeshContainer
 {
 	friend class MeshResource;
 public:
@@ -28,7 +30,8 @@ public:
 	~InstancingMeshContainer();
 
 	//リソース読み込み後の初期化処理
-	void Load(const std::string& path);
+	//必ずメッシュ情報を取得した後に呼ぶこと
+	void Init();
 
 	//描画処理
 	void Draw();
@@ -49,12 +52,8 @@ protected:
 	LPDIRECT3DVERTEXDECLARATION9 declare;
 
 	LPDIRECT3DVERTEXBUFFER9 transformBuffer;
-
-	DWORD numMaterial;
 	
-	std::vector<D3DMATERIAL9> materials;
 	std::vector<D3DXATTRIBUTERANGE> attributeTable;
-	std::vector<LPDIRECT3DTEXTURE9> textures;
 
 	InstancingMeshEffect *effect;
 
