@@ -39,6 +39,9 @@ namespace Field::Actor
 
 		const static std::string WhirlPoolTag;		//渦潮のリソースタグ
 
+		const static std::string GroundTag;			//地面のリソースタグ
+		const static std::string RiverTag;			//川のリソースタグ
+
 		//コンストラクタ、デストラクタ
 		ActorLoader();
 		~ActorLoader();
