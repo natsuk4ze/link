@@ -17,6 +17,7 @@ class TitleLogo :
 {
 private:
 	static const D3DXVECTOR3 InitPos;
+	static const D3DXVECTOR2 InitSize;
 
 public:
 	TitleLogo();

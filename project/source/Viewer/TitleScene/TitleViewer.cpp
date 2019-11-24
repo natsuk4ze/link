@@ -7,6 +7,7 @@
 //=====================================
 #include "TitleViewer.h"
 #include "TitleLogo.h"
+#include "SelectViewer.h"
 
 //=====================================
 // コンストラクタ
@@ -14,6 +15,7 @@
 TitleViewer::TitleViewer()
 {
 	logo = new TitleLogo();
+	selectViewer = new SelectViewer();
 }
 
 //=====================================
@@ -21,7 +23,8 @@ TitleViewer::TitleViewer()
 //=====================================
 TitleViewer::~TitleViewer()
 {
-	SAFE_DELETE(logo)
+	SAFE_DELETE(logo);
+	SAFE_DELETE(selectViewer);
 }
 
 //=====================================
@@ -30,6 +33,7 @@ TitleViewer::~TitleViewer()
 void TitleViewer::Update()
 {
 	logo->Update();
+	selectViewer->Update();
 }
 
 //=====================================
@@ -41,6 +45,9 @@ void TitleViewer::Draw()
 		return;
 
 	logo->Draw();
+
+	// 別ウインドウを作成するので最後
+	selectViewer->Draw();
 }
 
 //=====================================

@@ -260,6 +260,10 @@
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.h" />
     <ClInclude Include="source\Viewer\TitleScene\TitleViewer.h" />
     <ClInclude Include="source\Viewer\TitleScene\TitleLogo.h" />
+    <ClInclude Include="source\SubScreen\SubScreen.h" />
+    <ClInclude Include="source\Viewer\TitleScene\SelectViewer.h" />
+    <ClInclude Include="source\Viewer\TitleScene\SelectCamera.h" />
+    <ClInclude Include="source\Viewer\TitleScene\SelectLogo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -501,6 +505,10 @@
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\TitleViewer.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\TitleLogo.cpp" />
+    <ClCompile Include="source\SubScreen\SubScreen.cpp" />
+    <ClCompile Include="source\Viewer\TitleScene\SelectViewer.cpp" />
+    <ClCompile Include="source\Viewer\TitleScene\SelectCamera.cpp" />
+    <ClCompile Include="source\Viewer\TitleScene\SelectLogo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

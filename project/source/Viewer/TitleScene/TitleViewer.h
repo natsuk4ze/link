@@ -11,6 +11,7 @@
 #include "../../../main.h"
 
 class TitleLogo;
+class SelectViewer;
 //**************************************
 // ƒNƒ‰ƒX’è‹`
 //**************************************
@@ -18,6 +19,7 @@ class TitleViewer
 {
 private:
 	TitleLogo* logo;
+	SelectViewer* selectViewer;
 
 	bool isActive;
 

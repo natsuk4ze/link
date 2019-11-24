@@ -33,13 +33,13 @@ GuideViewer::GuideViewer()
 {
 	// 描画用サブスクリーンの作成
 	subScreen = new SubScreen(SubScreenSize, SubScreenPosition);
+	camera = new GuideCamera();
 
 	// リソース読み込み
 	ResourceManager::Instance()->MakePolygon("GuideViewerBG", "data/TEXTURE/VIewer/GameViewer/GuideViewer/Circuit.png", D3DXVECTOR2(100.0f, 100.0f));
 
 	// 各種インスタンスの作成
 	actor = new GuideActor();
-	camera = new GuideCamera();
 	bg = new GuideViewerBG();
 	filter = new CRTFilter((DWORD)SubScreenSize.x, (DWORD)SubScreenSize.y);
 	callOutViewer = new GuideCallOutViewer();
@@ -91,7 +91,8 @@ void GuideViewer::Draw()
 	if (!isActive)
 		return;
 
-	subScreen->DrawBegin();
+	const D3DXCOLOR BackColor = D3DXCOLOR(0.6f, 0.6f, 1.0f, 0.8f);
+	subScreen->DrawBegin(BackColor);
 
 	const Camera *defaultCamera = Camera::MainCamera();
 	Camera::SetMainCamera(camera);
