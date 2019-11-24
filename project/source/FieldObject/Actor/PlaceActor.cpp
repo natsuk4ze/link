@@ -43,6 +43,7 @@ void PlaceActor::Init(const D3DXVECTOR3 & pos, Field::FieldLevel currentLevel)
 	// ステータスセット
 	transform->SetPosition(pos);
 	transform->SetScale(Scale);
+	transform->SetRotation(Quaternion::Identity);
 	this->SetActive(true);
 }
 
