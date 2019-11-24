@@ -18,6 +18,9 @@ const D3DXVECTOR3 SelectLogo::InitLogoPos[] = {
 	D3DXVECTOR3(Distance * sinf(D3DXToRadian(-60)), 0.0f, Distance * cosf(D3DXToRadian(-60))),
 	D3DXVECTOR3(Distance * sinf(D3DXToRadian(60)), 0.0f, Distance * cosf(D3DXToRadian(60)))
 };
+const float SelectLogo::InitAngle[] = {
+	180.0f, 60.0f, -60.0f
+};
 
 //=====================================
 // コンストラクタ
@@ -153,5 +156,5 @@ bool SelectLogo::Moveable()
 //=====================================
 void SelectLogo::SetAngle(float angle)
 {
-	this->angle = angle + 180.0f;
+	this->angle = angle;
 }

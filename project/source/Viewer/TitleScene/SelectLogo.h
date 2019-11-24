@@ -61,6 +61,7 @@ public:
 
 	// スタティックメンバ
 	static const D3DXVECTOR3 InitLogoPos[SelectViewer::Mode::Max];
+	static const float InitAngle[SelectViewer::Mode::Max];
 };
 
 #endif

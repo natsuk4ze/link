@@ -40,7 +40,7 @@ SelectViewer::SelectViewer()
 		p->LoadResource("ModeSelect");
 		p->SetTextureIndex(i);
 		p->SetPosition(SelectLogo::InitLogoPos[i]);
-		p->SetAngle((float)(i * 120));
+		p->SetAngle(SelectLogo::InitAngle[i]);
 		logo.push_back(p);
 	}
 }
