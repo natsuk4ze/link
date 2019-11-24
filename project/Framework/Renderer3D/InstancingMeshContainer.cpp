@@ -48,29 +48,9 @@ InstancingMeshContainer::~InstancingMeshContainer()
 /**************************************
 読み込み処理
 ***************************************/
-void InstancingMeshContainer::Load(const std::string& path)
+void InstancingMeshContainer::Init()
 {
-	LPD3DXMESH mesh;
-	LPD3DXBUFFER buffer;
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-	//メッシュ読み込み
-	D3DXLoadMeshFromX(path.c_str(),
-		D3DXMESH_MANAGED,
-		pDevice,
-		NULL,
-		&buffer,
-		NULL,
-		&numMaterial,
-		&mesh);
-
-	//隣接情報作成
-	std::vector<DWORD> adjList;
-	adjList.resize(3 * mesh->GetNumFaces());
-	mesh->GenerateAdjacency(1.0f / 512, &adjList[0]);
-
-	//メッシュを最適化
-	mesh->OptimizeInplace(D3DXMESHOPT_ATTRSORT, &adjList[0], 0, 0, 0);
 
 	//各バッファを取得
 	mesh->GetVertexBuffer(&vtxBuff);
@@ -78,34 +58,11 @@ void InstancingMeshContainer::Load(const std::string& path)
 	fvf = mesh->GetFVF();
 
 	//属性テーブルを取得
-	attributeTable.resize(numMaterial);
+	attributeTable.resize(materialNum);
 	mesh->GetAttributeTable(&attributeTable[0], NULL);
 
 	//頂点宣言を作成
 	MakeDeclaration(mesh);
-
-	//マテリアル転写
-	materials.resize(numMaterial);
-	D3DXMATERIAL *matBuffer = (D3DXMATERIAL*)buffer->GetBufferPointer();
-	for (DWORD i = 0; i < numMaterial; i++)
-	{
-		materials[i] = matBuffer[i].MatD3D;
-	}
-
-	//テクスチャ読み込み
-	textures.resize(numMaterial, NULL);
-	const std::string DirectoryName = path.substr(0, path.find_last_of('/'));
-	for (DWORD i = 0; i < numMaterial; i++)
-	{
-		if (matBuffer[i].pTextureFilename == NULL)
-			continue;
-
-		std::string fileName = DirectoryName + "/" + std::string(matBuffer[i].pTextureFilename);
-		D3DXCreateTextureFromFile(pDevice, fileName.c_str(), &textures[i]);
-	}
-
-	SAFE_RELEASE(buffer);
-	SAFE_RELEASE(mesh);
 }
 
 /**************************************
@@ -127,7 +84,7 @@ void InstancingMeshContainer::Draw()
 	pDevice->SetStreamSourceFreq(1, D3DSTREAMSOURCE_INSTANCEDATA | 1);
 
 	//マテリアルごとに描画
-	for (unsigned i = 0; i < numMaterial; i++)
+	for (unsigned i = 0; i < materialNum; i++)
 	{
 		effect->SetMaterial(materials[i]);
 
