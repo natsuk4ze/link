@@ -27,25 +27,26 @@ class ObjectPool : public BaseSingleton<ObjectPool>
 {
 	friend class SceneManager;
 public:
+	/**************************************
+	コンストラクタ
+	***************************************/
 	ObjectPool()
 	{
 
 	}
 
+	/**************************************
+	デストラクタ
+	***************************************/
 	~ObjectPool()
 	{
-		for (auto&& pair : objectPool)
-		{
-			for (auto&& object : pair.second)
-			{
-				SAFE_DELETE(object);
-			}
-			pair.second.clear();
-		}
-
-		objectPool.clear();
+		ClearAll();
 	}
 
+	/**************************************
+	オブジェクトインスタンス作成処理
+	生ポインタを返すので、削除について必ず管理すること
+	***************************************/
 	template<class T, class ...TArgs>
 	T* Create(TArgs... args)
 	{
@@ -69,6 +70,10 @@ public:
 		return ptr;
 	}
 
+	/**************************************
+	オブジェクトインスタンス削除処理
+	※実際には削除せずプールしておき、シーン遷移時に削除
+	***************************************/
 	template<class T>
 	void Destroy(T* object)
 	{
@@ -88,6 +93,9 @@ public:
 private:
 	std::unordered_map<std::string, std::vector<GameObject*>> objectPool;
 
+	/**************************************
+	オブジェクトインスタンス解放処理
+	***************************************/
 	void ClearAll()
 	{
 		for (auto&& pair : objectPool)
