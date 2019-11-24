@@ -93,13 +93,15 @@ void MountainActor::Uninit()
 //=====================================
 void MountainActor::Update()
 {
+	//…ã or ‰F’ˆ‚Ìê‡‚Í‰ñ“]‚³‚¹‚é
 	if (onWater || level == Field::FieldLevel::Space)
 	{
 		cntWhirl += speedWhirl;
 		effect->SetTime(cntWhirl);
 	}
 
-	if (emitter != nullptr)
+	//…ã‚È‚ç‰Q’ªƒGƒ~ƒbƒ^‚ð…–Ê‚É‚ ‚í‚¹‚é
+	if (onWater)
 	{
 		D3DXVECTOR3 position = emitter->GetPosition();
 		position.y = WaterHeightController::GetHeight();
@@ -114,7 +116,7 @@ void MountainActor::Update()
 //=====================================
 void MountainActor::Draw()
 {
-	if (onWater || Field::FieldLevel::Space)
+	if (onWater)
 	{
 		//‚‚³‚ð…–Ê‚É‡‚í‚¹‚é
 		D3DXVECTOR3 position = transform->GetPosition();
