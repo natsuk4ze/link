@@ -30,9 +30,11 @@ class PlaceActor :
 	public GameObject
 {
 public:
-	PlaceActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
+	PlaceActor();
 	virtual ~PlaceActor();
 
+	virtual void Init(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
+	virtual void Uninit();
 	virtual void Update();
 	virtual void Draw();
 

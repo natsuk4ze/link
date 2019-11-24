@@ -20,16 +20,11 @@ const D3DXVECTOR3 PlaceActor::Scale = D3DXVECTOR3(0.25f, 0.25f, 0.25f);
 //=====================================
 // コンストラクタ
 //=====================================
-PlaceActor::PlaceActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel) :
+PlaceActor::PlaceActor() :
 	onCamera(true)
 {
 	// メッシュコンテナの作成
 	mesh = new MeshContainer();
-
-	// ステータスセット
-	transform->SetPosition(pos);
-	transform->SetScale(Scale);
-	this->SetActive(true);
 }
 
 //=====================================
@@ -38,6 +33,25 @@ PlaceActor::PlaceActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel) :
 PlaceActor::~PlaceActor()
 {
 	SAFE_DELETE(mesh);
+}
+
+//=====================================
+// 初期化処理
+//=====================================
+void PlaceActor::Init(const D3DXVECTOR3 & pos, Field::FieldLevel currentLevel)
+{
+	// ステータスセット
+	transform->SetPosition(pos);
+	transform->SetScale(Scale);
+	this->SetActive(true);
+}
+
+//=====================================
+// 終了処理
+//=====================================
+void PlaceActor::Uninit()
+{
+	mesh->ReleaseResource();
 }
 
 //=====================================
