@@ -157,7 +157,7 @@ namespace Field::Actor
 					continue;
 
 				D3DXVECTOR3 position = FieldPosition(outerX, outerZ).ConvertToWorldPosition();
-				PlaceActor * actor = new RiverActor(position, FieldLevel::City);
+				PlaceActor *actor = ObjectPool::Instance()->Create<RiverActor>(position, FieldLevel::City);
 				riverContainer.push_back(actor);
 			}
 		}
