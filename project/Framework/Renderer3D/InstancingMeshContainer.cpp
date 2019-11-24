@@ -36,12 +36,6 @@ InstancingMeshContainer::~InstancingMeshContainer()
 	SAFE_RELEASE(indexBuff);
 	SAFE_RELEASE(declare);
 	
-	for (unsigned i = 0; i < textures.size(); i++)
-	{
-		SAFE_RELEASE(textures[i]);
-	}
-	textures.clear();
-
 	SAFE_DELETE(effect);
 }
 
