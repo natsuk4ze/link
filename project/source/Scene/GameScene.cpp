@@ -139,11 +139,11 @@ void GameScene::Uninit()
 	//パーティクル終了
 	particleManager->Uninit();
 
+	if(levelParticleManager != nullptr)
+		levelParticleManager->Uninit();
+
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
-
-	//デリゲート削除
-	SAFE_DELETE(onBuildRoad);
 }
 
 /**************************************

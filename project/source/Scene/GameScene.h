@@ -99,9 +99,6 @@ private:
 	//ポストエフェクト関連
 	BloomController *bloomController;			//ブルームエフェクトのコントローラ
 
-	//デリゲータ
-	Delegate<void(Route&)> *onBuildRoad;		//道を生成したときのデリゲータ
-
 	//イベントコントローラへのPlace受け渡し処理
 	void OnBuildRoad(Route& route);
 

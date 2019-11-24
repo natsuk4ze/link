@@ -16,7 +16,8 @@ using namespace std;
 /**************************************
 コンストラクタ
 ***************************************/
-AnimationManager::AnimationManager()
+AnimationManager::AnimationManager() :
+	currentAnimID(0)
 {
 	container = new AnimContainer();
 }
