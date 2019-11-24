@@ -18,32 +18,15 @@
 //=====================================
 // コンストラクタ
 //=====================================
-MountainActor::MountainActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater)
-	: PlaceActor(pos, currentLevel),
+MountainActor::MountainActor()
+	: PlaceActor(),
 	effect(nullptr),
 	speedWhirl(0.0f),
-	emitter(nullptr)
+	emitter(nullptr),
+	level(Field::FieldLevel::City),
+	onWater(false)
 {
-	using Field::Actor::ActorLoader;
-	if (!onWater)
-	{
-		ResourceManager::Instance()->GetMesh(ActorLoader::MountainTag[currentLevel].c_str(), mesh);
-
-		if (currentLevel == Field::FieldLevel::Space)
-		{
-			effect = new Field::Actor::WhirlPoolEffect();
-			emitter = SpaceParticleManager::Instance()->Generate(SpaceParticle::Blackhole, transform->GetPosition());
-			speedWhirl = Math::RandomRange(0.005f, 0.01f);
-		}
-	}
-	else
-	{
-		ResourceManager::Instance()->GetMesh(ActorLoader::WhirlPoolTag.c_str(), mesh);
-
-		effect = new Field::Actor::WhirlPoolEffect();
-		emitter = WorldParticleManager::Instance()->Generate(WorldParticle::WhirlPoolBubble, transform->GetPosition());
-		speedWhirl = Math::RandomRange(0.02f, 0.05f);
-	}
+	effect = new Field::Actor::WhirlPoolEffect();
 
 	type = Field::Model::Mountain;
 }
@@ -58,6 +41,50 @@ MountainActor::~MountainActor()
 	if (emitter != nullptr)
 	{
 		emitter->SetActive(false);
+		emitter = nullptr;
+	}
+}
+
+//=====================================
+// 初期化処理
+//=====================================
+void MountainActor::Init(const D3DXVECTOR3 & pos, Field::FieldLevel currentLevel, bool onWater)
+{
+	PlaceActor::Init(pos, currentLevel);
+
+	this->level = currentLevel;
+	this->onWater = onWater;
+
+	using Field::Actor::ActorLoader;
+
+	if (!onWater)
+	{
+		ResourceManager::Instance()->GetMesh(ActorLoader::MountainTag[currentLevel].c_str(), mesh);
+
+		if (currentLevel == Field::FieldLevel::Space)
+		{
+			emitter = SpaceParticleManager::Instance()->Generate(SpaceParticle::Blackhole, transform->GetPosition());
+			speedWhirl = Math::RandomRange(0.005f, 0.01f);
+		}
+	}
+	else
+	{
+		ResourceManager::Instance()->GetMesh(ActorLoader::WhirlPoolTag.c_str(), mesh);
+
+		emitter = WorldParticleManager::Instance()->Generate(WorldParticle::WhirlPoolBubble, transform->GetPosition());
+		speedWhirl = Math::RandomRange(0.02f, 0.05f);
+	}
+}
+
+//=====================================
+// 終了処理
+//=====================================
+void MountainActor::Uninit()
+{
+	if (emitter != nullptr)
+	{
+		emitter->SetActive(false);
+		emitter = nullptr;
 	}
 }
 
@@ -66,7 +93,7 @@ MountainActor::~MountainActor()
 //=====================================
 void MountainActor::Update()
 {
-	if (effect != nullptr)
+	if (onWater || level == Field::FieldLevel::Space)
 	{
 		cntWhirl += speedWhirl;
 		effect->SetTime(cntWhirl);
@@ -87,7 +114,7 @@ void MountainActor::Update()
 //=====================================
 void MountainActor::Draw()
 {
-	if (effect != nullptr)
+	if (onWater || Field::FieldLevel::Space)
 	{
 		//高さを水面に合わせる
 		D3DXVECTOR3 position = transform->GetPosition();
