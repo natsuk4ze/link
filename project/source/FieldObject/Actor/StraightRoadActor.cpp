@@ -16,24 +16,12 @@
 //=====================================
 // コンストラクタ
 //=====================================
-StraightRoadActor::StraightRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater)
-	: PlaceActor(pos, currentLevel),
+StraightRoadActor::StraightRoadActor()
+	: PlaceActor(),
 	emitter(nullptr),
 	onWater(onWater)
 {
-	using Field::Actor::ActorLoader;
 
-	if (!onWater)
-		ResourceManager::Instance()->GetMesh(ActorLoader::StraightTag[currentLevel].c_str(), mesh);
-	else
-		ResourceManager::Instance()->GetMesh(ActorLoader::WaterStraight.c_str(), mesh);
-
-	type = Field::Model::Road;
-
-	if (currentLevel == Field::FieldLevel::Space)
-	{
-		emitter = SpaceParticleManager::Instance()->Generate(SpaceParticle::StarRoad, *transform);
-	}
 }
 
 //=====================================
@@ -42,7 +30,43 @@ StraightRoadActor::StraightRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel c
 StraightRoadActor::~StraightRoadActor()
 {
 	if (emitter != nullptr)
+	{
 		emitter->SetActive(false);
+		emitter = nullptr;
+	}
+}
+
+//=====================================
+// 初期化処理
+//=====================================
+void StraightRoadActor::Init(const D3DXVECTOR3 & pos, Field::FieldLevel currentLevel, bool onWataer)
+{
+	using Field::Actor::ActorLoader;
+
+	this->onWater = onWataer;
+
+	if (!onWater)
+		ResourceManager::Instance()->GetMesh(ActorLoader::StraightTag[currentLevel].c_str(), mesh);
+	else
+		ResourceManager::Instance()->GetMesh(ActorLoader::WaterStraight.c_str(), mesh);
+
+	if (currentLevel == Field::FieldLevel::Space)
+	{
+		emitter = SpaceParticleManager::Instance()->Generate(SpaceParticle::StarRoad, *transform);
+	}
+}
+
+//=====================================
+// 更新処理
+//=====================================
+void StraightRoadActor::Uninit()
+{
+	PlaceActor::Uninit();
+	if (emitter != nullptr)
+	{
+		emitter->SetActive(false);
+		emitter = nullptr;
+	}
 }
 
 //=====================================
