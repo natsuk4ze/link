@@ -30,7 +30,7 @@ public:
 	SubScreen(D3DXVECTOR2 size, D3DXVECTOR2 position);
 	~SubScreen();
 
-	void DrawBegin();
+	void DrawBegin(const D3DXCOLOR& backColor);
 	void DrawTexture();		// ピクセルシェーダに渡すために分離
 	void DrawEnd();
 };

@@ -33,15 +33,14 @@ SubScreen::~SubScreen()
 //=====================================
 // 描画はじめ
 //=====================================
-void SubScreen::DrawBegin()
+void SubScreen::DrawBegin(const D3DXCOLOR& backColor)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	//レンダーターゲット切り替え
-	const D3DXCOLOR BackColor = D3DXCOLOR(0.6f, 0.6f, 1.0f, 0.8f);
 	pDevice->GetRenderTarget(0, &oldSuface);
 	pDevice->SetRenderTarget(0, renderSurface);
-	pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, BackColor, 1.0f, 0);
+	pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, backColor, 1.0f, 0);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 }
 
