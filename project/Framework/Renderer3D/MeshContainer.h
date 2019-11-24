@@ -23,13 +23,13 @@ class MeshContainer
 {
 	friend class MeshResource;
 public:
-	MeshContainer();					//コンストラクタ
-	~MeshContainer();					//デストラクタ
+	MeshContainer();						//コンストラクタ
+	~MeshContainer();						//デストラクタ
 
-	//混乱の原因になるのでCreate()とReleaseは削除
+	void ReleaseResource();					//リソース解放処理
 
 	void Draw();							//モデルを描画
-	void Draw(RendererEffect& effect);	//モデルを描画（シェーダ使用)
+	void Draw(RendererEffect& effect);		//モデルを描画（シェーダ使用)
 
 	UINT GetMaterialNum();
 	void GetMaterial(UINT index, D3DMATERIAL9& out);
@@ -46,7 +46,6 @@ private:
 	MeshResource * resource;						//リソースの参照元
 	bool initialized;								//メッシュが初期化済みかどうか
 
-	void ReleaseResource();							//リソース解放処理
 };
 
 #endif
