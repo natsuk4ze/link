@@ -44,7 +44,7 @@ void ParticleTestScene::Init()
 	ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
 	ResourceManager::Instance()->LoadMesh("UFO", "data/MODEL/UFO/UFO.x");
 	ResourceManager::Instance()->LoadMesh("Town-Space", "data/Model/PlaceActor/earth.x");
-	actor = new CityActor(Vector3::Zero, Field::FieldLevel::City);
+	//actor = new CityActor(Vector3::Zero, Field::FieldLevel::City);
 	//actor = new MountainActor(Vector3::Zero, Field::FieldLevel::City);
 	//actor = new RiverActor(Vector3::Zero, Field::FieldLevel::City);
 	//actor->SetScale(Vector3::One * 1.0f);

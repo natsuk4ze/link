@@ -99,6 +99,11 @@ namespace Field::Actor
 		SAFE_DELETE(passengerController);
 		SAFE_DELETE(bgContainer);
 
+		for (auto&& pair : actorContainer)
+		{
+			ObjectPool::Instance()->Destroy(pair.second.get());
+			pair.second.release();
+		}
 		actorContainer.clear();
 	}
 
@@ -259,6 +264,9 @@ namespace Field::Actor
 		//アニメーションさせて終了時に解放
 		ActorAnimation::Shrink(*poolDestroy[placeID], [&, placeID]()
 		{
+			poolDestroy[placeID]->Uninit();
+			ObjectPool::Instance()->Destroy(poolDestroy[placeID].get());
+			poolDestroy[placeID].release();
 			poolDestroy.erase(placeID);
 		});
 
@@ -530,7 +538,7 @@ namespace Field::Actor
 	/**************************************
 	コンテナ追加処理
 	***************************************/
-	void PlaceActorController::AddContainer(unsigned key, PlaceActor * actor)
+	inline void PlaceActorController::AddContainer(unsigned key, PlaceActor * actor)
 	{
 		//重複確認
 		EraseFromContainer(key);
@@ -541,12 +549,12 @@ namespace Field::Actor
 	/**************************************
 	コンテナからの削除処理
 	***************************************/
-	bool PlaceActorController::EraseFromContainer(unsigned key)
+	inline bool PlaceActorController::EraseFromContainer(unsigned key)
 	{
 		if (actorContainer.count(key) == 0)
 			return false;
 
-		//アクターコンテナから
+		//アクターコンテナからオブジェクトプールへ移動
 		ObjectPool::Instance()->Destroy(actorContainer[key].get());
 		actorContainer[key].release();
 		actorContainer.erase(key);

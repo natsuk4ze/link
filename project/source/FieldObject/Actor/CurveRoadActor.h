@@ -24,7 +24,7 @@ public:
 	CurveRoadActor();
 	~CurveRoadActor();
 
-	void Init(const D3DXVECTOR3& ois, Field::FieldLevel currentLevel, bool onWater);
+	void Init(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater);
 	void Uninit() override;
 	void Draw() override;
 	void Rotate(float y);

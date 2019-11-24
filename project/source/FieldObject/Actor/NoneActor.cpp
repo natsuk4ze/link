@@ -11,8 +11,8 @@
 //=====================================
 // コンストラクタ
 //=====================================
-NoneActor::NoneActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
-	: PlaceActor(pos, currentLevel)
+NoneActor::NoneActor()
+	: PlaceActor()
 {
 	// モデルデータ参照
 	ResourceManager::Instance()->GetMesh("NoneActor", mesh);

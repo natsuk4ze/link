@@ -147,8 +147,8 @@ namespace Field::Actor
 		void SetMountain(const Model::PlaceModel* place);
 
 		//コンテナ追加、削除処理
-		void AddContainer(unsigned key, PlaceActor* actor);
-		bool EraseFromContainer(unsigned key);
+		inline void AddContainer(unsigned key, PlaceActor* actor);
+		inline bool EraseFromContainer(unsigned key);
 
 		//アニメーションセット処理
 		void SetRoadGenerateAnimation(PlaceActor* actor, const D3DXVECTOR3 actorPos, int delay = 0);
