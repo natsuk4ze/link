@@ -425,8 +425,16 @@ void GameScene::DebugTool()
 ***************************************/
 void GameScene::SetFieldLevel(int level)
 {
-	field->SetLevel((Field::FieldLevel)level);
+	LARGE_INTEGER start, end;
 
+	start = ProfilerCPU::GetCounter();
+	field->SetLevel((Field::FieldLevel)level);
+	end = ProfilerCPU::GetCounter();
+
+	Debug::Log("Init Field : %f", ProfilerCPU::CalcElapsed(start, end));
+
+	//レベル固有のパーティクルマネージャ初期化
+	start = ProfilerCPU::GetCounter();
 	switch (level)
 	{
 	case Field::City:
@@ -442,15 +450,23 @@ void GameScene::SetFieldLevel(int level)
 		levelParticleManager = nullptr;
 		break;
 	}
-
-	//レベル固有のパーティクルマネージャ初期化
 	levelParticleManager->Init();
+
+	end = ProfilerCPU::GetCounter();
+
+	Debug::Log("Init Particle : %f", ProfilerCPU::CalcElapsed(start, end));
+
+	start = ProfilerCPU::GetCounter();
 
 	//イベントコントローラ作成
 	eventController = new EventController(level);
 
 	//イベントハンドラ設定
 	SetEventHandler();
+
+	end = ProfilerCPU::GetCounter();
+
+	Debug::Log("Init Event : %f", ProfilerCPU::CalcElapsed(start, end));
 }
 
 /**************************************
@@ -458,13 +474,27 @@ void GameScene::SetFieldLevel(int level)
 ***************************************/
 void GameScene::Clear()
 {
+	LARGE_INTEGER start, end;
+
 	//フィールド側をクリア
+	start = ProfilerCPU::GetCounter();
 	field->Clear();
+	end = ProfilerCPU::GetCounter();
+
+	Debug::Log("Clear Field : %f", ProfilerCPU::CalcElapsed(start, end));
 
 	//レベル固有のパーティクルを終了
+	start = ProfilerCPU::GetCounter();
 	levelParticleManager->Uninit();
 	levelParticleManager = nullptr;
+	end = ProfilerCPU::GetCounter();
+
+	Debug::Log("Clear Particle : %f", ProfilerCPU::CalcElapsed(start, end));
 
 	//イベントコントローラ削除
+	start = ProfilerCPU::GetCounter();
 	SAFE_DELETE(eventController);
+	end = ProfilerCPU::GetCounter();
+
+	Debug::Log("Clear Event : %f", ProfilerCPU::CalcElapsed(start, end));
 }
