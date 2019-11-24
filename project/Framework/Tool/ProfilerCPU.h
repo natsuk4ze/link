@@ -36,8 +36,8 @@ public:
 	void Begin(const char* tag);
 	void End(const char* tag);
 
-	LARGE_INTEGER GetCounter();
-	double CalcElapsed(LARGE_INTEGER& start, LARGE_INTEGER& end);
+	static LARGE_INTEGER GetCounter();
+	static double CalcElapsed(LARGE_INTEGER& start, LARGE_INTEGER& end);
 
 private:
 	std::unordered_map<std::string, std::unordered_map<std::string, ProfilerNode>> profilerMap;

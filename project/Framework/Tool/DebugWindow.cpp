@@ -103,9 +103,9 @@ void Debug::Draw(void)
 	}
 
 	Debug::Begin("Log");
-	for (auto itr = textLog.rbegin(); itr != textLog.rend(); itr++)
+	for(auto&& log : textLog)
 	{
-		Text((*itr).c_str());
+		Text(log.c_str());
 	}
 	Debug::End();
 	
