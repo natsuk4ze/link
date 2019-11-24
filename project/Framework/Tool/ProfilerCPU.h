@@ -36,12 +36,16 @@ public:
 	void Begin(const char* tag);
 	void End(const char* tag);
 
+	LARGE_INTEGER GetCounter();
+	double CalcElapsed(LARGE_INTEGER& start, LARGE_INTEGER& end);
+
 private:
 	std::unordered_map<std::string, std::unordered_map<std::string, ProfilerNode>> profilerMap;
 	
 	std::chrono::system_clock::time_point time, prevTime;
 	std::chrono::milliseconds::rep cntFPS;
 	DWORD cntFrame;
+	LARGE_INTEGER measureTime;
 
 	std::string currentLabel, prevLabel;
 

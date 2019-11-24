@@ -145,6 +145,32 @@ void ProfilerCPU::End(const char* tag)
 }
 
 /**************************************
+現在のカウンター取得処理
+***************************************/
+LARGE_INTEGER ProfilerCPU::GetCounter()
+{
+	LARGE_INTEGER frequency;
+	QueryPerformanceFrequency(&frequency);
+
+	LARGE_INTEGER counter;
+	QueryPerformanceCounter(&counter);
+
+	return counter;
+}
+
+/**************************************
+経過時間取得処理
+***************************************/
+double ProfilerCPU::CalcElapsed(LARGE_INTEGER & start, LARGE_INTEGER & end)
+{
+	LARGE_INTEGER frequency;
+	QueryPerformanceFrequency(&frequency);
+	LONGLONG span = end.QuadPart - start.QuadPart;
+	double elapsedTime = (double)span * 1000.0 / (double)frequency.QuadPart;
+	return elapsedTime;
+}
+
+/**************************************
 経過時間計算
 ***************************************/
 void ProfilerCPU::CalcElapsed()
