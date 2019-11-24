@@ -27,6 +27,7 @@
 
 #include "../../Framework/Input/input.h"
 #include "../../Framework/Tool/DebugWindow.h"
+#include "../../Framework/Tool/ProfilerCPU.h"
 #include "../../Framework/Math//Easing.h"
 #include "../../Framework/Core/PlayerPrefs.h"
 #include "../GameConfig.h"
@@ -64,6 +65,9 @@ namespace Field
 	{
 		using Model::PlaceContainer;
 		using Model::PlaceModel;
+
+		//リソース読み込み
+		FieldSkyBox::LoadResource();
 
 		//インスタンス作成
 		cursor = new FieldCursor(PlaceOffset);
@@ -222,12 +226,28 @@ namespace Field
 	***************************************/
 	void FieldController::SetLevel(Field::FieldLevel level)
 	{
+		LARGE_INTEGER start, end;
+
 		currentLevel = level;
 
 		//フィールドレベルが関係するインスタンスを作成
+		start = ProfilerCPU::GetCounter();
 		skybox = new FieldSkyBox(level);
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Create Skybox : %f", ProfilerCPU::CalcElapsed(start, end));
+
+		start = ProfilerCPU::GetCounter();
 		placeActController = new Field::Actor::PlaceActorController(level);
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Create Actor : %f", ProfilerCPU::CalcElapsed(start, end));
+
+		start = ProfilerCPU::GetCounter();
 		infoController = new InfoController(level);
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Create InfoController : %f", ProfilerCPU::CalcElapsed(start, end));
 
 		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
