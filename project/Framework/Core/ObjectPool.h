@@ -25,6 +25,7 @@
 ***************************************/
 class ObjectPool : public BaseSingleton<ObjectPool>
 {
+	friend class SceneManager;
 public:
 	ObjectPool()
 	{
@@ -86,5 +87,18 @@ public:
 
 private:
 	std::unordered_map<std::string, std::vector<GameObject*>> objectPool;
+
+	void ClearAll()
+	{
+		for (auto&& pair : objectPool)
+		{
+			for (auto&& object : pair.second)
+			{
+				SAFE_DELETE(object);
+			}
+			pair.second.clear();
+		}
+		objectPool.clear();
+	}
 };
 #endif
