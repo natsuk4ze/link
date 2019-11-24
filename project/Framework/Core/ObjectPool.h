@@ -65,7 +65,7 @@ public:
 		if (object == nullptr)
 			return;
 
-		std::type_index index = std::type_index(typeid(T));
+		std::type_index index = std::type_index(typeid(*object));
 		objectPool[index].push_back(object);
 
 		object = nullptr;
