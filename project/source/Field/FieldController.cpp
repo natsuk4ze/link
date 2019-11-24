@@ -68,6 +68,7 @@ namespace Field
 
 		//リソース読み込み
 		FieldSkyBox::LoadResource();
+		Actor::PlaceActorController::LoadResource();
 
 		//インスタンス作成
 		cursor = new FieldCursor(PlaceOffset);
@@ -282,7 +283,7 @@ namespace Field
 	void FieldController::Load()
 	{
 		//リソース読み込み
-		placeActController->LoadResource();
+		placeActController->Load();
 
 		placeContainer->LoadCSV(Const::FieldDataFile[currentLevel]);
 

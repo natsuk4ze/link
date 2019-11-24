@@ -62,7 +62,9 @@ namespace Field::Actor
 		void Update();
 		void Draw();
 
-		void LoadResource();
+		//読み込み処理
+		static void LoadResource();
+		void Load();
 
 		//アクター生成処理
 		void SetActor(const Model::PlaceModel* place, int delay = 0);

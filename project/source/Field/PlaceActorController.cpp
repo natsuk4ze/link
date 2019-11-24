@@ -152,9 +152,6 @@ namespace Field::Actor
 		bgContainer->Draw();
 	}
 
-	/**************************************
-	リソース読み込み処理
-	***************************************/
 	void PlaceActorController::LoadResource()
 	{
 		// 3Dオブジェクトのリソースをロード
@@ -169,11 +166,18 @@ namespace Field::Actor
 		loader.LoadConfig();
 		loader.LoadResource();
 
-		//背景アクターをロード
+		PassengerController::LoadResource();
+	}
+
+	/**************************************
+	リソース読み込み処理
+	***************************************/
+	void PlaceActorController::Load()
+	{
+		//背景データをロード
 		bgContainer->Load();
 
-		// パッセンジャー
-		passengerController->LoadResource();
+		// パッセンジャーの背景データをロード
 		passengerController->LoadCSV(Field::Const::FieldLayerFile[0]);
 	}
 
