@@ -71,10 +71,11 @@ void CurveRoadActor::Init(const D3DXVECTOR3 & pos, Field::FieldLevel currentLeve
 }
 
 //=====================================
-// XVˆ—
+// I—¹ˆ—
 //=====================================
 void CurveRoadActor::Uninit()
 {
+	PlaceActor::Uninit();
 	for (auto&& emitter : emitterContainer)
 	{
 		if (emitter != nullptr)
