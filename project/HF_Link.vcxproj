@@ -33,6 +33,7 @@
     <ClInclude Include="Framework\Core\BaseGame.h" />
     <ClInclude Include="Framework\Core\BaseScene.h" />
     <ClInclude Include="Framework\Core\GameObject.h" />
+    <ClInclude Include="Framework\Core\ObjectPool.h" />
     <ClInclude Include="Framework\Core\PlayerPrefs.h" />
     <ClInclude Include="Framework\Core\SceneManager.h" />
     <ClInclude Include="Framework\Core\Transform.h" />
