@@ -20,8 +20,10 @@ class CityActor :
 	public PlaceActor
 {
 public:
-	CityActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel);
+	CityActor();
 	~CityActor();
+
+	void Init(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel) override;
 };
 
 #endif

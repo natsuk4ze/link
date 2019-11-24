@@ -13,12 +13,9 @@
 //=====================================
 // コンストラクタ
 //=====================================
-CityActor::CityActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
-	: PlaceActor(pos, currentLevel)
+CityActor::CityActor()
+	: PlaceActor()
 {
-	using Field::Actor::ActorLoader;
-	ResourceManager::Instance()->GetMesh(ActorLoader::CityTag[currentLevel].c_str(), mesh);
-
 	type = Field::Model::Town;
 }
 
@@ -27,4 +24,15 @@ CityActor::CityActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
 //=====================================
 CityActor::~CityActor()
 {
+}
+
+//=====================================
+// 初期化処理
+//=====================================
+void CityActor::Init(const D3DXVECTOR3 & pos, Field::FieldLevel currentLevel)
+{
+	using Field::Actor::ActorLoader;
+	ResourceManager::Instance()->GetMesh(ActorLoader::CityTag[currentLevel].c_str(), mesh);
+
+	PlaceActor::Init(pos, currentLevel);
 }
