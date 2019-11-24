@@ -282,17 +282,32 @@ namespace Field
 	***************************************/
 	void FieldController::Load()
 	{
-		//リソース読み込み
-		placeActController->Load();
+		LARGE_INTEGER start, end;
 
+		//アクターのデータ読み込み
+		start = ProfilerCPU::GetCounter();
+		placeActController->Load();
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Load ActorData : %f", ProfilerCPU::CalcElapsed(start, end));
+
+		//モデルのデータ読み込み
+		start = ProfilerCPU::GetCounter();
 		placeContainer->LoadCSV(Const::FieldDataFile[currentLevel]);
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Load ModelData : %f", ProfilerCPU::CalcElapsed(start, end));
 
 		//アクター生成
+		start = ProfilerCPU::GetCounter();
 		auto places = placeContainer->GetAllPlaces();
 		for (auto&& place : places)
 		{
 			placeActController->SetActor(place);
 		}
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Create Actor : %f", ProfilerCPU::CalcElapsed(start, end));
 
 		//カーソルのフィールドの中央へ設定
 		FieldPosition border = placeContainer->GetPlaceBorder();

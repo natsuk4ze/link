@@ -103,6 +103,8 @@ void Debug::Draw(void)
 	}
 
 	Debug::Begin("Log");
+	if (Button("Clear"))
+		textLog.clear();
 	for(auto&& log : textLog)
 	{
 		Text(log.c_str());

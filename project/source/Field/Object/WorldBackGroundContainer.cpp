@@ -124,8 +124,7 @@ namespace Field::Actor
 
 				if (type == FieldLayer::Sea)
 				{
-					actor = new RiverActor();		//City‚Æ“¯‚¶‚È‚Ì‚Å‚Æ‚è‚ ‚¦‚¸
-					actor->Init(position, FieldLevel::City);
+					actor = ObjectPool::Instance()->Create<RiverActor>(position, FieldLevel::City);		//City‚Æ“¯‚¶‚È‚Ì‚Å‚Æ‚è‚ ‚¦‚¸
 					riverContainer.push_back(actor);
 
 					//seaMap‚É’Ç‰Á
