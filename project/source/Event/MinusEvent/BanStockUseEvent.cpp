@@ -67,7 +67,7 @@ void BanStockUseEvent::Init()
 	GameParticleManager::Instance()->SetAngryFaceEffect();
 
 	// 怒り顔エフェクト終わるまで待つ
-	TaskManager::Instance()->CreateDelayedTask(210, [&]() {	beatGame->CountdownStart(); });
+	TaskManager::Instance()->CreateDelayedTask(150, [&]() {	beatGame->CountdownStart(); });
 
 	// 初期化終了
 	Initialized = true;
