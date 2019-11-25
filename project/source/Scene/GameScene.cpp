@@ -226,12 +226,12 @@ void GameScene::Draw()
 	//testInfoController->Draw();
 
 	//ポストエフェクトは重いのでリリース版のみ適用する
-//#ifndef _DEBUG
+#ifndef _DEBUG
 	//ポストエフェクト適用
 	ProfilerCPU::Instance()->Begin("Draw PostEffect");
 	bloomController->Draw(renderTexture);
 	ProfilerCPU::Instance()->End("Draw PostEffect");
-//#endif
+#endif
 
 	//フィールドの情報表示
 	field->DrawInfo();

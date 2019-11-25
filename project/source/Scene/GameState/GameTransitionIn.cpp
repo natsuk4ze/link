@@ -31,7 +31,6 @@ void GameScene::GameTransitionIn::OnStart(GameScene & entity)
 
 	//アクター切り替え
 
-
 	//カメラ切り替え
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::TransitionIn);
 

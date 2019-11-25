@@ -28,6 +28,7 @@
 #include "../Field/Place/FieldPlaceModel.h"
 #include "../Viewer/GameScene/Controller/EventViewer.h"
 #include "../Viewer/GameScene/ParameterContainer/EventViewerParam.h"
+#include "../Viewer/GameScene/Controller/BeatGameViewer.h"
 
 #include "../Field/Camera/EventCamera.h"
 
@@ -58,6 +59,8 @@ EventController::EventController(int FieldLevel)
 	
 	camera = new EventCamera();
 
+	beatViewer = new BeatGameViewer();
+
 	Init(FieldLevel);
 
 #if _DEBUG
@@ -78,6 +81,8 @@ EventController::~EventController()
 	SAFE_DELETE(eventViewer);
 
 	SAFE_DELETE(camera);
+
+	SAFE_DELETE(beatViewer);
 
 #if _DEBUG
 	SAFE_DELETE(polygon);
@@ -184,6 +189,9 @@ void EventController::DrawEventObject()
 //=============================================================================
 void EventController::DrawEventViewer()
 {
+	//ビートビューア描画
+	beatViewer->Draw();
+
 	// イベントビューア描画
 	eventViewer->Draw();
 }
@@ -298,11 +306,11 @@ bool EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					Ptr = new LinkLevelDecreaseEvent();
 					break;
 				case CityDestroy:
-					Ptr = new CityDestroyEvent(eventViewer, camera);
+					Ptr = new CityDestroyEvent(eventViewer, beatViewer, camera);
 					flgPause = true;
 					break;
 				case AILevelDecrease:
-					Ptr = new AILevelDecreaseEvent(eventViewer, camera);
+					Ptr = new AILevelDecreaseEvent(eventViewer, camera, beatViewer);
 					flgPause = true;
 					break;
 				case BanStockUse:
@@ -315,6 +323,7 @@ bool EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					else
 					{
 						Ptr = new BanStockUseEvent(eventViewer,
+							beatViewer,
 							[&](bool Flag) {SetBanStock(Flag); },
 							[&]() {return GetInPause(); });
 						flgPause = true;

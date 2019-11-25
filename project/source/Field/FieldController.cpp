@@ -275,7 +275,8 @@ namespace Field
 
 		//パラメータリセット
 		cntFrame = 0;
-		developmentLevelAI = 0;
+		developmentLevelAI = 0.0f;
+		realDevelopmentLevelAI = 0.0f;
 		developSpeedBonus = 1.0f;
 		enableDevelop = true;
 		flgWaitPopup = false;

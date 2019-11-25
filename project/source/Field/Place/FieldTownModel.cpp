@@ -77,7 +77,8 @@ namespace Field::Model
 	***************************************/
 	int TownModel::LinkLevel()
 	{
-		return linkLevel + biasLinkLevel;
+		//ƒŠƒ“ƒNƒŒƒxƒ‹‚Í0ˆÈ‰º‚É‚Í‚µ‚È‚¢
+		return Math::Max(1, linkLevel + biasLinkLevel);
 	}
 
 	/**************************************
@@ -147,6 +148,6 @@ namespace Field::Model
 	PlaceData TownModel::GetPlaceData()
 	{
 		FieldPosition pos = place->GetPosition();
-		return { pos, (int)(linkLevel + biasLinkLevel) };
+		return { pos, LinkLevel() };
 	}
 }

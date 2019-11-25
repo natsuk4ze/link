@@ -198,7 +198,7 @@ void LevelViewer::DecreaseDrawingRatioLevel(void)
 	if (!isLevelAI_Decreasing) return;
 
 	//ratioLevelの減少スピード
-	const float ratioDecreaseSpeed = 0.005f;
+	const float ratioDecreaseSpeed = 0.05f;
 
 	//描画用RatioLevelの方がRatioLevelより大きい間、描画用RatioLevelを減少
 	if (drawingRatioLevel > parameterBox[RatioLevel])
