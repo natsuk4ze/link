@@ -24,7 +24,7 @@ namespace Field::Model
 	/**************************************
 	コンストラクタ
 	***************************************/
-	RouteProcessor::RouteProcessor(Delegate<void(const PlaceModel*)> *onChangePlaceType)
+	RouteProcessor::RouteProcessor(std::function<void(const PlaceModel*)>& onChangePlaceType)
 	{
 		this->onChangePlaceType = onChangePlaceType;
 	}
@@ -126,12 +126,12 @@ namespace Field::Model
 		secondHalf.assign(itrJunction + 1, route.end());		//Junctionも含めないのでイテレータを+1
 
 		//前半のRouteModelを作成
-		RouteModelPtr first = RouteModel::Create(model->onConnectedTown, model->onCreateJunction, firstHalf);
+		RouteModelPtr first = RouteModel::Create(model->onConnectedTown, firstHalf);
 		first->SetEdge(model->edgeStart);
 		first->SetEdge(junction);
 
 		//後半のRouteModelを作成
-		RouteModelPtr second = RouteModel::Create(model->onConnectedTown, model->onCreateJunction, secondHalf);
+		RouteModelPtr second = RouteModel::Create(model->onConnectedTown, secondHalf);
 		second->SetEdge(junction);
 		second->SetEdge(model->edgeEnd);
 
@@ -172,7 +172,6 @@ namespace Field::Model
 		//対象のPlaceを交差点にして分割
 		place->SetType(PlaceType::Junction);
 		divList = Divide(model, place, routeContainer);
-		(*model->onCreateJunction)(place);
 
 		place->AddDirection(target);
 		target->AddDirection(place);
@@ -182,7 +181,6 @@ namespace Field::Model
 		RouteContainer subDivList;
 		if (target->GetPrevType() == PlaceType::Road)
 		{
-			(*model->onCreateJunction)(target);
 			RouteModelPtr opponent = target->GetConnectingRoute();
 			subDivList = Divide(opponent, target, routeContainer);
 		}
@@ -214,8 +212,8 @@ namespace Field::Model
 		target->BelongRoute(divList);
 
 		//交差点と連結対象のオブジェクトを設定
-		(*onChangePlaceType)(place);
-		(*onChangePlaceType)(target);
+		onChangePlaceType(place);
+		onChangePlaceType(target);
 	}
 
 	/**************************************
@@ -232,12 +230,10 @@ namespace Field::Model
 		{
 			place->SetType(PlaceType::Junction);
 			place->AddDirection(adjacency);
-			(*onChangePlaceType)(place);
+			onChangePlaceType(place);
 
 			if (place->GetPrevType() == PlaceType::Road)
 			{
-				(*model->onCreateJunction)(place);
-
 				RouteContainer targetList = place->GetConnectingRoutes();
 
 				//取得した所属リストに新しく作ったルートが含まれるので削除

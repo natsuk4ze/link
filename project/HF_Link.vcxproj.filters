@@ -138,7 +138,6 @@
     <ClInclude Include="source\Event\MinusEvent\AILevelDecreaseEvent.h" />
     <ClInclude Include="source\Event\MinusEvent\BanStockUseEvent.h" />
     <ClInclude Include="source\Effect\GameParticleManager.h" />
-    <ClInclude Include="source\Scene\ParticleTestScene.h" />
     <ClInclude Include="source\Effect\TestParticleCamera.h" />
     <ClInclude Include="source\Effect\TestParticleManager.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraFar.h" />
@@ -264,6 +263,12 @@
     <ClInclude Include="source\Viewer\TitleScene\SelectViewer.h" />
     <ClInclude Include="source\Viewer\TitleScene\SelectCamera.h" />
     <ClInclude Include="source\Viewer\TitleScene\SelectLogo.h" />
+    <ClInclude Include="source\Effect\Game\General\Cloud.h" />
+    <ClInclude Include="source\Field\Camera\State\FIeldCameraTransitionOut.h" />
+    <ClInclude Include="source\Scene\GameState\GameTransitionIn.h" />
+    <ClInclude Include="source\Scene\GameState\GameTransitionOut.h" />
+    <ClInclude Include="source\Field\Camera\State\FieldCameraTransitionIn.h" />
+    <ClInclude Include="Framework\Core\ObjectPool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -509,6 +514,11 @@
     <ClCompile Include="source\Viewer\TitleScene\SelectViewer.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\SelectCamera.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\SelectLogo.cpp" />
+    <ClCompile Include="source\Effect\Game\General\Cloud.cpp" />
+    <ClCompile Include="source\Field\Camera\State\FieldCameraTransitionOut.cpp" />
+    <ClCompile Include="source\Scene\GameState\GameTransitionIn.cpp" />
+    <ClCompile Include="source\Scene\GameState\GameTransitionOut.cpp" />
+    <ClCompile Include="source\Field\Camera\State\FieldCameraTransitionIn.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

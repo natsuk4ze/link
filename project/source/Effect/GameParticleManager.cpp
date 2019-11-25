@@ -18,6 +18,7 @@
 #include "Game/General/Darkness.h"
 #include "Game/General/LinkLevelUp.h"
 #include "Game/General/MoveTail.h"
+#include "Game/General/Cloud.h"
 
 /**************************************
 staticƒƒ“ƒo
@@ -42,9 +43,22 @@ void GameParticleManager::Init()
 	controllers[GameParticle::Darkness] = new Effect::Game::DarknessController();
 	controllers[GameParticle::MoveTail] = new Effect::Game::MoveTailController();
 	controllers[GameParticle::LinkLevelUp] = new Effect::Game::LinkLevelUpController();
+	controllers[GameParticle::Cloud] = new Effect::Game::CloudController();
 
 	crossFilter->SetPower(BloomPower[0], BloomPower[1], BloomPower[2]);
 	crossFilter->SetThrethold(BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]);
+}
+
+/**************************************
+•`‰æˆ—
+***************************************/
+void GameParticleManager::Draw()
+{
+	SceneParticleManager::Draw();
+
+	Debug::Begin("GameParticle");
+	Debug::Text("Cloud : %d", controllers[GameParticle::Cloud]->GetParticleCount());
+	Debug::End();
 }
 
 /**************************************

@@ -45,8 +45,8 @@ void ParticleRenderer::BeginDraw()
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	//レンダーステート切り替え
-	pDevice->SetRenderState(D3DRS_LIGHTING, false);
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
+	//pDevice->SetRenderState(D3DRS_LIGHTING, false);
+	//pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
 
 	//ビュー行列、プロジェクション行列、ビュー逆行列を取得
 	D3DXMATRIX view, proj, invView, screenProj;
@@ -93,8 +93,8 @@ void ParticleRenderer::EndDraw()
 	effect->End();
 
 	//レンダーステート復元
-	pDevice->SetRenderState(D3DRS_LIGHTING, true);
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
+	//pDevice->SetRenderState(D3DRS_LIGHTING, true);
+	//pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
 
 	//ストリーム周波数復元
 	pDevice->SetStreamSourceFreq(0, 1);

@@ -14,18 +14,13 @@
 //=====================================
 // コンストラクタ
 //=====================================
-BridgeActor::BridgeActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel)
-	: PlaceActor(pos, currentLevel),
+BridgeActor::BridgeActor()
+	: PlaceActor(),
 	effect(nullptr),
-	uv(0.0f, 0.0f)
+	uv(0.0f, 0.0f),
+	level(Field::FieldLevel::City)
 {
-	using Field::Actor::ActorLoader;
-	ResourceManager::Instance()->GetMesh(ActorLoader::BridgeTag[currentLevel].c_str(), mesh);
-
-	if (currentLevel == Field::FieldLevel::Space)
-	{
-		effect = new Field::Actor::RiverEffect();
-	}
+	effect = new Field::Actor::RiverEffect();
 
 	type = Field::Model::Bridge;
 }
@@ -39,13 +34,26 @@ BridgeActor::~BridgeActor()
 }
 
 //=====================================
+// 初期化処理
+//=====================================
+void BridgeActor::Init(const D3DXVECTOR3 & pos, Field::FieldLevel currentLevel)
+{
+	using Field::Actor::ActorLoader;
+	ResourceManager::Instance()->GetMesh(ActorLoader::BridgeTag[currentLevel].c_str(), mesh);
+	
+	level = currentLevel;
+
+	PlaceActor::Init(pos, currentLevel);
+}
+
+//=====================================
 // 更新処理
 //=====================================
 void BridgeActor::Update()
 {
 	PlaceActor::Update();
 
-	if (effect != nullptr)
+	if (level == Field::FieldLevel::Space)
 	{
 		uv.y += 0.005f;
 		effect->SetUV(uv);
@@ -57,7 +65,7 @@ void BridgeActor::Update()
 //=====================================
 void BridgeActor::Draw()
 {
-	if (effect == nullptr)
+	if (level != Field::FieldLevel::Space)
 	{
 		PlaceActor::Draw();
 	}

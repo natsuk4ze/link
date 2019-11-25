@@ -28,6 +28,7 @@
 #include "../Field/Place/FieldPlaceModel.h"
 #include "../Viewer/GameScene/Controller/EventViewer.h"
 #include "../Viewer/GameScene/ParameterContainer/EventViewerParam.h"
+#include "../Viewer/GameScene/Controller/BeatGameViewer.h"
 
 #include "../Field/Camera/EventCamera.h"
 
@@ -54,22 +55,13 @@ const char* EventCSVPath_Space = "data/FIELD/Space/Space_Event.csv";
 //=============================================================================
 EventController::EventController(int FieldLevel)
 {
-	if (FieldLevel == Field::City)
-	{
-		LoadCSV(EventCSVPath_City);
-	}
-	else if (FieldLevel == Field::World)
-	{
-		LoadCSV(EventCSVPath_World);
-	}
-	else if (FieldLevel == Field::Space)
-	{
-		LoadCSV(EventCSVPath_Space);
-	}
-
 	eventViewer = new EventViewer();
-
+	
 	camera = new EventCamera();
+
+	beatViewer = new BeatGameViewer();
+
+	Init(FieldLevel);
 
 #if _DEBUG
 	ResourceManager::Instance()->MakePolygon("Event", "data/TEXTURE/PlaceTest/Event.png", { 4.5f, 4.5f }, { 13.0f,1.0f });
@@ -84,17 +76,46 @@ EventController::EventController(int FieldLevel)
 //=============================================================================
 EventController::~EventController()
 {
-	// イベントベクトル削除
-	Utility::DeleteContainer(EventVec);
-	EventCSVData.clear();
+	Uninit();
 
 	SAFE_DELETE(eventViewer);
 
 	SAFE_DELETE(camera);
 
+	SAFE_DELETE(beatViewer);
+
 #if _DEBUG
 	SAFE_DELETE(polygon);
 #endif
+}
+
+//=============================================================================
+// 初期化
+//=============================================================================
+void EventController::Init(int FieldLevel)
+{
+	if (FieldLevel == Field::City)
+	{
+		LoadCSV(EventCSVPath_City);
+	}
+	else if (FieldLevel == Field::World)
+	{
+		LoadCSV(EventCSVPath_World);
+	}
+	else if (FieldLevel == Field::Space)
+	{
+		LoadCSV(EventCSVPath_Space);
+	}
+}
+
+//=============================================================================
+// 終了
+//=============================================================================
+void EventController::Uninit(void)
+{	
+	// イベントベクトル削除
+	Utility::DeleteContainer(EventVec);
+	EventCSVData.clear();
 }
 
 //=============================================================================
@@ -168,6 +189,9 @@ void EventController::DrawEventObject()
 //=============================================================================
 void EventController::DrawEventViewer()
 {
+	//ビートビューア描画
+	beatViewer->Draw();
+
 	// イベントビューア描画
 	eventViewer->Draw();
 }
@@ -282,11 +306,11 @@ bool EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					Ptr = new LinkLevelDecreaseEvent();
 					break;
 				case CityDestroy:
-					Ptr = new CityDestroyEvent(eventViewer, camera);
+					Ptr = new CityDestroyEvent(eventViewer, beatViewer, camera);
 					flgPause = true;
 					break;
 				case AILevelDecrease:
-					Ptr = new AILevelDecreaseEvent(eventViewer, camera);
+					Ptr = new AILevelDecreaseEvent(eventViewer, camera, beatViewer);
 					flgPause = true;
 					break;
 				case BanStockUse:
@@ -299,6 +323,7 @@ bool EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 					else
 					{
 						Ptr = new BanStockUseEvent(eventViewer,
+							beatViewer,
 							[&](bool Flag) {SetBanStock(Flag); },
 							[&]() {return GetInPause(); });
 						flgPause = true;

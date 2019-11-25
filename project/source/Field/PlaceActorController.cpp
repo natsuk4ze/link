@@ -15,6 +15,9 @@
 #include "AStar\AStarController.h"
 #include "../FieldObject/PassengerController.h"
 #include "../../Framework/Resource/ResourceManager.h"
+#include "../../Framework/Core/ObjectPool.h"
+#include "../../Framework/Tool/DebugWindow.h"
+#include "../../Framework/Tool/ProfilerCPU.h"
 
 #include "Object/CityBackGroundContainer.h"
 #include "Object/WorldBackGroundContainer.h"
@@ -56,10 +59,27 @@ namespace Field::Actor
 		currentLevel(level),
 		bonusSideWay(0.0f)
 	{
-		alongController = new Along::AlongController(level);
-		aStarController = new Route::AStarController();
-		passengerController = new PassengerController(currentLevel);
+		LARGE_INTEGER start, end;
 
+		start = ProfilerCPU::GetCounter();
+		alongController = new Along::AlongController(level);
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Create AlongController : %f", ProfilerCPU::CalcElapsed(start, end));
+
+		start = ProfilerCPU::GetCounter();
+		aStarController = new Route::AStarController();
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Create AStarController : %f", ProfilerCPU::CalcElapsed(start, end));
+		
+		start = ProfilerCPU::GetCounter();
+		passengerController = new PassengerController(currentLevel);
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Create PassengerController : %f", ProfilerCPU::CalcElapsed(start, end));
+
+		start = ProfilerCPU::GetCounter();
 		switch (level)
 		{
 		case FieldLevel::City:
@@ -78,6 +98,9 @@ namespace Field::Actor
 			bgContainer = new CityBackGroundContainer();
 			break;
 		}
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Create bgcontainer : %f", ProfilerCPU::CalcElapsed(start, end));
 
 		auto onReachPassenger = std::bind(&Along::AlongController::OnReachPassenger, alongController, std::placeholders::_1);
 		passengerController->SetCallbackOnReach(onReachPassenger);
@@ -98,6 +121,11 @@ namespace Field::Actor
 		SAFE_DELETE(passengerController);
 		SAFE_DELETE(bgContainer);
 
+		for (auto&& pair : actorContainer)
+		{
+			ObjectPool::Instance()->Destroy(pair.second.get());
+			pair.second.release();
+		}
 		actorContainer.clear();
 	}
 
@@ -146,9 +174,6 @@ namespace Field::Actor
 		bgContainer->Draw();
 	}
 
-	/**************************************
-	リソース読み込み処理
-	***************************************/
 	void PlaceActorController::LoadResource()
 	{
 		// 3Dオブジェクトのリソースをロード
@@ -163,12 +188,29 @@ namespace Field::Actor
 		loader.LoadConfig();
 		loader.LoadResource();
 
-		//背景アクターをロード
-		bgContainer->Load();
+		PassengerController::LoadResource();
+	}
 
-		// パッセンジャー
-		passengerController->LoadResource();
+	/**************************************
+	リソース読み込み処理
+	***************************************/
+	void PlaceActorController::Load()
+	{
+		LARGE_INTEGER start, end;
+
+		//背景データをロード
+		start = ProfilerCPU::GetCounter();
+		bgContainer->Load();
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Load BG : %f", ProfilerCPU::CalcElapsed(start, end));
+
+		// パッセンジャーの背景データをロード
+		start = ProfilerCPU::GetCounter();
 		passengerController->LoadCSV(Field::Const::FieldLayerFile[0]);
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Load Passenger : %f", ProfilerCPU::CalcElapsed(start, end));
 	}
 
 	/**************************************
@@ -258,6 +300,9 @@ namespace Field::Actor
 		//アニメーションさせて終了時に解放
 		ActorAnimation::Shrink(*poolDestroy[placeID], [&, placeID]()
 		{
+			poolDestroy[placeID]->Uninit();
+			ObjectPool::Instance()->Destroy(poolDestroy[placeID].get());
+			poolDestroy[placeID].release();
 			poolDestroy.erase(placeID);
 		});
 
@@ -316,7 +361,7 @@ namespace Field::Actor
 	{
 		//アクター生成
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
-		PlaceActor* actor = new CityActor(actorPos, currentLevel);
+		PlaceActor* actor = ObjectPool::Instance()->Create<CityActor>(actorPos, currentLevel);
 
 		AddContainer(place->ID(), actor);
 		aStarController->OnChangePlace(place);
@@ -363,7 +408,7 @@ namespace Field::Actor
 		if (straightType != StraightType::NotStraight)
 		{
 			//アクター生成
-			PlaceActor* actor = new StraightRoadActor(actorPos, currentLevel, onWater);
+			PlaceActor* actor = ObjectPool::Instance()->Create<StraightRoadActor>(actorPos, currentLevel, onWater);
 			AddContainer(place->ID(), actor);
 
 			//左右に繋がるタイプなら回転させる
@@ -380,7 +425,7 @@ namespace Field::Actor
 		else
 		{
 			//アクター生成
-			PlaceActor* actor = new CurveRoadActor(actorPos, currentLevel, onWater);
+			PlaceActor* actor = ObjectPool::Instance()->Create<CurveRoadActor>(actorPos, currentLevel, onWater);
 			AddContainer(place->ID(), actor);
 
 			//回転角度を決定して回転
@@ -415,7 +460,7 @@ namespace Field::Actor
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
 		//アクター生成
-		PlaceActor* actor = new CityActor(actorPos, currentLevel);
+		PlaceActor* actor = ObjectPool::Instance()->Create<CityActor>(actorPos, currentLevel);
 
 		// 生成アニメーション
 		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
@@ -434,7 +479,7 @@ namespace Field::Actor
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 
 		//アクター生成
-		PlaceActor* actor = new BridgeActor(actorPos, currentLevel);
+		PlaceActor* actor = ObjectPool::Instance()->Create<BridgeActor>(actorPos, currentLevel);
 
 		//回転角度を決定
 		std::vector<Adjacency> AdjacencyType = place->GetConnectingAdjacency();
@@ -468,7 +513,7 @@ namespace Field::Actor
 		//十字路のアクター作成
 		if (adjacencyTypeList.size() == 4)
 		{
-			PlaceActor *actor = new CrossJunctionActor(actorPos, currentLevel, onWater);
+			PlaceActor *actor = ObjectPool::Instance()->Create<CrossJunctionActor>(actorPos, currentLevel, onWater);
 
 			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::CrossJunction, onWater);
 
@@ -480,7 +525,7 @@ namespace Field::Actor
 		//T字路のアクター生成
 		else
 		{
-			PlaceActor* actor = new TJunctionActor(actorPos, currentLevel, onWater);
+			PlaceActor* actor = ObjectPool::Instance()->Create<TJunctionActor>(actorPos, currentLevel, onWater);
 
 			TjunctionType junctionType = IsTjunction(adjacencyTypeList);
 			float rotAngle = 0.0f;
@@ -514,7 +559,7 @@ namespace Field::Actor
 		D3DXVECTOR3 actorPos = place->GetPosition().ConvertToWorldPosition();
 		bool onWater = bgContainer->IsSeaPlace(place->GetPosition());
 
-		PlaceActor *actor = new MountainActor(actorPos, currentLevel, onWater);
+		PlaceActor *actor = ObjectPool::Instance()->Create<MountainActor>(actorPos, currentLevel, onWater);
 
 		//回転
 		float rotateAngle = Math::RandomRange(0, 4) * 90.0f;
@@ -529,7 +574,7 @@ namespace Field::Actor
 	/**************************************
 	コンテナ追加処理
 	***************************************/
-	void PlaceActorController::AddContainer(unsigned key, PlaceActor * actor)
+	inline void PlaceActorController::AddContainer(unsigned key, PlaceActor * actor)
 	{
 		//重複確認
 		EraseFromContainer(key);
@@ -540,12 +585,14 @@ namespace Field::Actor
 	/**************************************
 	コンテナからの削除処理
 	***************************************/
-	bool PlaceActorController::EraseFromContainer(unsigned key)
+	inline bool PlaceActorController::EraseFromContainer(unsigned key)
 	{
 		if (actorContainer.count(key) == 0)
 			return false;
 
-		//アクターコンテナから
+		//アクターコンテナからオブジェクトプールへ移動
+		ObjectPool::Instance()->Destroy(actorContainer[key].get());
+		actorContainer[key].release();
 		actorContainer.erase(key);
 
 		return true;

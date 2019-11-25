@@ -6,6 +6,7 @@
 //=====================================
 #include "BackGroundContainer.h"
 #include "../../FieldObject/Actor/PlaceActor.h"
+#include "../../../Framework/Core/ObjectPool.h"
 
 /**************************************
 コンストラクタ
@@ -20,8 +21,17 @@ Field::Actor::BackGroundContainer::BackGroundContainer()
 ***************************************/
 Field::Actor::BackGroundContainer::~BackGroundContainer()
 {
-	Utility::DeleteContainer(groundContainer);
-	Utility::DeleteContainer(riverContainer);
+	for (auto&& ground : groundContainer)
+	{
+		ObjectPool::Instance()->Destroy(ground);
+	}
+	groundContainer.clear();
+
+	for (auto&& river : riverContainer)
+	{
+		ObjectPool::Instance()->Destroy(river);
+	}
+	riverContainer.clear();
 }
 
 /**************************************

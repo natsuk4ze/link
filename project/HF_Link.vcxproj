@@ -33,6 +33,7 @@
     <ClInclude Include="Framework\Core\BaseGame.h" />
     <ClInclude Include="Framework\Core\BaseScene.h" />
     <ClInclude Include="Framework\Core\GameObject.h" />
+    <ClInclude Include="Framework\Core\ObjectPool.h" />
     <ClInclude Include="Framework\Core\PlayerPrefs.h" />
     <ClInclude Include="Framework\Core\SceneManager.h" />
     <ClInclude Include="Framework\Core\Transform.h" />
@@ -133,6 +134,7 @@
     <ClInclude Include="source\Effect\Game\BanIcon.h" />
     <ClInclude Include="source\Effect\Game\City\BlueDebris.h" />
     <ClInclude Include="source\Effect\Game\City\BlueSpark.h" />
+    <ClInclude Include="source\Effect\Game\General\Cloud.h" />
     <ClInclude Include="source\Effect\Game\Space\Blackhole.h" />
     <ClInclude Include="source\Effect\Game\World\Bubble.h" />
     <ClInclude Include="source\Effect\Game\General\ColorfulDebris.h" />
@@ -202,6 +204,8 @@
     <ClInclude Include="source\Field\Camera\State\FieldCameraFar.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraQuater.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraRotate.h" />
+    <ClInclude Include="source\Field\Camera\State\FieldCameraTransitionIn.h" />
+    <ClInclude Include="source\Field\Camera\State\FIeldCameraTransitionOut.h" />
     <ClInclude Include="source\Field\Controller\FieldDevelopper.h" />
     <ClInclude Include="source\Field\FieldConfig.h" />
     <ClInclude Include="source\Field\FieldController.h" />
@@ -239,8 +243,9 @@
     <ClInclude Include="source\Scene\GameState\GamePause.h" />
     <ClInclude Include="source\Scene\GameState\GameResult.h" />
     <ClInclude Include="source\Scene\GameState\GameTitle.h" />
+    <ClInclude Include="source\Scene\GameState\GameTransitionOut.h" />
+    <ClInclude Include="source\Scene\GameState\GameTransitionIn.h" />
     <ClInclude Include="source\Scene\ModelViewScene.h" />
-    <ClInclude Include="source\Scene\ParticleTestScene.h" />
     <ClInclude Include="source\Scene\ResultScene.h" />
     <ClInclude Include="source\Scene\TitleScene.h" />
     <ClInclude Include="source\Score\Score.h" />
@@ -384,6 +389,7 @@
     <ClCompile Include="source\Effect\Game\BanIcon.cpp" />
     <ClCompile Include="source\Effect\Game\City\BlueDebris.cpp" />
     <ClCompile Include="source\Effect\Game\City\BlueSpark.cpp" />
+    <ClCompile Include="source\Effect\Game\General\Cloud.cpp" />
     <ClCompile Include="source\Effect\Game\Space\Blackhole.cpp" />
     <ClCompile Include="source\Effect\Game\World\WhirlPoolBubble.cpp" />
     <ClCompile Include="source\Effect\SpaceParticleManager.cpp" />
@@ -452,6 +458,8 @@
     <ClCompile Include="source\Field\Camera\State\FieldCameraFar.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraQuater.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraRotate.cpp" />
+    <ClCompile Include="source\Field\Camera\State\FieldCameraTransitionIn.cpp" />
+    <ClCompile Include="source\Field\Camera\State\FieldCameraTransitionOut.cpp" />
     <ClCompile Include="source\Field\Controller\FieldDevelopper.cpp" />
     <ClCompile Include="source\Field\FieldConfig.cpp" />
     <ClCompile Include="source\Field\FieldController.cpp" />
@@ -487,6 +495,8 @@
     <ClCompile Include="source\Scene\GameState\GamePause.cpp" />
     <ClCompile Include="source\Scene\GameState\GameResult.cpp" />
     <ClCompile Include="source\Scene\GameState\GameTitle.cpp" />
+    <ClCompile Include="source\Scene\GameState\GameTransitionOut.cpp" />
+    <ClCompile Include="source\Scene\GameState\GameTransitionIn.cpp" />
     <ClCompile Include="source\Scene\ModelViewScene.cpp" />
     <ClCompile Include="source\Scene\ParticleTestScene.cpp" />
     <ClCompile Include="source\Scene\ResultScene.cpp" />

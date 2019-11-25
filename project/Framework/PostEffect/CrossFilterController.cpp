@@ -49,6 +49,9 @@ CrossFilterController::CrossFilterController() :
 		blurFilter[i] = new CrossBlurFilter(reducedWidth[i], reducedHeight[i]);
 	}
 
+	//ブルームブレンダ作成
+	bloomBlender = new BloomFilter(SCREEN_WIDTH, SCREEN_HEIGHT);
+
 	//テクスチャ、サーフェイスを設定
 	for (int i = 0; i < 3; i++)
 	{
@@ -83,6 +86,8 @@ CrossFilterController::~CrossFilterController()
 		SAFE_DELETE(bloomFilter[i]);
 		SAFE_DELETE(blurFilter[i]);
 	}
+
+	SAFE_DELETE(bloomBlender);
 }
 
 /**************************************
@@ -95,9 +100,6 @@ void CrossFilterController::Draw(LPDIRECT3DTEXTURE9 targetTexture)
 	//ブラー処理をするのでサンプリングをCLAMPに設定
 	pDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
 	pDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
-
-	//Zバッファへの書き込みを行わない
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
 
 	//ビューポートを退避
 	pDevice->GetViewport(&oldViewPort);
@@ -120,9 +122,6 @@ void CrossFilterController::Draw(LPDIRECT3DTEXTURE9 targetTexture)
 
 	//レンダーターゲットの参照を解放
 	SAFE_RELEASE(oldSuf);
-
-	//Zバッファに書き込むように戻す
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
 
 	//サンプリングを元に戻す
 	pDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
@@ -230,17 +229,9 @@ void CrossFilterController::BlendBloom()
 	//ビューポートをもとに戻す
 	pDevice->SetViewport(&oldViewPort);
 
-	//レンダーステートを加算合成に設定
-	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
-	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
-
 	for (int i = 0; i < NumReduction; i++)
 	{
-		pDevice->SetTexture(0, blurTexture[0][cntBlur % 2]);
-		renderer->Draw();
+		pDevice->SetTexture(i, blurTexture[0][cntBlur % 2]);
 	}
-
-	//レンダーステートを元に戻す
-	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+	bloomBlender->DrawEffect(1);
 }

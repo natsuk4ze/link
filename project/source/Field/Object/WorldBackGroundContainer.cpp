@@ -9,10 +9,13 @@
 #include "../../FieldObject/Actor/PlaceActor.h"
 #include "../../FieldObject/Actor/RiverActor.h"
 #include "../../FieldObject/Actor/NoneActor.h"
+#include "../ActorLoader.h"
 
 #include "../../../Framework/Renderer3D/InstancingMeshContainer.h"
 #include "../../../Framework/String/String.h"
 #include "../../../Framework/Tween/Tween.h"
+#include "../../../Framework/Core/ObjectPool.h"
+#include "../../../Framework/Resource/ResourceManager.h"
 
 #include <fstream>
 #include <string>
@@ -33,10 +36,7 @@ namespace Field::Actor
 		seaMap.reserve(ReserveSizeSea);
 
 		groundMesh = new InstancingMeshContainer(ReserveSizeGround);
-		groundMesh->Load("data/MODEL/PlaceActor/ground.x");
-
 		seaMesh = new InstancingMeshContainer(ReserveSizeSea);
-		seaMesh->Load("data/MODEL/PlaceActor/river.x");
 	}
 
 	/**************************************
@@ -123,7 +123,7 @@ namespace Field::Actor
 
 				if (type == FieldLayer::Sea)
 				{
-					actor = new RiverActor(position, FieldLevel::City);		//Cityと同じなのでとりあえず
+					actor = ObjectPool::Instance()->Create<RiverActor>(position, FieldLevel::City);		//Cityと同じなのでとりあえず
 					riverContainer.push_back(actor);
 
 					//seaMapに追加
@@ -133,8 +133,7 @@ namespace Field::Actor
 				{
 					//真っ平らだと不自然なので高さに少し凹凸をつける
 					position.y += Math::RandomRange(-2.0f, 0.0f);
-
-					actor = new NoneActor(position, FieldLevel::City);
+					actor = ObjectPool::Instance()->Create<NoneActor>(position, Field::FieldLevel::City);
 					groundContainer.push_back(actor);
 				}
 
@@ -156,11 +155,18 @@ namespace Field::Actor
 					continue;
 
 				D3DXVECTOR3 position = FieldPosition(outerX, outerZ).ConvertToWorldPosition();
-				PlaceActor * actor = new RiverActor(position, FieldLevel::City);
+				PlaceActor *actor = ObjectPool::Instance()->Create<RiverActor>(position, FieldLevel::City);
 				riverContainer.push_back(actor);
 			}
 		}
 #endif
+
+		//メッシュコンテナ作成
+		ResourceManager::Instance()->GetMesh(ActorLoader::GroundTag.c_str(), groundMesh);
+		groundMesh->Init();
+
+		ResourceManager::Instance()->GetMesh(ActorLoader::RiverTag.c_str(), seaMesh);
+		seaMesh->Init();
 	}
 
 	/**************************************
@@ -203,7 +209,7 @@ namespace Field::Actor
 			for (int z = -1; z <= 1; z++)
 			{
 				D3DXVECTOR3 worldPosition = (position + FieldPosition(x, z)).ConvertToWorldPosition();
-				PlaceActor * actor = new NoneActor(worldPosition + InitOffset, FieldLevel::City);
+				PlaceActor *actor = ObjectPool::Instance()->Create<NoneActor>(worldPosition + InitOffset, FieldLevel::City);
 				groundContainer.push_back(actor);
 
 				//海からせり上がってくるアニメーション

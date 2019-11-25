@@ -9,11 +9,14 @@
 #include "../../FieldObject/Actor/PlaceActor.h"
 #include "../../FieldObject/Actor/RiverActor.h"
 #include "../../FieldObject/Actor/NoneActor.h"
+#include "../ActorLoader.h"
 
 #include "../Place/PlaceConfig.h"
 
 #include "../../../Framework/String/String.h"
 #include "../../../Framework/Renderer3D/InstancingMeshContainer.h"
+#include "../../../Framework/Core/ObjectPool.h"
+#include "../../../Framework/Resource/ResourceManager.h"
 
 #include <fstream>
 #include <string>
@@ -32,7 +35,6 @@ namespace Field::Actor
 		riverContainer.reserve(ReserveSizeRiver);
 
 		groundMesh = new InstancingMeshContainer(ReserveSizeGround);
-		groundMesh->Load("data/MODEL/PlaceActor/ground.x");
 	}
 
 	/**************************************
@@ -40,9 +42,6 @@ namespace Field::Actor
 	***************************************/
 	CityBackGroundContainer::~CityBackGroundContainer()
 	{
-		Utility::DeleteContainer(groundContainer);
-		Utility::DeleteContainer(riverContainer);
-
 		SAFE_DELETE(groundMesh);
 	}
 
@@ -116,7 +115,7 @@ namespace Field::Actor
 
 				if (type == PlaceType::River)
 				{
-					RiverActor *actor = new RiverActor(position.ConvertToWorldPosition(), FieldLevel::City);
+					RiverActor *actor = ObjectPool::Instance()->Create<RiverActor>(position.ConvertToWorldPosition(), FieldLevel::City);
 					riverContainer.push_back(actor);
 
 					actor->SetDirection((RiverActor::FlowDirection)flowMap[position]);
@@ -126,7 +125,7 @@ namespace Field::Actor
 					//真っ平らだと不自然なので高さに少し凹凸をつける
 					D3DXVECTOR3 offset = { 0.0f, Math::RandomRange(-2.0f, 0.0f), 0.0f };
 
-					NoneActor *actor = new NoneActor(position.ConvertToWorldPosition() + offset, FieldLevel::City);
+					NoneActor *actor = ObjectPool::Instance()->Create<NoneActor>(position.ConvertToWorldPosition() + offset, FieldLevel::City);
 					groundContainer.push_back(actor);
 				}
 
@@ -149,11 +148,15 @@ namespace Field::Actor
 
 				D3DXVECTOR3 position = FieldPosition(outerX, outerZ).ConvertToWorldPosition();
 				position.y += Math::RandomRange(-2.0f, 0.0f);
-				PlaceActor * actor = new NoneActor(position, FieldLevel::City);
+				PlaceActor* actor = ObjectPool::Instance()->Create<NoneActor>(position, FieldLevel::City);
 				groundContainer.push_back(actor);
 			}
 		}
 #endif
+
+		//メッシュコンテナ作成
+		ResourceManager::Instance()->GetMesh(ActorLoader::GroundTag.c_str(), groundMesh);
+		groundMesh->Init();
 	}
 
 	/**************************************

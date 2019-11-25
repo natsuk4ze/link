@@ -7,7 +7,6 @@
 //=====================================
 #include "FieldController.h"
 #include "Object/FieldCursor.h"
-#include "Object/FieldGround.h"
 #include "Object/FieldSkyBox.h"
 #include "Place\FieldPlaceContainer.h"
 #include "Place\OperatePlaceContainer.h"
@@ -28,6 +27,7 @@
 
 #include "../../Framework/Input/input.h"
 #include "../../Framework/Tool/DebugWindow.h"
+#include "../../Framework/Tool/ProfilerCPU.h"
 #include "../../Framework/Math//Easing.h"
 #include "../../Framework/Core/PlayerPrefs.h"
 #include "../GameConfig.h"
@@ -61,26 +61,26 @@ namespace Field
 		operationX(OperationExplanationViewer::OperationID::X_None),
 		operationSpace(OperationExplanationViewer::OperationID::Space_None),
 		enableDevelop(true),
-		flgWaitPopup(false),
-		onConnectTown(nullptr),
-		onCreateJunction(nullptr),
-		onChangePlaceType(nullptr)
+		flgWaitPopup(false)
 	{
 		using Model::PlaceContainer;
 		using Model::PlaceModel;
 
+		//リソース読み込み
+		FieldSkyBox::LoadResource();
+		Actor::PlaceActorController::LoadResource();
+
 		//インスタンス作成
-		skybox = new FieldSkyBox(level);
 		cursor = new FieldCursor(PlaceOffset);
-		ground = new FieldGround();
 		operateContainer = new Model::OperatePlaceContainer();
-		placeActController = new Actor::PlaceActorController(level);
 		developper = new FieldDevelopper(this);
 		input = new FieldInput(this);
 		placeContainer = new Model::PlaceContainer();
-		infoController = new InfoController(level);
 		viewer = new FieldViewer();
 		score = new Score();
+
+		//フィールドレベル設定
+		SetLevel(currentLevel);
 
 		//ステートマシン作成
 		fsm.resize(State::Max, NULL);
@@ -88,10 +88,9 @@ namespace Field
 		fsm[State::Idle] = new IdleState();
 		fsm[State::Develop] = new UseItemState();
 
-		//デリゲート作成
-		onConnectTown = DelegateObject<FieldController, void(const PlaceModel*, const PlaceModel*)>::Create(this, &FieldController::OnConnectedTown);
-		onCreateJunction = DelegateObject<PlaceContainer, void(const PlaceModel*)>::Create(placeContainer, &PlaceContainer::OnCreateJunction);
-		onChangePlaceType = DelegateObject<Actor::PlaceActorController, void(const PlaceModel*)>::Create(placeActController, &Actor::PlaceActorController::ChangeActor);
+		//コールバック作成
+		onConnectTown = std::bind(&FieldController::OnConnectedTown, this, std::placeholders::_1, std::placeholders::_2);
+		onChangePlaceType = std::bind(&Actor::PlaceActorController::ChangeActor, placeActController, std::placeholders::_1);
 
 		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
@@ -116,7 +115,6 @@ namespace Field
 		//インスタンス削除
 		SAFE_DELETE(skybox);
 		SAFE_DELETE(cursor);
-		SAFE_DELETE(ground);
 		SAFE_DELETE(placeContainer);
 		SAFE_DELETE(operateContainer);
 		SAFE_DELETE(routeProcessor);
@@ -126,11 +124,6 @@ namespace Field
 		SAFE_DELETE(infoController);
 		SAFE_DELETE(viewer);
 		SAFE_DELETE(score);
-
-		//デリゲート削除
-		SAFE_DELETE(onConnectTown);
-		SAFE_DELETE(onCreateJunction);
-		SAFE_DELETE(onChangePlaceType);
 
 		//ステートマシン削除
 		Utility::DeleteContainer(fsm);
@@ -230,22 +223,93 @@ namespace Field
 	}
 
 	/**************************************
+	フィールドレベル設定処理
+	***************************************/
+	void FieldController::SetLevel(Field::FieldLevel level)
+	{
+		LARGE_INTEGER start, end;
+
+		currentLevel = level;
+
+		//フィールドレベルが関係するインスタンスを作成
+		start = ProfilerCPU::GetCounter();
+		skybox = new FieldSkyBox(level);
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Create Skybox : %f", ProfilerCPU::CalcElapsed(start, end));
+
+
+		placeActController = new Field::Actor::PlaceActorController(level);
+
+
+		start = ProfilerCPU::GetCounter();
+		infoController = new InfoController(level);
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Create InfoController : %f", ProfilerCPU::CalcElapsed(start, end));
+
+		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
+
+		onChangePlaceType = std::bind(&Actor::PlaceActorController::ChangeActor, placeActController, std::placeholders::_1);
+
+		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
+	}
+
+	/**************************************
+	クリア処理
+	***************************************/
+	void FieldController::Clear()
+	{
+		//フィールドレベルに関係ないものをリセット
+		cursor->Reset();
+		operateContainer->Clear();
+		placeContainer->Clear();
+		routeContainer.clear();
+
+		//フィールドレベルが関係するインスタンスを削除
+		SAFE_DELETE(skybox);
+		SAFE_DELETE(placeActController);
+		SAFE_DELETE(infoController);
+		SAFE_DELETE(routeProcessor);
+
+		//パラメータリセット
+		cntFrame = 0;
+		developmentLevelAI = 0.0f;
+		realDevelopmentLevelAI = 0.0f;
+		developSpeedBonus = 1.0f;
+		enableDevelop = true;
+		flgWaitPopup = false;
+	}
+
+	/**************************************
 	CSV読み込み処理
 	TODO：読み込むデータを選択できるようにする
 	***************************************/
 	void FieldController::Load()
 	{
-		//リソース読み込み
-		placeActController->LoadResource();
+		LARGE_INTEGER start, end;
 
+		//アクターのデータ読み込み
+		placeActController->Load();
+
+		//モデルのデータ読み込み
+		start = ProfilerCPU::GetCounter();
 		placeContainer->LoadCSV(Const::FieldDataFile[currentLevel]);
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Load ModelData : %f", ProfilerCPU::CalcElapsed(start, end));
 
 		//アクター生成
+		start = ProfilerCPU::GetCounter();
 		auto places = placeContainer->GetAllPlaces();
 		for (auto&& place : places)
 		{
 			placeActController->SetActor(place);
 		}
+		end = ProfilerCPU::GetCounter();
+
+		Debug::Log("Create Actor : %f", ProfilerCPU::CalcElapsed(start, end));
 
 		//カーソルのフィールドの中央へ設定
 		FieldPosition border = placeContainer->GetPlaceBorder();
@@ -286,9 +350,9 @@ namespace Field
 	}
 
 	/**************************************
-	道作成時のデリゲータ設定処理
+	道作成時のコールバック設定処理
 	***************************************/
-	void FieldController::SetCallbackOnBuildRoad(Delegate<void(std::vector<Model::PlaceModel*>&)> *callback)
+	void FieldController::SetCallbackBuildRoad(const std::function<void(std::vector<Model::PlaceModel*>&)>& callback)
 	{
 		onBuildRoad = callback;
 	}

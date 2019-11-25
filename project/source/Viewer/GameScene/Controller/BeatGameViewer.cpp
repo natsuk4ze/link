@@ -85,6 +85,9 @@ void BeatGameViewer::Update()
 //=============================================================================
 void BeatGameViewer::Draw(void)
 {
+	if (!active)
+		return;
+
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
@@ -147,4 +150,12 @@ void BeatGameViewer::SetGo(void)
 void BeatGameViewer::SetResult(BeatResultViewer::ResultID id, std::function<void(void)> Callback)
 {
 	resultViewer->Set(id, Callback);
+}
+
+//=============================================================================
+// ï\é¶ÅEîÒï\é¶ÇÃêÿÇËë÷Ç¶
+//=============================================================================
+void BeatGameViewer::SetActive(bool state)
+{
+	active = state;
 }

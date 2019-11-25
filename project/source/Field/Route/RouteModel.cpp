@@ -30,12 +30,11 @@ namespace Field::Model
 	/**************************************
 	コンストラクタ
 	***************************************/
-	RouteModel::RouteModel(Delegate<void(const PlaceModel*, const PlaceModel*)> *onConnectTown, DelegatePlace *onCreateJunction) :
+	RouteModel::RouteModel(CallbackConnect& onConnectTown) :
 		edgeStart(nullptr), edgeEnd(nullptr),
 		uniqueID(incrementID++),
 		isUnused(false),
-		onConnectedTown(onConnectTown),
-		onCreateJunction(onCreateJunction)
+		onConnectedTown(onConnectTown)
 	{
 
 	}
@@ -51,18 +50,18 @@ namespace Field::Model
 	/**************************************
 	スマートポインタ作成処理
 	***************************************/
-	RouteModelPtr RouteModel::Create(Delegate<void(const PlaceModel*, const PlaceModel*)> *onConnectTown, DelegatePlace *onCreateJunction)
+	RouteModelPtr RouteModel::Create(CallbackConnect& onConnectTown)
 	{
-		RouteModelPtr ptr = std::make_shared<RouteModel>(onConnectTown, onCreateJunction);
+		RouteModelPtr ptr = std::make_shared<RouteModel>(onConnectTown);
 		return ptr;
 	}
 
 	/**************************************
 	スマートポインタ作成処理
 	***************************************/
-	RouteModelPtr RouteModel::Create(Delegate<void(const PlaceModel*, const PlaceModel*)> *onConnectTown, DelegatePlace *onCreateJunction, const std::vector<PlaceModel*>& placeVector)
+	RouteModelPtr RouteModel::Create(CallbackConnect& onConnectTown, const std::vector<PlaceModel*>& placeVector)
 	{
-		RouteModelPtr ptr = std::make_shared<RouteModel>(onConnectTown, onCreateJunction);
+		RouteModelPtr ptr = std::make_shared<RouteModel>(onConnectTown);
 
 		ptr->route.assign(placeVector.begin(), placeVector.end());
 
@@ -336,7 +335,7 @@ namespace Field::Model
 			//方向追加
 			edge->AddDirection(edge->IsAdjacent(place));
 
-			(*onConnectedTown)(edge, place);
+			onConnectedTown(edge, place);
 		}
 	}
 }

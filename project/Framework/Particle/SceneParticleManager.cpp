@@ -84,13 +84,28 @@ void SceneParticleManager::Draw()
 	using cpplinq::where;
 	using cpplinq::to_vector;
 
-	//レンダーパラメータ切り替え
-	ChangeRenderParameter();
-
 	//インスタンシング描画開始
 	BaseParticleController::BeginDraw();
 
-	//描画
+	//クロスフィルタを適用しない3Dパーティクルを描画
+	{
+		auto controller = from(controllers)
+			>> where([](BaseParticleController* entity)
+		{
+			return !entity->UseCrossFilter() && entity->GetType() == BaseParticleController::Particle_3D;
+		})
+			>> to_vector();
+
+		for (auto&& entity : controller)
+		{
+			entity->Draw();
+		}
+	}
+
+	//レンダーパラメータ切り替え
+	ChangeRenderParameter();
+
+	//描画フラグ
 	bool isDrewd = false;
 
 	//3Dを先に描画
@@ -122,7 +137,7 @@ void SceneParticleManager::Draw()
 	//インスタンシング描画終了
 	BaseParticleController::EndDraw();
 
-	//すべての結果を元のレンダーターゲットに描画
+	//元のレンダーターゲットに復元
 	RestoreRenderParameter();
 	screenObj->Draw();
 
@@ -132,12 +147,24 @@ void SceneParticleManager::Draw()
 		crossFilter->Draw(renderTexture);
 #endif
 
-	//レンダーステート復元
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	pDevice->SetRenderState(D3DRS_LIGHTING, true);
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
-	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
-	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+	//クロスフィルタを適用しない2Dパーティクルを描画
+	{
+		BaseParticleController::BeginDraw();
+
+		auto controller = from(controllers)
+			>> where([](BaseParticleController* entity)
+		{
+			return !entity->UseCrossFilter() && entity->GetType() == BaseParticleController::Particle_2D;
+		})
+			>> to_vector();
+
+		for (auto&& entity : controller)
+		{
+			entity->Draw();
+		}
+
+		BaseParticleController::EndDraw();
+	}
 }
 
 /**************************************
@@ -206,10 +233,6 @@ void SceneParticleManager::ChangeRenderParameter()
 	pDevice->SetRenderTarget(0, renderSurface);
 	pDevice->SetViewport(&viewPort);
 	pDevice->Clear(0, 0, D3DCLEAR_TARGET, 0, 0.0f, 0);
-
-	//レンダーステート切り替え
-	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
-	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
 }
 
 /**************************************

@@ -28,6 +28,8 @@ public:
 		QuaterView,				//クォータービューモード
 		FarView,				//遠景モード
 		AngleRotate,			//回転ステート
+		TransitionOut,			//レベルアップ時の引き
+		TransitionIn,			//新しいレベルになった時の初期状態
 		Max
 	};
 
@@ -68,6 +70,8 @@ private:
 	class FieldCameraQuater;
 	class FieldCameraFar;
 	class FieldCameraRotate;
+	class FieldCameraTransitionOut;
+	class FieldCameraTransitionIn;
 };
 
 #endif

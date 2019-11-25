@@ -91,6 +91,16 @@ namespace Field::Actor
 	const std::string ActorLoader::WhirlPoolTag = "World-WhirlPool";
 
 	/**************************************
+	地面のリソースタグ
+	***************************************/
+	const std::string ActorLoader::GroundTag = "Ground";
+
+	/**************************************
+	川のリソースタグ
+	***************************************/
+	const std::string ActorLoader::RiverTag = "River";
+
+	/**************************************
 	コンストラクタ
 	***************************************/
 	ActorLoader::ActorLoader()
@@ -136,12 +146,15 @@ namespace Field::Actor
 			modelFileName[CrossTag[i]] = data[CrossTag[i]].string_value();
 			modelFileName[BridgeTag[i]] = data[BridgeTag[i]].string_value();
 			modelFileName[MountainTag[i]] = data[MountainTag[i]].string_value();
-			modelFileName[WaterStraight] = data[WaterStraight].string_value();
-			modelFileName[WaterCurve] = data[WaterCurve].string_value();
-			modelFileName[WaterT] = data[WaterT].string_value();
-			modelFileName[WaterCross] = data[WaterCross].string_value();
-			modelFileName[WhirlPoolTag] = data[WhirlPoolTag].string_value();
 		}
+
+		modelFileName[WaterStraight] = data[WaterStraight].string_value();
+		modelFileName[WaterCurve] = data[WaterCurve].string_value();
+		modelFileName[WaterT] = data[WaterT].string_value();
+		modelFileName[WaterCross] = data[WaterCross].string_value();
+		modelFileName[WhirlPoolTag] = data[WhirlPoolTag].string_value();
+		modelFileName[GroundTag] = data[GroundTag].string_value();
+		modelFileName[RiverTag] = data[RiverTag].string_value();
 	}
 
 	/**************************************

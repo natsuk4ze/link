@@ -23,18 +23,18 @@ class MeshContainer
 {
 	friend class MeshResource;
 public:
-	MeshContainer();					//コンストラクタ
-	~MeshContainer();					//デストラクタ
+	MeshContainer();								//コンストラクタ
+	virtual ~MeshContainer();						//デストラクタ
 
-	//混乱の原因になるのでCreate()とReleaseは削除
+	virtual void ReleaseResource();					//リソース解放処理
 
-	void Draw();							//モデルを描画
-	void Draw(RendererEffect& effect);	//モデルを描画（シェーダ使用)
+	virtual void Draw();							//モデルを描画
+	virtual void Draw(RendererEffect& effect);		//モデルを描画（シェーダ使用)
 
-	UINT GetMaterialNum();
-	void GetMaterial(UINT index, D3DMATERIAL9& out);
-	void SetMaterialColor(const D3DXCOLOR& color, UINT index);
-	void SetMaterialAlpha(float alpha, UINT index);
+	virtual UINT GetMaterialNum();
+	virtual void GetMaterial(UINT index, D3DMATERIAL9& out);
+	virtual void SetMaterialColor(const D3DXCOLOR& color, UINT index);
+	virtual void SetMaterialAlpha(float alpha, UINT index);
 
 protected:								
 	LPD3DXMESH mesh;								//メッシュデータ
@@ -46,7 +46,6 @@ private:
 	MeshResource * resource;						//リソースの参照元
 	bool initialized;								//メッシュが初期化済みかどうか
 
-	void ReleaseResource();							//リソース解放処理
 };
 
 #endif

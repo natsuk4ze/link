@@ -16,6 +16,7 @@
 class BeatGame;
 class EventViewer;
 class BaseViewerDrawer;
+class BeatGameViewer;
 
 //*****************************************************************************
 // クラス定義
@@ -31,9 +32,11 @@ private:
 	// 連打ゲーム
 	BeatGame *beatGame;
 	EventViewer* eventViewer;
+	BeatGameViewer *beatViewer;
 
 public:
-	BanStockUseEvent(EventViewer* eventViewer, 
+	BanStockUseEvent(EventViewer* eventViewer,
+		BeatGameViewer *beatViewer,
 		std::function<void(bool)> SetBanStock,
 		std::function<bool(void)> GetInPause);
 	~BanStockUseEvent();
