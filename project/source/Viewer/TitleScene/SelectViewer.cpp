@@ -15,6 +15,7 @@
 #include "../../../Framework/Tool/DebugWindow.h"
 
 #include <algorithm>
+#include <functional>
 //**************************************
 // スタティックメンバ初期化
 //**************************************
