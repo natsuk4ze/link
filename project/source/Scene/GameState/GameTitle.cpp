@@ -21,7 +21,7 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	entity.titleViewer->SetActive(true);
 
 	// Žg—p‚µ‚È‚¢UI‚Ì•`‰æ‚ðOFF
-	entity.field->SetActive(false);
+	entity.field->SetViewerActive(false);
 	entity.gameViewer->SetActive(false);
 	entity.guideViewer->SetActive(false);
 }

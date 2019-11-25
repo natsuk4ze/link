@@ -19,7 +19,7 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	// リザルト画面で使用するUIの描画をON
 
 	// 使用しないUIの描画をOFF
-	entity.field->SetActive(false);
+	entity.field->SetViewerActive(false);
 	entity.gameViewer->SetActive(false);
 	entity.guideViewer->SetActive(false);
 

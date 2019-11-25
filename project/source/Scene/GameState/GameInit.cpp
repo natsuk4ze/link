@@ -30,11 +30,10 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	ResourceManager::Instance()->LoadMesh("Meteor", "data/MODEL/Planet/Meteor.x");
 	ResourceManager::Instance()->LoadMesh("UFO", "data/MODEL/UFO/UFO.x");
 
-	// ゲームシーンで使用するUIの描画をON
-	entity.field->SetActive(true);
-	entity.gameViewer->SetActive(true);
-	entity.guideViewer->SetActive(true);
 	// 使用しないUIの描画をOFF（タイトル、リザルト用など）
+	entity.field->SetViewerActive(false);
+	entity.gameViewer->SetActive(false);
+	entity.guideViewer->SetActive(false);
 
 	//パーティクル初期化
 	entity.particleManager->Init();
@@ -70,7 +69,7 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	//トランジション画面をオフにして遷移
 	TransitionController::Instance()->SetTransition(true, TransitionType::HexaPop, [&]()
 	{
-		entity.ChangeState(State::Idle);
+		entity.ChangeState(State::Title);
 	});
 }
 
