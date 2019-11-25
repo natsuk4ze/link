@@ -30,6 +30,7 @@
 #include "../Effect/WorldParticleManager.h"
 #include "../Effect/SpaceParticleManager.h"
 #include "../Viewer/GameScene/GuideViewer/GuideViewer.h"
+#include "../Viewer/GameScene/Controller/ResultViewer.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
@@ -45,6 +46,10 @@
 
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Sound/BackgroundMusic.h"
+
+#ifdef _DEBUG
+#include "../../Framework/Input/input.h"
+#endif
 
 /**************************************
 staticメンバ
@@ -76,6 +81,7 @@ void GameScene::Init()
 	//serial = new SerialWrapper(3);								//TODO:ポート番号を変えられるようにする
 	Client = new UDPClient();
 	guideViewer = new GuideViewer();
+	resultViewer = new ResultViewer();
 
 	//レベル毎のパーティクルマネージャを選択
 	switch (level)
@@ -132,6 +138,7 @@ void GameScene::Uninit()
 	//SAFE_DELETE(serial);
 	SAFE_DELETE(Client);
 	SAFE_DELETE(guideViewer);
+	SAFE_DELETE(resultViewer);
 
 	//パーティクル終了
 	particleManager->Uninit();
@@ -150,6 +157,15 @@ void GameScene::Uninit()
 void GameScene::Update()
 {
 	ProfilerCPU::Instance()->BeginLabel("GameScene");
+
+#ifdef _DEBUG
+
+	if (Keyboard::GetTrigger(DIK_R))
+	{
+		ChangeState(State::Result);
+	}
+
+#endif
 
 	//ステートを更新
 	State next = fsm[currentState]->OnUpdate(*this);
@@ -175,6 +191,7 @@ void GameScene::Update()
 	//ビュアー更新
 	gameViewer->Update();
 	guideViewer->Update();
+	resultViewer->Update();
 
 	//パーティクル更新
 	ProfilerCPU::Instance()->Begin("Update Particle");
@@ -240,6 +257,7 @@ void GameScene::Draw()
 	field->DrawViewer();
 	gameViewer->Draw();
 	eventController->DrawEventViewer();
+	resultViewer->Draw();
 
 	//*******別ウインドウを作成するため最後*******
 	guideViewer->Draw();

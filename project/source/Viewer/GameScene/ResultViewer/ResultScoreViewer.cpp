@@ -1,52 +1,63 @@
 //=============================================================================
 //
-// 結果ランキングビュアー処理 [ResultRankingViewer.cpp]
+// 結果スコアビュアー処理 [ResultScoreViewer.cpp]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
 #include "../../../../main.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
-#include "ResultRankingViewer.h"
+#include "ResultScoreViewer.h"
 
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-ResultRankingViewer::ResultRankingViewer()
+ResultScoreViewer::ResultScoreViewer()
 {
-	num = new CountViewerDrawer();
-	num->LoadTexture("data/TEXTURE/Viewer/ResultViewer/ResultRankingViewer/Number.png");
-	num->size = D3DXVECTOR3(120.0f, 120.0f, 0.0f);
-	num->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	num->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.3f, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
-	num->intervalPosScr = 80.0f;
-	num->intervalPosTex = 0.1f;
-	num->placeMax = 3;
-	num->baseNumber = 10;
-	num->MakeVertex();
+	for (int i = 0; i < fieldTypeMax; i++)
+	{
+		num[i] = new CountViewerDrawer();
+		num[i]->LoadTexture("data/TEXTURE/Viewer/ResultViewer/ResultScoreViewer/Number.png");
+		num[i]->size = D3DXVECTOR3(120.0f, 120.0f, 0.0f);
+		num[i]->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		num[i]->intervalPosScr = 80.0f;
+		num[i]->intervalPosTex = 0.1f;
+		num[0]->placeMax = 5;
+		num[1]->placeMax = 5;
+		num[2]->placeMax = 6;
+		num[i]->baseNumber = 16;
+		num[i]->position = D3DXVECTOR3(SCREEN_WIDTH/5*3 - i*num[i]->placeMax*num[i]->intervalPosScr, SCREEN_CENTER_Y, 0.0f);
+		num[i]->MakeVertex();
+	}
 }
 
 //*****************************************************************************
 // デストラクタ
 //*****************************************************************************
-ResultRankingViewer::~ResultRankingViewer()
+ResultScoreViewer::~ResultScoreViewer()
 {
-	SAFE_DELETE(num);
+	for (int i = 0; i < fieldTypeMax; i++)
+	{
+		SAFE_DELETE(num[i]);
+	}
 }
 
 //=============================================================================
 // 更新処理
 //=============================================================================
-void ResultRankingViewer::Update(void)
+void ResultScoreViewer::Update(void)
 {
 }
 
 //=============================================================================
 // 描画処理
 //=============================================================================
-void ResultRankingViewer::Draw(void)
+void ResultScoreViewer::Draw(void)
 {
-	num->DrawCounter(num->baseNumber,
-		(int)parameterBox, num->placeMax,
-		num->intervalPosScr, num->intervalPosTex);
+	for (int i = 0; i < fieldTypeMax; i++)
+	{
+		num[i]->DrawCounter(num[i]->baseNumber,
+			parameterBox[0], num[i]->placeMax,
+			num[i]->intervalPosScr, num[i]->intervalPosTex);
+	}
 }

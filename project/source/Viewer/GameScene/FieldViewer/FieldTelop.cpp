@@ -26,18 +26,18 @@ static const int animMax = 4;
 
 //テキストアニメーション開始位置
 static const float textStartPositionY[animMax] = {
-	(float)SCREEN_CENTER_Y/1.9f,
-	(float)SCREEN_CENTER_Y/1.9f,
-	(float)SCREEN_CENTER_Y/2.7,
-	(float)SCREEN_CENTER_Y/2.7
+	(float)(SCREEN_CENTER_Y/1.9f),
+	(float)(SCREEN_CENTER_Y/1.9f),
+	(float)(SCREEN_CENTER_Y/2.7),
+	(float)(SCREEN_CENTER_Y/2.7)
 };
 
 //テキストアニメーション終了位置
 static const float textEndPositionY[animMax] = {
-	(float)SCREEN_CENTER_Y/1.9f,
-	(float)SCREEN_CENTER_Y/2.7,
-	(float)SCREEN_CENTER_Y/2.7,
-	(float)SCREEN_CENTER_Y/2.7 
+	(float)(SCREEN_CENTER_Y/1.9f),
+	(float)(SCREEN_CENTER_Y/2.7),
+	(float)(SCREEN_CENTER_Y/2.7),
+	(float)(SCREEN_CENTER_Y/2.7) 
 };
 
 //テキストアニメーション種類

@@ -40,6 +40,7 @@ class SerialWrapper;
 class UDPClient;
 class SceneParticleManager;
 class GuideViewer;
+class ResultViewer;
 
 /**************************************
 クラス定義
@@ -89,6 +90,7 @@ private:
 	SerialWrapper *serial;						//シリアル通信
 	UDPClient *Client;							//クライアント
 	GuideViewer* guideViewer;					//ガイドビュアー
+	ResultViewer*resultViewer;					//リザルトビュアー
 
 	int remainTime;								//制限時間
 

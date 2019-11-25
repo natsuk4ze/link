@@ -1,11 +1,11 @@
 //=============================================================================
 //
-// 結果ランキングビュアー処理 [ResultRankingViewer.h]
+// 結果スコアビュアー処理 [ResultScoreViewer.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _RANKING_VIEWER_H_
-#define _RANKING_VIEWER_H_
+#ifndef _RESULT_SCORE_VIEWER_H_
+#define _RESULT_SCORE_VIEWER_H_
 
 #include "../../Framework/BaseViewer.h"
 
@@ -18,20 +18,21 @@ class CountViewerDrawer;
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class ResultRankingViewer :public BaseViewer
+class ResultScoreViewer :public BaseViewer
 {
+private:
+	const static int fieldTypeMax = 3;
+	CountViewerDrawer * num[fieldTypeMax];
+
 public:
-	ResultRankingViewer();
-	~ResultRankingViewer();
+	ResultScoreViewer();
+	~ResultScoreViewer();
 
 	void Update(void);
 	void Draw(void);
 
 	//パラメータを受けとる箱
-	float parameterBox;
-
-private:
-	CountViewerDrawer *num;
+	int parameterBox[fieldTypeMax];
 };
 
 #endif

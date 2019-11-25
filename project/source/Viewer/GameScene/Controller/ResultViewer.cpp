@@ -5,7 +5,8 @@
 //
 //=============================================================================
 #include "../../../../main.h"
-#include "../ResultViewer/ResultRankingViewer.h"
+#include "../../../Score/Score.h"
+#include "../ResultViewer/ResultScoreViewer.h"
 #include "../ParameterContainer/ResultViewerParam.h"
 #include "ResultViewer.h"
 
@@ -19,7 +20,8 @@
 //*****************************************************************************
 ResultViewer::ResultViewer()
 {
-	resultViewer.push_back(rankingViewer = new ResultRankingViewer());
+	viewerParam = new ResultViewerParam();
+	resultViewer.push_back(scoreViewer = new ResultScoreViewer());
 }
 
 //*****************************************************************************
@@ -35,6 +37,8 @@ ResultViewer::~ResultViewer()
 
 	//インスタンスを入れた配列をクリア
 	resultViewer.clear();
+
+	SAFE_DELETE(viewerParam);
 }
 
 //=============================================================================
@@ -73,11 +77,20 @@ void ResultViewer::Draw(void)
 }
 
 //=============================================================================
-// パラメータ受け取り処理
+// パラメータ受け取る処理
 //=============================================================================
-void ResultViewer::ReceiveParam(ResultViewerParam &param)
+void ResultViewer::ReceiveParam(int cityScore, int worldScore, int spaceScore)
 {
+	int param[ResultViewerParam::fieldTypeMax] = { cityScore ,worldScore ,spaceScore };
 
+	for (int i = 0; i < ResultViewerParam::fieldTypeMax; i++)
+	{
+		//コンテナに入れて
+		viewerParam->score[i] = param[i];
+
+		//コンテナからビュアーに渡す
+		scoreViewer->parameterBox[i] = viewerParam->score[i];
+	}
 }
 
 //=============================================================================

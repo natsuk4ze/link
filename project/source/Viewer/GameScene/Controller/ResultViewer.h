@@ -12,8 +12,8 @@
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
+class ResultScoreViewer;
 class ResultViewerParam;
-class ResultRankingViewer;
 class BaseViewer;
 
 //*****************************************************************************
@@ -28,16 +28,16 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	//パラメータ受け取り
-	void ReceiveParam(ResultViewerParam&param);
-
 	void SetActive(bool flag);
 
-	std::vector <BaseViewer*> resultViewer;
+	//パラメータの受け取り処理
+	void ReceiveParam(int cityScore,int worldScore,int spaceScore);
 
 private:
+	std::vector <BaseViewer*> resultViewer;
+	ResultScoreViewer * scoreViewer;
+	ResultViewerParam *viewerParam;
 
-	ResultRankingViewer * rankingViewer;
 	bool isActive;
 };
 

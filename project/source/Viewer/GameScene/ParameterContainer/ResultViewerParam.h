@@ -13,7 +13,9 @@
 class ResultViewerParam
 {
 public:
+	const static int fieldTypeMax = 3;
 
+	int score[fieldTypeMax];
 };
 
 #endif
