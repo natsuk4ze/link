@@ -12,7 +12,7 @@
 // スタティックメンバ初期化
 //**************************************
 const float SelectLogo::Distance = 75.0f;
-const int SelectLogo::MoveFrame = 15;
+const int SelectLogo::MoveFrame = 10;
 const D3DXVECTOR3 SelectLogo::InitLogoPos[] = {
 	D3DXVECTOR3(0.0f, 0.0f, -Distance),
 	D3DXVECTOR3(Distance * sinf(D3DXToRadian(-60)), 0.0f, Distance * cosf(D3DXToRadian(-60))),
@@ -53,19 +53,19 @@ void SelectLogo::Update()
 			// 右回転
 			if (moveRight)
 			{
-				angle -= 120.0f / (float)MoveFrame;
-				if (angle <= -180.0f)
+				angle += 120.0f / (float)MoveFrame;
+				if (angle >= 180.0f)
 				{
-					angle += 360.0f;
+					angle -= 360.0f;
 				}
 			}
 			// 左回転
 			else if (moveLeft)
 			{
-				angle += 120.0f / (float)MoveFrame;
-				if (angle >= 180.0f)
+				angle -= 120.0f / (float)MoveFrame;
+				if (angle <= -180.0f)
 				{
-					angle -= 360.0f;
+					angle += 360.0f;
 				}
 			}
 			D3DXVECTOR3 curPos = transform->GetPosition();
@@ -120,7 +120,16 @@ void SelectLogo::SetTexDiv(const D3DXVECTOR2& div)
 //=====================================
 void SelectLogo::SetTextureIndex(const int& index)
 {
+	this->index = index;
 	polygon->SetTextureIndex(index);
+}
+
+//=====================================
+// インデックス番号の取得
+//=====================================
+int SelectLogo::GetNextScene()
+{
+	return index;
 }
 
 //=====================================
@@ -128,8 +137,6 @@ void SelectLogo::SetTextureIndex(const int& index)
 //=====================================
 void SelectLogo::TurnRight()
 {
-	if (!Moveable())
-		return;
 	moveRight = true;
 }
 
@@ -138,8 +145,6 @@ void SelectLogo::TurnRight()
 //=====================================
 void SelectLogo::TurnLeft()
 {
-	if (!Moveable())
-		return;
 	moveLeft = true;
 }
 

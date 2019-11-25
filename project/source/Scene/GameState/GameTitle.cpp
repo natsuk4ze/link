@@ -32,6 +32,13 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 {
 	//今はとりあえず作っただけ
+
+	// シーンチェンジ
+	if (entity.titleViewer->CheckSceneChange())
+	{
+		entity.titleViewer->SetNextScene(entity);
+	}
+
 	State next = State::Title;
 	return next;
 }

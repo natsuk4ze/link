@@ -20,14 +20,13 @@ class SelectLogo :
 {
 private:
 	BoardPolygon* polygon;
+	int index;
 
 	// 移動判定
 	bool moveRight;
 	bool moveLeft;
 	int counter;
 	float angle;
-
-	bool Moveable();	// 操作可能判定
 
 	// スタティックメンバ
 	static const float Distance;
@@ -44,9 +43,11 @@ public:
 	void SetPosition(const D3DXVECTOR3& pos);
 	void SetTexDiv(const D3DXVECTOR2& div);
 	void SetTextureIndex(const int& index);
+	int GetNextScene();
 	void TurnRight();	// 右に移動
 	void TurnLeft();	// 左に移動
 	void SetAngle(float angle);
+	bool Moveable();	// 操作可能判定
 
 	// 演算子のオーバーロード
 	// 描画順ソートのため

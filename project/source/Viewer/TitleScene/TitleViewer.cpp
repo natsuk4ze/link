@@ -8,6 +8,8 @@
 #include "TitleViewer.h"
 #include "TitleLogo.h"
 #include "SelectViewer.h"
+#include "../../../Framework/Input/input.h"
+#include "../../Scene/GameScene.h"
 
 //=====================================
 // コンストラクタ
@@ -56,4 +58,32 @@ void TitleViewer::Draw()
 void TitleViewer::SetActive(bool flag)
 {
 	isActive = flag;
+}
+
+//=====================================
+// シーンチェンジ
+//=====================================
+bool TitleViewer::CheckSceneChange()
+{
+	return Keyboard::GetTrigger(DIK_RETURN);
+}
+
+//=====================================
+// 次のシーンを指定する
+//=====================================
+void TitleViewer::SetNextScene(GameScene& entity)
+{
+	if (selectViewer->CheckNextScene() == 0)
+	{
+		entity.ChangeState(GameScene::State::Idle);
+	}
+	else if (selectViewer->CheckNextScene() == 1)
+	{
+		// トロフィー確認
+	}
+	else if (selectViewer->CheckNextScene() == 2)
+	{
+		// ゲーム終了
+		PostQuitMessage(0);
+	}
 }

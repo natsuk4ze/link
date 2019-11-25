@@ -33,10 +33,13 @@ public:
 	void Update();
 	void Draw();
 
+	int CheckNextScene();
+
 private:
 	SubScreen* subScreen;
 	SelectCamera* camera;
 	std::vector<SelectLogo*> logo;
+	int nextMode;
 
 	static const D3DXVECTOR2 SubScreenSize;
 	static const D3DXVECTOR2 SubScreenPos;

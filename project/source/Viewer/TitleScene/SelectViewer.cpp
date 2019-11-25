@@ -12,6 +12,7 @@
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "SelectLogo.h"
 #include "../../../Framework/Input/input.h"
+#include "../../../Framework/Tool/DebugWindow.h"
 
 #include <algorithm>
 //**************************************
@@ -23,7 +24,8 @@ const D3DXVECTOR2 SelectViewer::SubScreenPos = D3DXVECTOR2((float)SCREEN_CENTER_
 //=====================================
 // コンストラクタ
 //=====================================
-SelectViewer::SelectViewer()
+SelectViewer::SelectViewer() :
+	nextMode(0)
 {
 	// サブスクリーンを作成
 	subScreen = new SubScreen(SubScreenSize, SubScreenPos);
@@ -76,19 +78,30 @@ void SelectViewer::Update()
 
 	if (Keyboard::GetPress(DIK_RIGHT))
 	{
-		for (auto& p : logo)
+		if (logo[0]->Moveable())
 		{
-			p->TurnRight();
+			nextMode = Math::WrapAround(0, Mode::Max, ++nextMode);
+			for (auto& p : logo)
+			{
+				p->TurnRight();
+			}
 		}
 	}
 	if (Keyboard::GetPress(DIK_LEFT))
 	{
-		for (auto& p : logo)
+		if (logo[0]->Moveable())
 		{
-			p->TurnLeft();
+			nextMode = Math::WrapAround(0, Mode::Max, --nextMode);
+			for (auto& p : logo)
+			{
+				p->TurnLeft();
+			}
 		}
 	}
 
+	Debug::Begin("Select");
+	Debug::Text("%d", nextMode);
+	Debug::End();
 }
 
 //=====================================
@@ -120,4 +133,12 @@ void SelectViewer::Draw()
 	Camera::SetMainCamera(const_cast<Camera*>(defaultCamera));
 	RendererEffect::SetView(defaultCamera->GetViewMtx());
 	RendererEffect::SetProjection(defaultCamera->GetProjectionMtx());
+}
+
+//=====================================
+// シーンチェンジ
+//=====================================
+int SelectViewer::CheckNextScene()
+{
+	return nextMode;
 }

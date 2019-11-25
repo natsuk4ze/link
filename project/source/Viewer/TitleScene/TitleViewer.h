@@ -12,6 +12,7 @@
 
 class TitleLogo;
 class SelectViewer;
+class GameScene;
 //**************************************
 // ƒNƒ‰ƒX’è‹`
 //**************************************
@@ -31,6 +32,9 @@ public:
 	void Draw();
 
 	void SetActive(bool flag);
+
+	bool CheckSceneChange();
+	void SetNextScene(GameScene& entity);
 };
 
 #endif
