@@ -189,6 +189,9 @@ void EventController::DrawEventObject()
 //=============================================================================
 void EventController::DrawEventViewer()
 {
+	//ビートビューア描画
+	beatViewer->Draw();
+
 	// イベントビューア描画
 	eventViewer->Draw();
 }

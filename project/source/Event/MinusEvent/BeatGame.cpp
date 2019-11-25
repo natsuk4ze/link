@@ -53,6 +53,9 @@ BeatGame::BeatGame(BeatGame::GameType type, BeatGameViewer *viewer, std::functio
 	//パラメータを初期値にセット
 	beatGameViewer->SetGameGauge(1.0f);
 	beatGameViewer->SetRemainTime(gameTime);
+
+	//ビューワは最初は非表示
+	beatGameViewer->SetActive(false);
 }
 
 //=============================================================================
@@ -248,6 +251,7 @@ string BeatGame::GetEventMessage(int FieldLevel)
 void BeatGame::CountdownStart(void)
 {
 	TelopOver = true;
+	beatGameViewer->SetActive(true);
 }
 
 //=============================================================================
@@ -257,4 +261,5 @@ void BeatGame::EventOver(void)
 {
 	Callback(isSuccess);
 	UseFlag = false;
+	beatGameViewer->SetActive(false);
 }
