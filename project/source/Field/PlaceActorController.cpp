@@ -323,6 +323,11 @@ namespace Field::Actor
 	void PlaceActorController::OnConnectedTown(const Model::PlaceModel * place)
 	{
 		aStarController->OnChangePlace(place);
+
+		if (actorContainer.count(place->ID()) == 0)
+			return;
+
+		ActorAnimation::ExpantionYAndReturnToOrigin(*actorContainer[place->ID()]);
 	}
 
 	/**************************************
