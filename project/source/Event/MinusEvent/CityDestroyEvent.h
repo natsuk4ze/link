@@ -16,6 +16,7 @@ class BeatGame;
 class EventViewer;
 class EventActorBase;
 class EventCamera;
+class BeatGameViewer;
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -33,9 +34,10 @@ private:
 	EventViewer* eventViewer;
 	EventActorBase *Meteor;
 	EventCamera *camera;
+	BeatGameViewer *beatViewer;
 
 public:
-	CityDestroyEvent(EventViewer* eventViewer, EventCamera *camera);
+	CityDestroyEvent(EventViewer* eventViewer, BeatGameViewer *beatViewer, EventCamera *camera);
 	~CityDestroyEvent();
 	void Init(void) override;
 	void Update(void) override;

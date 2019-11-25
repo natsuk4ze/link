@@ -31,7 +31,7 @@ static const float gameTime = 5.0f;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-BeatGame::BeatGame(BeatGame::GameType type, std::function<void(bool)> Callback) :
+BeatGame::BeatGame(BeatGame::GameType type, BeatGameViewer *viewer, std::function<void(bool)> Callback) :
 	EventBase(false),
 	TelopOver(false),
 	isSuccess(false),
@@ -41,10 +41,9 @@ BeatGame::BeatGame(BeatGame::GameType type, std::function<void(bool)> Callback) 
 	canSetGo(true),
 	countInput(0),
 	countFrame(0),
-	Callback(Callback)
+	Callback(Callback),
+	beatGameViewer(viewer)
 {
-	beatGameViewer = new BeatGameViewer();
-
 	//再生中のイベントをセット
 	playingEvent = type;
 
@@ -61,7 +60,7 @@ BeatGame::BeatGame(BeatGame::GameType type, std::function<void(bool)> Callback) 
 //=============================================================================
 BeatGame::~BeatGame()
 {
-	SAFE_DELETE(beatGameViewer);
+
 }
 
 //=============================================================================

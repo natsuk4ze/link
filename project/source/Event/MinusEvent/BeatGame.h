@@ -36,7 +36,7 @@ public:
 		CityDestroyEvent,
 	};
 
-	BeatGame(BeatGame::GameType type, std::function<void(bool)> CallBack = nullptr);
+	BeatGame(BeatGame::GameType type, BeatGameViewer *viewer, std::function<void(bool)> CallBack = nullptr);
 	~BeatGame();
 	void Update(void) override;
 	void Draw(void) override;

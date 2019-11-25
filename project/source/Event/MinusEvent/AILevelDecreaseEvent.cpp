@@ -13,6 +13,7 @@
 #include "../../Effect/GameParticleManager.h"
 #include "../../../Framework/Task/TaskManager.h"
 #include "../../Field/Camera/EventCamera.h"
+#include "../../Viewer/GameScene/Controller/BeatGameViewer.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -45,11 +46,12 @@ enum State
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-AILevelDecreaseEvent::AILevelDecreaseEvent(EventViewer* eventViewer, EventCamera *camera) :
+AILevelDecreaseEvent::AILevelDecreaseEvent(EventViewer* eventViewer, EventCamera *camera, BeatGameViewer *beatViewer) :
 	EventBase(true),
 	EventState(State::TelopExpanding),
 	eventViewer(eventViewer),
-	camera(camera)
+	camera(camera),
+	beatViewer(beatViewer)
 {
 
 }
@@ -74,7 +76,7 @@ void AILevelDecreaseEvent::Init()
 	camera->Init();
 
 	// 連打ゲームインスタンス
-	beatGame = new BeatGame(BeatGame::AILevelDecrease,[&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
+	beatGame = new BeatGame(BeatGame::AILevelDecrease, beatViewer, [&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
 
 	// 目標町の予定地を取得
 	Target = fieldEventHandler->GetDestroyTarget();

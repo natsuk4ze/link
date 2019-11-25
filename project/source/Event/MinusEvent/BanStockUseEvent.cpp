@@ -27,6 +27,7 @@ const int DefaultDebuffFrame = 300;
 // コンストラクタ
 //=============================================================================
 BanStockUseEvent::BanStockUseEvent(EventViewer* eventViewer,
+	BeatGameViewer *beatViewer,
 	std::function<void(bool)> SetBanStock,
 	std::function<bool(void)> GetInPause) :
 	EventBase(true),
@@ -34,7 +35,8 @@ BanStockUseEvent::BanStockUseEvent(EventViewer* eventViewer,
 	InDebuff(false),
 	SetBanStock(SetBanStock),
 	GetInPause(GetInPause),
-	eventViewer(eventViewer)
+	eventViewer(eventViewer),
+	beatViewer(beatViewer)
 {
 }
 
@@ -53,7 +55,7 @@ BanStockUseEvent::~BanStockUseEvent()
 void BanStockUseEvent::Init()
 {
 	// 連打ゲームインスタンス
-	beatGame = new BeatGame(BeatGame::BanStockUse,[&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
+	beatGame = new BeatGame(BeatGame::BanStockUse, beatViewer, [&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
 
 	// ゲーム進行停止
 	fieldEventHandler->PauseGame();
