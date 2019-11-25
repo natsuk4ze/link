@@ -13,6 +13,7 @@
 #include "../../../Framework/Pattern/Delegate.h"
 
 #include <vector>
+#include <functional>
 
 namespace Field::Model
 {
@@ -23,7 +24,7 @@ namespace Field::Model
 	{
 	public:
 		//コンストラクタ、デストラクタ
-		RouteProcessor(Delegate<void(const PlaceModel*)> *onChangePlaceType);
+		RouteProcessor(std::function<void(const PlaceModel*)>& onChangePlaceType);
 		RouteProcessor() {}
 
 		//新しく作ったルートに対して隣接しているルートと連結させて加工する
@@ -37,7 +38,7 @@ namespace Field::Model
 
 	private:
 		//プレイスタイプを変化させた際のデリゲート
-		Delegate<void(const PlaceModel*)> *onChangePlaceType;
+		std::function<void(const PlaceModel*)> onChangePlaceType;
 
 		void _Process(RouteModelPtr& model, PlaceModel* place, PlaceModel* target, RouteContainer& routeContainer, RouteContainer& divList);
 

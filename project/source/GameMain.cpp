@@ -53,5 +53,4 @@ void GameMain::Update()
 		sceneManager->ChangeScene(GameConfig::ModelView);
 
 	Debug::End();
-
 }

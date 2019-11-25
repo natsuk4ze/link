@@ -42,30 +42,57 @@ void ModelViewScene::Init()
 	for (int i = 0; i < 3; i++)
 	{
 		const float OffsetX = 10.0f;
-		D3DXVECTOR3 position = { -80.0f, 0.0f, -20.0f * i + 20.0f};
+		D3DXVECTOR3 position = { -80.0f, 0.0f, -20.0f * i + 20.0f };
 
-		PlaceActor *actor = new StraightRoadActor(position, (Field::FieldLevel)i, false);
-		actorContainer.push_back(actor);
-		actor->Rotate(90.0f);
-		position.x += OffsetX;
+		{
+			StraightRoadActor *actor = new StraightRoadActor();
+			actor->Init(position, (Field::FieldLevel)i, false);
+			actorContainer.push_back(actor);
+			actor->Rotate(90.0f);
+			position.x += OffsetX;
+		}
 
-		actorContainer.push_back(new CurveRoadActor(position, (Field::FieldLevel)i, false));
-		position.x += OffsetX;
+		{
+			CurveRoadActor *actor = new CurveRoadActor();
+			actor->Init(position, (Field::FieldLevel)i, false);
+			actorContainer.push_back(actor);
+			position.x += OffsetX;
+		}
 
-		actorContainer.push_back(new TJunctionActor(position, (Field::FieldLevel)i, false));
-		position.x += OffsetX;
+		{
+			TJunctionActor *actor = new TJunctionActor();
+			actor->Init(position, (Field::FieldLevel)i, false);
+			actorContainer.push_back(actor);
+			position.x += OffsetX;
+		}
 
-		actorContainer.push_back(new CrossJunctionActor(position, (Field::FieldLevel)i, false));
-		position.x += OffsetX * 2.0f;
+		{
+			CrossJunctionActor *actor = new CrossJunctionActor();
+			actor->Init(position, (Field::FieldLevel)i, false);
+			actorContainer.push_back(actor);
+			position.x += OffsetX * 2.0f;
+		}
 
-		actorContainer.push_back(new CityActor(position, (Field::FieldLevel)i));
-		position.x += OffsetX * 2.0f;
+		{
+			CityActor *actor = new CityActor();
+			actor->Init(position, (Field::FieldLevel)i);
+			actorContainer.push_back(actor);
+			position.x += OffsetX * 2.0f;
+		}
 
-		actorContainer.push_back(new BridgeActor(position, (Field::FieldLevel)i));
-		position.x += OffsetX * 2.0f;
+		{
+			BridgeActor *actor = new BridgeActor();
+			actor->Init(position, (Field::FieldLevel)i);
+			actorContainer.push_back(actor);
+			position.x += OffsetX * 2.0f;
+		}
 
-		actorContainer.push_back(new MountainActor(position, (Field::FieldLevel)i, false));
-		position.x += OffsetX * 2.0f;
+		{
+			MountainActor *actor = new MountainActor();
+			actor->Init(position, (Field::FieldLevel)i, false);
+			actorContainer.push_back(actor);
+			position.x += OffsetX * 2.0f;
+		}
 	}
 
 	skybox = new Field::FieldSkyBox(Field::FieldLevel::World);

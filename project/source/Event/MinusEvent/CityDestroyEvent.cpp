@@ -41,11 +41,12 @@ const D3DXVECTOR3 Scale = D3DXVECTOR3(0.15f, 0.15f, 0.15f);
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer, EventCamera* camera) :
+CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer, BeatGameViewer* beatViewer, EventCamera* camera) :
 	EventBase(true),
 	EventState(State::TelopExpanding),
 	eventViewer(eventViewer),
-	camera(camera)
+	camera(camera),
+	beatViewer(beatViewer)
 {
 }
 
@@ -68,7 +69,7 @@ void CityDestroyEvent::Init()
 	camera->Init();
 
 	// 連打ゲームインスタンス
-	beatGame = new BeatGame(BeatGame::CityDestroyEvent,[&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
+	beatGame = new BeatGame(BeatGame::CityDestroyEvent, beatViewer, [&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
 
 	// 破壊する町の予定地を取得
 	Target = fieldEventHandler->GetDestroyTarget();

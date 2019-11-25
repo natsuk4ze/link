@@ -116,11 +116,21 @@ float4 psMain(VS_OUTPUT In) : COLOR0
 ***************************************************************/
 technique tech {
 	pass p0 {
+		LIGHTING = false;
+		ZWRITEENABLE = false;
+		ALPHABLENDENABLE = true;
+		ALPHATESTENABLE = true;
+
 		VertexShader = compile vs_2_0 VS_3D();
 		PixelShader = compile ps_2_0 psMain();
 	}
 
 	pass p1 {
+		LIGHTING = false;
+		ZWRITEENABLE = false;
+		ALPHABLENDENABLE = true;
+		ALPHATESTENABLE = true;
+
 		VertexShader = compile vs_2_0 VS_2D();
 		PixelShader = compile ps_2_0 psMain();
 	}

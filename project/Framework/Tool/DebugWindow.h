@@ -10,6 +10,7 @@
 #include "../../main.h"
 
 #include <string>
+#include <deque>
 
 /**************************************
 É}ÉNÉçíËã`
@@ -108,6 +109,9 @@ public:
 
 private:
 	Debug();
+
+	static const unsigned MaxLog;
+	static std::deque<std::string> textLog;
 };
 
 #endif

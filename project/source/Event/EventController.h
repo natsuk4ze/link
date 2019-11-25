@@ -19,6 +19,7 @@ class EventViewer;
 class BoardPolygon;
 class EventViewerParam;
 class EventCamera;
+class BeatGameViewer;
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -36,6 +37,7 @@ private:
 	std::vector<EventBase*> EventVec;
 	EventViewer *eventViewer;
 	EventCamera *camera;
+	BeatGameViewer *beatViewer;
 
 	bool InBanStock;
 	bool InPauseEvent;
@@ -50,6 +52,9 @@ private:
 public:
 	EventController(int FieldLevel);
 	~EventController();
+
+	void Init(int FieldLevel);
+	void Uninit(void);
 	void Update(void);
 	void UpdateViewer(void);
 	void DrawEventObject(void);

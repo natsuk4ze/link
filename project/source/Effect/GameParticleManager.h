@@ -28,6 +28,7 @@ namespace GameParticle
 		Darkness,		//闇の粒子(AIレベル減少イベント)
 		MoveTail,		//移動の軌跡
 		LinkLevelUp,	//リンクレベルアップ時エフェクト
+		Cloud,			//雲
 		Max
 	};
 }
@@ -41,6 +42,9 @@ class GameParticleManager : public SceneParticleManager, public BaseSingleton<Ga
 public:
 	//初期化処理
 	void Init() override;
+
+	//描画処理
+	void Draw() override;
 
 	//町消滅のエフェクトセット処理
 	void SetTownExplosionEffect(const D3DXVECTOR3& position, std::function<void(void)> callback = nullptr);

@@ -82,9 +82,11 @@ void ScreenObject::Draw()
 
 	pDevice->SetStreamSource(0, vtxBuff, 0, sizeof(VERTEX_2D));
 
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
+
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
 
-	VERTEX_2D *p;
-	vtxBuff->Lock(0, 0, (void**)&p, 0);
-	vtxBuff->Unlock();
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
 }

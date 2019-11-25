@@ -24,9 +24,11 @@ class CrossJunctionActor :
 private:
 
 public:
-	CrossJunctionActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater);
+	CrossJunctionActor();
 	~CrossJunctionActor();
 
+	void Init(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater);
+	void Uninit() override;
 	void Draw() override;
 	void Rotate(float y) override;
 

@@ -152,6 +152,19 @@ namespace Field
 	}
 
 	/**************************************
+	ƒŠƒZƒbƒgˆ—
+	***************************************/
+	void Field::FieldCursor::Reset()
+	{
+		cntFrame = 0;
+		cntMove = MoveDuration;
+
+		currentMode = Mode::BuildRoad;
+
+		SetModelPosition(25, 25);
+	}
+
+	/**************************************
 	ˆÚ“®”ÍˆÍİ’èˆ—
 	***************************************/
 	void FieldCursor::SetBorder(int forward, int right, int back, int left)

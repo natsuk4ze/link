@@ -31,6 +31,7 @@
 #include "../Effect/SpaceParticleManager.h"
 #include "../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../Viewer/GameScene/Controller/ResultViewer.h"
+#include "../Viewer/TitleScene/TitleViewer.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
@@ -43,6 +44,8 @@
 #include "GameState/GameFarView.h"
 #include "GameState/GameTitle.h"
 #include "GameState/GameResult.h"
+#include "GameState\GameTransitionOut.h"
+#include "GameState\GameTransitionIn.h"
 
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Sound/BackgroundMusic.h"
@@ -51,8 +54,8 @@
 staticメンバ
 ***************************************/
 int GameScene::level = 0;		//デバッグ用フィールドレベル（本番では非staticメンバにする
-const float GameScene::BloomPower[] = {0.25f, 0.25f, 0.15f};		//ブルームの強さ
-const float GameScene::BloomThrethold[] = {0.45f, 0.5f, 0.55f};		//ブルームをかける輝度の閾値
+const float GameScene::BloomPower[] = {0.6f, 0.55f, 0.50f};		//ブルームの強さ
+const float GameScene::BloomThrethold[] = {0.6f, 0.5f, 0.4f};		//ブルームをかける輝度の閾値
 
 /**************************************
 初期化処理
@@ -78,6 +81,7 @@ void GameScene::Init()
 	Client = new UDPClient();
 	guideViewer = new GuideViewer();
 	resultViewer = new ResultViewer();
+	titleViewer = new TitleViewer();
 
 	//レベル毎のパーティクルマネージャを選択
 	switch (level)
@@ -107,14 +111,15 @@ void GameScene::Init()
 	fsm[State::FarView] = new GameFarView();
 	fsm[State::Title] = new GameTitle();
 	fsm[State::Result] = new GameResult();
+	fsm[State::TransitionOut] = new GameTransitionOut();
+	fsm[State::TransitionIn] = new GameTransitionIn();
 
 	//デリゲートを作成して設定
-	onBuildRoad = DelegateObject<GameScene, void(Route&)>::Create(this, &GameScene::OnBuildRoad);
-	field->SetCallbackOnBuildRoad(onBuildRoad);
+	auto onBuildRoad = std::bind(&GameScene::OnBuildRoad, this, std::placeholders::_1);
+	field->SetCallbackBuildRoad(onBuildRoad);
 
 	//ステート初期化
 	ChangeState(State::Initialize);
-
 }
 
 /**************************************
@@ -135,16 +140,16 @@ void GameScene::Uninit()
 	SAFE_DELETE(Client);
 	SAFE_DELETE(guideViewer);
 	SAFE_DELETE(resultViewer);
+	SAFE_DELETE(titleViewer);
 
 	//パーティクル終了
 	particleManager->Uninit();
 
+	if(levelParticleManager != nullptr)
+		levelParticleManager->Uninit();
+
 	//ステートマシン削除
 	Utility::DeleteContainer(fsm);
-
-	//デリゲート削除
-	SAFE_DELETE(onBuildRoad);
-
 }
 
 /**************************************
@@ -179,11 +184,16 @@ void GameScene::Update()
 	gameViewer->Update();
 	guideViewer->Update();
 	resultViewer->Update();
+	titleViewer->Update();
 
 	//パーティクル更新
 	ProfilerCPU::Instance()->Begin("Update Particle");
-	levelParticleManager->Update();
+
+	if(levelParticleManager != nullptr)
+		levelParticleManager->Update();
+
 	particleManager->Update();
+
 	ProfilerCPU::Instance()->End("Update Particle");
 
 	//デバッグ機能
@@ -236,7 +246,10 @@ void GameScene::Draw()
 
 	//パーティクル描画
 	ProfilerCPU::Instance()->Begin("Draw Particle");
-	levelParticleManager->Draw();
+	
+	if(levelParticleManager != nullptr)
+		levelParticleManager->Draw();
+
 	particleManager->Draw();
 	ProfilerCPU::Instance()->End("Draw Particle");
 
@@ -245,6 +258,7 @@ void GameScene::Draw()
 	gameViewer->Draw();
 	eventController->DrawEventViewer();
 	resultViewer->Draw();
+	titleViewer->Draw();
 
 	//*******別ウインドウを作成するため最後*******
 	guideViewer->Draw();
@@ -291,12 +305,7 @@ void GameScene::OnLevelUp()
 
 	//テストなのでインクリメントしてしまう
 	//本番ではちゃんと制限する
-	TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
-	{
-		level++;
-		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), level);
-		SceneManager::ChangeScene(GameConfig::SceneID::Game);
-	});
+	level++;
 }
 
 /**************************************
@@ -382,18 +391,112 @@ void GameScene::DebugTool()
 	Debug::NewLine();
 	if (Debug::Button("Title"))
 	{
+		level = 0;
 		ChangeState(State::Title);
 	}
 	Debug::SameLine();
 	if (Debug::Button("Idle"))
 	{
+		level = 1;
 		ChangeState(State::Idle);
 	}
 	Debug::SameLine();
 	if (Debug::Button("Result"))
 	{
+		level = 2;
 		ChangeState(State::Result);
 	}
+	Debug::SameLine();
+	if (Debug::Button("Transition"))
+	{
+		level++;
+		ChangeState(State::TransitionOut);
+	}
+
+	Debug::NewLine();
+	Debug::Text("Bloom");
+	static D3DXVECTOR3 power = {BloomPower[0], BloomPower[1], BloomPower[2]};
+	static D3DXVECTOR3 threthold = {BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]};
+	Debug::Slider("power", power, Vector3::Zero, Vector3::One);
+	Debug::Slider("threthold", threthold, Vector3::Zero, Vector3::One);
+	bloomController->SetPower(power.x, power.y, power.z);
+	bloomController->SetThrethold(threthold.x, threthold.y, threthold.z);
 
 	Debug::End();
+}
+
+/**************************************
+フィールドレベル設定処理
+***************************************/
+void GameScene::SetFieldLevel(int level)
+{
+	LARGE_INTEGER start, end;
+
+	//フィールドレベルを設定
+	field->SetLevel((Field::FieldLevel)level);
+
+	//レベル固有のパーティクルマネージャ初期化
+	start = ProfilerCPU::GetCounter();
+	switch (level)
+	{
+	case Field::City:
+		levelParticleManager = CityParticleManager::Instance();
+		break;
+	case Field::World:
+		levelParticleManager = WorldParticleManager::Instance();
+		break;
+	case Field::Space:
+		levelParticleManager = SpaceParticleManager::Instance();
+		break;
+	default:
+		levelParticleManager = nullptr;
+		break;
+	}
+	levelParticleManager->Init();
+
+	end = ProfilerCPU::GetCounter();
+
+	Debug::Log("Init Particle : %f", ProfilerCPU::CalcElapsed(start, end));
+
+	start = ProfilerCPU::GetCounter();
+
+	//イベントコントローラ作成
+	eventController->Init(level);
+
+	//イベントハンドラ設定
+	SetEventHandler();
+
+	end = ProfilerCPU::GetCounter();
+
+	Debug::Log("Init Event : %f", ProfilerCPU::CalcElapsed(start, end));
+}
+
+/**************************************
+シーンクリア処理
+***************************************/
+void GameScene::Clear()
+{
+	LARGE_INTEGER start, end;
+
+	//フィールド側をクリア
+	start = ProfilerCPU::GetCounter();
+	field->Clear();
+	end = ProfilerCPU::GetCounter();
+
+	Debug::Log("Clear Field : %f", ProfilerCPU::CalcElapsed(start, end));
+
+	//レベル固有のパーティクルを終了
+	start = ProfilerCPU::GetCounter();
+	levelParticleManager->Uninit();
+	levelParticleManager = nullptr;
+	end = ProfilerCPU::GetCounter();
+
+	Debug::Log("Clear Particle : %f", ProfilerCPU::CalcElapsed(start, end));
+
+	//イベントコントローラクリア
+	start = ProfilerCPU::GetCounter();
+	eventController->Uninit();
+	end = ProfilerCPU::GetCounter();
+
+	Debug::Log("Clear Event : %f", ProfilerCPU::CalcElapsed(start, end));
 }

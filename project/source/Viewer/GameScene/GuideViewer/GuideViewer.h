@@ -11,13 +11,14 @@
 #include "../../../../Framework/PostEffect/Effect/CRTFilter.h"
 #include <string>
 #include "GuideActor.h"
-#include "GuideCamera.h"
-#include "GuideViewerBG.h"
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
+class GuideCamera;
+class GuideViewerBG;
 class GuideCallOutViewer;
+class SubScreen;
 
 //**************************************
 // クラス定義
@@ -31,17 +32,12 @@ private:
 	GuideViewerBG* bg;
 	CRTFilter* filter;
 	GuideCallOutViewer *callOutViewer;
+	SubScreen* subScreen;
 
 	bool isActive;	// 描画可否判定
 
-	// 描画用サブスクリーンを作成
-	LPDIRECT3DTEXTURE9 renderTexture;
-	LPDIRECT3DSURFACE9 renderSurface;
-	LPDIRECT3DVERTEXBUFFER9 screenVtx;
-	void MakeRenderTarget();
-	void MakeScreen();
-
-	static const D3DXVECTOR3 SubScreenPosition;
+	static const D3DXVECTOR2 SubScreenPosition;
+	static const D3DXVECTOR2 SubScreenSize;
 
 public:
 	GuideViewer();
@@ -52,8 +48,6 @@ public:
 
 	void ChangeAnim(GuideActor::AnimState next);
 	void SetActive(bool flag);
-
-	static const D3DXVECTOR2 SubScreenSize;
 
 	//ガイドビュアーセット
 	void SetGuideViewer(const std::string &message);

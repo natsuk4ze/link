@@ -26,7 +26,10 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	entity.guideViewer->SetActive(false);
 
 	//// ƒŠƒUƒ‹ƒg—p‚ÌUI‚ÉAI”­“WƒŒƒxƒ‹‚ð“n‚·
-	//entity.resultViewer->ReceiveParam((int)entity.field->GetScore(), (int)entity.field->GetScore(), (int)entity.field->GetScore());
+	int cityScore = (int)entity.field->GetScore(Field::FieldLevel::City);
+	int worldScore = (int)entity.field->GetScore(Field::FieldLevel::World);
+	int spaceScore = (int)entity.field->GetScore(Field::FieldLevel::Space);
+	entity.resultViewer->ReceiveParam(cityScore, worldScore, spaceScore);
 }
 
 //=====================================

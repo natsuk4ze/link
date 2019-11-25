@@ -53,6 +53,9 @@ public:
 	//結果を表示する
 	void SetResult(BeatResultViewer::ResultID id, std::function<void(void)> Callback = nullptr);
 
+	//表示・非表示を切り替える
+	void SetActive(bool state);
+
 private:
 	std::vector <BaseViewer*> beatGameViewer;
 	BeatTitleViewer *titleViewer;
@@ -60,6 +63,8 @@ private:
 	BeatTimerViewer *timerViewer;
 	BeatStarterViewer *starterViewer;
 	BeatResultViewer *resultViewer;
+
+	bool active;
 };
 
 #endif

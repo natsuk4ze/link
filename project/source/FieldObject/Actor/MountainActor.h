@@ -26,9 +26,11 @@ class MountainActor :
 	public PlaceActor
 {
 public:
-	MountainActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater);
+	MountainActor();
 	~MountainActor();
 
+	void Init(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater);
+	void Uninit() override;
 	void Update() override;
 	void Draw() override;
 
@@ -36,6 +38,8 @@ private:
 	Field::Actor::WhirlPoolEffect *effect;
 	float speedWhirl;
 	float cntWhirl;
+	Field::FieldLevel level;
+	bool onWater;
 
 	BaseEmitter *emitter;
 };

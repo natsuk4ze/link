@@ -41,6 +41,7 @@ class UDPClient;
 class SceneParticleManager;
 class GuideViewer;
 class ResultViewer;
+class TitleViewer;
 
 /**************************************
 クラス定義
@@ -67,6 +68,8 @@ public:
 		FarView,
 		Title,
 		Result,
+		TransitionOut,
+		TransitionIn,
 		Max
 	};
 
@@ -91,14 +94,14 @@ private:
 	UDPClient *Client;							//クライアント
 	GuideViewer* guideViewer;					//ガイドビュアー
 	ResultViewer*resultViewer;					//リザルトビュアー
+	TitleViewer* titleViewer;					// タイトルビュアー
 
 	int remainTime;								//制限時間
 
+	int cntFrame;								//フレームカウンタ
+
 	//ポストエフェクト関連
 	BloomController *bloomController;			//ブルームエフェクトのコントローラ
-
-	//デリゲータ
-	Delegate<void(Route&)> *onBuildRoad;		//道を生成したときのデリゲータ
 
 	//イベントコントローラへのPlace受け渡し処理
 	void OnBuildRoad(Route& route);
@@ -111,6 +114,12 @@ private:
 
 	//デバッグ機能
 	void DebugTool();
+
+	//フィールドレベル設定処理
+	void SetFieldLevel(int level);
+
+	//クリア処理
+	void Clear();
 
 	//static定数メンバ
 	static const float BloomPower[3];
@@ -126,6 +135,8 @@ private:
 	class GameWaitPopup;
 	class GameTitle;
 	class GameResult;
+	class GameTransitionOut;
+	class GameTransitionIn;
 
 	//デバッグ用フィールドレベル
 	static int level;

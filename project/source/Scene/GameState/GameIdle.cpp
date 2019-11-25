@@ -13,6 +13,7 @@
 #include "../../../Framework/Tool/ProfilerCPU.h"
 #include "../../Viewer/GameScene/Controller/GameViewer.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
+#include "../../Viewer/TitleScene/TitleViewer.h"
 
 /**************************************
 更新処理
@@ -42,6 +43,7 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 	//残り時間が0になったら終了
 	if (entity.remainTime == 0)
 	{
+		entity.field->SetScore();
 		entity.ChangeState(State::Finish);
 	}
 	//AI発展レベルが最大に到達していたらレベルアップ
@@ -74,5 +76,5 @@ void GameScene::GameIdle::OnStart(GameScene & entity)
 	entity.gameViewer->SetActive(true);
 	entity.guideViewer->SetActive(true);
 	// 使用しないUIの描画をOFF（タイトル、リザルト用など）
-
+	entity.titleViewer->SetActive(false);
 }

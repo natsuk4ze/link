@@ -16,10 +16,34 @@
 //=====================================
 // コンストラクタ
 //=====================================
-CurveRoadActor::CurveRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel, bool onWater)
-	: PlaceActor(pos, currentLevel),
-	onWater(onWater)
+CurveRoadActor::CurveRoadActor()
+	: PlaceActor(),
+	onWater(false)
 {
+
+}
+
+//=====================================
+// デストラクタ
+//=====================================
+CurveRoadActor::~CurveRoadActor()
+{
+	for (auto&& emitter : emitterContainer)
+	{
+		if (emitter != nullptr)
+			emitter->SetActive(false);
+	}
+}
+
+//=====================================
+// 初期化処理
+//=====================================
+void CurveRoadActor::Init(const D3DXVECTOR3 & pos, Field::FieldLevel currentLevel, bool onWater)
+{
+	PlaceActor::Init(pos, currentLevel);
+
+	this->onWater = onWater;
+
 	using Field::Actor::ActorLoader;
 	if (!onWater)
 		ResourceManager::Instance()->GetMesh(ActorLoader::CurveTag[currentLevel].c_str(), mesh);
@@ -44,14 +68,14 @@ CurveRoadActor::CurveRoadActor(const D3DXVECTOR3& pos, Field::FieldLevel current
 			euler.y -= 90.0f;
 		}
 	}
-
 }
 
 //=====================================
-// デストラクタ
+// 終了処理
 //=====================================
-CurveRoadActor::~CurveRoadActor()
+void CurveRoadActor::Uninit()
 {
+	PlaceActor::Uninit();
 	for (auto&& emitter : emitterContainer)
 	{
 		if (emitter != nullptr)

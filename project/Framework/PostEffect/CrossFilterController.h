@@ -44,6 +44,7 @@ private:
 	void BlendBloom();
 
 	BloomFilter *bloomFilter[NumReduction];
+	BloomFilter *bloomBlender;
 	CrossBlurFilter *blurFilter[NumReduction];
 
 	LPDIRECT3DTEXTURE9 blurTexture[NumReduction][NumBlur];

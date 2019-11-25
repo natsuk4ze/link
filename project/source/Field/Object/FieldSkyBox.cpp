@@ -5,6 +5,7 @@
 //
 //=====================================
 #include "FieldSkyBox.h"
+#include "../../../Framework/Resource/ResourceManager.h"
 
 namespace Field
 {
@@ -67,6 +68,19 @@ namespace Field
 				LoadTexture(SpaceTexturePath[i], (Surface)i);
 			}
 			break;	
+		}
+	}
+
+	/**************************************
+	ÉäÉ\Å[ÉXì«Ç›çûÇ›èàóù
+	***************************************/
+	void FieldSkyBox::LoadResource()
+	{
+		for (int i = 0; i < Surface::Max; i++)
+		{
+			ResourceManager::Instance()->LoadTexture(CityTexturePath[i]);
+			ResourceManager::Instance()->LoadTexture(WorldTexturePath[i]);
+			ResourceManager::Instance()->LoadTexture(SpaceTexturePath[i]);
 		}
 	}
 }

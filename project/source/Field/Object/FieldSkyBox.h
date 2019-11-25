@@ -26,6 +26,8 @@ namespace Field
 	public:
 		FieldSkyBox(Field::FieldLevel level);
 
+		static void LoadResource();
+
 	private:
 		static const char* CityTexturePath[];
 		static const char* WorldTexturePath[];

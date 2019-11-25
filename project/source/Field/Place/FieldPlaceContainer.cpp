@@ -59,10 +59,7 @@ namespace Field::Model
 	***************************************/
 	PlaceContainer::~PlaceContainer()
 	{
-		Utility::DeleteContainer(placeVector);
-
-		Utility::DeleteMap(townContainer);
-		Utility::DeleteMap(junctionContainer);
+		Clear();
 	}
 
 	/**************************************
@@ -77,11 +74,18 @@ namespace Field::Model
 		{
 			town.second->Update();
 		}
+	}
 
-		//デバッグ表示
-		Debug::Log("CntLinkedTown:%d", townContainer.size());
-		Debug::Log("CntJunction:%d", junctionContainer.size());
-		Debug::Log("TrafficJam: %f", trafficJamRate);
+	/**************************************
+	クリア処理
+	***************************************/
+	void Field::Model::PlaceContainer::Clear()
+	{
+		Utility::DeleteContainer(placeVector);
+		Utility::DeleteMap(townContainer);
+		Utility::DeleteMap(junctionContainer);
+
+		initialized = false;
 	}
 
 #ifdef DEBUG_PLACEMODEL
@@ -139,10 +143,20 @@ namespace Field::Model
 	/**************************************
 	前プレイス取得処理
 	***************************************/
-	std::vector<const PlaceModel*> Field::Model::PlaceContainer::GetAllPlaces() const
+	std::vector<PlaceModel*> Field::Model::PlaceContainer::GetAllPlaces() const
 	{
-		std::vector<const PlaceModel*> out;
-		out.assign(placeVector.begin(), placeVector.end());
+		using cpplinq::from;
+		using cpplinq::where;
+		using cpplinq::to_vector;
+
+		std::vector<PlaceModel*> out = 
+			from(placeVector)
+			>> where([](PlaceModel* model)
+		{
+			return !model->IsType(PlaceType::None);
+		})
+			>> to_vector();
+
 		return out;
 	}
 
@@ -214,7 +228,7 @@ namespace Field::Model
 		//登録確認
 		if (townContainer.count(placeID) == 0)
 		{
-			townContainer.emplace(placeID, new TownModel(town, &onDepartPassenger));
+			townContainer.emplace(placeID, new TownModel(town, onDepartPassenger));
 		}
 
 		townContainer[placeID]->AddGate(gate);
