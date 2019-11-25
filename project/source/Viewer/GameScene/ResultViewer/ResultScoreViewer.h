@@ -24,6 +24,8 @@ private:
 	const static int fieldTypeMax = 3;
 	CountViewerDrawer * num[fieldTypeMax];
 
+	void SetViewerPos(void);
+
 public:
 	ResultScoreViewer();
 	~ResultScoreViewer();

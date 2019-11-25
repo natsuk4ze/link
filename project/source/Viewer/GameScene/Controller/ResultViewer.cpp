@@ -29,6 +29,8 @@ ResultViewer::ResultViewer()
 //*****************************************************************************
 ResultViewer::~ResultViewer()
 {
+	SAFE_DELETE(viewerParam);
+
 	//メモリを解放
 	for (unsigned int i = 0; i < resultViewer.size(); i++)
 	{
@@ -37,8 +39,6 @@ ResultViewer::~ResultViewer()
 
 	//インスタンスを入れた配列をクリア
 	resultViewer.clear();
-
-	SAFE_DELETE(viewerParam);
 }
 
 //=============================================================================

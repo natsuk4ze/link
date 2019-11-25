@@ -47,10 +47,6 @@
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Sound/BackgroundMusic.h"
 
-#ifdef _DEBUG
-#include "../../Framework/Input/input.h"
-#endif
-
 /**************************************
 staticメンバ
 ***************************************/
@@ -157,15 +153,6 @@ void GameScene::Uninit()
 void GameScene::Update()
 {
 	ProfilerCPU::Instance()->BeginLabel("GameScene");
-
-#ifdef _DEBUG
-
-	if (Keyboard::GetTrigger(DIK_R))
-	{
-		ChangeState(State::Result);
-	}
-
-#endif
 
 	//ステートを更新
 	State next = fsm[currentState]->OnUpdate(*this);

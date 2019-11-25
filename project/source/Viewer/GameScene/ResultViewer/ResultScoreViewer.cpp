@@ -12,23 +12,28 @@
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-ResultScoreViewer::ResultScoreViewer()
+ResultScoreViewer::ResultScoreViewer() :parameterBox()
 {
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	LPDIRECT3DTEXTURE9 tex;
+
+	// テクスチャの読み込み
+	D3DXCreateTextureFromFile(pDevice,
+		"data/TEXTURE/Viewer/ResultViewer/ResultScoreViewer/Number.png",
+		&tex);
+
 	for (int i = 0; i < fieldTypeMax; i++)
 	{
 		num[i] = new CountViewerDrawer();
-		num[i]->LoadTexture("data/TEXTURE/Viewer/ResultViewer/ResultScoreViewer/Number.png");
+		num[i]->texture = tex;
 		num[i]->size = D3DXVECTOR3(120.0f, 120.0f, 0.0f);
 		num[i]->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		num[i]->intervalPosScr = 80.0f;
 		num[i]->intervalPosTex = 0.1f;
-		num[0]->placeMax = 5;
-		num[1]->placeMax = 5;
-		num[2]->placeMax = 6;
-		num[i]->baseNumber = 16;
-		num[i]->position = D3DXVECTOR3(SCREEN_WIDTH/5*3 - i*num[i]->placeMax*num[i]->intervalPosScr, SCREEN_CENTER_Y, 0.0f);
-		num[i]->MakeVertex();
+		num[i]->baseNumber = 10;
 	}
+
+	SetViewerPos();
 }
 
 //*****************************************************************************
@@ -57,7 +62,34 @@ void ResultScoreViewer::Draw(void)
 	for (int i = 0; i < fieldTypeMax; i++)
 	{
 		num[i]->DrawCounter(num[i]->baseNumber,
-			parameterBox[0], num[i]->placeMax,
+			parameterBox[i], num[i]->placeMax,
 			num[i]->intervalPosScr, num[i]->intervalPosTex);
+	}
+}
+
+//=============================================================================
+// ビュアー座標設定処理（リファクタリング予定）
+//=============================================================================
+void ResultScoreViewer::SetViewerPos(void)
+{
+	num[0]->placeMax = 4;
+	num[1]->placeMax = 4;
+	num[2]->placeMax = 8;
+
+	for (int i = 0; i < fieldTypeMax; i++)
+	{
+		int placeCnt[fieldTypeMax] = {
+			num[0]->placeMax,
+			num[0]->placeMax + num[1]->placeMax,
+			num[0]->placeMax + num[1]->placeMax + num[2]->placeMax };
+
+		float pos = placeCnt[i] * num[i]->intervalPosScr;
+
+		num[i]->position = D3DXVECTOR3(
+			SCREEN_WIDTH/2 
+			+ num[i]->intervalPosScr/2 
+			+ (num[0]->placeMax + num[1]->placeMax + num[2]->placeMax)/2*num[i]->intervalPosScr 
+			- pos, SCREEN_CENTER_Y, 0.0f);
+		num[i]->MakeVertex();
 	}
 }

@@ -25,8 +25,8 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	entity.gameViewer->SetActive(false);
 	entity.guideViewer->SetActive(false);
 
-	// ƒŠƒUƒ‹ƒg—p‚ÌUI‚ÉAI”­“WƒŒƒxƒ‹‚ð“n‚·
-	entity.resultViewer->ReceiveParam((int)entity.field->GetScore(), (int)entity.field->GetScore(), (int)entity.field->GetScore());
+	//// ƒŠƒUƒ‹ƒg—p‚ÌUI‚ÉAI”­“WƒŒƒxƒ‹‚ð“n‚·
+	//entity.resultViewer->ReceiveParam((int)entity.field->GetScore(), (int)entity.field->GetScore(), (int)entity.field->GetScore());
 }
 
 //=====================================
