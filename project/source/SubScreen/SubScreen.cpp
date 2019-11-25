@@ -42,6 +42,7 @@ void SubScreen::DrawBegin(const D3DXCOLOR& backColor)
 	pDevice->SetRenderTarget(0, renderSurface);
 	pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, backColor, 1.0f, 0);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
 }
 
 //=====================================
@@ -69,6 +70,7 @@ void SubScreen::DrawEnd()
 	pDevice->SetFVF(FVF_VERTEX_2D);
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
 }
 
 //=====================================

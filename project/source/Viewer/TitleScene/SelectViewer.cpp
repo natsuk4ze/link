@@ -30,7 +30,7 @@ SelectViewer::SelectViewer()
 	camera = new SelectCamera();
 
 	// リソース読み込み
-	ResourceManager::Instance()->MakePolygon("ModeSelect", "data/TEXTURE/Title/ModeSelect.png", D3DXVECTOR2(25.0f, 8.35f), D3DXVECTOR2(1.0f, 3.0f));
+	ResourceManager::Instance()->MakePolygon("ModeSelect", "data/TEXTURE/Title/ModeSelect.png", D3DXVECTOR2(48.0f, 10.0f), D3DXVECTOR2(1.0f, 3.0f));
 
 	// 各種インスタンスの作成
 	logo.reserve(Mode::Max);
@@ -38,6 +38,7 @@ SelectViewer::SelectViewer()
 	{
 		SelectLogo* p = new SelectLogo();
 		p->LoadResource("ModeSelect");
+		p->SetTexDiv(D3DXVECTOR2(1.0f, 3.0f));
 		p->SetTextureIndex(i);
 		p->SetPosition(SelectLogo::InitLogoPos[i]);
 		p->SetAngle(SelectLogo::InitAngle[i]);
