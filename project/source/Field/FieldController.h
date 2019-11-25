@@ -116,8 +116,9 @@ namespace Field
 		// UI描画可否判定
 		void SetActive(bool flag);
 
-		// スコア取得
-		UINT GetScore();
+		// スコア処理
+		int GetScore(FieldLevel current);
+		void SetScore();
 
 	private:
 		//内部クラス前方宣言

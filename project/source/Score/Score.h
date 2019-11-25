@@ -20,14 +20,14 @@ namespace Field
 	{
 	private:
 		FieldLevel current;	// 現在のフィールドレベル
-		UINT developmentLevelAI;	// 総AI発展レベル＝スコア
+		int score[FieldLevel::Max];	// それぞれのフィールドのスコア
 
 	public:
 		Score();
 		~Score();
 
-		UINT GetScore();			// スコアの取得
-		void AddScore(UINT score, FieldLevel current);	// スコアの加算
+		int GetScore(FieldLevel level);					// スコアの取得
+		void SetScore(int score, FieldLevel current);	// スコアのセット
 	};
 }
 

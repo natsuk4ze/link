@@ -24,7 +24,7 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	entity.guideViewer->SetActive(false);
 
 	// ƒŠƒUƒ‹ƒg—p‚ÌUI‚ÉAI”­“WƒŒƒxƒ‹‚ð“n‚·
-	// entity.resultScore->SetScore(entity.field->GetScore());
+	//entity.resultViewer->SetScore(entity.field->GetScore(Field::FieldLevel::City), entity.field->GetScore(Field::FieldLevel::World), entity.field->GetScore(Field::FieldLevel::Space));
 
 }
 

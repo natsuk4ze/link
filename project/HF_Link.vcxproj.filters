@@ -257,6 +257,12 @@
     <ClInclude Include="source\Viewer\GameScene\ParameterContainer\EventViewerParam.h" />
     <ClInclude Include="source\Score\Score.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.h" />
+    <ClInclude Include="source\Viewer\TitleScene\TitleViewer.h" />
+    <ClInclude Include="source\Viewer\TitleScene\TitleLogo.h" />
+    <ClInclude Include="source\SubScreen\SubScreen.h" />
+    <ClInclude Include="source\Viewer\TitleScene\SelectViewer.h" />
+    <ClInclude Include="source\Viewer\TitleScene\SelectCamera.h" />
+    <ClInclude Include="source\Viewer\TitleScene\SelectLogo.h" />
     <ClInclude Include="source\Effect\Game\General\Cloud.h" />
     <ClInclude Include="source\Field\Camera\State\FIeldCameraTransitionOut.h" />
     <ClInclude Include="source\Scene\GameState\GameTransitionIn.h" />
@@ -502,6 +508,12 @@
     <ClCompile Include="source\Viewer\GameScene\Controller\GameViewer.cpp" />
     <ClCompile Include="source\Score\Score.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.cpp" />
+    <ClCompile Include="source\Viewer\TitleScene\TitleViewer.cpp" />
+    <ClCompile Include="source\Viewer\TitleScene\TitleLogo.cpp" />
+    <ClCompile Include="source\SubScreen\SubScreen.cpp" />
+    <ClCompile Include="source\Viewer\TitleScene\SelectViewer.cpp" />
+    <ClCompile Include="source\Viewer\TitleScene\SelectCamera.cpp" />
+    <ClCompile Include="source\Viewer\TitleScene\SelectLogo.cpp" />
     <ClCompile Include="source\Effect\Game\General\Cloud.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraTransitionOut.cpp" />
     <ClCompile Include="source\Scene\GameState\GameTransitionIn.cpp" />

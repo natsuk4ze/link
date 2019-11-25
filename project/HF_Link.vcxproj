@@ -251,6 +251,7 @@
     <ClInclude Include="source\Score\Score.h" />
     <ClInclude Include="source\Shader\RiverEffect.h" />
     <ClInclude Include="source\Shader\WhirlPoolEffect.h" />
+    <ClInclude Include="source\SubScreen\SubScreen.h" />
     <ClInclude Include="source\Viewer\Framework\BaseViewer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.h" />
@@ -281,6 +282,11 @@
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCamera.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.h" />
+    <ClInclude Include="source\Viewer\TitleScene\SelectCamera.h" />
+    <ClInclude Include="source\Viewer\TitleScene\SelectLogo.h" />
+    <ClInclude Include="source\Viewer\TitleScene\SelectViewer.h" />
+    <ClInclude Include="source\Viewer\TitleScene\TitleLogo.h" />
+    <ClInclude Include="source\Viewer\TitleScene\TitleViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Animation\AnimationManager.cpp" />
@@ -498,6 +504,7 @@
     <ClCompile Include="source\Score\Score.cpp" />
     <ClCompile Include="source\Shader\RiverEffect.cpp" />
     <ClCompile Include="source\Shader\WhirlPoolEffect.cpp" />
+    <ClCompile Include="source\SubScreen\SubScreen.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.cpp" />
@@ -525,6 +532,11 @@
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideCamera.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.cpp" />
+    <ClCompile Include="source\Viewer\TitleScene\SelectCamera.cpp" />
+    <ClCompile Include="source\Viewer\TitleScene\SelectLogo.cpp" />
+    <ClCompile Include="source\Viewer\TitleScene\SelectViewer.cpp" />
+    <ClCompile Include="source\Viewer\TitleScene\TitleLogo.cpp" />
+    <ClCompile Include="source\Viewer\TitleScene\TitleViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
