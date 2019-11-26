@@ -35,7 +35,7 @@ GameScene::State GameScene::GameTransitionOut::OnUpdate(GameScene & entity)
 	entity.field->UpdateObject();
 
 	//雲パーティクル発生
-	if (entity.cntFrame == 60)
+	if (entity.cntFrame == 45)
 	{
 		GameParticleManager::Instance()->Generate(GameParticle::Cloud, Vector3::Zero);
 	}
