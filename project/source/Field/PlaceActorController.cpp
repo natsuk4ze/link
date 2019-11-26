@@ -397,6 +397,14 @@ namespace Field::Actor
 	}
 
 	/**************************************
+	海上判定
+	***************************************/
+	bool PlaceActorController::IsOnSea(const FieldPosition & position) const
+	{
+		return bgContainer->IsSeaPlace(position);
+	}
+
+	/**************************************
 	ロードセット処理
 	***************************************/
 	void PlaceActorController::SetRoad(const Model::PlaceModel * place, int delay)

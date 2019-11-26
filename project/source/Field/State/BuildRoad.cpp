@@ -13,6 +13,7 @@
 #include "../Place/FieldPlaceModel.h"
 #include "../../Viewer/GameScene/FieldViewer/OperationExplanationViewer.h"
 #include "../../Viewer/GameScene/Controller/FieldViewer.h"
+#include "../PlaceActorController.h"
 
 namespace Field
 {
@@ -23,9 +24,10 @@ namespace Field
 	{
 		//ルートの開始点を取得
 		Model::PlaceModel* start = entity.GetPlace();
+		bool isSea = entity.placeActController->IsOnSea(start->GetPosition());
 
 		//ルートの開始を試みる
-		bool result = entity.operateContainer->BeginRoute(start);
+		bool result = entity.operateContainer->BeginRoute(start, isSea);
 
 		//開始できなかったらIdle状態へ遷移する
 		if (!result)
@@ -44,7 +46,8 @@ namespace Field
 
 		//カーソル位置のプレイスを操作対象として追加
 		Model::PlaceModel* place = entity.GetPlace();
-		entity.operateContainer->AddRoute(place);
+		bool isSea = entity.placeActController->IsOnSea(place->GetPosition());
+		entity.operateContainer->AddRoute(place, isSea);
 
 		//操作説明を更新
 		entity.operationZ = entity.operateContainer->EndRoute() ?

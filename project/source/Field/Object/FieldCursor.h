@@ -39,7 +39,7 @@ namespace Field
 
 		//XVˆ—A•`‰æˆ—
 		void Update();
-		void Draw();
+		void Draw(bool isSea);
 
 		//ˆÚ“®ˆ—
 		void Move(int x, int z);
