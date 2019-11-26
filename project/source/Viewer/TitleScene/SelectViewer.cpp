@@ -12,7 +12,6 @@
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "SelectLogo.h"
 #include "../../../Framework/Input/input.h"
-#include "../../../Framework/Tool/DebugWindow.h"
 
 #include <algorithm>
 //**************************************
@@ -99,9 +98,6 @@ void SelectViewer::Update()
 		}
 	}
 
-	Debug::Begin("Select");
-	Debug::Text("%d", nextMode);
-	Debug::End();
 }
 
 //=====================================
