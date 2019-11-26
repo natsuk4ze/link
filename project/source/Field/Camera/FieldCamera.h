@@ -30,6 +30,7 @@ public:
 		AngleRotate,			//回転ステート
 		TransitionOut,			//レベルアップ時の引き
 		TransitionIn,			//新しいレベルになった時の初期状態
+		Arround,				//フィールドの中心を焦点にして回転（タイトル、リザルト）
 		Max
 	};
 
@@ -72,6 +73,7 @@ private:
 	class FieldCameraRotate;
 	class FieldCameraTransitionOut;
 	class FieldCameraTransitionIn;
+	class FieldCameraArround;
 };
 
 #endif

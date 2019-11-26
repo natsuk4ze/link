@@ -71,6 +71,11 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 ***************************************/
 void GameScene::GameIdle::OnStart(GameScene & entity)
 {
+	// カメラの焦点をセット
+	entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
+	entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
+
+
 	// ゲームシーンで使用するUIの描画をON
 	entity.field->SetActive(true);
 	entity.gameViewer->SetActive(true);

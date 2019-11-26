@@ -10,12 +10,16 @@
 #include "../../Viewer/GameScene/Controller/GameViewer.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../Viewer/TitleScene/TitleViewer.h"
+#include "../../Field/Camera/FieldCamera.h"
 
 //=====================================
 // 入場処理
 //=====================================
 void GameScene::GameTitle::OnStart(GameScene & entity)
 {
+	// カメラのモード切替
+	entity.fieldCamera->ChangeMode(FieldCamera::Mode::Arround);
+
 	//タイトル、選択肢などなど
 	// タイトル画面で使用するUIの描画をON
 	entity.titleViewer->SetActive(true);

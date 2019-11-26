@@ -269,6 +269,7 @@
     <ClInclude Include="source\Scene\GameState\GameTransitionOut.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraTransitionIn.h" />
     <ClInclude Include="Framework\Core\ObjectPool.h" />
+    <ClInclude Include="source\Field\Camera\State\FieldCameraArround.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -519,6 +520,7 @@
     <ClCompile Include="source\Scene\GameState\GameTransitionIn.cpp" />
     <ClCompile Include="source\Scene\GameState\GameTransitionOut.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraTransitionIn.cpp" />
+    <ClCompile Include="source\Field\Camera\State\FieldCameraArround.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
