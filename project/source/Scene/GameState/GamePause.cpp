@@ -16,11 +16,7 @@
 ***************************************/
 void GameScene::GamePause::OnStart(GameScene & entity)
 {
-	//イベントビューア以外をオフに
-	// ゲームシーンで使用するUIの描画をON
-	entity.field->SetViewerActive(false);
-	entity.gameViewer->SetActive(false);
-	entity.guideViewer->SetActive(false);
+	//NOTE:ここでFieldViewerをオフにしてしまうとレベルアップが見えなくなるのでしない
 }
 
 /**************************************
@@ -34,6 +30,12 @@ GameScene::State GameScene::GamePause::OnUpdate(GameScene & entity)
 	//ポップアップ終了の待機中はイベントのオブジェクトを更新させない
 	if (!entity.field->ShouldWaitPopup())
 	{
+		//イベント中はFieldViewerをオフに
+		//NOTE：汚いけどとりあえずこのやり方でやってしまう
+		entity.field->SetViewerActive(false);
+		entity.gameViewer->SetActive(false);
+		entity.guideViewer->SetActive(false);
+
 		entity.eventController->Update();
 	}
 
