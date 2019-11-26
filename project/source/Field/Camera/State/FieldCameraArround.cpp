@@ -65,10 +65,5 @@ FieldCamera::Mode FieldCamera::FieldCameraArround::OnUpdate(FieldCamera & entity
 		entity.transform.SetPosition(position + targetPos);
 		entity.transform.LookAt(targetPos);
 	}
-
-	Debug::Begin("CameraPos");
-	Debug::Text("X:%f Y:%f Z:%f", entity.transform.GetPosition().x, entity.transform.GetPosition().y, entity.transform.GetPosition().z);
-	Debug::End();
-
 	return FieldCamera::Arround;
 }
