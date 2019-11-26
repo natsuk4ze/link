@@ -11,6 +11,7 @@
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../../../Framework/Renderer3D/BoardPolygon.h"
 #include "../../../Framework/Tween/Tween.h"
+#include "../Object/WaterHeightController.h"
 
 #include "../../../Library/cppLinq/cpplinq.hpp"
 
@@ -45,7 +46,7 @@ namespace Field::Model
 	/**************************************
 	プレイス追加開始処理
 	***************************************/
-	bool OperatePlaceContainer::BeginRoute(PlaceModel * place)
+	bool OperatePlaceContainer::BeginRoute(PlaceModel * place, bool isSea)
 	{
 		//ルートを始められるプレイスであるか確認
 		if (!place->CanStartRoute())
@@ -53,14 +54,14 @@ namespace Field::Model
 
 		//コンテナに追加してreturn true
 		container.push_back(place);
-		CreatePin(place, BuildRoad);
+		CreatePin(place, BuildRoad, isSea);
 		return true;
 	}
 
 	/**************************************
 	プレイス追加開始処理
 	***************************************/
-	bool OperatePlaceContainer::BeginDevelop(PlaceModel * place)
+	bool OperatePlaceContainer::BeginDevelop(PlaceModel * place, bool isSea)
 	{
 		//開発可能タイプ以外か確認
 		if (place->IsDevelopableType())
@@ -68,7 +69,7 @@ namespace Field::Model
 
 		//コンテナに追加してreturn true
 		container.push_back(place);
-		CreatePin(place, Develop);
+		CreatePin(place, Develop, isSea);
 
 		return true;
 	}
@@ -76,7 +77,7 @@ namespace Field::Model
 	/**************************************
 	プレイス追加処理
 	***************************************/
-	bool OperatePlaceContainer::AddRoute(PlaceModel * place)
+	bool OperatePlaceContainer::AddRoute(PlaceModel * place, bool isSea)
 	{
 		//重複確認
 		auto itr = std::find(container.begin(), container.end(), place);
@@ -94,7 +95,7 @@ namespace Field::Model
 
 		//追加してreturn true
 		container.push_back(place);
-		CreatePin(place, BuildRoad);
+		CreatePin(place, BuildRoad, isSea);
 
 		return true;
 	}
@@ -102,7 +103,7 @@ namespace Field::Model
 	/**************************************
 	プレイス追加処理
 	***************************************/
-	bool OperatePlaceContainer::AddDevelop(PlaceModel * place)
+	bool OperatePlaceContainer::AddDevelop(PlaceModel * place, bool isSea)
 	{
 		//重複確認
 		auto itr = std::find(container.begin(), container.end(), place);
@@ -115,7 +116,7 @@ namespace Field::Model
 
 		//追加してreturn true
 		container.push_back(place);
-		CreatePin(place, Develop);
+		CreatePin(place, Develop, isSea);
 
 		return true;
 	}
@@ -215,17 +216,18 @@ namespace Field::Model
 	/**************************************
 	ピンアクター作成処理
 	***************************************/
-	void Field::Model::OperatePlaceContainer::CreatePin(const PlaceModel * place, Mode mode)
+	void Field::Model::OperatePlaceContainer::CreatePin(const PlaceModel * place, Mode mode, bool isSea)
 	{
 		D3DXVECTOR3 offset = place->IsType(PlaceType::Mountain) ? Vector3::Up * 15.0f : Vector3::Up * 5.0f;
-		PinActor *actor = new PinActor(place->GetPosition().ConvertToWorldPosition() + offset, mode);
+		PinActor *actor = new PinActor(place->GetPosition().ConvertToWorldPosition() + offset, mode, isSea);
 		actorContainer.push_back(std::unique_ptr<PinActor>(actor));
 	}
 
 	/**************************************
 	PinActorコンストラクタ
 	***************************************/
-	PinActor::PinActor(const D3DXVECTOR3& position, OperatePlaceContainer::Mode mode)
+	PinActor::PinActor(const D3DXVECTOR3& position, OperatePlaceContainer::Mode mode, bool isSea) :
+		isSea(isSea)
 	{
 		polygon = new BoardPolygon();
 		polygon->SetTexDiv({ 2.0f, 1.0f });
@@ -255,6 +257,13 @@ namespace Field::Model
 	***************************************/
 	void PinActor::Draw()
 	{
+		//海上だったら高さを水面に合わせる
+		if (isSea)
+		{
+			D3DXVECTOR3 position = transform->GetPosition();
+			position.y = WaterHeightController::GetHeight() + 5.0f;
+			transform->SetPosition(position);
+		}
 		polygon->Draw(transform->GetMatrix());
 	}
 }
