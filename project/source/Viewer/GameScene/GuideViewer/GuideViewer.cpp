@@ -36,7 +36,7 @@ GuideViewer::GuideViewer()
 	camera = new GuideCamera();
 
 	// リソース読み込み
-	ResourceManager::Instance()->MakePolygon("GuideViewerBG", "data/TEXTURE/VIewer/GameViewer/GuideViewer/Circuit.png", D3DXVECTOR2(100.0f, 100.0f));
+	ResourceManager::Instance()->MakePolygon("GuideViewerBG", "data/TEXTURE/VIewer/GameViewer/GuideViewer/Circuit.jpg", D3DXVECTOR2(100.0f, 100.0f));
 
 	// 各種インスタンスの作成
 	actor = new GuideActor();
