@@ -11,6 +11,8 @@
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../Viewer/GameScene/Controller/ResultViewer.h"
 #include "../../../Framework/Input/input.h"
+#include "../../../Framework/Transition/TransitionController.h"
+#include "../../Field/FieldController.h"
 
 //=====================================
 // 入場処理
@@ -46,7 +48,16 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 {
 	//とりあえずエンターが押されたらタイトルへ戻る
 	if (Keyboard::GetTrigger(DIK_RETURN))
-		entity.ChangeState(State::Title);
+	{
+		TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
+		{
+			entity.level = 0;
+			entity.Clear();
+			entity.SetFieldLevel(0);
+			entity.field->Load();
+			entity.ChangeState(State::Title);
+		});
+	}
 
 	return State::Result;
 }

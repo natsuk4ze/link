@@ -68,11 +68,8 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	//制限時間読み込み
 	entity.remainTime = PlayerPrefs::GetNumber<int>(Utility::ToString(GameConfig::Key_RemainTime));
 
-	//トランジション画面をオフにして遷移
-	TransitionController::Instance()->SetTransition(true, TransitionType::HexaPop, [&]()
-	{
-		entity.ChangeState(State::Title);
-	});
+	//タイトルに遷移
+	entity.ChangeState(State::Title);
 }
 
 /**************************************
