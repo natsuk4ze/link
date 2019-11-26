@@ -11,12 +11,17 @@
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../Viewer/TitleScene/TitleViewer.h"
 #include "../../Field/Camera/FieldCamera.h"
+#include "../../Viewer/GameScene/Controller/ResultViewer.h"
+#include "../../../Framework/Transition/TransitionController.h"
 
 //=====================================
 // 入場処理
 //=====================================
 void GameScene::GameTitle::OnStart(GameScene & entity)
 {
+	// シーンチェンジ
+	TransitionController::Instance()->SetTransition(true, TransitionType::HexaPop);
+
 	// カメラのモード切替
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::Arround);
 
@@ -25,9 +30,10 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	entity.titleViewer->SetActive(true);
 
 	// 使用しないUIの描画をOFF
-	entity.field->SetActive(false);
+	entity.field->SetViewerActive(false);
 	entity.gameViewer->SetActive(false);
 	entity.guideViewer->SetActive(false);
+	entity.resultViewer->SetActive(false);
 }
 
 //=====================================
@@ -35,7 +41,7 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 //=====================================
 GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 {
-	//今はとりあえず作っただけ
+	entity.field->UpdateObject();
 
 	// シーンチェンジ
 	if (entity.titleViewer->CheckSceneChange())

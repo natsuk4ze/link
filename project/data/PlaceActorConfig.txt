@@ -18,10 +18,10 @@
 	"City-Bridge":"data/MODEL/PlaceActor/bridge.x",
 
 	"City-Mountain":"フィールドレベル街の山モデル",
-	"City-Mountain":"data/MODEL/PlaceActor/mountain.x",
+	"City-Mountain":"data/MODEL/PlaceActor/mountainCity.x",
 
 	"World-Town":"フィールドレベル国の街モデル",
-	"World-Town":"data/MODEL/PlaceActor/town.x",
+	"World-Town":"data/MODEL/PlaceActor/Big country.x",
 
 	"World-Straight":"フィールドレベル国の直線道モデル",
 	"World-Straight":"data/MODEL/PlaceActor/Straight track.x",

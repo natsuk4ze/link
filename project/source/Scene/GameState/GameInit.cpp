@@ -20,6 +20,7 @@
 #include "../../../Framework/Sound/BackgroundMusic.h"
 #include "../../Viewer/GameScene/Controller/GameViewer.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
+#include "../../Viewer/GameScene/Controller/ResultViewer.h"
 
 /**************************************
 入場処理
@@ -30,11 +31,11 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	ResourceManager::Instance()->LoadMesh("Meteor", "data/MODEL/Planet/Meteor.x");
 	ResourceManager::Instance()->LoadMesh("UFO", "data/MODEL/UFO/UFO.x");
 
-	// ゲームシーンで使用するUIの描画をON
-	entity.field->SetActive(true);
-	entity.gameViewer->SetActive(true);
-	entity.guideViewer->SetActive(true);
 	// 使用しないUIの描画をOFF（タイトル、リザルト用など）
+	entity.field->SetViewerActive(false);
+	entity.gameViewer->SetActive(false);
+	entity.guideViewer->SetActive(false);
+	entity.resultViewer->SetActive(false);
 
 	//パーティクル初期化
 	entity.particleManager->Init();
@@ -67,11 +68,8 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	//制限時間読み込み
 	entity.remainTime = PlayerPrefs::GetNumber<int>(Utility::ToString(GameConfig::Key_RemainTime));
 
-	//トランジション画面をオフにして遷移
-	TransitionController::Instance()->SetTransition(true, TransitionType::HexaPop, [&]()
-	{
-		entity.ChangeState(State::Idle);
-	});
+	//タイトルに遷移
+	entity.ChangeState(State::Title);
 }
 
 /**************************************

@@ -30,6 +30,7 @@
 #include "../Effect/WorldParticleManager.h"
 #include "../Effect/SpaceParticleManager.h"
 #include "../Viewer/GameScene/GuideViewer/GuideViewer.h"
+#include "../Viewer/GameScene/Controller/ResultViewer.h"
 #include "../Viewer/TitleScene/TitleViewer.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
@@ -53,8 +54,8 @@
 staticメンバ
 ***************************************/
 int GameScene::level = 0;		//デバッグ用フィールドレベル（本番では非staticメンバにする
-const float GameScene::BloomPower[] = {0.75f, 0.65f, 0.50f};		//ブルームの強さ
-const float GameScene::BloomThrethold[] = {0.6f, 0.35f, 0.21f};		//ブルームをかける輝度の閾値
+const float GameScene::BloomPower[] = {0.6f, 0.55f, 0.50f};		//ブルームの強さ
+const float GameScene::BloomThrethold[] = {0.6f, 0.5f, 0.4f};		//ブルームをかける輝度の閾値
 
 /**************************************
 初期化処理
@@ -79,6 +80,7 @@ void GameScene::Init()
 	//serial = new SerialWrapper(3);								//TODO:ポート番号を変えられるようにする
 	Client = new UDPClient();
 	guideViewer = new GuideViewer();
+	resultViewer = new ResultViewer();
 	titleViewer = new TitleViewer();
 
 	//レベル毎のパーティクルマネージャを選択
@@ -137,6 +139,7 @@ void GameScene::Uninit()
 	//SAFE_DELETE(serial);
 	SAFE_DELETE(Client);
 	SAFE_DELETE(guideViewer);
+	SAFE_DELETE(resultViewer);
 	SAFE_DELETE(titleViewer);
 
 	//パーティクル終了
@@ -180,6 +183,7 @@ void GameScene::Update()
 	//ビュアー更新
 	gameViewer->Update();
 	guideViewer->Update();
+	resultViewer->Update();
 	titleViewer->Update();
 
 	//パーティクル更新
@@ -253,6 +257,7 @@ void GameScene::Draw()
 	field->DrawViewer();
 	gameViewer->Draw();
 	eventController->DrawEventViewer();
+	resultViewer->Draw();
 	titleViewer->Draw();
 
 	//*******別ウインドウを作成するため最後*******
@@ -281,7 +286,7 @@ void GameScene::ChangeState(State next)
 ***************************************/
 void GameScene::OnBuildRoad(Route& route)
 {
-	bool flgPause = eventController->CheckEventHappen(route, Field::FieldLevel::City);
+	bool flgPause = eventController->CheckEventHappen(route, level);
 
 	if (flgPause)
 		ChangeState(State::Pause);
@@ -341,20 +346,29 @@ void GameScene::DebugTool()
 	Debug::Text("Level");
 	if (Debug::Button("CityLevel"))
 	{
-		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::City);
-		SceneManager::ChangeScene(GameConfig::SceneID::Game);
+		level = 0;
+		Clear();
+		SetFieldLevel(level);
+		field->Load();
+		ChangeState(Idle);
 	}
 	Debug::SameLine();
 	if (Debug::Button("WorldLevel"))
 	{
-		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::World);
-		SceneManager::ChangeScene(GameConfig::SceneID::Game);
+		level = 1;
+		Clear();
+		SetFieldLevel(level);
+		field->Load();
+		ChangeState(Idle);
 	}
 	Debug::SameLine();
 	if (Debug::Button("SpaceLevel"))
 	{
-		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::Space);
-		SceneManager::ChangeScene(GameConfig::SceneID::Game);
+		level = 2;
+		Clear();
+		SetFieldLevel(level);
+		field->Load();
+		ChangeState(Idle);
 	}
 
 	Debug::NewLine();
@@ -406,6 +420,14 @@ void GameScene::DebugTool()
 	{
 		level++;
 		ChangeState(State::TransitionOut);
+	}
+
+	Debug::NewLine();
+	Debug::Text("Event");
+	bool flgPause = eventController->EventDebug(level);
+	if (flgPause)
+	{
+		ChangeState(Pause);
 	}
 
 	Debug::NewLine();

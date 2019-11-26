@@ -15,10 +15,10 @@ namespace Effect::Game
 	***************************************/
 	const float Cloud::MinSpeed = 10.0f;
 	const float Cloud::MaxSpeed = 40.0f;
-	const float Cloud::MinPositionX = -100.0f;
-	const float Cloud::MaxPositionX = SCREEN_WIDTH + 100.0f;
-	const float Cloud::MinPositionY = -100.0f;
-	const float Cloud::MaxPositionY = SCREEN_HEIGHT + 100.0f;
+	const float Cloud::MinPositionX = -300.0f;
+	const float Cloud::MaxPositionX = SCREEN_WIDTH + 300.0f;
+	const float Cloud::MinPositionY = -300.0f;
+	const float Cloud::MaxPositionY = SCREEN_HEIGHT + 300.0f;
 
 	/**************************************
 	コンストラクタ
@@ -27,7 +27,7 @@ namespace Effect::Game
 		BaseParticleController(Particle_2D, false)
 	{
 		//単位頂点バッファ作成
-		const D3DXVECTOR2 SizeParticle = { 200.0f, -200.0f };
+		const D3DXVECTOR2 SizeParticle = { 250.0f, -250.0f };
 		const D3DXVECTOR2 DivParticle = { 3.0f, 2.0f };
 		MakeUnitBuffer(SizeParticle, DivParticle);
 
@@ -71,7 +71,7 @@ namespace Effect::Game
 
 		transform->Rotate(Math::RandomRange(0.0f, 360.0f), Vector3::Forward);
 
-		initScale = Math::RandomRange(0.8f, 2.0f);
+		initScale = Math::RandomRange(0.8f, 2.5f);
 		transform->SetScale(Vector3::One * initScale);
 
 		cntFrame = 0;
@@ -126,7 +126,7 @@ namespace Effect::Game
 	CloudEmitterコンストラクタ
 	***************************************/
 	CloudEmitter::CloudEmitter() :
-		BaseEmitter(14, 30)
+		BaseEmitter(15, 30)
 	{
 
 	}

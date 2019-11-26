@@ -198,7 +198,8 @@ namespace Field
 		placeContainer->DrawDebug();
 #endif
 		//カーソルには透過オブジェクトが含まれるので最後に描画
-		cursor->Draw();
+		bool isSea = placeActController->IsOnSea(cursor->GetModelPosition());
+		cursor->Draw(isSea);
 		operateContainer->Draw();
 	}
 
@@ -215,7 +216,7 @@ namespace Field
 	***************************************/
 	void FieldController::DrawViewer()
 	{
-		if (!isActive)
+		if (!isViewerActive)
 			return;
 
 		SetOperationExplanation();
@@ -363,8 +364,8 @@ namespace Field
 	bool FieldController::ShouldLevelUp()
 	{
 		//宇宙レベルではレベルアップしない
-		if (currentLevel == FieldLevel::Space)
-			return false;
+		//if (currentLevel == FieldLevel::Space)
+		//	return false;
 
 		//AI発展レベルが最大値に到達していたらレベルアップする
 		return developmentLevelAI >= MaxDevelopmentLevelAI;
@@ -599,9 +600,9 @@ namespace Field
 	/**************************************
 	UI描画の可否判定セット
 	***************************************/
-	void FieldController::SetActive(bool flag)
+	void FieldController::SetViewerActive(bool flag)
 	{
-		isActive = flag;
+		isViewerActive = flag;
 	}
 
 	/**************************************

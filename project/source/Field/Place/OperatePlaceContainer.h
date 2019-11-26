@@ -41,12 +41,12 @@ namespace Field::Model
 		~OperatePlaceContainer();
 
 		//プレイス追加開始処理
-		bool BeginRoute(PlaceModel* place);
-		bool BeginDevelop(PlaceModel* place);
+		bool BeginRoute(PlaceModel* place, bool isSea);
+		bool BeginDevelop(PlaceModel* place, bool isSea);
 
 		//プレイス追加処理
-		bool AddRoute(PlaceModel* place);
-		bool AddDevelop(PlaceModel* place);
+		bool AddRoute(PlaceModel* place, bool isSea);
+		bool AddDevelop(PlaceModel* place, bool isSea);
 
 		//プレイス追加終了処理
 		bool EndRoute();
@@ -68,7 +68,7 @@ namespace Field::Model
 		std::vector<PlaceModel*> container;		//PlaceModelコンテナ
 		std::vector<std::unique_ptr<PinActor>> actorContainer;	//PinActorコンテナ
 
-		void CreatePin(const PlaceModel* place, Mode mode);
+		void CreatePin(const PlaceModel* place, Mode mode, bool isSea);
 	};
 
 	/**************************************
@@ -77,7 +77,7 @@ namespace Field::Model
 	class PinActor : GameObject
 	{
 	public:
-		PinActor(const D3DXVECTOR3& position, OperatePlaceContainer::Mode mode);
+		PinActor(const D3DXVECTOR3& position, OperatePlaceContainer::Mode mode, bool isSea);
 		~PinActor();
 
 		void Update();
@@ -85,6 +85,7 @@ namespace Field::Model
 
 	private:
 		BoardPolygon *polygon;
+		bool isSea;
 	};
 }
 #endif

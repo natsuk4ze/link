@@ -31,9 +31,6 @@ void GameScene::GameTransitionIn::OnStart(GameScene & entity)
 
 	//アクター切り替え
 
-	//カメラ切り替え
-	entity.fieldCamera->ChangeMode(FieldCamera::Mode::TransitionIn);
-
 	entity.cntFrame = 0;
 }
 
@@ -47,7 +44,13 @@ GameScene::State GameScene::GameTransitionIn::OnUpdate(GameScene & entity)
 	entity.eventController->UpdateViewer();
 	entity.field->UpdateObject();
 
-	if (entity.cntFrame == 90)
+	if (entity.cntFrame == 15)
+	{
+		//カメラ切り替え
+		entity.fieldCamera->ChangeMode(FieldCamera::Mode::TransitionIn);
+	}
+
+	if (entity.cntFrame == 100)
 	{
 		entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
 		entity.ChangeState(GameScene::Idle);

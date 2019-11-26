@@ -9,6 +9,7 @@
 #include "../../../Framework/Math/Easing.h"
 #include "../../../Framework/Tool/DebugWindow.h"
 #include "../../../Framework/Resource/ResourceManager.h"
+#include "../Object/WaterHeightController.h"
 
 #include <algorithm>
 
@@ -76,12 +77,22 @@ namespace Field
 	/**************************************
 	描画処理
 	***************************************/
-	void FieldCursor::Draw()
+	void FieldCursor::Draw(bool isSea)
 	{
 		LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
+		Transform workTransform = *transform;
+
+		//海上だったら高さを水面に合わせる
+		if (isSea)
+		{
+			D3DXVECTOR3 position = workTransform.GetPosition();
+			position.y = WaterHeightController::GetHeight();
+			workTransform.SetPosition(position);
+		}
+
 		//自身のワールド変換行列を作成
-		D3DXMATRIX mtxWorld = transform->GetMatrix();
+		D3DXMATRIX mtxWorld = workTransform.GetMatrix();
 
 		//四角形をソートして描画
 		pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);

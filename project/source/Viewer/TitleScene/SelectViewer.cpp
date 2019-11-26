@@ -14,6 +14,8 @@
 #include "../../../Framework/Input/input.h"
 
 #include <algorithm>
+#include <functional>
+
 //**************************************
 // スタティックメンバ初期化
 //**************************************
