@@ -8,13 +8,19 @@
 #include "GamePause.h"
 #include "../../Event/EventController.h"
 #include "../../Field/FieldController.h"
+#include "../../Viewer/GameScene/Controller/GameViewer.h"
+#include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 
 /**************************************
 入場処理
 ***************************************/
 void GameScene::GamePause::OnStart(GameScene & entity)
 {
-
+	//イベントビューア以外をオフに
+	// ゲームシーンで使用するUIの描画をON
+	entity.field->SetViewerActive(false);
+	entity.gameViewer->SetActive(false);
+	entity.guideViewer->SetActive(false);
 }
 
 /**************************************

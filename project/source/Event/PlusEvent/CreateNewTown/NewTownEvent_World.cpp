@@ -49,14 +49,14 @@ NewTownEvent_World::~NewTownEvent_World()
 void NewTownEvent_World::Init()
 {
 	// 新しい国を作る予定地を取得
-	NewTown = fieldEventHandler->GetNewTownPosition();
-	const D3DXVECTOR3 TownPos = NewTown->GetPosition().ConvertToWorldPosition();
+	NewTown = fieldEventHandler->GetAtlantisPlace();
+	TownPos = NewTown->GetPosition().ConvertToWorldPosition();
 
 	// ゲーム進行停止
 	fieldEventHandler->PauseGame();
 
 	// テロップ設置
-	eventViewer->SetEventTelop(EventTelop::Atlantis, [=]()
+	eventViewer->SetEventTelop(EventTelop::Atlantis, [&]()
 	{
 		// 予定地にカメラを移動させる
 		camera->Translation(TownPos, 30, [&]() {CreateNewTown(); });
@@ -100,9 +100,12 @@ void NewTownEvent_World::CreateNewTown(void)
 	D3DXVECTOR3 Amplitude = D3DXVECTOR3(5.0f, 3.0f, 5.0f);
 
 	CameraShakePlugin::Instance()->Set(Amplitude, 300);
-	fieldEventHandler->CreateNewTown(NewTown);
+	fieldEventHandler->CreateAtlantis(NewTown);
 	WorldParticleManager::Instance()->SetAtlantisEffect(TownPos);
-	TaskManager::Instance()->CreateDelayedTask(180, [&]() {EventOverFunc(); });
+	TaskManager::Instance()->CreateDelayedTask(180, [&]() 
+	{
+		camera->Return(15, EventOverFunc);
+	});
 }
 
 ////=============================================================================
