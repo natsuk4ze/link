@@ -281,6 +281,10 @@ namespace Field
 		developSpeedBonus = 1.0f;
 		enableDevelop = true;
 		flgWaitPopup = false;
+
+		//ステートをIdleへ変更
+		current = State::Idle;
+		state = fsm[current];
 	}
 
 	/**************************************
