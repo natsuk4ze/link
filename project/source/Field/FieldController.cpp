@@ -198,7 +198,8 @@ namespace Field
 		placeContainer->DrawDebug();
 #endif
 		//カーソルには透過オブジェクトが含まれるので最後に描画
-		cursor->Draw();
+		bool isSea = placeActController->IsOnSea(cursor->GetModelPosition());
+		cursor->Draw(isSea);
 		operateContainer->Draw();
 	}
 
