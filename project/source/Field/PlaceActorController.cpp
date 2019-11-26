@@ -386,7 +386,11 @@ namespace Field::Actor
 		PlaceActor* townActor = CreateNewTown(place);
 
 		D3DXVECTOR3 actorPos = townActor->GetPosition();
-		Tween::Move(*townActor, actorPos + InitOffset, actorPos, 60, EaseType::InOutCirc);
+		Tween::Move(*townActor, actorPos + InitOffset, actorPos, 60, EaseType::InOutCirc, [=]()
+		{
+			for(int i = 0; i < 5; i++)
+				GameParticleManager::Instance()->Generate(GameParticle::WhiteSmog, actorPos);
+		});
 
 		//ínñ ê∂ê¨
 		WorldBackGroundContainer *worldBgContainer = dynamic_cast<WorldBackGroundContainer*>(bgContainer);
