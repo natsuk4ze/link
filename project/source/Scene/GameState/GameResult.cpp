@@ -25,6 +25,12 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	entity.gameViewer->SetActive(false);
 	entity.guideViewer->SetActive(false);
 
+	//宇宙レベルのスコアを保存
+	if (level == 2)
+	{
+		entity.field->SetScore();
+	}
+
 	//// リザルト用のUIにAI発展レベルを渡す
 	int cityScore = (int)entity.field->GetScore(Field::FieldLevel::City);
 	int worldScore = (int)entity.field->GetScore(Field::FieldLevel::World);
