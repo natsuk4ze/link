@@ -8,6 +8,7 @@
 #include "FieldCameraArround.h"
 #include "../../FieldConfig.h"
 #include "../../../../Framework/Math/Easing.h"
+#include "../../../../Framework/Tool/DebugWindow.h"
 
 //**************************************
 // スタティックメンバ初期化
@@ -20,10 +21,12 @@ void FieldCamera::FieldCameraArround::OnStart(FieldCamera & entity)
 {
 	// パラメータ初期化
 	const D3DXVECTOR3 targetPos = Field::FieldPosition(25, 25).ConvertToWorldPosition();
-	const D3DXVECTOR3 startPosition = D3DXVECTOR3(250.0f, 300.0f, -400.0f);
+	entity.cameraAngle = -180.0f;
+	const D3DXVECTOR3 startPosition = D3DXVECTOR3(0.0f, 200.0f, -100.0f);
 	entity.startPosition = entity.transform.GetPosition();
 	entity.cntFrame = 0;
-	entity.cameraAngle = 180.0f;
+	D3DXVECTOR3 vec = startPosition - Vector3::Zero;
+	entity.distance = D3DXVec2Length(&D3DXVECTOR2(vec.x, vec.z));
 	entity.transform.LookAt(targetPos);
 
 	// 移動先
@@ -38,32 +41,34 @@ FieldCamera::Mode FieldCamera::FieldCameraArround::OnUpdate(FieldCamera & entity
 	entity.cntFrame++;
 
 	D3DXVECTOR3 targetPos = Field::FieldPosition(25, 25).ConvertToWorldPosition();
-	D3DXVECTOR3 vec = targetPos - entity.goalPosition;
-	const float Dist = D3DXVec3Length(&vec);
 	const int MoveDuration = 60;
 
 	if (entity.cntFrame <= MoveDuration)
 	{
 		// イージングで移動
 		float t = (float)entity.cntFrame / MoveDuration;
-		D3DXVECTOR3 position = Easing::EaseValue(t, entity.startPosition, entity.goalPosition, EaseType::InOutCirc);
+		D3DXVECTOR3 position = Easing::EaseValue(t, entity.startPosition, entity.goalPosition + targetPos, EaseType::InOutCirc);
 		entity.transform.SetPosition(position);
 		entity.transform.LookAt(targetPos);
 	}
 	else
 	{
 		// 回転し続ける
-		entity.cameraAngle += 1.5f;
+		entity.cameraAngle += 1.0f;
 		if (entity.cameraAngle >= 180.0f)
 		{
 			entity.cameraAngle -= 360.0f;
 		}
-		D3DXVECTOR3 position = entity.transform.GetPosition() + entity.targetObject->GetPosition();
-		position.x = Dist * sinf(D3DXToRadian(entity.cameraAngle));
-		position.z = Dist * cosf(D3DXToRadian(entity.cameraAngle));
+		D3DXVECTOR3 position = entity.transform.GetPosition() - targetPos;
+		position.x = entity.distance * sinf(D3DXToRadian(entity.cameraAngle));
+		position.z = entity.distance * cosf(D3DXToRadian(entity.cameraAngle));
 		entity.transform.SetPosition(position + targetPos);
 		entity.transform.LookAt(targetPos);
 	}
+
+	Debug::Begin("CameraPos");
+	Debug::Text("X:%f Y:%f Z:%f", entity.transform.GetPosition().x, entity.transform.GetPosition().y, entity.transform.GetPosition().z);
+	Debug::End();
 
 	return FieldCamera::Arround;
 }

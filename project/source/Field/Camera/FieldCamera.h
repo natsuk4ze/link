@@ -61,6 +61,7 @@ private:
 	float cameraAngle;								//カメラのXZ平面の角度
 	float startAngle, endAngle;						//イージング用角度
 	int cntRotate;									//回転フレームカウント
+	float distance;									// カメラと焦点の距離
 
 	D3DXVECTOR3 startEyeVector;						//遷移開始時の視線ベクトル
 

@@ -38,6 +38,7 @@ FieldCamera::FieldCamera() :
 	startAngle(InitCameraAngle),
 	endAngle(InitCameraAngle),
 	cntRotate(DurationRotate),
+	distance(0.0f),
 	currentMode(Mode::FarView)
 {
 	//ƒpƒ‰ƒ[ƒ^İ’è
