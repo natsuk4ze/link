@@ -21,6 +21,7 @@ class NewTownEventCtrl : public EventBase
 private:
 	EventBase *NewTownEvent;
 	EventViewer *eventViewer;
+	EventCamera *eventCamera;
 
 public:
 	NewTownEventCtrl(EventViewer *Ptr, int FieldLevel, EventCamera *camera);

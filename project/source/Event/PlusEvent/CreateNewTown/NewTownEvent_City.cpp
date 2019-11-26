@@ -49,13 +49,13 @@ void NewTownEvent_City::Init()
 {
 	// 新しい町を作る予定地を取得
 	NewTown = fieldEventHandler->GetNewTownPosition();
-	const D3DXVECTOR3 TownPos = NewTown->GetPosition().ConvertToWorldPosition();
+	TownPos = NewTown->GetPosition().ConvertToWorldPosition();
 
 	// ゲーム進行停止
 	fieldEventHandler->PauseGame();
 
 	// テロップ設置
-	eventViewer->SetEventTelop(EventTelop::NewPlanet, [=]()
+	eventViewer->SetEventTelop(EventTelop::NewPlanet, [&]()
 	{
 		// 予定地にカメラを移動させる
 		camera->Translation(TownPos, 30, [&]() {CreateNewTown(); });
@@ -99,7 +99,10 @@ void NewTownEvent_City::CreateNewTown(void)
 
 	fieldEventHandler->CreateNewTown(NewTown);
 	CityParticleManager::Instance()->SetSingularityEffect(TownPos);
-	TaskManager::Instance()->CreateDelayedTask(90, [&]() {EventOverFunc(); });
+	TaskManager::Instance()->CreateDelayedTask(90, [&]() 
+	{
+		camera->Return(15, EventOverFunc);
+	});
 }
 
 ////=============================================================================
