@@ -346,20 +346,29 @@ void GameScene::DebugTool()
 	Debug::Text("Level");
 	if (Debug::Button("CityLevel"))
 	{
-		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::City);
-		SceneManager::ChangeScene(GameConfig::SceneID::Game);
+		level = 0;
+		Clear();
+		SetFieldLevel(level);
+		field->Load();
+		ChangeState(Idle);
 	}
 	Debug::SameLine();
 	if (Debug::Button("WorldLevel"))
 	{
-		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::World);
-		SceneManager::ChangeScene(GameConfig::SceneID::Game);
+		level = 1;
+		Clear();
+		SetFieldLevel(level);
+		field->Load();
+		ChangeState(Idle);
 	}
 	Debug::SameLine();
 	if (Debug::Button("SpaceLevel"))
 	{
-		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::Space);
-		SceneManager::ChangeScene(GameConfig::SceneID::Game);
+		level = 2;
+		Clear();
+		SetFieldLevel(level);
+		field->Load();
+		ChangeState(Idle);
 	}
 
 	Debug::NewLine();
