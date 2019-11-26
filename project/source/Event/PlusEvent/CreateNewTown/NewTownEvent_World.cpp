@@ -49,7 +49,7 @@ NewTownEvent_World::~NewTownEvent_World()
 void NewTownEvent_World::Init()
 {
 	// V‚µ‚¢‘‚ðì‚é—\’è’n‚ðŽæ“¾
-	NewTown = fieldEventHandler->GetNewTownPosition();
+	NewTown = fieldEventHandler->GetAtlantisPlace();
 	TownPos = NewTown->GetPosition().ConvertToWorldPosition();
 
 	// ƒQ[ƒ€is’âŽ~
@@ -100,7 +100,7 @@ void NewTownEvent_World::CreateNewTown(void)
 	D3DXVECTOR3 Amplitude = D3DXVECTOR3(5.0f, 3.0f, 5.0f);
 
 	CameraShakePlugin::Instance()->Set(Amplitude, 300);
-	fieldEventHandler->CreateNewTown(NewTown);
+	fieldEventHandler->CreateAtlantis(NewTown);
 	WorldParticleManager::Instance()->SetAtlantisEffect(TownPos);
 	TaskManager::Instance()->CreateDelayedTask(180, [&]() 
 	{
