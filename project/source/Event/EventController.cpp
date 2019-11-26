@@ -24,6 +24,7 @@
 #include "../../Framework/String/String.h"
 #include "../../Framework/Camera/CameraTranslationPlugin.h"
 #include "../../Framework/Camera/CameraShakePlugin.h"
+#include "../../Framework/Tool/DebugWindow.h"
 
 #include "../Field/Place/FieldPlaceModel.h"
 #include "../Viewer/GameScene/Controller/EventViewer.h"
@@ -56,7 +57,7 @@ const char* EventCSVPath_Space = "data/FIELD/Space/Space_Event.csv";
 EventController::EventController(int FieldLevel)
 {
 	eventViewer = new EventViewer();
-	
+
 	camera = new EventCamera();
 
 	beatViewer = new BeatGameViewer();
@@ -112,7 +113,7 @@ void EventController::Init(int FieldLevel)
 // 終了
 //=============================================================================
 void EventController::Uninit(void)
-{	
+{
 	// イベントベクトル削除
 	Utility::DeleteContainer(EventVec);
 	EventCSVData.clear();
@@ -396,4 +397,77 @@ void EventController::SetInPause(bool Flag)
 bool EventController::GetInPause(void)
 {
 	return InPauseEvent;
+}
+
+//=============================================================================
+// イベントの確認用デバッグ
+//=============================================================================
+bool EventController::EventDebug(int FieldLevel)
+{
+	EventBase* Ptr = nullptr;
+	bool flgPause = false;
+
+	// イベントインスタンス作成
+	if (Debug::Button("LinkLevel Up"))
+	{
+		Ptr = new LinkLevelUpEvent();
+	}
+	if (Debug::Button("New Town"))
+	{
+		Ptr = new NewTownEventCtrl(eventViewer, FieldLevel, camera);
+		flgPause = true;
+	}
+	if (Debug::Button("Stock Recovery"))
+	{
+		Ptr = new StockRecoveryEvent();
+	}
+	if (Debug::Button("Famout people"))
+	{
+		Ptr = new FamousPeopleEvent();
+	}
+	if (Debug::Button("All LinlLevel Up"))
+	{
+		Ptr = new AllLinkLevelUpEvent();
+	}
+	if (Debug::Button("AI Level Up"))
+	{
+		Ptr = new AILevelUpEvent();
+	}
+	if (Debug::Button("Time Recovery"))
+	{
+		Ptr = new TimeRecoveryEvent();
+	}
+	if (Debug::Button("LinkLevel Decrease"))
+	{
+		Ptr = new LinkLevelDecreaseEvent();
+	}
+	if (Debug::Button("City Destroy"))
+	{
+		Ptr = new CityDestroyEvent(eventViewer, beatViewer, camera);
+		flgPause = true;
+	}
+	if (Debug::Button("AI Level Decrease"))
+	{
+		Ptr = new AILevelDecreaseEvent(eventViewer, camera, beatViewer);
+		flgPause = true;
+	}
+	if (Debug::Button("Ban StockUse"))
+	{
+		Ptr = new BanStockUseEvent(eventViewer,
+			beatViewer,
+			[&](bool Flag) {SetBanStock(Flag); },
+			[&]() {return GetInPause(); });
+		flgPause = true;
+	}
+
+	if (Ptr != nullptr)
+	{
+		// イベントメッセージ設置
+		eventViewer->SetEventMessage(Ptr->GetEventMessage(FieldLevel));
+
+		// イベントベクトルにプッシュ
+		EventVec.push_back(Ptr);
+	}
+
+	return flgPause;
 }

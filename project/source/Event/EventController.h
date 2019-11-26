@@ -65,6 +65,7 @@ public:
 	void SetBanStock(bool Flag);
 	void SetInPause(bool Flag);
 	bool GetInPause(void);
+	bool EventDebug(int fieldLevel);
 };
 
 #endif

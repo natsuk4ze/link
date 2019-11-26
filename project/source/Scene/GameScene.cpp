@@ -423,6 +423,14 @@ void GameScene::DebugTool()
 	}
 
 	Debug::NewLine();
+	Debug::Text("Event");
+	bool flgPause = eventController->EventDebug(level);
+	if (flgPause)
+	{
+		ChangeState(Pause);
+	}
+
+	Debug::NewLine();
 	Debug::Text("Bloom");
 	static D3DXVECTOR3 power = {BloomPower[0], BloomPower[1], BloomPower[2]};
 	static D3DXVECTOR3 threthold = {BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]};
