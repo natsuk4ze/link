@@ -10,6 +10,7 @@
 #include "../../Viewer/GameScene/Controller/GameViewer.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../Viewer/TitleScene/TitleViewer.h"
+#include "../../Field/Camera/FieldCamera.h"
 #include "../../Viewer/GameScene/Controller/ResultViewer.h"
 #include "../../../Framework/Transition/TransitionController.h"
 
@@ -18,7 +19,11 @@
 //=====================================
 void GameScene::GameTitle::OnStart(GameScene & entity)
 {
+	// シーンチェンジ
 	TransitionController::Instance()->SetTransition(true, TransitionType::HexaPop);
+
+	// カメラのモード切替
+	entity.fieldCamera->ChangeMode(FieldCamera::Mode::Arround);
 
 	//タイトル、選択肢などなど
 	// タイトル画面で使用するUIの描画をON

@@ -9,6 +9,7 @@
 #include "../../Field/FieldController.h"
 #include "../../Viewer/GameScene/Controller/GameViewer.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
+#include "../../Field/Camera/FieldCamera.h"
 #include "../../Viewer/GameScene/Controller/ResultViewer.h"
 #include "../../../Framework/Input/input.h"
 #include "../../../Framework/Transition/TransitionController.h"
@@ -20,6 +21,9 @@
 void GameScene::GameResult::OnStart(GameScene & entity)
 {
 	//スコア表示、名前入力などなど
+	// カメラのモード切り替え
+	entity.fieldCamera->ChangeMode(FieldCamera::Mode::Arround);
+
 	// リザルト画面で使用するUIの描画をON
 	entity.resultViewer->SetActive(true);
 

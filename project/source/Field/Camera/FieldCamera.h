@@ -30,6 +30,7 @@ public:
 		AngleRotate,			//回転ステート
 		TransitionOut,			//レベルアップ時の引き
 		TransitionIn,			//新しいレベルになった時の初期状態
+		Arround,				//フィールドの中心を焦点にして回転（タイトル、リザルト）
 		Max
 	};
 
@@ -60,6 +61,7 @@ private:
 	float cameraAngle;								//カメラのXZ平面の角度
 	float startAngle, endAngle;						//イージング用角度
 	int cntRotate;									//回転フレームカウント
+	float distance;									// カメラと焦点の距離
 
 	D3DXVECTOR3 startEyeVector;						//遷移開始時の視線ベクトル
 
@@ -72,6 +74,7 @@ private:
 	class FieldCameraRotate;
 	class FieldCameraTransitionOut;
 	class FieldCameraTransitionIn;
+	class FieldCameraArround;
 };
 
 #endif

@@ -12,6 +12,7 @@
 #include "State/FieldCameraRotate.h"
 #include "State\FIeldCameraTransitionOut.h"
 #include "State\FIeldCameraTransitionIn.h"
+#include "State/FieldCameraArround.h"
 
 #include "../../../Framework/Input/input.h"
 #include "../../../Framework/Tool/DebugWindow.h"
@@ -37,6 +38,7 @@ FieldCamera::FieldCamera() :
 	startAngle(InitCameraAngle),
 	endAngle(InitCameraAngle),
 	cntRotate(DurationRotate),
+	distance(0.0f),
 	currentMode(Mode::FarView)
 {
 	//ÉpÉâÉÅÅ[É^ê›íË
@@ -56,6 +58,7 @@ FieldCamera::FieldCamera() :
 	fsm[Mode::AngleRotate] = new FieldCameraRotate();
 	fsm[Mode::TransitionOut] = new FieldCameraTransitionOut();
 	fsm[Mode::TransitionIn] = new FieldCameraTransitionIn();
+	fsm[Mode::Arround] = new FieldCameraArround();
 }
 
 /**************************************
