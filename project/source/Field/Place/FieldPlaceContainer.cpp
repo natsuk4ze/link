@@ -37,7 +37,8 @@ namespace Field::Model
 		initialized(false),
 		trafficJamRate(0.0f),
 		trafficJamBias(0.0f),
-		onDepartPassenger(nullptr)
+		onDepartPassenger(nullptr),
+		fieldLinkLevel(0)
 	{
 		placeVector.reserve(PlaceMax);
 
@@ -86,6 +87,7 @@ namespace Field::Model
 		Utility::DeleteMap(junctionContainer);
 
 		initialized = false;
+		fieldLinkLevel = 0;
 	}
 
 #ifdef DEBUG_PLACEMODEL
