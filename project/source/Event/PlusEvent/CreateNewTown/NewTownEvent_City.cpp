@@ -55,7 +55,7 @@ void NewTownEvent_City::Init()
 	fieldEventHandler->PauseGame();
 
 	// テロップ設置
-	eventViewer->SetEventTelop(EventTelop::NewPlanet, [&]()
+	eventViewer->SetEventTelop(EventTelop::Singularity, [&]()
 	{
 		// 予定地にカメラを移動させる
 		camera->Translation(TownPos, 30, [&]() {CreateNewTown(); });
