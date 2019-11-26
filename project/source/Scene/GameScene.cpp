@@ -286,7 +286,7 @@ void GameScene::ChangeState(State next)
 ***************************************/
 void GameScene::OnBuildRoad(Route& route)
 {
-	bool flgPause = eventController->CheckEventHappen(route, Field::FieldLevel::City);
+	bool flgPause = eventController->CheckEventHappen(route, level);
 
 	if (flgPause)
 		ChangeState(State::Pause);
