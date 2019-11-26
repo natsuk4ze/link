@@ -60,15 +60,15 @@ string LinkLevelDecreaseEvent::GetEventMessage(int FieldLevel)
 
 	if (FieldLevel == Field::City)
 	{
-		MessageContainer.push_back("リンクレベル減らすイベント");
+		MessageContainer.push_back("発注数間違えた！\n街のリンクレベルが下がった...");
 	}
 	else if (FieldLevel == Field::World)
 	{
-
+		MessageContainer.push_back("発注数間違えた！\n街のリンクレベルが下がった...");
 	}
 	else if (FieldLevel == Field::Space)
 	{
-
+		MessageContainer.push_back("発注数間違えた！\n街のリンクレベルが下がった...");
 	}
 
 	if (!MessageContainer.empty())
