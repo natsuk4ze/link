@@ -64,6 +64,8 @@ EventController::EventController(int FieldLevel)
 
 	Init(FieldLevel);
 
+	camera->AddPlugin(CameraShakePlugin::Instance());
+
 #if _DEBUG
 	ResourceManager::Instance()->MakePolygon("Event", "data/TEXTURE/PlaceTest/Event.png", { 4.5f, 4.5f }, { 13.0f,1.0f });
 	polygon = new BoardPolygon();
