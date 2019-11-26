@@ -10,6 +10,7 @@
 #include "../../Viewer/GameScene/Controller/GameViewer.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../Viewer/GameScene/Controller/ResultViewer.h"
+#include "../../../Framework/Input/input.h"
 
 //=====================================
 // 入場処理
@@ -43,7 +44,9 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 //=====================================
 GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 {
-	//今はとりあえず作っただけ
-	State next = State::Result;
-	return next;
+	//とりあえずエンターが押されたらタイトルへ戻る
+	if (Keyboard::GetTrigger(DIK_RETURN))
+		entity.ChangeState(State::Title);
+
+	return State::Result;
 }
