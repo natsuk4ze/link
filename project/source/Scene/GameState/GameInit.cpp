@@ -20,6 +20,7 @@
 #include "../../../Framework/Sound/BackgroundMusic.h"
 #include "../../Viewer/GameScene/Controller/GameViewer.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
+#include "../../Viewer/GameScene/Controller/ResultViewer.h"
 
 /**************************************
 入場処理
@@ -34,6 +35,7 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	entity.field->SetViewerActive(false);
 	entity.gameViewer->SetActive(false);
 	entity.guideViewer->SetActive(false);
+	entity.resultViewer->SetActive(false);
 
 	//パーティクル初期化
 	entity.particleManager->Init();
