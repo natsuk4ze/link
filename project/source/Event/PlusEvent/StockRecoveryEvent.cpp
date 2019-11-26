@@ -60,15 +60,15 @@ string StockRecoveryEvent::GetEventMessage(int FieldLevel)
 
 	if (FieldLevel == Field::City)
 	{
-		MessageContainer.push_back("危機管理！(ストック使用回数回復)");
+		MessageContainer.push_back("埋蔵金発掘！\nドリルのストックが増えた！");
 	}
 	else if (FieldLevel == Field::World)
 	{
-
+		MessageContainer.push_back("タイムマシンの開発に成功！\n制限時間が回復！");
 	}
 	else if (FieldLevel == Field::Space)
 	{
-
+		MessageContainer.push_back("タイムマシンの開発に成功！\n制限時間が回復！");
 	}
 
 	if (!MessageContainer.empty())

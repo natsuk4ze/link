@@ -60,15 +60,15 @@ string AILevelUpEvent::GetEventMessage(int FieldLevel)
 
 	if (FieldLevel == Field::City)
 	{
-		MessageContainer.push_back("このドリルは天を貫くドリルだ！！");
+		MessageContainer.push_back("シンギュラリティに到達！\nAIレベルがパワーアップした！");
 	}
 	else if (FieldLevel == Field::World)
 	{
-
+		MessageContainer.push_back("シンギュラリティに到達！\nAIレベルがパワーアップした！");
 	}
 	else if (FieldLevel == Field::Space)
 	{
-
+		MessageContainer.push_back("シンギュラリティに到達！\nAIレベルがパワーアップした！");
 	}
 
 	if (!MessageContainer.empty())

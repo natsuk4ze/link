@@ -60,15 +60,15 @@ string TimeRecoveryEvent::GetEventMessage(int FieldLevel)
 
 	if (FieldLevel == Field::City)
 	{
-		MessageContainer.push_back("制限時間回復！");
+		MessageContainer.push_back("タイムマシンの開発に成功！\n制限時間が回復！");
 	}
 	else if (FieldLevel == Field::World)
 	{
-
+		MessageContainer.push_back("タイムマシンの開発に成功！\n制限時間が回復！");
 	}
 	else if (FieldLevel == Field::Space)
 	{
-
+		MessageContainer.push_back("タイムマシンの開発に成功！\n制限時間が回復！");
 	}
 
 	if (!MessageContainer.empty())

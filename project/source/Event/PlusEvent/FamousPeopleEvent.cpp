@@ -70,15 +70,15 @@ string FamousPeopleEvent::GetEventMessage(int FieldLevel)
 
 	if (FieldLevel == Field::City)
 	{
-		MessageContainer.push_back("たいへんよくできました！");
+		MessageContainer.push_back("芸人が街に来た！\n発展速度アップ！");
 	}
 	else if (FieldLevel == Field::World)
 	{
-
+		MessageContainer.push_back("芸人が街に来た！\n発展速度アップ！");
 	}
 	else if (FieldLevel == Field::Space)
 	{
-
+		MessageContainer.push_back("芸人が街に来た！\n発展速度アップ！");
 	}
 
 	if (!MessageContainer.empty())
