@@ -114,7 +114,7 @@ namespace Field
 		void SetEventHandler(::FieldEventHandler& handler);
 
 		// UI描画可否判定
-		void SetActive(bool flag);
+		void SetViewerActive(bool flag);
 
 		// スコア処理
 		int GetScore(FieldLevel current);
@@ -162,7 +162,7 @@ namespace Field
 		float developSpeedBonus;				//発展スピード増加ボーナス
 		bool enableDevelop;						//開拓可能かどうか
 		bool flgWaitPopup;						//ポップアップ待機状態
-		bool isActive;							//UI描画可否判定
+		bool isViewerActive;							//UI描画可否判定
 
 		FieldLevel currentLevel;				//現在のフィールドレベル
 

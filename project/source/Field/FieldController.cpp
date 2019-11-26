@@ -215,7 +215,7 @@ namespace Field
 	***************************************/
 	void FieldController::DrawViewer()
 	{
-		if (!isActive)
+		if (!isViewerActive)
 			return;
 
 		SetOperationExplanation();
@@ -599,9 +599,9 @@ namespace Field
 	/**************************************
 	UI•`‰æ‚Ì‰Â”Û”»’èƒZƒbƒg
 	***************************************/
-	void FieldController::SetActive(bool flag)
+	void FieldController::SetViewerActive(bool flag)
 	{
-		isActive = flag;
+		isViewerActive = flag;
 	}
 
 	/**************************************

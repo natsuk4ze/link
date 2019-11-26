@@ -72,9 +72,10 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 void GameScene::GameIdle::OnStart(GameScene & entity)
 {
 	// ゲームシーンで使用するUIの描画をON
-	entity.field->SetActive(true);
+	entity.field->SetViewerActive(true);
 	entity.gameViewer->SetActive(true);
 	entity.guideViewer->SetActive(true);
+
 	// 使用しないUIの描画をOFF（タイトル、リザルト用など）
 	entity.titleViewer->SetActive(false);
 }
