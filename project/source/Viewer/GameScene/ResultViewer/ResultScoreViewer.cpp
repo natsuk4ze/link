@@ -14,6 +14,9 @@
 //*****************************************************************************
 ResultScoreViewer::ResultScoreViewer() :parameterBox()
 {
+	//*****************
+	// テクスチャの二重開放注意（リファクタリング中）
+	//*****************
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	LPDIRECT3DTEXTURE9 tex;
 
@@ -89,7 +92,7 @@ void ResultScoreViewer::SetViewerPos(void)
 			SCREEN_WIDTH/2 
 			+ num[i]->intervalPosScr/2 
 			+ (num[0]->placeMax + num[1]->placeMax + num[2]->placeMax)/2*num[i]->intervalPosScr 
-			- pos, SCREEN_CENTER_Y, 0.0f);
+			- pos, SCREEN_CENTER_Y/2, 0.0f);
 		num[i]->MakeVertex();
 	}
 }

@@ -131,7 +131,6 @@
     <ClInclude Include="source\Effect\CityParticleManager.h" />
     <ClInclude Include="source\Effect\GameParticleManager.h" />
     <ClInclude Include="source\Effect\Game\General\AngryFace.h" />
-    <ClInclude Include="source\Effect\Game\BanIcon.h" />
     <ClInclude Include="source\Effect\Game\City\BlueDebris.h" />
     <ClInclude Include="source\Effect\Game\City\BlueSpark.h" />
     <ClInclude Include="source\Effect\Game\General\Cloud.h" />
@@ -285,6 +284,7 @@
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.h" />
     <ClInclude Include="source\Viewer\GameScene\ParameterContainer\ResultViewerParam.h" />
+    <ClInclude Include="source\Viewer\GameScene\ResultViewer\ResultNameEntryViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\ResultViewer\ResultScoreViewer.h" />
     <ClInclude Include="source\Viewer\TitleScene\SelectCamera.h" />
     <ClInclude Include="source\Viewer\TitleScene\SelectLogo.h" />
@@ -390,7 +390,6 @@
     <ClCompile Include="source\Effect\CityParticleManager.cpp" />
     <ClCompile Include="source\Effect\GameParticleManager.cpp" />
     <ClCompile Include="source\Effect\Game\General\AngryFace.cpp" />
-    <ClCompile Include="source\Effect\Game\BanIcon.cpp" />
     <ClCompile Include="source\Effect\Game\City\BlueDebris.cpp" />
     <ClCompile Include="source\Effect\Game\City\BlueSpark.cpp" />
     <ClCompile Include="source\Effect\Game\General\Cloud.cpp" />
@@ -537,6 +536,7 @@
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideCamera.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\ResultViewer\ResultNameEntryViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\ResultViewer\ResultScoreViewer.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\SelectCamera.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\SelectLogo.cpp" />

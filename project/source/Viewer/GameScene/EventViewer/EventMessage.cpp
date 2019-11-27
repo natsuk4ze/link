@@ -51,7 +51,7 @@ static const EaseType animType[animMax] = {
 static const float animDuration[animMax] = {
 	50,
 	50,
-	30,
+	15,
 };
 
 //アニメーションシーン

@@ -41,8 +41,6 @@ public:
 
 	void LoadTexture(const char *path);
 	void Draw();
-	//前のフレームワークならこっちを使う
-	void DrawOrigin();
 	void SetAlpha(float alpha);
 	void SetColor(D3DXCOLOR color);
 

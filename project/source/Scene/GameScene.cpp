@@ -50,6 +50,11 @@
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Sound/BackgroundMusic.h"
 
+#ifdef _DEBUG
+#include "../../Framework/Input/input.h"
+#include "../../Framework/Tool/DebugWindow.h"
+#endif
+
 /**************************************
 staticメンバ
 ***************************************/
@@ -161,6 +166,11 @@ void GameScene::Update()
 
 	//ステートを更新
 	State next = fsm[currentState]->OnUpdate(*this);
+
+	if (Keyboard::GetTrigger(DIK_R))
+	{
+		ChangeState(State::Result);
+	}
 
 	//カメラ更新
 	ProfilerCPU::Instance()->Begin("Update Camera");

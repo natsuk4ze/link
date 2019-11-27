@@ -117,7 +117,6 @@
     <ClCompile Include="source\Effect\CityParticleManager.cpp" />
     <ClCompile Include="source\Effect\GameParticleManager.cpp" />
     <ClCompile Include="source\Effect\Game\General\AngryFace.cpp" />
-    <ClCompile Include="source\Effect\Game\BanIcon.cpp" />
     <ClCompile Include="source\Effect\Game\City\BlueDebris.cpp" />
     <ClCompile Include="source\Effect\Game\City\BlueSpark.cpp" />
     <ClCompile Include="source\Effect\Game\General\Cloud.cpp" />
@@ -270,6 +269,7 @@
     <ClCompile Include="source\Viewer\TitleScene\SelectViewer.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\TitleLogo.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\TitleViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\ResultViewer\ResultNameEntryViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -384,7 +384,6 @@
     <ClInclude Include="source\Effect\CityParticleManager.h" />
     <ClInclude Include="source\Effect\GameParticleManager.h" />
     <ClInclude Include="source\Effect\Game\General\AngryFace.h" />
-    <ClInclude Include="source\Effect\Game\BanIcon.h" />
     <ClInclude Include="source\Effect\Game\City\BlueDebris.h" />
     <ClInclude Include="source\Effect\Game\City\BlueSpark.h" />
     <ClInclude Include="source\Effect\Game\General\Cloud.h" />
@@ -544,6 +543,7 @@
     <ClInclude Include="source\Viewer\TitleScene\TitleLogo.h" />
     <ClInclude Include="source\Viewer\TitleScene\TitleViewer.h" />
     <ClInclude Include="source\Scene\ParticleTestScene.h" />
+    <ClInclude Include="source\Viewer\GameScene\ResultViewer\ResultNameEntryViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
