@@ -17,8 +17,9 @@
 #include "Game/General/AngryFace.h"
 #include "Game/General/Darkness.h"
 #include "Game/General/LinkLevelUp.h"
-#include "Game/General/MoveTail.h"
 #include "Game/General/Cloud.h"
+#include "Game/Space/MoveTail.h"
+#include "Game/Space/StarDust.h"
 
 /**************************************
 staticメンバ
@@ -42,6 +43,7 @@ void GameParticleManager::Init()
 	controllers[GameParticle::MeteorExplosion] = new Effect::Game::MeteorExplosionController();
 	controllers[GameParticle::Darkness] = new Effect::Game::DarknessController();
 	controllers[GameParticle::MoveTail] = new Effect::Game::MoveTailController();
+	controllers[GameParticle::StarDust] = new Effect::Game::StarDustController();
 	controllers[GameParticle::LinkLevelUp] = new Effect::Game::LinkLevelUpController();
 	controllers[GameParticle::Cloud] = new Effect::Game::CloudController();
 
@@ -100,7 +102,8 @@ void GameParticleManager::SetDarknessEffect(const D3DXVECTOR3 & position, std::f
 /**************************************
 移動の軌跡のエフェクトセット処理
 ***************************************/
-BaseEmitter* GameParticleManager::SetMoveTailEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback)
+void GameParticleManager::SetPlanetFallEffect(const D3DXVECTOR3 & position, BaseEmitter** MoveTail, BaseEmitter** StarDust)
 {
-	return controllers[GameParticle::MoveTail]->SetEmitter(position, nullptr);
+	*MoveTail = controllers[GameParticle::MoveTail]->SetEmitter(position, nullptr);
+	*StarDust = controllers[GameParticle::StarDust]->SetEmitter(position, nullptr);
 }

@@ -26,13 +26,13 @@ namespace TestParticle
 		AngryFace,
 		TownExplosion,
 		MeteorExplosion,
-		MeteorFire,
 		Darkness,
 		Bubble,
 		WaterSmog,
 		MoveTail,
 		LinkLevelUp,
 		StarRoad,
+		StarDust,
 		Max
 	};
 }

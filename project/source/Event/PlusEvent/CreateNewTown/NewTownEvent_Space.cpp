@@ -10,8 +10,10 @@
 #include "../../../Viewer/GameScene/EventViewer/EventTelop.h"
 #include "../../../Viewer/GameScene/Controller/EventViewer.h"
 #include "../../../Effect/GameParticleManager.h"
-#include "../../../../Framework/Task/TaskManager.h"
 #include "../../../Field/Camera/EventCamera.h"
+
+#include "../../../../Framework/Task/TaskManager.h"
+#include "../../../../Framework/Math/Easing.h"
 
 enum State
 {
@@ -23,9 +25,9 @@ enum State
 // マクロ定義
 //*****************************************************************************
 // 落下速度
-const float FallSpeed = 4.0f;
+const int FallFrame = 90;
 // 惑星モデルのスケール
-const D3DXVECTOR3 Scale = D3DXVECTOR3(0.15f, 0.15f, 0.15f);
+const D3DXVECTOR3 Scale = D3DXVECTOR3(0.25f, 0.25f, 0.25f);
 
 //*****************************************************************************
 // スタティック変数宣言
@@ -40,7 +42,8 @@ NewTownEvent_Space::NewTownEvent_Space(EventViewer *Ptr, std::function<void(void
 	eventViewer(Ptr),
 	EventState(TelopExpanding),
 	EventOverFunc(EventOverFunc),
-	camera(camera)
+	camera(camera),
+	CountFrame(0)
 {
 
 }
@@ -52,6 +55,9 @@ NewTownEvent_Space::~NewTownEvent_Space()
 {
 	eventViewer = nullptr;
 	NewPlanet = nullptr;
+	camera = nullptr;
+	MoveTailEmitter = nullptr;
+	StarDustEmitter = nullptr;
 	SAFE_DELETE(PlanetModel);
 }
 
@@ -65,12 +71,10 @@ void NewTownEvent_Space::Init()
 	BuildPos = NewPlanet->GetPosition().ConvertToWorldPosition();
 
 	// 惑星落下方向計算
-	PlanetPos = BuildPos + D3DXVECTOR3(100.0f, 100.0f, 0.0f);
-	MoveDirection = BuildPos - PlanetPos;
-	D3DXVec3Normalize(&MoveDirection, &MoveDirection);
+	StartPos = BuildPos + D3DXVECTOR3(100.0f, 100.0f, 0.0f);
 
 	// 惑星メッシュ作成
-	PlanetModel = new PlanetActor(PlanetPos, Scale, "Town-Space");
+	PlanetModel = new PlanetActor(StartPos, Scale, "Space-Town");
 
 	// ゲーム進行停止
 	fieldEventHandler->PauseGame();
@@ -78,8 +82,8 @@ void NewTownEvent_Space::Init()
 	// テロップ設置
 	eventViewer->SetEventTelop(EventTelop::NewPlanet, [=]()
 	{
-		// 予定地にカメラを移動させる
-		camera->Translation(PlanetPos, 30, [&]() {FallenStart(); });
+		// 惑星にカメラを移動させる
+		camera->Translation(StartPos, 30, [&]() {FallenStart(); });
 	});
 
 	// 初期化終了
@@ -95,33 +99,27 @@ void NewTownEvent_Space::Update()
 	if (!Initialized)
 		return;
 
-	float Distance = 0.0f;
-
-	switch (EventState)
+	if (EventState == PlanetDebut)
 	{
-		// 惑星登場
-	case PlanetDebut:
+		CountFrame++;
+		float Time = (float)CountFrame / (float)FallFrame;
 
-		Distance = D3DXVec3LengthSq(&D3DXVECTOR3(PlanetPos - BuildPos));
-
-		if (Distance > pow(4.0f, 2))
-		{
-			PlanetPos += MoveDirection * FallSpeed;
-		}
-		else
-		{
-			// 惑星到着エフェクト
-			EventState = State::PlanetArrive;
-		}
+		D3DXVECTOR3 PlanetPos = Easing::EaseValue(Time, StartPos, BuildPos, EaseType::OutQuart);
+		PlanetModel->SetPosition(PlanetPos);
+		MoveTailEmitter->SetPosition(PlanetPos);
+		StarDustEmitter->SetPosition(PlanetPos);
 
 		camera->Translation(PlanetPos, 1, nullptr);
 
-		break;
-
-	default:
-		break;
+		if (CountFrame >= FallFrame)
+		{
+			EventState = PlanetArrive;
+			TaskManager::Instance()->CreateDelayedTask(30, [&]()
+			{
+				camera->Return(15, EventOverFunc);
+			});
+		}
 	}
-
 }
 
 //=============================================================================
@@ -133,7 +131,6 @@ void NewTownEvent_Space::Draw()
 	if (!Initialized)
 		return;
 
-	PlanetModel->SetPosition(PlanetPos);
 	PlanetModel->Draw();
 }
 
@@ -154,6 +151,7 @@ void NewTownEvent_Space::FallenStart(void)
 	EventState = PlanetDebut;
 
 	// 惑星落下エフェクト
+	GameParticleManager::Instance()->SetPlanetFallEffect(StartPos, &MoveTailEmitter, &StarDustEmitter);
 	//GameParticleManager::Instance()->SetSingularityEffect(TownPos);
 }
 

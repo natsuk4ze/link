@@ -9,6 +9,7 @@
 
 #include "../../EventBase.h"
 #include "../../../Field/Place/FieldPlaceModel.h"
+#include "../../../../Framework/Particle/BaseEmitter.h"
 
 class EventViewer;
 class PlanetActor;
@@ -22,13 +23,15 @@ class NewTownEvent_Space : public EventBase
 private:
 	EventViewer *eventViewer;
 	PlanetActor *PlanetModel;
-	D3DXVECTOR3 PlanetPos;
+	D3DXVECTOR3 StartPos;
 	D3DXVECTOR3 BuildPos;
-	D3DXVECTOR3 MoveDirection;
 	const Field::Model::PlaceModel* NewPlanet;
 	int EventState;
+	int CountFrame;
 	std::function<void(void)> EventOverFunc;
 	EventCamera *camera;
+	BaseEmitter* MoveTailEmitter;
+	BaseEmitter* StarDustEmitter;
 
 public:
 	NewTownEvent_Space(EventViewer *Ptr, std::function<void(void)> EventOverFunc, EventCamera* camera);

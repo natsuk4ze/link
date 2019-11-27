@@ -27,6 +27,7 @@ namespace GameParticle
 		MeteorExplosion,//ミサイル命中
 		Darkness,		//闇の粒子(AIレベル減少イベント)
 		MoveTail,		//移動の軌跡
+		StarDust,		//惑星落下のスターダスト
 		LinkLevelUp,	//リンクレベルアップ時エフェクト
 		Cloud,			//雲
 		Max
@@ -53,9 +54,9 @@ public:
 	//怒り顔のエフェクトセット処理
 	void SetAngryFaceEffect(std::function<void(void)> callback = nullptr);
 	//闇の粒子のエフェクトセット処理
-	void SetDarknessEffect(const D3DXVECTOR3 & position,std::function<void(void)> callback = nullptr);
+	void SetDarknessEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback = nullptr);
 	//移動の軌跡のエフェクトセット処理
-	BaseEmitter* SetMoveTailEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback = nullptr);
+	void SetPlanetFallEffect(const D3DXVECTOR3 & position, BaseEmitter** MoveTail, BaseEmitter** StarDust);
 
 private:
 	static const float BloomPower[3];

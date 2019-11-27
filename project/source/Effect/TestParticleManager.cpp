@@ -14,12 +14,12 @@
 #include "Game/General/ExplosionFlare.h"
 #include "Game/General/AngryFace.h"
 #include "Game/General/MeteorExplosion.h"
-#include "Game/General/MeteorFire.h"
 #include "Game/General/Darkness.h"
 #include "Game/World/Bubble.h"
 #include "Game/World/WaterSmog.h"
-#include "Game/General/MoveTail.h"
 #include "Game/General/LinkLevelUp.h"
+#include "Game/Space/MoveTail.h"
+#include "Game/Space/StarDust.h"
 #include "Game/Space/StarRoad.h"
 
 /**************************************
@@ -37,13 +37,13 @@ void TestParticleManager::Init()
 	controllers[TestParticle::AngryFace] = new Effect::Game::AngryFaceController();
 	controllers[TestParticle::TownExplosion] = new Effect::Game::TownExplosionController();
 	controllers[TestParticle::MeteorExplosion] = new Effect::Game::MeteorExplosionController();
-	controllers[TestParticle::MeteorFire] = new Effect::Game::MeteorFireController();
 	controllers[TestParticle::Darkness] = new Effect::Game::DarknessController();
 	controllers[TestParticle::Bubble] = new Effect::Game::BubbleController();
 	controllers[TestParticle::WaterSmog] = new Effect::Game::WaterSmogController();
 	controllers[TestParticle::MoveTail] = new Effect::Game::MoveTailController();
 	controllers[TestParticle::LinkLevelUp] = new Effect::Game::LinkLevelUpController();
 	controllers[TestParticle::StarRoad] = new Effect::Game::StarRoadController();
+	controllers[TestParticle::StarDust] = new Effect::Game::StarDustController();
 }
 
 /**************************************
@@ -67,8 +67,6 @@ void TestParticleManager::Update()
 		Generate(TestParticle::AngryFace, Vector3::Zero);
 	else if (Debug::Button("MeteorExplosion"))
 		Generate(TestParticle::MeteorExplosion, Vector3::Up * 10.0f);
-	else if (Debug::Button("MeteorFire"))
-		Generate(TestParticle::MeteorFire, Vector3::Up * 20.0f);
 	else if (Debug::Button("Darkness"))
 		Generate(TestParticle::Darkness, Vector3::Zero);
 	else if (Debug::Button("Bubble"))
