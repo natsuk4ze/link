@@ -218,6 +218,9 @@ Camera & Camera::operator=(const Camera & rhs)
 	this->viewAspect = rhs.viewAspect;
 	this->viewNear = rhs.viewNear;
 	this->viewFar = rhs.viewFar;
+	this->view = rhs.view;
+	this->projection = rhs.projection;
+
 	return *this;
 }
 

@@ -20,6 +20,7 @@ class NewTownEvent_World : public EventBase
 {
 private:
 	EventViewer *eventViewer;
+	D3DXVECTOR3 TownPos;
 	const Field::Model::PlaceModel* NewTown;
 	std::function<void(void)> EventOverFunc;
 	EventCamera* camera;

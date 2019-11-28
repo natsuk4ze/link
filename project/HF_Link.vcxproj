@@ -135,12 +135,12 @@
     <ClInclude Include="source\Effect\Game\City\BlueSpark.h" />
     <ClInclude Include="source\Effect\Game\General\Cloud.h" />
     <ClInclude Include="source\Effect\Game\Space\Blackhole.h" />
+    <ClInclude Include="source\Effect\Game\Space\StarDust.h" />
     <ClInclude Include="source\Effect\Game\World\Bubble.h" />
     <ClInclude Include="source\Effect\Game\General\ColorfulDebris.h" />
     <ClInclude Include="source\Effect\Game\General\Darkness.h" />
     <ClInclude Include="source\Effect\Game\General\LinkLevelUp.h" />
-    <ClInclude Include="source\Effect\Game\General\MeteorFire.h" />
-    <ClInclude Include="source\Effect\Game\General\MoveTail.h" />
+    <ClInclude Include="source\Effect\Game\Space\MoveTail.h" />
     <ClInclude Include="source\Effect\Game\Space\SpaceTear.h" />
     <ClInclude Include="source\Effect\Game\Space\StarRoad.h" />
     <ClInclude Include="source\Effect\Game\General\TownExplosion.h" />
@@ -200,6 +200,7 @@
     <ClInclude Include="source\Field\Camera\EventCamera.h" />
     <ClInclude Include="source\Field\Camera\FieldCamera.h" />
     <ClInclude Include="source\Field\Camera\Plugin\FieldCameraTranslationPlugin.h" />
+    <ClInclude Include="source\Field\Camera\State\FieldCameraArround.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraFar.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraQuater.h" />
     <ClInclude Include="source\Field\Camera\State\FieldCameraRotate.h" />
@@ -396,16 +397,16 @@
     <ClCompile Include="source\Effect\Game\City\BlueDebris.cpp" />
     <ClCompile Include="source\Effect\Game\City\BlueSpark.cpp" />
     <ClCompile Include="source\Effect\Game\General\Cloud.cpp" />
+    <ClCompile Include="source\Effect\Game\General\Darkness.cpp" />
     <ClCompile Include="source\Effect\Game\Space\Blackhole.cpp" />
+    <ClCompile Include="source\Effect\Game\Space\StarDust.cpp" />
     <ClCompile Include="source\Effect\Game\World\WhirlPoolBubble.cpp" />
     <ClCompile Include="source\Effect\SpaceParticleManager.cpp" />
     <ClCompile Include="source\Effect\WorldParticleManager.cpp" />
     <ClCompile Include="source\Effect\Game\World\Bubble.cpp" />
     <ClCompile Include="source\Effect\Game\General\ColorfulDebris.cpp" />
-    <ClCompile Include="source\Effect\Game\General\Drakness.cpp" />
     <ClCompile Include="source\Effect\Game\General\LinkLevelUp.cpp" />
-    <ClCompile Include="source\Effect\Game\General\MeteorFire.cpp" />
-    <ClCompile Include="source\Effect\Game\General\MoveTail.cpp" />
+    <ClCompile Include="source\Effect\Game\Space\MoveTail.cpp" />
     <ClCompile Include="source\Effect\Game\Space\SpaceTear.cpp" />
     <ClCompile Include="source\Effect\Game\Space\StarRoad.cpp" />
     <ClCompile Include="source\Effect\Game\General\TownExplosion.cpp" />
@@ -461,6 +462,7 @@
     <ClCompile Include="source\Field\Camera\EventCamera.cpp" />
     <ClCompile Include="source\Field\Camera\FieldCamera.cpp" />
     <ClCompile Include="source\Field\Camera\Plugin\FieldCameraTranslationPlugin.cpp" />
+    <ClCompile Include="source\Field\Camera\State\FieldCameraArround.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraFar.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraQuater.cpp" />
     <ClCompile Include="source\Field\Camera\State\FieldCameraRotate.cpp" />
@@ -739,6 +741,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <PostBuildEvent>
       <Command>for %%1 in ($(InputDir)Shaders/*.fx) do fxc.exe $(InputDir)Shaders/%%~n1.fx /T fx_2_0 /Fo $(InputDir)data/EFFECT/%%~n1.cfx
@@ -765,6 +768,7 @@ for %%1 in ($(InputDir)source/Shader/*.fx) do fxc.exe $(InputDir)source/Shader/%
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

@@ -51,10 +51,8 @@
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Sound/BackgroundMusic.h"
 
-#ifdef _DEBUG
 #include "../../Framework/Input/input.h"
 #include "../../Framework/Tool/DebugWindow.h"
-#endif
 
 /**************************************
 staticƒƒ“ƒo
@@ -99,7 +97,6 @@ void GameScene::Init()
 	case Field::World:
 		levelParticleManager = WorldParticleManager::Instance();
 		break;
-
 	case Field::Space:
 		levelParticleManager = SpaceParticleManager::Instance();
 		break;
@@ -301,7 +298,7 @@ void GameScene::ChangeState(State next)
 ***************************************/
 void GameScene::OnBuildRoad(Route& route)
 {
-	bool flgPause = eventController->CheckEventHappen(route, Field::FieldLevel::City);
+	bool flgPause = eventController->CheckEventHappen(route, level);
 
 	if (flgPause)
 		ChangeState(State::Pause);
@@ -361,20 +358,29 @@ void GameScene::DebugTool()
 	Debug::Text("Level");
 	if (Debug::Button("CityLevel"))
 	{
-		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::City);
-		SceneManager::ChangeScene(GameConfig::SceneID::Game);
+		level = 0;
+		Clear();
+		SetFieldLevel(level);
+		field->Load();
+		ChangeState(Idle);
 	}
 	Debug::SameLine();
 	if (Debug::Button("WorldLevel"))
 	{
-		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::World);
-		SceneManager::ChangeScene(GameConfig::SceneID::Game);
+		level = 1;
+		Clear();
+		SetFieldLevel(level);
+		field->Load();
+		ChangeState(Idle);
 	}
 	Debug::SameLine();
 	if (Debug::Button("SpaceLevel"))
 	{
-		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::Space);
-		SceneManager::ChangeScene(GameConfig::SceneID::Game);
+		level = 2;
+		Clear();
+		SetFieldLevel(level);
+		field->Load();
+		ChangeState(Idle);
 	}
 
 	Debug::NewLine();
@@ -426,6 +432,14 @@ void GameScene::DebugTool()
 	{
 		level++;
 		ChangeState(State::TransitionOut);
+	}
+
+	Debug::NewLine();
+	Debug::Text("Event");
+	bool flgPause = eventController->EventDebug(level);
+	if (flgPause)
+	{
+		ChangeState(Pause);
 	}
 
 	Debug::NewLine();

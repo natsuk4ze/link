@@ -49,7 +49,10 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 	//AI発展レベルが最大に到達していたらレベルアップ
 	else if (entity.field->ShouldLevelUp())
 	{
-		entity.ChangeState(State::LevelUp);
+		if (level < 2)
+			entity.ChangeState(State::LevelUp);
+		else
+			entity.ChangeState(State::Result);
 	}
 	//遠景モードへの遷移確認
 	else if (entity.field->ShouldSwicthCamera())
@@ -71,10 +74,16 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 ***************************************/
 void GameScene::GameIdle::OnStart(GameScene & entity)
 {
+	// カメラの焦点をセット
+	entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
+	entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
+
+
 	// ゲームシーンで使用するUIの描画をON
-	entity.field->SetActive(true);
+	entity.field->SetViewerActive(true);
 	entity.gameViewer->SetActive(true);
 	entity.guideViewer->SetActive(true);
+
 	// 使用しないUIの描画をOFF（タイトル、リザルト用など）
 	entity.titleViewer->SetActive(false);
 }

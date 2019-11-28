@@ -1,47 +1,46 @@
 //=============================================================================
 //
-// 移動の残像エフェクトクラス [MoveTail.h]
+// スターダストエフェクトクラス [StarDust.cpp]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#ifndef _MoveTail_H_
-#define _MoveTail_H_
+#ifndef _StarDust_H_
+#define _StarDust_H_
 
 #include "../../../../main.h"
 #include "../../../../Framework/Particle/BaseParticleController.h"
 #include "../../../../Framework/Particle/3D/Particle3D.h"
 
-/**************************************
-前方宣言
-***************************************/
-
 namespace Effect::Game
 {
 	/**************************************
-	MoveTailControllerクラス
+	StarDustController
 	***************************************/
-	class MoveTailController : public BaseParticleController
+	class StarDustController : public BaseParticleController
 	{
 	public:
-		MoveTailController();
+		StarDustController();
+		bool Draw(void) override;
 		void SetEmitterPos(D3DXVECTOR3 Pos);
-		bool Draw() override;
 	};
 
 	/**************************************
-	MoveTailクラス
+	StarDust
 	***************************************/
-	class MoveTail : public Particle3D
+	class StarDust : public Particle3D
 	{
 	public:
-		MoveTail();
+		static const int MinLife, MaxLife;
+		static const float MinScale, MaxScale;
+		static const int TexDiv;
 
-		void Init() override;
-		void Update() override;
+		StarDust();
+		void Init();
+		void Update();
+
 	private:
-		static const int Life;
+		float initScale;
+		D3DXVECTOR3 directionMove;
 	};
 }
-
-
 #endif

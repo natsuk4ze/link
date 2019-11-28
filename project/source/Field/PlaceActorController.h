@@ -89,7 +89,7 @@ namespace Field::Actor
 		//道沿いボーナス取得設定
 		float GetSideWayBonus() const;
 
-		//海かどうかの判定
+		//アトランティス判定
 		bool EnableAtlantis(const FieldPosition& position) const;
 
 		//新しい街作成
@@ -97,6 +97,9 @@ namespace Field::Actor
 
 		//アトランティス出現
 		void SetAtlantis(const Model::PlaceModel* place);
+
+		//海判定
+		bool IsOnSea(const FieldPosition& position) const;
 
 		//定数メンバ
 		static const D3DXVECTOR3 PositionEmitSmog;		//道落下時の煙発生位置

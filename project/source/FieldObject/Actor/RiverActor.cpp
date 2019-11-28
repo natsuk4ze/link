@@ -73,11 +73,11 @@ void RiverActor::Update()
 	switch (direction)
 	{
 	case FlowDirection::Back:
-		uv.y = Math::WrapAround(0.0f, 1.0f, uv.y - FlowSpeed);
+		uv.y = Math::WrapAround(0.0f, 1.0f, uv.y + FlowSpeed);
 		break;
 
 	case FlowDirection::Forward:
-		uv.y = Math::WrapAround(0.0f, 1.0f, uv.y + FlowSpeed);
+		uv.y = Math::WrapAround(0.0f, 1.0f, uv.y - FlowSpeed);
 		break;
 
 	case FlowDirection::Right:

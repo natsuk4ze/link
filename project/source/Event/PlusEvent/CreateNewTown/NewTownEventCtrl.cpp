@@ -9,8 +9,10 @@
 #include "NewTownEvent_City.h"
 #include "NewTownEvent_World.h"
 #include "NewTownEvent_Space.h"
+
 #include "../../../Field/Camera/Plugin/FieldCameraTranslationPlugin.h"
 #include "../../../Viewer/GameScene/Controller/EventViewer.h"
+#include "../../../Field/Camera/EventCamera.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -27,8 +29,11 @@
 //=============================================================================
 NewTownEventCtrl::NewTownEventCtrl(EventViewer *Ptr, int FieldLevel, EventCamera *camera) :
 	EventBase(true),
-	eventViewer(Ptr)
+	eventViewer(Ptr),
+	eventCamera(camera)
 {
+	eventCamera->Init();
+
 	if (FieldLevel == Field::City)
 	{
 		NewTownEvent = new NewTownEvent_City(Ptr, [&]() {EventOver(); }, camera);
@@ -49,6 +54,7 @@ NewTownEventCtrl::NewTownEventCtrl(EventViewer *Ptr, int FieldLevel, EventCamera
 NewTownEventCtrl::~NewTownEventCtrl()
 {
 	eventViewer = nullptr;
+	eventCamera = nullptr;
 	SAFE_DELETE(NewTownEvent);
 }
 
@@ -102,7 +108,7 @@ string NewTownEventCtrl::GetEventMessage(int FieldLevel)
 void NewTownEventCtrl::EventOver(void)
 {
 	// イベント終了、ゲーム続行
-	FieldCameraTranslationPlugin::Instance()->Restore(30, nullptr);
+	eventCamera->Restore();
 	fieldEventHandler->ResumeGame();
 	UseFlag = false;
 }

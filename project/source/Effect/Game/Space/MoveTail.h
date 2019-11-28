@@ -1,41 +1,47 @@
 //=============================================================================
 //
-// 隕石周りの炎エフェクトクラス [MeteorFire.cpp]
+// 移動の軌跡エフェクトクラス [MoveTail.h]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
-#ifndef _MeteorFire_H_
-#define _MeteorFire_H_
+#ifndef _MoveTail_H_
+#define _MoveTail_H_
 
 #include "../../../../main.h"
 #include "../../../../Framework/Particle/BaseParticleController.h"
-#include "../../../../Framework/Particle/3D/AnimationParticle3D.h"
+#include "../../../../Framework/Particle/3D/Particle3D.h"
+
+/**************************************
+前方宣言
+***************************************/
 
 namespace Effect::Game
 {
 	/**************************************
-	MeteorFireControllerクラス
+	MoveTailControllerクラス
 	***************************************/
-	class MeteorFireController : public BaseParticleController
+	class MoveTailController : public BaseParticleController
 	{
 	public:
-		MeteorFireController();
+		MoveTailController();
+		void SetEmitterPos(D3DXVECTOR3 Pos);
+		bool Draw() override;
 	};
 
 	/**************************************
-	MeteorFireクラス
+	MoveTailクラス
 	***************************************/
-	class MeteorFire : public AnimationParticle3D
+	class MoveTail : public Particle3D
 	{
 	public:
-		MeteorFire();
+		MoveTail();
 
 		void Init() override;
 		void Update() override;
-
 	private:
 		static const int Life;
-		int AnimIndex;
 	};
 }
+
+
 #endif

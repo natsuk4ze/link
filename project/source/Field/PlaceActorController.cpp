@@ -386,7 +386,11 @@ namespace Field::Actor
 		PlaceActor* townActor = CreateNewTown(place);
 
 		D3DXVECTOR3 actorPos = townActor->GetPosition();
-		Tween::Move(*townActor, actorPos + InitOffset, actorPos, 60, EaseType::InOutCirc);
+		Tween::Move(*townActor, actorPos + InitOffset, actorPos, 60, EaseType::InOutCirc, [=]()
+		{
+			for(int i = 0; i < 5; i++)
+				GameParticleManager::Instance()->Generate(GameParticle::WhiteSmog, actorPos);
+		});
 
 		//地面生成
 		WorldBackGroundContainer *worldBgContainer = dynamic_cast<WorldBackGroundContainer*>(bgContainer);
@@ -394,6 +398,14 @@ namespace Field::Actor
 
 		//パッセンジャー側に地形の変化を通知
 		passengerController->RewriteMap(place->GetPosition(), PassengerController::Geography::Ground);
+	}
+
+	/**************************************
+	海上判定
+	***************************************/
+	bool PlaceActorController::IsOnSea(const FieldPosition & position) const
+	{
+		return bgContainer->IsSeaPlace(position);
 	}
 
 	/**************************************

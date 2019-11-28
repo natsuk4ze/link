@@ -64,11 +64,11 @@ string LinkLevelUpEvent::GetEventMessage(int FieldLevel)
 	}
 	else if (FieldLevel == Field::World)
 	{
-
+		MessageContainer.push_back("リンクレベル上昇！");
 	}
 	else if (FieldLevel == Field::Space)
 	{
-
+		MessageContainer.push_back("リンクレベル上昇！");
 	}
 
 	if (!MessageContainer.empty())

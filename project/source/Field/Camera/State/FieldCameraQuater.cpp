@@ -42,12 +42,12 @@ FieldCamera::Mode FieldCamera::FieldCameraQuater::OnUpdate(FieldCamera & entity)
 	//イージングで移動
 	const float MoveDuration = 30;
 	float t = entity.cntFrame / MoveDuration;
-	D3DXVECTOR3 position = Easing::EaseValue(t, entity.startPosition, entity.goalPosition, EaseType::OutCubic);
+	D3DXVECTOR3 position = Easing::EaseValue(t, entity.startPosition, entity.goalPosition, EaseType::InOutQuart);
 
 	D3DXVECTOR3 targetPosition = entity.targetObject->GetPosition();
 	entity.transform.SetPosition(position + targetPosition);
 
-	D3DXVECTOR3 reference = Easing::EaseValue(t, entity.startEyeVector, targetPosition, EaseType::OutCubic);
+	D3DXVECTOR3 reference = Easing::EaseValue(t, entity.startEyeVector, targetPosition, EaseType::InOutQuart);
 	entity.transform.LookAt(reference);
 
 	return FieldCamera::QuaterView;

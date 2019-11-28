@@ -60,15 +60,15 @@ string AllLinkLevelUpEvent::GetEventMessage(int FieldLevel)
 
 	if (FieldLevel == Field::City)
 	{
-		MessageContainer.push_back("発展は止まるじゃねぇぞ！");
+		MessageContainer.push_back("オリンピック開催！\n全ての街のリンクレベル上昇！");
 	}
 	else if (FieldLevel == Field::World)
 	{
-
+		MessageContainer.push_back("オリンピック開催！\n全ての街のリンクレベル上昇！");
 	}
 	else if (FieldLevel == Field::Space)
 	{
-
+		MessageContainer.push_back("オリンピック開催！\n全ての街のリンクレベル上昇！");
 	}
 
 	if (!MessageContainer.empty())
