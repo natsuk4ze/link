@@ -22,16 +22,17 @@ class NewTownEvent_Space : public EventBase
 {
 private:
 	EventViewer *eventViewer;
-	PlanetActor *PlanetModel;
-	D3DXVECTOR3 StartPos;
-	D3DXVECTOR3 BuildPos;
-	const Field::Model::PlaceModel* NewPlanet;
-	int EventState;
-	int CountFrame;
-	std::function<void(void)> EventOverFunc;
 	EventCamera *camera;
 	BaseEmitter* MoveTailEmitter;
 	BaseEmitter* StarDustEmitter;
+	const Field::Model::PlaceModel* NewPlanet;
+	PlanetActor *PlanetModel;
+	D3DXVECTOR3 StartPos;
+	D3DXVECTOR3 BuildPos;
+	int EventState;
+	int CountFrame;
+	std::function<void(void)> EventOverFunc;
+
 
 public:
 	NewTownEvent_Space(EventViewer *Ptr, std::function<void(void)> EventOverFunc, EventCamera* camera);

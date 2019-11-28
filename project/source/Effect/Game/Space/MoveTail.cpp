@@ -16,7 +16,7 @@ namespace Effect::Game
 		BaseParticleController(Particle_3D)
 	{
 		//単位頂点バッファ作成
-		const D3DXVECTOR2 ParticleSize{ 7.0f, 7.0f };
+		const D3DXVECTOR2 ParticleSize{ 15.0f, 15.0f };
 		MakeUnitBuffer(ParticleSize);
 
 		//テクスチャ読み込み
@@ -34,7 +34,7 @@ namespace Effect::Game
 		//エミッターコンテナ作成
 		const unsigned MaxEmitter = 1;
 		const int NumEmit = 1;
-		const int DurationEmit = 60;
+		const int DurationEmit = 40;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
@@ -51,12 +51,12 @@ namespace Effect::Game
 		LPDIRECT3DDEVICE9 Device = GetDevice();
 
 		//レンダーステートを加算合成に設定
-		//Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+		Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 
 		Result = BaseParticleController::Draw();
 
 		//レンダーステートを元に戻す
-		//Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+		Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 		return Result;
 	}

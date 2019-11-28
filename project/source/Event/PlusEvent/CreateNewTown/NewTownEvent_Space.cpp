@@ -9,7 +9,7 @@
 #include "../../EventActor/PlanetActor.h"
 #include "../../../Viewer/GameScene/EventViewer/EventTelop.h"
 #include "../../../Viewer/GameScene/Controller/EventViewer.h"
-#include "../../../Effect/GameParticleManager.h"
+#include "../../../Effect/SpaceParticleManager.h"
 #include "../../../Field/Camera/EventCamera.h"
 
 #include "../../../../Framework/Task/TaskManager.h"
@@ -71,7 +71,7 @@ void NewTownEvent_Space::Init()
 	BuildPos = NewPlanet->GetPosition().ConvertToWorldPosition();
 
 	// 惑星落下方向計算
-	StartPos = BuildPos + D3DXVECTOR3(100.0f, 100.0f, 0.0f);
+	StartPos = BuildPos + D3DXVECTOR3(100.0f, 100.0f, -100.0f);
 
 	// 惑星メッシュ作成
 	PlanetModel = new PlanetActor(StartPos, Scale, "Space-Town");
@@ -104,18 +104,24 @@ void NewTownEvent_Space::Update()
 		CountFrame++;
 		float Time = (float)CountFrame / (float)FallFrame;
 
+		// 惑星移動
 		D3DXVECTOR3 PlanetPos = Easing::EaseValue(Time, StartPos, BuildPos, EaseType::OutQuart);
 		PlanetModel->SetPosition(PlanetPos);
 		MoveTailEmitter->SetPosition(PlanetPos);
 		StarDustEmitter->SetPosition(PlanetPos);
 
+		// カメラ設置
 		camera->Translation(PlanetPos, 1, nullptr);
 
+		// 終了処理
 		if (CountFrame >= FallFrame)
 		{
 			EventState = PlanetArrive;
 			TaskManager::Instance()->CreateDelayedTask(30, [&]()
 			{
+				// 惑星追加
+				fieldEventHandler->CreateNewTown(NewPlanet);
+				// カメラ復帰
 				camera->Return(15, EventOverFunc);
 			});
 		}
@@ -151,17 +157,5 @@ void NewTownEvent_Space::FallenStart(void)
 	EventState = PlanetDebut;
 
 	// 惑星落下エフェクト
-	GameParticleManager::Instance()->SetPlanetFallEffect(StartPos, &MoveTailEmitter, &StarDustEmitter);
-	//GameParticleManager::Instance()->SetSingularityEffect(TownPos);
+	SpaceParticleManager::Instance()->SetPlanetFallEffect(StartPos, &MoveTailEmitter, &StarDustEmitter);
 }
-
-////=============================================================================
-//// イベント終了処理
-////=============================================================================
-//void NewTownEvent_Space::EventOver(void)
-//{
-//	// イベント終了、ゲーム続行
-//	CameraTranslationPlugin::Instance()->Restore(30, nullptr);
-//	fieldEventHandler->ResumeGame();
-//	UseFlag = false;
-//}

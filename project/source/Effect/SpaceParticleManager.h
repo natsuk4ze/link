@@ -22,6 +22,8 @@ namespace SpaceParticle
 		SpaceTear,		//時空断裂のスパーク,
 		StarRoad,		//銀河道
 		Blackhole,		//ブラックホール
+		MoveTail,		//移動の軌跡
+		StarDust,		//惑星落下のスターダスト
 		Max
 	};
 }
@@ -34,6 +36,9 @@ class SpaceParticleManager : public SceneParticleManager, public BaseSingleton<S
 	using SceneParticleManager::SceneParticleManager;
 public:
 	void Init() override;
+
+	//惑星登場のエフェクトセット処理
+	void SetPlanetFallEffect(const D3DXVECTOR3 & position, BaseEmitter** MoveTail, BaseEmitter** StarDust);
 
 private:
 	static const float BloomPower[3];

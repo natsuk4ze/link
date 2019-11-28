@@ -92,7 +92,6 @@ void GameScene::Init()
 	case Field::World:
 		levelParticleManager = WorldParticleManager::Instance();
 		break;
-
 	case Field::Space:
 		levelParticleManager = SpaceParticleManager::Instance();
 		break;
