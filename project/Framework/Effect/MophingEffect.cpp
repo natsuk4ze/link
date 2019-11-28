@@ -14,7 +14,7 @@
 MophingEffect::MophingEffect()
 {	
 	//エフェクト読み込み
-	ResourceManager::Instance()->GetEffect("data/EFFECT/Mophing.cfx", effect);
+	ResourceManager::Instance()->GetEffect("data/EFFECT/MophingMesh.cfx", effect);
 
 	//ハンドル取得
 	hWorld = effect->GetParameterByName(0, "mtxWorld");
@@ -30,7 +30,7 @@ MophingEffect::MophingEffect()
 	hLightAmbient = effect->GetParameterByName(0, "lightAmbient");
 	hLightSpecular = effect->GetParameterByName(0, "lightSpecular");
 
-	hTime = effect->GetParameterByName(0, "time");
+	hTime = effect->GetParameterByName(0, "t");
 
 	hTechnique = effect->GetTechniqueByName("tech");
 	effect->SetTechnique(hTechnique);

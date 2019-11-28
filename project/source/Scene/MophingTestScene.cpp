@@ -7,6 +7,11 @@
 //=====================================
 #include "MophingTestScene.h"
 #include "../../Framework/Effect/MophingEffect.h"
+#include "../../Framework/Tool/DebugWindow.h"
+#include "../../Framework/Renderer3D/MeshContainer.h"
+#include "../../Framework/Resource/ResourceManager.h"
+
+#include "../Field/Object/FieldSkyBox.h"
 
 /**************************************
 初期化処理
@@ -29,6 +34,12 @@ void MophingTestScene::Init()
 
 	if (res != S_OK)
 		return;
+
+	//隣接情報を作成して最適化
+	std::vector<DWORD> adjList;
+	adjList.resize(3 * mesh->GetNumFaces());
+	mesh->GenerateAdjacency(1.0f / 512, &adjList[0]);
+	mesh->OptimizeInplace(D3DXMESHOPT_ATTRSORT, &adjList[0], 0, 0, 0);
 
 	//各バッファを取得
 	mesh->GetVertexBuffer(&vtx1);
@@ -57,7 +68,7 @@ void MophingTestScene::Init()
 		if (elem[i].Type != D3DDECLTYPE_UNUSED)
 			continue;
 
-		for (int j = 0; j < i * 2; j++)
+		for (int j = i; j < i * 2; j++)
 		{
 			elem[j] = elem[j - i];
 			elem[j].Stream = 1;
@@ -80,6 +91,15 @@ void MophingTestScene::Init()
 		&materialNum,
 		&mesh);
 
+	//隣接情報を作成して最適化
+	adjList.resize(3 * mesh->GetNumFaces());
+	mesh->GenerateAdjacency(1.0f / 512, &adjList[0]);
+	mesh->OptimizeInplace(D3DXMESHOPT_ATTRSORT, &adjList[0], 0, 0, 0);
+
+	//各バッファを取得
+	mesh->GetVertexBuffer(&vtx2);	
+	fvf2 = mesh->GetFVF();
+
 	//テクスチャ読み込み
 	D3DXCreateTextureFromFile(pDevice, "data/MODEL/Mophing/ishi.bmp", &texture);
 
@@ -87,6 +107,15 @@ void MophingTestScene::Init()
 	SAFE_RELEASE(tmpMaterial);
 
 	effect = new MophingEffect();
+
+	sceneCamera = new Camera();
+	Camera::SetMainCamera(sceneCamera);
+
+	skybox = new Field::FieldSkyBox(Field::FieldLevel::World);
+
+	ResourceManager::Instance()->LoadMesh("ishi", "data/MODEL/Mophing/ishi.x");
+	meshContainer = new MeshContainer();
+	ResourceManager::Instance()->GetMesh("ishi", meshContainer);
 }
 
 /**************************************
@@ -105,6 +134,10 @@ void MophingTestScene::Uninit()
 	materialNum = 0;
 
 	SAFE_DELETE(effect);
+
+	SAFE_DELETE(sceneCamera);
+
+	SAFE_DELETE(meshContainer);
 }
 
 /**************************************
@@ -112,6 +145,7 @@ void MophingTestScene::Uninit()
 ***************************************/
 void MophingTestScene::Update()
 {
+	sceneCamera->Update();
 }
 
 /**************************************
@@ -119,20 +153,42 @@ void MophingTestScene::Update()
 ***************************************/
 void MophingTestScene::Draw()
 {
+	sceneCamera->Set();
+
+	skybox->Draw();
+	
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	pDevice->SetStreamSource(0, vtx1, 0, D3DXGetFVFVertexSize(fvf));
-	pDevice->SetStreamSource(1, vtx2, 0, D3DXGetFVFVertexSize(fvf));
+	pDevice->SetStreamSource(1, vtx2, 0, D3DXGetFVFVertexSize(fvf2));
+
+	UINT freq0, freq1;
+	pDevice->GetStreamSourceFreq(0, &freq0);
+	pDevice->GetStreamSourceFreq(1, &freq1);
+
 	pDevice->SetIndices(indexBuff);
 
-	Transform transform;
+	pDevice->SetVertexDeclaration(declare);
+
+	static Transform transform;
+	static D3DXVECTOR3 pos = Vector3::Forward * 1000.0f, scale = Vector3::One;
+	static float t = 0.0f;
+
+	Debug::Begin("Mophing");
+	Debug::Slider("pos", pos, Vector3::One * -1000.0f, Vector3::One * 1000.0f);
+	Debug::Slider("scl", scale, Vector3::Zero, Vector3::One * 20.0f);
+	Debug::Slider("t", t, 0.0f, 1.0f);
+	Debug::End();
+
+	transform.SetPosition(pos);
+	transform.SetScale(scale);
+
 	effect->SetWorld(transform.GetMatrix());
+	effect->SetTime(t);
 
 	for (unsigned i = 0; i < materialNum; i++)
 	{
 		effect->SetMaterial(materials[i]);
-		
-		effect->SetTime(0.0f);
 
 		pDevice->SetTexture(0, texture);
 
@@ -149,4 +205,7 @@ void MophingTestScene::Draw()
 		effect->EndPass();
 		effect->End();
 	}
+
+	//transform.SetWorld();
+	//meshContainer->Draw();
 }

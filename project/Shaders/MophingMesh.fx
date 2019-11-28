@@ -50,13 +50,13 @@ VS_OUT VS(
 	VS_OUT Out = (VS_OUT)0;
 
 	//頂点変換
-	float4 position = float4(pos0 * (1.0f - t) + pos1 * t, 1.0f);
-	Out.pos = mul(position, mtxWorld);
+	float3 position = lerp(pos0, pos1, t);
+	Out.pos = mul(float4(position, 1.0f), mtxWorld);
 	Out.pos = mul(Out.pos, mtxView);
 	Out.pos = mul(Out.pos, mtxProjection);
 
 	//法線をワールド変換
-	float3 N = mul(normal0 * (1.0f - t) + normal1 * t, (float3x3)mtxWorld);
+	float3 N = mul(lerp(normal0, normal1, t), (float3x3)mtxWorld);
 	N = normalize(N);
 
 	//UV座標を格納
@@ -88,7 +88,7 @@ VS_OUT VS(
 ***************************************/
 float4 PS(VS_OUT In) : COLOR0
 {
-	return tex2D(s0, In.uv) * In.color;
+	return tex2D(s0, In.uv);
 }
 
 /**************************************
