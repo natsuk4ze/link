@@ -131,7 +131,6 @@
     <ClInclude Include="source\Effect\CityParticleManager.h" />
     <ClInclude Include="source\Effect\GameParticleManager.h" />
     <ClInclude Include="source\Effect\Game\General\AngryFace.h" />
-    <ClInclude Include="source\Effect\Game\BanIcon.h" />
     <ClInclude Include="source\Effect\Game\City\BlueDebris.h" />
     <ClInclude Include="source\Effect\Game\City\BlueSpark.h" />
     <ClInclude Include="source\Effect\Game\General\Cloud.h" />
@@ -263,6 +262,7 @@
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatStarterViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatTimerViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatTitleViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\Controller\NameEntryViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\Controller\ResultViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\Controller\BeatGameViewer.h" />
@@ -270,6 +270,8 @@
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h" />
     <ClInclude Include="source\Viewer\GameScene\Controller\EventViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryCursorViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.h" />
     <ClInclude Include="source\Viewer\GameScene\ParameterContainer\EventViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldTelop.h" />
@@ -286,6 +288,7 @@
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.h" />
     <ClInclude Include="source\Viewer\GameScene\ParameterContainer\ResultViewerParam.h" />
+    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryReelViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\ResultViewer\ResultScoreViewer.h" />
     <ClInclude Include="source\Viewer\TitleScene\SelectCamera.h" />
     <ClInclude Include="source\Viewer\TitleScene\SelectLogo.h" />
@@ -391,7 +394,6 @@
     <ClCompile Include="source\Effect\CityParticleManager.cpp" />
     <ClCompile Include="source\Effect\GameParticleManager.cpp" />
     <ClCompile Include="source\Effect\Game\General\AngryFace.cpp" />
-    <ClCompile Include="source\Effect\Game\BanIcon.cpp" />
     <ClCompile Include="source\Effect\Game\City\BlueDebris.cpp" />
     <ClCompile Include="source\Effect\Game\City\BlueSpark.cpp" />
     <ClCompile Include="source\Effect\Game\General\Cloud.cpp" />
@@ -519,6 +521,7 @@
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatStarterViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatTimerViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatTitleViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\Controller\NameEntryViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\Controller\ResultViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\EventViewer\SealItemStockViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\Controller\BeatGameViewer.cpp" />
@@ -539,6 +542,9 @@
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideCamera.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryReelViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntyCursorViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\ResultViewer\ResultScoreViewer.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\SelectCamera.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\SelectLogo.cpp" />
@@ -735,6 +741,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <PostBuildEvent>
       <Command>for %%1 in ($(InputDir)Shaders/*.fx) do fxc.exe $(InputDir)Shaders/%%~n1.fx /T fx_2_0 /Fo $(InputDir)data/EFFECT/%%~n1.cfx
@@ -761,6 +768,7 @@ for %%1 in ($(InputDir)source/Shader/*.fx) do fxc.exe $(InputDir)source/Shader/%
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

@@ -21,6 +21,7 @@
 #include "../../Viewer/GameScene/Controller/GameViewer.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../Viewer/GameScene/Controller/ResultViewer.h"
+#include "../../Viewer/GameScene/Controller/NameEntryViewer.h"
 
 /**************************************
 入場処理
@@ -36,6 +37,7 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	entity.gameViewer->SetActive(false);
 	entity.guideViewer->SetActive(false);
 	entity.resultViewer->SetActive(false);
+	entity.nemeEntryViewer->SetActive(false);
 
 	//パーティクル初期化
 	entity.particleManager->Init();

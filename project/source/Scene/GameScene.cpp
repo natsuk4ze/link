@@ -31,6 +31,7 @@
 #include "../Effect/SpaceParticleManager.h"
 #include "../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../Viewer/GameScene/Controller/ResultViewer.h"
+#include "../Viewer/GameScene/Controller/NameEntryViewer.h"
 #include "../Viewer/TitleScene/TitleViewer.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
@@ -49,6 +50,9 @@
 
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Sound/BackgroundMusic.h"
+
+#include "../../Framework/Input/input.h"
+#include "../../Framework/Tool/DebugWindow.h"
 
 /**************************************
 staticメンバ
@@ -81,6 +85,7 @@ void GameScene::Init()
 	Client = new UDPClient();
 	guideViewer = new GuideViewer();
 	resultViewer = new ResultViewer();
+	nemeEntryViewer = new NameEntryViewer();
 	titleViewer = new TitleViewer();
 
 	//レベル毎のパーティクルマネージャを選択
@@ -139,6 +144,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(Client);
 	SAFE_DELETE(guideViewer);
 	SAFE_DELETE(resultViewer);
+	SAFE_DELETE(nemeEntryViewer);
 	SAFE_DELETE(titleViewer);
 
 	//パーティクル終了
@@ -160,6 +166,11 @@ void GameScene::Update()
 
 	//ステートを更新
 	State next = fsm[currentState]->OnUpdate(*this);
+
+	if (Keyboard::GetTrigger(DIK_R))
+	{
+		ChangeState(State::Result);
+	}
 
 	//カメラ更新
 	ProfilerCPU::Instance()->Begin("Update Camera");
@@ -183,6 +194,7 @@ void GameScene::Update()
 	gameViewer->Update();
 	guideViewer->Update();
 	resultViewer->Update();
+	nemeEntryViewer->Update();
 	titleViewer->Update();
 
 	//パーティクル更新
@@ -257,6 +269,7 @@ void GameScene::Draw()
 	gameViewer->Draw();
 	eventController->DrawEventViewer();
 	resultViewer->Draw();
+	nemeEntryViewer->Draw();
 	titleViewer->Draw();
 
 	//*******別ウインドウを作成するため最後*******

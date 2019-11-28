@@ -172,7 +172,6 @@
     <ClInclude Include="Framework\Renderer3D\Viewer3D.h" />
     <ClInclude Include="source\FieldObject\Infomation\InfoDigit.h" />
     <ClInclude Include="source\FieldObject\InfoController.h" />
-    <ClInclude Include="source\Effect\Game\BanIcon.h" />
     <ClInclude Include="source\Field\AStar\AStarController.h" />
     <ClInclude Include="source\Field\Object\FieldCursor.h" />
     <ClInclude Include="source\Field\Object\FieldGround.h" />
@@ -386,7 +385,6 @@
     <ClCompile Include="source\Effect\CityParticleManager.cpp" />
     <ClCompile Include="source\Effect\GameParticleManager.cpp" />
     <ClCompile Include="source\Effect\Game\General\AngryFace.cpp" />
-    <ClCompile Include="source\Effect\Game\BanIcon.cpp" />
     <ClCompile Include="source\Effect\Game\City\BlueDebris.cpp" />
     <ClCompile Include="source\Effect\Game\City\BlueSpark.cpp" />
     <ClCompile Include="source\Effect\Game\General\Cloud.cpp" />
@@ -542,6 +540,10 @@
     <ClCompile Include="source\Viewer\TitleScene\SelectViewer.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\TitleLogo.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\TitleViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\Controller\NameEntryViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryReelViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntyCursorViewer.cpp" />
     <ClCompile Include="source\Effect\Game\Space\MoveTail.cpp" />
     <ClCompile Include="source\Effect\Game\Space\StarDust.cpp" />
     <ClCompile Include="source\Effect\Game\General\Darkness.cpp" />
@@ -659,7 +661,6 @@
     <ClInclude Include="source\Effect\CityParticleManager.h" />
     <ClInclude Include="source\Effect\GameParticleManager.h" />
     <ClInclude Include="source\Effect\Game\General\AngryFace.h" />
-    <ClInclude Include="source\Effect\Game\BanIcon.h" />
     <ClInclude Include="source\Effect\Game\City\BlueDebris.h" />
     <ClInclude Include="source\Effect\Game\City\BlueSpark.h" />
     <ClInclude Include="source\Effect\Game\General\Cloud.h" />
@@ -668,8 +669,6 @@
     <ClInclude Include="source\Effect\Game\General\ColorfulDebris.h" />
     <ClInclude Include="source\Effect\Game\General\Darkness.h" />
     <ClInclude Include="source\Effect\Game\General\LinkLevelUp.h" />
-    <ClInclude Include="source\Effect\Game\General\MeteorFire.h" />
-    <ClInclude Include="source\Effect\Game\General\MoveTail.h" />
     <ClInclude Include="source\Effect\Game\Space\SpaceTear.h" />
     <ClInclude Include="source\Effect\Game\Space\StarRoad.h" />
     <ClInclude Include="source\Effect\Game\General\TownExplosion.h" />
@@ -819,6 +818,10 @@
     <ClInclude Include="source\Viewer\TitleScene\TitleLogo.h" />
     <ClInclude Include="source\Viewer\TitleScene\TitleViewer.h" />
     <ClInclude Include="source\Scene\ParticleTestScene.h" />
+    <ClInclude Include="source\Viewer\GameScene\Controller\NameEntryViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryReelViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.h" />
+    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryCursorViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
