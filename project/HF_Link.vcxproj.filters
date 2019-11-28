@@ -235,8 +235,6 @@
     <ClInclude Include="source\Effect\Game\General\ExplosionFlare.h" />
     <ClInclude Include="source\Effect\Game\General\LinkLevelUp.h" />
     <ClInclude Include="source\Effect\Game\General\MeteorExplosion.h" />
-    <ClInclude Include="source\Effect\Game\General\MeteorFire.h" />
-    <ClInclude Include="source\Effect\Game\General\MoveTail.h" />
     <ClInclude Include="source\Effect\Game\Space\SpaceTear.h" />
     <ClInclude Include="source\Effect\Game\Space\StarRoad.h" />
     <ClInclude Include="source\Effect\Game\General\TownExplosion.h" />
@@ -287,6 +285,8 @@
     <FxCompile Include="Shaders\Sprite.fx" />
     <FxCompile Include="Shaders\StrongBlurFilter.fx" />
     <FxCompile Include="source\Shader\RiverRenderer.fx" />
+    <ClInclude Include="source\Effect\Game\Space\MoveTail.h" />
+    <ClInclude Include="source\Effect\Game\Space\StarDust.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Animation\AnimationManager.cpp" />
@@ -396,10 +396,7 @@
     <ClCompile Include="source\Effect\WorldParticleManager.cpp" />
     <ClCompile Include="source\Effect\Game\World\Bubble.cpp" />
     <ClCompile Include="source\Effect\Game\General\ColorfulDebris.cpp" />
-    <ClCompile Include="source\Effect\Game\General\Drakness.cpp" />
     <ClCompile Include="source\Effect\Game\General\LinkLevelUp.cpp" />
-    <ClCompile Include="source\Effect\Game\General\MeteorFire.cpp" />
-    <ClCompile Include="source\Effect\Game\General\MoveTail.cpp" />
     <ClCompile Include="source\Effect\Game\Space\SpaceTear.cpp" />
     <ClCompile Include="source\Effect\Game\Space\StarRoad.cpp" />
     <ClCompile Include="source\Effect\Game\General\TownExplosion.cpp" />
@@ -545,6 +542,9 @@
     <ClCompile Include="source\Viewer\TitleScene\SelectViewer.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\TitleLogo.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\TitleViewer.cpp" />
+    <ClCompile Include="source\Effect\Game\Space\MoveTail.cpp" />
+    <ClCompile Include="source\Effect\Game\Space\StarDust.cpp" />
+    <ClCompile Include="source\Effect\Game\General\Darkness.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />

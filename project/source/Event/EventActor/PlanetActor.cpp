@@ -19,6 +19,7 @@ PlanetActor::PlanetActor(D3DXVECTOR3 Pos, D3DXVECTOR3 Scale, const char* MeshTag
 {
 #if _DEBUG
 	MoveTailEmitter = TestParticleManager::Instance()->Generate(TestParticle::MoveTail, Vector3::Zero);
+	StarDustEmitter = TestParticleManager::Instance()->Generate(TestParticle::StarDust, Vector3::Zero);
 #endif
 }
 
@@ -51,12 +52,14 @@ void PlanetActor::HoverMotion(void)
 
 	D3DXVECTOR3 Pos = D3DXVECTOR3
 	(
-		10.0f * cosf(Theta),
+		0.0f,
+		//10.0f * cosf(Theta),
 		10.0f,
-		10.0f * sinf(Theta)
+		30.0f * sinf(Theta)
 	);
 
 	MoveTailEmitter->SetPosition(Pos);
+	StarDustEmitter->SetPosition(Pos);
 	transform->SetPosition(Pos);
 }
 #endif

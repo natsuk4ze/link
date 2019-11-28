@@ -129,6 +129,7 @@ void EventController::Update()
 #if _DEBUG
 	if (Keyboard::GetTrigger(DIK_F))
 	{
+		EventVec.push_back(new NewTownEventCtrl(eventViewer, Field::Space, camera));
 	}
 #endif
 

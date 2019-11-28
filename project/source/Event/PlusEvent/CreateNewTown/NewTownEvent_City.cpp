@@ -104,14 +104,3 @@ void NewTownEvent_City::CreateNewTown(void)
 		camera->Return(15, EventOverFunc);
 	});
 }
-
-////=============================================================================
-//// イベント終了処理
-////=============================================================================
-//void NewTownEvent_City::EventOver(void)
-//{
-//	// イベント終了、ゲーム続行
-//	CameraTranslationPlugin::Instance()->Restore(30, nullptr);
-//	fieldEventHandler->ResumeGame();
-//	UseFlag = false;
-//}

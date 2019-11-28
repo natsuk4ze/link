@@ -1,6 +1,6 @@
 ﻿//=============================================================================
 //
-// 移動の残像エフェクトクラス [MoveTail.cpp]
+// 移動の軌跡エフェクトクラス [MoveTail.cpp]
 // Author : HAL東京 GP12B332 41 頼凱興
 //
 //=============================================================================
@@ -16,7 +16,7 @@ namespace Effect::Game
 		BaseParticleController(Particle_3D)
 	{
 		//単位頂点バッファ作成
-		const D3DXVECTOR2 ParticleSize{ 3.0f, 3.0f };
+		const D3DXVECTOR2 ParticleSize{ 15.0f, 15.0f };
 		MakeUnitBuffer(ParticleSize);
 
 		//テクスチャ読み込み
@@ -24,7 +24,7 @@ namespace Effect::Game
 		LoadTexture(path);
 
 		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 512;
+		const unsigned MaxParticle = 64;
 		particleContainer.resize(MaxParticle, nullptr);
 		for (auto&& particle : particleContainer)
 		{
@@ -34,8 +34,7 @@ namespace Effect::Game
 		//エミッターコンテナ作成
 		const unsigned MaxEmitter = 1;
 		const int NumEmit = 1;
-		const int DurationEmit = 3000;
-
+		const int DurationEmit = 40;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
@@ -77,7 +76,7 @@ namespace Effect::Game
 	/**************************************
 	MoveTail staticメンバ
 	***************************************/
-	const int MoveTail::Life = 10;
+	const int MoveTail::Life = 15;
 
 	/**************************************
 	MoveTailコンストラクタ
@@ -94,18 +93,6 @@ namespace Effect::Game
 	{
 		cntFrame = 0;
 		active = true;
-
-		//初期位置を移動方向へオフセット
-		//float BaseAngle = 10.0f;
-		//float Theta = Math::RandomRange(0, 36) * BaseAngle;
-		//float Length = Math::RandomRange(0.0f, 15.0f);
-		//D3DXVECTOR3 InitOffset = D3DXVECTOR3
-		//(
-		//	Length * cosf(D3DXToRadian(Theta)),
-		//	Math::RandomRange(0.0f, 1.0f),
-		//	Length * sinf(D3DXToRadian(Theta))
-		//);
-		//transform->Move(InitOffset);
 	}
 
 	/**************************************
@@ -118,6 +105,9 @@ namespace Effect::Game
 
 		cntFrame++;
 
-		//transform->Move(Vector3::Right * 2.0f);
+		float Time = (float)cntFrame / (float)Life;
+
+		float Scale = Easing::EaseValue(Time, 1.0f, 0.0f, EaseType::InCubic);
+		transform->SetScale(Vector3::One * Scale);
 	}
 }
