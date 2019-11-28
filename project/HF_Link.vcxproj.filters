@@ -287,6 +287,9 @@
     <FxCompile Include="Shaders\Sprite.fx" />
     <FxCompile Include="Shaders\StrongBlurFilter.fx" />
     <FxCompile Include="source\Shader\RiverRenderer.fx" />
+    <ClInclude Include="Framework\Renderer3D\MophingMeshContainer.h" />
+    <ClInclude Include="source\Scene\MophingTestScene.h" />
+    <ClInclude Include="Framework\Effect\MophingEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Animation\AnimationManager.cpp" />
@@ -545,6 +548,9 @@
     <ClCompile Include="source\Viewer\TitleScene\SelectViewer.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\TitleLogo.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\TitleViewer.cpp" />
+    <ClCompile Include="Framework\Renderer3D\MophingMeshContainer.cpp" />
+    <ClCompile Include="source\Scene\MophingTestScene.cpp" />
+    <ClCompile Include="Framework\Effect\MophingEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />

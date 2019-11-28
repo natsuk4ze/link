@@ -1,0 +1,53 @@
+//=====================================
+//
+//MophingEffect.cpp
+//機能:モーフィング用エフェクト
+//Author:GP12B332 21 立花雄太
+//
+//=====================================
+#include "MophingEffect.h"
+#include "../Resource/ResourceManager.h"
+
+/**************************************
+コンストラクタ
+***************************************/
+MophingEffect::MophingEffect()
+{	
+	//エフェクト読み込み
+	ResourceManager::Instance()->GetEffect("data/EFFECT/Mophing.cfx", effect);
+
+	//ハンドル取得
+	hView = effect->GetParameterByName(0, "mtxView");
+	hProjection = effect->GetParameterByName(0, "mtxProjection");
+
+	hMatDiffuse = effect->GetParameterByName(0, "materialDiffuse");
+	hMatAmbient = effect->GetParameterByName(0, "materialAmbient");
+	hMatSpecular = effect->GetParameterByName(0, "materialSpecular");
+
+	hLightDirection = effect->GetParameterByName(0, "lightDirection");
+	hLightDiffuse = effect->GetParameterByName(0, "lightDiffuse");
+	hLightAmbient = effect->GetParameterByName(0, "lightAmbient");
+	hLightSpecular = effect->GetParameterByName(0, "lightSpecular");
+
+	hTime = effect->GetParameterByName(0, "time");
+
+	hTechnique = effect->GetTechniqueByName("tech");
+	effect->SetTechnique(hTechnique);
+
+}
+
+/**************************************
+デストラクタ
+***************************************/
+MophingEffect::~MophingEffect()
+{
+	SAFE_RELEASE(effect);
+}
+
+/**************************************
+変化割合設定処理
+***************************************/
+void MophingEffect::SetTime(float t)
+{
+	effect->SetFloat(hTime, t);
+}
