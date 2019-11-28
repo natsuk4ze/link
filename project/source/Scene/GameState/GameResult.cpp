@@ -10,6 +10,7 @@
 #include "../../Viewer/GameScene/Controller/GameViewer.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../Viewer/GameScene/Controller/ResultViewer.h"
+#include "../../Viewer/GameScene/Controller/NameEntryViewer.h"//GameNameEntryのStateが出来たら移動(おーはま)
 
 //=====================================
 // 入場処理
@@ -19,6 +20,7 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	//スコア表示、名前入力などなど
 	// リザルト画面で使用するUIの描画をON
 	entity.resultViewer->SetActive(true);
+	entity.nemeEntryViewer->SetActive(true);//GameNameEntryのStateが出来たら移動(おーはま)
 
 	// 使用しないUIの描画をOFF
 	entity.field->SetActive(false);

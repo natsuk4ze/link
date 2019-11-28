@@ -5,9 +5,7 @@
 //
 //=============================================================================
 #include "../../../../main.h"
-#include "../../../Score/Score.h"
 #include "../ResultViewer/ResultScoreViewer.h"
-#include "../ResultViewer/ResultNameEntryViewer.h"
 #include "../ParameterContainer/ResultViewerParam.h"
 #include "ResultViewer.h"
 
@@ -23,7 +21,6 @@ ResultViewer::ResultViewer()
 {
 	viewerParam = new ResultViewerParam();
 	resultViewer.push_back(scoreViewer = new ResultScoreViewer());
-	resultViewer.push_back(nemeEntryViewer = new ResultNameEntryViewer());
 }
 
 //*****************************************************************************
@@ -48,6 +45,9 @@ ResultViewer::~ResultViewer()
 //=============================================================================
 void ResultViewer::Update()
 {
+	if (!isActive)
+		return;
+
 	for (unsigned int i = 0; i < resultViewer.size(); i++)
 	{
 		resultViewer[i]->Update();
@@ -101,12 +101,4 @@ void ResultViewer::ReceiveParam(int cityScore, int worldScore, int spaceScore)
 void ResultViewer::SetActive(bool flag)
 {
 	isActive = flag;
-}
-
-//=============================================================================
-// “o˜^–¼Žæ“¾ˆ—
-//=============================================================================
-std::string ResultViewer::GetEntryName()
-{
-	return nemeEntryViewer->entryName;
 }

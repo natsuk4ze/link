@@ -1,29 +1,30 @@
 //=============================================================================
 //
-// 結果ビュアーコントロール処理 [ResultViewer.h]
+// 名前登録ビュアーコントロール処理 [NameEntryViewer.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _RESULT_VIEWER_H_
-#define _RESULT_VIEWER_H_
+#ifndef _NAME_ENTRY_VIEWER_H_
+#define _NAME_ENTRY_VIEWER_H_
 
 #include <vector>
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
-class ResultScoreViewer;
-class ResultViewerParam;
+class NameEntryInput;
+class NameEntryReelViewer;
+class NameEntryCursorViewer;
 class BaseViewer;
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class ResultViewer
+class NameEntryViewer
 {
 public:
-	ResultViewer();
-	~ResultViewer();
+	NameEntryViewer();
+	~NameEntryViewer();
 
 	void Update(void);
 	void Draw(void);
@@ -31,14 +32,33 @@ public:
 	//アクティブ状態をセット
 	void SetActive(bool flag);
 
-	//パラメータの受け取り処理
-	void ReceiveParam(int cityScore,int worldScore,int spaceScore);
+	std::string GetEntryName();
 
 private:
-	std::vector <BaseViewer*> resultViewer;
-	ResultScoreViewer * scoreViewer;
-	ResultViewerParam *viewerParam;
+	std::vector <BaseViewer*> nameEntryViewer;
+	NameEntryInput *input;
+	NameEntryReelViewer *reelViewer;
+	NameEntryCursorViewer *cursorViewer;
 
+	//登録名
+	std::string entryName;
+
+	//カーソル移動処理
+	void MoveCursor(void);
+
+	//リール上下処理
+	void UpDownReel(void);
+
+	//登録名セット処理
+	void SetEntryName();
+
+	//登録できる名前の最大数
+	static const int entryNameMax = 3;
+
+	//リールカウント
+	int reelCnt;
+
+	//アクティブかどうか
 	bool isActive;
 };
 

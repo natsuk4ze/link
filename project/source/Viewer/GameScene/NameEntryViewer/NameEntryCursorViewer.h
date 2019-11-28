@@ -1,46 +1,40 @@
 //=============================================================================
 //
-// 結果ビュアーコントロール処理 [ResultViewer.h]
+// 名前入力カーソルビュアー処理 [NameEntryCursorViewer.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _RESULT_VIEWER_H_
-#define _RESULT_VIEWER_H_
+#ifndef _NAME_ENTRY_CURSOR_VIEWER_H_
+#define _NAME_ENTRY_CURSOR_VIEWER_H_
 
-#include <vector>
+#include "../../Framework/BaseViewer.h"
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
-class ResultScoreViewer;
-class ResultViewerParam;
-class BaseViewer;
+class BaseViewerDrawer;
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class ResultViewer
+class NameEntryCursorViewer :public BaseViewer
 {
 public:
-	ResultViewer();
-	~ResultViewer();
+	NameEntryCursorViewer();
+	~NameEntryCursorViewer();
 
-	void Update(void);
-	void Draw(void);
+	void Update();
+	void Draw();
 
-	//アクティブ状態をセット
-	void SetActive(bool flag);
+	//カーソルを右に移動
+	void MoveCursorRight();
 
-	//パラメータの受け取り処理
-	void ReceiveParam(int cityScore,int worldScore,int spaceScore);
+	//カーソルを左に移動
+	void MoveCursorLeft();
 
 private:
-	std::vector <BaseViewer*> resultViewer;
-	ResultScoreViewer * scoreViewer;
-	ResultViewerParam *viewerParam;
 
-	bool isActive;
+	//カーソル
+	BaseViewerDrawer * cursor;
 };
-
 #endif
-

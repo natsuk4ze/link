@@ -1,12 +1,12 @@
 
 //=============================================================================
 //
-// リザルト名前入力処理 [ResultNameEntryViewer.h]
+// 名前入力リール処理 [NameEntryReelViewer.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _RESULT_NAME_ENTRY_VIEWER_H_
-#define _RESULT_NAME_ENTRY_VIEWER_H_
+#ifndef _NAME_ENTRY_REEL_VIEWER_H_
+#define _NAME_ENTRY_REEL_VIEWER_H_
 
 #include "../../Framework/BaseViewer.h"
 
@@ -18,20 +18,23 @@ class BaseViewerDrawer;
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class ResultNameEntryViewer :public BaseViewer
+class NameEntryReelViewer :public BaseViewer
 {
 public:
-	ResultNameEntryViewer();
-	~ResultNameEntryViewer();
+	NameEntryReelViewer();
+	~NameEntryReelViewer();
 
 	void Update();
 	void Draw(void);
 
-	//登録名取得処理
-	std::string GetEntryName(void);
+	//リールアップ処理
+	void ReelUp(int reelCnt);
 
-	//登録名
-	std::string entryName;
+	//リールダウン処理
+	void ReelDown(int reelCnt);
+
+	//リールの文字を取得する
+	int* GetReelChar(void);
 
 private:
 
@@ -41,29 +44,11 @@ private:
 	//文字種の最大数
 	static const int charTypeMax = 36;
 
-	//文字
-	BaseViewerDrawer * character[entryNameMax];
+	//リールに表示されている文字
+	int character[entryNameMax];
 
-	//カーソル
-	BaseViewerDrawer * cursor;
-
-	//テクスチャのUVをセット
-	void SetTexture();
-
-	//カーソルの座標をセット
-	void SetCursorPos();
-
-	//名前入力処理
-	void NameInput(void);
-
-	//登録名セット処理
-	void SetEntryName(int id);
-
-	//文字ID
-	int charID[entryNameMax];
-
-	//文字カウント
-	int charCnt;
+	//リール
+	BaseViewerDrawer * reel[entryNameMax];
 };
 
 #endif

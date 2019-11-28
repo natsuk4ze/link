@@ -15,20 +15,12 @@
 ResultScoreViewer::ResultScoreViewer() :parameterBox()
 {
 	//*****************
-	// テクスチャの二重開放注意（リファクタリング中）
+	// テクスチャの読み込みリファクタリング中
 	//*****************
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	LPDIRECT3DTEXTURE9 tex;
-
-	// テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,
-		"data/TEXTURE/Viewer/ResultViewer/ResultScoreViewer/Number.png",
-		&tex);
-
 	for (int i = 0; i < fieldTypeMax; i++)
 	{
 		num[i] = new CountViewerDrawer();
-		num[i]->texture = tex;
+		num[i]->LoadTexture("data/TEXTURE/Viewer/ResultViewer/ResultScoreViewer/Number.png");
 		num[i]->size = D3DXVECTOR3(120.0f, 120.0f, 0.0f);
 		num[i]->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		num[i]->intervalPosScr = 80.0f;

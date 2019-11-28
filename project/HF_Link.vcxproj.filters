@@ -269,7 +269,10 @@
     <ClCompile Include="source\Viewer\TitleScene\SelectViewer.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\TitleLogo.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\TitleViewer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\ResultViewer\ResultNameEntryViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\Controller\NameEntryViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryReelViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntyCursorViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -543,7 +546,10 @@
     <ClInclude Include="source\Viewer\TitleScene\TitleLogo.h" />
     <ClInclude Include="source\Viewer\TitleScene\TitleViewer.h" />
     <ClInclude Include="source\Scene\ParticleTestScene.h" />
-    <ClInclude Include="source\Viewer\GameScene\ResultViewer\ResultNameEntryViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\Controller\NameEntryViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryReelViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.h" />
+    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryCursorViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
