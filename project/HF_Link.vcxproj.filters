@@ -829,4 +829,7 @@
   <ItemGroup>
     <None Include="imgui.ini" />
   </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\MophingMesh.fx" />
+  </ItemGroup>
 </Project>

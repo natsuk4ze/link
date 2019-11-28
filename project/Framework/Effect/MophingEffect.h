@@ -26,6 +26,7 @@ public:
 	~MophingEffect();
 
 	void SetTime(float t);
+	void SetWorld(const D3DXMATRIX& mtx);
 
 private:
 	//シェーダへのハンドル

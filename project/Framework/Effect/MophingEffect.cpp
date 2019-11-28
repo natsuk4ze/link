@@ -17,6 +17,7 @@ MophingEffect::MophingEffect()
 	ResourceManager::Instance()->GetEffect("data/EFFECT/Mophing.cfx", effect);
 
 	//ハンドル取得
+	hWorld = effect->GetParameterByName(0, "mtxWorld");
 	hView = effect->GetParameterByName(0, "mtxView");
 	hProjection = effect->GetParameterByName(0, "mtxProjection");
 
@@ -49,5 +50,14 @@ MophingEffect::~MophingEffect()
 ***************************************/
 void MophingEffect::SetTime(float t)
 {
+	t = Math::Clamp(0.0f, 1.0f, t);
 	effect->SetFloat(hTime, t);
+}
+
+/**************************************
+ワールド変換行列設定処理
+***************************************/
+void MophingEffect::SetWorld(const D3DXMATRIX & mtx)
+{
+	effect->SetMatrix(hWorld, &mtx);
 }

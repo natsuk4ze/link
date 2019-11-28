@@ -61,6 +61,7 @@ void MophingTestScene::Init()
 		{
 			elem[j] = elem[j - i];
 			elem[j].Stream = 1;
+			elem[j].UsageIndex = 1;
 		}
 		elem[i * 2] = D3DDECL_END();
 		break;
@@ -123,6 +124,9 @@ void MophingTestScene::Draw()
 	pDevice->SetStreamSource(0, vtx1, 0, D3DXGetFVFVertexSize(fvf));
 	pDevice->SetStreamSource(1, vtx2, 0, D3DXGetFVFVertexSize(fvf));
 	pDevice->SetIndices(indexBuff);
+
+	Transform transform;
+	effect->SetWorld(transform.GetMatrix());
 
 	for (unsigned i = 0; i < materialNum; i++)
 	{
