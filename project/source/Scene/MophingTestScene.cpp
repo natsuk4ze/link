@@ -115,7 +115,7 @@ void MophingTestScene::Init()
 	skybox = new Field::FieldSkyBox(Field::FieldLevel::World);
 
 	ResourceManager::Instance()->LoadMesh("ishi", "data/MODEL/Mophing/ishi.x");
-	ResourceManager::Instance()->LoadMesh("ishi2", "data/MODEL/Mophing/ish2.x");
+	ResourceManager::Instance()->LoadMesh("ishi2", "data/MODEL/Mophing/ishi2.x");
 
 	morphContainer = new MorphingMeshContainer();
 	ResourceManager::Instance()->GetMesh("ishi", morphContainer);
@@ -169,16 +169,16 @@ void MophingTestScene::Draw()
 	
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	pDevice->SetStreamSource(0, vtx1, 0, D3DXGetFVFVertexSize(fvf));
-	pDevice->SetStreamSource(1, vtx2, 0, D3DXGetFVFVertexSize(fvf2));
+	//pDevice->SetStreamSource(0, vtx1, 0, D3DXGetFVFVertexSize(fvf));
+	//pDevice->SetStreamSource(1, vtx2, 0, D3DXGetFVFVertexSize(fvf2));
 
-	UINT freq0, freq1;
-	pDevice->GetStreamSourceFreq(0, &freq0);
-	pDevice->GetStreamSourceFreq(1, &freq1);
+	//UINT freq0, freq1;
+	//pDevice->GetStreamSourceFreq(0, &freq0);
+	//pDevice->GetStreamSourceFreq(1, &freq1);
 
-	pDevice->SetIndices(indexBuff);
+	//pDevice->SetIndices(indexBuff);
 
-	pDevice->SetVertexDeclaration(declare);
+	//pDevice->SetVertexDeclaration(declare);
 
 	static Transform transform;
 	static D3DXVECTOR3 pos = Vector3::Forward * 1000.0f, scale = Vector3::One;
@@ -195,30 +195,4 @@ void MophingTestScene::Draw()
 
 	morphContainer->SetChange(t);
 	morphContainer->Draw(transform.GetMatrix());
-
-	//effect->SetWorld(transform.GetMatrix());
-	//effect->SetTime(t);
-
-	//for (unsigned i = 0; i < materialNum; i++)
-	//{
-	//	effect->SetMaterial(materials[i]);
-
-	//	pDevice->SetTexture(0, texture);
-
-	//	effect->Begin();
-	//	effect->BeginPass(0);
-
-	//	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,
-	//		0,
-	//		attributeTable[i].VertexStart,
-	//		attributeTable[i].VertexCount,
-	//		attributeTable[i].VertexStart * 3,
-	//		attributeTable[i].FaceCount);
-
-	//	effect->EndPass();
-	//	effect->End();
-	//}
-
-	//transform.SetWorld();
-	//meshContainer->Draw();
 }

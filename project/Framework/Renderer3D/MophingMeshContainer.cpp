@@ -57,7 +57,11 @@ void MorphingMeshContainer::RegisterVertex(unsigned index)
 		return;
 
 	if (meshTable.size() < index + 1)
+	{
 		meshTable.resize(index + 1, NULL);
+		textureContainer.resize(index + 1);
+		materialContainer.resize(index + 1);
+	}
 
 	//バッファ登録
 	meshTable[index] = mesh;
@@ -66,6 +70,22 @@ void MorphingMeshContainer::RegisterVertex(unsigned index)
 
 	if (indexBuff == NULL)
 		mesh->GetIndexBuffer(&indexBuff);
+
+	//マテリアル登録
+	materialContainer[index].reserve(materialNum);
+	for (unsigned i = 0; i < materialNum; i++)
+	{
+		materialContainer[index].push_back(materials[i]);
+	}
+
+	//テクスチャ登録
+	textureContainer[index].resize(materialNum);
+	for(unsigned i = 0; i < materialNum; i++)
+	{
+		textureContainer[index][i] = textures[i];
+		textures[i]->AddRef();
+	}
+
 
 	//属性テーブル取得
 	if (attributeTable.empty())
@@ -122,7 +142,7 @@ void MorphingMeshContainer::Draw(const D3DXMATRIX & mtxWorld)
 
 	//ストリームソース設定
 	pDevice->SetStreamSource(0, vtx0, 0, D3DXGetFVFVertexSize(fvf));
-	pDevice->SetStreamSource(0, vtx1, 0, D3DXGetFVFVertexSize(fvf));
+	pDevice->SetStreamSource(1, vtx1, 0, D3DXGetFVFVertexSize(fvf));
 
 	//インデックスバッファ設定
 	pDevice->SetIndices(indexBuff);
@@ -137,9 +157,11 @@ void MorphingMeshContainer::Draw(const D3DXMATRIX & mtxWorld)
 	//描画
 	for (unsigned i = 0; i < materialNum; i++)
 	{
-		effect->SetMaterial(materials[i]);
+		effect->SetMaterial(materialContainer[currentIndex][i]);
+		effect->SetNextMaterial(materialContainer[nextIndex][i]);
 
-		pDevice->SetTexture(0, textures[i]);
+		pDevice->SetTexture(0, textureContainer[currentIndex][i]);
+		effect->SetNextTexture(textureContainer[nextIndex][i]);
 
 		effect->Begin();
 		effect->BeginPass(0);

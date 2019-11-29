@@ -11,9 +11,14 @@
 float4x4 mtxWorld;				//ワールド行列
 float4x4 mtxView;				//ビュー行列
 float4x4 mtxProjection;			//プロジェクション行列
+
 float4 materialDiffuse;			//マテリアルディフューズ
 float4 materialAmbient;			//マテリアルアンビエント
 float4 materialSpecular;		//マテリアルスペキュラー
+
+float4 nextMaterialDiffuse;		//次のマテリアルディフューズ
+float4 nextMaterialAmbient;		//次のマテリアルアンビエント
+float4 nextMaterialSpecular;	//次のマテリアルスペキュラ
 
 float4 lightDiffuse[3];			//ライトディフューズ
 float4 lightAmbient[3];			//ライトアンビエント
@@ -22,10 +27,19 @@ float4 lightDirection[3];		//ライト方向
 
 float t;						//変化率
 
+texture nextTexture;			//変化後のテクスチャ
+
 /**************************************
 *テクスチャサンプラー
 ***************************************/
 sampler s0 : register(s0);
+
+sampler nextSampler = sampler_state
+{
+	Texture = <nextTexture>;
+	MagFilter = Linear;
+	MinFilter = Linear;
+};
 
 /**************************************
 *頂点シェーダ出力構造体
@@ -66,17 +80,19 @@ VS_OUT VS(
 		Out.uv = uv1;
 
 	//ライトによる色を計算
-	float4 diffuse = (float4)0;
-	float4 ambient = (float4)0;
+	float4 lightDiffuse = (float4)0;
+	float4 lightAmbient = (float4)0;
 
 	for (int i = 0; i < 3; i++)
 	{
 		float3 L = normalize(-lightDirection[i].xyz);
-		diffuse += max(0.0f, dot(L, N)) * lightDiffuse[i];
-		ambient += lightAmbient[i];
+		lightDiffuse += max(0.0f, dot(L, N)) * lightDiffuse[i];
+		lightAmbient += lightAmbient[i];
 	}
 
-	Out.color = saturate(diffuse * materialDiffuse + ambient * materialAmbient);
+	float4 matDiffuse = lerp(materialDiffuse, nextMaterialDiffuse, t);
+	float4 matAmbient = lerp(materialAmbient, nextMaterialAmbient, t);
+	Out.color = saturate(lightDiffuse * matDiffuse + lightAmbient * matAmbient);
 
 	Out.color.a = 1.0f;
 
@@ -88,7 +104,10 @@ VS_OUT VS(
 ***************************************/
 float4 PS(VS_OUT In) : COLOR0
 {
-	return tex2D(s0, In.uv);
+	 float4 col0 = tex2D(s0, In.uv);
+	 float4 col1 = tex2D(nextSampler, In.uv);
+
+	 return lerp(col0, col1, t);
 }
 
 /**************************************

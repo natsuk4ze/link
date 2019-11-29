@@ -27,10 +27,18 @@ public:
 
 	void SetTime(float t);
 	void SetWorld(const D3DXMATRIX& mtx);
+	void SetNextMaterial(const D3DMATERIAL9& mat);
+	void SetNextTexture(LPDIRECT3DTEXTURE9 texture);
 
 private:
 	//シェーダへのハンドル
 	D3DXHANDLE hTechnique;
 	D3DXHANDLE hTime;
+
+	D3DXHANDLE hNextMaterialDiffuse;
+	D3DXHANDLE hNextMaterialAmbient;
+	D3DXHANDLE hNextMaterialSpecular;
+
+	D3DXHANDLE hNextTexture;
 };
 #endif

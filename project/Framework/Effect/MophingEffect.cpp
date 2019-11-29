@@ -30,6 +30,12 @@ MophingEffect::MophingEffect()
 	hLightAmbient = effect->GetParameterByName(0, "lightAmbient");
 	hLightSpecular = effect->GetParameterByName(0, "lightSpecular");
 
+	hNextMaterialDiffuse = effect->GetParameterByName(0, "nextMaterialDiffuse");
+	hNextMaterialAmbient = effect->GetParameterByName(0, "nextMaterialAmbient");
+	hNextMaterialSpecular = effect->GetParameterByName(0, "nextMaterialSpecular");
+
+	hNextTexture = effect->GetParameterByName(0, "nextTexture");
+
 	hTime = effect->GetParameterByName(0, "t");
 
 	hTechnique = effect->GetTechniqueByName("tech");
@@ -60,4 +66,22 @@ void MophingEffect::SetTime(float t)
 void MophingEffect::SetWorld(const D3DXMATRIX & mtx)
 {
 	effect->SetMatrix(hWorld, &mtx);
+}
+
+/**************************************
+変化先のマテリアル設定処理
+***************************************/
+void MophingEffect::SetNextMaterial(const D3DMATERIAL9 & mat)
+{
+	effect->SetFloatArray(hNextMaterialDiffuse, (float*)&mat.Diffuse, 4);
+	effect->SetFloatArray(hNextMaterialAmbient, (float*)&mat.Ambient, 4);
+	effect->SetFloatArray(hNextMaterialSpecular, (float*)&mat.Specular, 4);
+}
+
+/**************************************
+変化先のテクスチャ設定処理
+***************************************/
+void MophingEffect::SetNextTexture(LPDIRECT3DTEXTURE9 texture)
+{
+	effect->SetTexture(hNextTexture, texture);
 }
