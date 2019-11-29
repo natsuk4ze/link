@@ -24,6 +24,7 @@ public:
 	~UDPClient();
 	void SendPacket();
 	void ReceivePacketConfig(PacketConfig Packet);
+	string GetLastScore(void);
 };
 
 #endif
