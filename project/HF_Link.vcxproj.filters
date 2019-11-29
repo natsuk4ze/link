@@ -284,6 +284,9 @@
     <FxCompile Include="Shaders\Sprite.fx" />
     <FxCompile Include="Shaders\StrongBlurFilter.fx" />
     <FxCompile Include="source\Shader\RiverRenderer.fx" />
+    <ClInclude Include="Framework\Renderer3D\MophingMeshContainer.h" />
+    <ClInclude Include="source\Scene\MophingTestScene.h" />
+    <ClInclude Include="Framework\Effect\MophingEffect.h" />
     <ClInclude Include="source\Effect\Game\Space\MoveTail.h" />
     <ClInclude Include="source\Effect\Game\Space\StarDust.h" />
   </ItemGroup>
@@ -540,6 +543,9 @@
     <ClCompile Include="source\Viewer\TitleScene\SelectViewer.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\TitleLogo.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\TitleViewer.cpp" />
+    <ClCompile Include="Framework\Renderer3D\MophingMeshContainer.cpp" />
+    <ClCompile Include="source\Scene\MophingTestScene.cpp" />
+    <ClCompile Include="Framework\Effect\MophingEffect.cpp" />
     <ClCompile Include="source\Viewer\GameScene\Controller\NameEntryViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryReelViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.cpp" />
@@ -825,5 +831,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\MophingMesh.fx" />
   </ItemGroup>
 </Project>

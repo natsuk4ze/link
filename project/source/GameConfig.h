@@ -20,6 +20,7 @@ namespace GameConfig
 		Result,
 		ParticleTest,
 		ModelView,
+		MophingTest,
 		Max
 	};
 
