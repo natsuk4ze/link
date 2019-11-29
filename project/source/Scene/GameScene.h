@@ -41,6 +41,7 @@ class UDPClient;
 class SceneParticleManager;
 class GuideViewer;
 class ResultViewer;
+class NameEntryViewer;
 class TitleViewer;
 
 /**************************************
@@ -94,6 +95,7 @@ private:
 	UDPClient *Client;							//クライアント
 	GuideViewer* guideViewer;					//ガイドビュアー
 	ResultViewer*resultViewer;					//リザルトビュアー
+	NameEntryViewer *nemeEntryViewer;			//名前登録ビュアー
 	TitleViewer* titleViewer;					// タイトルビュアー
 
 	int remainTime;								//制限時間

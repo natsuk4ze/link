@@ -54,6 +54,7 @@ NewTownEventCtrl::NewTownEventCtrl(EventViewer *Ptr, int FieldLevel, EventCamera
 NewTownEventCtrl::~NewTownEventCtrl()
 {
 	eventViewer = nullptr;
+	eventCamera = nullptr;
 	SAFE_DELETE(NewTownEvent);
 }
 

@@ -77,7 +77,6 @@ void BeatGaugeViewer::Draw(void)
 void BeatGaugeViewer::HandleShake()
 {
 	//とりあえずパラメータの差で実装
-	//後でキー入力での実装に変える？
 	currentParam = gaugePer;
 
 	if (currentParam < lastParam)
@@ -100,24 +99,24 @@ void BeatGaugeViewer::HandleShake()
 void BeatGaugeViewer::Shake()
 {
 	//何回振動させるか
-	const int shakeNum = 20;
+	const int shakeNum = 400;
 	//どのくらいの振れ幅か
-	const float shakeValue = 7.0f;
+	const float shakeValue = 3.0f;
 	//どのくらいの時間振動させるか
-	const float shakeTime = 10.0f;
+	const float shakeTime = 2.0f;
 	//初期座標
 	const float initPosX = SCREEN_CENTER_X;
 	const float initPosY = SCREEN_HEIGHT / 3 * 2.40f;
 	//イージングのスタートとゴールを設定
-	float easingStart = 0.0f;
-	float easingGoal = D3DX_PI * shakeNum;
+	const float easingStart = 0.0f;
+	const float easingGoal = D3DX_PI * shakeNum;
 
 	countFrame++;
 	animTime = countFrame / shakeTime;
 
 	radian = Easing::EaseValue(animTime, easingStart, easingGoal, OutCirc);
 
-	frame->position.x = initPosX + shakeValue* sinf(radian);
+	frame->position.x = initPosX + shakeValue * sinf(radian);
 	frame->position.y = initPosY + shakeValue * sinf(radian);
 
 	if (radian >= easingGoal)

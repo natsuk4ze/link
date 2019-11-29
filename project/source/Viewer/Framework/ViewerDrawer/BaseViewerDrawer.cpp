@@ -57,23 +57,6 @@ void BaseViewerDrawer::Draw()
 }
 
 //=============================================================================
-// オブジェクト描画処理 (前のフレームワークならこっちを使う)
-//=============================================================================
-void BaseViewerDrawer::DrawOrigin()
-{
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-	// 頂点フォーマットの設定
-	pDevice->SetFVF(FVF_VERTEX_2D);
-
-	// テクスチャの設定
-	pDevice->SetTexture(0, texture);
-
-	// ポリゴンの描画
-	pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_POLYGON, vertexWk, sizeof(VERTEX_2D));
-}
-
-//=============================================================================
 // 頂点の作成
 //=============================================================================
 void BaseViewerDrawer::MakeVertex()

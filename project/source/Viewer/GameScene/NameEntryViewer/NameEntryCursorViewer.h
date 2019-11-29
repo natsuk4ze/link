@@ -1,14 +1,13 @@
 //=============================================================================
 //
-// ストックビュアー処理 [BanIcon.h]
+// 名前入力カーソルビュアー処理 [NameEntryCursorViewer.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _STOCK_VIEWER_H_
-#define _STOCK_VIEWER_H_
+#ifndef _NAME_ENTRY_CURSOR_VIEWER_H_
+#define _NAME_ENTRY_CURSOR_VIEWER_H_
 
-#include "../../Viewer/Framework/BaseViewer.h"
-#include "../../Viewer/Framework/ViewerDrawer/BaseViewerDrawer.h"
+#include "../../Framework/BaseViewer.h"
 
 //*****************************************************************************
 // 前方宣言
@@ -18,29 +17,24 @@ class BaseViewerDrawer;
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class BanIcon :public BaseViewer
+class NameEntryCursorViewer :public BaseViewer
 {
 public:
-	BanIcon();
-	~BanIcon();
+	NameEntryCursorViewer();
+	~NameEntryCursorViewer();
 
-	void Update(void);
-	void Draw(void);
-	void Init(void);
+	void Update();
+	void Draw();
+
+	//カーソルを右に移動
+	void MoveCursorRight();
+
+	//カーソルを左に移動
+	void MoveCursorLeft();
 
 private:
-	int RemainFrame;
-	bool IsPlaying;
-	BaseViewerDrawer *Icon;			
-	BaseViewerDrawer *Icon1;		
-	BaseViewerDrawer *Icon2;		
-	BaseViewerDrawer *Icon2_White;	
 
-	//アニメーション
-	void Animate(void);
-	void SetVertex(float Percent);
-	void SetTexture(float Percent);
+	//カーソル
+	BaseViewerDrawer * cursor;
 };
-
-
 #endif

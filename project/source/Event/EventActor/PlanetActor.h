@@ -17,6 +17,7 @@ class PlanetActor : public EventActorBase
 {
 private:
 	BaseEmitter* MoveTailEmitter;
+	BaseEmitter* StarDustEmitter;
 
 #if _DEBUG
 	D3DXVECTOR3 Pos;

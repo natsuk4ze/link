@@ -14,18 +14,13 @@
 //*****************************************************************************
 ResultScoreViewer::ResultScoreViewer() :parameterBox()
 {
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	LPDIRECT3DTEXTURE9 tex;
-
-	// テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,
-		"data/TEXTURE/Viewer/ResultViewer/ResultScoreViewer/Number.png",
-		&tex);
-
+	//*****************
+	// テクスチャの読み込みリファクタリング中
+	//*****************
 	for (int i = 0; i < fieldTypeMax; i++)
 	{
 		num[i] = new CountViewerDrawer();
-		num[i]->texture = tex;
+		num[i]->LoadTexture("data/TEXTURE/Viewer/ResultViewer/ResultScoreViewer/Number.png");
 		num[i]->size = D3DXVECTOR3(120.0f, 120.0f, 0.0f);
 		num[i]->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		num[i]->intervalPosScr = 80.0f;
@@ -89,7 +84,7 @@ void ResultScoreViewer::SetViewerPos(void)
 			SCREEN_WIDTH/2 
 			+ num[i]->intervalPosScr/2 
 			+ (num[0]->placeMax + num[1]->placeMax + num[2]->placeMax)/2*num[i]->intervalPosScr 
-			- pos, SCREEN_CENTER_Y, 0.0f);
+			- pos, SCREEN_CENTER_Y/2, 0.0f);
 		num[i]->MakeVertex();
 	}
 }

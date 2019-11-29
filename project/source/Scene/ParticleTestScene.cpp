@@ -21,7 +21,7 @@
 #include "../Event/EventActor/UFOActor.h"
 #include "../Event/EventActor/PlanetActor.h"
 
-const D3DXVECTOR3 EventActorScale = D3DXVECTOR3(0.15f, 0.15f, 0.15f);
+const D3DXVECTOR3 EventActorScale = D3DXVECTOR3(0.25f, 0.25f, 0.25f);
 
 /**************************************
 ‰Šú‰»ˆ—
@@ -43,14 +43,14 @@ void ParticleTestScene::Init()
 	ResourceManager::Instance()->LoadMesh("Mountain-City", "data/MODEL/PlaceActor/mountain.x");
 	ResourceManager::Instance()->LoadMesh("River-City", "data/MODEL/PlaceActor/river.x");
 	ResourceManager::Instance()->LoadMesh("UFO", "data/MODEL/UFO/UFO.x");
-	ResourceManager::Instance()->LoadMesh("Town-Space", "data/Model/PlaceActor/earth.x");
-	//actor = new CityActor(Vector3::Zero, Field::FieldLevel::City);
+	ResourceManager::Instance()->LoadMesh("Space-Town", "data/Model/PlaceActor/earth.x");
+	actor = new CityActor();
 	//actor = new MountainActor(Vector3::Zero, Field::FieldLevel::City);
 	//actor = new RiverActor(Vector3::Zero, Field::FieldLevel::City);
 	//actor->SetScale(Vector3::One * 1.0f);
 	UFO = new UFOActor(Vector3::Up * 10.0f, EventActorScale, "UFO");
 	UFO->SetHoverMotion(true);
-	Planet = new PlanetActor(Vector3::Up * 10.0f, EventActorScale, "Town-Space");
+	Planet = new PlanetActor(Vector3::Zero, EventActorScale, "Space-Town");
 
 	//ƒJƒƒ‰Ý’è
 	Camera::SetMainCamera(sceneCamera);
@@ -83,11 +83,11 @@ void ParticleTestScene::Uninit()
 ***************************************/
 void ParticleTestScene::Update()
 {
-	Debug::Begin("ActorRot");
-	static float angle = 0.0f;
-	Debug::Slider("Angle", angle, 0.0f, 360.0f);
-	actor->SetRotatition(Vector3::Up * angle);
-	Debug::End();
+	//Debug::Begin("ActorRot");
+	//static float angle = 0.0f;
+	//Debug::Slider("Angle", angle, 0.0f, 360.0f);
+	//actor->SetRotatition(Vector3::Up * angle);
+	//Debug::End();
 
 	//UFO->Update();
 	Planet->Update();

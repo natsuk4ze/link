@@ -5,7 +5,6 @@
 //
 //=============================================================================
 #include "../../../../main.h"
-#include "../../../Score/Score.h"
 #include "../ResultViewer/ResultScoreViewer.h"
 #include "../ParameterContainer/ResultViewerParam.h"
 #include "ResultViewer.h"
@@ -46,6 +45,9 @@ ResultViewer::~ResultViewer()
 //=============================================================================
 void ResultViewer::Update()
 {
+	if (!isActive)
+		return;
+
 	for (unsigned int i = 0; i < resultViewer.size(); i++)
 	{
 		resultViewer[i]->Update();
