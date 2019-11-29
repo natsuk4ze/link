@@ -52,6 +52,7 @@ private:
 	Field::FieldSkyBox *skybox;
 
 	MorphingMeshContainer *morphContainer;
+	MorphingMeshContainer *stoneMesh;
 
 };
 #endif
