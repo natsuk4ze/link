@@ -17,6 +17,7 @@
 ***************************************/
 class MophingEffect;
 class MeshContainer;
+class MorphingMeshContainer;
 
 namespace Field
 {
@@ -49,7 +50,8 @@ private:
 	DWORD materialNum;
 
 	Field::FieldSkyBox *skybox;
-	MeshContainer *meshContainer;
+
+	MorphingMeshContainer *morphContainer;
 
 };
 #endif

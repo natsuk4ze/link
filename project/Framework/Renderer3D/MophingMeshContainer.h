@@ -1,6 +1,6 @@
 //=====================================
 //
-//MophingMeshContainer.h
+//MorphingMeshContainer.h
 //機能:モーフィングメッシュコンテナ
 //Author:GP12B332 21 立花雄太
 //
@@ -16,19 +16,64 @@
 /**************************************
 前方宣言
 ***************************************/
+class MophingEffect;
 
 /**************************************
 クラス定義
 ***************************************/
-class MophingMeshContainer : public MeshContainer
+class MorphingMeshContainer : public MeshContainer
 {
 public:
-	MophingMeshContainer();
-	virtual ~MophingMeshContainer();
+	//コンストラクタ、デストラクタ
+	MorphingMeshContainer();
+	virtual ~MorphingMeshContainer();
 
+	//現在保持しているメッシュをモーフテーブルに登録する
 	void RegisterVertex(unsigned index);
 
+	//描画処理
+	void Draw(const D3DXMATRIX& mtxWorld);
+
+	//現在のメッシュを設定
+	void SetCurrent(unsigned index);
+
+	//モーフィング先を設定
+	void SetNext(unsigned next);
+
+	//変化量を設定
+	void SetChange(float t);
+
 private:
-	std::vector<LPDIRECT3DVERTEXBUFFER9> vtxContainer;
+	//使用するメッシュ群
+	std::vector<LPD3DXMESH> meshTable;
+
+	//使用するテクスチャ群
+	std::vector<std::vector<LPDIRECT3DTEXTURE9>> textureContainer;
+
+	//使用するマテリアル群
+	std::vector<std::vector<D3DMATERIAL9>> materialContainer;
+
+	//インデックスバッファ
+	LPDIRECT3DINDEXBUFFER9 indexBuff;
+
+	//頂点情報
+	DWORD fvf;
+	LPDIRECT3DVERTEXDECLARATION9 declare;
+
+	//頂点属性テーブル
+	std::vector<D3DXATTRIBUTERANGE> attributeTable;
+
+	//描画エフェクト
+	MophingEffect *effect;
+
+	//モーフィングインデックス
+	int currentIndex, nextIndex;
+
+	//変化量
+	float t;
+
+	//MeshContainerのDraw()を使わせたくないのでprivate化
+	void Draw() override;
+	void Draw(RendererEffect& effect) override;
 };
 #endif

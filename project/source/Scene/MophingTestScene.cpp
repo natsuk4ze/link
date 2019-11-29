@@ -10,6 +10,7 @@
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Renderer3D/MeshContainer.h"
 #include "../../Framework/Resource/ResourceManager.h"
+#include "../../Framework/Renderer3D/MophingMeshContainer.h"
 
 #include "../Field/Object/FieldSkyBox.h"
 
@@ -114,8 +115,17 @@ void MophingTestScene::Init()
 	skybox = new Field::FieldSkyBox(Field::FieldLevel::World);
 
 	ResourceManager::Instance()->LoadMesh("ishi", "data/MODEL/Mophing/ishi.x");
-	meshContainer = new MeshContainer();
-	ResourceManager::Instance()->GetMesh("ishi", meshContainer);
+	ResourceManager::Instance()->LoadMesh("ishi2", "data/MODEL/Mophing/ish2.x");
+
+	morphContainer = new MorphingMeshContainer();
+	ResourceManager::Instance()->GetMesh("ishi", morphContainer);
+	morphContainer->RegisterVertex(0);
+
+	ResourceManager::Instance()->GetMesh("ishi2", morphContainer);
+	morphContainer->RegisterVertex(1);
+
+	morphContainer->SetCurrent(0);
+	morphContainer->SetNext(1);
 }
 
 /**************************************
@@ -137,7 +147,7 @@ void MophingTestScene::Uninit()
 
 	SAFE_DELETE(sceneCamera);
 
-	SAFE_DELETE(meshContainer);
+	SAFE_DELETE(morphContainer);
 }
 
 /**************************************
@@ -183,28 +193,31 @@ void MophingTestScene::Draw()
 	transform.SetPosition(pos);
 	transform.SetScale(scale);
 
-	effect->SetWorld(transform.GetMatrix());
-	effect->SetTime(t);
+	morphContainer->SetChange(t);
+	morphContainer->Draw(transform.GetMatrix());
 
-	for (unsigned i = 0; i < materialNum; i++)
-	{
-		effect->SetMaterial(materials[i]);
+	//effect->SetWorld(transform.GetMatrix());
+	//effect->SetTime(t);
 
-		pDevice->SetTexture(0, texture);
+	//for (unsigned i = 0; i < materialNum; i++)
+	//{
+	//	effect->SetMaterial(materials[i]);
 
-		effect->Begin();
-		effect->BeginPass(0);
+	//	pDevice->SetTexture(0, texture);
 
-		pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,
-			0,
-			attributeTable[i].VertexStart,
-			attributeTable[i].VertexCount,
-			attributeTable[i].VertexStart * 3,
-			attributeTable[i].FaceCount);
+	//	effect->Begin();
+	//	effect->BeginPass(0);
 
-		effect->EndPass();
-		effect->End();
-	}
+	//	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,
+	//		0,
+	//		attributeTable[i].VertexStart,
+	//		attributeTable[i].VertexCount,
+	//		attributeTable[i].VertexStart * 3,
+	//		attributeTable[i].FaceCount);
+
+	//	effect->EndPass();
+	//	effect->End();
+	//}
 
 	//transform.SetWorld();
 	//meshContainer->Draw();
