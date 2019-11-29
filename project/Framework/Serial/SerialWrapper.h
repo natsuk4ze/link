@@ -44,6 +44,8 @@ public:
 
 private:
 	HANDLE comPort;
+
+	bool initialized;
 };
 
 #endif

@@ -12,7 +12,8 @@
 /**************************************
 コンストラクタ
 ***************************************/
-SerialWrapper::SerialWrapper(int comNum)
+SerialWrapper::SerialWrapper(int comNum) :
+	initialized(false)
 {
 	TCHAR com[10];
 	_stprintf_s(com, 10, _T("COM%d"), comNum);
@@ -20,7 +21,8 @@ SerialWrapper::SerialWrapper(int comNum)
 	//シリアルポートを開く
 	comPort = CreateFile(com, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
 
-	assert(comPort != INVALID_HANDLE_VALUE);
+	if(comPort != INVALID_HANDLE_VALUE)
+		initialized = true;
 }
 
 /**************************************
@@ -37,6 +39,9 @@ SerialWrapper::~SerialWrapper()
 ***************************************/
 void SerialWrapper::Begin(unsigned long speed)
 {
+	if (!initialized)
+		return;
+
 	DCB dcb;		//シリアルポートの構成情報が入る構造体
 	GetCommState(comPort, &dcb);
 
@@ -56,6 +61,9 @@ void SerialWrapper::Begin(unsigned long speed)
 ***************************************/
 size_t SerialWrapper::Write(char data)
 {
+	if (!initialized)
+		return -1;
+
 	char* sentData = &data;		//送信する1Byte
 	DWORD numberOfPut;			//実際に送信したByte数
 
@@ -70,6 +78,9 @@ size_t SerialWrapper::Write(char data)
 ***************************************/
 size_t SerialWrapper::Write(const char buf[], int length)
 {
+	if (!initialized)
+		return -1;
+
 	DWORD lengthOfSent = length;		//送信するByte数
 	DWORD numberOfPut;					//実際に送信したByte数
 
@@ -84,6 +95,9 @@ size_t SerialWrapper::Write(const char buf[], int length)
 ***************************************/
 int SerialWrapper::Available()
 {
+	if (!initialized)
+		return -1;
+
 	//受信データ数を調べる
 	DWORD errors;
 	COMSTAT comStat;
@@ -99,6 +113,9 @@ int SerialWrapper::Available()
 ***************************************/
 int SerialWrapper::Read()
 {
+	if (!initialized)
+		return -1;
+
 	if (Available() < 1)
 		return -1;
 
