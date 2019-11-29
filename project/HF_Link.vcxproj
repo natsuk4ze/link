@@ -258,9 +258,11 @@
     <ClInclude Include="source\Shader\WhirlPoolEffect.h" />
     <ClInclude Include="source\SubScreen\SubScreen.h" />
     <ClInclude Include="source\Viewer\Framework\BaseViewer.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseTextureDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\TextureDrawer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatGaugeViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatResultViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatStarterViewer.h" />
@@ -521,9 +523,11 @@
     <ClCompile Include="source\Shader\RiverEffect.cpp" />
     <ClCompile Include="source\Shader\WhirlPoolEffect.cpp" />
     <ClCompile Include="source\SubScreen\SubScreen.cpp" />
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseTextureDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.cpp" />
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\TextureDrawer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatGaugeViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatResultViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatStarterViewer.cpp" />

@@ -55,7 +55,10 @@ void UDPClient::SendPacket()
 	AddressLength = sizeof(ServerAddress);
 
 	// 入力メッセージ処理
-	Message = Packet.Header + "," + Packet.PlayerName + "," + std::to_string(Packet.AILevel);
+	Message = Packet.Header + "," +
+		std::to_string(Packet.PacketType) +"," +
+		Packet.PlayerName + "," +
+		std::to_string(Packet.AILevel);
 
 	// 送信
 	sendto(ClientSocket, Message.c_str(), Message.length() + 1, 0, (sockaddr*)&ServerAddress, sizeof(ServerAddress));
@@ -67,4 +70,28 @@ void UDPClient::SendPacket()
 void UDPClient::ReceivePacketConfig(const PacketConfig Packet)
 {
 	this->Packet = Packet;
+}
+
+//=============================================================================
+// サーバーからランキング最下位のスコアを取得
+//=============================================================================
+string UDPClient::GetLastScore(void)
+{
+	// データ送信
+	char data[256];
+	string Message;
+	int AddressLength;
+
+	AddressLength = sizeof(ServerAddress);
+
+	// 入力メッセージ処理
+	Message = Packet.Header + "," + std::to_string(Packet::GetLastScore);
+
+	// 送信
+	sendto(ClientSocket, Message.c_str(), Message.length() + 1, 0, (sockaddr*)&ServerAddress, sizeof(ServerAddress));
+	// メッセージ受信
+	recvfrom(ClientSocket, (char*)data, sizeof(data), 0, (sockaddr*)&ServerAddress, &AddressLength);
+	Message = data;
+
+	return Message;
 }
