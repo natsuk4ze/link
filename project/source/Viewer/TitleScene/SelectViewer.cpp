@@ -117,11 +117,16 @@ void SelectViewer::Draw()
 	RendererEffect::SetView(camera->GetViewMtx());
 	RendererEffect::SetProjection(camera->GetProjectionMtx());
 
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
+
 	// インスタンスの描画
 	for (auto& p : logo)
 	{
 		p->Draw();
 	}
+
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
 
 	subScreen->DrawTexture();
 
