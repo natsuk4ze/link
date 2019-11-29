@@ -46,7 +46,8 @@ sampler nextSampler = sampler_state
 ***************************************/
 struct VS_OUT {
 	float4 pos	: POSITION;
-	float2 uv	: TEXCOORD0;
+	float2 uv1	: TEXCOORD0;
+	float2 uv2 : TEXCOORD1;
 	float4 color : COLOR0;
 };
 
@@ -74,10 +75,8 @@ VS_OUT VS(
 	N = normalize(N);
 
 	//UVç¿ïWÇäiî[
-	if (t < 0.5f)
-		Out.uv = uv0;
-	else
-		Out.uv = uv1;
+	Out.uv1 = uv0;
+	Out.uv2 = uv1;
 
 	//ÉâÉCÉgÇ…ÇÊÇÈêFÇåvéZ
 	float4 lightDiffuse = (float4)0;
@@ -104,8 +103,8 @@ VS_OUT VS(
 ***************************************/
 float4 PS(VS_OUT In) : COLOR0
 {
-	 float4 col0 = tex2D(s0, In.uv);
-	 float4 col1 = tex2D(nextSampler, In.uv);
+	 float4 col0 = tex2D(s0, In.uv1);
+	 float4 col1 = tex2D(nextSampler, In.uv2);
 
 	 return lerp(col0, col1, t);
 }

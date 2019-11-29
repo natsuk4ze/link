@@ -11,8 +11,12 @@
 #include "../../Framework/Renderer3D/MeshContainer.h"
 #include "../../Framework/Resource/ResourceManager.h"
 #include "../../Framework/Renderer3D/MophingMeshContainer.h"
+#include "../../Framework/Math/Easing.h"
 
 #include "../Field/Object/FieldSkyBox.h"
+
+static float t = 0.0f;
+static int cntFrame = 0;
 
 /**************************************
 ‰Šú‰»ˆ—
@@ -77,6 +81,17 @@ void MophingTestScene::Uninit()
 ***************************************/
 void MophingTestScene::Update()
 {
+	Debug::Begin("Mophing");
+	static int period = 30;
+
+	Debug::Slider("period", period, 10, 120);
+
+	float time = (float)cntFrame++ / period;
+	t = Easing::EaseValue(time, 1.0f, 0.0f, EaseType::InOutExpo);
+
+	cntFrame = Math::WrapAround(0, period, cntFrame);
+	Debug::End();
+
 	sceneCamera->Update();
 }
 
@@ -93,13 +108,13 @@ void MophingTestScene::Draw()
 
 	static Transform transform;
 	static D3DXVECTOR3 pos = Vector3::Forward * 200.0f, scale = Vector3::One, rot = Vector3::Zero;
-	static float t = 0.0f;
+	//static float t = 0.0f;
 
 	Debug::Begin("Mophing");
 	Debug::Slider("pos", pos, Vector3::One * -1000.0f, Vector3::One * 1000.0f);
 	Debug::Slider("scl", scale, Vector3::Zero, Vector3::One * 20.0f);
 	Debug::Slider("rot", rot, Vector3::Zero, Vector3::One * 360.0f);
-	Debug::Slider("t", t, 0.0f, 1.0f);
+	//Debug::Slider("t", t, 0.0f, 1.0f);
 	Debug::End();
 
 	transform.SetPosition(pos);
