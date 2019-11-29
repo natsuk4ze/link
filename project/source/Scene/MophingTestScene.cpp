@@ -114,8 +114,8 @@ void MophingTestScene::Init()
 
 	skybox = new Field::FieldSkyBox(Field::FieldLevel::World);
 
-	ResourceManager::Instance()->LoadMesh("ishi", "data/MODEL/Mophing/ishi.x");
-	ResourceManager::Instance()->LoadMesh("ishi2", "data/MODEL/Mophing/ishi2.x");
+	ResourceManager::Instance()->LoadMesh("ishi", "data/MODEL/Mophing/town.x");
+	ResourceManager::Instance()->LoadMesh("ishi2", "data/MODEL/Mophing/town_m.x");
 
 	morphContainer = new MorphingMeshContainer();
 	ResourceManager::Instance()->GetMesh("ishi", morphContainer);
@@ -181,17 +181,19 @@ void MophingTestScene::Draw()
 	//pDevice->SetVertexDeclaration(declare);
 
 	static Transform transform;
-	static D3DXVECTOR3 pos = Vector3::Forward * 1000.0f, scale = Vector3::One;
+	static D3DXVECTOR3 pos = Vector3::Forward * 1000.0f, scale = Vector3::One, rot = Vector3::Zero;
 	static float t = 0.0f;
 
 	Debug::Begin("Mophing");
 	Debug::Slider("pos", pos, Vector3::One * -1000.0f, Vector3::One * 1000.0f);
 	Debug::Slider("scl", scale, Vector3::Zero, Vector3::One * 20.0f);
+	Debug::Slider("rot", rot, Vector3::Zero, Vector3::One * 360.0f);
 	Debug::Slider("t", t, 0.0f, 1.0f);
 	Debug::End();
 
 	transform.SetPosition(pos);
 	transform.SetScale(scale);
+	transform.SetRotation(rot);
 
 	morphContainer->SetChange(t);
 	morphContainer->Draw(transform.GetMatrix());
