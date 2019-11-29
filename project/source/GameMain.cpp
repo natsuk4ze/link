@@ -34,7 +34,7 @@ GameMain::GameMain(HINSTANCE hInstance, HWND hWnd) :
 	PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), 0);
 
 	//‰ŠúƒV[ƒ“‚É‘JˆÚ
-	const int InitScene = GameConfig::SceneID::MophingTest;
+	const int InitScene = GameConfig::SceneID::Game;
 	sceneManager->ChangeScene(InitScene);
 }
 
