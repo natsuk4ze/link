@@ -13,6 +13,7 @@
 #include "../../Field/Camera/FieldCamera.h"
 #include "../../Viewer/GameScene/Controller/ResultViewer.h"
 #include "../../../Framework/Transition/TransitionController.h"
+#include "../../../Framework/Serial/SerialWrapper.h"
 
 //=====================================
 // “üêˆ—
@@ -34,6 +35,9 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	entity.gameViewer->SetActive(false);
 	entity.guideViewer->SetActive(false);
 	entity.resultViewer->SetActive(false);
+
+	//ƒ‚[ƒ^‚ÌŠp“x‚ð‰Šú‰»
+	entity.serial->Write(GameScene::AngleTable[0]);
 }
 
 //=====================================
