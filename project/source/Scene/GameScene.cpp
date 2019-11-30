@@ -33,6 +33,7 @@
 #include "../Viewer/GameScene/Controller/ResultViewer.h"
 #include "../Viewer/GameScene/Controller/NameEntryViewer.h"
 #include "../Viewer/TitleScene/TitleViewer.h"
+#include "../Reward/RewardController.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
@@ -91,6 +92,12 @@ void GameScene::Init()
 	nemeEntryViewer = new NameEntryViewer();
 	titleViewer = new TitleViewer();
 
+	// リワードの作成
+	for (int i = 0; i < RewardController::Type::Max; i++)
+	{
+		RewardController::Instance()->Create(RewardController::Type(i), RewardController::MaxData[i]);
+	}
+
 	//レベル毎のパーティクルマネージャを選択
 	switch (level)
 	{
@@ -134,6 +141,9 @@ void GameScene::Init()
 ***************************************/
 void GameScene::Uninit()
 {
+	// リワード全削除
+	RewardController::Instance()->AllDelete();
+
 	//カメラ削除
 	SAFE_DELETE(fieldCamera);
 
