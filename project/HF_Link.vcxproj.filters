@@ -293,6 +293,7 @@
     <ClInclude Include="source\Reward\Reward.h" />
     <ClInclude Include="source\Reward\CountupReward.h" />
     <ClInclude Include="source\Reward\StateReward.h" />
+    <ClInclude Include="source\Viewer\NameViewer\NameViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Animation\AnimationManager.cpp" />
@@ -561,6 +562,7 @@
     <ClCompile Include="source\Reward\Reward.cpp" />
     <ClCompile Include="source\Reward\CountupReward.cpp" />
     <ClCompile Include="source\Reward\StateReward.cpp" />
+    <ClCompile Include="source\Viewer\NameViewer\NameViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
