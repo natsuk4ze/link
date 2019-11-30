@@ -6,6 +6,7 @@
 //=====================================
 #include "BaseEmitter.h"
 #include "BaseParticle.h"
+#include "../Camera/Camera.h"
 
 /**************************************
 É}ÉNÉçíËã`
@@ -116,6 +117,11 @@ bool BaseEmitter::Emit(std::vector<BaseParticle*>& container)
 	if (!IsActive())
 		return true;
 
+	D3DXVECTOR3 screenPos = Camera::MainCamera()->Projection(transform->GetPosition());
+
+	if (screenPos.x < 0.0f || screenPos.x > 1.0f || screenPos.y < 0.0f || screenPos.y > 0.0f)
+		return true;
+
 	UINT cntEmit = 0;
 	for (auto& particle : container)
 	{
@@ -144,6 +150,9 @@ bool BaseEmitter::IsActive() const
 {
 	if (!active)
 		return false;
+
+	if (duration == 0)
+		return true;
 
 	return cntFrame <= duration;
 }
