@@ -290,6 +290,7 @@
     <ClInclude Include="source\Effect\Game\Space\MoveTail.h" />
     <ClInclude Include="source\Effect\Game\Space\StarDust.h" />
     <ClInclude Include="Framework\Serial\SerialWrapper.h" />
+    <ClInclude Include="source\Effect\Game\General\EventInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Animation\AnimationManager.cpp" />
@@ -555,6 +556,7 @@
     <ClCompile Include="source\Effect\Game\Space\StarDust.cpp" />
     <ClCompile Include="source\Effect\Game\General\Darkness.cpp" />
     <ClCompile Include="Framework\Serial\SerialWrapper.cpp" />
+    <ClCompile Include="source\Effect\Game\General\EventInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
