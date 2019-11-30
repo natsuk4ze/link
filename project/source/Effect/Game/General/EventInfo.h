@@ -33,6 +33,9 @@ namespace Effect::Game
 
 		void Init();
 		void Update();
+
+	private:
+		float initScale;
 	};
 }
 #endif

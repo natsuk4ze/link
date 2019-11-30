@@ -40,7 +40,6 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	entity.nemeEntryViewer->SetActive(false);
 
 	//パーティクル初期化
-	entity.particleManager->Init();
 	entity.levelParticleManager->Init();
 
 	//カメラにプラグインを追加して初期化

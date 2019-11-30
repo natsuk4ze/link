@@ -26,7 +26,8 @@
 BaseEmitter::BaseEmitter() :
 	GameObject(false),
 	emitNum(1),
-	duration(1)
+	duration(1),
+	useCull(false)
 {
 
 }
@@ -37,7 +38,8 @@ BaseEmitter::BaseEmitter() :
 BaseEmitter::BaseEmitter(int emitNum) :
 	GameObject(false),
 	emitNum(emitNum),
-	duration(2)
+	duration(2),
+	useCull(false)
 {
 
 }
@@ -48,7 +50,8 @@ BaseEmitter::BaseEmitter(int emitNum) :
 BaseEmitter::BaseEmitter(int emitNum, int duration) :
 	GameObject(false),
 	emitNum(emitNum),
-	duration(duration)
+	duration(duration),
+	useCull(false)
 {
 
 }
@@ -59,7 +62,8 @@ BaseEmitter::BaseEmitter(int emitNum, int duration) :
 BaseEmitter::BaseEmitter(int emitNum, int durationMin, int durationMax) :
 	GameObject(false),
 	emitNum(emitNum),
-	duration(Math::RandomRange(durationMin, durationMax))
+	duration(Math::RandomRange(durationMin, durationMax)),
+	useCull(false)
 {
 
 }
@@ -70,7 +74,8 @@ BaseEmitter::BaseEmitter(int emitNum, int durationMin, int durationMax) :
 BaseEmitter::BaseEmitter(int emitNumMin, int emitNumMax, int durationMin, int durationMax) :
 	GameObject(false),
 	emitNum(Math::RandomRange(emitNumMin, emitNumMax)),
-	duration(Math::RandomRange(durationMin, durationMax))
+	duration(Math::RandomRange(durationMin, durationMax)),
+	useCull(false)
 {
 
 }
@@ -119,8 +124,11 @@ bool BaseEmitter::Emit(std::vector<BaseParticle*>& container)
 
 	D3DXVECTOR3 screenPos = Camera::MainCamera()->Projection(transform->GetPosition());
 
-	if (screenPos.x < 0.0f || screenPos.x > 1.0f || screenPos.y < 0.0f || screenPos.y > 0.0f)
-		return true;
+	if (useCull)
+	{
+		if (screenPos.x < 0.0f || screenPos.x > SCREEN_WIDTH || screenPos.y < 0.0f || screenPos.y > SCREEN_HEIGHT)
+			return true;
+	}
 
 	UINT cntEmit = 0;
 	for (auto& particle : container)
@@ -155,4 +163,12 @@ bool BaseEmitter::IsActive() const
 		return true;
 
 	return cntFrame <= duration;
+}
+
+/**************************************
+カリング使用設定
+***************************************/
+void BaseEmitter::UseCulling(bool value)
+{
+	useCull = value;
 }
