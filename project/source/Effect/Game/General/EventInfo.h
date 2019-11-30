@@ -36,6 +36,22 @@ namespace Effect::Game
 
 	private:
 		float initScale;
+		float speed;
+	};
+
+	/**************************************
+	EventInfoEmitter
+	***************************************/
+	class EventInfoEmitter : public BaseEmitter
+	{
+	public:
+		EventInfoEmitter();
+
+		virtual void Init(std::function<void()>& callback) override;
+		virtual void Update() override;
+		virtual bool Emit(std::vector<BaseParticle*>& container) override;
+
+		const static int PeriodEmit;
 	};
 }
 #endif

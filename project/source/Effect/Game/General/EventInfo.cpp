@@ -11,13 +11,18 @@
 namespace Effect::Game
 {
 	/**************************************
+	staticメンバ
+	***************************************/
+	const int EventInfoEmitter::PeriodEmit = 90;
+
+	/**************************************
 	EventInfoEffectControllerコンストラクタ
 	***************************************/
 	EventInfoEffectController::EventInfoEffectController() :
 		BaseParticleController(Particle_3D)
 	{
 		//単位頂点バッファ作成
-		const D3DXVECTOR2 Size = { 1.0f, 1.0f };
+		const D3DXVECTOR2 Size = { 0.5f, 0.5f };
 		const D3DXVECTOR2 Div = { 2.0f, 2.0f };
 		MakeUnitBuffer(Size, Div);
 
@@ -35,12 +40,10 @@ namespace Effect::Game
 
 		//エミッタコンテナ作成
 		const unsigned MaxEmitter = 64;
-		const int NumEmit = 2;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
-			emitter = new BaseEmitter(NumEmit, 0);
-			emitter->UseCulling(true);
+			emitter = new EventInfoEmitter();
 		}
 	}
 
@@ -48,7 +51,7 @@ namespace Effect::Game
 	EventInfoEffectコンストラクタ
 	***************************************/
 	EventInfoEffect::EventInfoEffect() :
-		Particle3D(10, 20)
+		Particle3D(20, 40)
 	{
 
 	}
@@ -71,6 +74,8 @@ namespace Effect::Game
 
 		uv.u = 0.5f * Math::RandomRange(0, 2);
 		uv.v = 0.5f * Math::RandomRange(0, 2);
+
+		speed = Math::RandomRange(0.05f, 0.3f);
 	}
 
 	/**************************************
@@ -87,7 +92,43 @@ namespace Effect::Game
 		float scale = Easing::EaseValue(t, initScale, 0.0f, EaseType::InExpo);
 		transform->SetScale(scale * Vector3::One);
 
-		transform->Move(Vector3::Up * 0.3f);
+		transform->Move(Vector3::Up * speed);
 	}
 
+	/**************************************
+	EventInfoEffectEmitterコンストラクタ
+	***************************************/
+	EventInfoEmitter::EventInfoEmitter() :
+		BaseEmitter(60, 0)
+	{
+		UseCulling(true);
+	}
+
+	/**************************************
+	EventInfoEffectEmitter初期化処理
+	***************************************/
+	void EventInfoEmitter::Init(std::function<void()>& callback)
+	{
+		cntFrame = Math::RandomRange(0, PeriodEmit);
+		active = true;
+	}
+
+	/**************************************
+	EventInfoEffectEmitter更新処理
+	***************************************/
+	void EventInfoEmitter::Update()
+	{
+		cntFrame = Math::WrapAround(0, PeriodEmit, ++cntFrame);
+	}
+
+	/**************************************
+	EventInfoEffectEmitter放出処理
+	***************************************/
+	bool EventInfoEmitter::Emit(std::vector<BaseParticle*>& container)
+	{
+		if (cntFrame != 0)
+			return true;
+
+		BaseEmitter::Emit(container);
+	}
 }
