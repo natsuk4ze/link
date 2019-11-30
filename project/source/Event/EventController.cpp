@@ -89,6 +89,12 @@ EventController::~EventController()
 
 	SAFE_DELETE(beatViewer);
 
+	for (auto&& pair : infoEmitterContainer)
+	{
+		if(pair.second != nullptr)
+			pair.second->SetActive(false);
+	}
+
 #if _DEBUG
 	SAFE_DELETE(polygon);
 #endif

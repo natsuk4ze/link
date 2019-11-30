@@ -17,7 +17,7 @@ namespace Effect::Game
 		BaseParticleController(Particle_3D)
 	{
 		//単位頂点バッファ作成
-		const D3DXVECTOR2 Size = { 3.0f, 3.0f };
+		const D3DXVECTOR2 Size = { 1.0f, 1.0f };
 		const D3DXVECTOR2 Div = { 2.0f, 2.0f };
 		MakeUnitBuffer(Size, Div);
 
@@ -48,7 +48,7 @@ namespace Effect::Game
 	EventInfoEffectコンストラクタ
 	***************************************/
 	EventInfoEffect::EventInfoEffect() :
-		Particle3D(15, 45)
+		Particle3D(10, 20)
 	{
 
 	}
@@ -63,9 +63,14 @@ namespace Effect::Game
 
 		initScale = Math::RandomRange(0.8f, 1.5f);
 
-		float offset = Math::RandomRange(-5.0f, 5.0f);
+		float offset = Math::RandomRange(-4.0f, 4.0f);
 		transform->Move(Vector3::Right * offset);
+
+		offset = Math::RandomRange(-4.0f, 4.0f);
 		transform->Move(Vector3::Forward * offset);
+
+		uv.u = 0.5f * Math::RandomRange(0, 2);
+		uv.v = 0.5f * Math::RandomRange(0, 2);
 	}
 
 	/**************************************
