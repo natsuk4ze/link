@@ -289,6 +289,7 @@
     <ClInclude Include="Framework\Effect\MophingEffect.h" />
     <ClInclude Include="source\Effect\Game\Space\MoveTail.h" />
     <ClInclude Include="source\Effect\Game\Space\StarDust.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerAnimater\ViewerAnimater.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Animation\AnimationManager.cpp" />
@@ -553,6 +554,7 @@
     <ClCompile Include="source\Effect\Game\Space\MoveTail.cpp" />
     <ClCompile Include="source\Effect\Game\Space\StarDust.cpp" />
     <ClCompile Include="source\Effect\Game\General\Darkness.cpp" />
+    <ClCompile Include="source\Viewer\Framework\ViewerAnimater\ViewerAnimater.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />

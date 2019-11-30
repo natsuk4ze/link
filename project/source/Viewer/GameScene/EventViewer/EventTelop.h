@@ -56,29 +56,20 @@ private:
 	//再生終了通知
 	std::function<void(void)> Callback;
 
-	//再生
-	void Play();
-
 	//テクスチャ情報受け渡し
 	void SetTexture(TelopID id);
 
-	//背景をオープン
-	void OpenBG(void);
+	//アニメーションの動作を設定
+	void SetAnimBehavior(void);
 
-	//背景をクローズ
-	void CloseBG(void);
+	//アニメーション終了
+    bool SetPlayFinished(void);
 
 	//再生中かどうか
 	bool isPlaying;
 
-	//フレームカウント
-	int countFrame;
-
-	//現在のアニメーション
-	int currentAnim;
-
-	//アニメーション時間
-	float animTime;
+	//アニメーション配列
+	std::vector <std::function<void()>> animArray;
 };
 
 #endif

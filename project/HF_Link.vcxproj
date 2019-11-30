@@ -257,6 +257,7 @@
     <ClInclude Include="source\Shader\WhirlPoolEffect.h" />
     <ClInclude Include="source\SubScreen\SubScreen.h" />
     <ClInclude Include="source\Viewer\Framework\BaseViewer.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerAnimater\ViewerAnimater.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.h" />
@@ -519,6 +520,7 @@
     <ClCompile Include="source\Shader\RiverEffect.cpp" />
     <ClCompile Include="source\Shader\WhirlPoolEffect.cpp" />
     <ClCompile Include="source\SubScreen\SubScreen.cpp" />
+    <ClCompile Include="source\Viewer\Framework\ViewerAnimater\ViewerAnimater.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.cpp" />
