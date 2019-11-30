@@ -28,6 +28,7 @@ namespace GameParticle
 		Darkness,		//闇の粒子(AIレベル減少イベント)
 		LinkLevelUp,	//リンクレベルアップ時エフェクト
 		Cloud,			//雲
+		EventInfo,		//イベントます
 		Max
 	};
 }

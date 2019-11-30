@@ -100,6 +100,7 @@
     <ClInclude Include="Framework\Resource\MeshResource.h" />
     <ClInclude Include="Framework\Resource\PolygonResource.h" />
     <ClInclude Include="Framework\Resource\ResourceManager.h" />
+    <ClInclude Include="Framework\Serial\SerialWrapper.h" />
     <ClInclude Include="Framework\Sound\BackgroundMusic.h" />
     <ClInclude Include="Framework\Sound\MusicClip.h" />
     <ClInclude Include="Framework\Sound\sound.h" />
@@ -136,6 +137,7 @@
     <ClInclude Include="source\Effect\Game\City\BlueDebris.h" />
     <ClInclude Include="source\Effect\Game\City\BlueSpark.h" />
     <ClInclude Include="source\Effect\Game\General\Cloud.h" />
+    <ClInclude Include="source\Effect\Game\General\EventInfo.h" />
     <ClInclude Include="source\Effect\Game\Space\Blackhole.h" />
     <ClInclude Include="source\Effect\Game\Space\StarDust.h" />
     <ClInclude Include="source\Effect\Game\World\Bubble.h" />
@@ -261,9 +263,11 @@
     <ClInclude Include="source\Shader\WhirlPoolEffect.h" />
     <ClInclude Include="source\SubScreen\SubScreen.h" />
     <ClInclude Include="source\Viewer\Framework\BaseViewer.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseTextureDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\TextureDrawer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatGaugeViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatResultViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatStarterViewer.h" />
@@ -376,6 +380,7 @@
     <ClCompile Include="Framework\Resource\MeshResource.cpp" />
     <ClCompile Include="Framework\Resource\PolygonResource.cpp" />
     <ClCompile Include="Framework\Resource\ResourceManager.cpp" />
+    <ClCompile Include="Framework\Serial\SerialWrapper.cpp" />
     <ClCompile Include="Framework\Sound\BackgroundMusic.cpp" />
     <ClCompile Include="Framework\Sound\MusicClip.cpp" />
     <ClCompile Include="Framework\Sound\sound.cpp" />
@@ -408,6 +413,7 @@
     <ClCompile Include="source\Effect\Game\City\BlueSpark.cpp" />
     <ClCompile Include="source\Effect\Game\General\Cloud.cpp" />
     <ClCompile Include="source\Effect\Game\General\Darkness.cpp" />
+    <ClCompile Include="source\Effect\Game\General\EventInfo.cpp" />
     <ClCompile Include="source\Effect\Game\Space\Blackhole.cpp" />
     <ClCompile Include="source\Effect\Game\Space\StarDust.cpp" />
     <ClCompile Include="source\Effect\Game\World\WhirlPoolBubble.cpp" />
@@ -528,9 +534,11 @@
     <ClCompile Include="source\Shader\RiverEffect.cpp" />
     <ClCompile Include="source\Shader\WhirlPoolEffect.cpp" />
     <ClCompile Include="source\SubScreen\SubScreen.cpp" />
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseTextureDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.cpp" />
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\TextureDrawer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatGaugeViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatResultViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatStarterViewer.cpp" />
