@@ -410,6 +410,11 @@ void GameScene::DebugTool()
 		Client->ReceivePacketConfig(Packet);
 		Client->SendPacket();
 	}
+	Debug::SameLine();
+	if (Debug::Button("GetLastScore"))
+	{
+		string Score = Client->GetLastScore();
+	}
 
 	Debug::Text("State");
 	Debug::NewLine();
