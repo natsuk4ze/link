@@ -79,19 +79,19 @@ VS_OUT VS(
 	Out.uv2 = uv1;
 
 	//ライトによる色を計算
-	float4 lightDiffuse = (float4)0;
-	float4 lightAmbient = (float4)0;
+	float4 diffuse = (float4)0;
+	float4 ambient = (float4)0;
 
 	for (int i = 0; i < 3; i++)
 	{
 		float3 L = normalize(-lightDirection[i].xyz);
-		lightDiffuse += max(0.0f, dot(L, N)) * lightDiffuse[i];
-		lightAmbient += lightAmbient[i];
+		diffuse += max(0.0f, dot(L, N)) * lightDiffuse[i];
+		ambient += lightAmbient[i];
 	}
 
-	float4 matDiffuse = lerp(materialDiffuse, nextMaterialDiffuse, t);
+	float4 matDiffuse = float4(lerp(materialDiffuse.rgb, nextMaterialDiffuse.rgb, t), 1.0f);
 	float4 matAmbient = lerp(materialAmbient, nextMaterialAmbient, t);
-	Out.color = saturate(lightDiffuse * matDiffuse + lightAmbient * matAmbient);
+	Out.color = saturate(diffuse * matDiffuse + ambient * matAmbient);
 
 	Out.color.a = 1.0f;
 
@@ -106,7 +106,7 @@ float4 PS(VS_OUT In) : COLOR0
 	 float4 col0 = tex2D(s0, In.uv1);
 	 float4 col1 = tex2D(nextSampler, In.uv2);
 
-	 return lerp(col0, col1, t);
+	 return lerp(col0, col1, t) * In.color;
 }
 
 /**************************************

@@ -15,9 +15,6 @@
 
 #include "../Field/Object/FieldSkyBox.h"
 
-static float t = 0.0f;
-static int cntFrame = 0;
-
 /**************************************
 ‰Šú‰»ˆ—
 ***************************************/
@@ -28,12 +25,11 @@ void MophingTestScene::Init()
 
 	skybox = new Field::FieldSkyBox(Field::FieldLevel::World);
 	morphContainer = new MorphingMeshContainer();
-	stoneMesh = new MorphingMeshContainer();
+	mesh = new MeshContainer();
 
 	ResourceManager::Instance()->LoadMesh("town", "data/MODEL/Mophing/town.x");
 	ResourceManager::Instance()->LoadMesh("town2", "data/MODEL/Mophing/town_m.x");
-	ResourceManager::Instance()->LoadMesh("ishi", "data/MODEL/Mophing/ishi.x");
-	ResourceManager::Instance()->LoadMesh("ishi2", "data/MODEL/Mophing/ishi2.x");
+	ResourceManager::Instance()->LoadMesh("town3", "data/MODEL/Mophing/town_last.x");
 
 	ResourceManager::Instance()->GetMesh("town", morphContainer);
 	morphContainer->RegisterVertex(0);
@@ -41,16 +37,13 @@ void MophingTestScene::Init()
 	ResourceManager::Instance()->GetMesh("town2", morphContainer);
 	morphContainer->RegisterVertex(1);
 
-	ResourceManager::Instance()->GetMesh("ishi", stoneMesh);
-	stoneMesh->RegisterVertex(0);
-
-	ResourceManager::Instance()->GetMesh("ishi2", stoneMesh);
-	stoneMesh->RegisterVertex(1);
+	ResourceManager::Instance()->GetMesh("town3", morphContainer);
+	morphContainer->RegisterVertex(2);
 
 	morphContainer->SetCurrent(0);
 	morphContainer->SetNext(1);
 
-	stoneMesh->SetNext(1);
+	ResourceManager::Instance()->GetMesh("town", mesh);
 }
 
 /**************************************
@@ -58,22 +51,11 @@ void MophingTestScene::Init()
 ***************************************/
 void MophingTestScene::Uninit()
 {
-	SAFE_RELEASE(vtx1);
-	SAFE_RELEASE(vtx2);
-	SAFE_RELEASE(indexBuff);
-	SAFE_RELEASE(texture);
-	SAFE_RELEASE(declare);
-
-	attributeTable.clear();
-	materials.clear();
-	materialNum = 0;
-
-	SAFE_DELETE(effect);
-
 	SAFE_DELETE(sceneCamera);
 
 	SAFE_DELETE(morphContainer);
-	SAFE_DELETE(stoneMesh);
+
+	SAFE_DELETE(mesh);
 }
 
 /**************************************
@@ -81,17 +63,6 @@ void MophingTestScene::Uninit()
 ***************************************/
 void MophingTestScene::Update()
 {
-	Debug::Begin("Mophing");
-	static int period = 30;
-
-	Debug::Slider("period", period, 10, 120);
-
-	float time = (float)cntFrame++ / period;
-	t = Easing::EaseValue(time, 1.0f, 0.0f, EaseType::InOutExpo);
-
-	cntFrame = Math::WrapAround(0, period, cntFrame);
-	Debug::End();
-
 	sceneCamera->Update();
 }
 
@@ -108,24 +79,38 @@ void MophingTestScene::Draw()
 
 	static Transform transform;
 	static D3DXVECTOR3 pos = Vector3::Forward * 200.0f, scale = Vector3::One, rot = Vector3::Zero;
-	//static float t = 0.0f;
+	static float t = 0.0f;
 
 	Debug::Begin("Mophing");
 	Debug::Slider("pos", pos, Vector3::One * -1000.0f, Vector3::One * 1000.0f);
 	Debug::Slider("scl", scale, Vector3::Zero, Vector3::One * 20.0f);
 	Debug::Slider("rot", rot, Vector3::Zero, Vector3::One * 360.0f);
-	//Debug::Slider("t", t, 0.0f, 1.0f);
+	if (Debug::Slider("t", t, 0.0f, 2.0f))
+	{
+		if (t < 1.0f)
+		{
+			morphContainer->SetCurrent(0);
+			morphContainer->SetNext(1);
+			morphContainer->SetChange(t);
+		}
+		else
+		{
+			morphContainer->SetCurrent(1);
+			morphContainer->SetNext(2);
+			morphContainer->SetChange(t - 1.0f);
+		}
+
+	};
 	Debug::End();
 
 	transform.SetPosition(pos);
 	transform.SetScale(scale);
 	transform.SetRotation(rot);
 
-	morphContainer->SetChange(t);
 	morphContainer->Draw(transform.GetMatrix());
 
-	transform.SetPosition({ 150.0f, 25.0f, 1000.0f });
+	transform.Move(Vector3::Right * 150.0f);
 
-	stoneMesh->SetChange(t);
-	stoneMesh->Draw(transform.GetMatrix());
+	transform.SetWorld();
+	mesh->Draw();
 }
