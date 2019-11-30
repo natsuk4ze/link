@@ -35,10 +35,13 @@ public:
 
 	virtual bool IsActive() const override;
 
+	virtual void UseCulling(bool value);
+
 protected:
 	int cntFrame;
 	int duration;
 	int emitNum;
+	bool useCull;
 
 	std::function<void(void)> callback;
 };

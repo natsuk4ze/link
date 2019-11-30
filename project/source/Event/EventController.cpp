@@ -25,11 +25,13 @@
 #include "../../Framework/Camera/CameraTranslationPlugin.h"
 #include "../../Framework/Camera/CameraShakePlugin.h"
 #include "../../Framework/Tool/DebugWindow.h"
+#include "../../Framework/Particle/BaseEmitter.h"
 
 #include "../Field/Place/FieldPlaceModel.h"
 #include "../Viewer/GameScene/Controller/EventViewer.h"
 #include "../Viewer/GameScene/ParameterContainer/EventViewerParam.h"
 #include "../Viewer/GameScene/Controller/BeatGameViewer.h"
+#include "../Effect/GameParticleManager.h"
 
 #include "../Field/Camera/EventCamera.h"
 
@@ -86,6 +88,12 @@ EventController::~EventController()
 	SAFE_DELETE(camera);
 
 	SAFE_DELETE(beatViewer);
+
+	for (auto&& pair : infoEmitterContainer)
+	{
+		if(pair.second != nullptr)
+			pair.second->SetActive(false);
+	}
 
 #if _DEBUG
 	SAFE_DELETE(polygon);
@@ -257,6 +265,7 @@ void EventController::LoadCSV(const char* FilePath)
 			{
 				Field::FieldPosition Pos = { x, z };
 				EventCSVData.push_back(EventInfo{ Pos, Type });
+				infoEmitterContainer[Pos] = GameParticleManager::Instance()->Generate(GameParticle::EventInfo, Pos.ConvertToWorldPosition());
 			}
 			x++;
 		}
@@ -348,6 +357,10 @@ bool EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 
 				// CSVデータから発生したイベントの資料を削除
 				EventPlace = EventCSVData.erase(EventPlace);
+
+				//イベントインフォのエミッタを停止
+				infoEmitterContainer[PlacePos]->SetActive(false);
+				infoEmitterContainer.erase(PlacePos);
 			}
 			else
 				++EventPlace;

@@ -12,6 +12,8 @@
 #include "../Field/FieldConfig.h"
 #include "../Field/FieldEventHandler.h"
 
+#include <map>
+
 //*****************************************************************************
 // 前方宣言(おーはま追記)
 //*****************************************************************************
@@ -20,6 +22,7 @@ class BoardPolygon;
 class EventViewerParam;
 class EventCamera;
 class BeatGameViewer;
+class BaseEmitter;
 
 //*****************************************************************************
 // クラス定義
@@ -41,6 +44,8 @@ private:
 
 	bool InBanStock;
 	bool InPauseEvent;
+
+	std::map<Field::FieldPosition, BaseEmitter*> infoEmitterContainer;
 
 	void LoadCSV(const char* FilePath);
 

@@ -74,13 +74,15 @@ void GameScene::Init()
 	//フィールドレベル読み込み
 	Field::FieldLevel level = (Field::FieldLevel)PlayerPrefs::GetNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel));
 
+	particleManager = GameParticleManager::Instance();
+	particleManager->Init();
+
 	//各インスタンス作成
 	field = new Field::FieldController(level);
 	gameViewer = new GameViewer();
 	eventController = new EventController(level);
 	eventHandler = new FieldEventHandler();
 	eventController->ReceiveFieldEventHandler(eventHandler);
-	particleManager = GameParticleManager::Instance();
 	bloomController = new BloomController();
 	serial = new SerialWrapper(3);								//TODO:ポート番号を変えられるようにする
 	Client = new UDPClient();

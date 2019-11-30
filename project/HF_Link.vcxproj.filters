@@ -290,6 +290,7 @@
     <ClInclude Include="source\Effect\Game\Space\MoveTail.h" />
     <ClInclude Include="source\Effect\Game\Space\StarDust.h" />
     <ClInclude Include="Framework\Serial\SerialWrapper.h" />
+    <ClInclude Include="source\Effect\Game\General\EventInfo.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseTextureDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\TextureDrawer.h" />
   </ItemGroup>
@@ -557,6 +558,7 @@
     <ClCompile Include="source\Effect\Game\Space\StarDust.cpp" />
     <ClCompile Include="source\Effect\Game\General\Darkness.cpp" />
     <ClCompile Include="Framework\Serial\SerialWrapper.cpp" />
+    <ClCompile Include="source\Effect\Game\General\EventInfo.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseTextureDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\TextureDrawer.cpp" />
   </ItemGroup>
