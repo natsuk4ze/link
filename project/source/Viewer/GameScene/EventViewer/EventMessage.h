@@ -9,6 +9,8 @@
 #define _EVENT_MESSAGE_H_
 
 #include "../../Framework/BaseViewer.h"
+#include "../../Framework/ViewerAnimater/ViewerAnimater.h"
+#include <functional>
 #include <string>
 
 //*****************************************************************************
@@ -41,24 +43,20 @@ public:
 private:
 	BaseViewerDrawer *bg;
 	TextViewer *text;
-
-	//アニメーション時間
-	float animTime;
-
-	//フレームカウント
-	int countFrame;
-
-	//現在再生中のアニメーション
-	int currentAnim;
-
-	//α値
-	float alpha = 1.0f;
+	ViewerAnimater *anim;
 
 	//再生処理
 	void Play(void);
 
-	//フェードアウト処理
-	void FadeOut(void);
+	//アニメーションの動作を設定
+	void SetAnimBehavior(void);
+
+	//アニメーション終了
+	bool SetPlayFinished(void);
+
+	//アニメーション配列
+	std::vector <std::function<void()>> animArray;
+
 };
 
 #endif

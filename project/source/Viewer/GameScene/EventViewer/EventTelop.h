@@ -8,6 +8,7 @@
 #ifndef _EVENT_TELOP_H_
 #define _EVENT_TELOP_H_
 
+#include "../../Framework/ViewerAnimater/ViewerAnimater.h"
 #include "../../Framework/BaseViewer.h"
 #include "../../../../Framework/Pattern/Delegate.h"
 #include <functional>
@@ -52,6 +53,7 @@ public:
 private:
 	BaseViewerDrawer *text;
 	BaseViewerDrawer *bg;
+	ViewerAnimater *anim;
 
 	//çƒê∂èIóπí ím
 	std::function<void(void)> Callback = nullptr;

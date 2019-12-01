@@ -10,17 +10,13 @@
 #include "ViewerAnimater.h"
 
 //=============================================================================
-// static変数
-//=============================================================================
-int ViewerAnimater::finishedCnt = 0;
-int ViewerAnimater::frameCnt = 0;
-float ViewerAnimater::animTime = 0;
-bool ViewerAnimater::isFinished = false;
-
-//=============================================================================
 // コンストラクタ
 //=============================================================================
-ViewerAnimater::ViewerAnimater()
+ViewerAnimater::ViewerAnimater():
+	frameCnt(0),
+	animTime(0),
+	finishedCnt(0),
+	isFinished(false)
 {
 }
 
@@ -107,6 +103,93 @@ void ViewerAnimater::Fade(BaseViewerDrawer & viewer, const float & start,
 	//終了処理
 	if (frameCnt < duration) return;
 	SetAnimFinished();
+}
+
+//=============================================================================
+// 移動処理（同時実行アニメーションあり）
+//=============================================================================
+void ViewerAnimater::Move(BaseViewerDrawer& viewer, const D3DXVECTOR2& start,
+	const D3DXVECTOR2& end, float duration, EaseType type, std::function<void()> Callback)
+{
+	//フレームカウントと時間を更新
+	UpdateFrameAndTime(duration);
+
+	Callback();
+
+	viewer.position.x = Easing::EaseValue(animTime, start.x, end.x, type);
+	viewer.position.y = Easing::EaseValue(animTime, start.y, end.y, type);
+
+	//終了処理
+	if (frameCnt < duration) return;
+	SetAnimFinished();
+}
+
+//=============================================================================
+// スケール処理（同時実行アニメーションあり）
+//=============================================================================
+void ViewerAnimater::Scale(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start,
+	const D3DXVECTOR2 & end, float duration, EaseType type, std::function<void()> Callback)
+{
+	//フレームカウントと時間を更新
+	UpdateFrameAndTime(duration);
+
+	Callback();
+
+	viewer.size.x = Easing::EaseValue(animTime, start.x, end.x, type);
+	viewer.size.y = Easing::EaseValue(animTime, start.y, end.y, type);
+
+	//終了処理
+	if (frameCnt < duration) return;
+	SetAnimFinished();
+}
+
+//=============================================================================
+// フェード処理（同時実行アニメーションあり）
+//=============================================================================
+void ViewerAnimater::Fade(BaseViewerDrawer & viewer, const float & start,
+	const float & end, float duration, EaseType type, std::function<void()> Callback)
+{
+	//フレームカウントと時間を更新
+	UpdateFrameAndTime(duration);
+
+	Callback();
+
+	float alpha = Easing::EaseValue(animTime, start, end, type);
+	viewer.SetAlpha(alpha);
+
+	//終了処理
+	if (frameCnt < duration) return;
+	SetAnimFinished();
+}
+
+//=============================================================================
+//	移動処理（サブ）
+//=============================================================================
+void ViewerAnimater::SubMove(BaseViewerDrawer& viewer, const D3DXVECTOR2& start,
+	const D3DXVECTOR2& end, EaseType type)
+{
+	viewer.position.x = Easing::EaseValue(animTime, start.x, end.x, type);
+	viewer.position.y = Easing::EaseValue(animTime, start.y, end.y, type);
+}
+
+//=============================================================================
+// スケール処理（サブ）
+//=============================================================================
+void ViewerAnimater::SubScale(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start,
+	const D3DXVECTOR2 & end, EaseType type)
+{
+	viewer.size.x = Easing::EaseValue(animTime, start.x, end.x, type);
+	viewer.size.y = Easing::EaseValue(animTime, start.y, end.y, type);
+}
+
+//=============================================================================
+// フェード処理（サブ）
+//=============================================================================
+void ViewerAnimater::SubFade(BaseViewerDrawer & viewer, const float & start,
+	const float & end, EaseType type)
+{
+	float alpha = Easing::EaseValue(animTime*1.5f, start, end, type);
+	viewer.SetAlpha(alpha);
 }
 
 //=============================================================================

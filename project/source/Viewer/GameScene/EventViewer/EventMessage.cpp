@@ -10,63 +10,14 @@
 #include "../../../../Framework/Renderer2D/TextViewer.h"
 #include "../../../../Framework/Pattern/Delegate.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
+#include "../../Framework/ViewerAnimater/ViewerAnimater.h"
 #include "EventMessage.h"
-
-#ifdef _DEBUG
-#include "../../../../Framework/Input/input.h"
-#endif
-
-//*****************************************************************************
-// グローバル変数
-//*****************************************************************************
-
-//アニメーションの数
-static const int animMax = 3;
-
-//ビュアーの表示座標間隔
-static const float intervalViewerPos = 100.0f;
-
-//アニメーション開始位置
-static const D3DXVECTOR2 animStartPosition[animMax] = {
-	D3DXVECTOR2((float)(SCREEN_WIDTH / 10 * 8.6),(float)(SCREEN_HEIGHT*1.5)),
-	D3DXVECTOR2((float)(SCREEN_WIDTH / 10 * 8.6),(float)(SCREEN_HEIGHT/10*5.5)),
-	D3DXVECTOR2((float)(SCREEN_WIDTH / 10 * 8.6),(float)(SCREEN_HEIGHT / 10 * 5.5)),
-};
-
-//アニメーション終了位置
-static const D3DXVECTOR2 animEndPosition[animMax] = {
-	D3DXVECTOR2((float)(SCREEN_WIDTH / 10 * 8.6),(float)(SCREEN_HEIGHT / 10 * 5.5)),
-	D3DXVECTOR2((float)(SCREEN_WIDTH / 10 * 8.6),(float)(SCREEN_HEIGHT / 10 * 5.5)),
-	D3DXVECTOR2((float)(SCREEN_WIDTH*1.2),(float)(SCREEN_HEIGHT / 10 * 5.5)),
-};
-
-//アニメーション種類
-static const EaseType animType[animMax] = {
-	InOutCubic,
-	InOutCubic,
-	InOutCubic,
-};
-
-//アニメーション間隔
-static const float animDuration[animMax] = {
-	50,
-	50,
-	15,
-};
-
-//アニメーションシーン
-enum animScene
-{
-    In,
-	Stop,
-	Out
-};
 
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
 EventMessage::EventMessage() :
-	currentAnim(0)
+	animArray()
 {
 	//テキスト
 	text = new TextViewer("data/TEXTURE/Viewer/EventViewer/EventMessage/Text_cinecaption226.ttf",40);
@@ -78,8 +29,12 @@ EventMessage::EventMessage() :
 	bg->LoadTexture("data/TEXTURE/Viewer/EventViewer/EventMessage/BG.png");
 	bg->size = D3DXVECTOR3(560.0f, 104.0f, 0.0f);
 	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	bg->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 8.6), (float)(SCREEN_HEIGHT*1.5),0.0f);
+	bg->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 8.6f, SCREEN_HEIGHT*1.5f,0.0f);
 	bg->MakeVertex();
+
+	//アニメーション
+	anim = new ViewerAnimater();
+	SetAnimBehavior();
 }
 
 //*****************************************************************************
@@ -89,6 +44,7 @@ EventMessage::~EventMessage()
 {
 	SAFE_DELETE(text);
 	SAFE_DELETE(bg);
+	SAFE_DELETE(anim);
 }
 
 //=============================================================================
@@ -96,6 +52,9 @@ EventMessage::~EventMessage()
 //=============================================================================
 void EventMessage::Update(void)
 {
+	//再生中なら実行
+	if (!isPlaying) return;
+
 	//再生処理
 	Play();
 }
@@ -120,67 +79,56 @@ void EventMessage::Draw(void)
 //=============================================================================
 void EventMessage::Play(void)
 {
-	//再生中なら実行
-	if (!isPlaying) return;
-	
-	//ポジション
-	D3DXVECTOR2 position;
-	
-	//フレーム更新
-	countFrame++;
-
-	//時間更新
-	animTime = countFrame / animDuration[currentAnim];
-
-	//ポジションを更新
-	position = Easing::EaseValue(animTime,
-	animStartPosition[currentAnim],
-	animEndPosition[currentAnim],
-	animType[currentAnim]);
-
-	//アニメーション更新
-	if (countFrame == animDuration[currentAnim])
+	anim->PlayAnim(animArray, [=]
 	{
-		countFrame = 0;
-		currentAnim++;
+		SetPlayFinished();
 	}
+	);
 
-	//Outシーン以降はフェードアウトを実行
-	if (currentAnim >= Out)
-	{
-		FadeOut();
-	}
+	D3DXVECTOR2 pos = D3DXVECTOR2(bg->position.x, bg->position.y);
+	D3DXCOLOR alpha = bg->vertexWk[3].diffuse;
 
-	//アニメーション終了
-	if (currentAnim == animMax)
-	{
-		countFrame = 0;
-		currentAnim = 0;
-		animTime = 0;
-		alpha = 1.0f;
-		text->SetColor(SET_COLOR_NOT_COLORED);
-		bg->SetColor(SET_COLOR_NOT_COLORED);
-		isPlaying = false;
-	}
-
-	//ポジションをセット(*後に変更予定)
-	text->SetPos((int)position.x,(int)position.y + int((messageSetCnt-1) * intervalViewerPos));
-	bg->position = D3DXVECTOR3(position.x, position.y + (messageSetCnt-1) * intervalViewerPos, 0.0f);
+	text->SetPos((int)pos.x, (int)pos.y);
+	text->SetColor(alpha);
 }
 
 //=============================================================================
-// フェードアウト処理
+// アニメーション動作設定処理
 //=============================================================================
-void EventMessage::FadeOut(void)
+void EventMessage::SetAnimBehavior(void)
 {
-	//α値の最小を0.0fに設定
-	alpha = Math::Max(alpha, 0.0f);
+	//ビュアーの表示座標間隔
+	const float intervalViewerPos = 100.0f;
 
-	//フェードアウト中はα値を減算
-	alpha -= 0.05f;
+	animArray.push_back([=]
+	{
+		anim->Move(*bg, D3DXVECTOR2(SCREEN_WIDTH / 10 * 8.6f, SCREEN_HEIGHT*1.5f), D3DXVECTOR2(SCREEN_WIDTH / 10 * 8.6f, SCREEN_HEIGHT / 10 * 5.5f + (messageSetCnt - 1) * intervalViewerPos), 40, OutCubic);
+	}
+	);
+	animArray.push_back([=]
+	{
+		anim->Wait(50.0f);
+	}
+	);
+	animArray.push_back([=]
+	{
+		anim->Move(*bg, D3DXVECTOR2(SCREEN_WIDTH / 10 * 8.6f, SCREEN_HEIGHT / 10 * 5.5f + (messageSetCnt - 1) * intervalViewerPos), D3DXVECTOR2(SCREEN_WIDTH*1.2f, SCREEN_HEIGHT / 10 * 5.5f + (messageSetCnt - 1) * intervalViewerPos), 20, InOutCubic, [=]
+		{
+			anim->SubFade(*bg,1.0f,0.0f, InOutCubic);
+		});
+	}
+	);
+}
 
-	text->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, alpha));
-	bg->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, alpha));
+//=============================================================================
+// 再生終了処理
+//=============================================================================
+bool EventMessage::SetPlayFinished(void)
+{
+	text->SetColor(SET_COLOR_NOT_COLORED);
+	bg->SetColor(SET_COLOR_NOT_COLORED);
+
+	return isPlaying = false;
 }
 
 //=============================================================================

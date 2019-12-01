@@ -8,6 +8,7 @@
 
 #include "../../../../main.h"
 #include"../../../../Framework/Math/Easing.h"
+#include "../../Framework/ViewerAnimater/ViewerAnimater.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerAnimater/ViewerAnimater.h"
 
@@ -34,7 +35,8 @@ EventTelop::EventTelop():
 	bg->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 5), SCREEN_HEIGHT / 10 * 5.0f, 0.0f);
 	bg->MakeVertex();
 
-	//アニメーションの動作を設定
+	//アニメーション
+	anim = new ViewerAnimater();
 	SetAnimBehavior();
 }
 
@@ -45,6 +47,7 @@ EventTelop::~EventTelop()
 {
 	SAFE_DELETE(text);
 	SAFE_DELETE(bg);
+	SAFE_DELETE(anim);
 }
 
 //=============================================================================
@@ -56,7 +59,7 @@ void EventTelop::Update()
 	if (!isPlaying) return;
 
 	//アニメーション再生
-	ViewerAnimater::PlayAnim(animArray, [=]
+	anim->PlayAnim(animArray, [=]
 	{
 		SetPlayFinished();
 	});
@@ -86,27 +89,27 @@ void EventTelop::SetAnimBehavior(void)
 	animArray.push_back([=]()
 	{
 		//背景オープン
-		ViewerAnimater::Scale(*bg, D3DXVECTOR2(SCREEN_WIDTH, 0.0f), D3DXVECTOR2(SCREEN_WIDTH, 128.0f), 15.0f, OutCirc);
+		anim->Scale(*bg, D3DXVECTOR2(SCREEN_WIDTH, 0.0f), D3DXVECTOR2(SCREEN_WIDTH, 128.0f), 15.0f, OutCirc);
 	});
 	animArray.push_back([=]()
 	{
 		//テキストスクリーンイン
-		ViewerAnimater::Move(*text, D3DXVECTOR2(SCREEN_WIDTH*1.5, SCREEN_CENTER_Y), D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_CENTER_Y), 50.0f, OutCirc);
+		anim->Move(*text, D3DXVECTOR2(SCREEN_WIDTH*1.5, SCREEN_CENTER_Y), D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_CENTER_Y), 50.0f, OutCirc);
 	});
 	animArray.push_back([=]()
 	{
 		//待機
-		ViewerAnimater::Wait(5.0f);
+		anim->Wait(5.0f);
 	});
 	animArray.push_back([=]()
 	{
 		//テキストスクリーンアウト
-		ViewerAnimater::Move(*text, D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_CENTER_Y), D3DXVECTOR2(-SCREEN_WIDTH * 1.5, SCREEN_CENTER_Y), 30.0f, InCirc);
+		anim->Move(*text, D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_CENTER_Y), D3DXVECTOR2(-SCREEN_WIDTH * 1.5, SCREEN_CENTER_Y), 30.0f, InCirc);
 	});
 	animArray.push_back([=]()
 	{
 		//背景クローズ
-		ViewerAnimater::Scale(*bg, D3DXVECTOR2(SCREEN_WIDTH, 128.0f), D3DXVECTOR2(SCREEN_WIDTH, 0.0f), 15.0f, OutCirc);
+		anim->Scale(*bg, D3DXVECTOR2(SCREEN_WIDTH, 128.0f), D3DXVECTOR2(SCREEN_WIDTH, 0.0f), 15.0f, OutCirc);
 	});
 }
 

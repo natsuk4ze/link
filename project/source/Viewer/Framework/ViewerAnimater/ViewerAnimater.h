@@ -7,7 +7,9 @@
 #ifndef _VIEWER_ANIMATER_H_
 #define _VIEWER_ANIMATER_H_
 
+#include "../../../../main.h"
 #include <functional>
+#include "../../../../Framework/Math/Easing.h"
 
 //*****************************************************************************
 // 前方宣言
@@ -24,39 +26,56 @@ public:
 	~ViewerAnimater();
 
 	//アニメーション再生処理
-	static void PlayAnim(std::vector <std::function<void()>> animArray, std::function<void()> Callback = nullptr);
+	void PlayAnim(std::vector <std::function<void()>> animArray, std::function<void()> Callback = nullptr);
 
 	//移動処理
-	static void Move(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type);
-
+	void Move(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type);
 	//スケール処理
-	static void Scale(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type);
-
+	void Scale(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type);
 	//フェード処理
-	static void Fade(BaseViewerDrawer& viewer, const float& start, const float& end, float duration, EaseType type);
-
+	void Fade(BaseViewerDrawer& viewer, const float& start, const float& end, float duration, EaseType type);
 	//待機処理
-	static void Wait(float duration);
+	void Wait(float duration);
+
+	//*****************************************************************************
+	// 以下、Callbackで同時に実行する処理を呼べるver.
+	// ex)フェードアウトしながらスクリーンアウト...etc
+	// 注意：CallbackはSubを使うこと
+	//*****************************************************************************
+
+	//移動処理
+	void Move(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type, std::function<void()> Callback);
+	//スケール処理
+	void Scale(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type, std::function<void()> Callback);
+	//フェード処理
+	void Fade(BaseViewerDrawer& viewer, const float& start, const float& end, float duration, EaseType type, std::function<void()> Callback);
+
+	//移動処理
+	void SubMove(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, EaseType type);
+	//スケール処理
+	void SubScale(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, EaseType type);
+	//フェード処理
+	void SubFade(BaseViewerDrawer& viewer, const float& start, const float& end, EaseType type);
 
 private:
 
 	//アニメーション終了処理
-	static void SetAnimFinished(void);
+	void SetAnimFinished(void);
 
 	//フレームカウントと時間を更新
-	static void UpdateFrameAndTime(float duration);
+	void UpdateFrameAndTime(float duration);
 
 	//フレームカウント
-	static int frameCnt;
+	int frameCnt;
 
 	//アニメーション時間
-	static float animTime;
+	float animTime;
 
 	//アニメーション終了カウント
-	static int finishedCnt;
+	int finishedCnt;
 
 	//アニメーションが終了したか
-	static bool isFinished;
+	bool isFinished;
 
 };
 #endif
