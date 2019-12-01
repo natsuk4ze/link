@@ -29,9 +29,6 @@ public:
 	//移動処理
 	static void Move(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type);
 
-	//移動処理
-	static void Move(BaseViewerDrawer& viewer, const D3DXVECTOR2& end, float duration, EaseType type);
-
 	//スケール処理
 	static void Scale(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type);
 
@@ -42,6 +39,12 @@ public:
 	static void Wait(float duration);
 
 private:
+
+	//アニメーション終了処理
+	static void SetAnimFinished(void);
+
+	//フレームカウントと時間を更新
+	static void UpdateFrameAndTime(float duration);
 
 	//フレームカウント
 	static int frameCnt;

@@ -39,8 +39,10 @@ void ViewerAnimater::PlayAnim(std::vector <std::function<void()>> animArray, std
 	//未終了状態に移行
 	isFinished = false;
 
+	//配列の中のアニメーションを実行
 	animArray[finishedCnt]();
 
+	//終了したら終了カウントをカウントアップ
 	if (isFinished)
 		finishedCnt++;
 
@@ -48,7 +50,9 @@ void ViewerAnimater::PlayAnim(std::vector <std::function<void()>> animArray, std
 	if (finishedCnt == animArray.size())
 	{
 		finishedCnt = 0;
+		SetAnimFinished();
 		animArray.clear();
+
 		//終了通知
 		Callback();
 	}
@@ -60,50 +64,15 @@ void ViewerAnimater::PlayAnim(std::vector <std::function<void()>> animArray, std
 void ViewerAnimater::Move(BaseViewerDrawer& viewer, const D3DXVECTOR2& start,
 	const D3DXVECTOR2& end, float duration, EaseType type)
 {
-	//フレーム更新
-	frameCnt++;
-
-	//時間更新
-	animTime = frameCnt / duration;
+	//フレームカウントと時間を更新
+	UpdateFrameAndTime(duration);
 
 	viewer.position.x =  Easing::EaseValue(animTime,start.x,end.x,type);
 	viewer.position.y = Easing::EaseValue(animTime, start.y, end.y, type);
 
-	//終了
-	if (frameCnt == duration)
-	{
-		frameCnt = 0;
-		animTime = 0;
-		//終了状態に移行
-		isFinished = true;
-	}
-}
-
-//=============================================================================
-// 移動処理
-//=============================================================================
-void ViewerAnimater::Move(BaseViewerDrawer& viewer,
-	const D3DXVECTOR2& end, float duration, EaseType type)
-{
-	//フレーム更新
-	frameCnt++;
-
-	//時間更新
-	animTime = frameCnt / duration;
-
-	const D3DXVECTOR2 start = D3DXVECTOR2(viewer.position.x, viewer.position.y);
-
-	viewer.position.x = Easing::EaseValue(animTime, start.x, end.x, type);
-	viewer.position.y = Easing::EaseValue(animTime, start.y, end.y, type);
-
-	//終了
-	if (frameCnt == duration)
-	{
-		frameCnt = 0;
-		animTime = 0;
-		//終了状態に移行
-		isFinished = true;
-	}
+	//終了処理
+	if (frameCnt < duration) return;
+	SetAnimFinished();
 }
 
 //=============================================================================
@@ -112,23 +81,15 @@ void ViewerAnimater::Move(BaseViewerDrawer& viewer,
 void ViewerAnimater::Scale(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start, 
 	const D3DXVECTOR2 & end, float duration, EaseType type)
 {
-	//フレーム更新
-	frameCnt++;
-
-	//時間更新
-	animTime = frameCnt / duration;
+	//フレームカウントと時間を更新
+	UpdateFrameAndTime(duration);
 
 	viewer.size.x = Easing::EaseValue(animTime, start.x, end.x, type);
 	viewer.size.y = Easing::EaseValue(animTime, start.y, end.y, type);
 
-	//終了
-	if (frameCnt == duration)
-	{
-		frameCnt = 0;
-		animTime = 0;
-		//終了状態に移行
-		isFinished = true;
-	}
+	//終了処理
+	if (frameCnt < duration) return;
+	SetAnimFinished();
 }
 
 //=============================================================================
@@ -137,23 +98,15 @@ void ViewerAnimater::Scale(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start,
 void ViewerAnimater::Fade(BaseViewerDrawer & viewer, const float & start, 
 	const float & end, float duration, EaseType type)
 {
-	//フレーム更新
-	frameCnt++;
-
-	//時間更新
-	animTime = frameCnt / duration;
+	//フレームカウントと時間を更新
+	UpdateFrameAndTime(duration);
 
 	float alpha = Easing::EaseValue(animTime, start, end, type);
 	viewer.SetAlpha(alpha);
 
-	//終了
-	if (frameCnt == duration)
-	{
-		frameCnt = 0;
-		animTime = 0;
-		//終了状態に移行
-		isFinished = true;
-	}
+	//終了処理
+	if (frameCnt < duration) return;
+	SetAnimFinished();
 }
 
 //=============================================================================
@@ -164,11 +117,31 @@ void ViewerAnimater::Wait(float duration)
 	//フレーム更新
 	frameCnt++;
 
-	//終了
-	if (frameCnt == duration)
-	{
-		frameCnt = 0;
-		//終了状態に移行
-		isFinished = true;
-	}
+	//終了処理
+	if (frameCnt < duration) return;
+	SetAnimFinished();
+}
+
+//=============================================================================
+// フレームカウントと時間の更新処理
+//=============================================================================
+void ViewerAnimater::UpdateFrameAndTime(float duration)
+{
+	//フレーム更新
+	frameCnt++;
+
+	//時間更新
+	animTime = frameCnt / duration;
+}
+
+//=============================================================================
+// アニメーション終了処理
+//=============================================================================
+void ViewerAnimater::SetAnimFinished(void)
+{
+	frameCnt = 0;
+	animTime = 0;
+
+	//終了状態に移行
+	isFinished = true;
 }

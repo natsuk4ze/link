@@ -4,16 +4,19 @@
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
+#include "EventTelop.h"
+
 #include "../../../../main.h"
 #include"../../../../Framework/Math/Easing.h"
-#include "../../Framework/ViewerAnimater/ViewerAnimater.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
-#include "EventTelop.h"
+#include "../../Framework/ViewerAnimater/ViewerAnimater.h"
 
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-EventTelop::EventTelop()
+EventTelop::EventTelop():
+	animArray(),
+	isPlaying(false)
 {
 	//テキスト
 	text = new BaseViewerDrawer();
@@ -79,100 +82,31 @@ void EventTelop::Draw(void)
 //=============================================================================
 void EventTelop::SetAnimBehavior(void)
 {
-	//アニメーションの数
-	const int animMax = 5;
-
-	const D3DXVECTOR2 textStartPosition[animMax] =
-	{
-		D3DXVECTOR2(SCREEN_WIDTH*1.5,SCREEN_CENTER_Y),
-		D3DXVECTOR2(SCREEN_WIDTH*1.5,SCREEN_CENTER_Y),
-		D3DXVECTOR2(SCREEN_CENTER_X,SCREEN_CENTER_Y),
-		D3DXVECTOR2(SCREEN_CENTER_X,SCREEN_CENTER_Y),
-		D3DXVECTOR2(-SCREEN_WIDTH * 1.5,SCREEN_CENTER_Y),
-	};
-
-	const D3DXVECTOR2 textEndPosition[animMax] =
-	{
-		D3DXVECTOR2(SCREEN_WIDTH*1.5,SCREEN_CENTER_Y),
-		D3DXVECTOR2(SCREEN_CENTER_X,SCREEN_CENTER_Y),
-		D3DXVECTOR2(SCREEN_CENTER_X,SCREEN_CENTER_Y),
-		D3DXVECTOR2(-SCREEN_WIDTH * 1.5,SCREEN_CENTER_Y),
-		D3DXVECTOR2(-SCREEN_WIDTH * 1.5,SCREEN_CENTER_Y),
-	};
-
-	const D3DXVECTOR2 bgStartSize[animMax] =
-	{
-		D3DXVECTOR2(SCREEN_WIDTH, 0.0f),
-		D3DXVECTOR2(SCREEN_WIDTH, 128.0f),
-		D3DXVECTOR2(SCREEN_WIDTH, 128.0f),
-		D3DXVECTOR2(SCREEN_WIDTH, 128.0f),
-		D3DXVECTOR2(SCREEN_WIDTH, 128.0f),
-	};
-
-	const D3DXVECTOR2 bgEndSize[animMax] =
-	{
-		D3DXVECTOR2(SCREEN_WIDTH, 128.0f),
-		D3DXVECTOR2(SCREEN_WIDTH, 0.0f),
-		D3DXVECTOR2(SCREEN_WIDTH, 0.0f),
-		D3DXVECTOR2(SCREEN_WIDTH, 0.0f),
-		D3DXVECTOR2(SCREEN_WIDTH, 0.0f),
-	};
-
-
-	//テキストアニメーション種類
-	const EaseType animType[animMax] = {
-		OutCirc,
-		OutCirc,
-		InOutCubic,
-		InCirc,
-		OutCirc
-	};
-
-	//テキストアニメーション間隔(ここを変更するとアニメーションの速さを調整できる)
-	//*注意(0を入れると無限大になるからアニメーションそのものを削除すること)
-	const float animDuration[animMax] = {
-		15,
-		50,
-		5,
-		30,
-		15
-	};
-
-	//アニメーションシーン
-	enum TelopAnimScene
-	{
-		BG_Open,
-		Text_In,
-		Text_Stop,
-		Text_Out,
-		BG_Close
-	};
-
 	//アニメーション配列にアニメーションをセット
 	animArray.push_back([=]()
 	{
 		//背景オープン
-		ViewerAnimater::Scale(*bg, bgStartSize[BG_Open], bgEndSize[BG_Open], animDuration[BG_Open], animType[BG_Open]);
+		ViewerAnimater::Scale(*bg, D3DXVECTOR2(SCREEN_WIDTH, 0.0f), D3DXVECTOR2(SCREEN_WIDTH, 128.0f), 15.0f, OutCirc);
 	});
 	animArray.push_back([=]()
 	{
 		//テキストスクリーンイン
-		ViewerAnimater::Move(*text, textStartPosition[Text_In], textEndPosition[Text_In], animDuration[Text_In], animType[Text_In]);
+		ViewerAnimater::Move(*text, D3DXVECTOR2(SCREEN_WIDTH*1.5, SCREEN_CENTER_Y), D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_CENTER_Y), 50.0f, OutCirc);
 	});
 	animArray.push_back([=]()
 	{
 		//待機
-		ViewerAnimater::Wait(animDuration[Text_Stop]);
+		ViewerAnimater::Wait(5.0f);
 	});
 	animArray.push_back([=]()
 	{
 		//テキストスクリーンアウト
-		ViewerAnimater::Move(*text, textStartPosition[Text_Out], textEndPosition[Text_Out], animDuration[Text_Out], animType[Text_Out]);
+		ViewerAnimater::Move(*text, D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_CENTER_Y), D3DXVECTOR2(-SCREEN_WIDTH * 1.5, SCREEN_CENTER_Y), 30.0f, InCirc);
 	});
 	animArray.push_back([=]()
 	{
 		//背景クローズ
-		ViewerAnimater::Scale(*bg, bgStartSize[BG_Close], bgEndSize[BG_Close], animDuration[BG_Close], animType[BG_Close]);
+		ViewerAnimater::Scale(*bg, D3DXVECTOR2(SCREEN_WIDTH, 128.0f), D3DXVECTOR2(SCREEN_WIDTH, 0.0f), 15.0f, OutCirc);
 	});
 }
 
@@ -182,16 +116,13 @@ void EventTelop::SetAnimBehavior(void)
 bool EventTelop::SetPlayFinished(void)
 {
 	if (Callback != nullptr)
-	{
-		//再生終了の通知
 		Callback();
-	}
 
 	return isPlaying = false;
 }
 
 //=============================================================================
-// テクスチャ情報受け渡し処理
+// テクスチャUVセット処理
 //=============================================================================
 void EventTelop::SetTexture(TelopID id)
 {
@@ -200,14 +131,8 @@ void EventTelop::SetTexture(TelopID id)
 
 	bool isNegative;
 
-	if (id >= Meteorite)
-	{
-		isNegative = true;
-	}
-	else
-	{
-		isNegative = false;
-	}
+	if (id >= Meteorite) isNegative = true;
+	else isNegative = false;
 
 	//背景のUVを変更
 	bg->SetTexture(1, 2, isNegative);

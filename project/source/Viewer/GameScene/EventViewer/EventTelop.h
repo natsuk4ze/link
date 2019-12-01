@@ -54,9 +54,9 @@ private:
 	BaseViewerDrawer *bg;
 
 	//再生終了通知
-	std::function<void(void)> Callback;
+	std::function<void(void)> Callback = nullptr;
 
-	//テクスチャ情報受け渡し
+	//テクスチャUVセット処理
 	void SetTexture(TelopID id);
 
 	//アニメーションの動作を設定
