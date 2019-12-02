@@ -31,6 +31,10 @@ public:
 		ProtectCity,
 		//ボタンを連打してAIを鎮めろ！
 		CalmAI,
+		//ボタンを連打して国を守れ！
+		ProtectCountry,
+		//ボタンを連打して星を守れ！
+		ProtectPlanet,
 		//種類数
 		Max
 	};

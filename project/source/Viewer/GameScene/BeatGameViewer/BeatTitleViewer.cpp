@@ -17,7 +17,7 @@ BeatTitleViewer::BeatTitleViewer()
 	//テキスト
 	title = new BaseViewerDrawer();
 	title->LoadTexture("data/TEXTURE/Viewer/BeatGameViewer/BeatTitleViewer/Title.png");
-	title->size = D3DXVECTOR3(1325.0f, 250.0f, 0.0f);
+	title->size = D3DXVECTOR3(1000.0f, 250.0f, 0.0f);
 	title->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	title->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_HEIGHT /12, 0.0f);
 	title->MakeVertex();
