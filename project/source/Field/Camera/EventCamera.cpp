@@ -16,7 +16,8 @@ EventCamera::EventCamera() :
 	referencePosition(Vector3::Zero),
 	cntMove(0),
 	durationMove(0),
-	flgLookAt(false)
+	flgLookAt(false),
+	targetObject(nullptr)
 {
 }
 
@@ -52,6 +53,9 @@ void EventCamera::Restore()
 {
 	//元のメインカメラに戻す
 	Camera::SetMainCamera(defaultMainCamera);
+
+	//ターゲットを解除
+	targetObject = nullptr;
 }
 
 /**************************************
@@ -71,9 +75,9 @@ void EventCamera::Update()
 			callback();
 	}
 
-	if (flgLookAt)
+	if (targetObject != nullptr)
 	{
-		transform.LookAt(referencePosition);
+		transform.LookAt(targetObject->GetPosition());
 	}
 
 	Camera::Update();
@@ -82,7 +86,7 @@ void EventCamera::Update()
 /**************************************
 移動設定処理
 ***************************************/
-void EventCamera::Move(const D3DXVECTOR3 & position, int duration, std::function<void()> callback)
+void EventCamera::Move(const D3DXVECTOR3 & position, int duration, float eyeDistance, std::function<void()> callback)
 {
 	flgLookAt = true;
 	cntMove = 0;
@@ -91,7 +95,7 @@ void EventCamera::Move(const D3DXVECTOR3 & position, int duration, std::function
 	endPosition = position;
 	this->callback = callback;
 
-	referencePosition = transform.Forward() * FieldCamera::LengthFromTarget;
+	referencePosition = transform.Forward() * eyeDistance + transform.GetPosition();
 }
 
 /**************************************
@@ -136,4 +140,12 @@ EventCamera & EventCamera::operator=(const Camera & rhs)
 	Camera* downThis = dynamic_cast<Camera*>(this);
 	*downThis = rhs;
 	return *this;
+}
+
+/**************************************
+ターゲット指定
+***************************************/
+void EventCamera::SetTargetObject(GameObject * target)
+{
+	targetObject = target;
 }

@@ -18,6 +18,7 @@ enum State
 {
 	TelopExpanding,
 	MeteorDebut,
+	CameraMoveWait,
 	BeatGameStart,
 	BeatGameSuccess,
 	BeatGameFail,
@@ -106,22 +107,28 @@ void CityDestroyEvent::Update()
 		return;
 
 	float Distance = 0.0f;
+	D3DXVECTOR3 diff = Vector3::Zero;
 
 	switch (EventState)
 	{
 		// è¦Î“oê
 	case MeteorDebut:
 
-		Distance = D3DXVec3LengthSq(&D3DXVECTOR3(MeteoritePos - TownPos));
+		diff = TownPos - MeteoritePos;
+		Distance = D3DXVec3LengthSq(&diff);
 
-		if (Distance > pow(20.0f, 2))
+		if (Distance > pow(40.0f, 2))
 		{
 			MeteoritePos += MoveDirection * FallSpeed;
 		}
 		else
 		{
-			CountdownStart();
-			EventState = State::BeatGameStart;
+			EventState = CameraMoveWait;
+			D3DXVECTOR3 nextCameraPos = Vector3::Normalize(diff) * 25.0f + MeteoritePos;
+			camera->Move(nextCameraPos, 30, 35.0f, [this]
+			{
+				CountdownStart();
+			});
 		}
 		break;
 
@@ -217,6 +224,7 @@ void CityDestroyEvent::EventOver(void)
 void CityDestroyEvent::MeteorFallStart(void)
 {
 	EventState = State::MeteorDebut;
+	camera->SetTargetObject(Meteor);
 }
 
 //=============================================================================
@@ -225,6 +233,7 @@ void CityDestroyEvent::MeteorFallStart(void)
 void CityDestroyEvent::CountdownStart(void)
 {
 	beatGame->CountdownStart();
+	EventState = State::BeatGameStart;
 }
 
 //=============================================================================
