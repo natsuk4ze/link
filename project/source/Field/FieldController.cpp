@@ -36,6 +36,7 @@
 
 #include "../Effect/GameParticleManager.h"
 #include "../../Framework/Math/Easing.h"
+#include "../Reward/RewardController.h"
 
 namespace Field
 {
@@ -545,10 +546,17 @@ namespace Field
 		if (cntFrame != 0)
 			return;
 
+		float destvalue = realDevelopmentLevelAI;
 		float raiseValue = placeContainer->CalcDevelopmentLevelAI(developSpeedBonus);
 		float bonusSideWay = placeActController->GetSideWayBonus();
 		developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + raiseValue + bonusSideWay);
 		realDevelopmentLevelAI = Easing::EaseValue(developmentLevelAI / 9999.0f, 0.0f, 9999.0f, EaseType::OutSine);
+
+		// ƒŠƒ[ƒh‚É”½‰f
+		if (currentLevel == FieldLevel::Space)
+		{
+			RewardController::Instance()->SetRewardData(RewardController::Type::MasterAI, (int)(realDevelopmentLevelAI - destvalue));
+		}
 	}
 
 	/**************************************

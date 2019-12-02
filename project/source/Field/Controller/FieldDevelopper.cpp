@@ -16,6 +16,7 @@
 #include "../../FieldObject/InfoController.h"
 #include "../../Viewer/GameScene/Controller/FieldViewer.h"
 #include "../../Effect/GameParticleManager.h"
+#include "../../Reward/RewardController.h"
 
 #include "../../../Library/cppLinq/cpplinq.hpp"
 
@@ -76,11 +77,14 @@ namespace Field
 				return;
 		}
 
+		int cntRoot = 0;
 		//操作対象のプレイスをRoadタイプに変換
 		for (auto&& place : route)
 		{
 			if (place->IsType(PlaceType::None))
 				place->SetType(PlaceType::Road);
+
+			cntRoot++;
 		}
 
 		//ルートモデル作成
@@ -119,6 +123,9 @@ namespace Field
 
 		//コールバック
 		entity->onBuildRoad(route);
+
+		// リワードに反映
+		RewardController::Instance()->SetRewardData(RewardController::Type::Pioneer, cntRoot);
 	}
 
 	/**************************************
@@ -212,6 +219,9 @@ namespace Field
 			entity->viewer->SetFieldErroMessage(FieldErrorMessage::ErroID::StockShortage);
 		}
 
+		// リワードに反映
+		RewardController::Instance()->SetRewardData(RewardController::Type::Destructer, cntMountain);
+
 		return end + 1;
 	}
 
@@ -299,6 +309,9 @@ namespace Field
 			//エラーメッセージを再生
 			entity->viewer->SetFieldErroMessage(FieldErrorMessage::ErroID::StockShortage);
 		}
+
+		// リワードに反映
+		RewardController::Instance()->SetRewardData(RewardController::Type::Artist, cntRiver);
 
 		return end;
 	}

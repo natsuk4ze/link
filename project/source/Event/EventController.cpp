@@ -34,6 +34,7 @@
 #include "../Effect/GameParticleManager.h"
 
 #include "../Field/Camera/EventCamera.h"
+#include "../Reward/RewardController.h"
 
 #include <fstream>
 
@@ -295,35 +296,55 @@ bool EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 				{
 				case LinkLevelUp:
 					Ptr = new LinkLevelUpEvent();
+					RewardController::Instance()->SetRewardData(RewardController::Type::PlusMaster, 1);
+					RewardController::Instance()->SetRewardData(RewardController::Type::PlusComplete, LinkLevelUp);
 					break;
 				case NewCity:
 					Ptr = new NewTownEventCtrl(eventViewer, FieldLevel, camera);
+					RewardController::Instance()->SetRewardData(RewardController::Type::PlusMaster, 1);
+					RewardController::Instance()->SetRewardData(RewardController::Type::PlusComplete, NewCity);
 					flgPause = true;
 					break;
 				case StockRecovery:
 					Ptr = new StockRecoveryEvent();
+					RewardController::Instance()->SetRewardData(RewardController::Type::PlusMaster, 1);
+					RewardController::Instance()->SetRewardData(RewardController::Type::PlusComplete, StockRecovery);
 					break;
 				case FamousPeople:
 					Ptr = new FamousPeopleEvent();
+					RewardController::Instance()->SetRewardData(RewardController::Type::PlusMaster, 1);
+					RewardController::Instance()->SetRewardData(RewardController::Type::PlusComplete, FamousPeople);
 					break;
 				case AllLinkLevelUp:
 					Ptr = new AllLinkLevelUpEvent();
+					RewardController::Instance()->SetRewardData(RewardController::Type::PlusMaster, 1);
+					RewardController::Instance()->SetRewardData(RewardController::Type::PlusComplete, AllLinkLevelUp);
 					break;
 				case AILevelUp:
 					Ptr = new AILevelUpEvent();
+					RewardController::Instance()->SetRewardData(RewardController::Type::PlusMaster, 1);
+					RewardController::Instance()->SetRewardData(RewardController::Type::PlusComplete, AILevelUp);
 					break;
 				case TimeRecovery:
 					Ptr = new TimeRecoveryEvent();
+					RewardController::Instance()->SetRewardData(RewardController::Type::PlusMaster, 1);
+					RewardController::Instance()->SetRewardData(RewardController::Type::PlusComplete, TimeRecovery);
 					break;
 				case LinkLevelDecrease:
 					Ptr = new LinkLevelDecreaseEvent();
+					RewardController::Instance()->SetRewardData(RewardController::Type::MinusMaster, 1);
+					RewardController::Instance()->SetRewardData(RewardController::Type::MinusComplete, LinkLevelDecrease - 7);
 					break;
 				case CityDestroy:
 					Ptr = new CityDestroyEvent(eventViewer, beatViewer, camera);
+					RewardController::Instance()->SetRewardData(RewardController::Type::MinusMaster, 1);
+					RewardController::Instance()->SetRewardData(RewardController::Type::MinusComplete, CityDestroy - 7);
 					flgPause = true;
 					break;
 				case AILevelDecrease:
 					Ptr = new AILevelDecreaseEvent(eventViewer, camera, beatViewer);
+					RewardController::Instance()->SetRewardData(RewardController::Type::MinusMaster, 1);
+					RewardController::Instance()->SetRewardData(RewardController::Type::MinusComplete, AILevelDecrease - 7);
 					flgPause = true;
 					break;
 				case BanStockUse:
@@ -339,6 +360,8 @@ bool EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 							beatViewer,
 							[&](bool Flag) {SetBanStock(Flag); },
 							[&]() {return GetInPause(); });
+						RewardController::Instance()->SetRewardData(RewardController::Type::MinusMaster, 1);
+						RewardController::Instance()->SetRewardData(RewardController::Type::MinusComplete, BanStockUse - 7);
 						flgPause = true;
 					}
 					break;

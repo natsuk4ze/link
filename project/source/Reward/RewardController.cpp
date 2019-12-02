@@ -89,7 +89,7 @@ void RewardController::SetRewardData(Type rewardType, int data)
 //=====================================
 // データのリセット
 //=====================================
-void RewardController::ResetRewardData()
+void RewardController::ResetAllRewardData()
 {
 	for (auto& reward : rewardPool)
 	{
