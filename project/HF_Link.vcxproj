@@ -278,7 +278,6 @@
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.h" />
     <ClInclude Include="source\Viewer\GameScene\ParameterContainer\EventViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.h" />
-    <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldTelop.h" />
     <ClInclude Include="source\Viewer\GameScene\Controller\FieldViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\LinkLevelUpViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.h" />
@@ -537,7 +536,6 @@
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventTelop.cpp" />
     <ClCompile Include="source\Viewer\GameScene\Controller\EventViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldTelop.cpp" />
     <ClCompile Include="source\Viewer\GameScene\Controller\FieldViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\LinkLevelUpViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.cpp" />

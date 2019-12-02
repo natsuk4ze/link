@@ -51,19 +51,24 @@ public:
 	void Scale(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type, std::function<void()> Callback);
 	//フェード処理
 	void Fade(BaseViewerDrawer& viewer, const float& start, const float& end, float duration, EaseType type, std::function<void()> Callback);
+	//待機処理
+	void Wait(float duration, std::function<void()> Callback);
 
 	//移動処理
 	void SubMove(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, EaseType type);
 	//スケール処理
 	void SubScale(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, EaseType type);
 	//フェード処理
-	void SubFade(BaseViewerDrawer& viewer, const float& start, const float& end, EaseType type);
+	void SubFade(BaseViewerDrawer& viewer, const float& start, const float& end, const float maltiValue,EaseType type);
 
 	//アニメーションの動作を設定
 	void SetAnimBehavior(std::vector <std::function<void()>> animArray);
 
 	//アニメーション終了処理
 	void SetPlayFinished(bool& isPlayng, std::function<void()> Callback = nullptr);
+
+	//アニメーションのリセット処理
+	void ResetAnim(void);
 
 private:
 

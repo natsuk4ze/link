@@ -187,6 +187,21 @@ void ViewerAnimater::Fade(BaseViewerDrawer & viewer, const float & start,
 }
 
 //=============================================================================
+// 待機処理（同時実行アニメーションあり）
+//=============================================================================
+void ViewerAnimater::Wait(float duration, std::function<void()> Callback)
+{
+	//フレーム更新
+	frameCnt++;
+
+	if (Callback) Callback();
+
+	//終了処理
+	if (frameCnt < duration) return;
+	SetAnimFinished();
+}
+
+//=============================================================================
 //	移動処理（サブ）
 //=============================================================================
 void ViewerAnimater::SubMove(BaseViewerDrawer& viewer, const D3DXVECTOR2& start,
@@ -209,10 +224,10 @@ void ViewerAnimater::SubScale(BaseViewerDrawer & viewer, const D3DXVECTOR2 & sta
 //=============================================================================
 // フェード処理（サブ）
 //=============================================================================
-void ViewerAnimater::SubFade(BaseViewerDrawer & viewer, const float & start,
-	const float & end, EaseType type)
+void ViewerAnimater::SubFade(BaseViewerDrawer & viewer, const float & start, const float & end, 
+	const float maltiValue, EaseType type)
 {
-	float alpha = Easing::EaseValue(animTime*1.5f, start, end, type);
+	float alpha = Easing::EaseValue(animTime*maltiValue, start, end, type);
 	viewer.SetAlpha(alpha);
 }
 
@@ -242,7 +257,7 @@ void ViewerAnimater::UpdateFrameAndTime(float duration)
 }
 
 //=============================================================================
-// アニメーション終了処理
+// アニメーション終了処理（private）
 //=============================================================================
 void ViewerAnimater::SetAnimFinished(void)
 {
@@ -265,10 +280,21 @@ void ViewerAnimater::SetAnimBehavior(std::vector<std::function<void()>> animArra
 }
 
 //=============================================================================
-// アニメーション終了処理
+// アニメーション終了処理（public）
 //=============================================================================
 void ViewerAnimater::SetPlayFinished(bool& isPlayng, std::function<void()> Callback)
 {
 	isPlayng = false;
 	if (Callback) Callback();
+}
+
+//=============================================================================
+// アニメーションリセット処理
+//=============================================================================
+void ViewerAnimater::ResetAnim(void)
+{
+	frameCnt = 0;
+	animTime = 0;
+	finishedCnt = 0;
+	isFinished = false;
 }

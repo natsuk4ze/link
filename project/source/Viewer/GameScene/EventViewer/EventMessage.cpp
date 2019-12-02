@@ -49,7 +49,7 @@ EventMessage::EventMessage()
 			D3DXVECTOR2(SCREEN_WIDTH*1.2f, SCREEN_HEIGHT / 10 * 5.5f + (messageSetCnt - 1) * intervalViewerPos), 20, InOutCubic, [=]
 		{
 			//サブアニメーションでフェードアウト
-			anim->SubFade(*bg,1.0f,0.0f, InOutCubic);
+			anim->SubFade(*bg,1.0f,0.0f,1.5f, InOutCubic);
 		});
 	} };
 
@@ -115,6 +115,10 @@ void EventMessage::SetEventMessage(const std::string &message, int &cnt)
 
 	//テキストにメッセージをセット
 	text->SetText(message);
+
+	//開始準備
+	text->SetColor(SET_COLOR_NOT_COLORED);
+	bg->SetColor(SET_COLOR_NOT_COLORED);
 
 	//再生状態に移行
 	isPlaying = true;

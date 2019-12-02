@@ -8,14 +8,12 @@
 #define _FIELD_VIEWER_H_
 
 #include <vector>
-#include "../FieldViewer/FieldTelop.h"
 #include "../FieldViewer/FieldErrorMessage.h"
 #include "../FieldViewer/OperationExplanationViewer.h"
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
-class FieldTelop;
 class LinkLevelUpViewer;
 class FieldErrorMessage;
 class OperationExplanationViewer;
@@ -32,9 +30,6 @@ public:
 
 	void Update(void);
 	void Draw(void);
-
-	//フィールドテロップをセット（お試しで実装中）
-	void SetFieldTelop(FieldTelop::TelopID id, std::function<void(void)> Callback);
 
 	//フィールドエラーメッセージをセット
 	void SetFieldErroMessage(FieldErrorMessage::ErroID id);
@@ -54,7 +49,6 @@ public:
 private:
 	std::vector <BaseViewer*> fieldViewer;
 
-	FieldTelop * fieldTelop;
 	LinkLevelUpViewer *linkLevelUpViewer;
 	FieldErrorMessage * fieldErroMessage;
 	OperationExplanationViewer *operationExplanation;
