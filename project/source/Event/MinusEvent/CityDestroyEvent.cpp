@@ -272,6 +272,10 @@ void CityDestroyEvent::ReceiveBeatResult(bool IsSuccess)
 	{
 		// Ž¸”sAè¦Î—Ž‰º
 		EventState = State::BeatGameFail;
+		
+		D3DXVECTOR3 cameraPos = camera->GetPosition() + Vector3::Up * 30.0f;
+		camera->Move(cameraPos, 10, 100.0f);
+
 		guideActor->SetActive(false);
 	}
 }
