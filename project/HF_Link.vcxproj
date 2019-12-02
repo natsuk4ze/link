@@ -238,6 +238,7 @@
     <ClInclude Include="source\GameConfig.h" />
     <ClInclude Include="source\GameMain.h" />
     <ClInclude Include="source\ModelView\ModelViewCamera.h" />
+    <ClInclude Include="source\Reward\RewardViewer.h" />
     <ClInclude Include="source\Reward\StateReward.h" />
     <ClInclude Include="source\Reward\CountupReward.h" />
     <ClInclude Include="source\Reward\Reward.h" />
@@ -510,6 +511,7 @@
     <ClCompile Include="source\Field\State\UseItem.cpp" />
     <ClCompile Include="source\GameMain.cpp" />
     <ClCompile Include="source\ModelView\ModelViewCamera.cpp" />
+    <ClCompile Include="source\Reward\RewardViewer.cpp" />
     <ClCompile Include="source\Reward\StateReward.cpp" />
     <ClCompile Include="source\Reward\CountupReward.cpp" />
     <ClCompile Include="source\Reward\Reward.cpp" />

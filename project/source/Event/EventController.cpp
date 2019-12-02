@@ -128,6 +128,13 @@ void EventController::Uninit(void)
 	// イベントベクトル削除
 	Utility::DeleteContainer(EventVec);
 	EventCSVData.clear();
+
+	for (auto&& emitter : infoEmitterContainer)
+	{
+		if (emitter.second != nullptr)
+			emitter.second->SetActive(false);
+	}
+	infoEmitterContainer.clear();
 }
 
 //=============================================================================
