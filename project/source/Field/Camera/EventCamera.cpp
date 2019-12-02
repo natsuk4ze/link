@@ -8,6 +8,7 @@
 #include "EventCamera.h"
 #include "FieldCamera.h"
 #include "../../../Framework/Math/Easing.h"
+#include "../../../Framework/Tween/Tween.h"
 
 /**************************************
 コンストラクタ
@@ -125,11 +126,14 @@ void EventCamera::Translation(const D3DXVECTOR3 & position, int duration, std::f
 void EventCamera::Return(int duration, std::function<void()> callback)
 {
 	flgLookAt = false;
+	targetObject = nullptr;
 	cntMove = 0;
 	durationMove = duration;
 	startPosition = transform->GetPosition();
 	endPosition = defaultMainCamera->GetTransform().GetPosition();
 	this->callback = callback;
+
+	Tween::Rotate(*this, defaultMainCamera->GetRotation(), duration, EaseType::OutCubic);
 }
 
 /**************************************

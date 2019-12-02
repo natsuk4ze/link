@@ -205,7 +205,7 @@ ViewFrustum Camera::GetViewFrustrum() const
 ***************************************/
 Camera & Camera::operator=(const Camera & rhs)
 {
-	this->transform = rhs.transform;
+	*(this->transform) = *(rhs.transform);
 	this->viewAngle = rhs.viewAngle;
 	this->viewAspect = rhs.viewAspect;
 	this->viewNear = rhs.viewNear;
