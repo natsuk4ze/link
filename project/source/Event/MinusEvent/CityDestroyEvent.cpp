@@ -13,6 +13,7 @@
 #include "../../Effect/GameParticleManager.h"
 #include "../../../Framework/Task/TaskManager.h"
 #include "../../Field/Camera/EventCamera.h"
+#include "../../Viewer/GameScene/GuideViewer/GuideActor.h"
 
 enum State
 {
@@ -58,6 +59,7 @@ CityDestroyEvent::~CityDestroyEvent()
 {
 	SAFE_DELETE(Meteor);
 	SAFE_DELETE(beatGame);
+	SAFE_DELETE(guideActor);
 	eventViewer = nullptr;
 }
 
@@ -83,6 +85,11 @@ void CityDestroyEvent::Init()
 
 	// 隕石メッシュ作成
 	Meteor = new EventActorBase(MeteoritePos, Scale, "Meteor");
+
+	//ガイドキャラ作成
+	guideActor = new GuideActor();
+	guideActor->SetActive(false);
+	guideActor->SetScale(Vector3::One * 0.05f);
 
 	// ゲーム進行停止
 	fieldEventHandler->PauseGame();
@@ -124,7 +131,14 @@ void CityDestroyEvent::Update()
 		else
 		{
 			EventState = CameraMoveWait;
-			D3DXVECTOR3 nextCameraPos = Vector3::Normalize(diff) * 25.0f + MeteoritePos;
+
+			//ガイドキャラをアクティベイトして移動
+			guideActor->SetActive(true);
+			D3DXVECTOR3 guidePos = Vector3::Normalize(diff) * 5.0f + MeteoritePos;
+			guideActor->SetPosition(guidePos);
+
+			//カメラの移動
+			D3DXVECTOR3 nextCameraPos = Vector3::Normalize(diff) * 25.0f + MeteoritePos + Vector3::Back * 10.0f;
 			camera->Move(nextCameraPos, 30, 35.0f, [this]
 			{
 				CountdownStart();
@@ -178,6 +192,9 @@ void CityDestroyEvent::Update()
 	default:
 		break;
 	}
+
+	if (guideActor->IsActive())
+		guideActor->Update();
 }
 
 //=============================================================================
@@ -194,6 +211,9 @@ void CityDestroyEvent::Draw()
 		Meteor->SetPosition(MeteoritePos);
 		Meteor->Draw();
 	}
+
+	if (guideActor->IsActive())
+		guideActor->Draw();
 
 	beatGame->Draw();
 }
