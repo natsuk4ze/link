@@ -136,6 +136,7 @@ void CityDestroyEvent::Update()
 			guideActor->SetActive(true);
 			D3DXVECTOR3 guidePos = Vector3::Normalize(diff) * 5.0f + MeteoritePos;
 			guideActor->SetPosition(guidePos);
+			guideActor->LookAt(MeteoritePos);
 
 			//カメラの移動
 			D3DXVECTOR3 nextCameraPos = Vector3::Normalize(diff) * 25.0f + MeteoritePos + Vector3::Back * 10.0f;
@@ -160,6 +161,7 @@ void CityDestroyEvent::Update()
 		// 30フレームの遅延を設置
 		TaskManager::Instance()->CreateDelayedTask(30, [&]()
 		{
+			guideActor->SetActive(false);
 			camera->Return(30, [&]() { EventOver(); });
 		});
 		EventState = EffectHappend;
@@ -270,5 +272,6 @@ void CityDestroyEvent::ReceiveBeatResult(bool IsSuccess)
 	{
 		// 失敗、隕石落下
 		EventState = State::BeatGameFail;
+		guideActor->SetActive(false);
 	}
 }
