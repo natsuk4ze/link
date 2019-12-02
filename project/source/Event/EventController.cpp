@@ -117,6 +117,8 @@ void EventController::Init(int FieldLevel)
 	{
 		LoadCSV(EventCSVPath_Space);
 	}
+
+	beatViewer->SetFieldLevel(FieldLevel);
 }
 
 //=============================================================================
