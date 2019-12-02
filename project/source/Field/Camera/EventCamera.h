@@ -38,7 +38,7 @@ public:
 
 	//移動処理
 	//現在の注視点を向き続けるように移動する
-	void Move(const D3DXVECTOR3& position, int duration, std::function<void()> callback = nullptr);
+	void Move(const D3DXVECTOR3& position, int duration, float eyeDistance, std::function<void()> callback = nullptr);
 
 	//平行移動処理
 	//注視点も一緒に平行移動する
@@ -49,6 +49,9 @@ public:
 
 	//代入演算子
 	EventCamera& operator=(const Camera& rhs);
+
+	//ターゲット指定
+	void SetTargetObject(GameObject *target);
 
 private:
 	//元のメインカメラ
@@ -61,6 +64,7 @@ private:
 	std::function<void()> callback;
 
 	//注視点
+	GameObject* targetObject;
 	D3DXVECTOR3 referencePosition;
 	bool flgLookAt;
 };
