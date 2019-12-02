@@ -8,6 +8,7 @@
 #define _EVENT_MESSAGE_H_
 
 #include "../../Framework/BaseViewer.h"
+#include <string>
 
 //*****************************************************************************
 // ‘O•ûéŒ¾

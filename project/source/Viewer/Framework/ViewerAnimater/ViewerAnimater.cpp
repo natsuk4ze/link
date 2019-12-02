@@ -55,60 +55,9 @@ void ViewerAnimater::PlayAnim(std::function<void()> Callback)
 }
 
 //=============================================================================
-// 移動処理
-//=============================================================================
-void ViewerAnimater::Move(BaseViewerDrawer& viewer, const D3DXVECTOR2& start,
-	const D3DXVECTOR2& end, float duration, EaseType type)
-{
-	//フレームカウントと時間を更新
-	UpdateFrameAndTime(duration);
-
-	viewer.position.x =  Easing::EaseValue(animTime,start.x,end.x,type);
-	viewer.position.y = Easing::EaseValue(animTime, start.y, end.y, type);
-
-	//終了処理
-	if (frameCnt < duration) return;
-	SetAnimFinished();
-}
-
-//=============================================================================
-// スケール処理
-//=============================================================================
-void ViewerAnimater::Scale(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start, 
-	const D3DXVECTOR2 & end, float duration, EaseType type)
-{
-	//フレームカウントと時間を更新
-	UpdateFrameAndTime(duration);
-
-	viewer.size.x = Easing::EaseValue(animTime, start.x, end.x, type);
-	viewer.size.y = Easing::EaseValue(animTime, start.y, end.y, type);
-
-	//終了処理
-	if (frameCnt < duration) return;
-	SetAnimFinished();
-}
-
-//=============================================================================
-// フェード処理
-//=============================================================================
-void ViewerAnimater::Fade(BaseViewerDrawer & viewer, const float & start, 
-	const float & end, float duration, EaseType type)
-{
-	//フレームカウントと時間を更新
-	UpdateFrameAndTime(duration);
-
-	float alpha = Easing::EaseValue(animTime, start, end, type);
-	viewer.SetAlpha(alpha);
-
-	//終了処理
-	if (frameCnt < duration) return;
-	SetAnimFinished();
-}
-
-//=============================================================================
 // 振動処理
 //=============================================================================
-void ViewerAnimater::Shake(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start, float duration)
+void ViewerAnimater::Shake(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start, float duration, std::function<void()> Callback)
 {
 	//何回振動させるか
 	const int shakeNum = 400;
@@ -118,6 +67,8 @@ void ViewerAnimater::Shake(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start,
 	//フレームカウントと時間を更新
 	UpdateFrameAndTime(duration);
 
+	if (Callback) Callback();
+
 	float radian = Easing::EaseValue(animTime, 0.0f, D3DX_PI * shakeNum, OutCirc);
 
 	viewer.position.x = start.x + shakeValue * sinf(radian);
@@ -126,6 +77,28 @@ void ViewerAnimater::Shake(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start,
 	if (frameCnt < duration) return;
 	viewer.position.x = start.x;
 	viewer.position.y = start.y;
+	SetAnimFinished();
+}
+
+//=============================================================================
+// ホッピング処理
+//=============================================================================
+void ViewerAnimater::Hop(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start, const D3DXVECTOR2 & value, float duration,std::function<void()> Callback)
+{
+	//フレームカウントと時間を更新
+	UpdateFrameAndTime(duration);
+
+	if (Callback) Callback();
+
+	if (frameCnt <= duration/2) 
+	viewer.size.y = Easing::EaseValue(animTime*2, start.y, start.y + value.y, OutCubic);
+	else
+	{
+		viewer.size.y = Easing::EaseValue(animTime * 2, start.y + value.y, start.y, OutCubic);
+	}
+
+	//終了処理
+	if (frameCnt < duration) return;
 	SetAnimFinished();
 }
 
@@ -232,16 +205,16 @@ void ViewerAnimater::SubFade(BaseViewerDrawer & viewer, const float & start, con
 }
 
 //=============================================================================
-// 待機処理
+// ホッピング処理（サブ）
 //=============================================================================
-void ViewerAnimater::Wait(float duration)
+void ViewerAnimater::SubHop(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start, const D3DXVECTOR2 & value, float duration)
 {
-	//フレーム更新
-	frameCnt++;
-
-	//終了処理
-	if (frameCnt < duration) return;
-	SetAnimFinished();
+	if (frameCnt <= duration / 2)
+		viewer.size.y = Easing::EaseValue(animTime * 2, start.y, start.y + value.y, OutCubic);
+	else
+	{
+		viewer.size.y = Easing::EaseValue(animTime * 2, start.y + value.y, start.y, OutCubic);
+	}
 }
 
 //=============================================================================

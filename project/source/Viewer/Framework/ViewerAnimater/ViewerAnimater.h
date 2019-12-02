@@ -28,31 +28,28 @@ public:
 	//アニメーション再生処理
 	void PlayAnim(std::function<void()> Callback = nullptr);
 
-	//移動処理
-	void Move(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type);
-	//スケール処理
-	void Scale(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type);
-	//フェード処理
-	void Fade(BaseViewerDrawer& viewer, const float& start, const float& end, float duration, EaseType type);
-	//振動処理
-	void Shake(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, float duration);
-	//待機処理
-	void Wait(float duration);
-
 	//*****************************************************************************
-	// 以下、Callbackで同時に実行する処理を呼べるver.
+	// 以下、Callbackで同時に実行する処理を呼べる
 	// ex)フェードアウトしながらスクリーンアウト...etc
 	// 注意：Callbackでアニメーションを呼ぶ場合、Subを使うこと
 	//*****************************************************************************
 
 	//移動処理
-	void Move(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type, std::function<void()> Callback);
+	void Move(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type, std::function<void()> Callback = nullptr);
 	//スケール処理
-	void Scale(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type, std::function<void()> Callback);
+	void Scale(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type, std::function<void()> Callback = nullptr);
 	//フェード処理
-	void Fade(BaseViewerDrawer& viewer, const float& start, const float& end, float duration, EaseType type, std::function<void()> Callback);
+	void Fade(BaseViewerDrawer& viewer, const float& start, const float& end, float duration, EaseType type, std::function<void()> Callback = nullptr);
 	//待機処理
-	void Wait(float duration, std::function<void()> Callback);
+	void Wait(float duration, std::function<void()> Callback = nullptr);
+	//振動処理
+	void Shake(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, float duration, std::function<void()> Callback = nullptr);
+	//ホッピング処理
+	void Hop(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& value, float duration, std::function<void()> Callback = nullptr);
+
+	//*****************************************************************************
+	// 以下、サブアニメーション
+	//*****************************************************************************
 
 	//移動処理
 	void SubMove(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, EaseType type);
@@ -60,6 +57,8 @@ public:
 	void SubScale(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, EaseType type);
 	//フェード処理
 	void SubFade(BaseViewerDrawer& viewer, const float& start, const float& end, const float maltiValue,EaseType type);
+	//ホッピング処理
+	void SubHop(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& value, float duration);
 
 	//アニメーションの動作を設定
 	void SetAnimBehavior(std::vector <std::function<void()>> animArray);

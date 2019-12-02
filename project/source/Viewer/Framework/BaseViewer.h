@@ -7,7 +7,6 @@
 #ifndef _BASE_VIEWER_H_
 #define _BASE_VIEWER_H_
 
-#include <functional>
 //*****************************************************************************
 // Šî’êƒNƒ‰ƒX’è‹`
 //*****************************************************************************
@@ -52,6 +51,20 @@ public:
 		lastParam = param;
 
 		return isSmaller;
+	}
+	template <class T>
+	bool isCurrentEqualLast(const T param)
+	{
+		bool isEqual = false;
+
+		currentParam = param;
+		if (currentParam == lastParam)
+		{
+			isEqual = true;
+		}
+		lastParam = param;
+
+		return isEqual;
 	}
 
 	//Ä¶’†‚©‚Ç‚¤‚©
