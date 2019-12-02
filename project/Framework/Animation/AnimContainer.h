@@ -27,6 +27,7 @@ typedef struct
 
 class AnimContainer
 {
+	friend class AnimationResource;
 public:
 	AnimContainer();
 	virtual ~AnimContainer();
@@ -37,7 +38,6 @@ public:
 	void ChangeAnim(UINT animID, float playSpeed, bool forceChange = false);
 	void SetShiftTime(UINT animID, float interval);
 
-	HRESULT LoadXFile(LPCSTR fileName, const char* errorSrc);
 	HRESULT SetupCallbackKeyFrames(LPCSTR setName);
 	D3DXMATRIX GetBoneMatrix(const char* boneName);
 
@@ -60,7 +60,6 @@ private:
 	//メッシュコンテナ描画処理
 	void DrawMeshContainer(LPD3DXMESHCONTAINER meshContainerBase, LPD3DXFRAME frameBase);
 	void DrawFrame(LPD3DXFRAME frame);
-	HRESULT SetupBoneMatrixPointers(LPD3DXFRAME frameBase, LPD3DXFRAME frameRoot);
 	void UpdateFrameMatrixes(LPD3DXFRAME frameBase, LPD3DXMATRIX parentMatrix);
 	D3DXFRAME_DERIVED* SearchBoneFrame(const char* boneName, D3DXFRAME* frame);
 };

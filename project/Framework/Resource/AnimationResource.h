@@ -21,7 +21,7 @@ class AnimContainer;
 class AnimationResource
 {
 public:
-	AnimationResource(const char* fileName, const char* errorSrc);
+	AnimationResource();
 	virtual ~AnimationResource();
 
 	HRESULT Load(const char* fileName, const char* errorSrc);

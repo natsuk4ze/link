@@ -7,11 +7,12 @@
 //=====================================
 #include "AnimationResource.h"
 #include "../Animation/MyAllocateHierarchy.h"
+#include "../Animation/AnimContainer.h"
 
 /**************************************
 コンストラクタ
 ***************************************/
-AnimationResource::AnimationResource(const char * fileName, const char * errorSrc) :
+AnimationResource::AnimationResource() :
 	rootFrame(NULL),
 	animController(NULL),
 	animSetNum(0)
@@ -24,6 +25,7 @@ AnimationResource::AnimationResource(const char * fileName, const char * errorSr
 ***************************************/
 AnimationResource::~AnimationResource()
 {
+	//NOTE:エラーを治す
 	return;
 	MyAllocateHierarchy allocater = MyAllocateHierarchy();
 	D3DXFrameDestroy(rootFrame, &allocater);
@@ -68,6 +70,18 @@ HRESULT AnimationResource::Load(const char * fileName, const char * errorSrc)
 ***************************************/
 void AnimationResource::Clone(AnimContainer * container)
 {
+	animController->CloneAnimationController(
+		animController->GetMaxNumAnimationOutputs(),
+		animController->GetMaxNumAnimationSets(),
+		animController->GetMaxNumTracks(),
+		animController->GetMaxNumEvents(),
+		&container->animController
+	);
+
+	container->rootFrame = rootFrame;
+	container->animSetNum = animSetNum;
+
+	container->status = new AnimStatus[animSetNum];
 }
 
 /**************************************
