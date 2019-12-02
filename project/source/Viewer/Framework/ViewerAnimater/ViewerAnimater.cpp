@@ -25,32 +25,32 @@ ViewerAnimater::ViewerAnimater():
 //=============================================================================
 ViewerAnimater::~ViewerAnimater()
 {
+	this->animArray.clear();
 }
 
 //=============================================================================
 // アニメーション再生処理
 //=============================================================================
-void ViewerAnimater::PlayAnim(std::vector <std::function<void()>> animArray, std::function<void()> Callback)
+void ViewerAnimater::PlayAnim(std::function<void()> Callback)
 {
 	//未終了状態に移行
 	isFinished = false;
 
 	//配列の中のアニメーションを実行
-	animArray[finishedCnt]();
+	this->animArray[finishedCnt]();
 
 	//終了したら終了カウントをカウントアップ
 	if (isFinished)
 		finishedCnt++;
 
 	//終了した回数がアニメーション数に達したら
-	if (finishedCnt == animArray.size())
+	if (finishedCnt == this->animArray.size())
 	{
 		finishedCnt = 0;
 		SetAnimFinished();
-		animArray.clear();
 
 		//終了通知
-		Callback();
+		if (Callback) Callback();
 	}
 }
 
@@ -106,6 +106,31 @@ void ViewerAnimater::Fade(BaseViewerDrawer & viewer, const float & start,
 }
 
 //=============================================================================
+// 振動処理
+//=============================================================================
+void ViewerAnimater::Shake(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start, float duration)
+{
+	//何回振動させるか
+	const int shakeNum = 400;
+	//どのくらいの振れ幅か
+	const float shakeValue = 10.0f;
+
+	//フレームカウントと時間を更新
+	UpdateFrameAndTime(duration);
+
+	float radian = Easing::EaseValue(animTime, 0.0f, D3DX_PI * shakeNum, OutCirc);
+
+	viewer.position.x = start.x + shakeValue * sinf(radian);
+	viewer.position.y = start.y + shakeValue * sinf(radian);
+
+	//終了処理
+	if (frameCnt < duration) return;
+	viewer.position.x = start.x;
+	viewer.position.y = start.y;
+	SetAnimFinished();
+}
+
+//=============================================================================
 // 移動処理（同時実行アニメーションあり）
 //=============================================================================
 void ViewerAnimater::Move(BaseViewerDrawer& viewer, const D3DXVECTOR2& start,
@@ -114,7 +139,7 @@ void ViewerAnimater::Move(BaseViewerDrawer& viewer, const D3DXVECTOR2& start,
 	//フレームカウントと時間を更新
 	UpdateFrameAndTime(duration);
 
-	Callback();
+	if (Callback) Callback();
 
 	viewer.position.x = Easing::EaseValue(animTime, start.x, end.x, type);
 	viewer.position.y = Easing::EaseValue(animTime, start.y, end.y, type);
@@ -133,7 +158,7 @@ void ViewerAnimater::Scale(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start,
 	//フレームカウントと時間を更新
 	UpdateFrameAndTime(duration);
 
-	Callback();
+	if (Callback) Callback();
 
 	viewer.size.x = Easing::EaseValue(animTime, start.x, end.x, type);
 	viewer.size.y = Easing::EaseValue(animTime, start.y, end.y, type);
@@ -152,7 +177,7 @@ void ViewerAnimater::Fade(BaseViewerDrawer & viewer, const float & start,
 	//フレームカウントと時間を更新
 	UpdateFrameAndTime(duration);
 
-	Callback();
+	if (Callback) Callback();
 
 	float alpha = Easing::EaseValue(animTime, start, end, type);
 	viewer.SetAlpha(alpha);
@@ -227,4 +252,24 @@ void ViewerAnimater::SetAnimFinished(void)
 
 	//終了状態に移行
 	isFinished = true;
+}
+
+//=============================================================================
+// アニメーション動作設定処理
+//=============================================================================
+void ViewerAnimater::SetAnimBehavior(std::vector<std::function<void()>> animArray)
+{
+	for (unsigned int i = 0; i < animArray.size(); i++)
+	{
+		this->animArray.push_back(animArray[i]);
+	}
+}
+
+//=============================================================================
+// アニメーション終了処理
+//=============================================================================
+void ViewerAnimater::SetPlayFinished(bool& isPlayng, std::function<void()> Callback)
+{
+	isPlayng = false;
+	if (Callback) Callback();
 }

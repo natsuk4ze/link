@@ -9,7 +9,6 @@
 #define _EVENT_MESSAGE_H_
 
 #include "../../Framework/BaseViewer.h"
-#include "../../Framework/ViewerAnimater/ViewerAnimater.h"
 #include <functional>
 #include <string>
 
@@ -18,6 +17,7 @@
 //*****************************************************************************
 class BaseViewerDrawer;
 class TextViewer;
+class ViewerAnimater;
 
 //*****************************************************************************
 // クラス定義
@@ -31,14 +31,11 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	//メッセージセット
+	//メッセージセット処理
 	void SetEventMessage(const std::string &message, int &cnt);
 
-	//メッセージセットカウンター
-	int messageSetCnt;
-
-	//再生中かどうか
-	bool isPlaying;
+	//再生状態取得処理
+	bool GetIsPlaying(void);
 
 private:
 	BaseViewerDrawer *bg;
@@ -51,12 +48,17 @@ private:
 	//アニメーションの動作を設定
 	void SetAnimBehavior(void);
 
+	//メッセージセットカウンター
+	int messageSetCnt;
+
 	//アニメーション終了
 	bool SetPlayFinished(void);
 
-	//アニメーション配列
-	std::vector <std::function<void()>> animArray;
+	//再生中かどうか
+	bool isPlaying;
 
+	//アニメーション配列
+	std::vector <std::function<void()>> animArray{ 3 };
 };
 
 #endif

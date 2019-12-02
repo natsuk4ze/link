@@ -7,17 +7,13 @@
 #include "EventTelop.h"
 
 #include "../../../../main.h"
-#include"../../../../Framework/Math/Easing.h"
-#include "../../Framework/ViewerAnimater/ViewerAnimater.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerAnimater/ViewerAnimater.h"
 
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-EventTelop::EventTelop():
-	animArray(),
-	isPlaying(false)
+EventTelop::EventTelop()
 {
 	//テキスト
 	text = new BaseViewerDrawer();
@@ -37,7 +33,28 @@ EventTelop::EventTelop():
 
 	//アニメーション
 	anim = new ViewerAnimater();
-	SetAnimBehavior();
+	std::vector<std::function<void()>> vec = {
+	[=] {
+		//背景オープン
+		anim->Scale(*bg, D3DXVECTOR2(SCREEN_WIDTH, 0.0f), D3DXVECTOR2(SCREEN_WIDTH, 128.0f), 15.0f, OutCirc);
+	},
+	[=] {
+		//テキストスクリーンイン
+		anim->Move(*text, D3DXVECTOR2(SCREEN_WIDTH*1.5, SCREEN_CENTER_Y), D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_CENTER_Y), 50.0f, OutCirc);
+	},
+	[=] {
+		//待機
+		anim->Wait(5.0f);
+	},
+	[=] {
+		//テキストスクリーンアウト
+		anim->Move(*text, D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_CENTER_Y), D3DXVECTOR2(-SCREEN_WIDTH * 1.5, SCREEN_CENTER_Y), 30.0f, InCirc);
+	},
+	[=] {
+		//背景クローズ
+		anim->Scale(*bg, D3DXVECTOR2(SCREEN_WIDTH, 128.0f), D3DXVECTOR2(SCREEN_WIDTH, 0.0f), 15.0f, OutCirc);
+	}};
+	anim->SetAnimBehavior(vec);
 }
 
 //*****************************************************************************
@@ -59,9 +76,9 @@ void EventTelop::Update()
 	if (!isPlaying) return;
 
 	//アニメーション再生
-	anim->PlayAnim(animArray, [=]
+	anim->PlayAnim([=]
 	{
-		SetPlayFinished();
+		anim->SetPlayFinished(isPlaying,Callback);
 	});
 }
 
@@ -78,50 +95,6 @@ void EventTelop::Draw(void)
 
 	//テキスト
 	text->Draw();
-}
-
-//=============================================================================
-// アニメーションの動作設定処理
-//=============================================================================
-void EventTelop::SetAnimBehavior(void)
-{
-	//アニメーション配列にアニメーションをセット
-	animArray.push_back([=]()
-	{
-		//背景オープン
-		anim->Scale(*bg, D3DXVECTOR2(SCREEN_WIDTH, 0.0f), D3DXVECTOR2(SCREEN_WIDTH, 128.0f), 15.0f, OutCirc);
-	});
-	animArray.push_back([=]()
-	{
-		//テキストスクリーンイン
-		anim->Move(*text, D3DXVECTOR2(SCREEN_WIDTH*1.5, SCREEN_CENTER_Y), D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_CENTER_Y), 50.0f, OutCirc);
-	});
-	animArray.push_back([=]()
-	{
-		//待機
-		anim->Wait(5.0f);
-	});
-	animArray.push_back([=]()
-	{
-		//テキストスクリーンアウト
-		anim->Move(*text, D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_CENTER_Y), D3DXVECTOR2(-SCREEN_WIDTH * 1.5, SCREEN_CENTER_Y), 30.0f, InCirc);
-	});
-	animArray.push_back([=]()
-	{
-		//背景クローズ
-		anim->Scale(*bg, D3DXVECTOR2(SCREEN_WIDTH, 128.0f), D3DXVECTOR2(SCREEN_WIDTH, 0.0f), 15.0f, OutCirc);
-	});
-}
-
-//=============================================================================
-// アニメーション終了処理
-//=============================================================================
-bool EventTelop::SetPlayFinished(void)
-{
-	if (Callback != nullptr)
-		Callback();
-
-	return isPlaying = false;
 }
 
 //=============================================================================
@@ -142,7 +115,6 @@ void EventTelop::SetTexture(TelopID id)
 	bg->vertexWk[1].tex.x = 3.0f;
 	bg->vertexWk[3].tex.x = 3.0f;
 }
-
 
 //=============================================================================
 // テロップセット処理

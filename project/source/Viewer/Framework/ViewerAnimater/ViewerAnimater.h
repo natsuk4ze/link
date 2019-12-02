@@ -26,7 +26,7 @@ public:
 	~ViewerAnimater();
 
 	//アニメーション再生処理
-	void PlayAnim(std::vector <std::function<void()>> animArray, std::function<void()> Callback = nullptr);
+	void PlayAnim(std::function<void()> Callback = nullptr);
 
 	//移動処理
 	void Move(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type);
@@ -34,13 +34,15 @@ public:
 	void Scale(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type);
 	//フェード処理
 	void Fade(BaseViewerDrawer& viewer, const float& start, const float& end, float duration, EaseType type);
+	//振動処理
+	void Shake(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, float duration);
 	//待機処理
 	void Wait(float duration);
 
 	//*****************************************************************************
 	// 以下、Callbackで同時に実行する処理を呼べるver.
 	// ex)フェードアウトしながらスクリーンアウト...etc
-	// 注意：CallbackはSubを使うこと
+	// 注意：Callbackでアニメーションを呼ぶ場合、Subを使うこと
 	//*****************************************************************************
 
 	//移動処理
@@ -56,6 +58,12 @@ public:
 	void SubScale(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, EaseType type);
 	//フェード処理
 	void SubFade(BaseViewerDrawer& viewer, const float& start, const float& end, EaseType type);
+
+	//アニメーションの動作を設定
+	void SetAnimBehavior(std::vector <std::function<void()>> animArray);
+
+	//アニメーション終了処理
+	void SetPlayFinished(bool& isPlayng, std::function<void()> Callback = nullptr);
 
 private:
 
@@ -77,5 +85,7 @@ private:
 	//アニメーションが終了したか
 	bool isFinished;
 
+	//アニメーション配列
+	std::vector <std::function<void()>> animArray;
 };
 #endif

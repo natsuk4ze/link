@@ -8,7 +8,6 @@
 #ifndef _EVENT_TELOP_H_
 #define _EVENT_TELOP_H_
 
-#include "../../Framework/ViewerAnimater/ViewerAnimater.h"
 #include "../../Framework/BaseViewer.h"
 #include "../../../../Framework/Pattern/Delegate.h"
 #include <functional>
@@ -17,6 +16,7 @@
 // 前方宣言
 //*****************************************************************************
 class BaseViewerDrawer;
+class ViewerAnimater;
 
 //*****************************************************************************
 // クラス定義
@@ -60,18 +60,6 @@ private:
 
 	//テクスチャUVセット処理
 	void SetTexture(TelopID id);
-
-	//アニメーションの動作を設定
-	void SetAnimBehavior(void);
-
-	//アニメーション終了
-    bool SetPlayFinished(void);
-
-	//再生中かどうか
-	bool isPlaying;
-
-	//アニメーション配列
-	std::vector <std::function<void()>> animArray;
 };
 
 #endif

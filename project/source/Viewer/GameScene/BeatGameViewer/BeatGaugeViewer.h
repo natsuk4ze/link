@@ -9,11 +9,14 @@
 #define _BEAT_GAUGE_VIEWER_H_
 
 #include "../../Framework/BaseViewer.h"
+#include <functional>
+#include <vector>
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
 class BaseViewerDrawer;
+class ViewerAnimater;
 
 //*****************************************************************************
 // クラス定義
@@ -31,36 +34,25 @@ public:
 private:
 	BaseViewerDrawer *bar;
 	BaseViewerDrawer *frame;
+	ViewerAnimater *anim;
 
 	//ゲージバー描画処理
 	void DrawBar(void);
 
-	//震わせる
-	void Shake(void);
+	//アニメーションの動作を設定
+	void SetAnimBehavior(void);
 
-	//振動制御処理
-	void HandleShake(void);
+	//アニメーション終了
+	bool SetPlayFinished(void);
 
-	//震わせるべきか
-	bool shouldShake;
-
-	//フレームカウント
-	int countFrame;
-
-	//アニメーション時間
-	float animTime;
+	//再生中かどうか
+	bool isPlaying;
 
 	//ゲージパーセント
 	float gaugePer;
 
-	//現在フレームのパラメータ
-	float currentParam;
-
-	//前フレームのパラメータ
-	float lastParam;
-
-	//振動用のラジアン
-	float radian;
+	//アニメーション配列
+	std::vector <std::function<void()>> animArray{1};
 };
 
 #endif

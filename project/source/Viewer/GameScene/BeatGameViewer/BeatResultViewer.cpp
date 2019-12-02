@@ -5,7 +5,7 @@
 //
 //=============================================================================
 #include "../../../../main.h"
-#include"../../../../Framework/Math/Easing.h"
+#include "../../Framework/ViewerAnimater/ViewerAnimater.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "BeatResultViewer.h"
 
@@ -66,8 +66,7 @@ enum TelopAnimScene
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-BeatResultViewer::BeatResultViewer() :
-	currentAnim(0)
+BeatResultViewer::BeatResultViewer()
 {
 	//テキスト
 	text = new BaseViewerDrawer();
@@ -84,6 +83,10 @@ BeatResultViewer::BeatResultViewer() :
 	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	bg->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_CENTER_Y, 0.0f);
 	bg->MakeVertex();
+
+	//anim = new ViewerAnimater();
+
+	//SetAnimBehavior()
 }
 
 //*****************************************************************************
@@ -100,8 +103,8 @@ BeatResultViewer::~BeatResultViewer()
 //=============================================================================
 void BeatResultViewer::Update()
 {
-	//テロップ再生処理
-	Play();
+	////テロップ再生処理
+	//Play();
 }
 
 //=============================================================================
@@ -119,60 +122,60 @@ void BeatResultViewer::Draw(void)
 	text->Draw();
 }
 
-//=============================================================================
-// テロップ再生処理
-//=============================================================================
-void BeatResultViewer::Play()
-{
-	//再生中なら描画
-	if (!isPlaying) return;
-
-	//フレーム更新
-	countFrame++;
-
-	//時間更新
-	animTime = countFrame / animDuration[currentAnim];
-
-	//アニメーションシーンがBG_Openの間背景をオープンする
-	if (currentAnim == BG_Open)
-	{
-		OpenBG();
-	}
-
-	//ポジションを更新
-	text->position.x = Easing::EaseValue(animTime,
-		textStartPositionX[currentAnim],
-		textEndPositionX[currentAnim],
-		animType[currentAnim]);
-
-	//アニメーションシーンがBG_Closeの間背景をクローズする
-	if (currentAnim == BG_Close)
-	{
-		CloseBG();
-	}
-
-	//アニメーション更新
-	if (countFrame == animDuration[currentAnim])
-	{
-		countFrame = 0;
-		currentAnim++;
-	}
-
-	//アニメーション終了
-	if (currentAnim >= animMax)
-	{
-		countFrame = 0;
-		currentAnim = 0;
-		isPlaying = false;
-
-		//ヌルチェック
-		if (Callback != nullptr)
-		{
-			//再生終了の通知
-			Callback();
-		}
-	}
-}
+////=============================================================================
+//// テロップ再生処理
+////=============================================================================
+//void BeatResultViewer::Play()
+//{
+//	//再生中なら描画
+//	if (!isPlaying) return;
+//
+//	//フレーム更新
+//	countFrame++;
+//
+//	//時間更新
+//	animTime = countFrame / animDuration[currentAnim];
+//
+//	//アニメーションシーンがBG_Openの間背景をオープンする
+//	if (currentAnim == BG_Open)
+//	{
+//		OpenBG();
+//	}
+//
+//	//ポジションを更新
+//	text->position.x = Easing::EaseValue(animTime,
+//		textStartPositionX[currentAnim],
+//		textEndPositionX[currentAnim],
+//		animType[currentAnim]);
+//
+//	//アニメーションシーンがBG_Closeの間背景をクローズする
+//	if (currentAnim == BG_Close)
+//	{
+//		CloseBG();
+//	}
+//
+//	//アニメーション更新
+//	if (countFrame == animDuration[currentAnim])
+//	{
+//		countFrame = 0;
+//		currentAnim++;
+//	}
+//
+//	//アニメーション終了
+//	if (currentAnim >= animMax)
+//	{
+//		countFrame = 0;
+//		currentAnim = 0;
+//		isPlaying = false;
+//
+//		//ヌルチェック
+//		if (Callback != nullptr)
+//		{
+//			//再生終了の通知
+//			Callback();
+//		}
+//	}
+//}
 
 //=============================================================================
 // 背景を開く処理

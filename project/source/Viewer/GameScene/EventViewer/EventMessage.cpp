@@ -79,17 +79,14 @@ void EventMessage::Draw(void)
 //=============================================================================
 void EventMessage::Play(void)
 {
-	anim->PlayAnim(animArray, [=]
+	anim->PlayAnim([=]
 	{
 		SetPlayFinished();
 	}
 	);
 
-	D3DXVECTOR2 pos = D3DXVECTOR2(bg->position.x, bg->position.y);
-	D3DXCOLOR alpha = bg->vertexWk[3].diffuse;
-
-	text->SetPos((int)pos.x, (int)pos.y);
-	text->SetColor(alpha);
+	text->SetPos((int)bg->GetPosition().x, (int)bg->GetPosition().y);
+	text->SetColor(bg->GetColor());
 }
 
 //=============================================================================
@@ -102,7 +99,8 @@ void EventMessage::SetAnimBehavior(void)
 
 	animArray.push_back([=]
 	{
-		anim->Move(*bg, D3DXVECTOR2(SCREEN_WIDTH / 10 * 8.6f, SCREEN_HEIGHT*1.5f), D3DXVECTOR2(SCREEN_WIDTH / 10 * 8.6f, SCREEN_HEIGHT / 10 * 5.5f + (messageSetCnt - 1) * intervalViewerPos), 40, OutCubic);
+		anim->Move(*bg, D3DXVECTOR2(SCREEN_WIDTH / 10 * 8.6f, SCREEN_HEIGHT*1.5f), 
+			D3DXVECTOR2(SCREEN_WIDTH / 10 * 8.6f, SCREEN_HEIGHT / 10 * 5.5f + (messageSetCnt - 1) * intervalViewerPos), 40, OutCubic);
 	}
 	);
 	animArray.push_back([=]
@@ -112,7 +110,8 @@ void EventMessage::SetAnimBehavior(void)
 	);
 	animArray.push_back([=]
 	{
-		anim->Move(*bg, D3DXVECTOR2(SCREEN_WIDTH / 10 * 8.6f, SCREEN_HEIGHT / 10 * 5.5f + (messageSetCnt - 1) * intervalViewerPos), D3DXVECTOR2(SCREEN_WIDTH*1.2f, SCREEN_HEIGHT / 10 * 5.5f + (messageSetCnt - 1) * intervalViewerPos), 20, InOutCubic, [=]
+		anim->Move(*bg, D3DXVECTOR2(SCREEN_WIDTH / 10 * 8.6f, SCREEN_HEIGHT / 10 * 5.5f + (messageSetCnt - 1) * intervalViewerPos), 
+			D3DXVECTOR2(SCREEN_WIDTH*1.2f, SCREEN_HEIGHT / 10 * 5.5f + (messageSetCnt - 1) * intervalViewerPos), 20, InOutCubic, [=]
 		{
 			anim->SubFade(*bg,1.0f,0.0f, InOutCubic);
 		});
@@ -144,4 +143,12 @@ void EventMessage::SetEventMessage(const std::string &message, int &cnt)
 
 	//Ä¶ó‘Ô‚ÉˆÚs
 	isPlaying = true;
+}
+
+//=============================================================================
+// Ä¶ó‘Ôæ“¾ˆ—
+//=============================================================================
+bool EventMessage::GetIsPlaying(void)
+{
+	return isPlaying;
 }
