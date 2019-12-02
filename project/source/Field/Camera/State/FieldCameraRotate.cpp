@@ -44,8 +44,8 @@ FieldCamera::Mode FieldCamera::FieldCameraRotate::OnUpdate(FieldCamera & entity)
 		cosf(angleY) * sinf(angleXZ)) * 70.0f;
 
 	D3DXVECTOR3 targetPosition = entity.targetObject->GetPosition();
-	entity.transform.SetPosition(targetPosition + position);
-	entity.transform.LookAt(targetPosition);
+	entity.transform->SetPosition(targetPosition + position);
+	entity.transform->LookAt(targetPosition);
 
 	return FieldCamera::AngleRotate;
 }

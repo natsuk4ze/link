@@ -105,10 +105,36 @@ void BeatGameViewer::Draw(void)
 }
 
 //=============================================================================
+// フィールドレベル設定
+//=============================================================================
+void BeatGameViewer::SetFieldLevel(int fieldLevel)
+{
+	this->filedLevel = fieldLevel;
+}
+
+//=============================================================================
 // 連打ゲームのタイトルを設置する処理
 //=============================================================================
 void BeatGameViewer::SetGameTitle(BeatTitleViewer::TitleID id)
 {
+	if (id == BeatTitleViewer::TitleID::ProtectCity)
+	{
+		switch(filedLevel)
+		{
+			case 0:
+				id = BeatTitleViewer::ProtectCity;
+				break;
+
+			case 1:
+				id = BeatTitleViewer::ProtectCountry;
+				break;
+
+			case 2:
+				id = BeatTitleViewer::ProtectPlanet;
+				break;
+		}
+	}
+
 	titleViewer->Set(id);
 }
 

@@ -44,8 +44,8 @@ FieldCamera::Mode FieldCamera::FieldCameraTransitionIn::OnUpdate(FieldCamera & e
 
 	D3DXVECTOR3 targetPosition = entity.targetObject->GetPosition();
 
-	entity.transform.SetPosition(targetPosition + offset);
-	entity.transform.LookAt(targetPosition);
+	entity.transform->SetPosition(targetPosition + offset);
+	entity.transform->LookAt(targetPosition);
 
 	return FieldCamera::Mode::TransitionIn;
 }

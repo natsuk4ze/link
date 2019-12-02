@@ -22,7 +22,7 @@ const float FieldCamera::FieldCameraFar::CameraAngleY = D3DXToRadian(85.0f);
 void FieldCamera::FieldCameraFar::OnStart(FieldCamera & entity)
 {
 	//パラメータ初期化
-	entity.startPosition = entity.transform.GetPosition() - entity.targetObject->GetPosition();
+	entity.startPosition = entity.transform->GetPosition() - entity.targetObject->GetPosition();
 	entity.cntFrame = 0;
 
 	//移動先の座標を設定
@@ -48,8 +48,8 @@ FieldCamera::Mode FieldCamera::FieldCameraFar::OnUpdate(FieldCamera & entity)
 
 		//追従目標に合わせて視点を設定
 		D3DXVECTOR3 targetPosition = entity.targetObject->GetPosition();
-		entity.transform.SetPosition(position + targetPosition);
-		entity.transform.LookAt(targetPosition);
+		entity.transform->SetPosition(position + targetPosition);
+		entity.transform->LookAt(targetPosition);
 	}
 	else
 	{
@@ -64,12 +64,12 @@ FieldCamera::Mode FieldCamera::FieldCameraFar::OnUpdate(FieldCamera & entity)
 
 		D3DXVec3Normalize(&directionMove, &directionMove);
 
-		D3DXVECTOR3 position = entity.transform.GetPosition();
+		D3DXVECTOR3 position = entity.transform->GetPosition();
 		position += directionMove * MoveSpeed;
 		position.x = Math::Clamp(0.0f, 50 * 10.0f, position.x);
 		position.z = Math::Clamp(-50 * 10.0f, 0.0f, position.z);
 
-		entity.transform.SetPosition(position);
+		entity.transform->SetPosition(position);
 	}
 
 	return FieldCamera::FarView;
