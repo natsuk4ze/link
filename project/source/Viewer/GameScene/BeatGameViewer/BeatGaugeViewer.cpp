@@ -4,16 +4,16 @@
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
+#include "BeatGaugeViewer.h"
+
 #include "../../../../main.h"
 #include "../../Framework/ViewerAnimater/ViewerAnimater.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
-#include "BeatGaugeViewer.h"
 
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-BeatGaugeViewer::BeatGaugeViewer() :
-	animArray()
+BeatGaugeViewer::BeatGaugeViewer()
 {
 	//バー
 	bar = new BaseViewerDrawer();
@@ -35,7 +35,11 @@ BeatGaugeViewer::BeatGaugeViewer() :
 
 	//アニメーション
 	anim = new ViewerAnimater();
-	SetAnimBehavior();
+	std::vector<std::function<void()>> vec = {
+	[=] {
+		anim->Shake(*frame, D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_HEIGHT / 3 * 2.40f), 5.0f);
+	} };
+	anim->SetAnimBehavior(vec);
 }
 
 //*****************************************************************************
@@ -58,7 +62,7 @@ void BeatGaugeViewer::Update()
 	if (!isPlaying) return;
 	anim->PlayAnim([=]
 	{
-		SetPlayFinished();
+		anim->SetPlayFinished(isPlaying);
 	});
 }
 
@@ -95,25 +99,6 @@ void BeatGaugeViewer::DrawBar(void)
 
 	// ポリゴンの描画
 	pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_POLYGON, bar->vertexWk, sizeof(VERTEX_2D));
-}
-
-//=============================================================================
-// アニメーション動作設定処理
-//=============================================================================
-void BeatGaugeViewer::SetAnimBehavior(void)
-{
-	animArray.push_back([=]
-	{
-		anim->Shake(*frame, D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_HEIGHT / 3 * 2.40f), 5.0f);
-	});
-}
-
-//=============================================================================
-// アニメーション終了処理
-//=============================================================================
-bool BeatGaugeViewer::SetPlayFinished(void)
-{
-	return isPlaying = false;
 }
 
 //=============================================================================

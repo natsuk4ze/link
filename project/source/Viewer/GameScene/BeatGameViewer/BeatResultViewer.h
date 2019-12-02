@@ -49,24 +49,6 @@ private:
 
 	//テクスチャ情報受け渡し
 	void SetTexture(ResultID id);
-
-	//背景をオープン
-	void OpenBG(void);
-
-	//背景をクローズ
-	void CloseBG(void);
-
-	//再生中かどうか
-	bool isPlaying;
-
-	//フレームカウント
-	int countFrame;
-
-	//現在のアニメーション
-	int currentAnim;
-
-	//アニメーション時間
-	float animTime;
 };
 
 #endif

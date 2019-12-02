@@ -4,17 +4,17 @@
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#include "../../../../main.h"
-#include"../../../../Framework/Math/Easing.h"
-#include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "BeatTitleViewer.h"
+
+#include "../../../../main.h"
+#include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
 BeatTitleViewer::BeatTitleViewer()
 {
-	//テキスト
+	//タイトル
 	title = new BaseViewerDrawer();
 	title->LoadTexture("data/TEXTURE/Viewer/BeatGameViewer/BeatTitleViewer/Title.png");
 	title->size = D3DXVECTOR3(1325.0f, 250.0f, 0.0f);

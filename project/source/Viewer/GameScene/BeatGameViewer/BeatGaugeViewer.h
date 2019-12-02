@@ -1,4 +1,3 @@
-
 //=============================================================================
 //
 // 連打ゲームゲージビュアー処理 [BeatGaugeViewer.h]
@@ -39,20 +38,7 @@ private:
 	//ゲージバー描画処理
 	void DrawBar(void);
 
-	//アニメーションの動作を設定
-	void SetAnimBehavior(void);
-
-	//アニメーション終了
-	bool SetPlayFinished(void);
-
-	//再生中かどうか
-	bool isPlaying;
-
 	//ゲージパーセント
 	float gaugePer;
-
-	//アニメーション配列
-	std::vector <std::function<void()>> animArray{1};
 };
-
 #endif

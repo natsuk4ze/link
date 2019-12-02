@@ -26,7 +26,7 @@ public:
 
 	//現在フレームと前フレームのパラメータを比較して結果を返す
 	template <class T>
-	bool isCurrentGreaterLast(T param)
+	bool isCurrentGreaterLast(const T param)
 	{
 		bool isGreater = false;
 
@@ -40,7 +40,7 @@ public:
 		return isGreater;
 	}
 	template <class T>
-	bool isCurrentSmallerLast(T param)
+	bool isCurrentSmallerLast(const T param)
 	{
 		bool isSmaller = false;
 

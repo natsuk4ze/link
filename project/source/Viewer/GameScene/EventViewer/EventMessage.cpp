@@ -32,9 +32,9 @@ EventMessage::EventMessage() :
 	bg->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 8.6f, SCREEN_HEIGHT*1.5f,0.0f);
 	bg->MakeVertex();
 
-	//アニメーション
-	anim = new ViewerAnimater();
-	SetAnimBehavior();
+	////アニメーション
+	//anim = new ViewerAnimater();
+	//SetAnimBehavior();
 }
 
 //*****************************************************************************
@@ -44,7 +44,7 @@ EventMessage::~EventMessage()
 {
 	SAFE_DELETE(text);
 	SAFE_DELETE(bg);
-	SAFE_DELETE(anim);
+	//SAFE_DELETE(anim);
 }
 
 //=============================================================================
@@ -79,11 +79,11 @@ void EventMessage::Draw(void)
 //=============================================================================
 void EventMessage::Play(void)
 {
-	anim->PlayAnim([=]
-	{
-		SetPlayFinished();
-	}
-	);
+	//anim->PlayAnim([=]
+	//{
+	//	SetPlayFinished();
+	//}
+	//);
 
 	text->SetPos((int)bg->GetPosition().x, (int)bg->GetPosition().y);
 	text->SetColor(bg->GetColor());
@@ -97,26 +97,26 @@ void EventMessage::SetAnimBehavior(void)
 	//ビュアーの表示座標間隔
 	const float intervalViewerPos = 100.0f;
 
-	animArray.push_back([=]
-	{
-		anim->Move(*bg, D3DXVECTOR2(SCREEN_WIDTH / 10 * 8.6f, SCREEN_HEIGHT*1.5f), 
-			D3DXVECTOR2(SCREEN_WIDTH / 10 * 8.6f, SCREEN_HEIGHT / 10 * 5.5f + (messageSetCnt - 1) * intervalViewerPos), 40, OutCubic);
-	}
-	);
-	animArray.push_back([=]
-	{
-		anim->Wait(50.0f);
-	}
-	);
-	animArray.push_back([=]
-	{
-		anim->Move(*bg, D3DXVECTOR2(SCREEN_WIDTH / 10 * 8.6f, SCREEN_HEIGHT / 10 * 5.5f + (messageSetCnt - 1) * intervalViewerPos), 
-			D3DXVECTOR2(SCREEN_WIDTH*1.2f, SCREEN_HEIGHT / 10 * 5.5f + (messageSetCnt - 1) * intervalViewerPos), 20, InOutCubic, [=]
-		{
-			anim->SubFade(*bg,1.0f,0.0f, InOutCubic);
-		});
-	}
-	);
+	//animArray.push_back([=]
+	//{
+	//	anim->Move(*bg, D3DXVECTOR2(SCREEN_WIDTH / 10 * 8.6f, SCREEN_HEIGHT*1.5f), 
+	//		D3DXVECTOR2(SCREEN_WIDTH / 10 * 8.6f, SCREEN_HEIGHT / 10 * 5.5f + (messageSetCnt - 1) * intervalViewerPos), 40, OutCubic);
+	//}
+	//);
+	//animArray.push_back([=]
+	//{
+	//	anim->Wait(50.0f);
+	//}
+	//);
+	//animArray.push_back([=]
+	//{
+	//	anim->Move(*bg, D3DXVECTOR2(SCREEN_WIDTH / 10 * 8.6f, SCREEN_HEIGHT / 10 * 5.5f + (messageSetCnt - 1) * intervalViewerPos), 
+	//		D3DXVECTOR2(SCREEN_WIDTH*1.2f, SCREEN_HEIGHT / 10 * 5.5f + (messageSetCnt - 1) * intervalViewerPos), 20, InOutCubic, [=]
+	//	{
+	//		anim->SubFade(*bg,1.0f,0.0f, InOutCubic);
+	//	});
+	//}
+	//);
 }
 
 //=============================================================================
