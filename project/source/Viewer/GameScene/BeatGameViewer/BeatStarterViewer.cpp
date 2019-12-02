@@ -43,16 +43,20 @@ BeatStarterViewer::BeatStarterViewer():
 
 	std::vector<std::function<void()>> readyVec = {
 		[=] {
+		//レディーテキストイン
 		anim[TextType::Ready]->Move(*readyText,D3DXVECTOR2(SCREEN_WIDTH * 1.5f,SCREEN_CENTER_Y),D3DXVECTOR2(SCREEN_CENTER_X,SCREEN_CENTER_Y),15.0f,OutCirc);
 		} };
 	std::vector<std::function<void()>> goVec = {
 		[=] {
+		//ゴーテキストを拡大イン
 		anim[TextType::Go]->Scale(*goText,D3DXVECTOR2(500.0f,0.0f),D3DXVECTOR2(500.0f,200.0f),10.0f,OutCirc);
 		},
 		[=] {
+		//待機
 		anim[TextType::Go]->Wait(10.0f);
 		}, 
 		[=] {
+		//ゴーテキストをフェードアウト
 		anim[TextType::Go]->Fade(*goText,1.0f,0.0f,1.0f,OutCirc);
 		} };
 

@@ -113,7 +113,7 @@ void ViewerAnimater::Shake(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start,
 	//何回振動させるか
 	const int shakeNum = 400;
 	//どのくらいの振れ幅か
-	const float shakeValue = 10.0f;
+	const float shakeValue = 7.0f;
 
 	//フレームカウントと時間を更新
 	UpdateFrameAndTime(duration);
@@ -121,7 +121,6 @@ void ViewerAnimater::Shake(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start,
 	float radian = Easing::EaseValue(animTime, 0.0f, D3DX_PI * shakeNum, OutCirc);
 
 	viewer.position.x = start.x + shakeValue * sinf(radian);
-	viewer.position.y = start.y + shakeValue * sinf(radian);
 
 	//終了処理
 	if (frameCnt < duration) return;

@@ -1,4 +1,3 @@
-
 //=============================================================================
 //
 // イベントメッセージ処理 [EventMessage.h]
@@ -9,8 +8,6 @@
 #define _EVENT_MESSAGE_H_
 
 #include "../../Framework/BaseViewer.h"
-#include <functional>
-#include <string>
 
 //*****************************************************************************
 // 前方宣言
@@ -42,23 +39,8 @@ private:
 	TextViewer *text;
 	ViewerAnimater *anim;
 
-	//再生処理
-	void Play(void);
-
-	//アニメーションの動作を設定
-	void SetAnimBehavior(void);
-
 	//メッセージセットカウンター
 	int messageSetCnt;
-
-	//アニメーション終了
-	bool SetPlayFinished(void);
-
-	//再生中かどうか
-	bool isPlaying;
-
-	//アニメーション配列
-	std::vector <std::function<void()>> animArray{ 3 };
 };
 
 #endif
