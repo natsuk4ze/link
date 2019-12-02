@@ -33,7 +33,14 @@ StateReward::~StateReward()
 void StateReward::SetData(int data)
 {
 	this->data[data] = 1;
-
+	for (auto& d : this->data)
+	{
+		if (d != 1)
+		{
+			return;
+		}
+	}
+	achieve = true;
 }
 
 //=====================================
