@@ -1,0 +1,10 @@
+diff a/project/source/Scene/GameScene.h b/project/source/Scene/GameScene.h	(rejected hunks)
+@@ -146,5 +146,7 @@
+ 
+ 	//�f�o�b�O�p�t�B�[���h���x��
+ 	static int level;
++
++	NameViewer* name;
+ };
+ #endif
+\ No newline at end of file
