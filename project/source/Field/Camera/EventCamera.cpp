@@ -69,7 +69,7 @@ void EventCamera::Update()
 		cntMove++;
 		float t = (float)cntMove / durationMove;
 		D3DXVECTOR3 position = Easing::EaseValue(t, startPosition, endPosition, EaseType::OutCubic);
-		transform.SetPosition(position);
+		transform->SetPosition(position);
 
 		if (cntMove == durationMove && callback != nullptr)
 			callback();
@@ -77,7 +77,7 @@ void EventCamera::Update()
 
 	if (targetObject != nullptr)
 	{
-		transform.LookAt(targetObject->GetPosition());
+		transform->LookAt(targetObject->GetPosition());
 	}
 
 	Camera::Update();
@@ -91,11 +91,11 @@ void EventCamera::Move(const D3DXVECTOR3 & position, int duration, float eyeDist
 	flgLookAt = true;
 	cntMove = 0;
 	durationMove = duration;
-	startPosition = transform.GetPosition();
+	startPosition = transform->GetPosition();
 	endPosition = position;
 	this->callback = callback;
 
-	referencePosition = transform.Forward() * eyeDistance + transform.GetPosition();
+	referencePosition = transform->Forward() * eyeDistance + transform->GetPosition();
 }
 
 /**************************************
@@ -114,7 +114,7 @@ void EventCamera::Translation(const D3DXVECTOR3 & position, int duration, std::f
 	flgLookAt = false;
 	cntMove = 0;
 	durationMove = duration;
-	startPosition = transform.GetPosition();
+	startPosition = transform->GetPosition();
 	endPosition = position + offset;
 	this->callback = callback;
 }
@@ -127,7 +127,7 @@ void EventCamera::Return(int duration, std::function<void()> callback)
 	flgLookAt = false;
 	cntMove = 0;
 	durationMove = duration;
-	startPosition = transform.GetPosition();
+	startPosition = transform->GetPosition();
 	endPosition = defaultMainCamera->GetTransform().GetPosition();
 	this->callback = callback;
 }

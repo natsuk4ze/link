@@ -25,8 +25,8 @@ Camera::Camera()
 	const float InitViewNear = 10.0f;
 	const float InitViewFar = 50000.0f;
 
-	transform.SetPosition(InitPos);
-	transform.LookAt(InitTarget);
+	transform->SetPosition(InitPos);
+	transform->LookAt(InitTarget);
 	viewAngle = InitViewAngle;
 	viewAspect = InitViewAspect;
 	viewNear = InitViewNear;
@@ -62,7 +62,7 @@ void Camera::Update()
 		plugin->Update();
 	}
 	
-	Transform workTransform = transform;
+	Transform workTransform = *transform;
 
 	//ƒvƒ‰ƒOƒCƒ“”½‰f
 	for (auto& plugin : pluginList)
@@ -198,14 +198,6 @@ D3DXMATRIX Camera::GetProjectionMtx() const
 ViewFrustum Camera::GetViewFrustrum() const
 {
 	return viewFrustrum;
-}
-
-/**************************************
-Transformæ“¾ˆ—
-***************************************/
-Transform Camera::GetTransform() const
-{
-	return transform;
 }
 
 /**************************************

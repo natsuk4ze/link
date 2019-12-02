@@ -16,7 +16,7 @@ void FieldCamera::FieldCameraQuater::OnStart(FieldCamera & entity)
 {
 	//パラメータ初期化
 	entity.cameraAngle = -45.0f;
-	entity.startPosition = entity.transform.GetPosition() - entity.targetObject->GetPosition();
+	entity.startPosition = entity.transform->GetPosition() - entity.targetObject->GetPosition();
 	entity.cntFrame = 0;
 
 	//移動先の座標を設定
@@ -29,7 +29,7 @@ void FieldCamera::FieldCameraQuater::OnStart(FieldCamera & entity)
 		sinf(CameraAngleY),
 		cosf(CameraAngleY) * sinf(CameraAngleXZ)) * CameraLength;
 
-	entity.startEyeVector = entity.transform.GetPosition() + entity.transform.Forward() * 70.0f;
+	entity.startEyeVector = entity.transform->GetPosition() + entity.transform->Forward() * 70.0f;
 }
 
 /**************************************
@@ -45,10 +45,10 @@ FieldCamera::Mode FieldCamera::FieldCameraQuater::OnUpdate(FieldCamera & entity)
 	D3DXVECTOR3 position = Easing::EaseValue(t, entity.startPosition, entity.goalPosition, EaseType::InOutQuart);
 
 	D3DXVECTOR3 targetPosition = entity.targetObject->GetPosition();
-	entity.transform.SetPosition(position + targetPosition);
+	entity.transform->SetPosition(position + targetPosition);
 
 	D3DXVECTOR3 reference = Easing::EaseValue(t, entity.startEyeVector, targetPosition, EaseType::InOutQuart);
-	entity.transform.LookAt(reference);
+	entity.transform->LookAt(reference);
 
 	return FieldCamera::QuaterView;
 }
