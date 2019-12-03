@@ -10,12 +10,12 @@
 #include "../Animation/ActorAnimation.h"
 #include "../../../Framework/Camera/ViewFrustum.h"
 #include "../../../Framework/Camera/Camera.h"
-#include "../../Field/PlaceActorController.h"
 
 //**************************************
 // クラスのメンバ変数初期化
 //**************************************
 const D3DXVECTOR3 PlaceActor::Scale = D3DXVECTOR3(0.25f, 0.25f, 0.25f);
+const D3DXVECTOR3 PlaceActor::SizeCullingBox = { 10.0f, 30.0f, 10.0f };
 
 //=====================================
 // コンストラクタ
@@ -61,7 +61,7 @@ void PlaceActor::Uninit()
 void PlaceActor::Update()
 {
 	// カリング判定
-	onCamera = Camera::MainCamera()->GetViewFrustrum().CheckOnCamera(transform->GetPosition(), Field::Actor::PlaceActorController::PlacePositionOffset);
+	onCamera = Camera::MainCamera()->GetViewFrustrum()->CheckOnCamera(transform->GetPosition(), SizeCullingBox);
 
 #if _DEBUG
 	Debug();

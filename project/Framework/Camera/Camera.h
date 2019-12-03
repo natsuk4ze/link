@@ -55,7 +55,7 @@ public:
 	D3DXMATRIX GetProjectionMtx() const;
 
 	//‹‘äæ“¾ˆ—
-	ViewFrustum GetViewFrustrum() const;
+	const ViewFrustum* GetViewFrustrum() const;
 
 	//‘ã“ü‰‰Zq
 	Camera& operator=(const Camera& rhs);
