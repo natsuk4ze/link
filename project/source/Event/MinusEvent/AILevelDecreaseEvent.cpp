@@ -218,6 +218,10 @@ string AILevelDecreaseEvent::GetEventMessage(int FieldLevel)
 //=============================================================================
 void AILevelDecreaseEvent::UFODebutStart(void)
 {
+	//ƒJƒƒ‰‚ÌˆÊ’u‚ðØ‚è‘Ö‚¦
+	D3DXVECTOR3 cameraPos = TownPos + D3DXVECTOR3(30.0f, 20.0f, -30.0f);
+	camera->Move(cameraPos, 10, 10.0f);
+	camera->SetTargetObject(UFO);
 	EventState = UFODebut;
 }
 
@@ -238,6 +242,7 @@ void AILevelDecreaseEvent::EventOver(void)
 void AILevelDecreaseEvent::CountdownStart(void)
 {
 	beatGame->CountdownStart();
+	camera->SetTargetObject(nullptr);
 	UFO->SetHoverMotion(true);
 }
 
