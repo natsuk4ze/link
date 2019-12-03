@@ -105,5 +105,5 @@ void InfoController::SearchMaxLinkLevel()
 	}
 
 	// ƒŠƒ[ƒh‚É”½‰f
-	RewardController::Instance()->SetRewardData(RewardController::Type::Linker, ret);
+	RewardController::Instance()->SetRewardData(RC::Type::Linker, ret);
 }

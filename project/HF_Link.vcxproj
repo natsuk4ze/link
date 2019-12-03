@@ -240,6 +240,7 @@
     <ClInclude Include="source\ModelView\ModelViewCamera.h" />
     <ClInclude Include="source\Reward\AchieveViewer.h" />
     <ClInclude Include="source\Reward\MaxCheckReward.h" />
+    <ClInclude Include="source\Reward\RewardConfig.h" />
     <ClInclude Include="source\Reward\RewardViewer.h" />
     <ClInclude Include="source\Reward\StateReward.h" />
     <ClInclude Include="source\Reward\CountupReward.h" />

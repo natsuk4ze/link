@@ -10,6 +10,7 @@
 
 #include "Reward.h"
 
+namespace RC = RewardConfig;
 //**************************************
 // ƒNƒ‰ƒX’è‹`
 //**************************************
@@ -19,7 +20,7 @@ class MaxCheckReward :
 private:
 	int data;
 public:
-	MaxCheckReward(RewardController::Type type, int maxdata);
+	MaxCheckReward(RC::Type type, int maxdata);
 	~MaxCheckReward();
 
 	void SetData(int data)override;

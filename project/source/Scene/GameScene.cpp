@@ -33,6 +33,7 @@
 #include "../Viewer/GameScene/Controller/ResultViewer.h"
 #include "../Viewer/GameScene/Controller/NameEntryViewer.h"
 #include "../Viewer/TitleScene/TitleViewer.h"
+#include "../Reward/RewardConfig.h"
 #include "../Reward/RewardController.h"
 #include "../Reward/RewardViewer.h"
 
@@ -55,6 +56,8 @@
 
 #include "../../Framework/Input/input.h"
 #include "../../Framework/Tool/DebugWindow.h"
+
+namespace RC = RewardConfig;
 
 /**************************************
 staticメンバ
@@ -95,9 +98,9 @@ void GameScene::Init()
 	rewardViewer = new RewardViewer();
 
 	// リワードの作成
-	for (int i = 0; i < RewardController::Type::Max; i++)
+	for (int i = 0; i < RC::Type::Max; i++)
 	{
-		RewardController::Instance()->Create(RewardController::Type(i), RewardController::MaxData[i]);
+		RewardController::Instance()->Create(RC::Type(i), RC::MaxData[i]);
 	}
 
 	//レベル毎のパーティクルマネージャを選択

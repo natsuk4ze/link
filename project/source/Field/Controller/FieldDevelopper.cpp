@@ -125,7 +125,7 @@ namespace Field
 		entity->onBuildRoad(route);
 
 		// ƒŠƒ[ƒh‚É”½‰f
-		RewardController::Instance()->SetRewardData(RewardController::Type::Pioneer, cntRoot);
+		RewardController::Instance()->SetRewardData(RC::Type::Pioneer, cntRoot);
 	}
 
 	/**************************************
@@ -220,7 +220,7 @@ namespace Field
 		}
 
 		// ƒŠƒ[ƒh‚É”½‰f
-		RewardController::Instance()->SetRewardData(RewardController::Type::Destructer, cntMountain);
+		RewardController::Instance()->SetRewardData(RC::Type::Destructer, cntMountain);
 
 		return end + 1;
 	}
@@ -311,7 +311,7 @@ namespace Field
 		}
 
 		// ƒŠƒ[ƒh‚É”½‰f
-		RewardController::Instance()->SetRewardData(RewardController::Type::Artist, cntRiver);
+		RewardController::Instance()->SetRewardData(RC::Type::Artist, cntRiver);
 
 		return end;
 	}

@@ -11,6 +11,7 @@
 #include "RewardController.h"
 
 class AchieveViewer;
+namespace RC = RewardConfig;
 //**************************************
 // ƒNƒ‰ƒX’è‹`
 //**************************************
@@ -18,7 +19,7 @@ class RewardViewer
 {
 private:
 	AchieveViewer* achieveViewer;
-	bool achieved[RewardController::Type::Max];
+	bool achieved[RC::Type::Max];
 
 public:
 	RewardViewer();

@@ -20,7 +20,7 @@ private:
 	int data;
 
 public:
-	CountupReward(RewardController::Type type, int maxdata);
+	CountupReward(RC::Type type, int maxdata);
 	~CountupReward();
 
 	void SetData(int data)override;

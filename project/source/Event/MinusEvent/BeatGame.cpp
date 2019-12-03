@@ -117,7 +117,7 @@ void BeatGame::Update()
 			beatGameViewer->SetResult(BeatResultViewer::Success, [&]() {EventOver(); });
 
 			// ƒŠƒ[ƒh‚É”½‰f
-			RewardController::Instance()->SetRewardData(RewardController::Type::ButtonMashing, 1);
+			RewardController::Instance()->SetRewardData(RC::Type::ButtonMashing, 1);
 
 			//¬Œ÷
 			isSuccess = true;

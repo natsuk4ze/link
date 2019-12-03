@@ -10,7 +10,7 @@
 //=====================================
 // コンストラクタ
 //=====================================
-MaxCheckReward::MaxCheckReward(RewardController::Type type, int maxdata) :
+MaxCheckReward::MaxCheckReward(RC::Type type, int maxdata) :
 	Reward(type, maxdata), data(0)
 {
 }

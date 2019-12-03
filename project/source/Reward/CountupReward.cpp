@@ -10,7 +10,7 @@
 //=====================================
 // コンストラクタ
 //=====================================
-CountupReward::CountupReward(RewardController::Type type, int maxdata) :
+CountupReward::CountupReward(RC::Type type, int maxdata) :
 	Reward(type, maxdata), data(0)
 {
 }

@@ -301,6 +301,7 @@
     <ClInclude Include="source\Reward\RewardViewer.h" />
     <ClInclude Include="source\Reward\AchieveViewer.h" />
     <ClInclude Include="source\Reward\MaxCheckReward.h" />
+    <ClInclude Include="source\Reward\RewardConfig.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Animation\AnimationManager.cpp" />

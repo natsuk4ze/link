@@ -554,7 +554,7 @@ namespace Field
 		// ƒŠƒ[ƒh‚É”½‰f
 		if (currentLevel == FieldLevel::Space)
 		{
-			RewardController::Instance()->SetRewardData(RewardController::Type::MasterAI, (int)(realDevelopmentLevelAI));
+			RewardController::Instance()->SetRewardData(RC::Type::MasterAI, (int)(realDevelopmentLevelAI));
 		}
 	}
 

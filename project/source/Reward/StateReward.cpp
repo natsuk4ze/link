@@ -10,7 +10,7 @@
 //=====================================
 // コンストラクタ
 //=====================================
-StateReward::StateReward(RewardController::Type type, int maxdata) :
+StateReward::StateReward(RC::Type type, int maxdata) :
 	Reward(type, maxdata)
 {
 	for (int i = 0; i < MaxData; i++)
