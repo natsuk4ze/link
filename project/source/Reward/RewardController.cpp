@@ -9,24 +9,23 @@
 #include "Reward.h"
 #include "CountupReward.h"
 #include "StateReward.h"
-
-//**************************************
-// スタティックメンバ初期化
-//**************************************
-const int RewardController::MaxData[] = {
-	3, 20, 15, 15, 10, 20, 250, 10000, 7, 4
-};
+#include "MaxCheckReward.h"
 
 //=====================================
 // データ作成
 //=====================================
-void RewardController::Create(Type type, int maxData)
+void RewardController::Create(RC::Type type, int maxData)
 {
 	if (rewardPool.count(type) == 0)
 	{
-		if (type == MinusComplete || type == PlusComplete)
+		if (type == RC::MinusComplete || type == RC::PlusComplete)
 		{
 			Reward* reward = new StateReward(type, maxData);
+			rewardPool.emplace(type, reward);
+		}
+		else if (type == RC::Linker || type == RC::MasterAI)
+		{
+			Reward* reward = new MaxCheckReward(type, maxData);
 			rewardPool.emplace(type, reward);
 		}
 		else
@@ -57,7 +56,7 @@ void RewardController::AllDelete()
 //=====================================
 // 到達確認
 //=====================================
-bool RewardController::CheckAchieved(Type rewardType)
+bool RewardController::CheckAchieved(RC::Type rewardType)
 {
 	return rewardPool[rewardType]->CheckAchieved();
 }
@@ -65,7 +64,7 @@ bool RewardController::CheckAchieved(Type rewardType)
 //=====================================
 // 到達確認
 //=====================================
-bool RewardController::CheckFirstAchieved(Type rewardType)
+bool RewardController::CheckFirstAchieved(RC::Type rewardType)
 {
 	return rewardPool[rewardType]->CheckFirstAchieved();
 }
@@ -73,7 +72,7 @@ bool RewardController::CheckFirstAchieved(Type rewardType)
 //=====================================
 // 名前の取得（一文字ずつ）
 //=====================================
-int RewardController::GetName(Type rewardType, int alphabetNo)
+int RewardController::GetName(RC::Type rewardType, int alphabetNo)
 {
 	return rewardPool[rewardType]->GetName(alphabetNo);
 }
@@ -81,7 +80,7 @@ int RewardController::GetName(Type rewardType, int alphabetNo)
 //=====================================
 // データのセット
 //=====================================
-void RewardController::SetRewardData(Type rewardType, int data)
+void RewardController::SetRewardData(RC::Type rewardType, int data)
 {
 	rewardPool[rewardType]->SetData(data);
 }
@@ -89,7 +88,7 @@ void RewardController::SetRewardData(Type rewardType, int data)
 //=====================================
 // データのリセット
 //=====================================
-void RewardController::ResetRewardData()
+void RewardController::ResetAllRewardData()
 {
 	for (auto& reward : rewardPool)
 	{

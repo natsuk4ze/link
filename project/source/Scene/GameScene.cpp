@@ -33,7 +33,9 @@
 #include "../Viewer/GameScene/Controller/ResultViewer.h"
 #include "../Viewer/GameScene/Controller/NameEntryViewer.h"
 #include "../Viewer/TitleScene/TitleViewer.h"
+#include "../Reward/RewardConfig.h"
 #include "../Reward/RewardController.h"
+#include "../Reward/RewardViewer.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
@@ -54,6 +56,8 @@
 
 #include "../../Framework/Input/input.h"
 #include "../../Framework/Tool/DebugWindow.h"
+
+namespace RC = RewardConfig;
 
 /**************************************
 staticメンバ
@@ -91,11 +95,12 @@ void GameScene::Init()
 	resultViewer = new ResultViewer();
 	nemeEntryViewer = new NameEntryViewer();
 	titleViewer = new TitleViewer();
+	rewardViewer = new RewardViewer();
 
 	// リワードの作成
-	for (int i = 0; i < RewardController::Type::Max; i++)
+	for (int i = 0; i < RC::Type::Max; i++)
 	{
-		RewardController::Instance()->Create(RewardController::Type(i), RewardController::MaxData[i]);
+		RewardController::Instance()->Create(RC::Type(i), RC::MaxData[i]);
 	}
 
 	//レベル毎のパーティクルマネージャを選択
@@ -159,6 +164,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(resultViewer);
 	SAFE_DELETE(nemeEntryViewer);
 	SAFE_DELETE(titleViewer);
+	SAFE_DELETE(rewardViewer);
 
 	//パーティクル終了
 	particleManager->Uninit();
@@ -209,6 +215,7 @@ void GameScene::Update()
 	resultViewer->Update();
 	nemeEntryViewer->Update();
 	titleViewer->Update();
+	rewardViewer->Update();
 
 	//パーティクル更新
 	ProfilerCPU::Instance()->Begin("Update Particle");
@@ -284,6 +291,7 @@ void GameScene::Draw()
 	resultViewer->Draw();
 	nemeEntryViewer->Draw();
 	titleViewer->Draw();
+	rewardViewer->Draw();
 
 	//*******別ウインドウを作成するため最後*******
 	guideViewer->Draw();
@@ -532,6 +540,13 @@ void GameScene::Clear()
 
 	Debug::Log("Clear Field : %f", ProfilerCPU::CalcElapsed(start, end));
 
+	//イベントコントローラクリア
+	start = ProfilerCPU::GetCounter();
+	eventController->Uninit();
+	end = ProfilerCPU::GetCounter();
+
+	Debug::Log("Clear Event : %f", ProfilerCPU::CalcElapsed(start, end));
+
 	//レベル固有のパーティクルを終了
 	start = ProfilerCPU::GetCounter();
 	levelParticleManager->Uninit();
@@ -540,10 +555,7 @@ void GameScene::Clear()
 
 	Debug::Log("Clear Particle : %f", ProfilerCPU::CalcElapsed(start, end));
 
-	//イベントコントローラクリア
-	start = ProfilerCPU::GetCounter();
-	eventController->Uninit();
-	end = ProfilerCPU::GetCounter();
-
-	Debug::Log("Clear Event : %f", ProfilerCPU::CalcElapsed(start, end));
+	// リワードをリセット
+	rewardViewer->ResetAchieved();
+	RewardController::Instance()->ResetAllRewardData();
 }

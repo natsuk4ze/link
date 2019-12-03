@@ -6,6 +6,7 @@
 //
 //=====================================
 #include "InfoController.h"
+#include "../Reward/RewardController.h"
 
 //=====================================
 // コンストラクタ
@@ -36,6 +37,8 @@ void InfoController::Update()
 	{
 		map.second->Update();
 	}
+
+	SearchMaxLinkLevel();
 }
 
 //=====================================
@@ -83,4 +86,24 @@ void InfoController::SetAllLinkLevel(const std::vector<Field::PlaceData>& vec)
 	{
 		SetLinkLevel(v);
 	}
+}
+
+//=====================================
+// 一番Linkレベルの高い町のレベルを調べる
+//=====================================
+void InfoController::SearchMaxLinkLevel()
+{
+	int ret = 0;
+	
+	for (auto& map : LinkInfoMap)
+	{
+		int max = map.second->GetLevel();
+		if (ret < max)
+		{
+			ret = max;
+		}
+	}
+
+	// リワードに反映
+	RewardController::Instance()->SetRewardData(RC::Type::Linker, ret);
 }

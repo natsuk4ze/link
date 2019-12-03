@@ -14,6 +14,7 @@
 #include <iostream>
 #include "../../Viewer/GameScene/Controller/BeatGameViewer.h"
 #include "../../../Framework/Input/input.h"
+#include "../../Reward/RewardController.h"
 
 //*****************************************************************************
 // スタティック変数宣言
@@ -114,6 +115,9 @@ void BeatGame::Update()
 		{
 			//成功リザルトを表示
 			beatGameViewer->SetResult(BeatResultViewer::Success, [&]() {EventOver(); });
+
+			// リワードに反映
+			RewardController::Instance()->SetRewardData(RC::Type::ButtonMashing, 1);
 
 			//成功
 			isSuccess = true;
