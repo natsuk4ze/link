@@ -130,6 +130,6 @@ namespace Effect::Game
 		if (cntFrame != 0)
 			return true;
 
-		BaseEmitter::Emit(container);
+		return BaseEmitter::Emit(container);
 	}
 }
