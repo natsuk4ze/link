@@ -27,7 +27,7 @@ namespace RewardConfig
 	};
 
 	// リワード到達確認のためのデータ
-	static const int MaxData[] = {3, 20, 15, 15, 10, 20, 250, 1000, 4, 7};
+	static const int MaxData[] = {3, 20, 15, 15, 10, 20, 250, 10000, 4, 7};
 }
 
 #endif

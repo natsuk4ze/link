@@ -31,6 +31,8 @@ const GuideActor::AnimData GuideActor::data[] = {
 	{"TalkingTypeA", 1.0f, 0.3f, 1 / 30.0f},
 	{"TalkingTypeB", 1.0f, 0.3f, 1 / 30.0f},
 	{"SecretTalk", 1.0f, 0.3f, 1 / 30.0f},
+	{"FightingIdle", 1.0f, 0.3f, 1 / 30.0f},
+	{"Rush", 1.0f, 0.3f, 1 / 30.0f},
 };
 
 const char* GuideActor::FileName = "data/MODEL/Robot.X";
@@ -61,8 +63,16 @@ GuideActor::GuideActor() :
 	// アニメーション遷移のセット
 	for (int i = 0; i < AnimMax; i++)
 	{
+		// パンチ連打とファイティングポーズだけはずっと続ける
+		if (i == Rush || i == FightingIdle)
+		{
+			anim->SetFinishTransition(AnimState(i), AnimState(i));
+		}
 		// とりあえず全部アニメーション終了したらアイドルに戻す
-		anim->SetFinishTransition(AnimState(i), AnimState(0));
+		else
+		{
+			anim->SetFinishTransition(AnimState(i), AnimState(0));
+		}
 	}
 }
 
@@ -203,6 +213,14 @@ void GuideActor::Debug()
 	if (Debug::Button("SecretTalk"))
 	{
 		anim->ChangeAnim(SecretTalk);
+	}
+	if (Debug::Button("FightingIdle"))
+	{
+		anim->ChangeAnim(FightingIdle);
+	}
+	if (Debug::Button("Rush"))
+	{
+		anim->ChangeAnim(Rush);
 	}
 
 	Debug::End();
