@@ -29,6 +29,7 @@ namespace GameParticle
 		LinkLevelUp,	//リンクレベルアップ時エフェクト
 		Cloud,			//雲
 		EventInfo,		//イベントます
+		BlueAura,		//青オーラ
 		Max
 	};
 }
@@ -55,6 +56,8 @@ public:
 	//闇の粒子のエフェクトセット処理
 	void SetDarknessEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback = nullptr);
 
+	//オーラエフェクトセット処理
+	BaseEmitter* SetAuraEffect(const D3DXVECTOR3& position, const D3DXVECTOR3& direction, std::function<void()> callback = nullptr);
 
 private:
 	static const float BloomPower[3];
