@@ -34,7 +34,7 @@ GuideCamera::GuideCamera()
 	D3DXMatrixLookAtLH(&view,
 		&InitPos,
 		&InitTarget,
-		&transform.Up());
+		&transform->Up());
 
 	//プロジェクション行列作成
 	D3DXMatrixIdentity(&projection);
@@ -64,9 +64,9 @@ GuideCamera::~GuideCamera()
 
 void GuideCamera::Update(void)
 {
-	D3DXVECTOR3 eyePosition = transform.GetPosition();
+	D3DXVECTOR3 eyePosition = transform->GetPosition();
 	D3DXVECTOR3 targetPosition = D3DXVECTOR3(0.0f, 10.0f, 100.0f);
-	D3DXVECTOR3 upVector = transform.Up();
+	D3DXVECTOR3 upVector = transform->Up();
 
 	//ビュー行列作成
 	D3DXMatrixIdentity(&view);

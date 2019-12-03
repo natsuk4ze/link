@@ -90,12 +90,6 @@ EventController::~EventController()
 
 	SAFE_DELETE(beatViewer);
 
-	for (auto&& pair : infoEmitterContainer)
-	{
-		if(pair.second != nullptr)
-			pair.second->SetActive(false);
-	}
-
 #if _DEBUG
 	SAFE_DELETE(polygon);
 #endif
@@ -106,6 +100,15 @@ EventController::~EventController()
 //=============================================================================
 void EventController::Init(int FieldLevel)
 {
+	// エミッターコンテナのクリア
+	for (auto&& pair : infoEmitterContainer)
+	{
+		if (pair.second != nullptr)
+			pair.second->SetActive(false);
+	}
+	infoEmitterContainer.clear();
+
+	// CSVファイルを読み取る
 	if (FieldLevel == Field::City)
 	{
 		LoadCSV(EventCSVPath_City);
