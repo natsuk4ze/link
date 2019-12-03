@@ -59,7 +59,7 @@ void StraightRoadActor::Init(const D3DXVECTOR3 & pos, Field::FieldLevel currentL
 }
 
 //=====================================
-// XVˆ—
+// I—¹ˆ—
 //=====================================
 void StraightRoadActor::Uninit()
 {

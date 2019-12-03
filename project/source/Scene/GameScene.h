@@ -77,6 +77,9 @@ public:
 	//ステート遷移処理
 	void ChangeState(State next);
 
+	//各レベルのターンテーブルの角度
+	static const char AngleTable[];
+
 private:
 	using SceneState = BaseState<GameScene, State>;
 

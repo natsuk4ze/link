@@ -13,11 +13,13 @@
 #include "../../Effect/GameParticleManager.h"
 #include "../../../Framework/Task/TaskManager.h"
 #include "../../Field/Camera/EventCamera.h"
+#include "../../Viewer/GameScene/GuideViewer/GuideActor.h"
 
 enum State
 {
 	TelopExpanding,
 	MeteorDebut,
+	CameraMoveWait,
 	BeatGameStart,
 	BeatGameSuccess,
 	BeatGameFail,
@@ -57,6 +59,7 @@ CityDestroyEvent::~CityDestroyEvent()
 {
 	SAFE_DELETE(Meteor);
 	SAFE_DELETE(beatGame);
+	SAFE_DELETE(guideActor);
 	eventViewer = nullptr;
 }
 
@@ -83,6 +86,11 @@ void CityDestroyEvent::Init()
 	// 隕石メッシュ作成
 	Meteor = new EventActorBase(MeteoritePos, Scale, "Meteor");
 
+	//ガイドキャラ作成
+	guideActor = new GuideActor();
+	guideActor->SetActive(false);
+	guideActor->SetScale(Vector3::One * 0.05f);
+
 	// ゲーム進行停止
 	fieldEventHandler->PauseGame();
 
@@ -106,22 +114,36 @@ void CityDestroyEvent::Update()
 		return;
 
 	float Distance = 0.0f;
+	D3DXVECTOR3 diff = Vector3::Zero;
 
 	switch (EventState)
 	{
 		// 隕石登場
 	case MeteorDebut:
 
-		Distance = D3DXVec3LengthSq(&D3DXVECTOR3(MeteoritePos - TownPos));
+		diff = TownPos - MeteoritePos;
+		Distance = D3DXVec3LengthSq(&diff);
 
-		if (Distance > pow(20.0f, 2))
+		if (Distance > pow(40.0f, 2))
 		{
 			MeteoritePos += MoveDirection * FallSpeed;
 		}
 		else
 		{
-			CountdownStart();
-			EventState = State::BeatGameStart;
+			EventState = CameraMoveWait;
+
+			//ガイドキャラをアクティベイトして移動
+			guideActor->SetActive(true);
+			D3DXVECTOR3 guidePos = Vector3::Normalize(diff) * 5.0f + MeteoritePos;
+			guideActor->SetPosition(guidePos);
+			guideActor->LookAt(MeteoritePos);
+
+			//カメラの移動
+			D3DXVECTOR3 nextCameraPos = Vector3::Normalize(diff) * 25.0f + MeteoritePos + Vector3::Back * 10.0f;
+			camera->Move(nextCameraPos, 30, 35.0f, [this]
+			{
+				CountdownStart();
+			});
 		}
 		break;
 
@@ -139,6 +161,7 @@ void CityDestroyEvent::Update()
 		// 30フレームの遅延を設置
 		TaskManager::Instance()->CreateDelayedTask(30, [&]()
 		{
+			guideActor->SetActive(false);
 			camera->Return(30, [&]() { EventOver(); });
 		});
 		EventState = EffectHappend;
@@ -171,6 +194,9 @@ void CityDestroyEvent::Update()
 	default:
 		break;
 	}
+
+	if (guideActor->IsActive())
+		guideActor->Update();
 }
 
 //=============================================================================
@@ -187,6 +213,9 @@ void CityDestroyEvent::Draw()
 		Meteor->SetPosition(MeteoritePos);
 		Meteor->Draw();
 	}
+
+	if (guideActor->IsActive())
+		guideActor->Draw();
 
 	beatGame->Draw();
 }
@@ -217,6 +246,7 @@ void CityDestroyEvent::EventOver(void)
 void CityDestroyEvent::MeteorFallStart(void)
 {
 	EventState = State::MeteorDebut;
+	camera->SetTargetObject(Meteor);
 }
 
 //=============================================================================
@@ -225,6 +255,7 @@ void CityDestroyEvent::MeteorFallStart(void)
 void CityDestroyEvent::CountdownStart(void)
 {
 	beatGame->CountdownStart();
+	EventState = State::BeatGameStart;
 }
 
 //=============================================================================
@@ -241,5 +272,10 @@ void CityDestroyEvent::ReceiveBeatResult(bool IsSuccess)
 	{
 		// 失敗、隕石落下
 		EventState = State::BeatGameFail;
+		
+		D3DXVECTOR3 cameraPos = camera->GetPosition() + Vector3::Up * 30.0f;
+		camera->Move(cameraPos, 10, 100.0f);
+
+		guideActor->SetActive(false);
 	}
 }

@@ -19,8 +19,8 @@
 //**************************************
 // スタティックメンバ初期化
 //**************************************
-const D3DXVECTOR2 SelectViewer::SubScreenSize = D3DXVECTOR2(960.0f, 320.0f);
-const D3DXVECTOR2 SelectViewer::SubScreenPos = D3DXVECTOR2((float)SCREEN_CENTER_X - 480.0f, (float)SCREEN_CENTER_Y);
+const D3DXVECTOR2 SelectViewer::SubScreenSize = D3DXVECTOR2(1200.0f, 320.0f);
+const D3DXVECTOR2 SelectViewer::SubScreenPos = D3DXVECTOR2((float)SCREEN_CENTER_X - 600.0f, (float)SCREEN_CENTER_Y);
 
 //=====================================
 // コンストラクタ
@@ -117,11 +117,16 @@ void SelectViewer::Draw()
 	RendererEffect::SetView(camera->GetViewMtx());
 	RendererEffect::SetProjection(camera->GetProjectionMtx());
 
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
+
 	// インスタンスの描画
 	for (auto& p : logo)
 	{
 		p->Draw();
 	}
+
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
 
 	subScreen->DrawTexture();
 

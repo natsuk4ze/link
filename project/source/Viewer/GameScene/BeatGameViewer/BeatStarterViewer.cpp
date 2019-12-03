@@ -20,7 +20,7 @@ BeatStarterViewer::BeatStarterViewer():
 	//レディーテキスト
 	readyText = new BaseViewerDrawer();
 	readyText->LoadTexture("data/TEXTURE/Viewer/BeatGameViewer/BeatStarterViewer/Text.png");
-	readyText->size = D3DXVECTOR3(500.0f, 200.0f, 0.0f);
+	readyText->size = D3DXVECTOR3(600.0f, 300.0f, 0.0f);
 	readyText->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	readyText->position = D3DXVECTOR3(SCREEN_WIDTH * 1.5f, SCREEN_CENTER_Y, 0.0f);
 	readyText->MakeVertex();
@@ -29,7 +29,7 @@ BeatStarterViewer::BeatStarterViewer():
 	//ゴーテキスト
 	goText = new BaseViewerDrawer();
 	goText->LoadTexture("data/TEXTURE/Viewer/BeatGameViewer/BeatStarterViewer/Text.png");
-	goText->size = D3DXVECTOR3(500.0f, 0.0f, 0.0f);
+	goText->size = D3DXVECTOR3(600.0f, 0.0f, 0.0f);
 	goText->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	goText->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_CENTER_Y, 0.0f);
 	goText->MakeVertex();

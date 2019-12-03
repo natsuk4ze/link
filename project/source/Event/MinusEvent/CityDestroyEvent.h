@@ -17,6 +17,7 @@ class EventViewer;
 class EventActorBase;
 class EventCamera;
 class BeatGameViewer;
+class GuideActor;
 
 //*****************************************************************************
 // クラス定義
@@ -35,6 +36,8 @@ private:
 	EventActorBase *Meteor;
 	EventCamera *camera;
 	BeatGameViewer *beatViewer;
+
+	GuideActor *guideActor;				//ロボット
 
 public:
 	CityDestroyEvent(EventViewer* eventViewer, BeatGameViewer *beatViewer, EventCamera *camera);

@@ -33,6 +33,7 @@
 #include "../Viewer/GameScene/Controller/ResultViewer.h"
 #include "../Viewer/GameScene/Controller/NameEntryViewer.h"
 #include "../Viewer/TitleScene/TitleViewer.h"
+#include "../Reward/RewardController.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
@@ -60,6 +61,7 @@ staticメンバ
 int GameScene::level = 0;		//デバッグ用フィールドレベル（本番では非staticメンバにする
 const float GameScene::BloomPower[] = {0.6f, 0.55f, 0.50f};		//ブルームの強さ
 const float GameScene::BloomThrethold[] = {0.6f, 0.5f, 0.4f};		//ブルームをかける輝度の閾値
+const char GameScene::AngleTable[3] = { 3, 24, 50 };
 
 /**************************************
 初期化処理
@@ -73,20 +75,28 @@ void GameScene::Init()
 	//フィールドレベル読み込み
 	Field::FieldLevel level = (Field::FieldLevel)PlayerPrefs::GetNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel));
 
+	particleManager = GameParticleManager::Instance();
+	particleManager->Init();
+
 	//各インスタンス作成
 	field = new Field::FieldController(level);
 	gameViewer = new GameViewer();
 	eventController = new EventController(level);
 	eventHandler = new FieldEventHandler();
 	eventController->ReceiveFieldEventHandler(eventHandler);
-	particleManager = GameParticleManager::Instance();
 	bloomController = new BloomController();
-	//serial = new SerialWrapper(3);								//TODO:ポート番号を変えられるようにする
+	serial = new SerialWrapper(3);								//TODO:ポート番号を変えられるようにする
 	Client = new UDPClient();
 	guideViewer = new GuideViewer();
 	resultViewer = new ResultViewer();
 	nemeEntryViewer = new NameEntryViewer();
 	titleViewer = new TitleViewer();
+
+	// リワードの作成
+	for (int i = 0; i < RewardController::Type::Max; i++)
+	{
+		RewardController::Instance()->Create(RewardController::Type(i), RewardController::MaxData[i]);
+	}
 
 	//レベル毎のパーティクルマネージャを選択
 	switch (level)
@@ -131,6 +141,9 @@ void GameScene::Init()
 ***************************************/
 void GameScene::Uninit()
 {
+	// リワード全削除
+	RewardController::Instance()->AllDelete();
+
 	//カメラ削除
 	SAFE_DELETE(fieldCamera);
 
@@ -140,7 +153,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(eventController);
 	SAFE_DELETE(bloomController);
 	SAFE_DELETE(eventHandler);
-	//SAFE_DELETE(serial);
+	SAFE_DELETE(serial);
 	SAFE_DELETE(Client);
 	SAFE_DELETE(guideViewer);
 	SAFE_DELETE(resultViewer);
@@ -407,6 +420,11 @@ void GameScene::DebugTool()
 		Client->ReceivePacketConfig(Packet);
 		Client->SendPacket();
 	}
+	Debug::SameLine();
+	if (Debug::Button("GetLastScore"))
+	{
+		string Score = Client->GetLastScore();
+	}
 
 	Debug::Text("State");
 	Debug::NewLine();
@@ -428,7 +446,7 @@ void GameScene::DebugTool()
 		ChangeState(State::Result);
 	}
 	Debug::SameLine();
-	if (Debug::Button("Transition"))
+	if (Debug::Button("levelup"))
 	{
 		level++;
 		ChangeState(State::TransitionOut);

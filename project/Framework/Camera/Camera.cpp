@@ -25,8 +25,8 @@ Camera::Camera()
 	const float InitViewNear = 10.0f;
 	const float InitViewFar = 50000.0f;
 
-	transform.SetPosition(InitPos);
-	transform.LookAt(InitTarget);
+	transform->SetPosition(InitPos);
+	transform->LookAt(InitTarget);
 	viewAngle = InitViewAngle;
 	viewAspect = InitViewAspect;
 	viewNear = InitViewNear;
@@ -62,7 +62,7 @@ void Camera::Update()
 		plugin->Update();
 	}
 	
-	Transform workTransform = transform;
+	Transform workTransform = *transform;
 
 	//ƒvƒ‰ƒOƒCƒ“”½‰f
 	for (auto& plugin : pluginList)
@@ -201,19 +201,11 @@ ViewFrustum Camera::GetViewFrustrum() const
 }
 
 /**************************************
-TransformŽæ“¾ˆ—
-***************************************/
-Transform Camera::GetTransform() const
-{
-	return transform;
-}
-
-/**************************************
 ‘ã“ü‰‰ŽZŽq
 ***************************************/
 Camera & Camera::operator=(const Camera & rhs)
 {
-	this->transform = rhs.transform;
+	*(this->transform) = *(rhs.transform);
 	this->viewAngle = rhs.viewAngle;
 	this->viewAspect = rhs.viewAspect;
 	this->viewNear = rhs.viewNear;

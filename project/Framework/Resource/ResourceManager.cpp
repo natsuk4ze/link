@@ -10,6 +10,7 @@
 
 #include "MeshResource.h"
 #include "PolygonResource.h"
+#include "AnimationResource.h"
 
 /**************************************
 マクロ定義
@@ -173,6 +174,22 @@ void ResourceManager::ReleaseEffect(const char * path)
 }
 
 /**************************************
+スキンメッシュ読み込み処理
+***************************************/
+void ResourceManager::LoadSkinMesh(const char * path)
+{
+	std::string key = std::string(path);
+
+	//登録確認
+	if (skinMeshPool.count(key) != 0)
+		return;
+
+	AnimationResource *ptr = new AnimationResource();
+	ptr->Load(path, path);
+	skinMeshPool[key] = ptr;
+}
+
+/**************************************
 板ポリゴン参照処理
 ***************************************/
 bool ResourceManager::GetPolygon(const char* tag, BoardPolygon* pOut)
@@ -204,6 +221,20 @@ bool ResourceManager::GetEffect(const char * path, LPD3DXEFFECT & pOut)
 }
 
 /**************************************
+スキンメッシュ取得処理
+***************************************/
+bool ResourceManager::GetSkinMesh(const char * path, AnimContainer* pOut)
+{
+	std::string key = std::string(path);
+
+	if (skinMeshPool.count(key) == 0)
+		LoadSkinMesh(path);
+
+	skinMeshPool[key]->Clone(pOut);
+	return true;
+}
+
+/**************************************
 全リソース解放処理
 ***************************************/
 void ResourceManager::AllRelease()
@@ -231,4 +262,12 @@ void ResourceManager::AllRelease()
 		SAFE_RELEASE(pair.second);
 	}
 	effectPool.clear();
+
+	for (auto&& pair : skinMeshPool)
+	{
+		SAFE_DELETE(pair.second);
+	}
+	skinMeshPool.clear();
+
+
 }

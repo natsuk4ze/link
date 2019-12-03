@@ -23,11 +23,11 @@ void FieldCamera::FieldCameraArround::OnStart(FieldCamera & entity)
 	const D3DXVECTOR3 targetPos = Field::FieldPosition(25, 25).ConvertToWorldPosition();
 	entity.cameraAngle = -180.0f;
 	const D3DXVECTOR3 startPosition = D3DXVECTOR3(0.0f, 200.0f, -100.0f);
-	entity.startPosition = entity.transform.GetPosition();
+	entity.startPosition = entity.transform->GetPosition();
 	entity.cntFrame = 0;
 	D3DXVECTOR3 vec = startPosition - Vector3::Zero;
 	entity.distance = D3DXVec2Length(&D3DXVECTOR2(vec.x, vec.z));
-	entity.transform.LookAt(targetPos);
+	entity.transform->LookAt(targetPos);
 
 	// 移動先
 	entity.goalPosition = startPosition;
@@ -48,8 +48,8 @@ FieldCamera::Mode FieldCamera::FieldCameraArround::OnUpdate(FieldCamera & entity
 		// イージングで移動
 		float t = (float)entity.cntFrame / MoveDuration;
 		D3DXVECTOR3 position = Easing::EaseValue(t, entity.startPosition, entity.goalPosition + targetPos, EaseType::InOutCirc);
-		entity.transform.SetPosition(position);
-		entity.transform.LookAt(targetPos);
+		entity.transform->SetPosition(position);
+		entity.transform->LookAt(targetPos);
 	}
 	else
 	{
@@ -59,11 +59,11 @@ FieldCamera::Mode FieldCamera::FieldCameraArround::OnUpdate(FieldCamera & entity
 		{
 			entity.cameraAngle -= 360.0f;
 		}
-		D3DXVECTOR3 position = entity.transform.GetPosition() - targetPos;
+		D3DXVECTOR3 position = entity.transform->GetPosition() - targetPos;
 		position.x = entity.distance * sinf(D3DXToRadian(entity.cameraAngle));
 		position.z = entity.distance * cosf(D3DXToRadian(entity.cameraAngle));
-		entity.transform.SetPosition(position + targetPos);
-		entity.transform.LookAt(targetPos);
+		entity.transform->SetPosition(position + targetPos);
+		entity.transform->LookAt(targetPos);
 	}
 	return FieldCamera::Arround;
 }
