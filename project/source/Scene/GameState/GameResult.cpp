@@ -22,6 +22,9 @@
 //=====================================
 void GameScene::GameResult::OnStart(GameScene & entity)
 {
+	// 最下位のスコアを取得
+	entity.Client->GetLastScore();
+
 	//スコア表示、名前入力などなど
 	// カメラのモード切り替え
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::Arround);
@@ -40,10 +43,6 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	{
 		entity.field->SetScore();
 	}
-
-	// 受信スレッド開始
-	//entity.ReceiveThreadStart();
-	entity.Client->GetLastScore();
 
 	// リザルト用のUIにAI発展レベルを渡す
 	int cityScore = (int)entity.field->GetScore(Field::FieldLevel::City);

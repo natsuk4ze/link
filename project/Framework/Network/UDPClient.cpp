@@ -11,6 +11,8 @@
 // スタティック変数宣言
 //*****************************************************************************
 HANDLE UDPClient::Thread = 0;
+SOCKET UDPClient::ClientSocket = 0;
+sockaddr_in UDPClient::ServerAddress;
 
 //=============================================================================
 // コンストラクタ
@@ -19,7 +21,6 @@ UDPClient::UDPClient()
 {
 	Text = new TextureDrawer(D3DXVECTOR2(450.0f, 150.0f), 1, 2);
 	Text->LoadTexture("data/TEXTURE/Viewer/ResultViewer/NetworkText.png");
-	//Text->LoadTexture("data/TEXTURE/Viewer/ResultViewer/Text.png");
 	Text->SetPosition(D3DXVECTOR3(1600.0f, 100.0f, 0.0f));
 
 	// WinSock初期化
@@ -72,33 +73,15 @@ UDPClient::~UDPClient()
 //=============================================================================
 void UDPClient::Update(void)
 {
+	if (!InLoading)
+		return;
+
 	Text->Update();
-
-	//if (!InMultiThread)
-	//	return;
-
-	//DWORD Result = WaitForSingleObject(Thread, 0);
-	//// スレッド正常終了
-	//if (Result == WAIT_OBJECT_0)
-	//{
-	//	Thread = 0;
-	//	InMultiThread = false;
-	//	TimeoutCount = 0;
-	//}
-	//// タイムアウト
-	//else if (Result == WAIT_TIMEOUT)
-	//{
-	//	TimeoutCount++;
-	//	// 10回リクエスト、応答がなかったら更新終了
-	//	RetryGetLastScore();
-	//	if (TimeoutCount >= 10)
-	//	{
-	//		InMultiThread = false;
-	//		TimeoutCount = 0;
-	//	}
-	//}
 }
 
+//=============================================================================
+// 描画処理
+//=============================================================================
 void UDPClient::Draw(void)
 {
 	if (!InLoading)
@@ -158,11 +141,11 @@ void UDPClient::SendEventPacket(string EventNo, string FieldLevel)
 //=============================================================================
 // イベント中継パケット送信
 //=============================================================================
-void UDPClient::SendEventPacket(EventConfig::EventType EventNo, int FieldLevel)
+void UDPClient::SendEventPacket(int EventNo, int FieldLevel)
 {
 	string EventNoStr = std::to_string(EventNo);
 	string FieldLevelStr = std::to_string(FieldLevel);
-	SendRankPacket(EventNoStr, FieldLevelStr);
+	SendEventPacket(EventNoStr, FieldLevelStr);
 }
 
 //=============================================================================
@@ -226,9 +209,9 @@ void UDPClient::GetScorePacket(void)
 }
 
 //=============================================================================
-// セカンドスレッド
+// リクエスト
 //=============================================================================
-void UDPClient::RetryGetLastScore(void)
+void UDPClient::TryGetLastScore(void)
 {
 	// データ送信
 	string Message;
@@ -244,15 +227,18 @@ void UDPClient::RetryGetLastScore(void)
 	sendto(ClientSocket, Message.c_str(), Message.length() + 1, 0, (sockaddr*)&ServerAddress, AddressLength);
 }
 
+//=============================================================================
+// イベント中継パケット送信
+//=============================================================================
 unsigned long long UDPClient::GetLastScore(void)
 {
 	ReceiveSuccess = false;
-	TimeoutCount = 0;
 	InLoading = true;
+	TimeoutCount = 0;
 	Text->SetAlpha(1.0f);
 
 	// スレッドまだ解放されないので、もう一度サーバーにリクエスト
-	RetryGetLastScore();
+	TryGetLastScore();
 
 	while (TimeoutCount <= 60)
 	{
@@ -270,7 +256,7 @@ unsigned long long UDPClient::GetLastScore(void)
 
 			// リクエスト
 			if (TimeoutCount % 3 == 0)
-				RetryGetLastScore();
+				TryGetLastScore();
 		}
 	}
 

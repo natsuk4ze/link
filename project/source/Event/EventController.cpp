@@ -26,6 +26,7 @@
 #include "../../Framework/Camera/CameraShakePlugin.h"
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Particle/BaseEmitter.h"
+#include "../../Framework/Network/UDPClient.h"
 
 #include "../Field/Place/FieldPlaceModel.h"
 #include "../Viewer/GameScene/Controller/EventViewer.h"
@@ -137,7 +138,7 @@ void EventController::Update()
 #if _DEBUG
 	if (Keyboard::GetTrigger(DIK_F))
 	{
-		EventVec.push_back(new NewTownEventCtrl(eventViewer, Field::Space, camera));
+		//EventVec.push_back(new NewTownEventCtrl(eventViewer, Field::Space, camera));
 	}
 #endif
 
@@ -350,6 +351,12 @@ bool EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 				{
 					// イベントメッセージ設置
 					eventViewer->SetEventMessage(Ptr->GetEventMessage(FieldLevel));
+
+					// イベント中継パケットを送信
+					if (flgPause)
+					{
+						UDPClient::SendEventPacket(EventPlace->EventType, FieldLevel);
+					}
 
 					// イベントベクトルにプッシュ
 					EventVec.push_back(Ptr);

@@ -415,12 +415,12 @@ void GameScene::DebugTool()
 	Debug::NewLine();
 	if (Debug::Button("SendPacket"))
 	{
-		Client->SendRankPacket("000102","123456789");
+		UDPClient::SendRankPacket("000102","123456789");
 	}
 	Debug::SameLine();
 	if (Debug::Button("GetLastScore"))
 	{
-		ReceiveThreadStart();
+		Client->GetLastScore();
 	}
 
 	Debug::Text("State");
@@ -478,6 +478,9 @@ void GameScene::SetFieldLevel(int level)
 
 	//フィールドレベルを設定
 	field->SetLevel((Field::FieldLevel)level);
+
+	// フィールドレベルアップパケットを送信
+	UDPClient::SendLevelUpPacket();
 
 	//レベル固有のパーティクルマネージャ初期化
 	start = ProfilerCPU::GetCounter();
@@ -543,21 +546,4 @@ void GameScene::Clear()
 	end = ProfilerCPU::GetCounter();
 
 	Debug::Log("Clear Event : %f", ProfilerCPU::CalcElapsed(start, end));
-}
-
-/**************************************
-サーバーから受信のスレッドを始める
-***************************************/
-void GameScene::ReceiveThreadStart(void)
-{
-	if (UDPClient::Thread == 0)
-	{
-		// クライアント受信スレッド開始
-		UDPClient::Thread = (HANDLE)_beginthreadex(NULL, 0, UDPClient::ThreadEntryPoint, Client, 0, NULL);
-	}
-	else
-	{
-		// スレッドまだ解放されないので、もう一度サーバーにリクエスト
-		Client->RetryGetLastScore();
-	}
 }

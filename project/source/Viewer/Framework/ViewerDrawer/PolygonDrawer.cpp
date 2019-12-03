@@ -103,10 +103,10 @@ void PolygonDrawer::Draw()
 	Transform transform = Transform(Pos, Rot, Scale);
 	D3DXMATRIX WorldMatrix = transform.GetMatrix();
 
-	if (Movable)
-	{
-		//SetFade(WorldMatrix);
-	}
+	//if (Movable)
+	//{
+	//	SetFade(WorldMatrix);
+	//}
 
 	BoardPolygon::Draw(WorldMatrix);
 }

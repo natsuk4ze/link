@@ -126,9 +126,6 @@ private:
 	//クリア処理
 	void Clear();
 
-	//サーバーから受信のスレッドを始める
-	void ReceiveThreadStart(void);
-
 	//static定数メンバ
 	static const float BloomPower[3];
 	static const float BloomThrethold[3];
