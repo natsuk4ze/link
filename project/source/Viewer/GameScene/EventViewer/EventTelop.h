@@ -16,6 +16,7 @@
 // 前方宣言
 //*****************************************************************************
 class BaseViewerDrawer;
+class ViewerAnimater;
 
 //*****************************************************************************
 // クラス定義
@@ -52,33 +53,13 @@ public:
 private:
 	BaseViewerDrawer *text;
 	BaseViewerDrawer *bg;
+	ViewerAnimater *anim;
 
 	//再生終了通知
-	std::function<void(void)> Callback;
+	std::function<void(void)> Callback = nullptr;
 
-	//再生
-	void Play();
-
-	//テクスチャ情報受け渡し
+	//テクスチャUVセット処理
 	void SetTexture(TelopID id);
-
-	//背景をオープン
-	void OpenBG(void);
-
-	//背景をクローズ
-	void CloseBG(void);
-
-	//再生中かどうか
-	bool isPlaying;
-
-	//フレームカウント
-	int countFrame;
-
-	//現在のアニメーション
-	int currentAnim;
-
-	//アニメーション時間
-	float animTime;
 };
 
 #endif

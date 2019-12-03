@@ -66,7 +66,7 @@ void OperationExplanationViewer::Draw(void)
 }
 
 //=============================================================================
-// テクスチャ情報受け渡し処理
+// テクスチャUVセット処理
 //=============================================================================
 void OperationExplanationViewer::SetTexture(OperationID id0, OperationID id1, OperationID id2)
 {

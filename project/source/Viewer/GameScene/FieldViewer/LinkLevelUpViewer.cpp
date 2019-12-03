@@ -4,70 +4,25 @@
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#include "../../../../main.h"
-#include"../../../../Framework/Math/Easing.h"
-#include "../../../../Framework/Math/TMath.h"
-#include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
-#include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
 #include "LinkLevelUpViewer.h"
 
-//*****************************************************************************
-// グローバル変数
-//*****************************************************************************
-
-//アニメーションの数
-static const int animMax = 3;
-
-//テキストアニメーション開始位置
-static const float textStartPositionY[animMax] = {
-	SCREEN_HEIGHT/3*2,
-	SCREEN_CENTER_Y,
-	SCREEN_CENTER_Y
-};
-
-//テキストアニメーション終了位置
-static const float textEndPositionY[animMax] = {
-	SCREEN_CENTER_Y,
-	SCREEN_CENTER_Y,
-	SCREEN_HEIGHT/3
-};
-
-//アニメーション種類
-static const EaseType animType[animMax] = {
-	OutCubic,
-	OutBack,
-	InCubic,
-};
-
-//アニメーション間隔(ここを変更するとアニメーションの速さを調整できる)
-//*注意(0を入れると無限大になるからアニメーションそのものを削除すること)
-static const float animDuration[animMax] = {
-	15,
-	30,
-	15,
-};
-
-//アニメーションシーン
-enum AnimScene
-{
-	FadeIn_Text_PopIn,
-	Wait,
-	FadeOut_Text_PopOut,
-};
+#include "../../../../main.h"
+#include "../../Framework/ViewerAnimater/ViewerAnimater.h"
+#include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
+#include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
 
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
 LinkLevelUpViewer::LinkLevelUpViewer() :
-	currentAnim(0),
-	callback(nullptr)
+	Callback(nullptr)
 {
 	//テキスト
 	text = new BaseViewerDrawer();
 	text->LoadTexture("data/TEXTURE/Viewer/FieldViewer/LinkLevelUpViewer/Text.png");
 	text->size = D3DXVECTOR3(750.0f, 140.0f, 0.0f);
 	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	text->position = D3DXVECTOR3(SCREEN_CENTER_X, textStartPositionY[0], 0.0f);
+	text->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_HEIGHT / 3 * 2, 0.0f);
 	text->MakeVertex();
 	text->SetAlpha(0.0f);
 
@@ -101,6 +56,56 @@ LinkLevelUpViewer::LinkLevelUpViewer() :
 	plus->position = D3DXVECTOR3(SCREEN_CENTER_X - num->intervalPosScr, SCREEN_HEIGHT / 2 / 1.5, 0.0f);
 	plus->MakeVertex();
 	plus->SetAlpha(0.0f);
+
+	//アニメーション
+	for (int i = 0; i < AnimLayer::Max; i++)
+	{
+		anim[i] = new ViewerAnimater();
+	}
+
+	std::vector<std::function<void()>> textVec = {
+	[=] {
+		//テキストをスクリーンイン
+		anim[Text]->Move(*text, D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_HEIGHT / 3 * 2), D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_CENTER_Y), 15.0f, OutCubic,[=]
+		{
+			//サブアニメーションでフェードイン
+			anim[Text]->SubFade(*text, 0.0f, 1.0f,0.50f,OutCirc);
+		});
+	},
+	[=] {
+		//テキスト待機
+		anim[Text]->Wait(30.0f);
+	},
+	[=] {
+		//テキストをスクリーンアウト
+		anim[Text]->Move(*text, D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_CENTER_Y), D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_HEIGHT/3), 15.0f, InCubic,[=]
+		{
+			//サブアニメーションでフェードアウト
+			anim[Text]->SubFade(*text, 1.0f, 0.0f,1.0f,InCubic);
+		});
+	} };
+
+	std::vector<std::function<void()>> bgVec = {
+	[=] {
+		//数字をスケール
+		anim[BG]->Scale(*num,D3DXVECTOR2(0.0f, 0.0f),D3DXVECTOR2(100.0f, 100.0f),15.0f,OutBack,[=]
+		{
+			//背景出現
+			AppearBG();
+		});
+	},
+	[=]{
+		//待機
+		anim[BG]->Wait(45.0f,[=]
+		{
+			//背景消失
+			DisAppearBG();
+		});
+	}
+	};
+
+	anim[Text]->SetAnimBehavior(textVec);
+	anim[BG]->SetAnimBehavior(bgVec);
 }
 
 //*****************************************************************************
@@ -112,6 +117,10 @@ LinkLevelUpViewer::~LinkLevelUpViewer()
 	SAFE_DELETE(laurel);
 	SAFE_DELETE(plus);
 	SAFE_DELETE(num);
+	for (int i = 0; i < AnimLayer::Max; i++)
+	{
+		SAFE_DELETE(anim[i]);
+	}
 }
 
 //=============================================================================
@@ -119,8 +128,14 @@ LinkLevelUpViewer::~LinkLevelUpViewer()
 //=============================================================================
 void LinkLevelUpViewer::Update()
 {
-	//ビュアー再生処理
-	Play();
+	if (!isPlaying) return;
+
+	//アニメーション再生
+	anim[Text]->PlayAnim([=]
+	{
+		anim[Text]->SetPlayFinished(isPlaying, Callback);
+	});
+	anim[BG]->PlayAnim(nullptr);
 }
 
 //=============================================================================
@@ -146,113 +161,23 @@ void LinkLevelUpViewer::Draw(void)
 }
 
 //=============================================================================
-// ビュアー再生処理
+// 背景出現処理
 //=============================================================================
-void LinkLevelUpViewer::Play()
+void LinkLevelUpViewer::AppearBG()
 {
-	//再生中なら描画
-	if (!isPlaying) return;
-
-	//フレーム更新
-	countFrame++;
-
-	//時間更新
-	animTime = countFrame / animDuration[currentAnim];
-
-	//シーン毎に実行するサブアニメーション
-	switch (currentAnim)
-	{
-	case(FadeIn_Text_PopIn):
-		FadeIn();
-		InNum();
-		break;
-	case(FadeOut_Text_PopOut):
-		FadeOut();
-		break;
-	default:
-		break;
-	}
-
-	//ポジションを更新
-	text->position.y = Easing::EaseValue(animTime,
-		textStartPositionY[currentAnim],
-		textEndPositionY[currentAnim],
-		animType[currentAnim]);
-
-	//アニメーション更新
-	if (countFrame == animDuration[currentAnim])
-	{
-		countFrame = 0;
-		currentAnim++;
-	}
-
-	//アニメーション終了
-	if (currentAnim >= animMax)
-	{
-		countFrame = 0;
-		currentAnim = 0;
-		text->position.y = textStartPositionY[0];
-		num->size = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		isPlaying = false;
-
-		if (callback != nullptr)
-			callback();
-	}
+	anim[BG]->SubFade(*plus, 0.0f, 1.0f, 0.50f, OutBack);
+	anim[BG]->SubFade(*laurel, 0.0f, 1.0f, 0.50f, OutBack);
+	anim[BG]->SubFade(*num, 0.0f, 1.0f, 0.50f, OutBack);
 }
 
 //=============================================================================
-// テキストフェードイン処理
+// 背景消失処理
 //=============================================================================
-void LinkLevelUpViewer::FadeIn(void)
+void LinkLevelUpViewer::DisAppearBG()
 {
-	//イージングのスタートとゴールを設定
-	float easingStart = 0.0f;
-	float easingGoal = 1.0f;
-
-	//テクスチャのα値
-	float alpha;
-
-	alpha = Easing::EaseValue(animTime, easingStart, easingGoal, animType[FadeIn_Text_PopIn]);
-
-	//α値をセット
-	text->SetAlpha(alpha);
-	laurel->SetAlpha(alpha);
-	num->SetAlpha(alpha);
-	plus->SetAlpha(alpha);
-}
-
-//=============================================================================
-// テキストフェードアウト処理
-//=============================================================================
-void LinkLevelUpViewer::FadeOut(void)
-{
-	//イージングのスタートとゴールを設定
-	float easingStart = 1.0f;
-	float easingGoal = 0.0f;
-
-	//テクスチャのα値
-	float alpha;
-
-	alpha = Easing::EaseValue(animTime, easingStart, easingGoal, animType[FadeOut_Text_PopOut]);
-
-	//α値をセット
-	text->SetAlpha(alpha);
-	laurel->SetAlpha(alpha);
-	num->SetAlpha(alpha);
-	plus->SetAlpha(alpha);
-}
-
-//=============================================================================
-// 数字出現処理
-//=============================================================================
-void LinkLevelUpViewer::InNum()
-{
-	//イージングのスタートとゴールを設定
-	float easingStart = 0.0f;
-	float easingGoal = 100.0f;
-
-	num->size.x = Easing::EaseValue(animTime, easingStart, easingGoal, OutBack);
-	num->size.y = Easing::EaseValue(animTime, easingStart, easingGoal, OutBack);
+	anim[BG]->SubFade(*plus, 1.0f, 0.0f, 0.50f, OutBack);
+	anim[BG]->SubFade(*laurel, 1.0f, 0.0f, 0.50f, OutBack);
+	anim[BG]->SubFade(*num, 1.0f, 0.0f, 0.50f, OutBack);
 }
 
 //=============================================================================
@@ -263,13 +188,11 @@ void LinkLevelUpViewer::Set(int level, std::function<void()> callback)
 	//パラメータを受け取る
 	parameterBox = level;
 
+	anim[Text]->ResetAnim();
+	anim[BG]->ResetAnim();
+
 	//再生状態にする
 	isPlaying = true;
 
-	countFrame = 0;
-	currentAnim = 0;
-	text->position.y = textStartPositionY[0];
-	num->size = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	this->callback = callback;
+	this->Callback = callback;
 }

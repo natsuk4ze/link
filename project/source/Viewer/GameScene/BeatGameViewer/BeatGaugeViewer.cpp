@@ -4,18 +4,12 @@
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#include "../../../../main.h"
-#include"../../../../Framework/Math/Easing.h"
-#include "../../../../Framework/Math/TMath.h"
-#include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "BeatGaugeViewer.h"
 
-#ifdef _DEBUG
-
-#include "../../../../Framework/Input/input.h"
-#include "../../../../Framework/Tool/DebugWindow.h"
-
-#endif
+#include "../../../../main.h"
+#include "../../Framework/BaseViewer.h"
+#include "../../Framework/ViewerAnimater/ViewerAnimater.h"
+#include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 
 //*****************************************************************************
 // コンストラクタ
@@ -39,6 +33,15 @@ BeatGaugeViewer::BeatGaugeViewer()
 	frame->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_HEIGHT/3*2.40f, 0.0f);
 	frame->MakeVertex();
 	frame->SetTexture(1, 2, 2);
+
+	//アニメーション
+	anim = new ViewerAnimater();
+	std::vector<std::function<void()>> vec = {
+	[=] {
+		//振動
+		anim->Shake(*frame, D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_HEIGHT / 3 * 2.40f), 5.0f);
+	} };
+	anim->SetAnimBehavior(vec);
 }
 
 //*****************************************************************************
@@ -48,6 +51,7 @@ BeatGaugeViewer::~BeatGaugeViewer()
 {
 	SAFE_DELETE(bar);
 	SAFE_DELETE(frame);
+	SAFE_DELETE(anim);
 }
 
 //=============================================================================
@@ -55,8 +59,13 @@ BeatGaugeViewer::~BeatGaugeViewer()
 //=============================================================================
 void BeatGaugeViewer::Update()
 {
-	//振動制御
-	HandleShake();
+	//ゲージパーセントが小さくなったら振動
+	if (isCurrentSmallerLast(gaugePer)) isPlaying = true;
+	if (!isPlaying) return;
+	anim->PlayAnim([=]
+	{
+		anim->SetPlayFinished(isPlaying);
+	});
 }
 
 //=============================================================================
@@ -72,67 +81,6 @@ void BeatGaugeViewer::Draw(void)
 }
 
 //=============================================================================
-// 振動制御処理
-//=============================================================================
-void BeatGaugeViewer::HandleShake()
-{
-	//とりあえずパラメータの差で実装
-	currentParam = gaugePer;
-
-	if (currentParam < lastParam)
-	{
-		shouldShake = true;
-	}
-
-	lastParam = gaugePer;
-
-	//振動させるべきなら実行
-	if (shouldShake)
-	{
-		Shake();
-	}
-}
-
-//=============================================================================
-// 振動処理
-//=============================================================================
-void BeatGaugeViewer::Shake()
-{
-	//何回振動させるか
-	const int shakeNum = 400;
-	//どのくらいの振れ幅か
-	const float shakeValue = 3.0f;
-	//どのくらいの時間振動させるか
-	const float shakeTime = 2.0f;
-	//初期座標
-	const float initPosX = SCREEN_CENTER_X;
-	const float initPosY = SCREEN_HEIGHT / 3 * 2.40f;
-	//イージングのスタートとゴールを設定
-	const float easingStart = 0.0f;
-	const float easingGoal = D3DX_PI * shakeNum;
-
-	countFrame++;
-	animTime = countFrame / shakeTime;
-
-	radian = Easing::EaseValue(animTime, easingStart, easingGoal, OutCirc);
-
-	frame->position.x = initPosX + shakeValue * sinf(radian);
-	frame->position.y = initPosY + shakeValue * sinf(radian);
-
-	if (radian >= easingGoal)
-	{
-		//座標を初期化
-		frame->position.x = initPosX;
-		frame->position.y = initPosY;
-
-		radian = 0.0f;
-		countFrame = 0;
-		animTime = 0;
-		shouldShake = false;
-	}
-}
-
-//=============================================================================
 // ゲージバー描画処理
 //=============================================================================
 void BeatGaugeViewer::DrawBar(void)
@@ -141,9 +89,9 @@ void BeatGaugeViewer::DrawBar(void)
 
 	// 頂点座標の設定
 	bar->vertexWk[0].vtx = bar->position + D3DXVECTOR3(-bar->size.x / 2, -bar->size.y / 2, 0.0f);
-	bar->vertexWk[1].vtx = bar->position + D3DXVECTOR3(-bar->size.x/2 + (bar->size.x*gaugePer), -bar->size.y / 2, 0.0f);
+	bar->vertexWk[1].vtx = bar->position + D3DXVECTOR3(-bar->size.x / 2 + (bar->size.x*gaugePer), -bar->size.y / 2, 0.0f);
 	bar->vertexWk[2].vtx = bar->position + D3DXVECTOR3(-bar->size.x / 2, bar->size.y / 2, 0.0f);
-	bar->vertexWk[3].vtx = bar->position + D3DXVECTOR3(-bar->size.x/2 + (bar->size.x*gaugePer), bar->size.y / 2, 0.0f);
+	bar->vertexWk[3].vtx = bar->position + D3DXVECTOR3(-bar->size.x / 2 + (bar->size.x*gaugePer), bar->size.y / 2, 0.0f);
 
 	// 頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);

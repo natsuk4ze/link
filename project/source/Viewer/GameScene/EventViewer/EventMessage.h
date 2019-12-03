@@ -1,4 +1,3 @@
-
 //=============================================================================
 //
 // イベントメッセージ処理 [EventMessage.h]
@@ -16,6 +15,7 @@
 //*****************************************************************************
 class BaseViewerDrawer;
 class TextViewer;
+class ViewerAnimater;
 
 //*****************************************************************************
 // クラス定義
@@ -29,36 +29,19 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	//メッセージセット
+	//メッセージセット処理
 	void SetEventMessage(const std::string &message, int &cnt);
 
-	//メッセージセットカウンター
-	int messageSetCnt;
-
-	//再生中かどうか
-	bool isPlaying;
+	//再生状態取得処理
+	bool GetIsPlaying(void);
 
 private:
 	BaseViewerDrawer *bg;
 	TextViewer *text;
+	ViewerAnimater *anim;
 
-	//アニメーション時間
-	float animTime;
-
-	//フレームカウント
-	int countFrame;
-
-	//現在再生中のアニメーション
-	int currentAnim;
-
-	//α値
-	float alpha = 1.0f;
-
-	//再生処理
-	void Play(void);
-
-	//フェードアウト処理
-	void FadeOut(void);
+	//メッセージセットカウンター
+	int messageSetCnt;
 };
 
 #endif

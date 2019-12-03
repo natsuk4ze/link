@@ -193,7 +193,6 @@
     <ClInclude Include="source\Event\EventActor\PlanetActor.h" />
     <ClInclude Include="source\Field\Object\WorldBackGroundContainer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.h" />
-    <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldTelop.h" />
     <ClInclude Include="source\Field\Object\SpaceBackGroundContainer.h" />
     <ClInclude Include="source\Shader\RiverEffect.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.h" />
@@ -289,6 +288,7 @@
     <ClInclude Include="Framework\Effect\MophingEffect.h" />
     <ClInclude Include="source\Effect\Game\Space\MoveTail.h" />
     <ClInclude Include="source\Effect\Game\Space\StarDust.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerAnimater\ViewerAnimater.h" />
     <ClInclude Include="source\Reward\RewardController.h" />
     <ClInclude Include="source\Reward\Reward.h" />
     <ClInclude Include="source\Reward\CountupReward.h" />
@@ -299,6 +299,7 @@
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseTextureDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\TextureDrawer.h" />
     <ClInclude Include="Framework\Resource\AnimationResource.h" />
+>>>>>>> 031cf492c32a481dc42020531b4d31c64a9cff82
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Animation\AnimationManager.cpp" />
@@ -528,7 +529,6 @@
     <ClCompile Include="source\Viewer\GameScene\EventViewer\EventTelop.cpp" />
     <ClCompile Include="source\Viewer\GameScene\Controller\EventViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\FieldViewer\FieldTelop.cpp" />
     <ClCompile Include="source\Viewer\GameScene\Controller\FieldViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\LinkLevelUpViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.cpp" />
@@ -563,6 +563,7 @@
     <ClCompile Include="source\Effect\Game\Space\MoveTail.cpp" />
     <ClCompile Include="source\Effect\Game\Space\StarDust.cpp" />
     <ClCompile Include="source\Effect\Game\General\Darkness.cpp" />
+    <ClCompile Include="source\Viewer\Framework\ViewerAnimater\ViewerAnimater.cpp" />
     <ClCompile Include="source\Reward\RewardController.cpp" />
     <ClCompile Include="source\Reward\Reward.cpp" />
     <ClCompile Include="source\Reward\CountupReward.cpp" />
@@ -823,7 +824,6 @@
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\ParameterContainer\EventViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.h" />
-    <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldTelop.h" />
     <ClInclude Include="source\Viewer\GameScene\Controller\FieldViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\LinkLevelUpViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.h" />

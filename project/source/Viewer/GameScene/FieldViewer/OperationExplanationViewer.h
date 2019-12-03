@@ -1,4 +1,3 @@
-
 //=============================================================================
 //
 // 操作説明ビューア処理 [OperationExplanationViewer.h]
@@ -58,14 +57,8 @@ private:
 	//テキスト
 	BaseViewerDrawer * text[textMax];
 
-	//テクスチャ情報受け渡し
+	//テクスチャUVセット処理
 	void SetTexture(OperationID id0, OperationID id1, OperationID id2);
-
-	//再生中かどうか
-	bool isPlaying;
-
-	//フレームカウント
-	int countFrame;
 };
 
 #endif
