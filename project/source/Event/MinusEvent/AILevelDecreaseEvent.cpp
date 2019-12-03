@@ -269,7 +269,8 @@ void AILevelDecreaseEvent::CountdownStart(void)
 	D3DXVECTOR3 diff = Vector3::Normalize(camera->GetPosition() - UFOPos);
 	D3DXVECTOR3 guidePos = UFOPos + diff * 5.0f + Vector3::Down * 2.0f;
 
-	Tween::Move(*guideActor, TownPos, guidePos, 15, EaseType::OutCubic);
+	guideActor->SetPosition(TownPos);
+	guideActor->Move(guidePos, 60);
 
 	guideActor->SetActive(true);
 }

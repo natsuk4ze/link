@@ -137,6 +137,7 @@
     <ClInclude Include="source\Effect\Game\General\AngryFace.h" />
     <ClInclude Include="source\Effect\Game\City\BlueDebris.h" />
     <ClInclude Include="source\Effect\Game\City\BlueSpark.h" />
+    <ClInclude Include="source\Effect\Game\General\AuraEffect.h" />
     <ClInclude Include="source\Effect\Game\General\Cloud.h" />
     <ClInclude Include="source\Effect\Game\General\EventInfo.h" />
     <ClInclude Include="source\Effect\Game\Space\Blackhole.h" />
@@ -413,6 +414,7 @@
     <ClCompile Include="source\Effect\Game\General\AngryFace.cpp" />
     <ClCompile Include="source\Effect\Game\City\BlueDebris.cpp" />
     <ClCompile Include="source\Effect\Game\City\BlueSpark.cpp" />
+    <ClCompile Include="source\Effect\Game\General\AuraEffect.cpp" />
     <ClCompile Include="source\Effect\Game\General\Cloud.cpp" />
     <ClCompile Include="source\Effect\Game\General\Darkness.cpp" />
     <ClCompile Include="source\Effect\Game\General\EventInfo.cpp" />

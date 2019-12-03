@@ -7,6 +7,9 @@
 //=====================================
 #include "GuideActor.h"
 #include "../../../../Framework/Tool/DebugWindow.h"
+#include "../../../../Framework/Tween/Tween.h"
+#include "../../../Effect/GameParticleManager.h"
+#include "../../../../Framework/Particle/BaseEmitter.h"
 
 //=====================================
 // スタティックメンバ初期化
@@ -35,7 +38,8 @@ const char* GuideActor::FileName = "data/MODEL/Robot.X";
 //=====================================
 // コンストラクタ
 //=====================================
-GuideActor::GuideActor()
+GuideActor::GuideActor() :
+	auraEmitter(nullptr)
 {
 	transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	transform->SetScale(Vector3::One);
@@ -69,6 +73,9 @@ GuideActor::~GuideActor()
 {
 	//animのデストラクタは不要
 	SAFE_DELETE(anim);
+
+	if (auraEmitter != nullptr)
+		auraEmitter->SetActive(false);
 }
 
 //=====================================
@@ -78,6 +85,8 @@ void GuideActor::Update()
 {
 	anim->Update();
 
+	if (auraEmitter != nullptr)
+		auraEmitter->SetPosition(transform->GetPosition());
 	Debug();
 }
 
@@ -110,6 +119,22 @@ void GuideActor::LookAt(const D3DXVECTOR3 & pos)
 void GuideActor::ChangeAnim(AnimState next)
 {
 	anim->ChangeAnim((UINT)next, true);
+}
+
+//=====================================
+// 移動処理
+//=====================================
+void GuideActor::Move(const D3DXVECTOR3 & target, int duration)
+{
+		auraEmitter = GameParticleManager::Instance()->SetAuraEffect(
+		transform->GetPosition(),
+		transform->GetPosition() - target);
+
+	Tween::Move(*this, target, duration, EaseType::OutCubic, [&]()
+	{
+		auraEmitter->SetActive(false);
+		auraEmitter = nullptr;
+	});
 }
 
 //=====================================

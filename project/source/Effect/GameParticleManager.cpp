@@ -19,6 +19,7 @@
 #include "Game/General/LinkLevelUp.h"
 #include "Game/General/Cloud.h"
 #include "Game/General/EventInfo.h"
+#include "Game\General\AuraEffect.h"
 
 /**************************************
 staticメンバ
@@ -44,6 +45,7 @@ void GameParticleManager::Init()
 	controllers[GameParticle::LinkLevelUp] = new Effect::Game::LinkLevelUpController();
 	controllers[GameParticle::Cloud] = new Effect::Game::CloudController();
 	controllers[GameParticle::EventInfo] = new Effect::Game::EventInfoEffectController();
+	controllers[GameParticle::BlueAura] = new Effect::Game::AuraEffectController();
 
 	crossFilter->SetPower(BloomPower[0], BloomPower[1], BloomPower[2]);
 	crossFilter->SetThrethold(BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]);
@@ -95,4 +97,13 @@ void GameParticleManager::SetAngryFaceEffect(std::function<void(void)> callback)
 void GameParticleManager::SetDarknessEffect(const D3DXVECTOR3 & position, std::function<void(void)> callback)
 {
 	controllers[GameParticle::Darkness]->SetEmitter(position, nullptr);
+}
+
+/**************************************
+オーラエフェクトセット処理
+***************************************/
+BaseEmitter* GameParticleManager::SetAuraEffect(const D3DXVECTOR3 & position, const D3DXVECTOR3 & direction, std::function<void()> callback)
+{
+	Effect::Game::AuraEffectController* controller = dynamic_cast<Effect::Game::AuraEffectController*>(controllers[GameParticle::BlueAura]);
+	return controller->SetEmitter(position, direction, callback);
 }

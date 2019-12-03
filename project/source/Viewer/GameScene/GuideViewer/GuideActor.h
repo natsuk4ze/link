@@ -11,6 +11,8 @@
 #include "../../../../Framework/Core/GameObject.h"
 #include "../../../../Framework/Animation/AnimationManager.h"
 
+class BaseEmitter;
+
 //**************************************
 // クラス定義
 //**************************************
@@ -61,8 +63,11 @@ public:
 
 	void ChangeAnim(AnimState next);
 
+	void Move(const D3DXVECTOR3& target, int duration);
+
 private:
 	AnimationManager* anim;					// アニメーションマネージャ
+	BaseEmitter* auraEmitter;				//オーラエミッター
 	static const AnimData data[AnimMax];	// アニメーション読み込み用データ
 	static const char* FileName;			// 読み込むXファイル
 
