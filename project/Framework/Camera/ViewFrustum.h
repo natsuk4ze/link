@@ -36,15 +36,15 @@ public:
 	~ViewFrustum();
 
 	//面の法線取得処理 ※正規化済み
-	D3DXVECTOR3 GetNormal(Surface surfaceID);
+	D3DXVECTOR3 GetNormal(Surface surfaceID) const;
 
 	// 面上のある一点を取得
-	D3DXVECTOR3 GetSurfacePoint(Surface surfaceID);
+	D3DXVECTOR3 GetSurfacePoint(Surface surfaceID) const;
 
 	// 視錐台カリング
-	bool CheckOnCamera(const D3DXVECTOR3 target, const float size);
-	D3DXVECTOR3 GetPositivePoint(D3DXVECTOR3 target, const float size, D3DXVECTOR3 normal);
-	D3DXVECTOR3 GetNegativePoint(D3DXVECTOR3 target, const float size, D3DXVECTOR3 normal);
+	bool CheckOnCamera(const D3DXVECTOR3 target, const D3DXVECTOR3& size) const;
+	D3DXVECTOR3 GetPositivePoint(D3DXVECTOR3 target, const D3DXVECTOR3& size, D3DXVECTOR3 normal) const;
+	D3DXVECTOR3 GetNegativePoint(D3DXVECTOR3 target, const D3DXVECTOR3& size, D3DXVECTOR3 normal) const;
 
 	//頂点設定処理
 	void SetVertex(
@@ -61,7 +61,7 @@ private:
 	std::vector<D3DXVECTOR3> vertexPos;
 
 	//法線取得内部処理
-	D3DXVECTOR3 _GetNormal(int v1, int v2, int v3);
+	D3DXVECTOR3 _GetNormal(int v1, int v2, int v3) const;
 
 	//頂点列挙子
 	enum Vertex

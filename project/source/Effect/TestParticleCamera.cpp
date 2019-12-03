@@ -26,8 +26,8 @@ TestParticleCamera::TestParticleCamera()
 		sinf(CameraAngleY),
 		cosf(CameraAngleY) * -sinf(CameraAngleXZ)) * CameraLength;
 
-	transform.SetPosition(InitPos);
-	transform.LookAt(Vector3::Zero);
+	transform->SetPosition(InitPos);
+	transform->LookAt(Vector3::Zero);
 }
 
 /**************************************
@@ -48,7 +48,7 @@ void TestParticleCamera::Update()
 		sinf(D3DXToRadian(angleY)),
 		cosf(D3DXToRadian(angleY)) * -sinf(D3DXToRadian(angleXZ)))  * 50.0f;
 
-	transform.SetPosition(pos);
+	transform->SetPosition(pos);
 
 	Camera::Update();
 }

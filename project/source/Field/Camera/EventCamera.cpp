@@ -8,6 +8,7 @@
 #include "EventCamera.h"
 #include "FieldCamera.h"
 #include "../../../Framework/Math/Easing.h"
+#include "../../../Framework/Tween/Tween.h"
 
 /**************************************
 コンストラクタ
@@ -16,7 +17,8 @@ EventCamera::EventCamera() :
 	referencePosition(Vector3::Zero),
 	cntMove(0),
 	durationMove(0),
-	flgLookAt(false)
+	flgLookAt(false),
+	targetObject(nullptr)
 {
 }
 
@@ -52,6 +54,9 @@ void EventCamera::Restore()
 {
 	//元のメインカメラに戻す
 	Camera::SetMainCamera(defaultMainCamera);
+
+	//ターゲットを解除
+	targetObject = nullptr;
 }
 
 /**************************************
@@ -65,15 +70,15 @@ void EventCamera::Update()
 		cntMove++;
 		float t = (float)cntMove / durationMove;
 		D3DXVECTOR3 position = Easing::EaseValue(t, startPosition, endPosition, EaseType::OutCubic);
-		transform.SetPosition(position);
+		transform->SetPosition(position);
 
 		if (cntMove == durationMove && callback != nullptr)
 			callback();
 	}
 
-	if (flgLookAt)
+	if (targetObject != nullptr)
 	{
-		transform.LookAt(referencePosition);
+		transform->LookAt(targetObject->GetPosition());
 	}
 
 	Camera::Update();
@@ -82,16 +87,16 @@ void EventCamera::Update()
 /**************************************
 移動設定処理
 ***************************************/
-void EventCamera::Move(const D3DXVECTOR3 & position, int duration, std::function<void()> callback)
+void EventCamera::Move(const D3DXVECTOR3 & position, int duration, float eyeDistance, std::function<void()> callback)
 {
 	flgLookAt = true;
 	cntMove = 0;
 	durationMove = duration;
-	startPosition = transform.GetPosition();
+	startPosition = transform->GetPosition();
 	endPosition = position;
 	this->callback = callback;
 
-	referencePosition = transform.Forward() * FieldCamera::LengthFromTarget;
+	referencePosition = transform->Forward() * eyeDistance + transform->GetPosition();
 }
 
 /**************************************
@@ -110,7 +115,7 @@ void EventCamera::Translation(const D3DXVECTOR3 & position, int duration, std::f
 	flgLookAt = false;
 	cntMove = 0;
 	durationMove = duration;
-	startPosition = transform.GetPosition();
+	startPosition = transform->GetPosition();
 	endPosition = position + offset;
 	this->callback = callback;
 }
@@ -121,11 +126,14 @@ void EventCamera::Translation(const D3DXVECTOR3 & position, int duration, std::f
 void EventCamera::Return(int duration, std::function<void()> callback)
 {
 	flgLookAt = false;
+	targetObject = nullptr;
 	cntMove = 0;
 	durationMove = duration;
-	startPosition = transform.GetPosition();
+	startPosition = transform->GetPosition();
 	endPosition = defaultMainCamera->GetTransform().GetPosition();
 	this->callback = callback;
+
+	Tween::Rotate(*this, defaultMainCamera->GetRotation(), duration, EaseType::OutCubic);
 }
 
 /**************************************
@@ -136,4 +144,12 @@ EventCamera & EventCamera::operator=(const Camera & rhs)
 	Camera* downThis = dynamic_cast<Camera*>(this);
 	*downThis = rhs;
 	return *this;
+}
+
+/**************************************
+ターゲット指定
+***************************************/
+void EventCamera::SetTargetObject(GameObject * target)
+{
+	targetObject = target;
 }

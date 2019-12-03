@@ -57,6 +57,8 @@ public:
 	void Update();
 	void Draw();
 
+	void LookAt(const D3DXVECTOR3& pos);
+
 	void ChangeAnim(AnimState next);
 
 private:

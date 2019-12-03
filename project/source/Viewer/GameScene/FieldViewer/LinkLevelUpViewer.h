@@ -9,7 +9,6 @@
 #define _LINK_LEVEL_UP_VIEWER_H_
 
 #include "../../Framework/BaseViewer.h"
-
 #include <functional>
 
 //*****************************************************************************
@@ -17,6 +16,7 @@
 //*****************************************************************************
 class BaseViewerDrawer;
 class CountViewerDrawer;
+class ViewerAnimater;
 
 //*****************************************************************************
 // クラス定義
@@ -33,6 +33,13 @@ public:
 
 private:
 
+	enum AnimLayer
+	{
+		Text,
+		BG,
+		Max
+	};
+
 	//テキスト
 	BaseViewerDrawer *text;
 
@@ -45,35 +52,19 @@ private:
 	//＋
 	BaseViewerDrawer *plus;
 
+	//アニメーション
+	ViewerAnimater *anim[AnimLayer::Max];
+
 	//コールバック
-	std::function<void()> callback;
+	std::function<void()> Callback;
 
-	//ビュアー再生
-	void Play();
-
-	//フェードイン
-	void FadeIn();
-
-	//フェードアウト
-	void FadeOut();
-
-	//数字出現処理
-	void InNum();
-
-	//再生中かどうか
-	bool isPlaying;
-
-	//フレームカウント
-	int countFrame;
-
-	//現在のアニメーション
-	int currentAnim;
+	//背景出現処理
+	void AppearBG(void);
+	//背景消失処理
+	void DisAppearBG(void);
 
 	//パラメータを受け取る箱
 	int parameterBox;
-
-	//アニメーション時間
-	float animTime;
 };
 
 #endif

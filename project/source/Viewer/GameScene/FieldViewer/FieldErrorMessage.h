@@ -48,15 +48,6 @@ private:
 	//テキスト
 	BaseViewerDrawer *text;
 
-	//再生
-	void Play();
-
-	//テクスチャ情報受け渡し
-	void SetTexture(ErroID id);
-
-	//再生中かどうか
-	bool isPlaying;
-
 	//フレームカウント
 	int countFrame;
 };

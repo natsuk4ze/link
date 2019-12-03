@@ -1,4 +1,3 @@
-
 //=============================================================================
 //
 // 連打ゲームゲージビュアー処理 [BeatGaugeViewer.h]
@@ -9,11 +8,14 @@
 #define _BEAT_GAUGE_VIEWER_H_
 
 #include "../../Framework/BaseViewer.h"
+#include <functional>
+#include <vector>
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
 class BaseViewerDrawer;
+class ViewerAnimater;
 
 //*****************************************************************************
 // クラス定義
@@ -31,36 +33,12 @@ public:
 private:
 	BaseViewerDrawer *bar;
 	BaseViewerDrawer *frame;
+	ViewerAnimater *anim;
 
 	//ゲージバー描画処理
 	void DrawBar(void);
 
-	//震わせる
-	void Shake(void);
-
-	//振動制御処理
-	void HandleShake(void);
-
-	//震わせるべきか
-	bool shouldShake;
-
-	//フレームカウント
-	int countFrame;
-
-	//アニメーション時間
-	float animTime;
-
 	//ゲージパーセント
 	float gaugePer;
-
-	//現在フレームのパラメータ
-	float currentParam;
-
-	//前フレームのパラメータ
-	float lastParam;
-
-	//振動用のラジアン
-	float radian;
 };
-
 #endif

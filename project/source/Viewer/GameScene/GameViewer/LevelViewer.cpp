@@ -4,17 +4,12 @@
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
+#include "LevelViewer.h"
+
 #include "../../../../main.h"
 #include "../../../../Framework/Renderer2D/CircleGauge.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
-#include "../../Framework/ViewerDrawer/RotateViewerDrawer.h"
-#include "LevelViewer.h"
-
-#ifdef _DEBUG
-#include "../../../../Framework/Input/input.h"
-#include "../../../../Framework/Tool/DebugWindow.h"
-#endif
 
 //*****************************************************************************
 // ÉOÉçÅ[ÉoÉãïœêî

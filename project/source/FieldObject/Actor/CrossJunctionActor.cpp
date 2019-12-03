@@ -82,6 +82,7 @@ void CrossJunctionActor::Uninit()
 
 		emitter->SetActive(false);
 	}
+	emitterContainer.clear();
 }
 
 //=====================================

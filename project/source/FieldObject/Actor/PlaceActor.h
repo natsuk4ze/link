@@ -44,6 +44,8 @@ public:
 	void SetColor(const D3DXCOLOR& color);	// メッシュの色変更
 	void ResetTransform();								// 座標、回転、大きさをリセットする
 
+	static const D3DXVECTOR3 SizeCullingBox;			//視錐台カリングに使用するボックスの大きさ
+
 protected:
 	// ***継承先のクラスで読み込み***
 	MeshContainer* mesh;								// メッシュコンテナ

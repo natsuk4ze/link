@@ -81,6 +81,7 @@ void CurveRoadActor::Uninit()
 		if (emitter != nullptr)
 			emitter->SetActive(false);
 	}
+	emitterContainer.clear();
 }
 
 //=====================================

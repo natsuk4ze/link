@@ -47,6 +47,9 @@ public:
 	virtual void MakeVertex();
 	virtual void SetVertexPos();
 	virtual void SetTexture(int divX, int divY, int pattern);
+
+	D3DXVECTOR3 GetPosition(void);
+	D3DXCOLOR GetColor(void);
 };
 
 #endif
