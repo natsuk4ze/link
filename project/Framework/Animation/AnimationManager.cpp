@@ -45,9 +45,6 @@ void AnimationManager::Update()
 	{
 		ChangeAnim(transitionMap[currentAnimID], true);
 	}
-
-	//アニメーションの更新
-	container->Update(deltaTimeList[currentAnimID]);
 }
 
 /**************************************
@@ -55,6 +52,9 @@ void AnimationManager::Update()
 ***************************************/
 void AnimationManager::Draw(LPD3DXMATRIX mtxWorld)
 {
+	//アニメーションの更新
+	container->Update(deltaTimeList[currentAnimID]);
+
 	container->Draw(mtxWorld);
 }
 
