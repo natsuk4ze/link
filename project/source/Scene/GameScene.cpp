@@ -555,17 +555,14 @@ void GameScene::Clear()
 
 	Debug::Log("Clear Particle : %f", ProfilerCPU::CalcElapsed(start, end));
 
-<<<<<<< HEAD
 	//イベントコントローラクリア
 	start = ProfilerCPU::GetCounter();
 	eventController->Uninit();
 	end = ProfilerCPU::GetCounter();
 
 	Debug::Log("Clear Event : %f", ProfilerCPU::CalcElapsed(start, end));
-}
-=======
+
 	// リワードをリセット
 	rewardViewer->ResetAchieved();
 	RewardController::Instance()->ResetAllRewardData();
 }
->>>>>>> 4cde0265a1b5ee2f115fb1085dfd7cacd73e346e
