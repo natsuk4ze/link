@@ -11,13 +11,14 @@
 #include "RewardController.h"
 #include <string>
 
+namespace RC = RewardConfig;
 //**************************************
 // クラス定義
 //**************************************
 class Reward
 {
 public:
-	Reward(RewardController::Type type, int maxdata);
+	Reward(RC::Type type, int maxdata);
 	~Reward();
 
 	// 達成者の名前をセット
@@ -42,7 +43,7 @@ public:
 	virtual void ResetData() = 0;
 
 protected:
-	RewardController::Type type;	// リワードの種類
+	RC::Type type;	// リワードの種類
 	bool firstAchieve;				// 最初の到達確認
 	bool achieve;					// 到達確認
 	int name[3];					// 達成者の名前

@@ -11,6 +11,7 @@
 #include "Reward.h"
 #include <vector>
 
+namespace RC = RewardConfig;
 //**************************************
 // ƒNƒ‰ƒX’è‹`
 //**************************************
@@ -21,7 +22,7 @@ private:
 	std::vector<int> data;
 
 public:
-	StateReward(RewardController::Type type, int maxdata);
+	StateReward(RC::Type type, int maxdata);
 	~StateReward();
 
 	void SetData(int data)override;

@@ -14,6 +14,7 @@
 #include "../../Viewer/GameScene/Controller/NameEntryViewer.h"//GameNameEntryのStateが出来たら移動(おーはま)
 #include "../../../Framework/Input/input.h"
 #include "../../../Framework/Transition/TransitionController.h"
+#include "../../../Framework/Network/UDPClient.h"
 #include "../../Field/FieldController.h"
 
 //=====================================
@@ -21,6 +22,9 @@
 //=====================================
 void GameScene::GameResult::OnStart(GameScene & entity)
 {
+	// 最下位のスコアを取得
+	entity.Client->GetLastScore();
+
 	//スコア表示、名前入力などなど
 	// カメラのモード切り替え
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::Arround);
@@ -40,7 +44,7 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 		entity.field->SetScore();
 	}
 
-	//// リザルト用のUIにAI発展レベルを渡す
+	// リザルト用のUIにAI発展レベルを渡す
 	int cityScore = (int)entity.field->GetScore(Field::FieldLevel::City);
 	int worldScore = (int)entity.field->GetScore(Field::FieldLevel::World);
 	int spaceScore = (int)entity.field->GetScore(Field::FieldLevel::Space);
@@ -52,6 +56,9 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 //=====================================
 GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 {
+	// クライアント更新
+	entity.Client->Update();
+
 	//とりあえずエンターが押されたらタイトルへ戻る
 	if (Keyboard::GetTrigger(DIK_RETURN))
 	{

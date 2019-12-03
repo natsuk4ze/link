@@ -41,8 +41,8 @@ const char* GuideActor::FileName = "data/MODEL/Robot.X";
 GuideActor::GuideActor() :
 	auraEmitter(nullptr)
 {
-	transform->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	transform->SetScale(Vector3::One);
+	transform->SetPosition(D3DXVECTOR3(0.0f, -10.0f, 15.0f));
+	transform->SetScale(Vector3::One * 0.3f);
 	transform->SetRotation(Vector3::Zero);
 	SetActive(true);
 

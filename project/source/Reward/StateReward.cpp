@@ -10,7 +10,7 @@
 //=====================================
 // コンストラクタ
 //=====================================
-StateReward::StateReward(RewardController::Type type, int maxdata) :
+StateReward::StateReward(RC::Type type, int maxdata) :
 	Reward(type, maxdata)
 {
 	for (int i = 0; i < MaxData; i++)
@@ -33,7 +33,14 @@ StateReward::~StateReward()
 void StateReward::SetData(int data)
 {
 	this->data[data] = 1;
-
+	for (auto& d : this->data)
+	{
+		if (d != 1)
+		{
+			return;
+		}
+	}
+	achieve = true;
 }
 
 //=====================================
@@ -45,4 +52,5 @@ void StateReward::ResetData()
 	{
 		i = 0;
 	}
+	achieve = false;
 }

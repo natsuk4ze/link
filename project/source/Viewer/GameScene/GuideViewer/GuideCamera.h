@@ -20,6 +20,8 @@ private:
 public:
 	GuideCamera();
 	~GuideCamera();
+	void Update(void) override;
+	D3DXVECTOR3 UnProjection(const D3DXVECTOR3 & pos, float z) const override;
 };
 
 #endif
