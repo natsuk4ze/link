@@ -13,16 +13,16 @@ namespace RewardConfig
 	// リワードの種類
 	enum Type
 	{
-		ButtonMashing,	// ボタン連打イベント○回クリアOK
-		Destructer,		// 山破壊○回OK
-		Artist,			// 橋を架ける○個OK
-		Linker,			// 町のリンクレベル○レベル到達OK
-		MinusMaster,	// マイナスイベント○回OK
-		PlusMaster,		// プラスイベント○回OK
-		Pioneer,		// 道を○個OK
-		MasterAI,		// AIレベル○レベルに到達OK
-		MinusComplete,	// マイナスイベントコンプリートOK
-		PlusComplete,	// プラスイベントコンプリートOK
+		ButtonMashing,	// ボタン連打イベント○回クリア
+		Destructer,		// 山破壊○回
+		Artist,			// 橋を架ける○個
+		Linker,			// 町のリンクレベル○レベル到達
+		MinusMaster,	// マイナスイベント○回
+		PlusMaster,		// プラスイベント○回
+		Pioneer,		// 道を○個
+		MasterAI,		// AIレベル○レベルに到達
+		MinusComplete,	// マイナスイベントコンプリート
+		PlusComplete,	// プラスイベントコンプリート
 		Max
 	};
 
