@@ -37,6 +37,8 @@ public:
 		TalkingTypeA,	// 両手を広げてアピールしながら話す
 		TalkingTypeB,	// 電話してる感じ
 		SecretTalk,		// 内緒話
+		FightingIdle,	// ファイティングポーズ
+		Rush,			// パンチ連打
 
 		// 最大数
 		AnimMax
