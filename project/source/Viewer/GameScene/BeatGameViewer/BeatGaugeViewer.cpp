@@ -7,6 +7,7 @@
 #include "BeatGaugeViewer.h"
 
 #include "../../../../main.h"
+#include "../../Framework/BaseViewer.h"
 #include "../../Framework/ViewerAnimater/ViewerAnimater.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 

@@ -18,12 +18,12 @@ private:
 
 public:
 	BaseViewer() {};
-	virtual ~BaseViewer() {}
+	virtual ~BaseViewer() {};
 
 	virtual void Update(void) = 0;
 	virtual void Draw(void) = 0;
 
-	//現在フレームと前フレームのパラメータを比較して結果を返す
+	//現在フレームのパラメータと前フレームのパラメータを比較して結果を返す
 	template <class T>
 	bool isCurrentGreaterLast(const T param)
 	{
@@ -37,7 +37,8 @@ public:
 		lastParam = param;
 
 		return isGreater;
-	}
+	};
+
 	template <class T>
 	bool isCurrentSmallerLast(const T param)
 	{
@@ -51,7 +52,8 @@ public:
 		lastParam = param;
 
 		return isSmaller;
-	}
+	};
+
 	template <class T>
 	bool isCurrentEqualLast(const T param)
 	{
@@ -65,7 +67,7 @@ public:
 		lastParam = param;
 
 		return isEqual;
-	}
+	};
 
 	//再生中かどうか
 	bool isPlaying;
