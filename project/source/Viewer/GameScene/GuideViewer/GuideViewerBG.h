@@ -8,23 +8,28 @@
 #ifndef _GUIDEVIEWERBG_H_
 #define _GUIDEVIEWERBG_H_
 
-#include "../../../../Framework/Renderer3D/BoardPolygon.h"
-#include "../../../../Framework/Core/GameObject.h"
+#include <vector>
+using std::vector;
+
+class PolygonDrawer;
 
 //**************************************
 // ƒNƒ‰ƒX’è‹`
 //**************************************
-class GuideViewerBG :
-	public GameObject
+class GuideViewerBG
 {
 private:
-	BoardPolygon* polygon;
+	int CountFrame;
+
+	PolygonDrawer* background;
+	vector<PolygonDrawer*> LeftWall;
+	vector<PolygonDrawer*> RightWall;
+
 public:
 	GuideViewerBG();
 	~GuideViewerBG();
-
-	void Update();
-	void Draw();
+	void Update(void);
+	void Draw(void);
 };
 
 #endif

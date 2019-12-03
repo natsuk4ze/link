@@ -59,8 +59,8 @@
 staticメンバ
 ***************************************/
 int GameScene::level = 0;		//デバッグ用フィールドレベル（本番では非staticメンバにする
-const float GameScene::BloomPower[] = {0.6f, 0.55f, 0.50f};		//ブルームの強さ
-const float GameScene::BloomThrethold[] = {0.6f, 0.5f, 0.4f};		//ブルームをかける輝度の閾値
+const float GameScene::BloomPower[] = { 0.6f, 0.55f, 0.50f };		//ブルームの強さ
+const float GameScene::BloomThrethold[] = { 0.6f, 0.5f, 0.4f };		//ブルームをかける輝度の閾値
 const char GameScene::AngleTable[3] = { 3, 24, 50 };
 
 /**************************************
@@ -163,7 +163,7 @@ void GameScene::Uninit()
 	//パーティクル終了
 	particleManager->Uninit();
 
-	if(levelParticleManager != nullptr)
+	if (levelParticleManager != nullptr)
 		levelParticleManager->Uninit();
 
 	//ステートマシン削除
@@ -200,6 +200,7 @@ void GameScene::Update()
 	field->EmbedViewerParam(gameParam);
 	gameViewer->ReceiveParam(gameParam);
 
+	// イベントビューアに必要なパラメータを渡す
 	EventViewerParam eventParam;
 	eventController->EmbedViewerParam(eventParam);
 
@@ -213,7 +214,7 @@ void GameScene::Update()
 	//パーティクル更新
 	ProfilerCPU::Instance()->Begin("Update Particle");
 
-	if(levelParticleManager != nullptr)
+	if (levelParticleManager != nullptr)
 		levelParticleManager->Update();
 
 	particleManager->Update();
@@ -270,14 +271,15 @@ void GameScene::Draw()
 
 	//パーティクル描画
 	ProfilerCPU::Instance()->Begin("Draw Particle");
-	
-	if(levelParticleManager != nullptr)
+
+	if (levelParticleManager != nullptr)
 		levelParticleManager->Draw();
 
 	particleManager->Draw();
 	ProfilerCPU::Instance()->End("Draw Particle");
 
 	//ビュアー描画
+	Client->Draw();
 	field->DrawViewer();
 	gameViewer->Draw();
 	eventController->DrawEventViewer();
@@ -413,17 +415,12 @@ void GameScene::DebugTool()
 	Debug::NewLine();
 	if (Debug::Button("SendPacket"))
 	{
-		PacketConfig Packet;
-		GameViewerParam gameParam;
-		field->EmbedViewerParam(gameParam);
-		Packet.AILevel = gameParam.levelAI;
-		Client->ReceivePacketConfig(Packet);
-		Client->SendPacket();
+		Client->SendRankPacket("000102","123456789");
 	}
 	Debug::SameLine();
 	if (Debug::Button("GetLastScore"))
 	{
-		string Score = Client->GetLastScore();
+		ReceiveThreadStart();
 	}
 
 	Debug::Text("State");
@@ -462,8 +459,8 @@ void GameScene::DebugTool()
 
 	Debug::NewLine();
 	Debug::Text("Bloom");
-	static D3DXVECTOR3 power = {BloomPower[0], BloomPower[1], BloomPower[2]};
-	static D3DXVECTOR3 threthold = {BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]};
+	static D3DXVECTOR3 power = { BloomPower[0], BloomPower[1], BloomPower[2] };
+	static D3DXVECTOR3 threthold = { BloomThrethold[0], BloomThrethold[1], BloomThrethold[2] };
 	Debug::Slider("power", power, Vector3::Zero, Vector3::One);
 	Debug::Slider("threthold", threthold, Vector3::Zero, Vector3::One);
 	bloomController->SetPower(power.x, power.y, power.z);
@@ -546,4 +543,21 @@ void GameScene::Clear()
 	end = ProfilerCPU::GetCounter();
 
 	Debug::Log("Clear Event : %f", ProfilerCPU::CalcElapsed(start, end));
+}
+
+/**************************************
+サーバーから受信のスレッドを始める
+***************************************/
+void GameScene::ReceiveThreadStart(void)
+{
+	if (UDPClient::Thread == 0)
+	{
+		// クライアント受信スレッド開始
+		UDPClient::Thread = (HANDLE)_beginthreadex(NULL, 0, UDPClient::ThreadEntryPoint, Client, 0, NULL);
+	}
+	else
+	{
+		// スレッドまだ解放されないので、もう一度サーバーにリクエスト
+		Client->RetryGetLastScore();
+	}
 }

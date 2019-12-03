@@ -36,7 +36,7 @@ GuideViewer::GuideViewer()
 	camera = new GuideCamera();
 
 	// リソース読み込み
-	ResourceManager::Instance()->MakePolygon("GuideViewerBG", "data/TEXTURE/VIewer/GameViewer/GuideViewer/Circuit.jpg", D3DXVECTOR2(100.0f, 100.0f));
+	//ResourceManager::Instance()->MakePolygon("GuideViewerBG", "data/TEXTURE/VIewer/GameViewer/GuideViewer/Circuit.jpg", D3DXVECTOR2(100.0f, 100.0f));
 
 	// 各種インスタンスの作成
 	actor = new GuideActor();
@@ -76,6 +76,8 @@ void GuideViewer::Update()
 #endif
 
 	camera->Update();
+	D3DXVECTOR3 test = camera->UnProjection(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0.0f);
+	D3DXVECTOR3 test2 = camera->UnProjection(D3DXVECTOR3(SubScreenSize.x, SubScreenSize.y, 0.0f), 0.0f);
 	actor->Update();
 	bg->Update();
 	filter->SetTime();

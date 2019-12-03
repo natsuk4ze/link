@@ -298,6 +298,7 @@
     <ClInclude Include="source\Effect\Game\General\EventInfo.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseTextureDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\TextureDrawer.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\PolygonDrawer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Animation\AnimationManager.cpp" />
@@ -571,6 +572,7 @@
     <ClCompile Include="source\Effect\Game\General\EventInfo.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseTextureDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\TextureDrawer.cpp" />
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\PolygonDrawer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
