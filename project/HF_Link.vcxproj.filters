@@ -298,6 +298,7 @@
     <ClInclude Include="source\Effect\Game\General\EventInfo.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseTextureDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\TextureDrawer.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\PolygonDrawer.h" />
     <ClInclude Include="source\Reward\RewardViewer.h" />
     <ClInclude Include="source\Reward\AchieveViewer.h" />
     <ClInclude Include="source\Reward\MaxCheckReward.h" />
@@ -576,6 +577,7 @@
     <ClCompile Include="source\Effect\Game\General\EventInfo.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseTextureDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\TextureDrawer.cpp" />
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\PolygonDrawer.cpp" />
     <ClCompile Include="source\Reward\RewardViewer.cpp" />
     <ClCompile Include="source\Reward\AchieveViewer.cpp" />
     <ClCompile Include="source\Reward\MaxCheckReward.cpp" />

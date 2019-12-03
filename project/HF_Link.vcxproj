@@ -272,6 +272,7 @@
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseTextureDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.h" />
+    <ClInclude Include="source\Viewer\Framework\ViewerDrawer\PolygonDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\TextureDrawer.h" />
     <ClInclude Include="source\Viewer\GameScene\BeatGameViewer\BeatGaugeViewer.h" />
@@ -547,6 +548,7 @@
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseTextureDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\CountViewerDrawer.cpp" />
+    <ClCompile Include="source\Viewer\Framework\ViewerDrawer\PolygonDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\RotateViewerDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\TextureDrawer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\BeatGameViewer\BeatGaugeViewer.cpp" />

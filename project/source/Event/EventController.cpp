@@ -26,6 +26,7 @@
 #include "../../Framework/Camera/CameraShakePlugin.h"
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Particle/BaseEmitter.h"
+#include "../../Framework/Network/UDPClient.h"
 
 #include "../Field/Place/FieldPlaceModel.h"
 #include "../Viewer/GameScene/Controller/EventViewer.h"
@@ -90,12 +91,6 @@ EventController::~EventController()
 
 	SAFE_DELETE(beatViewer);
 
-	for (auto&& pair : infoEmitterContainer)
-	{
-		if(pair.second != nullptr)
-			pair.second->SetActive(false);
-	}
-
 #if _DEBUG
 	SAFE_DELETE(polygon);
 #endif
@@ -106,6 +101,15 @@ EventController::~EventController()
 //=============================================================================
 void EventController::Init(int FieldLevel)
 {
+	// エミッターコンテナのクリア
+	for (auto&& pair : infoEmitterContainer)
+	{
+		if (pair.second != nullptr)
+			pair.second->SetActive(false);
+	}
+	infoEmitterContainer.clear();
+
+	// CSVファイルを読み取る
 	if (FieldLevel == Field::City)
 	{
 		LoadCSV(EventCSVPath_City);
@@ -147,7 +151,7 @@ void EventController::Update()
 #if _DEBUG
 	if (Keyboard::GetTrigger(DIK_F))
 	{
-		EventVec.push_back(new NewTownEventCtrl(eventViewer, Field::Space, camera));
+		//EventVec.push_back(new NewTownEventCtrl(eventViewer, Field::Space, camera));
 	}
 #endif
 
@@ -382,6 +386,12 @@ bool EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 				{
 					// イベントメッセージ設置
 					eventViewer->SetEventMessage(Ptr->GetEventMessage(FieldLevel));
+
+					// イベント中継パケットを送信
+					if (flgPause)
+					{
+						UDPClient::SendEventPacket(EventPlace->EventType, FieldLevel);
+					}
 
 					// イベントベクトルにプッシュ
 					EventVec.push_back(Ptr);
