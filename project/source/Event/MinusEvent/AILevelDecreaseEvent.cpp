@@ -15,6 +15,7 @@
 #include "../../Field/Camera/EventCamera.h"
 #include "../../Viewer/GameScene/Controller/BeatGameViewer.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideActor.h"
+#include "../../../Framework/Tween/Tween.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -144,6 +145,10 @@ void AILevelDecreaseEvent::Update()
 
 		// 連打ゲームの更新
 		beatGame->Update();
+
+		//ガイドをUFOに向かせる
+		guideActor->LookAt(UFOPos);
+
 		break;
 
 		// UFO撃墜
@@ -263,8 +268,8 @@ void AILevelDecreaseEvent::CountdownStart(void)
 	//ガイドキャラ出撃
 	D3DXVECTOR3 diff = Vector3::Normalize(camera->GetPosition() - UFOPos);
 	D3DXVECTOR3 guidePos = UFOPos + diff * 5.0f + Vector3::Down * 2.0f;
-	guideActor->SetPosition(guidePos);
-	guideActor->LookAt(UFOPos);
+
+	Tween::Move(*guideActor, TownPos, guidePos, 15, EaseType::OutCubic);
 
 	guideActor->SetActive(true);
 }
@@ -284,6 +289,9 @@ void AILevelDecreaseEvent::ReceiveBeatResult(bool IsSuccess)
 		// 失敗
 		fieldEventHandler->AdjustLevelAI(DecreasePercent);
 		EventState = BeatGameFail;
+
+		//ガイドキャラに失敗モーションをさせる
+		guideActor->ChangeAnim(GuideActor::AnimState::Defeat);
 	}
 }
 
