@@ -13,12 +13,12 @@ namespace Field
 	staticÉÅÉìÉo
 	***************************************/
 	const char* FieldSkyBox::CityTexturePath[] = {
-		"data/TEXTURE/Skybox/Sunny_01A_up.png",
-		"data/TEXTURE/Skybox/Sunny_01A_back.png",
-		"data/TEXTURE/Skybox/Sunny_01A_down.png",
-		"data/TEXTURE/Skybox/Sunny_01A_front.png",
-		"data/TEXTURE/Skybox/Sunny_01A_left.png",
-		"data/TEXTURE/Skybox/Sunny_01A_right.png"
+		"data/TEXTURE/Skybox/Epic_BlueSunset_Cam_Up.jpg",
+		"data/TEXTURE/Skybox/Epic_BlueSunset_Cam_Back.jpg",
+		"data/TEXTURE/Skybox/Epic_BlueSunset_Cam_Down.jpg",
+		"data/TEXTURE/Skybox/Epic_BlueSunset_Cam_Front.jpg",
+		"data/TEXTURE/Skybox/Epic_BlueSunset_Cam_Right.jpg",
+		"data/TEXTURE/Skybox/Epic_BlueSunset_Cam_Left.jpg",
 	};
 
 	const char* FieldSkyBox::WorldTexturePath[] = {
