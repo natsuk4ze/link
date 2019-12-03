@@ -52,4 +52,5 @@ void StateReward::ResetData()
 	{
 		i = 0;
 	}
+	achieve = false;
 }

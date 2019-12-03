@@ -8,17 +8,27 @@
 #ifndef _REWARDVIEWER_H_
 #define _REWARDVIEWER_H_
 
+#include "RewardController.h"
+
+class AchieveViewer;
 //**************************************
 // ƒNƒ‰ƒX’è‹`
 //**************************************
 class RewardViewer
 {
+private:
+	AchieveViewer* achieveViewer;
+	bool achieved[RewardController::Type::Max];
+
 public:
 	RewardViewer();
 	~RewardViewer();
 
 	void Update();
 	void Draw();
+
+	void CheckAchieved();
+	void ResetAchieved();
 };
 
 #endif

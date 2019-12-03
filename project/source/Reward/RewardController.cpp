@@ -9,12 +9,13 @@
 #include "Reward.h"
 #include "CountupReward.h"
 #include "StateReward.h"
+#include "MaxCheckReward.h"
 
 //**************************************
 // スタティックメンバ初期化
 //**************************************
 const int RewardController::MaxData[] = {
-	3, 20, 15, 15, 10, 20, 250, 10000, 4, 7
+	3, 20, 15, 5, 10, 20, 250, 10, 4, 7
 };
 
 //=====================================
@@ -27,6 +28,11 @@ void RewardController::Create(Type type, int maxData)
 		if (type == MinusComplete || type == PlusComplete)
 		{
 			Reward* reward = new StateReward(type, maxData);
+			rewardPool.emplace(type, reward);
+		}
+		else if (type == Linker || type == MasterAI)
+		{
+			Reward* reward = new MaxCheckReward(type, maxData);
 			rewardPool.emplace(type, reward);
 		}
 		else

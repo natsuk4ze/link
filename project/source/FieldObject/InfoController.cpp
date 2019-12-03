@@ -38,8 +38,7 @@ void InfoController::Update()
 		map.second->Update();
 	}
 
-	// リワードに反映
-	RewardController::Instance()->SetRewardData(RewardController::Type::Linker, SearchMaxLinkLevel());
+	SearchMaxLinkLevel();
 }
 
 //=====================================
@@ -92,7 +91,7 @@ void InfoController::SetAllLinkLevel(const std::vector<Field::PlaceData>& vec)
 //=====================================
 // 一番Linkレベルの高い町のレベルを調べる
 //=====================================
-int InfoController::SearchMaxLinkLevel()
+void InfoController::SearchMaxLinkLevel()
 {
 	int ret = 0;
 	
@@ -105,5 +104,6 @@ int InfoController::SearchMaxLinkLevel()
 		}
 	}
 
-	return ret;
+	// リワードに反映
+	RewardController::Instance()->SetRewardData(RewardController::Type::Linker, ret);
 }

@@ -546,7 +546,6 @@ namespace Field
 		if (cntFrame != 0)
 			return;
 
-		float destvalue = realDevelopmentLevelAI;
 		float raiseValue = placeContainer->CalcDevelopmentLevelAI(developSpeedBonus);
 		float bonusSideWay = placeActController->GetSideWayBonus();
 		developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + raiseValue + bonusSideWay);
@@ -555,7 +554,7 @@ namespace Field
 		// ƒŠƒ[ƒh‚É”½‰f
 		if (currentLevel == FieldLevel::Space)
 		{
-			RewardController::Instance()->SetRewardData(RewardController::Type::MasterAI, (int)(realDevelopmentLevelAI - destvalue));
+			RewardController::Instance()->SetRewardData(RewardController::Type::MasterAI, (int)(realDevelopmentLevelAI));
 		}
 	}
 

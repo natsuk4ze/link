@@ -36,7 +36,7 @@ public:
 	void SetAllLinkLevel(const std::vector<Field::PlaceData>& vec);
 
 	// ˆê”ÔLinkƒŒƒxƒ‹‚Ì‚‚¢’¬‚ÌƒŒƒxƒ‹‚ğ’²‚×‚é
-	int SearchMaxLinkLevel();
+	void SearchMaxLinkLevel();
 };
 
 #endif

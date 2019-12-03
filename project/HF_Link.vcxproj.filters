@@ -299,6 +299,8 @@
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\BaseTextureDrawer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerDrawer\TextureDrawer.h" />
     <ClInclude Include="source\Reward\RewardViewer.h" />
+    <ClInclude Include="source\Reward\AchieveViewer.h" />
+    <ClInclude Include="source\Reward\MaxCheckReward.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Animation\AnimationManager.cpp" />
@@ -573,6 +575,8 @@
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseTextureDrawer.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\TextureDrawer.cpp" />
     <ClCompile Include="source\Reward\RewardViewer.cpp" />
+    <ClCompile Include="source\Reward\AchieveViewer.cpp" />
+    <ClCompile Include="source\Reward\MaxCheckReward.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />

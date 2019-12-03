@@ -1,16 +1,16 @@
 //=====================================
 //
-// カウントアップリワード[CountupReward.cpp]
-// 機能：カウントアップするタイプのリワード
+// マックスチェックリワード[MaxCheckReward.h]
+// 機能：最大値を超えたか確認するタイプのリワード
 // Author:GP12B332 19 染谷武志
 //
 //=====================================
-#include "CountupReward.h"
+#include "MaxCheckReward.h"
 
 //=====================================
 // コンストラクタ
 //=====================================
-CountupReward::CountupReward(RewardController::Type type, int maxdata) :
+MaxCheckReward::MaxCheckReward(RewardController::Type type, int maxdata) :
 	Reward(type, maxdata), data(0)
 {
 }
@@ -18,31 +18,27 @@ CountupReward::CountupReward(RewardController::Type type, int maxdata) :
 //=====================================
 // デストラクタ
 //=====================================
-CountupReward::~CountupReward()
+MaxCheckReward::~MaxCheckReward()
 {
 }
 
 //=====================================
-// データのセット
+// データの更新
 //=====================================
-void CountupReward::SetData(int data)
+void MaxCheckReward::SetData(int data)
 {
-	if (this->data < MaxData)
+	this->data = data;
+	if (data >= MaxData)
 	{
-		this->data += data;
-		if (this->data >= MaxData)
-		{
-			achieve = true;
-		}
+		achieve = true;
 	}
 }
 
 //=====================================
 // データのリセット
 //=====================================
-void CountupReward::ResetData()
+void MaxCheckReward::ResetData()
 {
-	data = 0;
+	this->data = 0;
 	achieve = false;
 }
-
