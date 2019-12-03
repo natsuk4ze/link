@@ -130,3 +130,19 @@ void BaseViewerDrawer::SetColor(D3DXCOLOR color)
 		vertexWk[2].diffuse =
 		vertexWk[3].diffuse = color;
 }
+
+//=============================================================================
+// 座標取得処理
+//=============================================================================
+D3DXVECTOR3 BaseViewerDrawer::GetPosition(void)
+{
+	return position;
+}
+
+//=============================================================================
+// テクスチャのカラー取得処理
+//=============================================================================
+D3DXCOLOR BaseViewerDrawer::GetColor(void)
+{
+	return vertexWk[3].diffuse;
+}

@@ -96,6 +96,15 @@ void GuideActor::Draw()
 }
 
 //=====================================
+// 指定の位置に向かせる
+//=====================================
+void GuideActor::LookAt(const D3DXVECTOR3 & pos)
+{
+	transform->LookAt(pos);
+	transform->Rotate(180.0f, transform->Up());
+}
+
+//=====================================
 // アニメーション切り替え
 //=====================================
 void GuideActor::ChangeAnim(AnimState next)

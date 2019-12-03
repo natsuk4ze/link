@@ -4,43 +4,64 @@
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#include "../../../../main.h"
-#include"../../../../Framework/Math/Easing.h"
-#include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "BeatStarterViewer.h"
 
-//*****************************************************************************
-// グローバル変数
-//*****************************************************************************
-
-//レディーテキスト待機ポジションX
-static const float readyTextWaitPosX = SCREEN_WIDTH * 1.5;
-
-//ゴーテキスト待機サイズY
-static const float goTextWaitSizeY = 0.0f;
+#include "../../../../main.h"
+#include "../../Framework/ViewerAnimater/ViewerAnimater.h"
+#include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-BeatStarterViewer::BeatStarterViewer()
+BeatStarterViewer::BeatStarterViewer():
+	shouldReady(false),
+	shouldGo(false)
 {
 	//レディーテキスト
 	readyText = new BaseViewerDrawer();
 	readyText->LoadTexture("data/TEXTURE/Viewer/BeatGameViewer/BeatStarterViewer/Text.png");
-	readyText->size = D3DXVECTOR3(500.0f, 200.0f, 0.0f);
+	readyText->size = D3DXVECTOR3(600.0f, 300.0f, 0.0f);
 	readyText->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	readyText->position = D3DXVECTOR3(readyTextWaitPosX, SCREEN_CENTER_Y, 0.0f);
+	readyText->position = D3DXVECTOR3(SCREEN_WIDTH * 1.5f, SCREEN_CENTER_Y, 0.0f);
 	readyText->MakeVertex();
 	readyText->SetTexture(1, 2, 0);
 
 	//ゴーテキスト
 	goText = new BaseViewerDrawer();
 	goText->LoadTexture("data/TEXTURE/Viewer/BeatGameViewer/BeatStarterViewer/Text.png");
-	goText->size = D3DXVECTOR3(500.0f, 0.0f, 0.0f);
+	goText->size = D3DXVECTOR3(600.0f, 0.0f, 0.0f);
 	goText->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	goText->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_CENTER_Y, 0.0f);
 	goText->MakeVertex();
 	goText->SetTexture(1, 2, 1);
+
+	//アニメーション
+	for (int i = 0; i < TextType::Max; i++)
+	{
+		anim[i] = new ViewerAnimater();
+	}
+
+	std::vector<std::function<void()>> readyVec = {
+		[=] {
+		//レディーテキストイン
+		anim[TextType::Ready]->Move(*readyText,D3DXVECTOR2(SCREEN_WIDTH * 1.5f,SCREEN_CENTER_Y),D3DXVECTOR2(SCREEN_CENTER_X,SCREEN_CENTER_Y),15.0f,OutCirc);
+		} };
+	std::vector<std::function<void()>> goVec = {
+		[=] {
+		//ゴーテキストを拡大イン
+		anim[TextType::Go]->Scale(*goText,D3DXVECTOR2(500.0f,0.0f),D3DXVECTOR2(500.0f,200.0f),10.0f,OutCirc);
+		},
+		[=] {
+		//待機
+		anim[TextType::Go]->Wait(10.0f);
+		}, 
+		[=] {
+		//ゴーテキストをフェードアウト
+		anim[TextType::Go]->Fade(*goText,1.0f,0.0f,1.0f,OutCirc);
+		} };
+
+	anim[TextType::Ready]->SetAnimBehavior(readyVec);
+	anim[TextType::Go]->SetAnimBehavior(goVec);
 }
 
 //*****************************************************************************
@@ -50,6 +71,10 @@ BeatStarterViewer::~BeatStarterViewer()
 {
 	SAFE_DELETE(readyText);
 	SAFE_DELETE(goText);
+	for (int i = 0; i < TextType::Max; i++)
+	{
+		SAFE_DELETE(anim[i]);
+	}
 }
 
 //=============================================================================
@@ -57,13 +82,20 @@ BeatStarterViewer::~BeatStarterViewer()
 //=============================================================================
 void BeatStarterViewer::Update()
 {
-	if (shouldReady)
-		//レディーテキスト
-		InReady();
-
-	if (shouldGo)
-		//ゴーテキスト
-		InGo();
+	if (isPlaying&&shouldReady)
+	{
+		anim[TextType::Ready]->PlayAnim([=]
+		{
+			anim[TextType::Ready]->SetPlayFinished(isPlaying);
+		});
+	}
+	if (isPlaying&&shouldGo)
+	{
+		anim[TextType::Go]->PlayAnim([=]
+		{
+			anim[TextType::Go]->SetPlayFinished(isPlaying);
+		});
+	}
 }
 
 //=============================================================================
@@ -72,56 +104,9 @@ void BeatStarterViewer::Update()
 void BeatStarterViewer::Draw(void)
 {
 	if(shouldReady)
-		//レディーテキスト
 		readyText->Draw();
-
 	if(shouldGo)
-		//ゴーテキスト
 		goText->Draw();
-}
-
-//=============================================================================
-// レディーテキストをスクリーンインする処理
-//=============================================================================
-void BeatStarterViewer::InReady(void)
-{
-	//フレーム更新
-	countFrame++;
-
-	//時間更新
-	animTime = countFrame / 15.0f;
-
-	//イージングのスタートとゴールを設定
-	float readyTextEasingStart = readyTextWaitPosX;
-	float readyTextEasingGoal = SCREEN_CENTER_X;
-
-	//レディーテキストの座標を更新
-	readyText->position.x = Easing::EaseValue(animTime, readyTextEasingStart, readyTextEasingGoal, OutCirc);
-}
-
-//=============================================================================
-// ゴーテキストを出現させる処理
-//=============================================================================
-void BeatStarterViewer::InGo(void)
-{
-	//フレーム更新
-	countFrame++;
-
-	//時間更新
-	animTime = countFrame / 10.0f;
-
-	//イージングのスタートとゴールを設定
-	float goTextEasingStart = goTextWaitSizeY;
-	float goTextEasingGoal = 200.0f;
-
-	//ゴーテキストのサイズを更新
-	goText->size.y = Easing::EaseValue(animTime, goTextEasingStart, goTextEasingGoal, OutCirc);
-
-	//一定時間経過で消す
-	if (countFrame == 50.0f)
-	{
-		shouldGo = false;
-	}
 }
 
 //=============================================================================
@@ -129,19 +114,9 @@ void BeatStarterViewer::InGo(void)
 //=============================================================================
 void BeatStarterViewer::SetReady(void)
 {
-	//ゴーテキストを強制終了
+	//ゴーテキストを強制終了してからセット
 	shouldGo = false;
-
-	//フレーム初期化
-	countFrame = 0;
-
-	//アニメーション時間初期化
-	animTime = 0;
-
-	//ポジションを待機位置にセット
-	readyText->position.x = readyTextWaitPosX;
-
-	//再生状態にする
+	isPlaying = true;
 	shouldReady = true;
 }
 
@@ -150,18 +125,8 @@ void BeatStarterViewer::SetReady(void)
 //=============================================================================
 void BeatStarterViewer::SetGo(void)
 {
-	//レディーテキストを強制終了
+	//レディーテキストを強制終了してからセット
 	shouldReady = false;
-
-	//フレーム初期化
-	countFrame = 0;
-
-	//アニメーション時間初期化
-	animTime = 0;
-
-	//サイズを待機サイズにセット
-	goText->size.y = goTextWaitSizeY;
-
-	//再生状態にする
+	isPlaying = true;
 	shouldGo = true;
 }

@@ -67,15 +67,10 @@ void EventViewer::Update()
 		SetEventMessage("イベント発生！");
 	}
 
-	//if (Keyboard::GetTrigger(DIK_T))
-	//{
-	//	SetEventTelop(eventTelop->Singularity, nullptr);
-	//}
-
-	//if (Keyboard::GetTrigger(DIK_Y))
-	//{
-	//	SetEventTelop(eventTelop->AI_Strike, nullptr);
-	//}
+	if (Keyboard::GetTrigger(DIK_T))
+	{
+		SetEventTelop(eventTelop->Singularity, nullptr);
+	}
 
 	//if (Keyboard::GetTrigger(DIK_1))
 	//{
@@ -126,7 +121,7 @@ void EventViewer::CountMessage(void)
 	if (messageSetCnt != 0)
 	{
 		//ひとつ前のメッセージが再生終了してたならカウントリセット
-		if (!eventMessage[messageSetCnt - 1]->isPlaying)
+		if (!eventMessage[messageSetCnt - 1]->GetIsPlaying())
 		{
 			messageSetCnt = 0;
 		}
@@ -145,7 +140,7 @@ void EventViewer::PlayMessage(void)
 	if (messageContainer.empty()) return;
 
 	//最後のメッセージがプレイ中なら終わるまでリターン
-	if (eventMessage[messageMax - 1]->isPlaying) return;
+	if (eventMessage[messageMax - 1]->GetIsPlaying()) return;
 
 	//メッセージをカウント
 	CountMessage();

@@ -4,21 +4,13 @@
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#include "../../../../main.h"
-#include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
-#include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
-#include "../../../../Framework/Math/Easing.h"
 #include "ItemStockViewer.h"
 
-//*****************************************************************************
-// グローバル変数
-//*****************************************************************************
-
-//数字のホップ量
-static const float hopNumValue = 30.0f;
-
-//数字の初期サイズ
-static const D3DXVECTOR3 initNumSize = D3DXVECTOR3(84.0f, 84.0f, 0.0f);
+#include "../../../../main.h"
+#include "../../Framework/BaseViewer.h"
+#include "../../Framework/ViewerAnimater/ViewerAnimater.h"
+#include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
+#include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
 
 //*****************************************************************************
 // コンストラクタ
@@ -28,7 +20,7 @@ ItemStockViewer::ItemStockViewer()
 	//数字
 	num = new CountViewerDrawer();
 	num->LoadTexture("data/TEXTURE/Viewer/GameViewer/StockViewer/Number.png");
-	num->size = initNumSize;
+	num->size = D3DXVECTOR3(84.0f, 84.0f, 0.0f);;
 	num->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	num->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.21f, SCREEN_HEIGHT / 10 * 3.5f, 0.0f);
 	num->intervalPosScr = 42.0f;
@@ -46,6 +38,15 @@ ItemStockViewer::ItemStockViewer()
 	icon->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	icon->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.7f, SCREEN_HEIGHT / 10 * 3.5f, 0.0f);
 	icon->MakeVertex();
+
+	//アニメーション
+	anim = new ViewerAnimater();
+	std::vector<std::function<void()>> vec = {
+		[=] {
+		//ホッピング
+		anim->Hop(*num, D3DXVECTOR2(84.0f, 84.0f),D3DXVECTOR2(0.0f,30.0f), 15.0f);
+	} };
+	anim->SetAnimBehavior(vec);
 }
 
 //*****************************************************************************
@@ -55,6 +56,7 @@ ItemStockViewer::~ItemStockViewer()
 {
 	SAFE_DELETE(num);
 	SAFE_DELETE(icon);
+	SAFE_DELETE(anim);
 }
 
 //=============================================================================
@@ -62,8 +64,12 @@ ItemStockViewer::~ItemStockViewer()
 //=============================================================================
 void ItemStockViewer::Update(void)
 {
-	//アニメーション
-	Hop();
+	if (!isCurrentEqualLast((float)parameterBox)) isPlaying = true;
+	if (!isPlaying) return;
+	anim->PlayAnim([=]
+	{
+		anim->SetPlayFinished(isPlaying);
+	});
 }
 
 //=============================================================================
@@ -77,21 +83,4 @@ void ItemStockViewer::Draw(void)
 	//数字
 	num->DrawCounter(num->baseNumber, parameterBox, num->placeMax,
 		num->intervalPosScr, num->intervalPosTex);
-}
-
-//=============================================================================
-// アニメーション処理
-//=============================================================================
-void ItemStockViewer::Hop(void)
-{
-	//前フレームのパラメータとの差が0でないときホッピング状態にする
-	currentParam = parameterBox;
-	if (currentParam - lastParam != 0)
-	{
-		num->isHopped = true;
-	}
-	lastParam = parameterBox;
-
-	//ホッピング処理
-	num->size.y = num->HopNumber(num->size.y, initNumSize.y, hopNumValue);
 }

@@ -18,8 +18,8 @@ GuideCamera::GuideCamera()
 	const D3DXVECTOR3 InitPos = D3DXVECTOR3(0.0f, 10.0f, 0.0f);
 	const D3DXVECTOR3 InitTarget = D3DXVECTOR3(0.0f, 10.0f, 100.0f);
 	
-	transform.SetPosition(InitPos);
-	transform.LookAt(InitTarget);
+	transform->SetPosition(InitPos);
+	transform->LookAt(InitTarget);
 
 	viewAspect = InitViewAspect;
 

@@ -13,6 +13,7 @@
 // 前方宣言
 //*****************************************************************************
 class BaseViewerDrawer;
+class ViewerAnimater;
 class CountViewerDrawer;
 
 //*****************************************************************************
@@ -32,20 +33,9 @@ public:
 
 private:
 
-	//アイコン
 	BaseViewerDrawer *icon;
-
-	//数字
 	CountViewerDrawer *num;
-
-	//アニメーション
-	void Hop(void);
-
-	//現在のパラメータ
-	int currentParam;
-
-	//１フレーム前のパラメータ
-	int lastParam;
+	ViewerAnimater *anim;
 };
 
 

@@ -32,7 +32,7 @@ ViewFrustum::~ViewFrustum()
 /**************************************
 視錐台の面の法線取得処理
 ***************************************/
-D3DXVECTOR3 ViewFrustum::GetNormal(Surface surfaceID)
+D3DXVECTOR3 ViewFrustum::GetNormal(Surface surfaceID) const
 {
 	D3DXVECTOR3 normal = Vector3::Up;
 	switch (surfaceID)
@@ -76,7 +76,7 @@ void ViewFrustum::SetVertex(const D3DXVECTOR3 & NearLeftTop, const D3DXVECTOR3 &
 /**************************************
 法線取得処理（内部処理）
 ***************************************/
-D3DXVECTOR3 ViewFrustum::_GetNormal(int v1, int v2, int v3)
+D3DXVECTOR3 ViewFrustum::_GetNormal(int v1, int v2, int v3) const
 {
 	return Vector3::Axis(vertexPos[v2] - vertexPos[v1], vertexPos[v3] - vertexPos[v1]);
 }
@@ -84,7 +84,7 @@ D3DXVECTOR3 ViewFrustum::_GetNormal(int v1, int v2, int v3)
 /**************************************
 面上のある一点を所得
 ***************************************/
-D3DXVECTOR3 ViewFrustum::GetSurfacePoint(Surface surfaceID)
+D3DXVECTOR3 ViewFrustum::GetSurfacePoint(Surface surfaceID) const
 {
 	D3DXVECTOR3 ret = Vector3::Zero;
 	switch (surfaceID)
@@ -111,7 +111,7 @@ D3DXVECTOR3 ViewFrustum::GetSurfacePoint(Surface surfaceID)
 /**************************************
 視錐台カリング
 ***************************************/
-bool ViewFrustum::CheckOnCamera(const D3DXVECTOR3 target, const float size)
+bool ViewFrustum::CheckOnCamera(const D3DXVECTOR3 target, const D3DXVECTOR3& size) const
 {
 	bool ret = false;
 
@@ -146,21 +146,21 @@ bool ViewFrustum::CheckOnCamera(const D3DXVECTOR3 target, const float size)
 /**************************************
 法線から一番近い点を算出する
 ***************************************/
-D3DXVECTOR3 ViewFrustum::GetPositivePoint(D3DXVECTOR3 target, const float size, D3DXVECTOR3 normal)
+D3DXVECTOR3 ViewFrustum::GetPositivePoint(D3DXVECTOR3 target, const D3DXVECTOR3& size, D3DXVECTOR3 normal) const
 {
 	D3DXVECTOR3 ret = target;
 
 	if (normal.x > 0)
 	{
-		ret.x += size;
+		ret.x += size.x;
 	}
 	if (normal.y > 0)
 	{
-		ret.y += size;
+		ret.y += size.y;
 	}
 	if (normal.z > 0)
 	{
-		ret.z += size;
+		ret.z += size.z;
 	}
 
 	return ret;
@@ -169,21 +169,21 @@ D3DXVECTOR3 ViewFrustum::GetPositivePoint(D3DXVECTOR3 target, const float size, 
 /**************************************
 法線から一番遠い点を算出する
 ***************************************/
-D3DXVECTOR3 ViewFrustum::GetNegativePoint(D3DXVECTOR3 target, const float size, D3DXVECTOR3 normal)
+D3DXVECTOR3 ViewFrustum::GetNegativePoint(D3DXVECTOR3 target, const D3DXVECTOR3& size, D3DXVECTOR3 normal) const
 {
 	D3DXVECTOR3 ret = target;
 
 	if (normal.x < 0)
 	{
-		ret.x -= size;
+		ret.x -= size.x;
 	}
 	if (normal.y < 0)
 	{
-		ret.y -= size;
+		ret.y -= size.y;
 	}
 	if (normal.z < 0)
 	{
-		ret.z -= size;
+		ret.z -= size.z;
 	}
 
 	return ret;

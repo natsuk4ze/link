@@ -1,4 +1,3 @@
-
 //=============================================================================
 //
 // 連打ゲームスタータービュアー処理 [BeatStarterViewer.h]
@@ -14,6 +13,7 @@
 // 前方宣言
 //*****************************************************************************
 class BaseViewerDrawer;
+class ViewerAnimater;
 
 //*****************************************************************************
 // クラス定義
@@ -30,26 +30,21 @@ public:
 	void SetGo(void);
 
 private:
+	enum TextType
+	{
+		Ready,
+		Go,
+		Max
+	};
+
 	BaseViewerDrawer *readyText;
 	BaseViewerDrawer *goText;
-
-	//レディーテキストをスクリーンイン
-	void InReady(void);
-
-	//ゴーテキストを出現させる処理
-	void InGo(void);
+	ViewerAnimater *anim[TextType::Max];
 
 	//レディーすべきか
 	bool shouldReady;
-
 	//ゴーすべきか
 	bool shouldGo;
-
-	//フレームカウント
-	int countFrame;
-
-	//アニメーション時間
-	float animTime;
 };
 
 #endif

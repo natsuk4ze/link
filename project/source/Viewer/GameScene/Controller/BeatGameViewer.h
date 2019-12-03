@@ -35,6 +35,8 @@ public:
 	void Update(void);
 	void Draw(void);
 
+	void SetFieldLevel(int fieldLevel);
+
 	//連打ゲームのタイトルを設置する
 	void SetGameTitle(BeatTitleViewer::TitleID id);
 
@@ -65,6 +67,8 @@ private:
 	BeatResultViewer *resultViewer;
 
 	bool active;
+
+	int filedLevel;
 };
 
 #endif

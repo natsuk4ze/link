@@ -6,6 +6,8 @@
 //=====================================
 #include "AnimationManager.h"
 #include "AnimContainer.h"
+#include "../Resource/ResourceManager.h"
+
 #include <assert.h>
 
 using namespace std;
@@ -62,7 +64,7 @@ Xƒtƒ@ƒCƒ‹“Ç‚Ýž‚Ýˆ—
 HRESULT AnimationManager::LoadXFile(LPCSTR fileName, const char* errorSrc)
 {
 	bool res = S_OK;
-	res = container->LoadXFile(fileName, errorSrc);
+	ResourceManager::Instance()->GetSkinMesh(fileName, container);
 
 	if (res != S_OK)
 		return res;

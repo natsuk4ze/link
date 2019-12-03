@@ -32,9 +32,9 @@ FieldCamera::Mode FieldCamera::FieldCameraTransitionOut::OnUpdate(FieldCamera & 
 
 	float t = (float)entity.cntFrame / DurationAccel;
 	float speed = Easing::EaseValue(t, 0.0f, MaxSpeed, EaseType::InOutCubic);
-	entity.transform.Move(Vector3::Up * speed);
+	entity.transform->Move(Vector3::Up * speed);
 
-	entity.transform.LookAt(entity.targetObject->GetPosition());
+	entity.transform->LookAt(entity.targetObject->GetPosition());
 
 	return FieldCamera::Mode::TransitionOut;
 }

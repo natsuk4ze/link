@@ -4,10 +4,11 @@
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
+#include "BeatTimerViewer.h"
+
 #include "../../../../main.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
-#include "BeatTimerViewer.h"
 
 //*****************************************************************************
 // コンストラクタ

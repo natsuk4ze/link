@@ -5,7 +5,6 @@
 //
 //=============================================================================
 #include "../../../../main.h"
-#include "../FieldViewer/FieldTelop.h"
 #include "../FieldViewer/LinkLevelUpViewer.h"
 #include "../FieldViewer/FieldErrorMessage.h"
 #include "../FieldViewer/OperationExplanationViewer.h"
@@ -21,7 +20,6 @@
 //*****************************************************************************
 FieldViewer::FieldViewer()
 {
-	fieldViewer.push_back(fieldTelop = new FieldTelop());
 	fieldViewer.push_back(linkLevelUpViewer = new LinkLevelUpViewer());
 	fieldViewer.push_back(fieldErroMessage = new FieldErrorMessage());
 	fieldViewer.push_back(operationExplanation = new OperationExplanationViewer());
@@ -53,12 +51,6 @@ void FieldViewer::Update()
 	}
 
 #ifdef _DEBUG
-
-	//お試しでフィールドが変わった時のテロップを実装
-	if (Keyboard::GetTrigger(DIK_F))
-	{
-		SetFieldTelop(fieldTelop->City, nullptr);
-	}
 
 	if (Keyboard::GetTrigger(DIK_O))
 	{
@@ -93,14 +85,6 @@ void FieldViewer::Draw(void)
 
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
-}
-
-//=============================================================================
-// フィールドテロップを設置
-//=============================================================================
-void FieldViewer::SetFieldTelop(FieldTelop::TelopID id, std::function<void(void)> Callback)
-{
-	fieldTelop->Set(id, Callback);
 }
 
 //=============================================================================

@@ -14,6 +14,7 @@
 #include "../../../Framework/Task/TaskManager.h"
 #include "../../Field/Camera/EventCamera.h"
 #include "../../Viewer/GameScene/Controller/BeatGameViewer.h"
+#include "../../Viewer/GameScene/GuideViewer/GuideActor.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -63,6 +64,7 @@ AILevelDecreaseEvent::~AILevelDecreaseEvent()
 {
 	SAFE_DELETE(beatGame);
 	SAFE_DELETE(UFO);
+	SAFE_DELETE(guideActor);
 	eventViewer = nullptr;
 }
 
@@ -87,6 +89,11 @@ void AILevelDecreaseEvent::Init()
 
 	// UFOメッシュ作成
 	UFO = new UFOActor(UFOPos, Scale, "UFO");
+
+	//ガイド作成
+	guideActor = new GuideActor();
+	guideActor->SetActive(false);
+	guideActor->SetScale(Vector3::One * 0.05f);
 
 	// テロップ設置
 	eventViewer->SetEventTelop(EventTelop::Alien, [&]()
@@ -185,6 +192,9 @@ void AILevelDecreaseEvent::Update()
 	default:
 		break;
 	}
+
+	if (guideActor->IsActive())
+		guideActor->Update();
 }
 
 //=============================================================================
@@ -200,6 +210,9 @@ void AILevelDecreaseEvent::Draw()
 	{
 		UFO->Draw();
 	}
+
+	if (guideActor->IsActive())
+		guideActor->Draw();
 
 	beatGame->Draw();
 }
@@ -218,6 +231,10 @@ string AILevelDecreaseEvent::GetEventMessage(int FieldLevel)
 //=============================================================================
 void AILevelDecreaseEvent::UFODebutStart(void)
 {
+	//カメラの位置を切り替え
+	D3DXVECTOR3 cameraPos = TownPos + D3DXVECTOR3(15.0f, 15.0f, -15.0f);
+	camera->Move(cameraPos, 10, 10.0f);
+	camera->SetTargetObject(UFO);
 	EventState = UFODebut;
 }
 
@@ -239,6 +256,17 @@ void AILevelDecreaseEvent::CountdownStart(void)
 {
 	beatGame->CountdownStart();
 	UFO->SetHoverMotion(true);
+
+	//カメラの追従を切る
+	camera->SetTargetObject(nullptr);
+	
+	//ガイドキャラ出撃
+	D3DXVECTOR3 diff = Vector3::Normalize(camera->GetPosition() - UFOPos);
+	D3DXVECTOR3 guidePos = UFOPos + diff * 5.0f + Vector3::Down * 2.0f;
+	guideActor->SetPosition(guidePos);
+	guideActor->LookAt(UFOPos);
+
+	guideActor->SetActive(true);
 }
 
 //=============================================================================

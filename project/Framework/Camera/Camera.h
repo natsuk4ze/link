@@ -21,7 +21,7 @@ class SpriteEffect;
 /**************************************
 Cameraクラス
 ***************************************/
-class Camera
+class Camera : public GameObject
 {
 	friend class BaseGame;
 public:
@@ -55,18 +55,12 @@ public:
 	D3DXMATRIX GetProjectionMtx() const;
 
 	//視錐台取得処理
-	ViewFrustum GetViewFrustrum() const;
-
-	//Transform取得処理
-	Transform GetTransform() const;
+	const ViewFrustum* GetViewFrustrum() const;
 
 	//代入演算子
 	Camera& operator=(const Camera& rhs);
 
 protected:
-	//SRT情報
-	Transform transform;
-
 	//視野角、アスペクト比、ニア値、ファー値
 	float viewAngle;
 	float viewAspect;
