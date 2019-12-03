@@ -10,7 +10,7 @@
 //=====================================
 // コンストラクタ
 //=====================================
-Reward::Reward(RewardController::Type type, int maxdata) :
+Reward::Reward(RC::Type type, int maxdata) :
 	type(type), achieve(false), firstAchieve(false), name(), MaxData(maxdata)
 {
 }

@@ -1,30 +1,31 @@
 //=====================================
 //
-// カウントアップリワード[CountupReward.h]
-// 機能：カウントアップするタイプのリワード
+// マックスチェックリワード[MaxCheckReward.h]
+// 機能：最大値を超えたか確認するタイプのリワード
 // Author:GP12B332 19 染谷武志
 //
 //=====================================
-#ifndef _COUNTUPREWARD_H_
-#define _COUNTUPREWARD_H_
+#ifndef _MAXCHECKREWARD_H_
+#define _MAXCHECKREWARD_H_
 
 #include "Reward.h"
 
+namespace RC = RewardConfig;
 //**************************************
 // クラス定義
 //**************************************
-class CountupReward :
+class MaxCheckReward :
 	public Reward
 {
 private:
 	int data;
-
 public:
-	CountupReward(RC::Type type, int maxdata);
-	~CountupReward();
+	MaxCheckReward(RC::Type type, int maxdata);
+	~MaxCheckReward();
 
 	void SetData(int data)override;
 	void ResetData()override;
+
 };
 
 #endif

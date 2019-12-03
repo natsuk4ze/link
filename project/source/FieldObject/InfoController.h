@@ -34,6 +34,9 @@ public:
 
 	// 全ての町のリンクレベルのセット、レベルアップ
 	void SetAllLinkLevel(const std::vector<Field::PlaceData>& vec);
+
+	// 一番Linkレベルの高い町のレベルを調べる
+	void SearchMaxLinkLevel();
 };
 
 #endif

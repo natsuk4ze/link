@@ -44,6 +44,7 @@ public:
 
 	// レベル変更時使用
 	void SetLevel(const int& nextLevel);
+	int GetLevel();
 
 };
 

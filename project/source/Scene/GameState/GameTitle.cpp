@@ -27,7 +27,6 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	// カメラのモード切替
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::Arround);
 
-	//タイトル、選択肢などなど
 	// タイトル画面で使用するUIの描画をON
 	entity.titleViewer->SetActive(true);
 

@@ -104,3 +104,11 @@ void LinkInfoActor::SetLevel(const int& nextLevel)
 		digitActor[i]->ChangeDigit(digit[i]);
 	}
 }
+
+//=====================================
+// ƒŒƒxƒ‹Žæ“¾
+//=====================================
+int LinkInfoActor::GetLevel()
+{
+	return linkLevel;
+}
