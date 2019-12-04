@@ -58,18 +58,7 @@ string AILevelUpEvent::GetEventMessage(int FieldLevel)
 {
 	vector<string> MessageContainer;
 
-	if (FieldLevel == Field::City)
-	{
-		MessageContainer.push_back("シンギュラリティに到達！\nAIレベルがパワーアップした！");
-	}
-	else if (FieldLevel == Field::World)
-	{
-		MessageContainer.push_back("シンギュラリティに到達！\nAIレベルがパワーアップした！");
-	}
-	else if (FieldLevel == Field::Space)
-	{
-		MessageContainer.push_back("シンギュラリティに到達！\nAIレベルがパワーアップした！");
-	}
+	MessageContainer.push_back("茶柱がたった！");
 
 	if (!MessageContainer.empty())
 	{

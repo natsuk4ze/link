@@ -11,6 +11,11 @@
 // マクロ定義
 //*****************************************************************************
 const int RecoveryFrame = 150;
+const std::string TimeRecoveryEvent::message[] = {
+	{"宇宙人がタイムマシンを持ってた！"},
+	{"宇宙人「なんかすごいビーム！」"},
+	{"ミステリーサークルに宇宙人降り立つ！\nパワースポット誕生！"}
+};
 
 //*****************************************************************************
 // スタティック変数宣言
@@ -58,18 +63,8 @@ string TimeRecoveryEvent::GetEventMessage(int FieldLevel)
 {
 	vector<string> MessageContainer;
 
-	if (FieldLevel == Field::City)
-	{
-		MessageContainer.push_back("タイムマシンの開発に成功！\n制限時間が回復！");
-	}
-	else if (FieldLevel == Field::World)
-	{
-		MessageContainer.push_back("タイムマシンの開発に成功！\n制限時間が回復！");
-	}
-	else if (FieldLevel == Field::Space)
-	{
-		MessageContainer.push_back("タイムマシンの開発に成功！\n制限時間が回復！");
-	}
+	int r = rand() % 3;
+	MessageContainer.push_back(message[r]);
 
 	if (!MessageContainer.empty())
 	{

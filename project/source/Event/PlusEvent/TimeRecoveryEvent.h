@@ -8,6 +8,7 @@
 #define _TimeRecoveryEvent_H_
 
 #include "../EventBase.h"
+#include <string>
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -15,6 +16,8 @@
 class TimeRecoveryEvent : public EventBase
 {
 private:
+	static const std::string message[3];
+
 public:
 	TimeRecoveryEvent();
 	~TimeRecoveryEvent();

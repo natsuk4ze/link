@@ -14,6 +14,11 @@
 const float BonusNum = 1.5f;
 // デフォルトのボーナス効果フレーム
 const int DefalutBonusFrame = 150;
+const std::string FamousPeopleEvent::message[] = {
+	{"最近ブームの芸人がうちの町にも来た！"},
+	{"M-1優勝芸人がこの町の観光大使に！？"},
+	{"おにぎりマン大好き好き君"}
+};
 
 //*****************************************************************************
 // スタティック変数宣言
@@ -68,18 +73,8 @@ string FamousPeopleEvent::GetEventMessage(int FieldLevel)
 {
 	vector<string> MessageContainer;
 
-	if (FieldLevel == Field::City)
-	{
-		MessageContainer.push_back("芸人が街に来た！\n発展速度アップ！");
-	}
-	else if (FieldLevel == Field::World)
-	{
-		MessageContainer.push_back("芸人が街に来た！\n発展速度アップ！");
-	}
-	else if (FieldLevel == Field::Space)
-	{
-		MessageContainer.push_back("芸人が街に来た！\n発展速度アップ！");
-	}
+	int r = rand() % r;
+	MessageContainer.push_back(message[r]);
 
 	if (!MessageContainer.empty())
 	{

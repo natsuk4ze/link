@@ -8,6 +8,7 @@
 #define _AllLinkLevelUpEvent_H_
 
 #include "../EventBase.h"
+#include <string>
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -15,6 +16,10 @@
 class AllLinkLevelUpEvent : public EventBase
 {
 private:
+	static const std::string CityMessage[3];
+	static const std::string WorldMessage[3];
+	static const std::string SpaceMessage[3];
+
 public:
 	AllLinkLevelUpEvent();
 	~AllLinkLevelUpEvent();

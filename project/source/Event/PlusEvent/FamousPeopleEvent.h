@@ -8,6 +8,7 @@
 #define _FamousPeopleEvent_H_
 
 #include "../EventBase.h"
+#include <string>
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -16,6 +17,7 @@ class FamousPeopleEvent : public EventBase
 {
 private:
 	int RemainTime;
+	static const std::string message[3];
 
 public:
 	FamousPeopleEvent();
