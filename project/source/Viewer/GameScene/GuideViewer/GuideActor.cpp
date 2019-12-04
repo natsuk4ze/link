@@ -32,7 +32,7 @@ const GuideActor::AnimData GuideActor::data[] = {
 	{"TalkingTypeB", 1.0f, 0.3f, 1 / 30.0f},
 	{"SecretTalk", 1.0f, 0.3f, 1 / 30.0f},
 	{"FightingIdle", 1.0f, 0.3f, 1 / 30.0f},
-	{"Rush", 1.0f, 0.3f, 1 / 30.0f},
+	{"Rush", 5.0f, 0.3f, 1 / 30.0f},
 };
 
 const char* GuideActor::FileName = "data/MODEL/Robot.X";

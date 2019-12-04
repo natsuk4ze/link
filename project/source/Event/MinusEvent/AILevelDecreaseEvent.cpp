@@ -272,7 +272,14 @@ void AILevelDecreaseEvent::CountdownStart(void)
 	guideActor->SetPosition(TownPos);
 	guideActor->Move(guidePos, 60);
 
+	guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle);
+
 	guideActor->SetActive(true);
+
+	TaskManager::Instance()->CreateDelayedTask(90, [&]()
+	{
+		guideActor->ChangeAnim(GuideActor::AnimState::Rush);
+	});
 }
 
 //=============================================================================

@@ -259,6 +259,14 @@ void CityDestroyEvent::CountdownStart(void)
 {
 	beatGame->CountdownStart();
 	EventState = State::BeatGameStart;
+
+	//ガイドアクターのアニメーション
+	guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle);
+
+	TaskManager::Instance()->CreateDelayedTask(90, [&]()
+	{
+		guideActor->ChangeAnim(GuideActor::AnimState::Rush);
+	});
 }
 
 //=============================================================================
@@ -270,6 +278,8 @@ void CityDestroyEvent::ReceiveBeatResult(bool IsSuccess)
 	{
 		// 成功、隕石撃破
 		EventState = State::BeatGameSuccess;
+
+		guideActor->ChangeAnim(GuideActor::AnimState::Yeah);
 	}
 	else
 	{
