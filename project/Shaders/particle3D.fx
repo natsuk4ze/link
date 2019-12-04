@@ -117,6 +117,7 @@ float4 psMain(VS_OUTPUT In) : COLOR0
 technique tech {
 	pass p0 {
 		LIGHTING = false;
+		ZENABLE = true;
 		ZWRITEENABLE = false;
 		ALPHABLENDENABLE = true;
 		ALPHATESTENABLE = true;
@@ -128,6 +129,7 @@ technique tech {
 	pass p1 {
 		LIGHTING = false;
 		ZWRITEENABLE = false;
+		ZENABLE = false;
 		ALPHABLENDENABLE = true;
 		ALPHATESTENABLE = true;
 

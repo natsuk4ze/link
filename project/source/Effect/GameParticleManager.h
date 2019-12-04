@@ -30,6 +30,7 @@ namespace GameParticle
 		Cloud,			//雲
 		EventInfo,		//イベントます
 		BlueAura,		//青オーラ
+		PunchEffect,	//パンチエフェクト
 		Max
 	};
 }

@@ -72,7 +72,8 @@ void CityDestroyEvent::Init()
 	camera->Init();
 
 	// 連打ゲームインスタンス
-	beatGame = new BeatGame(BeatGame::CityDestroyEvent, beatViewer, [&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
+	auto onFinishBeat = std::bind(&CityDestroyEvent::OnFinisheBeat, this, std::placeholders::_1);
+	beatGame = new BeatGame(BeatGame::CityDestroyEvent, beatViewer, [&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); }, onFinishBeat);
 
 	// 破壊する町の予定地を取得
 	Target = fieldEventHandler->GetDestroyTarget();
@@ -135,11 +136,13 @@ void CityDestroyEvent::Update()
 			//ガイドキャラをアクティベイトして移動
 			guideActor->SetActive(true);
 			
-			D3DXVECTOR3 guidePos = Vector3::Normalize(diff) * 5.0f + MeteoritePos;
+			D3DXVECTOR3 guidePos = Vector3::Normalize(diff) * 7.5f + MeteoritePos;
 			guideActor->SetPosition(TownPos);
 			guideActor->Move(guidePos, 60);
 
 			guideActor->LookAt(MeteoritePos);
+
+			guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle);
 
 			//カメラの移動
 			D3DXVECTOR3 nextCameraPos = Vector3::Normalize(diff) * 25.0f + MeteoritePos + Vector3::Back * 10.0f;
@@ -259,6 +262,14 @@ void CityDestroyEvent::CountdownStart(void)
 {
 	beatGame->CountdownStart();
 	EventState = State::BeatGameStart;
+
+	//ガイドアクターのアニメーション
+	guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle);
+
+	TaskManager::Instance()->CreateDelayedTask(90, [&]()
+	{
+		guideActor->StartPunsh();
+	});
 }
 
 //=============================================================================
@@ -281,4 +292,12 @@ void CityDestroyEvent::ReceiveBeatResult(bool IsSuccess)
 
 		guideActor->SetActive(false);
 	}
+}
+
+//=============================================================================
+// 連打ゲームの結果によるアニメーション遷移
+//=============================================================================
+void CityDestroyEvent::OnFinisheBeat(bool result)
+{
+	guideActor->EndPunch(result);
 }

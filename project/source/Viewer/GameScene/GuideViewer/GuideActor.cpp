@@ -32,7 +32,7 @@ const GuideActor::AnimData GuideActor::data[] = {
 	{"TalkingTypeB", 1.0f, 0.3f, 1 / 30.0f},
 	{"SecretTalk", 1.0f, 0.3f, 1 / 30.0f},
 	{"FightingIdle", 1.0f, 0.3f, 1 / 30.0f},
-	{"Rush", 1.0f, 0.3f, 1 / 30.0f},
+	{"Rush", 5.0f, 0.3f, 1 / 30.0f},
 };
 
 const char* GuideActor::FileName = "data/MODEL/Robot.X";
@@ -41,7 +41,8 @@ const char* GuideActor::FileName = "data/MODEL/Robot.X";
 // コンストラクタ
 //=====================================
 GuideActor::GuideActor() :
-	auraEmitter(nullptr)
+	auraEmitter(nullptr),
+	punchEmitter(nullptr)
 {
 	transform->SetPosition(D3DXVECTOR3(0.0f, -10.0f, 15.0f));
 	transform->SetScale(Vector3::One * 0.3f);
@@ -65,6 +66,11 @@ GuideActor::GuideActor() :
 	{
 		// パンチ連打とファイティングポーズだけはずっと続ける
 		if (i == Rush || i == FightingIdle)
+		{
+			anim->SetFinishTransition(AnimState(i), AnimState(i));
+		}
+		//YeahとDefeatも続ける
+		else if (i == Yeah || i == Defeat)
 		{
 			anim->SetFinishTransition(AnimState(i), AnimState(i));
 		}
@@ -145,6 +151,32 @@ void GuideActor::Move(const D3DXVECTOR3 & target, int duration)
 		auraEmitter->SetActive(false);
 		auraEmitter = nullptr;
 	});
+}
+
+//=====================================
+// パンチスタート
+//=====================================
+void GuideActor::StartPunsh()
+{
+	ChangeAnim(AnimState::Rush);
+
+	Transform emitterTransform = *transform;
+	emitterTransform.Move(transform->Up() * 3.0f + transform->Forward() * -0.5f);
+	emitterTransform.SetScale(Vector3::One);
+
+	punchEmitter = GameParticleManager::Instance()->Generate(GameParticle::PunchEffect, emitterTransform);
+}
+
+//=====================================
+// パンチ終了
+//=====================================
+void GuideActor::EndPunch(bool result)
+{
+	AnimState next = result ? AnimState::Yeah : AnimState::Defeat;
+	ChangeAnim(next);
+
+	if (punchEmitter != nullptr)
+		punchEmitter->SetActive(false);
 }
 
 //=====================================

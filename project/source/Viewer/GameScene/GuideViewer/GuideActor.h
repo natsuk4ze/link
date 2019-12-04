@@ -67,9 +67,13 @@ public:
 
 	void Move(const D3DXVECTOR3& target, int duration);
 
+	void StartPunsh();
+	void EndPunch(bool result);
+
 private:
 	AnimationManager* anim;					// アニメーションマネージャ
-	BaseEmitter* auraEmitter;				//オーラエミッター
+	BaseEmitter* auraEmitter;				// オーラエミッター
+	BaseEmitter* punchEmitter;				// パンチエミッター
 	static const AnimData data[AnimMax];	// アニメーション読み込み用データ
 	static const char* FileName;			// 読み込むXファイル
 
