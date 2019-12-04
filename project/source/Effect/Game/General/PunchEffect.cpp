@@ -37,7 +37,7 @@ namespace Effect::Game
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
-			emitter = new BaseEmitter(5, 0);
+			emitter = new BaseEmitter(15, 0);
 		}
 	}
 
@@ -60,8 +60,11 @@ namespace Effect::Game
 
 		initScale = Math::RandomRange(0.8f, 1.2f);
 
-		moveDir = Vector3::Random();
-		transform->Move(moveDir * 1.0f);
+		const float OffsetRange = 1.0f;
+		transform->Move(transform->Right() * Math::RandomRange(-OffsetRange, OffsetRange));
+		transform->Move(transform->Up() * Math::RandomRange(-OffsetRange, OffsetRange));
+
+		transform->SetRotation(Vector3::Zero);
 
 		uv.u = Math::RandomRange(0, 2) * 0.5f;
 		uv.v = Math::RandomRange(0, 2) * 0.5f;
