@@ -57,22 +57,6 @@ void CountViewerDrawer::SetVertexPos(int placeCount, float placeInterval)
 }
 
 //=============================================================================
-// 頂点座標の設定　（カウンター専用）(左からの描画)
-//=============================================================================
-void CountViewerDrawer::SetVertexPosLeft(int placeCount, float placeInterval)
-{
-	// 頂点座標の設定
-	vertexWk[0].vtx = D3DXVECTOR3(position.x + placeCount * placeInterval, position.y, 0.0f)
-		+ D3DXVECTOR3(-size.x / 2, -size.y / 2, 0.0f);
-	vertexWk[1].vtx = D3DXVECTOR3(position.x + placeCount * placeInterval, position.y, 0.0f)
-		+ D3DXVECTOR3(size.x / 2, -size.y / 2, 0.0f);
-	vertexWk[2].vtx = D3DXVECTOR3(position.x + placeCount * placeInterval, position.y, 0.0f)
-		+ D3DXVECTOR3(-size.x / 2, size.y / 2, 0.0f);
-	vertexWk[3].vtx = D3DXVECTOR3(position.x + placeCount * placeInterval, position.y, 0.0f)
-		+ D3DXVECTOR3(size.x / 2, size.y / 2, 0.0f);
-}
-
-//=============================================================================
 //オブジェクトのテクスチャ座標設定処理　（カウンター専用）
 //=============================================================================
 void CountViewerDrawer::SetTexture(int number, float placeInterval)
@@ -123,26 +107,6 @@ void CountViewerDrawer::DrawCounter(int baseNumber, int parameterBox,
 		int num = 0;
 		num = value % baseNumber;
 		value /= baseNumber;
-
-		this->SetVertexPos(nCntPlace, intervalNumberScr);
-		SetTexture(num, intervalNumberTex);
-		this->Draw();
-	}
-}
-
-//=============================================================================
-//0を表示しないカウンター描画処理（引数注意)(左からの描画)
-//=============================================================================
-void CountViewerDrawer::DrawCounterLeft(int baseNumber, int parameterBox,
-	float intervalNumberScr, float intervalNumberTex)
-{
-	int placeMax = (parameterBox == 0) ? 1 : (int)log10f((float)parameterBox) + 1;
-	int num = 0;
-
-	for (int nCntPlace = 0; nCntPlace < placeMax; nCntPlace++)
-	{
-		num = parameterBox % (int)(pow(baseNumber, (placeMax - nCntPlace)))
-			/ (int)(pow(baseNumber, (placeMax - nCntPlace - 1)));
 
 		this->SetVertexPos(nCntPlace, intervalNumberScr);
 		SetTexture(num, intervalNumberTex);

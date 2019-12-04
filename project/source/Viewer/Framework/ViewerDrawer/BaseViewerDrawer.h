@@ -45,6 +45,8 @@ public:
 	virtual void SetVertexPos();
 	virtual void SetTexture(int divX, int divY, int pattern);
 
+	void SetPosition(const D3DXVECTOR3 pos);
+
 	D3DXVECTOR3 GetPosition(void);
 	D3DXCOLOR GetColor(void);
 

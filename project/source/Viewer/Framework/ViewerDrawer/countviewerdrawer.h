@@ -21,9 +21,6 @@ public:
 	void DrawCounter(int baseNumber, int parameterBox,
 		float intervalNumberScr, float intervalNumberTex);
 
-	void DrawCounterLeft(int baseNumber, int parameterBox,
-		float intervalNumberScr, float intervalNumberTex);
-
 	//スクリーン上の表示座標間隔
 	float intervalPosScr;
 
@@ -50,7 +47,6 @@ private:
 	void Draw();
 
 	void SetVertexPos(int placeCount, float placeInterval);
-	void SetVertexPosLeft(int placeCount, float placeInterval);
 	void SetTexture(int number, float placeInterval);
 
 	int texDivX = 4;
