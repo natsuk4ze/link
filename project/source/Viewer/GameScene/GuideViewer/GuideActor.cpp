@@ -68,6 +68,11 @@ GuideActor::GuideActor() :
 		{
 			anim->SetFinishTransition(AnimState(i), AnimState(i));
 		}
+		//YeahとDefeatも続ける
+		else if (i == Yeah || i == Defeat)
+		{
+			anim->SetFinishTransition(AnimState(i), AnimState(i));
+		}
 		// とりあえず全部アニメーション終了したらアイドルに戻す
 		else
 		{
