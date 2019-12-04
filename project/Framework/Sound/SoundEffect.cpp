@@ -12,6 +12,24 @@
 staticÉÅÉìÉo
 ***************************************/
 std::unordered_map<int, LPDIRECTSOUNDBUFFER8> SE::soundContainer;
+const char* SE::path[] = {
+	{"data/SOUND/VOICE/AIBonus.wav"},
+	{"data/SOUND/VOICE/AIOutofControll.wav"},
+	{"data/SOUND/VOICE/AIOutofControllStop.wav"},
+	{"data/SOUND/VOICE/AllLinkLevelUp.wav"},
+	{"data/SOUND/VOICE/DevelopSpeedUp.wav"},
+	{"data/SOUND/VOICE/DrillStock.wav"},
+	{"data/SOUND/VOICE/LinkLevelDown.wav"},
+	{"data/SOUND/VOICE/LinkLevelUp.wav"},
+	{"data/SOUND/VOICE/MeteorBreakFailed.wav"},
+	{"data/SOUND/VOICE/MeteorBreakSuccess.wav"},
+	{"data/SOUND/VOICE/NewContinent.wav"},
+	{"data/SOUND/VOICE/NewStar.wav"},
+	{"data/SOUND/VOICE/NewTown.wav"},
+	{"data/SOUND/VOICE/TimeLimitHeal.wav"},
+	{"data/SOUND/VOICE/UMAFailed.wav"},
+	{"data/SOUND/VOICE/UMAStop.wav"}
+};
 
 /**************************************
 ì«Ç›çûÇ›èàóù

@@ -73,7 +73,7 @@ string FamousPeopleEvent::GetEventMessage(int FieldLevel)
 {
 	vector<string> MessageContainer;
 
-	int r = rand() % r;
+	int r = rand() % 3;
 	MessageContainer.push_back(message[r]);
 
 	if (!MessageContainer.empty())

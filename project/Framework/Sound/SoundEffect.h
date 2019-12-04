@@ -22,6 +22,31 @@
 class SE
 {
 public:
+	// SEの種類を列挙
+	enum Type
+	{
+		AIBonus,				// AIレベルにボーナス（茶柱イベント）
+		AIOutofControll,		// AI暴走
+		AIOutofControllStop,	// AI暴走阻止
+		AllLinkLevelUp,			// 全ての町のリンクレベル上昇
+		DevelopSpeedUp,			// 発展度上昇
+		StockRecovery,			// ドリルのストック回復
+		LinkLevelDown,			// 1つの町のリンクレベルダウン
+		LinkLevelUp,			// 1つの町のリンクレベルアップ
+		MeteorBreakFailed,		// 隕石イベント失敗
+		MeteorBreakSuccess,		// 隕石イベント成功
+		NewContinent,			// 新大陸出現
+		NewStar,				// 新しい星出現
+		NewTown,				// 新しい町誕生
+		TimeLimitHeal,			// 制限時間回復
+		UFOFailed,				// UFOイベント失敗
+		UFOSuccess,				// UFOイベント成功
+		
+		Max
+	};
+	static const char* path[Type::Max];
+
+
 	//サウンド読み込み処理
 	static void Load(const char* path, int tag);
 
