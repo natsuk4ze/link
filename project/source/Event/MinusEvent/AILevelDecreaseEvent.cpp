@@ -125,19 +125,8 @@ void AILevelDecreaseEvent::Update()
 	{
 		// UFO登場
 	case UFODebut:
-
-		Distance = D3DXVec3LengthSq(&D3DXVECTOR3(UFOPos - TownPos));
-
-		if (Distance > pow(25.0f, 2))
-		{
-			UFOPos += Vector3::Down * FallSpeed;
-			UFO->SetPosition(UFOPos);
-		}
-		else
-		{
-			CountdownStart();
-			EventState = State::BeatGameStart;
-		}
+		//UFOの移動、イベント遷移はTweenに任せる
+		UFOPos = UFO->GetPosition();
 		break;
 
 	case BeatGameStart:
@@ -170,29 +159,13 @@ void AILevelDecreaseEvent::Update()
 
 		UFO->Update();
 
-		// エフェクト
-		GameParticleManager::Instance()->SetDarknessEffect(TownPos);
-		TaskManager::Instance()->CreateDelayedTask(90, [&]()
-		{
-			EventState = UFOExit;
-		});
 		break;
 
 		// UFO退場
 	case UFOExit:
 
-		Distance = D3DXVec3LengthSq(&D3DXVECTOR3(UFOPos - TownPos));
-
-		if (Distance < pow(DefaultHeight, 2))
-		{
-			UFOPos += Vector3::Up * FallSpeed;
-			UFO->SetPosition(UFOPos);
-		}
-		else
-		{
-			camera->Return(30, [&]() { EventOver(); });
-			EventState = EffectHappend;
-		}
+		UFOPos = UFO->GetPosition();
+		//UFOの移動、イベント遷移はTweenに任せる
 		break;
 
 	default:
@@ -241,6 +214,13 @@ void AILevelDecreaseEvent::UFODebutStart(void)
 	D3DXVECTOR3 cameraPos = TownPos + D3DXVECTOR3(15.0f, 15.0f, -15.0f);
 	camera->Move(cameraPos, 10, 10.0f);
 	camera->SetTargetObject(UFO);
+
+	//UFO登場
+	Tween::Move(*UFO, TownPos + Vector3::Up * 25.0f, 60, EaseType::InOutCirc, [&]()
+	{
+		CountdownStart();
+	});
+
 	EventState = UFODebut;
 }
 
@@ -261,6 +241,20 @@ void AILevelDecreaseEvent::EventOver(void)
 void AILevelDecreaseEvent::OnFinishBeat(bool result)
 {
 	guideActor->EndPunch(result);
+}
+
+//=============================================================================
+// エフェクト終了時の処理
+//=============================================================================
+void AILevelDecreaseEvent::OnFinishEffect()
+{
+	Tween::Move(*UFO, TownPos + Vector3::Up * DefaultHeight, 90, EaseType::InCirc, [&]()
+	{
+		camera->Return(30, [&]() { EventOver(); });
+		EventState = EffectHappend;
+	});
+
+	EventState = UFOExit;
 }
 
 //=============================================================================
@@ -289,6 +283,8 @@ void AILevelDecreaseEvent::CountdownStart(void)
 	{
 		guideActor->StartPunsh();
 	});
+
+	EventState = State::BeatGameStart;
 }
 
 //=============================================================================
@@ -304,6 +300,14 @@ void AILevelDecreaseEvent::ReceiveBeatResult(bool IsSuccess)
 	else
 	{
 		// 失敗
+		TaskManager::Instance()->CreateDelayedTask(90, [&]()
+		{
+			OnFinishEffect();
+		});
+
+		// エフェクト
+		GameParticleManager::Instance()->SetDarknessEffect(TownPos);
+
 		fieldEventHandler->AdjustLevelAI(DecreasePercent);
 		EventState = BeatGameFail;
 	}

@@ -51,6 +51,7 @@ public:
 	void EventOver(void);
 
 	void OnFinishBeat(bool result);
+	void OnFinishEffect();
 };
 
 #endif
