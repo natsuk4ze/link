@@ -41,7 +41,8 @@ const char* GuideActor::FileName = "data/MODEL/Robot.X";
 // コンストラクタ
 //=====================================
 GuideActor::GuideActor() :
-	auraEmitter(nullptr)
+	auraEmitter(nullptr),
+	punchEmitter(nullptr)
 {
 	transform->SetPosition(D3DXVECTOR3(0.0f, -10.0f, 15.0f));
 	transform->SetScale(Vector3::One * 0.3f);
@@ -150,6 +151,29 @@ void GuideActor::Move(const D3DXVECTOR3 & target, int duration)
 		auraEmitter->SetActive(false);
 		auraEmitter = nullptr;
 	});
+}
+
+//=====================================
+// パンチスタート
+//=====================================
+void GuideActor::StartPunsh()
+{
+	ChangeAnim(AnimState::Rush);
+
+	D3DXVECTOR3 emitterPos = transform->GetPosition() + transform->Up() * 3.0f + transform->Forward() * -3.0f;
+	punchEmitter = GameParticleManager::Instance()->Generate(GameParticle::PunchEffect, emitterPos);
+}
+
+//=====================================
+// パンチ終了
+//=====================================
+void GuideActor::EndPunch(bool result)
+{
+	AnimState next = result ? AnimState::Yeah : AnimState::Defeat;
+	ChangeAnim(next);
+
+	if (punchEmitter != nullptr)
+		punchEmitter->SetActive(false);
 }
 
 //=====================================

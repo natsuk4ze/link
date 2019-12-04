@@ -260,10 +260,7 @@ void AILevelDecreaseEvent::EventOver(void)
 //=============================================================================
 void AILevelDecreaseEvent::OnFinishBeat(bool result)
 {
-	if (result)
-		guideActor->ChangeAnim(GuideActor::AnimState::Yeah);
-	else
-		guideActor->ChangeAnim(GuideActor::AnimState::Defeat);
+	guideActor->EndPunch(result);
 }
 
 //=============================================================================
@@ -290,7 +287,7 @@ void AILevelDecreaseEvent::CountdownStart(void)
 
 	TaskManager::Instance()->CreateDelayedTask(90, [&]()
 	{
-		guideActor->ChangeAnim(GuideActor::AnimState::Rush);
+		guideActor->StartPunsh();
 	});
 }
 
@@ -309,9 +306,6 @@ void AILevelDecreaseEvent::ReceiveBeatResult(bool IsSuccess)
 		// Ž¸”s
 		fieldEventHandler->AdjustLevelAI(DecreasePercent);
 		EventState = BeatGameFail;
-
-		//ƒKƒCƒhƒLƒƒƒ‰‚ÉŽ¸”sƒ‚[ƒVƒ‡ƒ“‚ð‚³‚¹‚é
-		guideActor->ChangeAnim(GuideActor::AnimState::Defeat);
 	}
 }
 

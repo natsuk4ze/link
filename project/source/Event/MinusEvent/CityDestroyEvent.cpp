@@ -266,7 +266,7 @@ void CityDestroyEvent::CountdownStart(void)
 
 	TaskManager::Instance()->CreateDelayedTask(90, [&]()
 	{
-		guideActor->ChangeAnim(GuideActor::AnimState::Rush);
+		guideActor->StartPunsh();
 	});
 }
 
@@ -297,8 +297,5 @@ void CityDestroyEvent::ReceiveBeatResult(bool IsSuccess)
 //=============================================================================
 void CityDestroyEvent::OnFinisheBeat(bool result)
 {
-	if (result)
-		guideActor->ChangeAnim(GuideActor::AnimState::Yeah);
-	else
-		guideActor->ChangeAnim(GuideActor::AnimState::Defeat);
+	guideActor->EndPunch(result);
 }
