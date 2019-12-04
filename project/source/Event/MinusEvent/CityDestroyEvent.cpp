@@ -72,7 +72,8 @@ void CityDestroyEvent::Init()
 	camera->Init();
 
 	// 連打ゲームインスタンス
-	beatGame = new BeatGame(BeatGame::CityDestroyEvent, beatViewer, [&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
+	auto onFinishBeat = std::bind(&CityDestroyEvent::OnFinisheBeat, this, std::placeholders::_1);
+	beatGame = new BeatGame(BeatGame::CityDestroyEvent, beatViewer, [&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); }, onFinishBeat);
 
 	// 破壊する町の予定地を取得
 	Target = fieldEventHandler->GetDestroyTarget();
@@ -278,8 +279,6 @@ void CityDestroyEvent::ReceiveBeatResult(bool IsSuccess)
 	{
 		// 成功、隕石撃破
 		EventState = State::BeatGameSuccess;
-
-		guideActor->ChangeAnim(GuideActor::AnimState::Yeah);
 	}
 	else
 	{
@@ -291,4 +290,15 @@ void CityDestroyEvent::ReceiveBeatResult(bool IsSuccess)
 
 		guideActor->SetActive(false);
 	}
+}
+
+//=============================================================================
+// 連打ゲームの結果によるアニメーション遷移
+//=============================================================================
+void CityDestroyEvent::OnFinisheBeat(bool result)
+{
+	if (result)
+		guideActor->ChangeAnim(GuideActor::AnimState::Yeah);
+	else
+		guideActor->ChangeAnim(GuideActor::AnimState::Defeat);
 }

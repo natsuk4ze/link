@@ -79,7 +79,8 @@ void AILevelDecreaseEvent::Init()
 	camera->Init();
 
 	// 連打ゲームインスタンス
-	beatGame = new BeatGame(BeatGame::AILevelDecrease, beatViewer, [&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
+	auto onFinishBeat = std::bind(&AILevelDecreaseEvent::OnFinishBeat, this, std::placeholders::_1);
+	beatGame = new BeatGame(BeatGame::AILevelDecrease, beatViewer, [&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); }, onFinishBeat);
 
 	// 目標町の予定地を取得
 	Target = fieldEventHandler->GetDestroyTarget();
@@ -252,6 +253,17 @@ void AILevelDecreaseEvent::EventOver(void)
 	camera->Restore();
 	fieldEventHandler->ResumeGame();
 	UseFlag = false;
+}
+
+//=============================================================================
+// 連打ゲームの結果によるガイドのアニメーション遷移
+//=============================================================================
+void AILevelDecreaseEvent::OnFinishBeat(bool result)
+{
+	if (result)
+		guideActor->ChangeAnim(GuideActor::AnimState::Yeah);
+	else
+		guideActor->ChangeAnim(GuideActor::AnimState::Defeat);
 }
 
 //=============================================================================
