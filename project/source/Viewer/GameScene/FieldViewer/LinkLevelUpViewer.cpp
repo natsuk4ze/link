@@ -150,7 +150,7 @@ void LinkLevelUpViewer::Draw(void)
 	laurel->Draw();
 
 	//êîâFÅi0Çï`âÊÇµÇ»Ç¢Ç≈Ç®Ç≠Åj
-	num->DrawCounter(num->baseNumber, parameterBox,
+	num->DrawCounterLeft(num->baseNumber, parameterBox,
 		num->intervalPosScr, num->intervalPosTex);
 
 	//Å{

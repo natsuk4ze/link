@@ -26,7 +26,7 @@ NameEntryCursorViewer::NameEntryCursorViewer()
 	cursor->LoadTexture("data/TEXTURE/Viewer/NameEntryViewer/NameEntryCursorViewer/Cursor.png");
 	cursor->size = D3DXVECTOR3(200.0f, 200.0f, 0.0f);
 	cursor->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	cursor->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_CENTER_Y, 0.0f);
+	cursor->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 7.0f, SCREEN_HEIGHT / 10 * 8.0f, 0.0f);
 	cursor->MakeVertex();
 	cursor->SetTexture(2, 2, 0);
 }

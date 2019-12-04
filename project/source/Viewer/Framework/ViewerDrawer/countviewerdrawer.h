@@ -15,13 +15,13 @@
 class CountViewerDrawer :public BaseViewerDrawer
 {
 public:
-	CountViewerDrawer();
-	~CountViewerDrawer();
-
 	void DrawCounter(int baseNumber, int parameterBox, int placeMax,
 		float intervalNumberScr, float intervalNumberTex);
 
 	void DrawCounter(int baseNumber, int parameterBox,
+		float intervalNumberScr, float intervalNumberTex);
+
+	void DrawCounterLeft(int baseNumber, int parameterBox,
 		float intervalNumberScr, float intervalNumberTex);
 
 	//スクリーン上の表示座標間隔
@@ -34,7 +34,7 @@ public:
 	int placeMax;
 
 	//進数　
-	int baseNumber;
+	int baseNumber = 10;
 
 	//ホップアニメーション関連変数
 	float HopNumber(float sizeY, float initSizeY, float hopValue);
@@ -42,10 +42,15 @@ public:
 	float radian;
 	const float hopSpeed = D3DX_PI / 10;
 
+	CountViewerDrawer(D3DXVECTOR2 position, D3DXVECTOR2 size, const char* path, 
+		float intervalPosScr, float intervalPosTex, int placeMax);
+	CountViewerDrawer();
+	~CountViewerDrawer();
 private:
 	void Draw();
 
 	void SetVertexPos(int placeCount, float placeInterval);
+	void SetVertexPosLeft(int placeCount, float placeInterval);
 	void SetTexture(int number, float placeInterval);
 
 	int texDivX = 4;

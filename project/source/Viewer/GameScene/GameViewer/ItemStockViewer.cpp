@@ -22,7 +22,7 @@ ItemStockViewer::ItemStockViewer()
 	num->LoadTexture("data/TEXTURE/Viewer/GameViewer/StockViewer/Number.png");
 	num->size = D3DXVECTOR3(84.0f, 84.0f, 0.0f);;
 	num->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	num->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.21f, SCREEN_HEIGHT / 10 * 3.5f, 0.0f);
+	num->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.430f, SCREEN_HEIGHT / 10 * 3.5f, 0.0f);
 	num->intervalPosScr = 42.0f;
 	num->intervalPosTex = 0.10f;
 	num->placeMax = 2;

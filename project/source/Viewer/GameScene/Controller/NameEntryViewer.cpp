@@ -19,7 +19,7 @@
 // コンストラクタ
 //*****************************************************************************
 NameEntryViewer::NameEntryViewer():
-	entryName(),
+	entryNameID(),
 	reelCnt()
 {
 	input = new NameEntryInput();
@@ -54,7 +54,10 @@ void NameEntryViewer::Update()
 		return;
 
 #ifdef _DEBUG
-	Debug::Text(entryName.c_str());
+	for (int i = 0; i < entryNameMax; i++)
+	{
+		Debug::Text("nameID%d", entryNameID[i]);
+	}
 #endif
 
 	MoveCursor();
@@ -99,25 +102,15 @@ void NameEntryViewer::SetEntryName()
 	//エンターボタンが押された
 	if (input->GetFinishedEntry())
 	{
-		const int charTypeMax = 36;
-
-		//文字テーブル
-		std::string charTable[charTypeMax] =
-		{
-			"A","B","C","D","E","F",
-			"G","H","I","J","K","L",
-			"M","N","O","P","Q","R",
-			"S","T","U","V","W","X",
-			"Y","Z","!","?","*",".",
-			"/","\\","#","\"","%%","&"
-		};
-
-		entryName = {};
-
+		//初期化して
 		for (int i = 0; i < entryNameMax; i++)
 		{
-			int id = reelViewer->GetReelChar()[i];
-			entryName += charTable[id];
+			entryNameID[i] = {};
+		}
+		//ID格納
+		for (int i = 0; i < entryNameMax; i++)
+		{
+			entryNameID[i] = reelViewer->GetReelChar()[i];
 		}
 	}
 }
@@ -170,9 +163,9 @@ void NameEntryViewer::SetActive(bool flag)
 }
 
 //=============================================================================
-// 登録名取得処理
+// 登録名ID取得処理
 //=============================================================================
-std::string NameEntryViewer::GetEntryName()
+int* NameEntryViewer::GetEntryNameID()
 {
-	return entryName;
+	return entryNameID;
 }

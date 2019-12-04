@@ -20,7 +20,7 @@ TimerViewer::TimerViewer()
 	intNum->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Number.png");
 	intNum->size = D3DXVECTOR3(120.0f, 120.0f, 0.0f);
 	intNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	intNum->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.3f, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
+	intNum->position = D3DXVECTOR3(SCREEN_WIDTH / 10, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
 	intNum->intervalPosScr = 80.0f;
 	intNum->intervalPosTex = 0.1f;
 	intNum->placeMax = 3;
@@ -32,7 +32,7 @@ TimerViewer::TimerViewer()
 	fewNum->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Number.png");
 	fewNum->size = D3DXVECTOR3(120.0f, 120.0f, 0.0f);
 	fewNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	fewNum->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 1.70f, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
+	fewNum->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 2.0f, SCREEN_HEIGHT / 10 * 1.0f, 0.0f);
 	fewNum->intervalPosScr = 80.0f;
 	fewNum->intervalPosTex = 0.1f;
 	fewNum->placeMax = 2;
@@ -44,7 +44,7 @@ TimerViewer::TimerViewer()
 	point->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Point.png");
 	point->size = D3DXVECTOR3(120.0f, 120.0f, 0.0f);
 	point->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	point->position = D3DXVECTOR3(intNum->position.x + intNum->intervalPosScr*2.80f, SCREEN_HEIGHT / 10 * 1.0f,0.0f);
+	point->position = D3DXVECTOR3((intNum->position.x + (fewNum->position.x - fewNum->intervalPosScr))/2, SCREEN_HEIGHT / 10 * 1.0f,0.0f);
 	point->MakeVertex();
 
 	//”wŒi

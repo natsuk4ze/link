@@ -21,10 +21,9 @@ class CountViewerDrawer;
 class ResultScoreViewer :public BaseViewer
 {
 private:
-	const static int fieldTypeMax = 3;
-	CountViewerDrawer * num[fieldTypeMax];
-
-	void SetViewerPos(void);
+	const static int telopMax = 4;
+	CountViewerDrawer *totalScoreNum[telopMax];
+	BaseViewerDrawer *bg[telopMax];
 
 public:
 	ResultScoreViewer();
@@ -34,7 +33,7 @@ public:
 	void Draw(void);
 
 	//ƒpƒ‰ƒ[ƒ^‚ğó‚¯‚Æ‚é” 
-	int parameterBox[fieldTypeMax];
+	int parameterBox[4];
 };
 
 #endif
