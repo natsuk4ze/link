@@ -136,11 +136,13 @@ void CityDestroyEvent::Update()
 			//ガイドキャラをアクティベイトして移動
 			guideActor->SetActive(true);
 			
-			D3DXVECTOR3 guidePos = Vector3::Normalize(diff) * 5.0f + MeteoritePos;
+			D3DXVECTOR3 guidePos = Vector3::Normalize(diff) * 7.5f + MeteoritePos;
 			guideActor->SetPosition(TownPos);
 			guideActor->Move(guidePos, 60);
 
 			guideActor->LookAt(MeteoritePos);
+
+			guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle);
 
 			//カメラの移動
 			D3DXVECTOR3 nextCameraPos = Vector3::Normalize(diff) * 25.0f + MeteoritePos + Vector3::Back * 10.0f;

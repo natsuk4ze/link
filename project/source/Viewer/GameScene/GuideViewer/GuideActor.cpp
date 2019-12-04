@@ -160,8 +160,11 @@ void GuideActor::StartPunsh()
 {
 	ChangeAnim(AnimState::Rush);
 
-	D3DXVECTOR3 emitterPos = transform->GetPosition() + transform->Up() * 3.0f + transform->Forward() * -3.0f;
-	punchEmitter = GameParticleManager::Instance()->Generate(GameParticle::PunchEffect, emitterPos);
+	Transform emitterTransform = *transform;
+	emitterTransform.Move(transform->Up() * 3.0f + transform->Forward() * -0.5f);
+	emitterTransform.SetScale(Vector3::One);
+
+	punchEmitter = GameParticleManager::Instance()->Generate(GameParticle::PunchEffect, emitterTransform);
 }
 
 //=====================================

@@ -270,7 +270,7 @@ void AILevelDecreaseEvent::CountdownStart(void)
 	
 	//ガイドキャラ出撃
 	D3DXVECTOR3 diff = Vector3::Normalize(camera->GetPosition() - UFOPos);
-	D3DXVECTOR3 guidePos = UFOPos + diff * 5.0f + Vector3::Down * 2.0f;
+	D3DXVECTOR3 guidePos = UFOPos + diff * 7.0f + Vector3::Down * 2.0f;
 
 	guideActor->SetPosition(TownPos);
 	guideActor->Move(guidePos, 60);
