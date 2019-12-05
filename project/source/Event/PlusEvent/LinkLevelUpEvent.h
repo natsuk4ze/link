@@ -8,6 +8,7 @@
 #define _LinkLevelUpEvent_H_
 
 #include "../EventBase.h"
+#include <string>
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
@@ -15,6 +16,8 @@
 class LinkLevelUpEvent : public EventBase
 {
 private:
+	static const std::string message[3];
+
 public:
 	LinkLevelUpEvent();
 	~LinkLevelUpEvent();

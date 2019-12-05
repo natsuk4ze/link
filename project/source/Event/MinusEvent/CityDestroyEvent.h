@@ -38,6 +38,7 @@ private:
 	BeatGameViewer *beatViewer;
 
 	GuideActor *guideActor;				//ロボット
+	bool success;						// イベント終了後に音声を再生するための判定フラグ
 
 public:
 	CityDestroyEvent(EventViewer* eventViewer, BeatGameViewer *beatViewer, EventCamera *camera);

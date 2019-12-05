@@ -18,6 +18,7 @@
 #include "../../../Framework/Core/PlayerPrefs.h"
 #include "../../GameConfig.h"
 #include "../../../Framework/Sound/BackgroundMusic.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 #include "../../Viewer/GameScene/Controller/GameViewer.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../Viewer/GameScene/Controller/ResultViewer.h"
@@ -35,7 +36,8 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	// 使用しないUIの描画をOFF（タイトル、リザルト用など）
 	entity.field->SetViewerActive(false);
 	entity.gameViewer->SetActive(false);
-	entity.guideViewer->SetActive(false);
+	GuideViewer::Instance()->SetActive(false);
+	//entity.guideViewer->SetActive(false);
 	entity.resultViewer->SetActive(false);
 	entity.nemeEntryViewer->SetActive(false);
 
@@ -65,6 +67,10 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	//NOTE : 今はお試し。本番ではちゃんとタグを用意する
 	BGM::Load("data/SOUND/BGM/Course_Select.wav", 0);
 	BGM::FadeIn(0, 0.1f, 30);
+	for (int i = 0; i < SE::VoiceType::Max; i++)
+	{
+		SE::Load(SE::path[i], SE::VoiceType(i));
+	}
 
 	//制限時間読み込み
 	entity.remainTime = PlayerPrefs::GetNumber<int>(Utility::ToString(GameConfig::Key_RemainTime));

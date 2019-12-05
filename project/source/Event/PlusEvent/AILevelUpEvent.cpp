@@ -6,6 +6,8 @@
 //=============================================================================
 #include "../../../main.h"
 #include "AILevelUpEvent.h"
+#include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -23,7 +25,9 @@ const float UpPercent = 0.1f;
 AILevelUpEvent::AILevelUpEvent() :
 	EventBase(false)
 {
-
+	GuideViewer::Instance()->SetMessage("AIレベルにボーナスポイントが入りました");
+	GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::FistPump);
+	SE::Play(SE::VoiceType::AIBonus, 1.0);
 }
 
 //=============================================================================
@@ -58,18 +62,7 @@ string AILevelUpEvent::GetEventMessage(int FieldLevel)
 {
 	vector<string> MessageContainer;
 
-	if (FieldLevel == Field::City)
-	{
-		MessageContainer.push_back("シンギュラリティに到達！\nAIレベルがパワーアップした！");
-	}
-	else if (FieldLevel == Field::World)
-	{
-		MessageContainer.push_back("シンギュラリティに到達！\nAIレベルがパワーアップした！");
-	}
-	else if (FieldLevel == Field::Space)
-	{
-		MessageContainer.push_back("シンギュラリティに到達！\nAIレベルがパワーアップした！");
-	}
+	MessageContainer.push_back("茶柱がたった！");
 
 	if (!MessageContainer.empty())
 	{

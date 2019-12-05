@@ -14,6 +14,10 @@
 #include "../../../Viewer/GameScene/Controller/EventViewer.h"
 #include "../../../Field/Camera/EventCamera.h"
 
+#include <typeinfo.h>
+#include "../../../Viewer/GameScene/GuideViewer/GuideViewer.h"
+#include "../../../../Framework/Sound/SoundEffect.h"
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -111,4 +115,25 @@ void NewTownEventCtrl::EventOver(void)
 	eventCamera->Restore();
 	fieldEventHandler->ResumeGame();
 	UseFlag = false;
+
+	// 現在発生しているイベントに合わせて再生を変更
+	if (typeid(*NewTownEvent) == typeid(NewTownEvent_City))
+	{
+		GuideViewer::Instance()->SetMessage("新しい町が出現しました");
+		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Yeah);
+		SE::Play(SE::VoiceType::NewTown, 1.0);
+	}
+	else if (typeid(*NewTownEvent) == typeid(NewTownEvent_World))
+	{
+		GuideViewer::Instance()->SetMessage("新しい大陸が出現しました");
+		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Yeah);
+		SE::Play(SE::VoiceType::NewContinent, 1.0);
+	}
+	else if (typeid(*NewTownEvent) == typeid(NewTownEvent_Space))
+	{
+		GuideViewer::Instance()->SetMessage("新しい星が誕生しました");
+		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Yeah);
+		SE::Play(SE::VoiceType::NewStar, 1.0);
+	}
+
 }

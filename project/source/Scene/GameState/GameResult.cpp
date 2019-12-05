@@ -36,7 +36,8 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	// 使用しないUIの描画をOFF
 	entity.field->SetViewerActive(false);
 	entity.gameViewer->SetActive(false);
-	entity.guideViewer->SetActive(false);
+	GuideViewer::Instance()->SetActive(false);
+	//entity.guideViewer->SetActive(false);
 
 	//宇宙レベルのスコアを保存
 	if (level == 2)
