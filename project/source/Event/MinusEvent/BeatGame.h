@@ -36,7 +36,11 @@ public:
 		CityDestroyEvent,
 	};
 
-	BeatGame(BeatGame::GameType type, BeatGameViewer *viewer, std::function<void(bool)> CallBack = nullptr);
+	BeatGame(
+		BeatGame::GameType type, 
+		BeatGameViewer *viewer, 
+		std::function<void(bool)> OnFinishTelop = nullptr,
+		std::function<void(bool)> onFinishBeat = nullptr);
 	~BeatGame();
 	void Update(void) override;
 	void Draw(void) override;
@@ -52,7 +56,8 @@ private:
 	bool isFinished;
 	bool canSetReady;
 	bool canSetGo;
-	std::function<void(bool)> Callback;
+	std::function<void(bool)> OnFinishTelop;
+	std::function<void(bool)> onFinishBeat;
 
 	void EventOver(void);
 

@@ -32,7 +32,10 @@ static const float gameTime = 5.0f;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-BeatGame::BeatGame(BeatGame::GameType type, BeatGameViewer *viewer, std::function<void(bool)> Callback) :
+BeatGame::BeatGame(BeatGame::GameType type,
+	BeatGameViewer *viewer,
+	std::function<void(bool)> OnFinishTelop,
+	std::function<void(bool)> onFinishEvent) :
 	EventBase(false),
 	TelopOver(false),
 	isSuccess(false),
@@ -42,8 +45,9 @@ BeatGame::BeatGame(BeatGame::GameType type, BeatGameViewer *viewer, std::functio
 	canSetGo(true),
 	countInput(0),
 	countFrame(0),
-	Callback(Callback),
-	beatGameViewer(viewer)
+	OnFinishTelop(OnFinishTelop),
+	beatGameViewer(viewer),
+	onFinishBeat(onFinishEvent)
 {
 	//再生中のイベントをセット
 	playingEvent = type;
@@ -113,6 +117,9 @@ void BeatGame::Update()
 		//成功したか判定
 		if (IsSuccess())
 		{
+			//結果を通知
+			onFinishBeat(true);
+
 			//成功リザルトを表示
 			beatGameViewer->SetResult(BeatResultViewer::Success, [&]() {EventOver(); });
 
@@ -129,6 +136,9 @@ void BeatGame::Update()
 		//失敗したか判定
 		if (IsFailed())
 		{
+			//結果を通知
+			onFinishBeat(false);
+
 			//失敗リザルトを表示
 			beatGameViewer->SetResult(BeatResultViewer::Failed, [&]() {EventOver(); });
 
@@ -263,7 +273,7 @@ void BeatGame::CountdownStart(void)
 //=============================================================================
 void BeatGame::EventOver(void)
 {
-	Callback(isSuccess);
+	OnFinishTelop(isSuccess);
 	UseFlag = false;
 	beatGameViewer->SetActive(false);
 }

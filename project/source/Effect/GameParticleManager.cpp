@@ -20,6 +20,8 @@
 #include "Game/General/Cloud.h"
 #include "Game/General/EventInfo.h"
 #include "Game\General\AuraEffect.h"
+#include "Game\General\PunchEffect.h"
+#include "Game\General\GaugeDebris.h"
 
 /**************************************
 staticƒƒ“ƒo
@@ -46,6 +48,8 @@ void GameParticleManager::Init()
 	controllers[GameParticle::Cloud] = new Effect::Game::CloudController();
 	controllers[GameParticle::EventInfo] = new Effect::Game::EventInfoEffectController();
 	controllers[GameParticle::BlueAura] = new Effect::Game::AuraEffectController();
+	controllers[GameParticle::PunchEffect] = new Effect::Game::PunchEffectController();
+	controllers[GameParticle::GaudeDebris] = new Effect::Game::GaugeDebrisController();
 
 	crossFilter->SetPower(BloomPower[0], BloomPower[1], BloomPower[2]);
 	crossFilter->SetThrethold(BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]);

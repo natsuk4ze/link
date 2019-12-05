@@ -106,6 +106,7 @@ namespace Field
 		}
 
 		pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+		pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
 	}
 
 	/**************************************

@@ -50,6 +50,9 @@ public:
 	void ReceiveBeatResult(bool IsSuccess);
 	void CountdownStart(void);
 	void EventOver(void);
+
+	void OnFinishBeat(bool result);
+	void OnFinishEffect();
 };
 
 #endif

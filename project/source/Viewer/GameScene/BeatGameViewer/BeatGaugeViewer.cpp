@@ -10,6 +10,7 @@
 #include "../../Framework/BaseViewer.h"
 #include "../../Framework/ViewerAnimater/ViewerAnimater.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
+#include "../../../Effect/GameParticleManager.h"
 
 //*****************************************************************************
 // コンストラクタ
@@ -59,8 +60,16 @@ BeatGaugeViewer::~BeatGaugeViewer()
 //=============================================================================
 void BeatGaugeViewer::Update()
 {
-	//ゲージパーセントが小さくなったら振動
-	if (isCurrentSmallerLast(gaugePer)) isPlaying = true;
+	//ゲージパーセントが小さくなったら振動してパーティクル放出
+	if (isCurrentSmallerLast(gaugePer))
+	{
+		isPlaying = true;
+
+		D3DXVECTOR3 emitterPos = bar->GetPosition();
+		emitterPos.x = bar->vertexWk[1].vtx.x;
+		GameParticleManager::Instance()->Generate(GameParticle::GaudeDebris, emitterPos);
+	}
+
 	if (!isPlaying) return;
 	anim->PlayAnim([=]
 	{

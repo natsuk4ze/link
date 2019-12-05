@@ -82,7 +82,8 @@ void AILevelDecreaseEvent::Init()
 	camera->Init();
 
 	// 連打ゲームインスタンス
-	beatGame = new BeatGame(BeatGame::AILevelDecrease, beatViewer, [&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); });
+	auto onFinishBeat = std::bind(&AILevelDecreaseEvent::OnFinishBeat, this, std::placeholders::_1);
+	beatGame = new BeatGame(BeatGame::AILevelDecrease, beatViewer, [&](bool IsSuccess) { ReceiveBeatResult(IsSuccess); }, onFinishBeat);
 
 	// 目標町の予定地を取得
 	Target = fieldEventHandler->GetDestroyTarget();
@@ -127,19 +128,8 @@ void AILevelDecreaseEvent::Update()
 	{
 		// UFO登場
 	case UFODebut:
-
-		Distance = D3DXVec3LengthSq(&D3DXVECTOR3(UFOPos - TownPos));
-
-		if (Distance > pow(25.0f, 2))
-		{
-			UFOPos += Vector3::Down * FallSpeed;
-			UFO->SetPosition(UFOPos);
-		}
-		else
-		{
-			CountdownStart();
-			EventState = State::BeatGameStart;
-		}
+		//UFOの移動、イベント遷移はTweenに任せる
+		UFOPos = UFO->GetPosition();
 		break;
 
 	case BeatGameStart:
@@ -172,29 +162,13 @@ void AILevelDecreaseEvent::Update()
 
 		UFO->Update();
 
-		// エフェクト
-		GameParticleManager::Instance()->SetDarknessEffect(TownPos);
-		TaskManager::Instance()->CreateDelayedTask(90, [&]()
-		{
-			EventState = UFOExit;
-		});
 		break;
 
 		// UFO退場
 	case UFOExit:
 
-		Distance = D3DXVec3LengthSq(&D3DXVECTOR3(UFOPos - TownPos));
-
-		if (Distance < pow(DefaultHeight, 2))
-		{
-			UFOPos += Vector3::Up * FallSpeed;
-			UFO->SetPosition(UFOPos);
-		}
-		else
-		{
-			camera->Return(30, [&]() { EventOver(); });
-			EventState = EffectHappend;
-		}
+		UFOPos = UFO->GetPosition();
+		//UFOの移動、イベント遷移はTweenに任せる
 		break;
 
 	default:
@@ -243,6 +217,13 @@ void AILevelDecreaseEvent::UFODebutStart(void)
 	D3DXVECTOR3 cameraPos = TownPos + D3DXVECTOR3(15.0f, 15.0f, -15.0f);
 	camera->Move(cameraPos, 10, 10.0f);
 	camera->SetTargetObject(UFO);
+
+	//UFO登場
+	Tween::Move(*UFO, TownPos + Vector3::Up * 25.0f, 60, EaseType::InOutCirc, [&]()
+	{
+		CountdownStart();
+	});
+
 	EventState = UFODebut;
 }
 
@@ -271,6 +252,28 @@ void AILevelDecreaseEvent::EventOver(void)
 }
 
 //=============================================================================
+// 連打ゲームの結果によるガイドのアニメーション遷移
+//=============================================================================
+void AILevelDecreaseEvent::OnFinishBeat(bool result)
+{
+	guideActor->EndPunch(result);
+}
+
+//=============================================================================
+// エフェクト終了時の処理
+//=============================================================================
+void AILevelDecreaseEvent::OnFinishEffect()
+{
+	Tween::Move(*UFO, TownPos + Vector3::Up * DefaultHeight, 90, EaseType::InCirc, [&]()
+	{
+		camera->Return(30, [&]() { EventOver(); });
+		EventState = EffectHappend;
+	});
+
+	EventState = UFOExit;
+}
+
+//=============================================================================
 // 連打ゲームのカウントダウン開始
 //=============================================================================
 void AILevelDecreaseEvent::CountdownStart(void)
@@ -283,12 +286,21 @@ void AILevelDecreaseEvent::CountdownStart(void)
 	
 	//ガイドキャラ出撃
 	D3DXVECTOR3 diff = Vector3::Normalize(camera->GetPosition() - UFOPos);
-	D3DXVECTOR3 guidePos = UFOPos + diff * 5.0f + Vector3::Down * 2.0f;
+	D3DXVECTOR3 guidePos = UFOPos + diff * 7.0f + Vector3::Down * 2.0f;
 
 	guideActor->SetPosition(TownPos);
 	guideActor->Move(guidePos, 60);
 
+	guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle);
+
 	guideActor->SetActive(true);
+
+	TaskManager::Instance()->CreateDelayedTask(90, [&]()
+	{
+		guideActor->StartPunsh();
+	});
+
+	EventState = State::BeatGameStart;
 }
 
 //=============================================================================
@@ -305,6 +317,14 @@ void AILevelDecreaseEvent::ReceiveBeatResult(bool IsSuccess)
 	else
 	{
 		// 失敗
+		TaskManager::Instance()->CreateDelayedTask(90, [&]()
+		{
+			OnFinishEffect();
+		});
+
+		// エフェクト
+		GameParticleManager::Instance()->SetDarknessEffect(TownPos);
+
 		fieldEventHandler->AdjustLevelAI(DecreasePercent);
 		EventState = BeatGameFail;
 		success = false;
