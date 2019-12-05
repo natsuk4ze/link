@@ -36,6 +36,8 @@ public:
 
 	//移動処理
 	void Move(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type, std::function<void()> Callback = nullptr);
+	//移動処理
+	void MovePos(D3DXVECTOR2& position, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type, std::function<void()> Callback = nullptr);
 	//スケール処理
 	void Scale(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, float duration, EaseType type, std::function<void()> Callback = nullptr);
 	//フェード処理

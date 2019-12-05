@@ -121,6 +121,24 @@ void ViewerAnimater::Move(BaseViewerDrawer& viewer, const D3DXVECTOR2& start,
 }
 
 //=============================================================================
+// 移動処理（同時実行アニメーションあり）
+//=============================================================================
+void ViewerAnimater::MovePos(D3DXVECTOR2 & position, const D3DXVECTOR2 & start, const D3DXVECTOR2 & end, float duration, EaseType type, std::function<void()> Callback)
+{
+	//フレームカウントと時間を更新
+	UpdateFrameAndTime(duration);
+
+	if (Callback) Callback();
+
+	position.x = Easing::EaseValue(animTime, start.x, end.x, type);
+	position.y = Easing::EaseValue(animTime, start.y, end.y, type);
+
+	//終了処理
+	if (frameCnt < duration) return;
+	SetAnimFinished();
+}
+
+//=============================================================================
 // スケール処理（同時実行アニメーションあり）
 //=============================================================================
 void ViewerAnimater::Scale(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start,

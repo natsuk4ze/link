@@ -22,9 +22,22 @@ class ResultScoreViewer :public BaseViewer
 {
 private:
 	const static int telopMax = 4;
+	const static int scoreTelopMax = 3;
+	const static int totalScorePlaceTextMax = 3;
+
 	CountViewerDrawer *totalScoreNum[telopMax];
+	CountViewerDrawer *rewardNum[telopMax];
 	BaseViewerDrawer *bg[telopMax];
-	BaseViewerDrawer*text[telopMax];
+	BaseViewerDrawer*fieldText[telopMax];
+	BaseViewerDrawer*rewardText[telopMax];
+	CountViewerDrawer *scoreNum[scoreTelopMax];
+	BaseViewerDrawer*scoreText[scoreTelopMax];
+
+	BaseViewerDrawer*placeText[scoreTelopMax];
+	BaseViewerDrawer*totalScorePlaceText[totalScorePlaceTextMax];
+
+	int score[4];
+	int completeRewardNum[3];
 
 public:
 	ResultScoreViewer();
@@ -34,7 +47,7 @@ public:
 	void Draw(void);
 
 	//ÉpÉâÉÅÅ[É^ÇéÛÇØÇ∆ÇÈî†
-	int parameterBox[4];
+	int parameterBox[3];
 };
 
 #endif
