@@ -16,6 +16,7 @@
 #include "../../../Framework/Renderer3D/InstancingMeshContainer.h"
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../../../Framework/Renderer3D/SkyBox.h"
+#include "../../../Framework/Tool/DebugWindow.h"
 
 #include "../../Effect/SpaceParticleManager.h"
 
@@ -75,9 +76,6 @@ namespace Field::Actor
 		pDevice->SetRenderState(D3DRS_STENCILFAIL, D3DSTENCILOP_KEEP);
 		pDevice->SetRenderState(D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP);
 		pDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_INCRSAT);
-		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
-		pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
-		pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 		pDevice->Clear(0, 0, D3DCLEAR_STENCIL, 0, 0.0f, 0);
@@ -94,8 +92,9 @@ namespace Field::Actor
 		tearMesh->Draw();
 
 		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
 		pDevice->SetRenderState(D3DRS_STENCILREF, 1);
-		pDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_LESS);
+		pDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_LESSEQUAL);
 		pDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
 		pDevice->SetRenderState(D3DRS_COLORWRITEENABLE,
 			D3DCOLORWRITEENABLE_RED |
