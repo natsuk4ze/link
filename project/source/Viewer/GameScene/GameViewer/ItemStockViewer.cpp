@@ -64,8 +64,12 @@ ItemStockViewer::~ItemStockViewer()
 //=============================================================================
 void ItemStockViewer::Update(void)
 {
-	if (!isCurrentEqualLast((float)parameterBox)) isPlaying = true;
-	if (!isPlaying) return;
+	if (!isCurrentEqualLast((float)parameterBox))
+		isPlaying = true;
+
+	if (!isPlaying) 
+		return;
+
 	anim->PlayAnim([=]
 	{
 		anim->SetPlayFinished(isPlaying);

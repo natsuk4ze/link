@@ -294,6 +294,9 @@
     <ClCompile Include="source\Viewer\TitleScene\TitleLogo.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\TitleViewer.cpp" />
     <ClCompile Include="source\Effect\Game\General\PunchEffect.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\GradeUpViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\GradeNameViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\GradeFrameViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -592,6 +595,9 @@
     <ClInclude Include="source\Viewer\TitleScene\TitleLogo.h" />
     <ClInclude Include="source\Viewer\TitleScene\TitleViewer.h" />
     <ClInclude Include="source\Effect\Game\General\PunchEffect.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GradeUpViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GradeNameViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GradeFrameViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

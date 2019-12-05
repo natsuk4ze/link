@@ -12,10 +12,13 @@
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
+class BaseViewer;
 class ItemStockViewer;
 class TimerViewer;
 class LevelViewer;
-class BaseViewer;
+class GradeUpViewer;
+class GradeFrameViewer;
+class GradeNameViewer;
 
 //*****************************************************************************
 // クラス定義
@@ -23,6 +26,17 @@ class BaseViewer;
 class GameViewer
 {
 public:
+	enum ViewerNo
+	{
+		ItemStock,
+		Timer,
+		Level,
+		GradeUp,
+		GradeFrame,
+		GradeName,
+		Max,
+	};
+
 	GameViewer();
 	~GameViewer();
 
@@ -33,6 +47,9 @@ public:
 	void ReceiveParam(GameViewerParam&param);
 
 	void SetActive(bool flag);
+	void SetActive(bool flag, ViewerNo viewer);
+
+	void SetGradeUp(std::function<void(void)> Callback = nullptr);
 
 	std::vector <BaseViewer*> gameViewer;
 
@@ -40,6 +57,9 @@ private:
 	ItemStockViewer *stockViewer;
 	TimerViewer *timerViewer;
 	LevelViewer *levelViewer;
+	GradeUpViewer *gradeUpViewer;
+	GradeFrameViewer *gradeFrameViewer;
+	GradeNameViewer *gradeNameViewer;
 
 	bool isActive;
 };

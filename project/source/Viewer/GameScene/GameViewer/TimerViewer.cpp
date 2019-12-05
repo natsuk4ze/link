@@ -15,6 +15,8 @@
 //*****************************************************************************
 TimerViewer::TimerViewer()
 {
+	isPlaying = true;
+
 	//®”•”
 	intNum = new CountViewerDrawer();
 	intNum->LoadTexture("data/TEXTURE/Viewer/GameViewer/TimerViewer/Number.png");
@@ -79,6 +81,9 @@ void TimerViewer::Update(void)
 //=============================================================================
 void TimerViewer::Draw(void)
 {
+	if (!isPlaying)
+		return;
+
 	//”wŒi‚ðæ‚É•`‰æ
 	bg->Draw();
 

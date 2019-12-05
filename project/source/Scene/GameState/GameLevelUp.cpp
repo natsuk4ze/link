@@ -7,6 +7,7 @@
 //=====================================
 #include "GameLevelUp.h"
 #include "../../Field/FieldController.h"
+#include "../../Viewer/GameScene/Controller/GameViewer.h"
 
 /**************************************
 入場処理
@@ -18,10 +19,13 @@ void GameScene::GameLevelUp::OnStart(GameScene & entity)
 	entity.field->SetScore();
 	//本来は演出終了のコールバックで遷移させる
 
-	//レベルアップ処理
-	entity.OnLevelUp();
-
-	entity.ChangeState(GameScene::State::TransitionOut);
+	// グレードアップ
+	entity.gameViewer->SetGradeUp([&]()
+	{
+		//レベルアップ処理
+		entity.OnLevelUp();
+		entity.ChangeState(GameScene::State::TransitionOut);
+	});
 }
 
 /**************************************

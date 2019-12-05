@@ -23,6 +23,8 @@ static const D3DXVECTOR3 initNumSize = D3DXVECTOR3(140.0f, 140.0f, 0.0f);
 //*****************************************************************************
 LevelViewer::LevelViewer()
 {
+	isPlaying = true;
+
 	//”Žš
 	num = new CountViewerDrawer();
 	num->LoadTexture("data/TEXTURE/Viewer/GameViewer/LevelViewer/Number.png");
@@ -85,6 +87,9 @@ void LevelViewer::Update(void)
 //=============================================================================
 void LevelViewer::Draw(void)
 {
+	if (!isPlaying)
+		return;
+
 	//”wŒi‚ðæ‚É•`‰æ
 	bg->Draw();
 
