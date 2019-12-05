@@ -6,6 +6,8 @@
 //=============================================================================
 #include "../../../main.h"
 #include "StockRecoveryEvent.h"
+#include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -38,7 +40,9 @@ const std::string StockRecoveryEvent::SpaceMessage[] = {
 StockRecoveryEvent::StockRecoveryEvent() :
 	EventBase(false)
 {
-
+	GuideViewer::Instance()->SetMessage("ドリルのストックが回復しました");
+	GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Cheering);
+	SE::Play(SE::VoiceType::StockRecovery, 1.0);
 }
 
 //=============================================================================

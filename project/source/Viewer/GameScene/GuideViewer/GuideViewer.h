@@ -55,8 +55,8 @@ public:
 	void ChangeAnim(GuideActor::AnimState next);
 	void SetActive(bool flag);
 
-	//ガイドビュアーセット
-	void SetGuideViewer(const std::string &message);
+	// メッセージをセット
+	void SetMessage(const std::string &message);
 };
 
 #endif

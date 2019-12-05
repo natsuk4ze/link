@@ -22,8 +22,8 @@
 class SE
 {
 public:
-	// SEの種類を列挙
-	enum Type
+	// Voiceの種類を列挙
+	enum VoiceType
 	{
 		AIBonus,				// AIレベルにボーナス（茶柱イベント）
 		AIOutofControll,		// AI暴走
@@ -44,7 +44,7 @@ public:
 		
 		Max
 	};
-	static const char* path[Type::Max];
+	static const char* path[VoiceType::Max];
 
 
 	//サウンド読み込み処理

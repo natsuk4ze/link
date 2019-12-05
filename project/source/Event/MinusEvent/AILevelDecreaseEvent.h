@@ -37,6 +37,7 @@ private:
 	EventCamera *camera;
 	BeatGameViewer *beatViewer;
 	GuideActor* guideActor;
+	bool success;					// SEÄ¶‚È‚Ç‚Ì‚½‚ß‚Ì¬Œ÷‰Â”Ûƒtƒ‰ƒO
 
 public:
 	AILevelDecreaseEvent(EventViewer* eventViewer, EventCamera* camera, BeatGameViewer *beatViewer);

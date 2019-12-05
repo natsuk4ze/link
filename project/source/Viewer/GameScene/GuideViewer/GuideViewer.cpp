@@ -70,7 +70,7 @@ void GuideViewer::Update()
 
 	if (Keyboard::GetTrigger(DIK_G))
 	{
-		SetGuideViewer("テストを再生中です～\n頑張って下さい～");
+		SetMessage("テストを再生中です～\n頑張って下さい～");
 	}
 
 #endif
@@ -152,7 +152,7 @@ void GuideViewer::SetActive(bool flag)
 //=====================================
 // ガイドビュアーセット処理
 //=====================================
-void GuideViewer::SetGuideViewer(const std::string &message)
+void GuideViewer::SetMessage(const std::string &message)
 {
 	// イベントメッセージがあったら実行
 	if (message.empty()) return;

@@ -67,9 +67,9 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	//NOTE : 今はお試し。本番ではちゃんとタグを用意する
 	BGM::Load("data/SOUND/BGM/Course_Select.wav", 0);
 	BGM::FadeIn(0, 0.1f, 30);
-	for (int i = 0; i < SE::Type::Max; i++)
+	for (int i = 0; i < SE::VoiceType::Max; i++)
 	{
-		SE::Load(SE::path[i], SE::Type(i));
+		SE::Load(SE::path[i], SE::VoiceType(i));
 	}
 
 	//制限時間読み込み

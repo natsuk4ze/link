@@ -16,6 +16,8 @@
 #include "../../Viewer/GameScene/Controller/BeatGameViewer.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideActor.h"
 #include "../../../Framework/Tween/Tween.h"
+#include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
@@ -53,7 +55,8 @@ AILevelDecreaseEvent::AILevelDecreaseEvent(EventViewer* eventViewer, EventCamera
 	EventState(State::TelopExpanding),
 	eventViewer(eventViewer),
 	camera(camera),
-	beatViewer(beatViewer)
+	beatViewer(beatViewer),
+	success(false)
 {
 
 }
@@ -252,6 +255,19 @@ void AILevelDecreaseEvent::EventOver(void)
 	camera->Restore();
 	fieldEventHandler->ResumeGame();
 	UseFlag = false;
+
+	if (success)
+	{
+		GuideViewer::Instance()->SetMessage("‰F’ˆl‚ÌNU‚ðH‚¢Ž~‚ß‚Ü‚µ‚½");
+		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Salute);
+		SE::Play(SE::VoiceType::UFOSuccess, 1.0);
+	}
+	else
+	{
+		GuideViewer::Instance()->SetMessage("ƒŠƒ“ƒNƒŒƒxƒ‹‚ª‰º‚ª‚è‚Ü‚·");
+		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Pain);
+		SE::Play(SE::VoiceType::UFOFailed, 1.0);
+	}
 }
 
 //=============================================================================
@@ -284,12 +300,14 @@ void AILevelDecreaseEvent::ReceiveBeatResult(bool IsSuccess)
 	{
 		// ¬Œ÷
 		EventState = BeatGameSuccess;
+		success = true;
 	}
 	else
 	{
 		// Ž¸”s
 		fieldEventHandler->AdjustLevelAI(DecreasePercent);
 		EventState = BeatGameFail;
+		success = false;
 
 		//ƒKƒCƒhƒLƒƒƒ‰‚ÉŽ¸”sƒ‚[ƒVƒ‡ƒ“‚ð‚³‚¹‚é
 		guideActor->ChangeAnim(GuideActor::AnimState::Defeat);

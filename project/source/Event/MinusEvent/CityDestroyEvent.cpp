@@ -14,6 +14,8 @@
 #include "../../../Framework/Task/TaskManager.h"
 #include "../../Field/Camera/EventCamera.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideActor.h"
+#include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 
 enum State
 {
@@ -48,7 +50,8 @@ CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer, BeatGameViewer* bea
 	EventState(State::TelopExpanding),
 	eventViewer(eventViewer),
 	camera(camera),
-	beatViewer(beatViewer)
+	beatViewer(beatViewer),
+	success(false)
 {
 }
 
@@ -241,6 +244,20 @@ void CityDestroyEvent::EventOver(void)
 	camera->Restore();
 	fieldEventHandler->ResumeGame();
 	UseFlag = false;
+
+	// ƒCƒxƒ“ƒg‚Ì‰Â”Û‚É‚æ‚Á‚ÄÄ¶‚ð•ÏX
+	if (success)
+	{
+		GuideViewer::Instance()->SetMessage("è¦Î‚Ì”j‰ó‚É¬Œ÷‚µ‚Ü‚µ‚½I");
+		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Clapping);
+		SE::Play(SE::VoiceType::MeteorBreakSuccess, 1.0);
+	}
+	else
+	{
+		GuideViewer::Instance()->SetMessage("è¦Î‚Ì”j‰ó‚ÉŽ¸”s‚µ‚Ü‚µ‚½...");
+		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Defeat);
+		SE::Play(SE::VoiceType::MeteorBreakFailed, 1.0);
+	}
 }
 
 //=============================================================================
@@ -270,11 +287,13 @@ void CityDestroyEvent::ReceiveBeatResult(bool IsSuccess)
 	{
 		// ¬Œ÷Aè¦ÎŒ‚”j
 		EventState = State::BeatGameSuccess;
+		success = true;
 	}
 	else
 	{
 		// Ž¸”sAè¦Î—Ž‰º
 		EventState = State::BeatGameFail;
+		success = false;
 		
 		D3DXVECTOR3 cameraPos = camera->GetPosition() + Vector3::Up * 30.0f;
 		camera->Move(cameraPos, 10, 100.0f);

@@ -6,6 +6,8 @@
 //=============================================================================
 #include "../../../main.h"
 #include "FamousPeopleEvent.h"
+#include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -33,6 +35,9 @@ FamousPeopleEvent::FamousPeopleEvent() :
 	RemainTime(DefalutBonusFrame)
 {
 	fieldEventHandler->SetDevelopBonus(BonusNum);
+	GuideViewer::Instance()->SetMessage("一定時間発展度が上昇します");
+	GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::FistPump);
+	SE::Play(SE::VoiceType::DevelopSpeedUp, 1.0);
 }
 
 //=============================================================================

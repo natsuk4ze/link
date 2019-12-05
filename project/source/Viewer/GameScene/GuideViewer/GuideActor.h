@@ -24,18 +24,18 @@ public:
 	enum AnimState
 	{
 		Idle,
-		Cheering,	// 右拳を上げて振る
-		Clapping,	// 拍手
-		Excited,	// 手をわちゃわちゃ顔きょろきょろ
-		FistPump,	// 右手でグッとガッツポーズ
-		Pain,		// 腰に痛みが
+		Cheering,	// 右拳を上げて振る○
+		Clapping,	// 拍手○
+		Excited,	// 手をわちゃわちゃ顔きょろきょろ○
+		FistPump,	// 右手でグッとガッツポーズ○
+		Pain,		// 腰に痛みが○
 		Waving,		// あ、どうもどうも
-		Yeah,		// 両手でグッとガッツポーズ
+		Yeah,		// 両手でグッとガッツポーズ○
 		ShakeFist,	// 右手を上げて振る
-		Salute,		// 敬礼
+		Salute,		// 敬礼○
 		WaveHand,	// 顔の前で手をふる（いやいやないない、みたいな）
-		Defeat,		// 顔を手で覆ってああーって感じ
-		Surprised,	// えぇー！？
+		Defeat,		// 顔を手で覆ってああーって感じ○
+		Surprised,	// えぇー！？○
 		TalkingTypeA,	// 両手を広げてアピールしながら話す
 		TalkingTypeB,	// 電話してる感じ
 		SecretTalk,		// 内緒話
