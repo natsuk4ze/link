@@ -15,6 +15,7 @@
 ‘O•ûéŒ¾
 ***************************************/
 class InstancingMeshContainer;
+class SkyBox;
 
 namespace Field::Actor
 {
@@ -36,6 +37,7 @@ namespace Field::Actor
 
 	private:
 		InstancingMeshContainer * tearMesh;		//‹ó‚Ì—ô‚¯–Ú‚ÌƒƒbƒVƒ…
+		SkyBox *skybox;
 	};
 }
 #endif
