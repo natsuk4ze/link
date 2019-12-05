@@ -8,6 +8,7 @@
 #ifndef _GUIDEVIEWER_H_
 #define _GUIDEVIEWER_H_
 
+#include "../../../../Framework/Pattern/BaseSingleton.h"
 #include "../../../../Framework/PostEffect/Effect/CRTFilter.h"
 #include <string>
 #include "GuideActor.h"
@@ -23,8 +24,10 @@ class SubScreen;
 //**************************************
 // クラス定義
 //**************************************
-class GuideViewer
+class GuideViewer :
+	public BaseSingleton<GuideViewer>
 {
+	friend class BaseSingleton<GuideViewer>;
 private:
 	// 各種インスタンス用ポインタ
 	GuideActor* actor;
@@ -39,9 +42,12 @@ private:
 	static const D3DXVECTOR2 SubScreenPosition;
 	static const D3DXVECTOR2 SubScreenSize;
 
+	GuideViewer() {}
+	~GuideViewer() {}
+
 public:
-	GuideViewer();
-	~GuideViewer();
+	void Init();	// 各種インスタンスの初期化
+	void Uninit();	// 各種インスタンスの削除
 
 	void Update();
 	void Draw();

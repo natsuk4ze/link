@@ -33,7 +33,8 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	// Žg—p‚µ‚È‚¢UI‚Ì•`‰æ‚ðOFF
 	entity.field->SetViewerActive(false);
 	entity.gameViewer->SetActive(false);
-	entity.guideViewer->SetActive(false);
+	GuideViewer::Instance()->SetActive(false);
+	//entity.guideViewer->SetActive(false);
 	entity.resultViewer->SetActive(false);
 	entity.nemeEntryViewer->SetActive(false);
 

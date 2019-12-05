@@ -36,7 +36,8 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	// 使用しないUIの描画をOFF（タイトル、リザルト用など）
 	entity.field->SetViewerActive(false);
 	entity.gameViewer->SetActive(false);
-	entity.guideViewer->SetActive(false);
+	GuideViewer::Instance()->SetActive(false);
+	//entity.guideViewer->SetActive(false);
 	entity.resultViewer->SetActive(false);
 	entity.nemeEntryViewer->SetActive(false);
 
