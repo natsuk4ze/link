@@ -62,7 +62,7 @@ void ViewerAnimater::Shake(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start,
 	//何回振動させるか
 	const int shakeNum = 400;
 	//どのくらいの振れ幅か
-	const float shakeValue = 7.0f;
+	const float shakeValue = 3.0f;
 
 	//フレームカウントと時間を更新
 	UpdateFrameAndTime(duration);
@@ -76,7 +76,6 @@ void ViewerAnimater::Shake(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start,
 	//終了処理
 	if (frameCnt < duration) return;
 	viewer.position.x = start.x;
-	viewer.position.y = start.y;
 	SetAnimFinished();
 }
 

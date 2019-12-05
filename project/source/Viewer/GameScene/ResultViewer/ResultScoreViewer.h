@@ -24,6 +24,7 @@ private:
 	const static int telopMax = 4;
 	CountViewerDrawer *totalScoreNum[telopMax];
 	BaseViewerDrawer *bg[telopMax];
+	BaseViewerDrawer*text[telopMax];
 
 public:
 	ResultScoreViewer();

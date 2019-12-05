@@ -17,7 +17,7 @@ ResultScoreViewer::ResultScoreViewer() :
 	parameterBox()
 {
 	const float intervalPosTelop = 230.0f;
-	const float intervalPosNum = 400.0f;
+	const float intervalPosNum = 320.0f;
 
 	const D3DXVECTOR2 telopSize[telopMax] = {
 		D3DXVECTOR2(2300.0f, 230.0f),
@@ -34,12 +34,16 @@ ResultScoreViewer::ResultScoreViewer() :
 
 	for (int i = 0; i < telopMax; i++)
 	{
-		totalScoreNum[i] = new CountViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 + i* intervalPosNum, SCREEN_HEIGHT / 10 * 2.5f),
-			D3DXVECTOR2(80.0f, 80.0f), "data/TEXTURE/Viewer/ResultViewer/ResultScoreViewer/Number.png", 80.0f, 0.1f, 4);
+		totalScoreNum[i] = new CountViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 18.0f + i* intervalPosNum, SCREEN_HEIGHT / 10 * 2.0f),
+			D3DXVECTOR2(80.0f, 80.0f), "data/TEXTURE/Viewer/ResultViewer/ResultScoreViewer/Number.png", 60.0f, 0.1f, 4);
 
-		bg[i] = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10.0f*1.0f, SCREEN_HEIGHT / 10 * 2.5f + i * intervalPosTelop),
+		bg[i] = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10.0f, SCREEN_HEIGHT / 10 * 2.5f + i * intervalPosTelop),
 			telopSize[i], "data/TEXTURE/Viewer/ResultViewer/ResultScoreViewer/ScoreBG.png");
 		bg[i]->SetColor(telopColor[i]);
+
+		text[i] = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10.0f + i * intervalPosTelop/2, SCREEN_HEIGHT / 10 + i * (intervalPosTelop)),
+			D3DXVECTOR2(1024/2.0f,1024/8.0f), "data/TEXTURE/Viewer/ResultViewer/ResultScoreViewer/Text.png");
+		text[i]->SetTexture(1, 4, i);
 	}
 }
 
@@ -52,6 +56,7 @@ ResultScoreViewer::~ResultScoreViewer()
 	{
 		SAFE_DELETE(totalScoreNum[i]);
 		SAFE_DELETE(bg[i]);
+		SAFE_DELETE(text[i]);
 	}
 }
 
@@ -60,6 +65,10 @@ ResultScoreViewer::~ResultScoreViewer()
 //=============================================================================
 void ResultScoreViewer::Update(void)
 {
+	parameterBox[0] = 99;
+	parameterBox[1] = 9999;
+	parameterBox[2] = 9999;
+	parameterBox[3] = 9999;
 }
 
 //=============================================================================
@@ -70,6 +79,7 @@ void ResultScoreViewer::Draw(void)
 	for (int i = 0; i < telopMax; i++)
 	{
 		bg[i]->Draw();
+		text[i]->Draw();
 
 		if (i == 0)
 		{
