@@ -140,6 +140,7 @@
     <ClInclude Include="source\Effect\Game\General\AuraEffect.h" />
     <ClInclude Include="source\Effect\Game\General\Cloud.h" />
     <ClInclude Include="source\Effect\Game\General\EventInfo.h" />
+    <ClInclude Include="source\Effect\Game\General\GaugeDebris.h" />
     <ClInclude Include="source\Effect\Game\General\PunchEffect.h" />
     <ClInclude Include="source\Effect\Game\Space\Blackhole.h" />
     <ClInclude Include="source\Effect\Game\Space\StarDust.h" />
@@ -424,6 +425,7 @@
     <ClCompile Include="source\Effect\Game\General\Cloud.cpp" />
     <ClCompile Include="source\Effect\Game\General\Darkness.cpp" />
     <ClCompile Include="source\Effect\Game\General\EventInfo.cpp" />
+    <ClCompile Include="source\Effect\Game\General\GaugeDebris.cpp" />
     <ClCompile Include="source\Effect\Game\General\PunchEffect.cpp" />
     <ClCompile Include="source\Effect\Game\Space\Blackhole.cpp" />
     <ClCompile Include="source\Effect\Game\Space\StarDust.cpp" />

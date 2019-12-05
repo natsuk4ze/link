@@ -31,6 +31,7 @@ namespace GameParticle
 		EventInfo,		//イベントます
 		BlueAura,		//青オーラ
 		PunchEffect,	//パンチエフェクト
+		GaudeDebris,	//ゲージ破片
 		Max
 	};
 }
