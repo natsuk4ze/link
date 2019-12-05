@@ -25,8 +25,6 @@ AnimationResource::AnimationResource() :
 ***************************************/
 AnimationResource::~AnimationResource()
 {
-	//NOTE:ÉGÉâÅ[Çé°Ç∑
-	return;
 	MyAllocateHierarchy allocater = MyAllocateHierarchy();
 	D3DXFrameDestroy(rootFrame, &allocater);
 
