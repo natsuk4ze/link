@@ -36,7 +36,7 @@ namespace Field::Actor
 		bool EnableAtlantis(const FieldPosition& position) const;
 
 	private:
-		InstancingMeshContainer * tearMesh;		//時空の裂け目のメッシュ
+		InstancingMeshContainer *tearMesh;		//時空の裂け目のメッシュ
 		SkyBox *skybox;
 	};
 }

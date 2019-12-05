@@ -35,6 +35,8 @@ namespace Field::Actor
 		riverContainer.reserve(ReserveTearSize);
 
 		tearMesh = new InstancingMeshContainer(ReserveTearSize);
+		ResourceManager::Instance()->GetMesh("River-Space", tearMesh);
+		tearMesh->Init();
 
 		skybox = new SkyBox({ 20000.0f, 20000.0f, 20000.0f });
 		for (int i = 0; i < SkyBox::Surface::Max; i++)
@@ -84,6 +86,7 @@ namespace Field::Actor
 		for (auto&& tear : riverContainer)
 		{
 			bool res = tearMesh->EmbedTranform(tear->GetTransform());
+
 			if (!res)
 				break;
 		}
@@ -146,6 +149,7 @@ namespace Field::Actor
 				{
 					actor = new RiverActor();
 					actor->Init(position, FieldLevel::Space);
+					actor->Rotate(Math::RandomRange(0, 4) * 90.0f);
 					riverContainer.push_back(actor);
 
 					//パーティクルのエミッタをセット
@@ -159,8 +163,6 @@ namespace Field::Actor
 			z++;
 		}
 
-		ResourceManager::Instance()->GetMesh("River-Space", tearMesh);
-		tearMesh->Init();
 	}
 
 	/**************************************
