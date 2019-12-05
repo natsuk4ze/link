@@ -33,6 +33,7 @@ const GuideActor::AnimData GuideActor::data[] = {
 	{"SecretTalk", 1.0f, 0.3f, 1 / 30.0f},
 	{"FightingIdle", 1.0f, 0.3f, 1 / 30.0f},
 	{"Rush", 1.0f, 0.3f, 1 / 30.0f},
+	{"Flying", 1.0f, 0.3f, 1 / 30.0f},
 };
 
 const char* GuideActor::FileName = "data/MODEL/Robot.X";
@@ -221,6 +222,10 @@ void GuideActor::Debug()
 	if (Debug::Button("Rush"))
 	{
 		anim->ChangeAnim(Rush);
+	}
+	if (Debug::Button("Flying"))
+	{
+		anim->ChangeAnim(Flying);
 	}
 
 	Debug::End();

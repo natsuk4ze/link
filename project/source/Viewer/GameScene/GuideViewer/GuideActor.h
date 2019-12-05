@@ -41,6 +41,7 @@ public:
 		SecretTalk,		// 内緒話
 		FightingIdle,	// ファイティングポーズ
 		Rush,			// パンチ連打
+		Flying,			// 飛行中
 
 		// 最大数
 		AnimMax
