@@ -15,7 +15,8 @@
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-ItemStockViewer::ItemStockViewer()
+ItemStockViewer::ItemStockViewer() :
+	InDrawing(true)
 {
 	//数字
 	num = new CountViewerDrawer();
@@ -64,8 +65,12 @@ ItemStockViewer::~ItemStockViewer()
 //=============================================================================
 void ItemStockViewer::Update(void)
 {
-	if (!isCurrentEqualLast((float)parameterBox)) isPlaying = true;
-	if (!isPlaying) return;
+	if (!isCurrentEqualLast((float)parameterBox))
+		isPlaying = true;
+
+	if (!isPlaying) 
+		return;
+
 	anim->PlayAnim([=]
 	{
 		anim->SetPlayFinished(isPlaying);
@@ -77,6 +82,9 @@ void ItemStockViewer::Update(void)
 //=============================================================================
 void ItemStockViewer::Draw(void)
 {
+	if (!InDrawing)
+		return;
+
 	//アイコン
 	icon->Draw();
 

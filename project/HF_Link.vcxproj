@@ -290,6 +290,9 @@
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h" />
     <ClInclude Include="source\Viewer\GameScene\Controller\EventViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GradeFrameViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GradeNameViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GradeUpViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryCursorViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.h" />
@@ -574,6 +577,9 @@
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\LinkLevelUpViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\Controller\GameViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\GradeFrameViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\GradeNameViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\GradeUpViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\LevelViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\ItemStockViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp" />

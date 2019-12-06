@@ -462,6 +462,7 @@ void GameScene::DebugTool()
 		ChangeState(State::TransitionOut);
 	}
 
+
 	Debug::NewLine();
 	Debug::Text("Event");
 	bool flgPause = eventController->EventDebug(level);
