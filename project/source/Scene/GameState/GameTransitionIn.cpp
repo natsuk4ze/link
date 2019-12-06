@@ -54,11 +54,11 @@ GameScene::State GameScene::GameTransitionIn::OnUpdate(GameScene & entity)
 
 	if (entity.cntFrame == 100)
 	{
-		entity.guideViewer->SetActive(false);
+		GuideViewer::Instance()->SetActive(false);
 		entity.field->SetViewerActive(false);
 		entity.gameViewer->SetGradeTitle(entity.level, [&]()
 		{
-			entity.guideViewer->SetActive(true);
+			GuideViewer::Instance()->SetActive(true);
 			entity.field->SetViewerActive(true);
 			entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
 			entity.ChangeState(GameScene::Idle);
