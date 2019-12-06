@@ -35,6 +35,8 @@ namespace Field::Actor
 
 		bool EnableAtlantis(const FieldPosition& position) const;
 
+		static const char* SkyboxTexName[];
+
 	private:
 		InstancingMeshContainer *tearMesh;		//‹ó‚Ì—ô‚¯–Ú‚ÌƒƒbƒVƒ…
 		SkyBox *skybox;

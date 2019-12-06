@@ -26,6 +26,19 @@
 namespace Field::Actor
 {
 	/**************************************
+	staticメンバ
+	***************************************/
+	const char* SpaceBackGroundContainer::SkyboxTexName[6] =
+	{
+		"data/TEXTURE/skybox/SpaceTear/Up_1K_TEX.jpg",
+		"data/TEXTURE/skybox/SpaceTear/Back_1K_TEX.jpg",
+		"data/TEXTURE/skybox/SpaceTear/Down_1K_TEX.jpg",
+		"data/TEXTURE/skybox/SpaceTear/Front_1K_TEX.jpg",
+		"data/TEXTURE/skybox/SpaceTear/Right_1K_TEX.jpg",
+		"data/TEXTURE/skybox/SpaceTear/Left_1K_TEX.jpg",
+	};
+
+	/**************************************
 	コンストラクタ
 	***************************************/
 	SpaceBackGroundContainer::SpaceBackGroundContainer()
@@ -41,7 +54,7 @@ namespace Field::Actor
 		skybox = new SkyBox({ 20000.0f, 20000.0f, 20000.0f });
 		for (int i = 0; i < SkyBox::Surface::Max; i++)
 		{
-			skybox->LoadTexture("data/MODEL/PlaceActor/spacePlasma.jpg", SkyBox::Surface(i));
+			skybox->LoadTexture(SkyboxTexName[i], SkyBox::Surface(i));
 		}
 	}
 
