@@ -49,7 +49,11 @@ public:
 	void SetActive(bool flag);
 	void SetActive(bool flag, ViewerNo viewer);
 
+	// グレードアップ演出
 	void SetGradeUp(std::function<void(void)> Callback = nullptr);
+
+	// グレードタイトル演出
+	void SetGradeTitle(int fieldLevel, std::function<void(void)> Callback = nullptr);
 
 	std::vector <BaseViewer*> gameViewer;
 

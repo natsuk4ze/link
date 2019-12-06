@@ -61,8 +61,8 @@ void GradeUpViewer::Draw()
 	if (!isPlaying)
 		return;
 
-	GradeUpText->Draw();
 	AILevelTex->Draw();
+	GradeUpText->Draw();
 }
 
 //=============================================================================
@@ -71,6 +71,7 @@ void GradeUpViewer::Draw()
 void GradeUpViewer::SetGradeUp(std::function<void(void)> callback)
 {
 	Callback = callback;
+	isPlaying = true;
 
 	// ‰Šú‰»
 	AILevelTex->SetVisible(true);

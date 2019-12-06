@@ -68,12 +68,11 @@ void GradeFrameViewer::SlideIn(std::function<void(void)> callback)
 {
 	Callback = callback;
 
-	FrameUp->Expand(60.0f, ExpandType::ExpandUpToDown);
-	FrameDown->Expand(60.0f, ExpandType::ExpandDownToUp);
-
-	TaskManager::Instance()->CreateDelayedTask(150, [&]()
+	FrameUp->Expand(15.0f, ExpandType::ExpandUpToDown);
+	FrameDown->Expand(15.0f, ExpandType::ExpandDownToUp, EaseType::Linear, [&]()
 	{
-		SlideOut();
+		if (Callback != nullptr)
+			Callback();
 	});
 }
 
@@ -85,7 +84,11 @@ void GradeFrameViewer::SlideOut(std::function<void(void)> callback)
 {
 	Callback = callback;
 
-	FrameUp->Close(60.0f, CloseType::CloseDownToUp);
-	FrameDown->Close(60.0f, CloseType::CloseUpToDown);
+	FrameUp->Close(15.0f, CloseType::CloseDownToUp);
+	FrameDown->Close(15.0f, CloseType::CloseUpToDown, EaseType::Linear, [&]()
+	{
+		if (Callback != nullptr)
+			Callback();
+	});
 }
 

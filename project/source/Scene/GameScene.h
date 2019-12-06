@@ -98,7 +98,7 @@ private:
 	SerialWrapper *serial;						//シリアル通信
 	UDPClient *Client;							//クライアント
 	GuideViewer* guideViewer;					//ガイドビュアー
-	ResultViewer*resultViewer;					//リザルトビュアー
+	ResultViewer* resultViewer;					//リザルトビュアー
 	NameEntryViewer *nemeEntryViewer;			//名前登録ビュアー
 	TitleViewer* titleViewer;					// タイトルビュアー
 	RewardViewer* rewardViewer;					// リワードビュアー

@@ -149,6 +149,14 @@ void TextureDrawer::Update()
 		{
 			Close_FromLeftRight(Time);
 		}
+		else if (closeType == CloseType::CloseLeftToRight)
+		{
+			Close_LeftToRight(Time);
+		}
+		else if (closeType == CloseType::CloseRightToLeft)
+		{
+			Close_RightToLeft(Time);
+		}
 		else if (closeType == CloseType::CloseUpToDown)
 		{
 			Close_UpToDown(Time);
@@ -368,6 +376,44 @@ void TextureDrawer::Close_FromLeftRight(float Time)
 	Vertex[1].tex = D3DXVECTOR2((Index.x + 1) * UnitUV.x - (UnitUV.x * TexPercent), Index.y * UnitUV.y);
 	Vertex[2].tex = D3DXVECTOR2(Index.x * UnitUV.x + (UnitUV.x * TexPercent), (Index.y + 1) * UnitUV.y);
 	Vertex[3].tex = D3DXVECTOR2((Index.x + 1) * UnitUV.x - (UnitUV.x * TexPercent), (Index.y + 1) * UnitUV.y);
+}
+
+//=============================================================================
+// テクスチャ終了処理
+//=============================================================================
+void TextureDrawer::Close_LeftToRight(float Time)
+{
+	float VtxPercent = Easing::EaseValue(Time, 1.0f, -1.0f, easeType);
+	float TexPercent = Easing::EaseValue(Time, 0.0f, UnitUV.x, easeType);
+
+	Vertex[0].vtx = Position + D3DXVECTOR3(-Size.x / 2 * VtxPercent, -Size.y / 2, 0.0f);
+	Vertex[1].vtx = Position + D3DXVECTOR3(Size.x / 2, -Size.y / 2, 0.0f);
+	Vertex[2].vtx = Position + D3DXVECTOR3(-Size.x / 2 * VtxPercent, Size.y / 2, 0.0f);
+	Vertex[3].vtx = Position + D3DXVECTOR3(Size.x / 2, Size.y / 2, 0.0f);
+
+	Vertex[0].tex = D3DXVECTOR2(Index.x * UnitUV.x + TexPercent, Index.y * UnitUV.y);
+	Vertex[1].tex = D3DXVECTOR2((Index.x + 1) * UnitUV.x, Index.y * UnitUV.y);
+	Vertex[2].tex = D3DXVECTOR2(Index.x * UnitUV.x + TexPercent, (Index.y + 1) * UnitUV.y);
+	Vertex[3].tex = D3DXVECTOR2((Index.x + 1) * UnitUV.x, (Index.y + 1) * UnitUV.y);
+}
+
+//=============================================================================
+// テクスチャ終了処理
+//=============================================================================
+void TextureDrawer::Close_RightToLeft(float Time)
+{
+	float VtxPercent = Easing::EaseValue(Time, 1.0f, -1.0f, easeType);
+	float TexPercent = Easing::EaseValue(Time, 0.0f, -UnitUV.x, easeType);
+
+	Vertex[0].vtx = Position + D3DXVECTOR3(-Size.x / 2, -Size.y / 2, 0.0f);
+	Vertex[1].vtx = Position + D3DXVECTOR3(Size.x / 2 * VtxPercent, -Size.y / 2, 0.0f);
+	Vertex[2].vtx = Position + D3DXVECTOR3(-Size.x / 2, Size.y / 2, 0.0f);
+	Vertex[3].vtx = Position + D3DXVECTOR3(Size.x / 2 * VtxPercent, Size.y / 2, 0.0f);
+
+	Vertex[0].tex = D3DXVECTOR2(Index.x * UnitUV.x, Index.y * UnitUV.y);
+	Vertex[1].tex = D3DXVECTOR2((Index.x + 1) * UnitUV.x + TexPercent, Index.y * UnitUV.y);
+	Vertex[2].tex = D3DXVECTOR2(Index.x * UnitUV.x, (Index.y + 1) * UnitUV.y);
+	Vertex[3].tex = D3DXVECTOR2((Index.x + 1) * UnitUV.x + TexPercent, (Index.y + 1) * UnitUV.y);
 }
 
 //=============================================================================

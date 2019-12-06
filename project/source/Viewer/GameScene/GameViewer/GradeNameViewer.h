@@ -8,6 +8,7 @@
 #define _GradeNameViewer_H_
 
 #include "../../Framework/BaseViewer.h"
+#include "../../../Field/FieldConfig.h"
 #include <functional>
 
 class TextureDrawer;
@@ -22,11 +23,14 @@ private:
 	TextureDrawer* LineTex;
 	std::function<void(void)> Callback;
 
+	void GradeNameFade(void);
+
 public:
 	GradeNameViewer();
 	~GradeNameViewer();
 	void Update(void);
 	void Draw(void);
+	void SetGradeName(int fieldLevel, std::function<void(void)> callback = nullptr);
 };
 
 #endif

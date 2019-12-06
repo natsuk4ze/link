@@ -15,7 +15,8 @@
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-ItemStockViewer::ItemStockViewer()
+ItemStockViewer::ItemStockViewer() :
+	InDrawing(true)
 {
 	//数字
 	num = new CountViewerDrawer();
@@ -81,6 +82,9 @@ void ItemStockViewer::Update(void)
 //=============================================================================
 void ItemStockViewer::Draw(void)
 {
+	if (!InDrawing)
+		return;
+
 	//アイコン
 	icon->Draw();
 

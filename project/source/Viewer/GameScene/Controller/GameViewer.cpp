@@ -57,6 +57,14 @@ void GameViewer::Update()
 		gradeUpViewer->SetGradeUp();
 	if (Debug::Button("Slide"))
 		gradeFrameViewer->SlideIn();
+	if (Debug::Button("GradeTitle"))
+		gradeFrameViewer->SlideIn([&]()
+	{
+		gradeNameViewer->SetGradeName(Field::World, [&]()
+		{
+			gradeFrameViewer->SlideOut();
+		});
+	});
 	Debug::End();
 
 	for (unsigned int i = 0; i < gameViewer.size(); i++)
@@ -118,7 +126,14 @@ void GameViewer::SetActive(bool flag)
 //=============================================================================
 void GameViewer::SetActive(bool flag, ViewerNo viewer)
 {
-	gameViewer.at(viewer)->isPlaying = flag;
+	if (viewer != ItemStock)
+	{
+		gameViewer.at(viewer)->isPlaying = flag;
+	}
+	else
+	{
+		stockViewer->SetInDrawing(flag);
+	}
 }
 
 //=============================================================================
@@ -134,5 +149,30 @@ void GameViewer::SetGradeUp(std::function<void(void)> Callback)
 		// レベルビューアの描画を復帰
 		SetActive(true, ViewerNo::Level);
 		Callback();
+	});
+}
+
+//=============================================================================
+// グレードタイトル演出
+//=============================================================================
+void GameViewer::SetGradeTitle(int fieldLevel, std::function<void(void)> Callback)
+{
+	// レベルビューアの描画を停止
+	SetActive(false, ViewerNo::Level);
+	SetActive(false, ViewerNo::ItemStock);
+	SetActive(false, ViewerNo::Timer);
+
+	gradeFrameViewer->SlideIn([=]()
+	{
+		gradeNameViewer->SetGradeName(fieldLevel, [=]()
+		{
+			gradeFrameViewer->SlideOut([=]()
+			{
+				SetActive(true, ViewerNo::Level);
+				SetActive(true, ViewerNo::ItemStock);
+				SetActive(true, ViewerNo::Timer);
+				Callback();
+			});
+		});
 	});
 }

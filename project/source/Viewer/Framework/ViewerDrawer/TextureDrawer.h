@@ -24,6 +24,8 @@ enum CloseType
 {
 	FromUpDown,
 	FromLeftRight,
+	CloseLeftToRight,
+	CloseRightToLeft,
 	CloseUpToDown,
 	CloseDownToUp,
 };
@@ -67,6 +69,8 @@ private:
 	void Expand_ToLeftRight(float Time);
 	void Close_FromUpDown(float Time);
 	void Close_FromLeftRight(float Time);
+	void Close_LeftToRight(float Time);
+	void Close_RightToLeft(float Time);
 	void Close_UpToDown(float Time);
 	void Close_DownToUp(float Time);
 public:
