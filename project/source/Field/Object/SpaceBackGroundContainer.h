@@ -16,6 +16,7 @@
 ***************************************/
 class InstancingMeshContainer;
 class SkyBox;
+class SpaceGrid;
 
 namespace Field::Actor
 {
@@ -40,6 +41,7 @@ namespace Field::Actor
 	private:
 		InstancingMeshContainer *tearMesh;		//‹ó‚Ì—ô‚¯–Ú‚ÌƒƒbƒVƒ…
 		SkyBox *skybox;
+		SpaceGrid *grid;
 	};
 }
 #endif

@@ -9,6 +9,7 @@
 
 #include "../../FieldObject/Actor/PlaceActor.h"
 #include "../../FieldObject/Actor/RiverActor.h"
+#include "SpaceGrid.h"
 
 #include "../Place/PlaceConfig.h"
 
@@ -56,6 +57,8 @@ namespace Field::Actor
 		{
 			skybox->LoadTexture(SkyboxTexName[i], SkyBox::Surface(i));
 		}
+
+		grid = new SpaceGrid();
 	}
 
 	/**************************************
@@ -66,6 +69,7 @@ namespace Field::Actor
 		Utility::DeleteContainer(riverContainer);
 		SAFE_DELETE(tearMesh);
 		SAFE_DELETE(skybox);
+		SAFE_DELETE(grid);
 	}
 
 	/**************************************
@@ -124,6 +128,9 @@ namespace Field::Actor
 
 		pDevice->SetRenderState(D3DRS_STENCILENABLE, false);
 		pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
+
+		//グリッドのフィールドを描画
+		grid->Draw();
 	}
 
 	/**************************************

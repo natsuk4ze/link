@@ -126,6 +126,16 @@ void MeshField::CreateVertexBuffer()
 ***************************************/
 void MeshField::CreateIndexBuffer()
 {
+
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+	pDevice->CreateIndexBuffer(sizeof(WORD) * numIndex,
+		D3DUSAGE_WRITEONLY,
+		D3DFMT_INDEX16,
+		D3DPOOL_MANAGED,
+		&indexBuff,
+		NULL);
+
 	WORD *pIdx;
 
 	// インデックスデータの範囲をロックし、頂点バッファへのポインタを取得
