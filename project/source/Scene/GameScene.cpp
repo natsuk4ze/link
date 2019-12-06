@@ -91,11 +91,13 @@ void GameScene::Init()
 	bloomController = new BloomController();
 	serial = new SerialWrapper(3);								//TODO:ポート番号を変えられるようにする
 	Client = new UDPClient();
-	guideViewer = new GuideViewer();
 	resultViewer = new ResultViewer();
 	nemeEntryViewer = new NameEntryViewer();
 	titleViewer = new TitleViewer();
 	rewardViewer = new RewardViewer();
+
+	// ガイドビュアーの初期化
+	GuideViewer::Instance()->Init();
 
 	// リワードの作成
 	for (int i = 0; i < RC::Type::Max; i++)
@@ -160,11 +162,14 @@ void GameScene::Uninit()
 	SAFE_DELETE(eventHandler);
 	SAFE_DELETE(serial);
 	SAFE_DELETE(Client);
-	SAFE_DELETE(guideViewer);
+	//SAFE_DELETE(guideViewer);
 	SAFE_DELETE(resultViewer);
 	SAFE_DELETE(nemeEntryViewer);
 	SAFE_DELETE(titleViewer);
 	SAFE_DELETE(rewardViewer);
+
+	// ガイドビュアーの削除
+	GuideViewer::Instance()->Uninit();
 
 	//パーティクル終了
 	particleManager->Uninit();
@@ -212,7 +217,7 @@ void GameScene::Update()
 
 	//ビュアー更新
 	gameViewer->Update();
-	guideViewer->Update();
+	GuideViewer::Instance()->Update();
 	resultViewer->Update();
 	nemeEntryViewer->Update();
 	titleViewer->Update();
@@ -296,7 +301,7 @@ void GameScene::Draw()
 	rewardViewer->Draw();
 
 	//*******別ウインドウを作成するため最後*******
-	guideViewer->Draw();
+	GuideViewer::Instance()->Draw();
 
 	ProfilerCPU::Instance()->EndLabel();
 }

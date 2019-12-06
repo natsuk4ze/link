@@ -10,6 +10,8 @@
 #include "../../Viewer/GameScene/Controller/EventViewer.h"
 #include "../../Effect/GameParticleManager.h"
 #include "../../../Framework/Task/TaskManager.h"
+#include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 
 
 //*****************************************************************************
@@ -127,6 +129,11 @@ void BanStockUseEvent::EventOver(void)
 	SetBanStock(false);
 	fieldEventHandler->ResumeGame();
 	UseFlag = false;
+
+	GuideViewer::Instance()->SetMessage("AI‚Ì–\‘–‚ðH‚¢Ž~‚ß‚Ü‚µ‚½");
+	GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Salute);
+	SE::Play(SE::VoiceType::AIOutofControllStop, 1.0);
+
 }
 
 //=============================================================================
@@ -146,6 +153,11 @@ void BanStockUseEvent::ReceiveBeatResult(bool IsSuccess)
 		InDebuff = true;
 		SetBanStock(true);
 		fieldEventHandler->ResumeGame();
+
+		GuideViewer::Instance()->SetMessage("ˆê’èŽžŠÔƒhƒŠƒ‹‚ªŽg‚¦‚È‚­‚È‚è‚Ü‚·");
+		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Pain);
+		SE::Play(SE::VoiceType::AIOutofControll, 1.0);
+
 	}
 }
 

@@ -88,7 +88,7 @@ namespace Effect::Game
 		D3DXVECTOR3 InitOffset = D3DXVECTOR3
 		(
 			7.0f * cosf(D3DXToRadian(Theta)),
-			Math::RandomRange(15.0f, 20.0f),
+			Math::RandomRange(25.0f, 27.5f),
 			//20.0f,
 			7.0f * sinf(D3DXToRadian(Theta))
 		);
@@ -106,6 +106,12 @@ namespace Effect::Game
 		cntFrame++;
 
 		transform->Move(Vector3::Down * Speed);
+
+		float t = cntFrame / 10.0f;
+		float scale = Easing::EaseValue(t, 0.0f, 1.0f, EaseType::InExpo);
+
+		transform->SetScale(scale * Vector3::One);
+
 		if (transform->GetPosition().y <= 0.0f)
 		{
 			SetActive(false);

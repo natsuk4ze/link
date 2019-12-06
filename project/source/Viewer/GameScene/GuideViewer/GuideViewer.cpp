@@ -27,9 +27,9 @@ const D3DXVECTOR2 GuideViewer::SubScreenSize = D3DXVECTOR2(360.0f, 360.0f);
 const D3DXVECTOR2 GuideViewer::SubScreenPosition = D3DXVECTOR2(30.0f, 690.0f);
 
 //=====================================
-// コンストラクタ
+// 初期化
 //=====================================
-GuideViewer::GuideViewer()
+void GuideViewer::Init()
 {
 	// 描画用サブスクリーンの作成
 	subScreen = new SubScreen(SubScreenSize, SubScreenPosition);
@@ -46,9 +46,9 @@ GuideViewer::GuideViewer()
 }
 
 //=====================================
-// デストラクタ
+// 削除
 //=====================================
-GuideViewer::~GuideViewer()
+void GuideViewer::Uninit()
 {
 	SAFE_DELETE(subScreen);
 
@@ -70,7 +70,7 @@ void GuideViewer::Update()
 
 	if (Keyboard::GetTrigger(DIK_G))
 	{
-		SetGuideViewer("テストを再生中です～\n頑張って下さい～");
+		SetMessage("テストを再生中です～\n頑張って下さい～");
 	}
 
 #endif
@@ -152,7 +152,7 @@ void GuideViewer::SetActive(bool flag)
 //=====================================
 // ガイドビュアーセット処理
 //=====================================
-void GuideViewer::SetGuideViewer(const std::string &message)
+void GuideViewer::SetMessage(const std::string &message)
 {
 	// イベントメッセージがあったら実行
 	if (message.empty()) return;

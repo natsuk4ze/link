@@ -34,7 +34,8 @@ GameScene::State GameScene::GamePause::OnUpdate(GameScene & entity)
 		//NOTEF‰˜‚¢‚¯‚Ç‚Æ‚è‚ ‚¦‚¸‚±‚Ì‚â‚è•û‚Å‚â‚Á‚Ä‚µ‚Ü‚¤
 		entity.field->SetViewerActive(false);
 		entity.gameViewer->SetActive(false);
-		entity.guideViewer->SetActive(false);
+		GuideViewer::Instance()->SetActive(false);
+		//entity.guideViewer->SetActive(false);
 
 		entity.eventController->Update();
 	}

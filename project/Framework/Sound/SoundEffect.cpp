@@ -7,11 +7,30 @@
 //=====================================
 #include "SoundEffect.h"
 #include "sound.h"
+#include "../Tool/DebugWindow.h"
 
 /**************************************
 staticメンバ
 ***************************************/
 std::unordered_map<int, LPDIRECTSOUNDBUFFER8> SE::soundContainer;
+const char* SE::path[] = {
+	{"data/SOUND/VOICE/AIBonus.wav"},
+	{"data/SOUND/VOICE/AIOutofControll.wav"},
+	{"data/SOUND/VOICE/AIOutofControllStop.wav"},
+	{"data/SOUND/VOICE/AllLinkLevelUp.wav"},
+	{"data/SOUND/VOICE/DevelopSpeedUp.wav"},
+	{"data/SOUND/VOICE/DrillStock.wav"},
+	{"data/SOUND/VOICE/LinkLevelDown.wav"},
+	{"data/SOUND/VOICE/LinkLevelUp.wav"},
+	{"data/SOUND/VOICE/MeteorBreakFailed.wav"},
+	{"data/SOUND/VOICE/MeteorBreakSuccess.wav"},
+	{"data/SOUND/VOICE/NewContinent.wav"},
+	{"data/SOUND/VOICE/NewStar.wav"},
+	{"data/SOUND/VOICE/NewTown.wav"},
+	{"data/SOUND/VOICE/TimeLimitHeal.wav"},
+	{"data/SOUND/VOICE/UMAFailed.wav"},
+	{"data/SOUND/VOICE/UMAStop.wav"}
+};
 
 /**************************************
 読み込み処理
@@ -99,4 +118,16 @@ void SE::Resume()
 	{
 		Sound::Play(pair.second, Sound::E_DS8_FLAG_NONE, false);
 	}
+}
+
+/**************************************
+再生中判定
+***************************************/
+bool SE::IsPlaying(int tag)
+{
+	if (soundContainer.count(tag) == 0)
+		return false;
+
+	//ステータス取得
+	return Sound::IsPlaying(soundContainer[tag]);
 }

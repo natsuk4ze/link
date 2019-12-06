@@ -97,8 +97,8 @@ private:
 	FieldEventHandler* eventHandler;			//イベントハンドラ
 	SerialWrapper *serial;						//シリアル通信
 	UDPClient *Client;							//クライアント
-	GuideViewer* guideViewer;					//ガイドビュアー
-	ResultViewer* resultViewer;					//リザルトビュアー
+	//GuideViewer* guideViewer;					//ガイドビュアー
+	ResultViewer*resultViewer;					//リザルトビュアー
 	NameEntryViewer *nemeEntryViewer;			//名前登録ビュアー
 	TitleViewer* titleViewer;					// タイトルビュアー
 	RewardViewer* rewardViewer;					// リワードビュアー

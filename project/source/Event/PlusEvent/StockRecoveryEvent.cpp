@@ -6,11 +6,28 @@
 //=============================================================================
 #include "../../../main.h"
 #include "StockRecoveryEvent.h"
+#include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
 const int AddNum = 3;
+const std::string StockRecoveryEvent::CityMessage[] = {
+	{"祭りだワッショイ！"},
+	{"タピオカ投げ祭り！\n今日はみんなでタピろう！"},
+	{"射的で景品ゲット！"}
+};
+const std::string StockRecoveryEvent::WorldMessage[] = {
+	{"裏庭から昔の金貨がザックザク！"},
+	{"海水浴中に砂浜に埋められてたらなんか出てきた！"},
+	{"こんなところに金隠しやがって..."}
+};
+const std::string StockRecoveryEvent::SpaceMessage[] = {
+	{"ふと空を見上げたら星が綺麗だった"},
+	{"あっ！流れ星！"},
+	{"ペガサス流星拳！！"}
+};
 
 //*****************************************************************************
 // スタティック変数宣言
@@ -23,7 +40,9 @@ const int AddNum = 3;
 StockRecoveryEvent::StockRecoveryEvent() :
 	EventBase(false)
 {
-
+	GuideViewer::Instance()->SetMessage("ドリルのストックが回復しました");
+	GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Cheering);
+	SE::Play(SE::VoiceType::StockRecovery, 1.0);
 }
 
 //=============================================================================
@@ -58,17 +77,18 @@ string StockRecoveryEvent::GetEventMessage(int FieldLevel)
 {
 	vector<string> MessageContainer;
 
+	int r = rand() % 3;
 	if (FieldLevel == Field::City)
 	{
-		MessageContainer.push_back("埋蔵金発掘！\nドリルのストックが増えた！");
+		MessageContainer.push_back(CityMessage[r]);
 	}
 	else if (FieldLevel == Field::World)
 	{
-		MessageContainer.push_back("タイムマシンの開発に成功！\n制限時間が回復！");
+		MessageContainer.push_back(WorldMessage[r]);
 	}
 	else if (FieldLevel == Field::Space)
 	{
-		MessageContainer.push_back("タイムマシンの開発に成功！\n制限時間が回復！");
+		MessageContainer.push_back(SpaceMessage[r]);
 	}
 
 	if (!MessageContainer.empty())
