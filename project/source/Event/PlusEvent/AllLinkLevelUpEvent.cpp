@@ -40,9 +40,9 @@ const std::string AllLinkLevelUpEvent::SpaceMessage[] = {
 AllLinkLevelUpEvent::AllLinkLevelUpEvent() :
 	EventBase(false)
 {
-	GuideViewer::Instance()->SetMessage("全ての町のリンクレベルが上昇しました");
-	GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::FistPump);
-	SE::Play(SE::VoiceType::AllLinkLevelUp, 1.0);
+	GuideViewer::Instance()->SetData("全ての町のリンクレベルが上昇しました",
+		GuideActor::AnimState::FistPump,
+		SE::VoiceType::AllLinkLevelUp);
 }
 
 //=============================================================================

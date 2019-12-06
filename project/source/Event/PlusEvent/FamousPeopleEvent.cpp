@@ -35,9 +35,9 @@ FamousPeopleEvent::FamousPeopleEvent() :
 	RemainTime(DefalutBonusFrame)
 {
 	fieldEventHandler->SetDevelopBonus(BonusNum);
-	GuideViewer::Instance()->SetMessage("ˆê’èŠÔ”­“W“x‚ªã¸‚µ‚Ü‚·");
-	GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::FistPump);
-	SE::Play(SE::VoiceType::DevelopSpeedUp, 1.0);
+	GuideViewer::Instance()->SetData("ˆê’èŠÔ”­“W“x‚ªã¸‚µ‚Ü‚·",
+		GuideActor::AnimState::FistPump,
+		SE::VoiceType::DevelopSpeedUp);
 }
 
 //=============================================================================
