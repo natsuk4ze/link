@@ -65,6 +65,9 @@ public:
 	static void Resume(int tag);
 	static void Resume();
 
+	//再生中判定
+	static bool IsPlaying(int tag);
+
 private:
 	//読み込んだサウンドのコンテナ
 	static std::unordered_map<int, LPDIRECTSOUNDBUFFER8> soundContainer;

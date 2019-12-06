@@ -7,6 +7,7 @@
 //=====================================
 #include "SoundEffect.h"
 #include "sound.h"
+#include "../Tool/DebugWindow.h"
 
 /**************************************
 staticメンバ
@@ -117,4 +118,16 @@ void SE::Resume()
 	{
 		Sound::Play(pair.second, Sound::E_DS8_FLAG_NONE, false);
 	}
+}
+
+/**************************************
+再生中判定
+***************************************/
+bool SE::IsPlaying(int tag)
+{
+	if (soundContainer.count(tag) == 0)
+		return false;
+
+	//ステータス取得
+	return Sound::IsPlaying(soundContainer[tag]);
 }
