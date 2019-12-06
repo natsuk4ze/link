@@ -37,7 +37,7 @@ private:
 	BaseViewerDrawer*totalScorePlaceText[totalScorePlaceTextMax];
 
 	int score[4];
-	int completeRewardNum[3];
+	int completeRewardNum[4];
 
 public:
 	ResultScoreViewer();

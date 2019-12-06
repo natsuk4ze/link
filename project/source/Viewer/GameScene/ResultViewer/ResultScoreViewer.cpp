@@ -14,8 +14,9 @@
 // コンストラクタ
 //*****************************************************************************
 ResultScoreViewer::ResultScoreViewer() :
-	parameterBox(),
-	completeRewardNum()
+	score(),
+	completeRewardNum(),
+	parameterBox()
 {
 	const float intervalPosTelop = 240.0f;
 	const float intervalPosNum = 320.0f;
@@ -44,10 +45,10 @@ ResultScoreViewer::ResultScoreViewer() :
 		D3DXVECTOR2(SCREEN_WIDTH / 10.0f*2.0f, SCREEN_HEIGHT / 10 * 4.50f + (2 * intervalPosTelop)),
 	};
 	const D3DXVECTOR2 fieldTextPos[telopMax] = {
-		D3DXVECTOR2(SCREEN_WIDTH / 10 * 2.0f - intervalPosTelop / 2, SCREEN_HEIGHT / 10 * 3.30f - intervalPosTelop - (1024 / 8.0f*1.30f - 1024 / 8.0f) - 20.0f),
-		D3DXVECTOR2(SCREEN_WIDTH / 10 * 2.0f + 0 * intervalPosTelop / 2, SCREEN_HEIGHT / 10 * 3.30f + 0 * intervalPosTelop),
-		D3DXVECTOR2(SCREEN_WIDTH / 10 * 2.0f + 1 * intervalPosTelop / 2, SCREEN_HEIGHT / 10 * 3.30f + 1 * intervalPosTelop),
-		D3DXVECTOR2(SCREEN_WIDTH / 10 * 2.0f + 2 * intervalPosTelop / 2, SCREEN_HEIGHT / 10 * 3.30f + 2 * intervalPosTelop)
+		D3DXVECTOR2(SCREEN_WIDTH / 10* 1.0f+50.0f, SCREEN_HEIGHT / 10 * 3.30f - intervalPosTelop - (1024 / 8.0f*1.30f - 1024 / 8.0f) - 20.0f),
+		D3DXVECTOR2(SCREEN_WIDTH / 10* 1.5f+50.0f, SCREEN_HEIGHT / 10 * 3.30f + 0 * intervalPosTelop),
+		D3DXVECTOR2(SCREEN_WIDTH / 10* 2.0f+50.0f, SCREEN_HEIGHT / 10 * 3.30f + 1 * intervalPosTelop),
+		D3DXVECTOR2(SCREEN_WIDTH / 10* 2.5f+50.0f, SCREEN_HEIGHT / 10 * 3.30f + 2 * intervalPosTelop)
 	};
 	const D3DXVECTOR2 fieldTextSize[telopMax] = {
 		D3DXVECTOR2(1024 / 2.0f*1.30f, 1024 / 8.0f*1.30f),

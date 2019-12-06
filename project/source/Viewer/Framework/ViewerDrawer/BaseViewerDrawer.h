@@ -8,6 +8,7 @@
 #define _BASE_VIEWER_DRAWER_H_
 
 #include"../../../../main.h"
+#include <string>
 
 //*****************************************************************************
 // É}ÉNÉçíËã`
@@ -53,7 +54,6 @@ public:
 	BaseViewerDrawer(D3DXVECTOR2 position, D3DXVECTOR2 size, const char* path);
 	BaseViewerDrawer();
 	virtual ~BaseViewerDrawer();
-
 };
 
 #endif

@@ -5,6 +5,7 @@
 //
 //=============================================================================
 #include"../../../../main.h"
+#include "../../../../Framework/Resource/ResourceManager.h"
 #include "BaseViewerDrawer.h"
 
 //=============================================================================
@@ -33,20 +34,15 @@ BaseViewerDrawer::BaseViewerDrawer()
 //=============================================================================
 BaseViewerDrawer::~BaseViewerDrawer()
 {
-	SAFE_RELEASE(texture);
-}
+	SAFE_DELETE(texture);
+}	
 
 //=============================================================================
 // テクスチャの読み込み
 //=============================================================================
 void BaseViewerDrawer::LoadTexture(const char *path)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-	// テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,	// デバイスへのポインタ
-		path,							// ファイルのアドレス
-		&texture);						// 読み込むメモリー
+	ResourceManager::Instance()->GetTexture(path,texture);
 }
 
 //=============================================================================
@@ -135,10 +131,11 @@ void BaseViewerDrawer::SetPosition(const D3DXVECTOR3 pos)
 //=============================================================================
 void BaseViewerDrawer::SetAlpha(float alpha)
 {
+	D3DXCOLOR c = vertexWk[3].diffuse;
 	vertexWk[0].diffuse =
 		vertexWk[1].diffuse =
 		vertexWk[2].diffuse =
-		vertexWk[3].diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, alpha);
+		vertexWk[3].diffuse = D3DXCOLOR(c.r, c.g, c.b, alpha);
 }
 
 //=============================================================================
