@@ -295,6 +295,7 @@
     <ClCompile Include="source\Viewer\TitleScene\TitleViewer.cpp" />
     <ClCompile Include="source\Effect\Game\General\PunchEffect.cpp" />
     <ClCompile Include="source\Effect\Game\General\GaugeDebris.cpp" />
+    <ClCompile Include="Framework\Renderer3D\MeshField.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -594,6 +595,7 @@
     <ClInclude Include="source\Viewer\TitleScene\TitleViewer.h" />
     <ClInclude Include="source\Effect\Game\General\PunchEffect.h" />
     <ClInclude Include="source\Effect\Game\General\GaugeDebris.h" />
+    <ClInclude Include="Framework\Renderer3D\MeshField.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
