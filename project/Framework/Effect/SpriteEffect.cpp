@@ -35,6 +35,27 @@ SpriteEffect::SpriteEffect(const D3DXVECTOR2 & texDiv) :
 }
 
 /**************************************
+コンストラクタ
+***************************************/
+SpriteEffect::SpriteEffect(const char*  effectPath, const D3DXVECTOR2& texDiv) :
+	diffuse(1.0f, 1.0f, 1.0f, 1.0f),
+	texDiv(texDiv),
+	texSize(1.0f / texDiv.x, 1.0f / texDiv.y),
+	uv(0.0f, 0.0f)
+{
+	//エフェクト読み込み
+	ResourceManager::Instance()->GetEffect(effectPath, effect);
+
+	//ハンドル取得
+	hWorld = effect->GetParameterByName(0, "mtxWorld");
+	hView = effect->GetParameterByName(0, "mtxView");
+	hProjection = effect->GetParameterByName(0, "mtxProj");
+	hMtxScreenProj = effect->GetParameterByName(0, "mtxScreenProj");
+	hTexUV = effect->GetParameterByName(0, "texUV");
+	hDiffuse = effect->GetParameterByName(0, "diffuse");
+}
+
+/**************************************
 デストラクタ
 ***************************************/
 SpriteEffect::~SpriteEffect()

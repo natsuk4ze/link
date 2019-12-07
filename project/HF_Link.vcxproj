@@ -270,6 +270,7 @@
     <ClInclude Include="source\Scene\TitleScene.h" />
     <ClInclude Include="source\Score\Score.h" />
     <ClInclude Include="source\Shader\RiverEffect.h" />
+    <ClInclude Include="source\Shader\SpaceGridEffect.h" />
     <ClInclude Include="source\Shader\WhirlPoolEffect.h" />
     <ClInclude Include="source\SubScreen\SubScreen.h" />
     <ClInclude Include="source\Viewer\Framework\BaseViewer.h" />
@@ -552,6 +553,7 @@
     <ClCompile Include="source\Scene\TitleScene.cpp" />
     <ClCompile Include="source\Score\Score.cpp" />
     <ClCompile Include="source\Shader\RiverEffect.cpp" />
+    <ClCompile Include="source\Shader\SpaceGridEffect.cpp" />
     <ClCompile Include="source\Shader\WhirlPoolEffect.cpp" />
     <ClCompile Include="source\SubScreen\SubScreen.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerAnimater\ViewerAnimater.cpp" />
@@ -600,6 +602,12 @@
   <ItemGroup>
     <None Include="imgui.ini" />
     <FxCompile Include="Shaders\MophingMesh.fx">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">2.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">2.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="source\Shader\SpaceGridRenderer.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">2.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Effect</ShaderType>

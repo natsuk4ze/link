@@ -8,13 +8,21 @@
 #include "SpaceGrid.h"
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../../../Framework/Renderer3D/BoardPolygon.h"
+#include "../../Shader/SpaceGridEffect.h"
+#include "../../../Framework/Math/Easing.h"
+
+/**************************************
+staticメンバ
+***************************************/
+const int SpaceGrid::PeriodFade = 150;
 
 /**************************************
 コンストラクタ
 ***************************************/
 SpaceGrid::SpaceGrid()
 {
-	polygon = new BoardPolygon();
+	effect = new SpaceGridEffect();
+	polygon = new BoardPolygon(effect);
 	ResourceManager::Instance()->GetPolygon("SpaceGrid", polygon);
 
 	polygon->SetTexDiv({ 0.02f, 0.02f });
@@ -30,13 +38,18 @@ SpaceGrid::SpaceGrid()
 SpaceGrid::~SpaceGrid()
 {
 	SAFE_DELETE(polygon);
+
+	//effectはBoardPolygon側が削除するので何もしない
 }
 
+/**************************************
+更新処理
+***************************************/
 void SpaceGrid::Update()
 {
-	cntFrame = Math::WrapAround(0, 90, ++cntFrame);
-	float alpha = cntFrame / 90.0f * 1.0f;
-	polygon->SetDiffuse(D3DXCOLOR(1.0f, 1.0f, 1.0f, alpha));
+	cntFrame = Math::WrapAround(0, PeriodFade, ++cntFrame);
+	float t = Easing::EaseValue((float)cntFrame / PeriodFade, 0.0f, 1.0f, EaseType::Linear);
+	effect->SetTime(t);
 }
 
 /**************************************
@@ -44,6 +57,5 @@ void SpaceGrid::Update()
 ***************************************/
 void SpaceGrid::Draw()
 {
-
 	polygon->Draw(transform->GetMatrix());
 }

@@ -77,6 +77,7 @@ namespace Field::Actor
 	***************************************/
 	void SpaceBackGroundContainer::Update()
 	{
+		grid->Update();
 	}
 
 	/**************************************

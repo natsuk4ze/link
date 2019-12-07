@@ -19,6 +19,7 @@
     <FxCompile Include="Shaders\Sprite.fx" />
     <FxCompile Include="Shaders\StrongBlurFilter.fx" />
     <FxCompile Include="source\Shader\RiverRenderer.fx" />
+    <FxCompile Include="source\Shader\SpaceGridRenderer.fx" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Animation\AnimationManager.cpp" />
@@ -297,6 +298,7 @@
     <ClCompile Include="source\Effect\Game\General\GaugeDebris.cpp" />
     <ClCompile Include="Framework\Renderer3D\MeshField.cpp" />
     <ClCompile Include="source\Field\Object\SpaceGrid.cpp" />
+    <ClCompile Include="source\Shader\SpaceGridEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -598,6 +600,7 @@
     <ClInclude Include="source\Effect\Game\General\GaugeDebris.h" />
     <ClInclude Include="Framework\Renderer3D\MeshField.h" />
     <ClInclude Include="source\Field\Object\SpaceGrid.h" />
+    <ClInclude Include="source\Shader\SpaceGridEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

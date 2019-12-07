@@ -26,6 +26,17 @@ BoardPolygon::BoardPolygon() :
 }
 
 /**************************************
+コンストラクタ
+***************************************/
+BoardPolygon::BoardPolygon(SpriteEffect * effect) :
+	vtxBuff(nullptr),
+	texture(nullptr),
+	effect(effect)
+{
+	pDevice = GetDevice();
+}
+
+/**************************************
 デストラクタ
 ***************************************/
 BoardPolygon::~BoardPolygon()

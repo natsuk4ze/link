@@ -14,6 +14,7 @@
 前方宣言
 ***************************************/
 class BoardPolygon;
+class SpaceGridEffect;
 
 /**************************************
 クラス定義
@@ -27,9 +28,11 @@ public:
 	void Update();
 	void Draw();
 
+	const static int PeriodFade;
+
 private:
 	BoardPolygon * polygon;
-
+	SpaceGridEffect *effect;
 	int cntFrame;
 };
 #endif
