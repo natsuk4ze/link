@@ -78,6 +78,10 @@ namespace Field::Actor
 	void SpaceBackGroundContainer::Update()
 	{
 		grid->Update();
+
+		D3DXVECTOR3 rotation = skybox->GetRotation();
+		rotation += Vector3::One * 0.05f;
+		skybox->SetRotatition(rotation);
 	}
 
 	/**************************************
