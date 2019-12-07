@@ -30,8 +30,6 @@ public:
 private:
 	BaseViewerDrawer * bg;
 	TextViewer *text;
-
-	void FadeText();
-	float alpha = 1.0f;
+	TextViewer *underBar;
 };
 #endif

@@ -16,17 +16,13 @@ NameEntryReelViewer::NameEntryReelViewer():
 	character()
 {
 	//ƒŠ[ƒ‹‚ÌÀ•WŠÔŠu
-	const float intervalReelPos = 130.0f;
+	const float intervalReelPos = 165.0f;
 
 	//ƒŠ[ƒ‹
 	for (int i = 0; i < entryNameMax; i++)
 	{
-		reel[i] = new BaseViewerDrawer();
-		reel[i]->LoadTexture("data/TEXTURE/Viewer/NameEntryViewer/NameEntryReelViewer/Character.png");
-		reel[i]->size = D3DXVECTOR3(180.0f, 180.0f, 0.0f);
-		reel[i]->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		reel[i]->position = D3DXVECTOR3(SCREEN_WIDTH/10*7.0f + i* intervalReelPos, SCREEN_HEIGHT/10*8.0f, 0.0f);
-		reel[i]->MakeVertex();
+		reel[i] = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 6.6250f + i * intervalReelPos, SCREEN_HEIGHT / 1.520f),
+			D3DXVECTOR2(180.0f, 180.0f), "data/TEXTURE/Viewer/NameEntryViewer/NameEntryReelViewer/Character.png");
 		reel[i]->SetTexture(6, 6, 0);
 	}
 }
