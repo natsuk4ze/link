@@ -285,7 +285,6 @@
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryReelViewer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntyCursorViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\ResultViewer\ResultScoreViewer.cpp" />
     <ClCompile Include="source\Viewer\NameViewer\NameViewer.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\SelectCamera.cpp" />
@@ -298,6 +297,7 @@
     <ClCompile Include="source\Viewer\GameScene\GameViewer\GradeNameViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\GradeFrameViewer.cpp" />
     <ClCompile Include="source\Effect\Game\General\GaugeDebris.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -570,7 +570,6 @@
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h" />
     <ClInclude Include="source\Viewer\GameScene\Controller\EventViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryCursorViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.h" />
     <ClInclude Include="source\Viewer\GameScene\ParameterContainer\EventViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.h" />
@@ -600,6 +599,7 @@
     <ClInclude Include="source\Viewer\GameScene\GameViewer\GradeNameViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\GradeFrameViewer.h" />
     <ClInclude Include="source\Effect\Game\General\GaugeDebris.h" />
+    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

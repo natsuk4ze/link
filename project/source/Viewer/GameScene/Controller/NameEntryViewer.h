@@ -14,7 +14,7 @@
 //*****************************************************************************
 class NameEntryInput;
 class NameEntryReelViewer;
-class NameEntryCursorViewer;
+class NameEntryBgViewer;
 class BaseViewer;
 
 //*****************************************************************************
@@ -39,7 +39,7 @@ private:
 	std::vector <BaseViewer*> nameEntryViewer;
 	NameEntryInput *input;
 	NameEntryReelViewer *reelViewer;
-	NameEntryCursorViewer *cursorViewer;
+	NameEntryBgViewer *bgViewer;
 
 	//ƒJ[ƒ\ƒ‹ˆÚ“®ˆ—
 	void MoveCursor(void);

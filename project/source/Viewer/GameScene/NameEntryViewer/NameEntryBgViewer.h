@@ -1,11 +1,11 @@
 //=============================================================================
 //
-// 名前入力カーソルビュアー処理 [NameEntryCursorViewer.h]
+// 名前入力背景処理 [NameEntryBgViewer.h]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#ifndef _NAME_ENTRY_CURSOR_VIEWER_H_
-#define _NAME_ENTRY_CURSOR_VIEWER_H_
+#ifndef _NAME_ENTRY_BG_VIEWER_H_
+#define _NAME_ENTRY_BG_VIEWER_H_
 
 #include "../../Framework/BaseViewer.h"
 
@@ -17,24 +17,22 @@ class BaseViewerDrawer;
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class NameEntryCursorViewer :public BaseViewer
+class NameEntryBgViewer :public BaseViewer
 {
 public:
-	NameEntryCursorViewer();
-	~NameEntryCursorViewer();
+	NameEntryBgViewer();
+	~NameEntryBgViewer();
 
 	void Update();
-	void Draw();
-
-	//カーソルを右に移動
-	void MoveCursorRight();
-
-	//カーソルを左に移動
-	void MoveCursorLeft();
+	void Draw(void);
 
 private:
 
-	//カーソル
-	BaseViewerDrawer * cursor;
+	//登録できる名前の最大数
+	static const int entryNameMax = 3;
+
+	//コングラチュレーション
+	BaseViewerDrawer * congratsText;
 };
+
 #endif
