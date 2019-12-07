@@ -55,8 +55,6 @@ private:
 	//é~Ç‹Ç¡ÇΩç¿ïW
 	D3DXVECTOR2 bgStopPos[telopMax];
 	D3DXVECTOR2 fieldTextStopPos[telopMax];
-	D3DXVECTOR2 rewardTextStopPos[telopMax];
-	D3DXVECTOR2 scoreTextStopPos[telopMax];
 
 	void GetStopPos();
 	void SetText();
