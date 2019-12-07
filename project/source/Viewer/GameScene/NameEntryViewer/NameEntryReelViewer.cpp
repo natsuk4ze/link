@@ -29,7 +29,7 @@ NameEntryReelViewer::NameEntryReelViewer():
 		reel[i]->LoadTexture("data/TEXTURE/Viewer/NameEntryViewer/NameEntryReelViewer/Character.png");
 		reel[i]->size = D3DXVECTOR3(180.0f, 180.0f, 0.0f);
 		reel[i]->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		reel[i]->position = D3DXVECTOR3(SCREEN_CENTER_X + i* intervalReelPos, SCREEN_CENTER_Y, 0.0f);
+		reel[i]->position = D3DXVECTOR3(SCREEN_WIDTH/10*7.0f + i* intervalReelPos, SCREEN_HEIGHT/10*8.0f, 0.0f);
 		reel[i]->MakeVertex();
 		reel[i]->SetTexture(6, 6, 0);
 	}

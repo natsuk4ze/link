@@ -8,6 +8,7 @@
 #define _BASE_VIEWER_DRAWER_H_
 
 #include"../../../../main.h"
+#include <string>
 
 //*****************************************************************************
 // É}ÉNÉçíËã`
@@ -30,9 +31,6 @@
 class BaseViewerDrawer
 {
 public:
-	BaseViewerDrawer();
-	virtual ~BaseViewerDrawer();
-
 	LPDIRECT3DTEXTURE9 texture;
 	VERTEX_2D vertexWk[NUM_VERTEX];
 	D3DXVECTOR3	position;
@@ -48,8 +46,14 @@ public:
 	virtual void SetVertexPos();
 	virtual void SetTexture(int divX, int divY, int pattern);
 
+	void SetPosition(const D3DXVECTOR3 pos);
+
 	D3DXVECTOR3 GetPosition(void);
 	D3DXCOLOR GetColor(void);
+
+	BaseViewerDrawer(D3DXVECTOR2 position, D3DXVECTOR2 size, const char* path);
+	BaseViewerDrawer();
+	virtual ~BaseViewerDrawer();
 };
 
 #endif

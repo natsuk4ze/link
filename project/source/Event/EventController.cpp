@@ -400,7 +400,7 @@ bool EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 				// CSVデータから発生したイベントの資料を削除
 				EventPlace = EventCSVData.erase(EventPlace);
 
-				//イベントインフォのエミッタを停止
+				//イベントインフォのエミッタを停止z
 				infoEmitterContainer[PlacePos]->SetActive(false);
 				infoEmitterContainer.erase(PlacePos);
 			}

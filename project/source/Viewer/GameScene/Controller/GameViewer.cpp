@@ -14,11 +14,6 @@
 #include "../ParameterContainer/GameViewerParam.h"
 #include "GameViewer.h"
 
-#ifdef _DEBUG
-#include "../../../../Framework/Input/input.h"
-#include "../../../../Framework/Tool/DebugWindow.h"
-#endif
-
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************

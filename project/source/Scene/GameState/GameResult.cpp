@@ -11,7 +11,7 @@
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../Field/Camera/FieldCamera.h"
 #include "../../Viewer/GameScene/Controller/ResultViewer.h"
-#include "../../Viewer/GameScene/Controller/NameEntryViewer.h"//GameNameEntryのStateが出来たら移動(おーはま)
+#include "../../Viewer/GameScene/Controller/NameEntryViewer.h"
 #include "../../../Framework/Input/input.h"
 #include "../../../Framework/Transition/TransitionController.h"
 #include "../../../Framework/Network/UDPClient.h"
@@ -31,7 +31,7 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 
 	// リザルト画面で使用するUIの描画をON
 	entity.resultViewer->SetActive(true);
-	entity.nemeEntryViewer->SetActive(true);//GameNameEntryのStateが出来たら移動(おーはま)
+	entity.nemeEntryViewer->SetActive(true);
 
 	// 使用しないUIの描画をOFF
 	entity.field->SetViewerActive(false);
