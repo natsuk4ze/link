@@ -15,6 +15,7 @@
 class NameEntryInput;
 class NameEntryReelViewer;
 class NameEntryBgViewer;
+class NameEntryInfoViewer;
 class BaseViewer;
 
 //*****************************************************************************
@@ -40,6 +41,7 @@ private:
 	NameEntryInput *input;
 	NameEntryReelViewer *reelViewer;
 	NameEntryBgViewer *bgViewer;
+	NameEntryInfoViewer *infoViewer;
 
 	//ƒJ[ƒ\ƒ‹ˆÚ“®ˆ—
 	void MoveCursor(void);

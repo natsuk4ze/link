@@ -4,14 +4,10 @@
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
-#include "../../../../main.h"
-#include "../../../../Framework/Input/input.h"
-#include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "NameEntryReelViewer.h"
 
-#ifdef _DEBUG
-#include "../../../../Framework/Tool/DebugWindow.h"
-#endif
+#include "../../../../main.h"
+#include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 
 //*****************************************************************************
 // コンストラクタ

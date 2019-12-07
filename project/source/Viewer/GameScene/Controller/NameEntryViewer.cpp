@@ -8,6 +8,7 @@
 #include "../NameEntryViewer/NameEntryReelViewer.h"
 #include "../NameEntryViewer/NameEntryInput.h"
 #include "../NameEntryViewer/NameEntryBgViewer.h"
+#include "../NameEntryViewer/NameEntryInfoViewer.h"
 #include "NameEntryViewer.h"
 
 #ifdef _DEBUG
@@ -25,6 +26,7 @@ NameEntryViewer::NameEntryViewer():
 	input = new NameEntryInput();
 
 	nameEntryViewer.push_back(bgViewer = new NameEntryBgViewer());
+	nameEntryViewer.push_back(infoViewer = new NameEntryInfoViewer());
 	nameEntryViewer.push_back(reelViewer = new NameEntryReelViewer());
 }
 
