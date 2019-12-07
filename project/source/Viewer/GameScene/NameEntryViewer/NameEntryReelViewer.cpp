@@ -16,7 +16,7 @@ NameEntryReelViewer::NameEntryReelViewer():
 	character()
 {
 	//ƒŠ[ƒ‹‚ÌÀ•WŠÔŠu
-	const float intervalReelPos = 165.0f;
+	const float intervalReelPos = 166.50f;
 
 	//ƒŠ[ƒ‹
 	for (int i = 0; i < entryNameMax; i++)

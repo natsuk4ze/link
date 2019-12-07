@@ -26,32 +26,27 @@ LevelViewer::LevelViewer()
 	isPlaying = true;
 
 	//”Žš
-	num = new CountViewerDrawer();
-	num->LoadTexture("data/TEXTURE/Viewer/GameViewer/LevelViewer/Number.png");
-	num->size = initNumSize;
-	num->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	num->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 9.80f, SCREEN_HEIGHT / 10 * 1.30f, 0.0f);
-	num->intervalPosScr = 65.0f;
-	num->intervalPosTex = 0.1f;
-	num->placeMax = 4;
-	num->baseNumber = 10;
-	num->MakeVertex();
+	num = new CountViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.80f, SCREEN_HEIGHT / 10 * 1.30f),D3DXVECTOR2(initNumSize.x, initNumSize.y), 
+		"data/TEXTURE/Viewer/GameViewer/LevelViewer/Number.png", 65.0f, 0.1f, 4);
 
 	//”wŒi
-	bg = new BaseViewerDrawer();
-	bg->LoadTexture("data/TEXTURE/Viewer/GameViewer/LevelViewer/BG.png");
-	bg->size = D3DXVECTOR3(250.0f, 250.0f, 0.0f);
-	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	bg->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 9.30f, SCREEN_HEIGHT / 10 * 1.2f, 0.0f);
-	bg->MakeVertex();
+	bg = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.30f, SCREEN_HEIGHT / 10 * 1.20f),
+		D3DXVECTOR2(250.0f, 250.0f), "data/TEXTURE/Viewer/GameViewer/LevelViewer/BG.png");
+
+	//ˆÊ‚ÌŠ¿”Žš
+	place = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.90f, SCREEN_HEIGHT / 10 * 1.20f),
+		D3DXVECTOR2(100.0f, 100.0f), "data/TEXTURE/Viewer/GameViewer/LevelViewer/PlaceText.png");
+	place->SetTexture(2, 2, 0);
 
 	//‰~ƒQ[ƒW
-	circleGuage = new CircleGauge(D3DXVECTOR2(250.0f, 250.0f));
-	circleGuage->LoadTexture("data/TEXTURE/Viewer/GameViewer/LevelViewer/CircleGuage.png");
-	circleGuage->SetScale(D3DXVECTOR3(1.0f, 1.0f, 0.0f));
-	circleGuage->SetRotation(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	circleGuage->SetPosition(D3DXVECTOR3(SCREEN_WIDTH / 10 * 9.30f, SCREEN_HEIGHT / 10 * 1.2f, 0.0f));
-	circleGuage->SetFillStart(circleGuage->Top);
+	for (int i = 0; i < guageMax; i++)
+	{
+		circleGuage[i] = new CircleGauge(D3DXVECTOR2(250.0f, 250.0f));
+		circleGuage[i]->LoadTexture("data/TEXTURE/Viewer/GameViewer/LevelViewer/CircleGuage.png");
+		circleGuage[i]->SetScale(D3DXVECTOR3(1.0f, 1.0f, 0.0f));
+		circleGuage[i]->SetPosition(D3DXVECTOR3(SCREEN_WIDTH / 10 * 9.30f, SCREEN_HEIGHT / 10 * 1.2f, 0.0f));
+		circleGuage[i]->SetFillStart(circleGuage[i]->Top);
+	}
 }
 
 //*****************************************************************************
@@ -61,7 +56,11 @@ LevelViewer::~LevelViewer()
 {
 	SAFE_DELETE(num);
 	SAFE_DELETE(bg);
-	SAFE_DELETE(circleGuage);
+	SAFE_DELETE(place);
+	for (int i = 0; i < guageMax; i++)
+	{
+		SAFE_DELETE(circleGuage[i]);
+	}
 }
 
 //=============================================================================
@@ -93,13 +92,16 @@ void LevelViewer::Draw(void)
 	//”wŒi‚ðæ‚É•`‰æ
 	bg->Draw();
 
-	//‰~ƒQ[ƒW
-	circleGuage->SetPercent(drawingRatioLevel);
-	circleGuage->Draw();
+	for (int i = 0; i < guageMax; i++)
+	{
+		circleGuage[i]->SetPercent(drawingRatioLevel);
+		circleGuage[i]->Draw();
+	}
 
-	//”‰F
 	num->DrawCounter(num->baseNumber, (int)parameterBox[LevelAI], num->placeMax,
 		num->intervalPosScr, num->intervalPosTex);
+
+	//place->Draw();
 }
 
 //=============================================================================

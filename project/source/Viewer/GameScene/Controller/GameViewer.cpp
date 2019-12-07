@@ -111,6 +111,7 @@ void GameViewer::ReceiveParam(GameViewerParam &param)
 	//AIレベルビュアー
 	levelViewer->parameterBox[levelViewer->LevelAI] = (float)param.levelAI;
 	levelViewer->parameterBox[levelViewer->RatioLevel] = param.ratioLevel;
+	levelViewer->parameterBox[levelViewer->CurrentFieldLevel] = (float)param.currentFieldLevel;
 }
 
 //=============================================================================

@@ -357,6 +357,7 @@ namespace Field
 
 		param.levelAI = (int)realDevelopmentLevelAI;
 		param.ratioLevel = (float)realDevelopmentLevelAI / MaxDevelopmentLevelAI;
+		param.currentFieldLevel = currentLevel;
 
 		developper->EmbedViewerParam(param);
 	}

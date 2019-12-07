@@ -35,6 +35,7 @@ public:
 	{
 		LevelAI,
 		RatioLevel,
+		CurrentFieldLevel,
 		Max
 	};
 
@@ -43,14 +44,14 @@ public:
 
 private:
 
-	//‰~ƒQ[ƒW
-	CircleGauge *circleGuage;
+	const static int guageMax = 3;
 
-	//”š
+	CircleGauge *circleGuage[guageMax];
 	CountViewerDrawer *num;
-
-	//”wŒi
 	BaseViewerDrawer *bg;
+	BaseViewerDrawer *place;
+
+	int currentScene;
 
 	//”šƒzƒbƒsƒ“ƒOˆ—
 	void HopNumber(void);
