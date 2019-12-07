@@ -189,6 +189,12 @@ namespace Field::Actor
 		loader.LoadConfig();
 		loader.LoadResource();
 
+		//グリッド用の板ポリゴンを作成
+		ResourceManager::Instance()->MakePolygon("SpaceGrid",
+			"data/TEXTURE/Field/spaceGrid.png",
+			{ 250.0f, 250.0f },
+			{ 0.02f, 0.02f });
+
 		PassengerController::LoadResource();
 	}
 
