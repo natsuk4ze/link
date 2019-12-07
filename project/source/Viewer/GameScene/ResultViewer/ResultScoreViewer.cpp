@@ -133,7 +133,7 @@ void ResultScoreViewer::Update(void)
 			//一旦即テロップアウトに移行
 			anim[AnimLayer::TelopIn]->SetPlayFinished(isInPlaying, [=]
 			{
-				SetTelopOut();
+				//SetTelopOut();
 			});
 		});
 	}
@@ -196,7 +196,7 @@ void ResultScoreViewer::SetText()
 //=============================================================================
 void ResultScoreViewer::InCityTelop()
 {
-	const float telopPosX = SCREEN_WIDTH / 10.0f;
+	const float telopPosX = SCREEN_WIDTH / 15.0f;
 	const float initPosX = -(telopPosX + SCREEN_WIDTH);
 	const int index = 1;
 
@@ -223,7 +223,7 @@ void ResultScoreViewer::InCityTelop()
 //=============================================================================
 void ResultScoreViewer::InWorldTelop()
 {
-	const float telopPosX = SCREEN_WIDTH / 10.0f*1.50f;
+	const float telopPosX = SCREEN_WIDTH / 15.0f*2.0f;
 	const float initPosX = -(telopPosX + SCREEN_WIDTH);
 	const int index = 2;
 
@@ -251,7 +251,7 @@ void ResultScoreViewer::InWorldTelop()
 //=============================================================================
 void ResultScoreViewer::InSpaceTelop()
 {
-	const float telopPosX = SCREEN_WIDTH / 10.0f*2.0f;
+	const float telopPosX = SCREEN_WIDTH / 15.0f*3.0f;
 	const float initPosX = -(telopPosX + SCREEN_WIDTH);
 	const int index = 3;
 
@@ -278,13 +278,13 @@ void ResultScoreViewer::InSpaceTelop()
 //=============================================================================
 void ResultScoreViewer::InResultTelop()
 {
-	const float telopPosX = SCREEN_WIDTH / 10.0f*2.50f;	
+	const float telopPosX = SCREEN_WIDTH / 15.0f*4.0f;	
 	const float initPosX = -(telopPosX + SCREEN_WIDTH);
 	const int index = 0;
 
 	anim[AnimLayer::TelopIn]->Move(*bg[index], D3DXVECTOR2(initPosX, bg[index]->position.y), D3DXVECTOR2(telopPosX, bg[index]->position.y), 30.0f, OutCirc, [=]
 	{
-		anim[AnimLayer::TelopIn]->SubMove(*fieldText[index], D3DXVECTOR2(initPosX, fieldText[index]->position.y), D3DXVECTOR2(telopPosX - fieldTelopGapPos*1.5f, fieldText[index]->position.y), OutCirc, [=]
+		anim[AnimLayer::TelopIn]->SubMove(*fieldText[index], D3DXVECTOR2(initPosX, fieldText[index]->position.y), D3DXVECTOR2(telopPosX - fieldTelopGapPos*1.60f, fieldText[index]->position.y), OutCirc, [=]
 		{
 			anim[AnimLayer::TelopIn]->SubFadeText(*scoreText[index], 0.0f, 1.0f, 0.3f, OutCirc, [=]
 			{
@@ -296,8 +296,8 @@ void ResultScoreViewer::InResultTelop()
 		});
 	});
 
-	scoreText[index]->SetPos((int)(bg[index]->position.x + scoreTextGapPos.x-350.0f), (int)(bg[index]->position.y + scoreTextGapPos.y));
-	rewardText[index]->SetPos((int)(bg[index]->position.x + rewardTextGapPos.x-370.0f), (int)(bg[index]->position.y + rewardTextGapPos.y));
+	scoreText[index]->SetPos((int)(bg[index]->position.x + scoreTextGapPos.x-300.0f), (int)(bg[index]->position.y + scoreTextGapPos.y));
+	rewardText[index]->SetPos((int)(bg[index]->position.x + rewardTextGapPos.x-480.0f), (int)(bg[index]->position.y + rewardTextGapPos.y));
 }
 
 //=============================================================================

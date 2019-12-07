@@ -6,8 +6,9 @@
 //=============================================================================
 #include "../../../../main.h"
 #include "../NameEntryViewer/NameEntryReelViewer.h"
-#include "../NameEntryViewer/NameEntryCursorViewer.h"
 #include "../NameEntryViewer/NameEntryInput.h"
+#include "../NameEntryViewer/NameEntryBgViewer.h"
+#include "../NameEntryViewer/NameEntryInfoViewer.h"
 #include "NameEntryViewer.h"
 
 #ifdef _DEBUG
@@ -24,8 +25,9 @@ NameEntryViewer::NameEntryViewer():
 {
 	input = new NameEntryInput();
 
+	nameEntryViewer.push_back(bgViewer = new NameEntryBgViewer());
+	nameEntryViewer.push_back(infoViewer = new NameEntryInfoViewer());
 	nameEntryViewer.push_back(reelViewer = new NameEntryReelViewer());
-	nameEntryViewer.push_back(cursorViewer = new NameEntryCursorViewer());
 }
 
 //*****************************************************************************
@@ -124,7 +126,6 @@ void NameEntryViewer::MoveCursor()
 	if (input->GetCursorRight())
 	{
 		if (reelCnt >= entryNameMax - 1) return;
-		cursorViewer->MoveCursorRight();
 		reelCnt++;
 	}
 
@@ -132,7 +133,6 @@ void NameEntryViewer::MoveCursor()
 	if (input->GetCursorLeft())
 	{
 		if (reelCnt <= 0) return;
-		cursorViewer->MoveCursorLeft();
 		reelCnt--;
 	}
 }
@@ -163,7 +163,7 @@ void NameEntryViewer::SetActive(bool flag)
 }
 
 //=============================================================================
-// 登録名ID取得処理
+// 登録名ID取得処理（文字テーブルの0～35までの値がentryNameMax個の配列）
 //=============================================================================
 int* NameEntryViewer::GetEntryNameID()
 {
