@@ -23,12 +23,17 @@
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../Viewer/GameScene/Controller/ResultViewer.h"
 #include "../../Viewer/GameScene/Controller/NameEntryViewer.h"
+#include "../../../Framework/Renderer2D/TextViewer.h"
 
 /**************************************
 入場処理
 ***************************************/
 void GameScene::GameInit::OnStart(GameScene & entity)
 {	
+	//テキストビューアで使用するフォントをロード
+	TextViewer::LoadFont("data/FONT/Makinas-4-Square.otf");
+	TextViewer::LoadFont("data/FONT/Text_cinecaption226.ttf");
+	
 	// イベント用モデル
 	ResourceManager::Instance()->LoadMesh("Meteor", "data/MODEL/Planet/Meteor.x");
 	ResourceManager::Instance()->LoadMesh("UFO", "data/MODEL/UFO/UFO.x");

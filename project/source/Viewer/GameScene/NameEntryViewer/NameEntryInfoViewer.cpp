@@ -18,11 +18,11 @@ NameEntryInfoViewer::NameEntryInfoViewer()
 	bg = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 7.50f, SCREEN_HEIGHT / 1.250f), D3DXVECTOR2(600.0f, 512.0f/4),
 		"data/TEXTURE/Viewer/NameEntryViewer/NameEntryInfoViewer/BG.png");
 
-	text = new TextViewer("data/FONT/Makinas-4-Square.otf", 50);
+	text = new TextViewer("マキナス 4 Square", 50);
 	text->SetPos((int)(SCREEN_WIDTH / 10 * 7.50f), (int)(SCREEN_HEIGHT / 1.250f));
 	text->SetText("名前を入力してね");
 
-	underBar = new TextViewer("data/FONT/Makinas-4-Square.otf", 100);
+	underBar = new TextViewer("マキナス 4 Square", 100);
 	underBar->SetPos((int)(SCREEN_WIDTH / 10 * 7.50f), (int)(SCREEN_HEIGHT / 1.5f));
 	underBar->SetText("＿　＿　＿");
 }

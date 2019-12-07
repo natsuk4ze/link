@@ -23,7 +23,7 @@ class TextViewer
 {
 public:
 	//コンストラクタ
-	//fontName : 使用するフォントの名前
+	//fontName : 使用するフォントの名前 ※フォントファイルへのパスではないので注意
 	//size : 表示フォントサイズ
 	TextViewer(const char* fontName, int size);
 
