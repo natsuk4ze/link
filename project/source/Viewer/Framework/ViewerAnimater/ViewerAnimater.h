@@ -15,6 +15,7 @@
 // 前方宣言
 //*****************************************************************************
 class BaseViewerDrawer;
+class TextViewer;
 
 //*****************************************************************************
 // クラス定義
@@ -54,13 +55,15 @@ public:
 	//*****************************************************************************
 
 	//移動処理
-	void SubMove(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, EaseType type);
+	void SubMove(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, EaseType type, std::function<void()> Callback = nullptr);
 	//スケール処理
-	void SubScale(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, EaseType type);
+	void SubScale(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& end, EaseType type, std::function<void()> Callback = nullptr);
 	//フェード処理
-	void SubFade(BaseViewerDrawer& viewer, const float& start, const float& end, const float maltiValue,EaseType type);
+	void SubFade(BaseViewerDrawer& viewer, const float& start, const float& end, const float maltiValue,EaseType type, std::function<void()> Callback = nullptr);
+	//テキストフェード処理
+	void SubFadeText(TextViewer &text, const float& start, const float& end, const float maltiValue, EaseType type, std::function<void()> Callback = nullptr);
 	//ホッピング処理
-	void SubHop(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& value, float duration);
+	void SubHop(BaseViewerDrawer& viewer, const D3DXVECTOR2& start, const D3DXVECTOR2& value, float duration, std::function<void()> Callback = nullptr);
 
 	//アニメーションの動作を設定
 	void SetAnimBehavior(std::vector <std::function<void()>> animArray);

@@ -7,6 +7,7 @@
 #include "../../../../main.h"
 #include "../../../../Framework/Math/Easing.h"
 #include "../ViewerDrawer/BaseViewerDrawer.h"
+#include "../../../../Framework/Renderer2D/TextViewer.h"
 #include "ViewerAnimater.h"
 
 //=============================================================================
@@ -195,8 +196,10 @@ void ViewerAnimater::Wait(float duration, std::function<void()> Callback)
 //	移動処理（サブ）
 //=============================================================================
 void ViewerAnimater::SubMove(BaseViewerDrawer& viewer, const D3DXVECTOR2& start,
-	const D3DXVECTOR2& end, EaseType type)
+	const D3DXVECTOR2& end, EaseType type, std::function<void()> Callback)
 {
+	if (Callback) Callback();
+
 	viewer.position.x = Easing::EaseValue(animTime, start.x, end.x, type);
 	viewer.position.y = Easing::EaseValue(animTime, start.y, end.y, type);
 }
@@ -205,8 +208,10 @@ void ViewerAnimater::SubMove(BaseViewerDrawer& viewer, const D3DXVECTOR2& start,
 // スケール処理（サブ）
 //=============================================================================
 void ViewerAnimater::SubScale(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start,
-	const D3DXVECTOR2 & end, EaseType type)
+	const D3DXVECTOR2 & end, EaseType type, std::function<void()> Callback)
 {
+	if (Callback) Callback();
+
 	viewer.size.x = Easing::EaseValue(animTime, start.x, end.x, type);
 	viewer.size.y = Easing::EaseValue(animTime, start.y, end.y, type);
 }
@@ -215,17 +220,33 @@ void ViewerAnimater::SubScale(BaseViewerDrawer & viewer, const D3DXVECTOR2 & sta
 // フェード処理（サブ）
 //=============================================================================
 void ViewerAnimater::SubFade(BaseViewerDrawer & viewer, const float & start, const float & end, 
-	const float maltiValue, EaseType type)
+	const float maltiValue, EaseType type, std::function<void()> Callback)
 {
+	if (Callback) Callback();
+
 	float alpha = Easing::EaseValue(animTime*maltiValue, start, end, type);
 	viewer.SetAlpha(alpha);
 }
 
 //=============================================================================
+// テキストフェード処理（サブ）
+//=============================================================================
+void ViewerAnimater::SubFadeText(TextViewer &text, const float & start, const float & end, const float maltiValue, EaseType type, std::function<void()> Callback)
+{
+	if (Callback) Callback();
+
+	float alpha = Easing::EaseValue(animTime*maltiValue, start, end, type);
+	text.SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f,alpha));
+}
+
+//=============================================================================
 // ホッピング処理（サブ）
 //=============================================================================
-void ViewerAnimater::SubHop(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start, const D3DXVECTOR2 & value, float duration)
+void ViewerAnimater::SubHop(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start, 
+	const D3DXVECTOR2 & value, float duration, std::function<void()> Callback)
 {
+	if (Callback) Callback();
+
 	if (frameCnt <= duration / 2)
 		viewer.size.y = Easing::EaseValue(animTime * 2, start.y, start.y + value.y, OutCubic);
 	else

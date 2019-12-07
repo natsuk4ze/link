@@ -34,7 +34,7 @@ BaseViewerDrawer::BaseViewerDrawer()
 //=============================================================================
 BaseViewerDrawer::~BaseViewerDrawer()
 {
-	SAFE_DELETE(texture);
+	SAFE_RELEASE(texture);
 }	
 
 //=============================================================================
@@ -43,6 +43,12 @@ BaseViewerDrawer::~BaseViewerDrawer()
 void BaseViewerDrawer::LoadTexture(const char *path)
 {
 	ResourceManager::Instance()->GetTexture(path,texture);
+
+	//LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+	//D3DXCreateTextureFromFile(pDevice,
+	//	path,							
+	//	&texture);
 }
 
 //=============================================================================

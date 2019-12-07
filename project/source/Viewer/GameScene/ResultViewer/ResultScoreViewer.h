@@ -13,7 +13,8 @@
 // 前方宣言
 //*****************************************************************************
 class BaseViewerDrawer;
-class CountViewerDrawer;
+class ViewerAnimater;
+class TextViewer;
 
 //*****************************************************************************
 // クラス定義
@@ -22,22 +23,22 @@ class ResultScoreViewer :public BaseViewer
 {
 private:
 	const static int telopMax = 4;
-	const static int scoreTelopMax = 3;
-	const static int totalScorePlaceTextMax = 3;
 
-	CountViewerDrawer *totalScoreNum[telopMax];
-	CountViewerDrawer *rewardNum[telopMax];
 	BaseViewerDrawer *bg[telopMax];
 	BaseViewerDrawer*fieldText[telopMax];
-	BaseViewerDrawer*rewardText[telopMax];
-	CountViewerDrawer *scoreNum[scoreTelopMax];
-	BaseViewerDrawer*scoreText[scoreTelopMax];
+	TextViewer *scoreText[telopMax];
+	TextViewer *rewardText[telopMax];
+	ViewerAnimater*anim;
 
-	BaseViewerDrawer*placeText[scoreTelopMax];
-	BaseViewerDrawer*totalScorePlaceText[totalScorePlaceTextMax];
+	int score[telopMax];
+	int completeRewardNum[telopMax];
 
-	int score[4];
-	int completeRewardNum[4];
+	void SetText();
+
+	void InCityTelop();
+	void InWorldTelop();
+	void InSpaceTelop();
+	void InResultTelop();
 
 public:
 	ResultScoreViewer();
@@ -45,6 +46,8 @@ public:
 
 	void Update(void);
 	void Draw(void);
+
+	void Set();
 
 	//パラメータを受けとる箱
 	int parameterBox[3];
