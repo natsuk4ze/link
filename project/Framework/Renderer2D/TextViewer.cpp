@@ -65,6 +65,14 @@ void TextViewer::SetColor(const D3DXCOLOR & color)
 	this->color = color;
 }
 
+//=============================================================================
+// 座標ゲット処理
+//=============================================================================
+D3DXVECTOR2 TextViewer::GetPosition(void) const
+{
+	return D3DXVECTOR2((float)this->posX, (float)this->posY);
+}
+
 /**************************************
 テキストセット処理
 ***************************************/

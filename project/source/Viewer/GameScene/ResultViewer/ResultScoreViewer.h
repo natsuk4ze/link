@@ -8,6 +8,7 @@
 #define _RESULT_SCORE_VIEWER_H_
 
 #include "../../Framework/BaseViewer.h"
+#include "../../../../main.h"
 
 //*****************************************************************************
 // 前方宣言
@@ -22,23 +23,46 @@ class TextViewer;
 class ResultScoreViewer :public BaseViewer
 {
 private:
+	enum AnimLayer
+	{
+		TelopIn,
+		TelopOut,
+		Max
+	};
 	const static int telopMax = 4;
 
 	BaseViewerDrawer *bg[telopMax];
 	BaseViewerDrawer*fieldText[telopMax];
 	TextViewer *scoreText[telopMax];
 	TextViewer *rewardText[telopMax];
-	ViewerAnimater*anim;
+	ViewerAnimater*anim[Max];
 
 	int score[telopMax];
 	int completeRewardNum[telopMax];
 
-	void SetText();
-
+	//テロップスクリーンイン
 	void InCityTelop();
 	void InWorldTelop();
 	void InSpaceTelop();
 	void InResultTelop();
+
+	//テロップスクリーンアウト
+	void OutCityTelop();
+	void OutWorldTelop();
+	void OutSpaceTelop();
+	void OutResultTelop();
+
+	//止まった座標
+	D3DXVECTOR2 bgStopPos[telopMax];
+	D3DXVECTOR2 fieldTextStopPos[telopMax];
+	D3DXVECTOR2 rewardTextStopPos[telopMax];
+	D3DXVECTOR2 scoreTextStopPos[telopMax];
+
+	void GetStopPos();
+	void SetText();
+
+	bool isInPlaying;
+	bool isOutPlaying;
 
 public:
 	ResultScoreViewer();
@@ -47,7 +71,8 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	void Set();
+	void SetTelopIn();
+	void SetTelopOut();
 
 	//パラメータを受けとる箱
 	int parameterBox[3];

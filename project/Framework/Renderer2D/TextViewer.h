@@ -41,6 +41,9 @@ public:
 
 	//表示テキストセット処理
 	void SetText(const std::string& message);
+
+	//座標ゲット処理
+	D3DXVECTOR2 GetPosition(void) const;
 	
 	//フォント読み込み処理
 	//自前のフォントを使用する場合にフォントを一時的にインストールする
