@@ -27,12 +27,12 @@ public:
 	void Draw(void);
 
 private:
-
-	//登録できる名前の最大数
-	static const int entryNameMax = 3;
-
-	//コングラチュレーション
 	BaseViewerDrawer * congratsText;
-};
+	BaseViewerDrawer * newRecordText;
+	BaseViewerDrawer * crown;
 
+	void AnimTexture(void);
+
+	int currentTexPattern;
+};
 #endif
