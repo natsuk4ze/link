@@ -52,6 +52,11 @@ void ResultViewer::Update()
 	{
 		resultViewer[i]->Update();
 	}
+
+	//if (Keyboard::GetTrigger(DIK_S))
+	//{
+	//	scoreViewer->Set();
+	//}
 }
 
 //=============================================================================

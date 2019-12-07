@@ -293,8 +293,12 @@
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventMessage.h" />
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h" />
     <ClInclude Include="source\Viewer\GameScene\Controller\EventViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GradeFrameViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GradeNameViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GradeUpViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryCursorViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInfoViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.h" />
     <ClInclude Include="source\Viewer\GameScene\ParameterContainer\EventViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.h" />
@@ -580,6 +584,9 @@
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\LinkLevelUpViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\FieldViewer\OperationExplanationViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\Controller\GameViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\GradeFrameViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\GradeNameViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\GradeUpViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\LevelViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\ItemStockViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp" />
@@ -588,9 +595,10 @@
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideCamera.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInfoViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryReelViewer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntyCursorViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\ResultViewer\ResultScoreViewer.cpp" />
     <ClCompile Include="source\Viewer\NameViewer\NameViewer.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\SelectCamera.cpp" />

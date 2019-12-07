@@ -286,7 +286,6 @@
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryReelViewer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntyCursorViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\ResultViewer\ResultScoreViewer.cpp" />
     <ClCompile Include="source\Viewer\NameViewer\NameViewer.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\SelectCamera.cpp" />
@@ -295,10 +294,15 @@
     <ClCompile Include="source\Viewer\TitleScene\TitleLogo.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\TitleViewer.cpp" />
     <ClCompile Include="source\Effect\Game\General\PunchEffect.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\GradeUpViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\GradeNameViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\GradeFrameViewer.cpp" />
     <ClCompile Include="source\Effect\Game\General\GaugeDebris.cpp" />
     <ClCompile Include="Framework\Renderer3D\MeshField.cpp" />
     <ClCompile Include="source\Field\Object\SpaceGrid.cpp" />
     <ClCompile Include="source\Shader\SpaceGridEffect.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInfoViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -571,7 +575,6 @@
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h" />
     <ClInclude Include="source\Viewer\GameScene\Controller\EventViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryCursorViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.h" />
     <ClInclude Include="source\Viewer\GameScene\ParameterContainer\EventViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.h" />
@@ -597,10 +600,15 @@
     <ClInclude Include="source\Viewer\TitleScene\TitleLogo.h" />
     <ClInclude Include="source\Viewer\TitleScene\TitleViewer.h" />
     <ClInclude Include="source\Effect\Game\General\PunchEffect.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GradeUpViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GradeNameViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\GradeFrameViewer.h" />
     <ClInclude Include="source\Effect\Game\General\GaugeDebris.h" />
     <ClInclude Include="Framework\Renderer3D\MeshField.h" />
     <ClInclude Include="source\Field\Object\SpaceGrid.h" />
     <ClInclude Include="source\Shader\SpaceGridEffect.h" />
+    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInfoViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

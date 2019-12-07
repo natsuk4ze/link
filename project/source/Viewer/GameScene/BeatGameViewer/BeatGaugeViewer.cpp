@@ -40,7 +40,7 @@ BeatGaugeViewer::BeatGaugeViewer()
 	std::vector<std::function<void()>> vec = {
 	[=] {
 		//U“®
-		anim->Shake(*frame, D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_HEIGHT / 3 * 2.40f), 5.0f);
+		anim->Shake(*frame, D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_HEIGHT / 3 * 2.40f), 2.0f);
 	} };
 	anim->SetAnimBehavior(vec);
 }

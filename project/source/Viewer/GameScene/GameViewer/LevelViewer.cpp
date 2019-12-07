@@ -23,12 +23,14 @@ static const D3DXVECTOR3 initNumSize = D3DXVECTOR3(140.0f, 140.0f, 0.0f);
 //*****************************************************************************
 LevelViewer::LevelViewer()
 {
+	isPlaying = true;
+
 	//”Žš
 	num = new CountViewerDrawer();
 	num->LoadTexture("data/TEXTURE/Viewer/GameViewer/LevelViewer/Number.png");
 	num->size = initNumSize;
 	num->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	num->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 8.80f, SCREEN_HEIGHT / 10 * 1.30f, 0.0f);
+	num->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 9.80f, SCREEN_HEIGHT / 10 * 1.30f, 0.0f);
 	num->intervalPosScr = 65.0f;
 	num->intervalPosTex = 0.1f;
 	num->placeMax = 4;
@@ -85,6 +87,9 @@ void LevelViewer::Update(void)
 //=============================================================================
 void LevelViewer::Draw(void)
 {
+	if (!isPlaying)
+		return;
+
 	//”wŒi‚ðæ‚É•`‰æ
 	bg->Draw();
 

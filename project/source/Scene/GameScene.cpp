@@ -191,10 +191,13 @@ void GameScene::Update()
 	//ステートを更新
 	State next = fsm[currentState]->OnUpdate(*this);
 
+#ifdef _DEBUG
+	//imguiが使えないのでdebug用に使ってます（おーはま）
 	if (Keyboard::GetTrigger(DIK_R))
 	{
 		ChangeState(State::Result);
 	}
+#endif
 
 	//カメラ更新
 	ProfilerCPU::Instance()->Begin("Update Camera");
@@ -461,6 +464,7 @@ void GameScene::DebugTool()
 		level++;
 		ChangeState(State::TransitionOut);
 	}
+
 
 	Debug::NewLine();
 	Debug::Text("Event");

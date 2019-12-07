@@ -153,7 +153,7 @@ namespace Field
 		{
 			viewer->ViewLinkLevelUp(5);
 		}
-		Debug::SameLine(); 
+		Debug::SameLine();
 		if (Debug::Button("LinkUp 15"))
 		{
 			viewer->ViewLinkLevelUp(15);
@@ -348,6 +348,12 @@ namespace Field
 	{
 		//param.levelAI = (int)developmentLevelAI;
 		//param.ratioLevel = (float)developmentLevelAI / MaxDevelopmentLevelAI;
+#if _DEBUG
+		Debug::Begin("DebugTool");
+		if (Debug::Button("AILevel 9999"))
+			developmentLevelAI = 9999.0f;
+		Debug::End();
+#endif
 
 		param.levelAI = (int)realDevelopmentLevelAI;
 		param.ratioLevel = (float)realDevelopmentLevelAI / MaxDevelopmentLevelAI;
@@ -574,7 +580,7 @@ namespace Field
 	{
 		std::vector<Model::PlaceModel*> ignoreList;
 
-		while(true)
+		while (true)
 		{
 			const Model::PlaceModel* target = placeContainer->GetNonePlace();
 

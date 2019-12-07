@@ -24,20 +24,6 @@
 #define SET_COLOR_RIGHTBLUE		(D3DXCOLOR(0.0f,1.0f,1.0f,1.0f))
 #define SET_COLOR_ORANGE		(D3DXCOLOR(1.0f,0.4f,0.0f,1.0f))
 
-enum ExpandType
-{
-	LeftToRight,
-	RightToLeft,
-	ToUpDown,
-	ToLeftRight,
-};
-
-enum CloseType
-{
-	FromLeftRight,
-	FromUpDown,
-};
-
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
 //*****************************************************************************
@@ -57,8 +43,11 @@ public:
 	void Draw();
 	void LoadTexture(const char *path);
 	void LoadTexture(LPDIRECT3DTEXTURE9* Texture);
+	void SetSize(D3DXVECTOR2 Size);
 	void SetAlpha(float alpha);
 	void SetColor(D3DXCOLOR color);
+	void SetVisible(bool Flag) { this->Visible = Flag; };
+	D3DXVECTOR3 GetPosition(void) { return this->Position; };
 };
 
 #endif

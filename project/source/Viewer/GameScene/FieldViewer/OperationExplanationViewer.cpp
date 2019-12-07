@@ -13,19 +13,11 @@
 //*****************************************************************************
 OperationExplanationViewer::OperationExplanationViewer()
 {
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	LPDIRECT3DTEXTURE9 tex;
-
-	// テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,
-		"data/TEXTURE/Viewer/FieldViewer/OperationExplanationViewer/OperationExplanation.png",
-		&tex);
-
 	//テキスト
 	for  (int i = 0; i < textMax; i++)
 	{
 		text[i] = new BaseViewerDrawer();
-		text[i]->texture = tex;
+		text[i]->LoadTexture("data/TEXTURE/Viewer/FieldViewer/OperationExplanationViewer/OperationExplanation.png");
 		text[i]->size = D3DXVECTOR3(210.0f, 50.0f, 0.0f);
 		text[i]->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		text[i]->position = D3DXVECTOR3((float)(SCREEN_WIDTH/3 + (i*SCREEN_WIDTH/3/2)), SCREEN_CENTER_Y*1.8f, 0.0f);

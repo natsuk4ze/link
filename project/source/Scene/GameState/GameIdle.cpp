@@ -50,7 +50,9 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 	else if (entity.field->ShouldLevelUp())
 	{
 		if (level < 2)
+		{
 			entity.ChangeState(State::LevelUp);
+		}
 		else
 			entity.ChangeState(State::Result);
 	}
