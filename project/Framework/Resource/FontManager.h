@@ -15,8 +15,19 @@
 #include <vector>
 
 /**************************************
-前方宣言
+FontResourceKeyクラス
 ***************************************/
+class FontResourceKey
+{
+	std::string fontName;
+	int fontSize;
+
+public:
+	FontResourceKey(std::string name, int size);
+
+	bool operator < (const FontResourceKey& rhs) const;
+
+};
 
 /**************************************
 クラス定義
@@ -29,22 +40,22 @@ public:
 	void LoadFont(const char* filePath);
 	void RemoveFont(const char* filePath);
 
-	void CleaaAll();
+	void ClearAll();
 
-	LPD3DXFONT GetFont(const std::string& fontName);
-	LPD3DXFONT GetItalicFont(const std::string& fontName);
+	LPD3DXFONT GetFont(const std::string& fontName, int fontSize);
+	LPD3DXFONT GetItalicFont(const std::string& fontName, int fontSize);
 
 private:
-	void _CreateFont(const std::string& name);
-	void _CreateItalicFont(const std::string& name);
+	void _CreateFont(const std::string& name, int fontSize);
+	void _CreateItalicFont(const std::string& name, int fontSize);
 
 	FontManager() {}
 	FontManager(const FontManager&) {}
 
 	~FontManager();
 	
-	std::map<std::string, LPD3DXFONT> fontPool;
-	std::map<std::string, LPD3DXFONT> italicFontPool;
+	std::map<FontResourceKey, LPD3DXFONT> fontPool;
+	std::map<FontResourceKey, LPD3DXFONT> italicFontPool;
 	std::vector<std::string> loadFontContainer;
 };
 #endif
