@@ -36,12 +36,20 @@ class FontManager : public BaseSingleton<FontManager>
 {
 	friend class BaseSingleton<FontManager>;
 public:
-
+	//フォント読み込み処理
+	//自前のフォントを使用する場合にフォントを一時的にインストールする
+	//fontFileName : インストールするフォントファイルへのパス
 	void LoadFont(const char* filePath);
+
+	//フォントアンインストール処理
+	//一時的にインストールした自前のフォントをアンインストールする
+	//fontFileName : アンインストールフォントファイルへのパス
 	void RemoveFont(const char* filePath);
 
+	//フォントリソース解放処理
 	void ClearAll();
 
+	//フォント取得処理
 	LPD3DXFONT GetFont(const std::string& fontName, int fontSize);
 	LPD3DXFONT GetItalicFont(const std::string& fontName, int fontSize);
 

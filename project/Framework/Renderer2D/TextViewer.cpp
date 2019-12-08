@@ -6,6 +6,7 @@
 //
 //=====================================
 #include "TextViewer.h"
+#include "../Resource/FontManager.h"
 
 /**************************************
 コンストラクタ
@@ -17,11 +18,11 @@ TextViewer::TextViewer(const char * fontName, int fontSize) :
 	posY(10),
 	lineNum(1),
 	color(0xffffffff),
-	text("")
+	text(""),
+	useItalic(false)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-	D3DXCreateFont(pDevice, fontSize, 0, 0, D3DX_DEFAULT, false, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, _T(fontName), &font);
+	font = FontManager::Instance()->GetFont(fontName, fontSize);
+	italicFont = FontManager::Instance()->GetItalicFont(fontName, fontSize);
 }
 
 /**************************************
@@ -30,6 +31,7 @@ TextViewer::TextViewer(const char * fontName, int fontSize) :
 TextViewer::~TextViewer()
 {
 	SAFE_RELEASE(font);
+	SAFE_RELEASE(italicFont);
 }
 
 /**************************************
@@ -45,7 +47,11 @@ void TextViewer::Draw()
 
 	//描画
 	RECT rect = { left, top, right, bottom};
-	font->DrawText(NULL, text.c_str(), -1, &rect, DT_CENTER | DT_VCENTER, color);
+
+	if(!useItalic)
+		font->DrawText(NULL, text.c_str(), -1, &rect, DT_CENTER | DT_VCENTER, color);
+	else
+		italicFont->DrawText(NULL, text.c_str(), -1, &rect, DT_CENTER | DT_VCENTER, color);
 }
 
 /**************************************
@@ -65,14 +71,6 @@ void TextViewer::SetColor(const D3DXCOLOR & color)
 	this->color = color;
 }
 
-//=============================================================================
-// 座標ゲット処理
-//=============================================================================
-D3DXVECTOR2 TextViewer::GetPosition(void) const
-{
-	return D3DXVECTOR2((float)this->posX, (float)this->posY);
-}
-
 /**************************************
 テキストセット処理
 ***************************************/
@@ -85,17 +83,9 @@ void TextViewer::SetText(const std::string & message)
 }
 
 /**************************************
-フォントロード処理
+イタリック使用設定
 ***************************************/
-void TextViewer::LoadFont(const char * fontFileName)
+void TextViewer::UseItalic(bool state)
 {
-	AddFontResource(fontFileName);
-}
-
-/**************************************
-フォントリムーブ処理
-***************************************/
-void TextViewer::RemoveFont(const char * fontFileName)
-{
-	RemoveFontResource(fontFileName);
+	useItalic = state;
 }

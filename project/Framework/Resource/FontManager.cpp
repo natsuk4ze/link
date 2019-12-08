@@ -56,6 +56,7 @@ LPD3DXFONT FontManager::GetFont(const std::string & fontName, int fontSize)
 	if (fontPool.count(Key) == 0)
 		_CreateFont(fontName, fontSize);
 
+	fontPool[Key]->AddRef();
 	return fontPool[Key];
 }
 
@@ -69,6 +70,7 @@ LPD3DXFONT FontManager::GetItalicFont(const std::string & fontName, int fontSize
 	if (italicFontPool.count(Key) == 0)
 		_CreateItalicFont(fontName, fontSize);
 
+	italicFontPool[Key]->AddRef();
 	return italicFontPool[Key];
 }
 
