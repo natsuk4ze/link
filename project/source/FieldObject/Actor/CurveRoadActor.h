@@ -29,6 +29,8 @@ public:
 	void Draw() override;
 	void Rotate(float y);
 
+	void OnSea(bool state) override;
+
 private:
 	std::vector<BaseEmitter*> emitterContainer;
 	bool onWater;

@@ -812,6 +812,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <PostBuildEvent>
       <Command>for %%1 in ($(InputDir)Shaders/*.fx) do fxc.exe $(InputDir)Shaders/%%~n1.fx /T fx_2_0 /Fo $(InputDir)data/EFFECT/%%~n1.cfx
@@ -838,6 +839,7 @@ for %%1 in ($(InputDir)source/Shader/*.fx) do fxc.exe $(InputDir)source/Shader/%
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

@@ -419,6 +419,10 @@ namespace Field::Actor
 				EraseFromContainer(placeID);
 			}
 			//“¹AŒð·“_‚ð—¤ã”»’è‚É•ÏX
+			else
+			{
+				actorContainer[placeID]->OnSea(false);
+			}
 		}
 		
 	}
