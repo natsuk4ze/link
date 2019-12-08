@@ -54,7 +54,7 @@ LPD3DXFONT FontManager::GetFont(const std::string & fontName, int fontSize)
 {
 	const FontResourceKey Key = { fontName, fontSize };
 	if (fontPool.count(Key) == 0)
-		_CreateFont(fontName, fontSize);
+		_CreateFont(Key);
 
 	fontPool[Key]->AddRef();
 	return fontPool[Key];
@@ -68,7 +68,7 @@ LPD3DXFONT FontManager::GetItalicFont(const std::string & fontName, int fontSize
 	const FontResourceKey Key = { fontName, fontSize };
 
 	if (italicFontPool.count(Key) == 0)
-		_CreateItalicFont(fontName, fontSize);
+		_CreateItalicFont(Key);
 
 	italicFontPool[Key]->AddRef();
 	return italicFontPool[Key];
@@ -77,23 +77,25 @@ LPD3DXFONT FontManager::GetItalicFont(const std::string & fontName, int fontSize
 /**************************************
 フォント作成取得処理
 ***************************************/
-void FontManager::_CreateFont(const std::string & name, int fontSize)
+void FontManager::_CreateFont(const FontResourceKey& key)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	LPD3DXFONT font = NULL;
-	D3DXCreateFont(pDevice, fontSize, 0, 0, D3DX_DEFAULT, false, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, _T(name.c_str()), &font);
+	D3DXCreateFont(pDevice, key.fontSize, 0, 0, D3DX_DEFAULT, false, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, _T(key.fontName.c_str()), &font);
+	fontPool[key] = font;
 }
 
 /**************************************
 イタリックフォント作成処理
 ***************************************/
-void FontManager::_CreateItalicFont(const std::string & name, int fontSize)
+void FontManager::_CreateItalicFont(const FontResourceKey& key)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	LPD3DXFONT font = NULL;
-	D3DXCreateFont(pDevice, fontSize, 0, 0, D3DX_DEFAULT, true, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, _T(name.c_str()), &font);
+	D3DXCreateFont(pDevice, key.fontSize, 0, 0, D3DX_DEFAULT, true, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, _T(key.fontName.c_str()), &font);
+	italicFontPool[key] = font;
 }
 
 /**************************************

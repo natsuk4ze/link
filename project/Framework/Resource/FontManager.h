@@ -19,14 +19,13 @@ FontResourceKeyƒNƒ‰ƒX
 ***************************************/
 class FontResourceKey
 {
+public:
 	std::string fontName;
 	int fontSize;
 
-public:
 	FontResourceKey(std::string name, int size);
 
 	bool operator < (const FontResourceKey& rhs) const;
-
 };
 
 /**************************************
@@ -54,8 +53,8 @@ public:
 	LPD3DXFONT GetItalicFont(const std::string& fontName, int fontSize);
 
 private:
-	void _CreateFont(const std::string& name, int fontSize);
-	void _CreateItalicFont(const std::string& name, int fontSize);
+	void _CreateFont(const FontResourceKey& key);
+	void _CreateItalicFont(const FontResourceKey& key);
 
 	FontManager() {}
 	FontManager(const FontManager&) {}
