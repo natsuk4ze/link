@@ -18,6 +18,7 @@
 #include "../../../Framework/Tween/Tween.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../Framework/Sound/SoundEffect.h"
+#include "../../Sound/SoundConfig.h"
 
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
@@ -241,13 +242,13 @@ void AILevelDecreaseEvent::EventOver(void)
 	{
 		GuideViewer::Instance()->SetMessage("‰F’ˆl‚ÌNU‚ðH‚¢Ž~‚ß‚Ü‚µ‚½");
 		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Salute);
-		SE::Play(SE::VoiceType::UFOSuccess, 1.0);
+		SE::Play(SoundConfig::UFOSuccess, 1.0);
 	}
 	else
 	{
 		GuideViewer::Instance()->SetMessage("ƒŠƒ“ƒNƒŒƒxƒ‹‚ª‰º‚ª‚è‚Ü‚·");
 		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Pain);
-		SE::Play(SE::VoiceType::UFOFailed, 1.0);
+		SE::Play(SoundConfig::UFOFailed, 1.0);
 	}
 }
 

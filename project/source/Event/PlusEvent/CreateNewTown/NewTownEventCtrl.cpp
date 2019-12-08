@@ -17,6 +17,7 @@
 #include <typeinfo.h>
 #include "../../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../../Framework/Sound/SoundEffect.h"
+#include "../../../Sound/SoundConfig.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -121,19 +122,19 @@ void NewTownEventCtrl::EventOver(void)
 	{
 		GuideViewer::Instance()->SetMessage("新しい町が出現しました");
 		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Yeah);
-		SE::Play(SE::VoiceType::NewTown, 1.0);
+		SE::Play(SoundConfig::NewTown, 1.0);
 	}
 	else if (typeid(*NewTownEvent) == typeid(NewTownEvent_World))
 	{
 		GuideViewer::Instance()->SetMessage("新しい大陸が出現しました");
 		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Yeah);
-		SE::Play(SE::VoiceType::NewContinent, 1.0);
+		SE::Play(SoundConfig::NewContinent, 1.0);
 	}
 	else if (typeid(*NewTownEvent) == typeid(NewTownEvent_Space))
 	{
 		GuideViewer::Instance()->SetMessage("新しい星が誕生しました");
 		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Yeah);
-		SE::Play(SE::VoiceType::NewStar, 1.0);
+		SE::Play(SoundConfig::NewStar, 1.0);
 	}
 
 }

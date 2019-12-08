@@ -12,7 +12,7 @@
 #include "../../../Framework/Task/TaskManager.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../Framework/Sound/SoundEffect.h"
-
+#include "../../Sound/SoundConfig.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -132,7 +132,7 @@ void BanStockUseEvent::EventOver(void)
 
 	GuideViewer::Instance()->SetMessage("AIの暴走を食い止めました");
 	GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Salute);
-	SE::Play(SE::VoiceType::AIOutofControllStop, 1.0);
+	SE::Play(SoundConfig::AIOutofControllStop, 1.0);
 
 }
 
@@ -156,7 +156,7 @@ void BanStockUseEvent::ReceiveBeatResult(bool IsSuccess)
 
 		GuideViewer::Instance()->SetMessage("一定時間ドリルが使えなくなります");
 		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Pain);
-		SE::Play(SE::VoiceType::AIOutofControll, 1.0);
+		SE::Play(SoundConfig::AIOutofControll, 1.0);
 
 	}
 }
