@@ -96,7 +96,7 @@ namespace Field::Actor
 		PlaceActor* CreateNewTown(const Model::PlaceModel* place);
 
 		//アトランティス出現
-		void SetAtlantis(const Model::PlaceModel* place);
+		void SetAtlantis(const Model::PlaceModel* place, std::vector<const Model::PlaceModel*>& container);
 
 		//海判定
 		bool IsOnSea(const FieldPosition& position) const;
