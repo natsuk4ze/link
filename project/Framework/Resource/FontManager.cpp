@@ -94,7 +94,7 @@ void FontManager::_CreateItalicFont(const FontResourceKey& key)
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	LPD3DXFONT font = NULL;
-	D3DXCreateFont(pDevice, key.fontSize, 0, 0, D3DX_DEFAULT, true, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, _T(key.fontName.c_str()), &font);
+	D3DXCreateFont(pDevice, key.fontSize, 0, 0, D3DX_DEFAULT, true, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, VARIABLE_PITCH | FF_DONTCARE, _T(key.fontName.c_str()), &font);
 	italicFontPool[key] = font;
 }
 

@@ -49,9 +49,9 @@ void TextViewer::Draw()
 	RECT rect = { left, top, right, bottom};
 
 	if(!useItalic)
-		font->DrawText(NULL, text.c_str(), -1, &rect, DT_CENTER | DT_VCENTER, color);
+		font->DrawText(NULL, text.c_str(), -1, &rect, DT_CENTER | DT_VCENTER | DT_NOCLIP, color);
 	else
-		italicFont->DrawText(NULL, text.c_str(), -1, &rect, DT_CENTER | DT_VCENTER, color);
+		italicFont->DrawText(NULL, text.c_str(), -1, &rect, DT_CENTER | DT_VCENTER | DT_NOCLIP, color);
 }
 
 /**************************************
