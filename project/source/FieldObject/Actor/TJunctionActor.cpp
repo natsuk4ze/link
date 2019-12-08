@@ -121,3 +121,19 @@ void TJunctionActor::Rotate(float y)
 		emitter->SetRotatition(euler);
 	}
 }
+
+//=====================================
+// ŠCã”»’èÝ’è
+//=====================================
+void TJunctionActor::OnSea(bool statea)
+{
+	this->onWater = onWater;
+
+	using Field::Actor::ActorLoader;
+	if (!onWater)
+		ResourceManager::Instance()->GetMesh(ActorLoader::TJunctionTag[Field::FieldLevel::World].c_str(), mesh);
+	else
+		ResourceManager::Instance()->GetMesh(ActorLoader::WaterT.c_str(), mesh);
+
+
+}

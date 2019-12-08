@@ -407,6 +407,53 @@ namespace Field::Model
 	}
 
 	/**************************************
+	アトランティス作成
+	***************************************/
+	std::vector<const PlaceModel*> Field::Model::PlaceContainer::CreateAtlantis(const PlaceModel * target)
+	{
+		auto itrPlace = std::find(placeVector.begin(), placeVector.end(), target);
+		std::vector<const PlaceModel*> output;
+
+		if (itrPlace == placeVector.end())
+			return output;
+
+		PlaceModel* place = *itrPlace;
+		place->SetType(PlaceType::Town);
+
+		//周囲8マスの渦潮を削除
+		FieldPosition center = target->GetPosition();
+		for (int x = -1; x <= 1; x++)
+		{
+			for (int z = -1; z <= 1; z++)
+			{
+				FieldPosition pos = center + FieldPosition(x, z);
+				auto itr = std::find_if(placeVector.begin(), placeVector.end(), [&](PlaceModel* model)
+				{
+					return model->GetPosition() == pos;
+				});
+
+				if (itr == placeVector.end())
+					continue;
+
+				PlaceModel *model = *itr;
+				//渦潮ならNoneに戻して追加
+				if (model->IsType(PlaceType::Mountain))
+				{
+					model->SetType(PlaceType::None);
+					output.push_back(model);
+				}
+				//道か交差点なら追加
+				else if (model->IsType(PlaceType::Road) || model->IsType(PlaceType::Junction))
+				{
+					output.push_back(model);
+				}
+			}
+		}
+
+		return output;
+	}
+
+	/**************************************
 	パッセンジャー出発ファンクタ設定
 	***************************************/
 	void Field::Model::PlaceContainer::SetDepartPassengerFanctor(const TownAction & action)

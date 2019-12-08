@@ -39,10 +39,11 @@ public:
 	virtual void Draw();
 
 	// インターフェース
-	virtual void Rotate(float y);								// Y軸回転
+	virtual void Rotate(float y);						// Y軸回転
 	void SetPosition(const D3DXVECTOR3&pos);			// 座標セット
-	void SetColor(const D3DXCOLOR& color);	// メッシュの色変更
+	void SetColor(const D3DXCOLOR& color);				// メッシュの色変更
 	void ResetTransform();								// 座標、回転、大きさをリセットする
+	virtual void OnSea(bool state);								//海上判定セット
 
 	static const D3DXVECTOR3 SizeCullingBox;			//視錐台カリングに使用するボックスの大きさ
 
