@@ -99,6 +99,7 @@
     <ClInclude Include="Framework\Renderer3D\TransformObject.h" />
     <ClInclude Include="Framework\Renderer3D\Viewer3D.h" />
     <ClInclude Include="Framework\Resource\AnimationResource.h" />
+    <ClInclude Include="Framework\Resource\FontManager.h" />
     <ClInclude Include="Framework\Resource\MeshResource.h" />
     <ClInclude Include="Framework\Resource\PolygonResource.h" />
     <ClInclude Include="Framework\Resource\ResourceManager.h" />
@@ -395,6 +396,7 @@
     <ClCompile Include="Framework\Renderer3D\TransformObject.cpp" />
     <ClCompile Include="Framework\Renderer3D\Viewer3D.cpp" />
     <ClCompile Include="Framework\Resource\AnimationResource.cpp" />
+    <ClCompile Include="Framework\Resource\FontManager.cpp" />
     <ClCompile Include="Framework\Resource\MeshResource.cpp" />
     <ClCompile Include="Framework\Resource\PolygonResource.cpp" />
     <ClCompile Include="Framework\Resource\ResourceManager.cpp" />

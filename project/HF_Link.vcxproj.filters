@@ -303,6 +303,7 @@
     <ClCompile Include="source\Shader\SpaceGridEffect.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInfoViewer.cpp" />
+    <ClCompile Include="Framework\Resource\FontManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -609,6 +610,7 @@
     <ClInclude Include="source\Shader\SpaceGridEffect.h" />
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInfoViewer.h" />
+    <ClInclude Include="Framework\Resource\FontManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

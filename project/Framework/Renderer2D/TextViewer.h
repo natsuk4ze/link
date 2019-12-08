@@ -23,7 +23,7 @@ class TextViewer
 {
 public:
 	//コンストラクタ
-	//fontName : 使用するフォントの名前
+	//fontName : 使用するフォントの名前 ※フォントファイルへのパスではないので注意
 	//size : 表示フォントサイズ
 	TextViewer(const char* fontName, int size);
 
@@ -42,22 +42,13 @@ public:
 	//表示テキストセット処理
 	void SetText(const std::string& message);
 
-	//座標ゲット処理
-	D3DXVECTOR2 GetPosition(void) const;
-	
-	//フォント読み込み処理
-	//自前のフォントを使用する場合にフォントを一時的にインストールする
-	//fontFileName : インストールするフォントファイルへのパス
-	static void LoadFont(const char* fontFileName);
-
-	//フォントアンインストール処理
-	//一時的にインストールした自前のフォントをアンインストールする
-	//fontFileName : アンインストールフォントファイルへのパス
-	static void RemoveFont(const char* fontFileName);
+	//イタリック使用設定
+	void UseItalic(bool state);
 
 private:
 	//フォントインターフェイス
-	ID3DXFont * font;
+	LPD3DXFONT font;
+	LPD3DXFONT italicFont;
 
 	//フォントサイズ
 	int fontSize;
@@ -71,6 +62,9 @@ private:
 
 	//表示カラー
 	D3DXCOLOR color;
+
+	//イタリック使用
+	bool useItalic;
 
 	//表示文字列
 #if _UNICODE
