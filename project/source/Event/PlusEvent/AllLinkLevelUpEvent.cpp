@@ -43,7 +43,7 @@ AllLinkLevelUpEvent::AllLinkLevelUpEvent() :
 {
 	GuideViewer::Instance()->SetMessage("‘S‚Ä‚Ì’¬‚ÌƒŠƒ“ƒNƒŒƒxƒ‹‚ªã¸‚µ‚Ü‚µ‚½");
 	GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::FistPump);
-	SE::Play(SoundConfig::AllLinkLevelUp, 1.0);
+	SE::Play(SoundConfig::AllLinkLevelUp, SoundConfig::VolumeVoice);
 }
 
 //=============================================================================

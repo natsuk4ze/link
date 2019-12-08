@@ -38,7 +38,7 @@ FamousPeopleEvent::FamousPeopleEvent() :
 	fieldEventHandler->SetDevelopBonus(BonusNum);
 	GuideViewer::Instance()->SetMessage("ˆê’èŽžŠÔ”­“W“x‚ªã¸‚µ‚Ü‚·");
 	GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::FistPump);
-	SE::Play(SoundConfig::DevelopSpeedUp, 1.0);
+	SE::Play(SoundConfig::DevelopSpeedUp, SoundConfig::VolumeVoice);
 }
 
 //=============================================================================

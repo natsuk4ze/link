@@ -43,7 +43,7 @@ LinkLevelDecreaseEvent::LinkLevelDecreaseEvent() :
 {
 	GuideViewer::Instance()->SetMessage("ƒŠƒ“ƒNƒŒƒxƒ‹‚ª‰º‚ª‚è‚Ü‚µ‚½");
 	GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Surprised);
-	SE::Play(SoundConfig::LinkLevelDown, 1.0);
+	SE::Play(SoundConfig::LinkLevelDown, SoundConfig::VolumeVoice);
 }
 
 //=============================================================================

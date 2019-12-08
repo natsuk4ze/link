@@ -254,13 +254,13 @@ void CityDestroyEvent::EventOver(void)
 	{
 		GuideViewer::Instance()->SetMessage("è¦Î‚Ì”j‰ó‚É¬Œ÷‚µ‚Ü‚µ‚½I");
 		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Clapping);
-		SE::Play(SoundConfig::MeteorBreakSuccess, 1.0);
+		SE::Play(SoundConfig::MeteorBreakSuccess, SoundConfig::VolumeVoice);
 	}
 	else
 	{
 		GuideViewer::Instance()->SetMessage("è¦Î‚Ì”j‰ó‚ÉŽ¸”s‚µ‚Ü‚µ‚½...");
 		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Defeat);
-		SE::Play(SoundConfig::MeteorBreakFailed, 1.0);
+		SE::Play(SoundConfig::MeteorBreakFailed, SoundConfig::VolumeVoice);
 	}
 }
 

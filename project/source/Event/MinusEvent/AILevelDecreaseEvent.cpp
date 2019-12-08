@@ -242,13 +242,13 @@ void AILevelDecreaseEvent::EventOver(void)
 	{
 		GuideViewer::Instance()->SetMessage("‰F’ˆl‚ÌNU‚ðH‚¢Ž~‚ß‚Ü‚µ‚½");
 		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Salute);
-		SE::Play(SoundConfig::UFOSuccess, 1.0);
+		SE::Play(SoundConfig::UFOSuccess, SoundConfig::VolumeVoice);
 	}
 	else
 	{
 		GuideViewer::Instance()->SetMessage("ƒŠƒ“ƒNƒŒƒxƒ‹‚ª‰º‚ª‚è‚Ü‚·");
 		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Pain);
-		SE::Play(SoundConfig::UFOFailed, 1.0);
+		SE::Play(SoundConfig::UFOFailed, SoundConfig::VolumeVoice);
 	}
 }
 

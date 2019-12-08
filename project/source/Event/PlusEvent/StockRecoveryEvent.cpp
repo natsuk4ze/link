@@ -43,7 +43,7 @@ StockRecoveryEvent::StockRecoveryEvent() :
 {
 	GuideViewer::Instance()->SetMessage("ドリルのストックが回復しました");
 	GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Cheering);
-	SE::Play(SoundConfig::StockRecovery, 1.0);
+	SE::Play(SoundConfig::StockRecovery, SoundConfig::VolumeVoice);
 }
 
 //=============================================================================

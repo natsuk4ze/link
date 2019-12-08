@@ -32,7 +32,7 @@ TimeRecoveryEvent::TimeRecoveryEvent() :
 	EventBase(false)
 {
 	GuideViewer::Instance()->SetMessage("§ŒÀŠÔ‚ª‰ñ•œ‚µ‚Ü‚µ‚½");
-	SE::Play(SoundConfig::TimeLimitHeal, 1.0);
+	SE::Play(SoundConfig::TimeLimitHeal, SoundConfig::VolumeVoice);
 }
 
 //=============================================================================

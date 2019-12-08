@@ -28,7 +28,7 @@ AILevelUpEvent::AILevelUpEvent() :
 {
 	GuideViewer::Instance()->SetMessage("AIレベルにボーナスポイントが入りました");
 	GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::FistPump);
-	SE::Play(SoundConfig::AIBonus, 1.0);
+	SE::Play(SoundConfig::AIBonus, SoundConfig::VolumeVoice);
 }
 
 //=============================================================================

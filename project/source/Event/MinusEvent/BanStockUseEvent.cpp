@@ -132,7 +132,7 @@ void BanStockUseEvent::EventOver(void)
 
 	GuideViewer::Instance()->SetMessage("AI‚Ì–\‘–‚ðH‚¢Ž~‚ß‚Ü‚µ‚½");
 	GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Salute);
-	SE::Play(SoundConfig::AIOutofControllStop, 1.0);
+	SE::Play(SoundConfig::AIOutofControllStop, SoundConfig::VolumeVoice);
 
 }
 
@@ -156,7 +156,7 @@ void BanStockUseEvent::ReceiveBeatResult(bool IsSuccess)
 
 		GuideViewer::Instance()->SetMessage("ˆê’èŽžŠÔƒhƒŠƒ‹‚ªŽg‚¦‚È‚­‚È‚è‚Ü‚·");
 		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Pain);
-		SE::Play(SoundConfig::AIOutofControll, 1.0);
+		SE::Play(SoundConfig::AIOutofControll, SoundConfig::VolumeVoice);
 
 	}
 }
