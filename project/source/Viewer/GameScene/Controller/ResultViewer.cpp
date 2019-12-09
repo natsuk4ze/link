@@ -6,6 +6,7 @@
 //=============================================================================
 #include "../../../../main.h"
 #include "../ResultViewer/ResultScoreViewer.h"
+#include "../ResultViewer/ResultAchieveViewer.h"
 #include "../ParameterContainer/ResultViewerParam.h"
 #include "ResultViewer.h"
 #include "../GuideViewer/GuideActor.h"
@@ -16,6 +17,7 @@
 #ifdef _DEBUG
 #include "../../../../Framework/Tool/DebugWindow.h"
 #include "../../../../Framework/Input/input.h"
+#include "../../../Reward/RewardConfig.h"
 #endif
 
 //*****************************************************************************
@@ -25,6 +27,7 @@ ResultViewer::ResultViewer()
 {
 	viewerParam = new ResultViewerParam();
 	resultViewer.push_back(scoreViewer = new ResultScoreViewer());
+	resultViewer.push_back(achieveViewer = new ResultAchieveViewer());
 
 	actor = new GuideActor();
 	screen = new SubScreen({ (float)SCREEN_WIDTH, (float)SCREEN_HEIGHT }, { 0.0f, 0.0f });
@@ -88,6 +91,21 @@ void ResultViewer::Update()
 	//{
 	//	scoreViewer->Set();
 	//}
+
+#ifdef _DEBUG
+	Debug::Begin("DebugTool");
+	if (Debug::Button("View Achieve"))
+	{
+		std::vector<RewardConfig::Type> container;
+		for (int i = 0; i < RewardConfig::Type::Max; i++)
+		{
+			container.push_back(RewardConfig::Type(i));
+		}
+		achieveViewer->SetReward(container);
+		achieveViewer->StartAnim();
+	}
+	Debug::End();
+#endif
 }
 
 //=============================================================================
@@ -128,6 +146,9 @@ void ResultViewer::Draw(void)
 
 	for (unsigned int i = 0; i < resultViewer.size(); i++)
 	{
+		if (i == 0)
+			continue;
+
 		resultViewer[i]->Draw();
 	}
 
@@ -164,6 +185,15 @@ ResultViewer::ResultAnimation ResultViewer::IsPlayingAnimation() const
 		return PlayingOut;
 
 	return Idle;
+}
+
+//=============================================================================
+// 実績ビューワのセット
+//=============================================================================
+void ResultViewer::SetAchiveViewer(std::vector<RewardConfig::Type>& rewardContainer, std::function<void()> callback)
+{
+	achieveViewer->SetReward(rewardContainer);
+	achieveViewer->StartAnim(callback);
 }
 
 //=============================================================================
