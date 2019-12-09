@@ -52,6 +52,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 	// シーンチェンジ
 	if (entity.titleViewer->CheckSceneChange())
 	{
+		entity.remainTime = 30 * 180;
 		entity.titleViewer->SetNextScene(entity);
 	}
 
