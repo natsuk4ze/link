@@ -72,6 +72,9 @@ public:
 	void SetTelopIn();
 	void SetTelopOut();
 
+	bool IsPlayingIn() const;
+	bool IsPlayingOut() const;
+
 	//ƒpƒ‰ƒ[ƒ^‚ğó‚¯‚Æ‚é” 
 	int parameterBox[3];
 };

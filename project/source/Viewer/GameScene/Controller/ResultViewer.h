@@ -25,6 +25,13 @@ class Camera;
 class ResultViewer
 {
 public:
+	enum ResultAnimation
+	{
+		PlayingIn,
+		Idle,
+		PlayingOut
+	};
+
 	ResultViewer();
 	~ResultViewer();
 
@@ -36,6 +43,9 @@ public:
 
 	//パラメータの受け取り処理
 	void ReceiveParam(int cityScore,int worldScore,int spaceScore);
+
+	//スコアビューアのアニメーション再生中判定
+	ResultAnimation IsPlayingAnimation() const;
 
 private:
 	std::vector <BaseViewer*> resultViewer;

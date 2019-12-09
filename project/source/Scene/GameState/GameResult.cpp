@@ -56,13 +56,7 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	entity.resultViewer->ReceiveParam(cityScore, worldScore, spaceScore);
 
 	//全体スコアを計算
-	entity.entiretyScore = (int)(powf(10, 8) * spaceScore) + (int)(powf(10, 4) * worldScore) + spaceScore;
- 
-	//遅延実行
-	TaskManager::Instance()->CreateDelayedTask(150, [&]()
-	{
-		entity.step++;
-	});
+	entity.entiretyScore = (int)(powf(10, 8) * spaceScore) + (int)(powf(10, 4) * worldScore) + cityScore;
 }
 
 //=====================================
@@ -79,11 +73,14 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 	switch (entity.step)
 	{
 	case Step::ScoreViewerIn:
-
+		if (entity.resultViewer->IsPlayingAnimation() != ResultViewer::PlayingIn)
+		{
+			entity.step = Step::InputWait;
+		}
 		break;
 
 	case Step::InputWait:
-		if (Keyboard::GetTrigger(DIK_Z))
+		if (Keyboard::GetTrigger(DIK_RETURN))
 		{
 			//ランキング更新があったらネームエントリーへ
 			long long lastScore = entity.Client->GetLastScore();

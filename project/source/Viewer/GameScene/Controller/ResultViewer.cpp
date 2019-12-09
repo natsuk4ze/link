@@ -153,6 +153,20 @@ void ResultViewer::ReceiveParam(int cityScore, int worldScore, int spaceScore)
 }
 
 //=============================================================================
+// アニメーションの再生中判定
+//=============================================================================
+ResultViewer::ResultAnimation ResultViewer::IsPlayingAnimation() const
+{
+	if (scoreViewer->IsPlayingIn())
+		return PlayingIn;
+
+	if (scoreViewer->IsPlayingOut())
+		return PlayingOut;
+
+	return Idle;
+}
+
+//=============================================================================
 // 描画可否判定のセット
 //=============================================================================
 void ResultViewer::SetActive(bool flag)
