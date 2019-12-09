@@ -14,6 +14,7 @@
 #include "GuideActor.h"
 #include <deque>
 #include "../../../../Framework/Sound/SoundEffect.h"
+#include "../../../Sound/SoundConfig.h"
 
 //*****************************************************************************
 // 前方宣言
@@ -30,8 +31,8 @@ struct GuideViewerData
 {
 	std::string message;
 	GuideActor::AnimState animation;
-	SE::VoiceType voice;
-	GuideViewerData(std::string message, GuideActor::AnimState next, SE::VoiceType voice) {
+	SoundConfig::ID voice;
+	GuideViewerData(std::string message, GuideActor::AnimState next, SoundConfig::ID voice) {
 		this->message = message;
 		this->animation = next;
 		this->voice = voice;
@@ -60,7 +61,7 @@ public:
 	void ChangeAnim(GuideActor::AnimState next);
 
 	// 上の２つ＆VOICEの再生をまとめて行う
-	void SetData(const std::string& message, GuideActor::AnimState next, SE::VoiceType voice);
+	void SetData(const std::string& message, GuideActor::AnimState next, SoundConfig::ID voice);
 
 private:
 	// 各種インスタンス用ポインタ
@@ -72,7 +73,7 @@ private:
 	SubScreen* subScreen;
 
 	std::deque<GuideViewerData*> que;	// アニメーション、メッセージ、SEを順番に収納するキュー
-	SE::VoiceType prev;
+	SoundConfig::ID prev;
 	int cntQue;
 	bool isActive;	// 描画可否判定
 

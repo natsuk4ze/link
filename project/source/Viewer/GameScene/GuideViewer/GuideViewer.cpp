@@ -44,7 +44,7 @@ void GuideViewer::Init()
 	bg = new GuideViewerBG();
 	filter = new CRTFilter((DWORD)SubScreenSize.x, (DWORD)SubScreenSize.y);
 	callOutViewer = new GuideCallOutViewer();
-	prev = SE::VoiceType::AIBonus;
+	prev = SoundConfig::ID::AIBonus;
 	cntQue = 0;
 }
 
@@ -148,7 +148,7 @@ void GuideViewer::ChangeAnim(GuideActor::AnimState next)
 //=====================================
 // キューにデータをセット
 //=====================================
-void GuideViewer::SetData(const std::string& message, GuideActor::AnimState next, SE::VoiceType voice)
+void GuideViewer::SetData(const std::string& message, GuideActor::AnimState next, SoundConfig::ID voice)
 {
 	que.push_back(new GuideViewerData(message, next, voice));
 }
@@ -173,7 +173,7 @@ void GuideViewer::UpdateDeque()
 		}
 		SetMessage(que[0]->message);
 		ChangeAnim(que[0]->animation);
-		SE::Play(que[0]->voice, 1.0f);
+		SE::Play(que[0]->voice, SoundConfig::VolumeVoice);
 		prev = que[0]->voice;
 		que.pop_front();
 		cntQue = 0;
