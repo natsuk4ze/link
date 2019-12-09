@@ -30,6 +30,7 @@ ResultViewer::ResultViewer()
 	screen = new SubScreen({ (float)SCREEN_WIDTH, (float)SCREEN_HEIGHT }, { 0.0f, 0.0f });
 	camera = new Camera();
 
+	//アクターの姿勢を調整
 	Transform actorTransform = actor->GetTransform();
 	const D3DXVECTOR3 ActorPos = { 13.0f, -14.0f, -10.0f };
 	actorTransform.SetPosition(ActorPos);
@@ -41,6 +42,9 @@ ResultViewer::ResultViewer()
 	actorTransform.Rotate(ActorAngle, actorTransform.Right());
 
 	actor->SetTransform(actorTransform);
+
+	//アニメーションを拍手に変更
+	actor->ChangeAnim(GuideActor::AnimState::Clapping, true);
 }
 
 //*****************************************************************************
