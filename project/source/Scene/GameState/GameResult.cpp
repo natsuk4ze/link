@@ -61,7 +61,7 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 	entity.Client->Update();
 
 	//とりあえずエンターが押されたらタイトルへ戻る
-	if (Keyboard::GetTrigger(DIK_RETURN))
+	if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 	{
 		TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
 		{

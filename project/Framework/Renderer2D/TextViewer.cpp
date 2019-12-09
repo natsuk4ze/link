@@ -35,17 +35,32 @@ TextViewer::~TextViewer()
 /**************************************
 描画処理
 ***************************************/
-void TextViewer::Draw()
+void TextViewer::Draw(bool FromLeft)
 {
-	//テキストを中央寄せで表示するためのRectを計算
-	LONG left = posX - text.length() * fontSize / 2;
-	LONG top =  posY - fontSize / 2 *lineNum;
-	LONG right = left + text.length() * fontSize;
-	LONG bottom = top + fontSize *lineNum;
+	if (!FromLeft)
+	{
+		//テキストを中央寄せで表示するためのRectを計算
+		LONG left = posX - text.length() * fontSize / 2;
+		LONG top = posY - fontSize / 2 * lineNum;
+		LONG right = left + text.length() * fontSize;
+		LONG bottom = top + fontSize * lineNum;
 
-	//描画
-	RECT rect = { left, top, right, bottom};
-	font->DrawText(NULL, text.c_str(), -1, &rect, DT_CENTER | DT_VCENTER, color);
+		//描画
+		RECT rect = { left, top, right, bottom };
+		font->DrawText(NULL, text.c_str(), -1, &rect, DT_CENTER | DT_VCENTER, color);
+	}
+	else
+	{
+		//テキストを左詰めで表示するためのRectを計算
+		LONG left = posX;
+		LONG top = posY - fontSize / 2 * lineNum;
+		LONG right = left + text.length() * fontSize;
+		LONG bottom = top + fontSize * lineNum;
+
+		//描画
+		RECT rect = { left, top, right, bottom };
+		font->DrawText(NULL, text.c_str(), -1, &rect, DT_LEFT | DT_VCENTER, color);
+	}
 }
 
 /**************************************
