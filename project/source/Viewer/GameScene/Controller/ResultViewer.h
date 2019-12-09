@@ -15,6 +15,9 @@
 class ResultScoreViewer;
 class ResultViewerParam;
 class BaseViewer;
+class GuideActor;
+class SubScreen;
+class Camera;
 
 //*****************************************************************************
 // クラス定義
@@ -40,6 +43,15 @@ private:
 	ResultViewerParam *viewerParam;
 
 	bool isActive;
+
+	//画面右に表示するロボ
+	GuideActor* actor;
+
+	//ロボを描画するレンダリングターゲット
+	SubScreen* screen;
+
+	//ロボ描画用のカメラ
+	Camera *camera;
 };
 
 #endif

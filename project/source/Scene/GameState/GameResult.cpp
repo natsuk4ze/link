@@ -29,13 +29,13 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	// カメラのモード切り替え
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::Arround);
 
-	// リザルト画面で使用するUIの描画をON
+	// リザルト画面で使用するUIの描画をON(ネームエントリーは最初はオフ）
 	entity.resultViewer->SetActive(true);
-	entity.nemeEntryViewer->SetActive(true);
 
 	// 使用しないUIの描画をOFF
 	entity.field->SetViewerActive(false);
 	entity.gameViewer->SetActive(false);
+	entity.nemeEntryViewer->SetActive(false);
 	GuideViewer::Instance()->SetActive(false);
 	//entity.guideViewer->SetActive(false);
 

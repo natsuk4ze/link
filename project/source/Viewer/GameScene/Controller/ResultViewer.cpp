@@ -8,10 +8,14 @@
 #include "../ResultViewer/ResultScoreViewer.h"
 #include "../ParameterContainer/ResultViewerParam.h"
 #include "ResultViewer.h"
+#include "../GuideViewer/GuideActor.h"
+#include "../../../SubScreen/SubScreen.h"
+#include "../../../../Framework/Camera/Camera.h"
+#include "../../../../Framework/Effect/RendererEffect.h"
 
 #ifdef _DEBUG
-#include "../../../../Framework/Input/input.h"
 #include "../../../../Framework/Tool/DebugWindow.h"
+#include "../../../../Framework/Input/input.h"
 #endif
 
 //*****************************************************************************
@@ -21,6 +25,14 @@ ResultViewer::ResultViewer()
 {
 	viewerParam = new ResultViewerParam();
 	resultViewer.push_back(scoreViewer = new ResultScoreViewer());
+
+	actor = new GuideActor();
+	screen = new SubScreen({ (float)SCREEN_WIDTH, (float)SCREEN_HEIGHT }, { 0.0f, 0.0f });
+	camera = new Camera();
+
+	const D3DXVECTOR3 ActorPos = { 15.0f, 0.0f, -10.0f };
+	actor->SetPosition(ActorPos);
+	actor->LookAt(camera->GetPosition());
 }
 
 //*****************************************************************************
@@ -38,6 +50,10 @@ ResultViewer::~ResultViewer()
 
 	//インスタンスを入れた配列をクリア
 	resultViewer.clear();
+
+	SAFE_DELETE(actor);
+	SAFE_DELETE(screen);
+	SAFE_DELETE(camera);
 }
 
 //=============================================================================
@@ -52,6 +68,19 @@ void ResultViewer::Update()
 	{
 		resultViewer[i]->Update();
 	}
+
+	actor->Update();
+	camera->Update();
+
+#ifdef _DEBUG
+	Debug::Begin("Result");
+	static D3DXVECTOR3 actorPos = Vector3::Zero;
+	Debug::Slider("actorPos", actorPos, Vector3::One * -20.0f, Vector3::One * 20.0f);
+	actor->SetPosition(actorPos);
+	actor->LookAt(camera->GetPosition());
+	Debug::End();
+#endif
+
 
 	//if (Keyboard::GetTrigger(DIK_S))
 	//{
@@ -69,6 +98,27 @@ void ResultViewer::Draw(void)
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
+	//レンダリングターゲットをscreenに切り替えてアクターを描画
+	screen->DrawBegin(D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+
+	const Camera *defaultCamera = Camera::MainCamera();
+	Camera::SetMainCamera(camera);
+	camera->Set();
+
+	RendererEffect::SetView(camera->GetViewMtx());
+	RendererEffect::SetProjection(camera->GetProjectionMtx());
+
+	actor->Draw();
+
+	screen->DrawEnd();
+
+	//カメラ復元
+	Camera::SetMainCamera(const_cast<Camera*>(defaultCamera));
+	RendererEffect::SetView(defaultCamera->GetViewMtx());
+	RendererEffect::SetProjection(defaultCamera->GetProjectionMtx());
+	defaultCamera->Set();
+
+	//UI描画
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, true);
 	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
 	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
