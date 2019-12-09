@@ -30,9 +30,17 @@ ResultViewer::ResultViewer()
 	screen = new SubScreen({ (float)SCREEN_WIDTH, (float)SCREEN_HEIGHT }, { 0.0f, 0.0f });
 	camera = new Camera();
 
-	const D3DXVECTOR3 ActorPos = { 15.0f, 0.0f, -10.0f };
-	actor->SetPosition(ActorPos);
-	actor->LookAt(camera->GetPosition());
+	Transform actorTransform = actor->GetTransform();
+	const D3DXVECTOR3 ActorPos = { 13.0f, -14.0f, -10.0f };
+	actorTransform.SetPosition(ActorPos);
+
+	actorTransform.LookAt(camera->GetPosition());
+	actorTransform.Rotate(180.0f, actorTransform.Up());
+
+	const float ActorAngle = -37.0f;
+	actorTransform.Rotate(ActorAngle, actorTransform.Right());
+
+	actor->SetTransform(actorTransform);
 }
 
 //*****************************************************************************
@@ -71,16 +79,6 @@ void ResultViewer::Update()
 
 	actor->Update();
 	camera->Update();
-
-#ifdef _DEBUG
-	Debug::Begin("Result");
-	static D3DXVECTOR3 actorPos = Vector3::Zero;
-	Debug::Slider("actorPos", actorPos, Vector3::One * -20.0f, Vector3::One * 20.0f);
-	actor->SetPosition(actorPos);
-	actor->LookAt(camera->GetPosition());
-	Debug::End();
-#endif
-
 
 	//if (Keyboard::GetTrigger(DIK_S))
 	//{
