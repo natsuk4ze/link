@@ -39,6 +39,10 @@ TextViewer::~TextViewer()
 ***************************************/
 void TextViewer::Draw()
 {
+	D3DXVECTOR3 position = transform->GetPosition();
+	posX = (int)position.x;
+	posY = (int)position.y;
+
 	//テキストを中央寄せで表示するためのRectを計算
 	LONG left = posX - text.length() * fontSize / 2;
 	LONG top =  posY - fontSize / 2 *lineNum;
@@ -59,8 +63,7 @@ void TextViewer::Draw()
 ***************************************/
 void TextViewer::SetPos(int x, int y)
 {
-	posX = x;
-	posY = y;
+	transform->SetPosition({ (float)x, (float)y, 0.0f });
 }
 
 /**************************************

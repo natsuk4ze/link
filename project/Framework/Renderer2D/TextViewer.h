@@ -19,7 +19,7 @@
 /**************************************
 クラス定義
 ***************************************/
-class TextViewer
+class TextViewer : public GameObject
 {
 public:
 	//コンストラクタ
