@@ -41,9 +41,9 @@ const std::string StockRecoveryEvent::SpaceMessage[] = {
 StockRecoveryEvent::StockRecoveryEvent() :
 	EventBase(false)
 {
-	GuideViewer::Instance()->SetMessage("ドリルのストックが回復しました");
-	GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Cheering);
-	SE::Play(SoundConfig::StockRecovery, SoundConfig::VolumeVoice);
+	GuideViewer::Instance()->SetData("ドリルのストックが回復しました",
+		GuideActor::AnimState::Cheering,
+		SoundConfig::StockRecovery);
 }
 
 //=============================================================================

@@ -120,21 +120,21 @@ void NewTownEventCtrl::EventOver(void)
 	// 現在発生しているイベントに合わせて再生を変更
 	if (typeid(*NewTownEvent) == typeid(NewTownEvent_City))
 	{
-		GuideViewer::Instance()->SetMessage("新しい町が出現しました");
-		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Yeah);
-		SE::Play(SoundConfig::NewTown, SoundConfig::VolumeVoice);
+		GuideViewer::Instance()->SetData("新しい町が出現しました",
+			GuideActor::AnimState::Yeah,
+			SoundConfig::NewTown);
 	}
 	else if (typeid(*NewTownEvent) == typeid(NewTownEvent_World))
 	{
-		GuideViewer::Instance()->SetMessage("新しい大陸が出現しました");
-		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Yeah);
-		SE::Play(SoundConfig::NewContinent, SoundConfig::VolumeVoice);
+		GuideViewer::Instance()->SetData("新しい大陸が出現しました",
+			GuideActor::AnimState::Yeah,
+			SoundConfig::NewContinent);
 	}
 	else if (typeid(*NewTownEvent) == typeid(NewTownEvent_Space))
 	{
-		GuideViewer::Instance()->SetMessage("新しい星が誕生しました");
-		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Yeah);
-		SE::Play(SoundConfig::NewStar, SoundConfig::VolumeVoice);
+		GuideViewer::Instance()->SetData("新しい星が誕生しました",
+			GuideActor::AnimState::Yeah,
+			SoundConfig::NewStar);
 	}
 
 }

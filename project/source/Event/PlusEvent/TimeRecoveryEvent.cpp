@@ -31,8 +31,9 @@ const std::string TimeRecoveryEvent::message[] = {
 TimeRecoveryEvent::TimeRecoveryEvent() :
 	EventBase(false)
 {
-	GuideViewer::Instance()->SetMessage("§ŒÀŠÔ‚ª‰ñ•œ‚µ‚Ü‚µ‚½");
-	SE::Play(SoundConfig::TimeLimitHeal, SoundConfig::VolumeVoice);
+	GuideViewer::Instance()->SetData("§ŒÀŠÔ‚ª‰ñ•œ‚µ‚Ü‚µ‚½",
+		GuideActor::AnimState::FistPump,
+		SoundConfig::TimeLimitHeal);
 }
 
 //=============================================================================

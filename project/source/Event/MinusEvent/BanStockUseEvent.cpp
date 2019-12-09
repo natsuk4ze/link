@@ -130,9 +130,9 @@ void BanStockUseEvent::EventOver(void)
 	fieldEventHandler->ResumeGame();
 	UseFlag = false;
 
-	GuideViewer::Instance()->SetMessage("AIの暴走を食い止めました");
-	GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Salute);
-	SE::Play(SoundConfig::AIOutofControllStop, SoundConfig::VolumeVoice);
+	GuideViewer::Instance()->SetData("AIの暴走を食い止めました",
+		GuideActor::AnimState::Salute, 
+		SoundConfig::AIOutofControllStop);
 
 }
 
@@ -154,10 +154,9 @@ void BanStockUseEvent::ReceiveBeatResult(bool IsSuccess)
 		SetBanStock(true);
 		fieldEventHandler->ResumeGame();
 
-		GuideViewer::Instance()->SetMessage("一定時間ドリルが使えなくなります");
-		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Pain);
-		SE::Play(SoundConfig::AIOutofControll, SoundConfig::VolumeVoice);
-
+		GuideViewer::Instance()->SetData("一定時間ドリルが使えなくなります",
+			GuideActor::AnimState::Pain,
+			SoundConfig::AIOutofControll);
 	}
 }
 

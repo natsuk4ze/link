@@ -26,9 +26,9 @@ const float UpPercent = 0.1f;
 AILevelUpEvent::AILevelUpEvent() :
 	EventBase(false)
 {
-	GuideViewer::Instance()->SetMessage("AIレベルにボーナスポイントが入りました");
-	GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::FistPump);
-	SE::Play(SoundConfig::AIBonus, SoundConfig::VolumeVoice);
+	GuideViewer::Instance()->SetData("AIレベルにボーナスポイントが入りました",
+		GuideActor::AnimState::FistPump,
+		SoundConfig::AIBonus);
 }
 
 //=============================================================================

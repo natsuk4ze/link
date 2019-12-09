@@ -252,15 +252,15 @@ void CityDestroyEvent::EventOver(void)
 	// ƒCƒxƒ“ƒg‚Ì‰Â”Û‚É‚æ‚Á‚ÄÄ¶‚ğ•ÏX
 	if (success)
 	{
-		GuideViewer::Instance()->SetMessage("è¦Î‚Ì”j‰ó‚É¬Œ÷‚µ‚Ü‚µ‚½I");
-		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Clapping);
-		SE::Play(SoundConfig::MeteorBreakSuccess, SoundConfig::VolumeVoice);
+		GuideViewer::Instance()->SetData("è¦Î‚Ì”j‰ó‚É¬Œ÷‚µ‚Ü‚µ‚½I",
+			GuideActor::AnimState::Clapping,
+			SoundConfig::MeteorBreakSuccess);
 	}
 	else
 	{
-		GuideViewer::Instance()->SetMessage("è¦Î‚Ì”j‰ó‚É¸”s‚µ‚Ü‚µ‚½...");
-		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Defeat);
-		SE::Play(SoundConfig::MeteorBreakFailed, SoundConfig::VolumeVoice);
+		GuideViewer::Instance()->SetData("è¦Î‚Ì”j‰ó‚É¸”s‚µ‚Ü‚µ‚½...",
+			GuideActor::AnimState::Defeat,
+			SoundConfig::MeteorBreakFailed);
 	}
 }
 

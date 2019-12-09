@@ -240,15 +240,15 @@ void AILevelDecreaseEvent::EventOver(void)
 
 	if (success)
 	{
-		GuideViewer::Instance()->SetMessage("‰F’ˆl‚ÌNU‚ğH‚¢~‚ß‚Ü‚µ‚½");
-		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Salute);
-		SE::Play(SoundConfig::UFOSuccess, SoundConfig::VolumeVoice);
+		GuideViewer::Instance()->SetData("‰F’ˆl‚ÌNU‚ğH‚¢~‚ß‚Ü‚µ‚½",
+			GuideActor::AnimState::Salute,
+			SoundConfig::UFOSuccess);
 	}
 	else
 	{
-		GuideViewer::Instance()->SetMessage("ƒŠƒ“ƒNƒŒƒxƒ‹‚ª‰º‚ª‚è‚Ü‚·");
-		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Pain);
-		SE::Play(SoundConfig::UFOFailed, SoundConfig::VolumeVoice);
+		GuideViewer::Instance()->SetData("ƒŠƒ“ƒNƒŒƒxƒ‹‚ª‰º‚ª‚è‚Ü‚·",
+			GuideActor::AnimState::Pain,
+			SoundConfig::UFOFailed);
 	}
 }
 
