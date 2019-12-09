@@ -7,6 +7,7 @@
 #include "../../../main.h"
 #include "RewardViewer.h"
 #include "../../Viewer/Framework/ViewerDrawer/TextureDrawer.h"
+#include "../../Reward/RewardController.h"
 
 #include "../../../Framework/Task/TaskManager.h"
 #include "../../../Framework/Renderer2D/TextViewer.h"
@@ -17,7 +18,10 @@ using std::string;
 
 // カーソル移動の間隔
 const float MoveInterval = 218.0f;
+const float CharInterval = 70.0f;
+const int NameDigitalMax = 3;
 const D3DXVECTOR3 DefaultCursorPos = D3DXVECTOR3(633.0f, 322.0f, 0.0f);
+const D3DXVECTOR3 DefaultAchieverPos = D3DXVECTOR3(1400.0f, 1030.0f, 0.0f);
 const string RewardText[10] =
 {
 	"防衛(連打)系イベント3回クリア",
@@ -27,7 +31,7 @@ const string RewardText[10] =
 	"マイナスイベントを10回見る",
 	"プラスイベントを20回見る",
 	"道を250マス引く",
-	"AIレベルが1000000000000に達する",
+	"AIレベルが 1000000000000に達する",
 	"マイナスイベントを全て見る",
 	"プラスイベントを全て見る",
 };
@@ -56,13 +60,29 @@ RewardViewer::RewardViewer(void)
 	RewardName->LoadTexture("data/TEXTURE/Title/RewardViewer/RewardName.png");
 	RewardName->SetPosition(D3DXVECTOR3(760.0f, 920.0f, 0.0f));
 
+	TextureVec.push_back(FirstAchiever = new TextureDrawer(D3DXVECTOR2(512.0f, 128.0f)));
+	FirstAchiever->LoadTexture("data/TEXTURE/Title/RewardViewer/FirstAchiever.png");
+	FirstAchiever->SetPosition(D3DXVECTOR3(SCREEN_CENTER_X + 150.0f, 1040.0f, 0.0f));
+
+	TextureVec.push_back(Unachieved = new TextureDrawer(D3DXVECTOR2(512.0f, 128.0f)));
+	Unachieved->LoadTexture("data/TEXTURE/Title/RewardViewer/Unachieved.png");
+	Unachieved->SetPosition(D3DXVECTOR3(1400.0f, 1040.0f, 0.0f));
+	Unachieved->SetScale(0.8f);
+
 	TextureVec.push_back(Cursor = new TextureDrawer(D3DXVECTOR2(218.0f, 218.0f)));
 	Cursor->LoadTexture("data/TEXTURE/Title/RewardViewer/Cursor.png");
 	Cursor->SetPosition(DefaultCursorPos);
 
-	Text = new TextViewer("data/TEXTURE/Title/RewardViewer/Makinas-4-Square.otf", 50);
+	PlayerName = new TextureDrawer(D3DXVECTOR2(1536.0f, 1536.0f), 6, 6);
+	PlayerName->LoadTexture("data/TEXTURE/Viewer/NameEntryViewer/NameEntryReelViewer/Character.png");
+	PlayerName->SetPosition(DefaultAchieverPos);
+	PlayerName->SetScale(0.5f);
+
+	Text = new TextViewer("Makinas-4-Square", 60);
 	Text->SetPos(480, 980);
 	Text->SetText(RewardText[0]);
+
+	PlayerNameInt.reserve(3);
 }
 
 //=============================================================================
@@ -75,6 +95,26 @@ RewardViewer::~RewardViewer()
 }
 
 //=============================================================================
+// 初期化
+//=============================================================================
+void RewardViewer::Init(void)
+{
+	isPlaying = true;
+
+	//const int NameDigitalMax = 3;
+
+	//int Num = 0;
+	//for (auto &Name : PlayerNameInt)
+	//{
+	//	if (RewardController::Instance()->CheckFirstAchieved((RC::Type)Num))
+	//	{
+	//		// 最初の達成者の名前を取得
+	//	}
+	//	Num++;
+	//}
+}
+
+//=============================================================================
 // 更新
 //=============================================================================
 void RewardViewer::Update()
@@ -83,6 +123,9 @@ void RewardViewer::Update()
 		return;
 
 	//Debug::Begin("RewardTexture");
+	//static D3DXVECTOR3 AchieverPos = FirstAchiever->GetPosition();
+	//static D3DXVECTOR3 UnachievedPos = Unachieved->GetPosition();
+	//static D3DXVECTOR3 PlayerNamePos = PlayerName->GetPosition();
 	//static D3DXVECTOR3 TitlePos = Title->GetPosition();
 	//static D3DXVECTOR3 CursorPosTest = Cursor->GetPosition();
 	//static D3DXVECTOR3 FramePos = RewardFrame->GetPosition();
@@ -93,18 +136,24 @@ void RewardViewer::Update()
 	//Debug::Input("FramePos", FramePos);
 	//Debug::Input("NamePos", NamePos);
 	//Debug::Input("TextPos", TextPos);
+	//Debug::Input("AchieverPos", AchieverPos);
+	//Debug::Input("UnachievedPos", UnachievedPos);
+	//Debug::Input("PlayerNamePos", PlayerNamePos);
 	//Title->SetPosition(TitlePos);
 	//Cursor->SetPosition(CursorPosTest);
 	//RewardFrame->SetPosition(FramePos);
 	//RewardName->SetPosition(NamePos);
+	//FirstAchiever->SetPosition(AchieverPos);
+	//Unachieved->SetPosition(UnachievedPos);
+	//PlayerName->SetPosition(PlayerNamePos);
 	//Text->SetPos((int)TextPos.x, (int)TextPos.y);
 	//Debug::End();
 
 	CursorMove();
 
+	// 終了
 	if (Keyboard::GetTrigger(DIK_X) || GamePad::GetTrigger(0, BUTTON_X))
 	{
-		// 終了
 		isPlaying = false;
 	}
 }
@@ -124,6 +173,16 @@ void RewardViewer::Draw()
 	for (auto &Texture : TextureVec)
 	{
 		Texture->Draw();
+	}
+
+	if (!PlayerNameInt.empty())
+	{
+		for (int i = 0; i < NameDigitalMax; i++)
+		{
+			PlayerName->SetPosition(DefaultAchieverPos + D3DXVECTOR3(CharInterval * i, 0.0f, 0.0f));
+			PlayerName->SetIndex(PlayerNameInt.at(i));
+			PlayerName->Draw();
+		}
 	}
 
 	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
@@ -213,4 +272,30 @@ void RewardViewer::CursorMove(void)
 	RewardName->SetIndex(Index);
 	// 説明のテキスト設定
 	Text->SetText(RewardText[Index]);
+	// 達成者の名前を設定
+	ReceiveName((RC::Type)Index);
+}
+
+//=============================================================================
+// 最初の達成者の名前を取得
+//=============================================================================
+void RewardViewer::ReceiveName(RewardConfig::Type rewardType)
+{
+	PlayerNameInt.clear();
+
+	if (RewardController::Instance()->CheckFirstAchieved(rewardType))
+	{
+		FirstAchiever->SetVisible(true);
+		PlayerName->SetVisible(true);
+		Unachieved->SetVisible(false);
+
+		// コントローラーから達成者の名前を取得
+		//RewardController::Instance()->GetName();
+	}
+	else
+	{
+		FirstAchiever->SetVisible(false);
+		PlayerName->SetVisible(false);
+		Unachieved->SetVisible(true);
+	}
 }

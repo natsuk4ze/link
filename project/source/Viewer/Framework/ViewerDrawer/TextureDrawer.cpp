@@ -545,6 +545,7 @@ void TextureDrawer::SetIndex(int x, int y)
 void TextureDrawer::SetScale(float Scale)
 {
 	Size *= Scale;
+	SetVertex();
 }
 
 //=============================================================================
