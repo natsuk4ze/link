@@ -20,7 +20,7 @@ BeatTimerViewer::BeatTimerViewer()
 	intNum->LoadTexture("data/TEXTURE/Viewer/BeatGameViewer/BeatTimerViewer/Number.png");
 	intNum->size = D3DXVECTOR3(100.0f, 100.0f, 0.0f);
 	intNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	intNum->position = D3DXVECTOR3(SCREEN_WIDTH/10*4.80f, SCREEN_HEIGHT/4, 0.0f);
+	intNum->position = D3DXVECTOR3(SCREEN_WIDTH/10*4.50f, SCREEN_HEIGHT/4, 0.0f);
 	intNum->intervalPosScr = 80.0f;
 	intNum->intervalPosTex = 0.1f;
 	intNum->placeMax = 1;
@@ -32,27 +32,26 @@ BeatTimerViewer::BeatTimerViewer()
 	point->LoadTexture("data/TEXTURE/Viewer/BeatGameViewer/BeatTimerViewer/Point.png");
 	point->size = D3DXVECTOR3(100.0f, 100.0f, 0.0f);
 	point->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	point->position = D3DXVECTOR3(intNum->position.x + intNum->intervalPosScr/2, SCREEN_HEIGHT/4, 0.0f);
+	point->position = D3DXVECTOR3(intNum->position.x + intNum->intervalPosScr/1.50f, SCREEN_HEIGHT / 4, 0.0f);
 	point->MakeVertex();
 
 	//小数部
 	fewNum = new CountViewerDrawer();
 	fewNum->LoadTexture("data/TEXTURE/Viewer/BeatGameViewer/BeatTimerViewer/Number.png");
 	fewNum->size = D3DXVECTOR3(100.0f, 100.0f, 0.0f);
-	fewNum->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	fewNum->position = D3DXVECTOR3(point->position.x + intNum->intervalPosScr/2, SCREEN_HEIGHT/4, 0.0f);
-	fewNum->intervalPosScr = 70.0f;
-	fewNum->intervalPosTex = 0.1f;
 	fewNum->placeMax = 2;
+	fewNum->intervalPosScr = 70.0f;
+	fewNum->position = D3DXVECTOR3(point->position.x + fewNum->placeMax*fewNum->intervalPosScr, SCREEN_HEIGHT / 4, 0.0f);
+	fewNum->intervalPosTex = 0.1f;
 	fewNum->baseNumber = 10;
 	fewNum->MakeVertex();
-	
+
 	//前のテキスト
 	frontText = new BaseViewerDrawer();
 	frontText->LoadTexture("data/TEXTURE/Viewer/BeatGameViewer/BeatTimerViewer/Text.png");
 	frontText->size = D3DXVECTOR3(200.0f, 150.0f, 0.0f);
 	frontText->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	frontText->position = D3DXVECTOR3(intNum->position.x - intNum->intervalPosScr*1.50f, SCREEN_HEIGHT/4 - 5.0f, 0.0f);
+	frontText->position = D3DXVECTOR3(intNum->position.x- intNum->intervalPosScr*intNum->placeMax*1.50f, SCREEN_HEIGHT/4 - 5.0f, 0.0f);
 	frontText->MakeVertex();
 	frontText->SetTexture(1, 2, 0);
 
@@ -61,7 +60,7 @@ BeatTimerViewer::BeatTimerViewer()
 	backText->LoadTexture("data/TEXTURE/Viewer/BeatGameViewer/BeatTimerViewer/Text.png");
 	backText->size = D3DXVECTOR3(200.0f, 150.0f, 0.0f);
 	backText->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	backText->position = D3DXVECTOR3(fewNum->position.x + intNum->intervalPosScr*fewNum->placeMax, SCREEN_HEIGHT/4 - 5.0f, 0.0f);
+	backText->position = D3DXVECTOR3(fewNum->position.x + fewNum->intervalPosScr*fewNum->placeMax/1.50f, SCREEN_HEIGHT/4 - 5.0f, 0.0f);
 	backText->MakeVertex();
 	backText->SetTexture(1, 2, 1);
 }

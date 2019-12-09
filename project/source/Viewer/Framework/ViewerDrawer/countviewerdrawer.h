@@ -15,9 +15,6 @@
 class CountViewerDrawer :public BaseViewerDrawer
 {
 public:
-	CountViewerDrawer();
-	~CountViewerDrawer();
-
 	void DrawCounter(int baseNumber, int parameterBox, int placeMax,
 		float intervalNumberScr, float intervalNumberTex);
 
@@ -34,7 +31,7 @@ public:
 	int placeMax;
 
 	//進数　
-	int baseNumber;
+	int baseNumber = 10;
 
 	//ホップアニメーション関連変数
 	float HopNumber(float sizeY, float initSizeY, float hopValue);
@@ -42,6 +39,10 @@ public:
 	float radian;
 	const float hopSpeed = D3DX_PI / 10;
 
+	CountViewerDrawer(D3DXVECTOR2 position, D3DXVECTOR2 size, const char* path, 
+		float intervalPosScr, float intervalPosTex, int placeMax);
+	CountViewerDrawer();
+	~CountViewerDrawer();
 private:
 	void Draw();
 

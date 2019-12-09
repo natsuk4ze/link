@@ -19,6 +19,7 @@
     <FxCompile Include="Shaders\Sprite.fx" />
     <FxCompile Include="Shaders\StrongBlurFilter.fx" />
     <FxCompile Include="source\Shader\RiverRenderer.fx" />
+    <FxCompile Include="source\Shader\SpaceGridRenderer.fx" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Animation\AnimationManager.cpp" />
@@ -284,7 +285,6 @@
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryReelViewer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntyCursorViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\ResultViewer\ResultScoreViewer.cpp" />
     <ClCompile Include="source\Viewer\NameViewer\NameViewer.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\SelectCamera.cpp" />
@@ -299,6 +299,15 @@
     <ClCompile Include="source\Effect\Game\General\GaugeDebris.cpp" />
     <ClCompile Include="source\Reward\RewardNotifier.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\RewardViewer.cpp" />
+    <ClCompile Include="Framework\Renderer3D\MeshField.cpp" />
+    <ClCompile Include="source\Field\Object\SpaceGrid.cpp" />
+    <ClCompile Include="source\Shader\SpaceGridEffect.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInfoViewer.cpp" />
+    <ClCompile Include="Framework\Resource\FontManager.cpp" />
+    <ClCompile Include="source\Sound\SoundConfig.cpp" />
+    <ClCompile Include="source\Viewer\NameViewer\Name.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\TimeUpViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -570,7 +579,6 @@
     <ClInclude Include="source\Viewer\GameScene\EventViewer\EventTelop.h" />
     <ClInclude Include="source\Viewer\GameScene\Controller\EventViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryCursorViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.h" />
     <ClInclude Include="source\Viewer\GameScene\ParameterContainer\EventViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.h" />
@@ -602,6 +610,15 @@
     <ClInclude Include="source\Effect\Game\General\GaugeDebris.h" />
     <ClInclude Include="source\Viewer\TitleScene\RewardViewer.h" />
     <ClInclude Include="source\Reward\RewardNotifier.h" />
+    <ClInclude Include="Framework\Renderer3D\MeshField.h" />
+    <ClInclude Include="source\Field\Object\SpaceGrid.h" />
+    <ClInclude Include="source\Shader\SpaceGridEffect.h" />
+    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInfoViewer.h" />
+    <ClInclude Include="Framework\Resource\FontManager.h" />
+    <ClInclude Include="source\Sound\SoundConfig.h" />
+    <ClInclude Include="source\Viewer\NameViewer\Name.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\TimeUpViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

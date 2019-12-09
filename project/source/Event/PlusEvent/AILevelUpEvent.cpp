@@ -8,6 +8,7 @@
 #include "AILevelUpEvent.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../Framework/Sound/SoundEffect.h"
+#include "../../Sound/SoundConfig.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -25,9 +26,9 @@ const float UpPercent = 0.1f;
 AILevelUpEvent::AILevelUpEvent() :
 	EventBase(false)
 {
-	GuideViewer::Instance()->SetMessage("AIレベルにボーナスポイントが入りました");
-	GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::FistPump);
-	SE::Play(SE::VoiceType::AIBonus, 1.0);
+	GuideViewer::Instance()->SetData("AIレベルにボーナスポイントが入りました",
+		GuideActor::AnimState::FistPump,
+		SoundConfig::AIBonus);
 }
 
 //=============================================================================

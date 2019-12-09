@@ -16,6 +16,7 @@
 #include "../../Viewer/GameScene/GuideViewer/GuideActor.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../Framework/Sound/SoundEffect.h"
+#include "../../Sound/SoundConfig.h"
 
 enum State
 {
@@ -145,7 +146,7 @@ void CityDestroyEvent::Update()
 
 			guideActor->LookAt(MeteoritePos);
 
-			guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle);
+			guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle, true);
 
 			//カメラの移動
 			D3DXVECTOR3 nextCameraPos = Vector3::Normalize(diff) * 25.0f + MeteoritePos + Vector3::Back * 10.0f;
@@ -251,15 +252,15 @@ void CityDestroyEvent::EventOver(void)
 	// イベントの可否によって再生を変更
 	if (success)
 	{
-		GuideViewer::Instance()->SetMessage("隕石の破壊に成功しました！");
-		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Clapping);
-		SE::Play(SE::VoiceType::MeteorBreakSuccess, 1.0);
+		GuideViewer::Instance()->SetData("隕石の破壊に成功しました！",
+			GuideActor::AnimState::Clapping,
+			SoundConfig::MeteorBreakSuccess);
 	}
 	else
 	{
-		GuideViewer::Instance()->SetMessage("隕石の破壊に失敗しました...");
-		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Defeat);
-		SE::Play(SE::VoiceType::MeteorBreakFailed, 1.0);
+		GuideViewer::Instance()->SetData("隕石の破壊に失敗しました...",
+			GuideActor::AnimState::Defeat,
+			SoundConfig::MeteorBreakFailed);
 	}
 }
 
@@ -281,7 +282,7 @@ void CityDestroyEvent::CountdownStart(void)
 	EventState = State::BeatGameStart;
 
 	//ガイドアクターのアニメーション
-	guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle);
+	guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle, true);
 
 	TaskManager::Instance()->CreateDelayedTask(90, [&]()
 	{

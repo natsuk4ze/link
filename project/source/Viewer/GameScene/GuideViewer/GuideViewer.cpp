@@ -12,6 +12,7 @@
 #include "GuideCamera.h"
 #include "GuideViewerBG.h"
 #include "../../../SubScreen/SubScreen.h"
+#include <algorithm>
 
 #ifdef _DEBUG
 
@@ -43,6 +44,8 @@ void GuideViewer::Init()
 	bg = new GuideViewerBG();
 	filter = new CRTFilter((DWORD)SubScreenSize.x, (DWORD)SubScreenSize.y);
 	callOutViewer = new GuideCallOutViewer();
+	prev = SoundConfig::ID::AIBonus;
+	cntQue = 0;
 }
 
 //=====================================
@@ -76,6 +79,7 @@ void GuideViewer::Update()
 #endif
 
 	camera->Update();
+	UpdateDeque();
 	D3DXVECTOR3 test = camera->UnProjection(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0.0f);
 	D3DXVECTOR3 test2 = camera->UnProjection(D3DXVECTOR3(SubScreenSize.x, SubScreenSize.y, 0.0f), 0.0f);
 	actor->Update();
@@ -142,6 +146,41 @@ void GuideViewer::ChangeAnim(GuideActor::AnimState next)
 }
 
 //=====================================
+// キューにデータをセット
+//=====================================
+void GuideViewer::SetData(const std::string& message, GuideActor::AnimState next, SoundConfig::ID voice)
+{
+	que.push_back(new GuideViewerData(message, next, voice));
+}
+
+//=====================================
+// キューの更新
+//=====================================
+void GuideViewer::UpdateDeque()
+{
+	cntQue++;
+	
+	// 同じボイスが続く場合、削除
+	que.erase(std::unique(que.begin(), que.end(), [](GuideViewerData* a, GuideViewerData* b) {
+		return (a->voice == b->voice);
+	}), que.end());
+
+	if (que.size() != 0 && (cntQue >= 30 || !SE::IsPlaying(prev)))
+	{
+		if (SE::IsPlaying(prev))
+		{
+			SE::Stop(prev);
+		}
+		SetMessage(que[0]->message);
+		ChangeAnim(que[0]->animation);
+		SE::Play(que[0]->voice, SoundConfig::VolumeVoice);
+		prev = que[0]->voice;
+		que.pop_front();
+		cntQue = 0;
+	}
+}
+
+//=====================================
 // 描画可否判定のセット
 //=====================================
 void GuideViewer::SetActive(bool flag)
@@ -150,7 +189,7 @@ void GuideViewer::SetActive(bool flag)
 }
 
 //=====================================
-// ガイドビュアーセット処理
+// メッセージセット
 //=====================================
 void GuideViewer::SetMessage(const std::string &message)
 {

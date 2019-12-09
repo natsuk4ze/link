@@ -107,6 +107,10 @@ private:
 
 	int cntFrame;								//フレームカウンタ
 
+	int step;									//各ステートの現在ステップ
+
+	long long entiretyScore;					//全レベルの合計スコア
+
 	//ポストエフェクト関連
 	BloomController *bloomController;			//ブルームエフェクトのコントローラ
 

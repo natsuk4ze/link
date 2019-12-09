@@ -7,6 +7,7 @@
 #include "LinkLevelUpViewer.h"
 
 #include "../../../../main.h"
+#include <string>
 #include "../../Framework/ViewerAnimater/ViewerAnimater.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
@@ -30,7 +31,6 @@ LinkLevelUpViewer::LinkLevelUpViewer() :
 	laurel = new BaseViewerDrawer();
 	laurel->LoadTexture("data/TEXTURE/Viewer/FieldViewer/LinkLevelUpViewer/Laurel.png");
 	laurel->size = D3DXVECTOR3(300.0f, 300.0f, 0.0f);
-	laurel->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	laurel->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_HEIGHT/2/1.5, 0.0f);
 	laurel->MakeVertex();
 	laurel->SetAlpha(0.0f);
@@ -39,7 +39,6 @@ LinkLevelUpViewer::LinkLevelUpViewer() :
 	num = new CountViewerDrawer();
 	num->LoadTexture("data/TEXTURE/Viewer/FieldViewer/LinkLevelUpViewer/Number.png");
 	num->size = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	num->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	num->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_HEIGHT / 2/1.5, 0.0f);
 	num->intervalPosScr = 70.0f;
 	num->intervalPosTex = 0.1f;
@@ -52,7 +51,6 @@ LinkLevelUpViewer::LinkLevelUpViewer() :
 	plus = new BaseViewerDrawer();
 	plus->LoadTexture("data/TEXTURE/Viewer/FieldViewer/LinkLevelUpViewer/Plus.png");
 	plus->size = D3DXVECTOR3(100.0f, 100.0f, 0.0f);
-	plus->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	plus->position = D3DXVECTOR3(SCREEN_CENTER_X - num->intervalPosScr, SCREEN_HEIGHT / 2 / 1.5, 0.0f);
 	plus->MakeVertex();
 	plus->SetAlpha(0.0f);
@@ -165,9 +163,9 @@ void LinkLevelUpViewer::Draw(void)
 //=============================================================================
 void LinkLevelUpViewer::AppearBG()
 {
-	anim[BG]->SubFade(*plus, 0.0f, 1.0f, 0.50f, OutBack);
-	anim[BG]->SubFade(*laurel, 0.0f, 1.0f, 0.50f, OutBack);
-	anim[BG]->SubFade(*num, 0.0f, 1.0f, 0.50f, OutBack);
+	anim[BG]->SubFade(*plus, 0.0f, 1.0f, 0.30f, OutBack);
+	anim[BG]->SubFade(*laurel, 0.0f, 1.0f, 0.30f, OutBack);
+	anim[BG]->SubFade(*num, 0.0f, 1.0f, 0.30f, OutBack);
 }
 
 //=============================================================================
@@ -175,9 +173,20 @@ void LinkLevelUpViewer::AppearBG()
 //=============================================================================
 void LinkLevelUpViewer::DisAppearBG()
 {
-	anim[BG]->SubFade(*plus, 1.0f, 0.0f, 0.50f, OutBack);
-	anim[BG]->SubFade(*laurel, 1.0f, 0.0f, 0.50f, OutBack);
-	anim[BG]->SubFade(*num, 1.0f, 0.0f, 0.50f, OutBack);
+	anim[BG]->SubFade(*plus, 1.0f, 0.0f, 0.30f, OutBack);
+	anim[BG]->SubFade(*laurel, 1.0f, 0.0f, 0.30f, OutBack);
+	anim[BG]->SubFade(*num, 1.0f, 0.0f, 0.30f, OutBack);
+}
+
+//=============================================================================
+// 数字の桁数に応じて＋の位置と数字の位置を調整する処理
+//=============================================================================
+void LinkLevelUpViewer::SetNumPos(int level)
+{
+	int digit = std::to_string(level).length();
+
+	num->SetPosition(D3DXVECTOR3(SCREEN_CENTER_X + num->intervalPosScr/2*(digit-1), SCREEN_HEIGHT / 2 / 1.5, 0.0f));
+	plus->SetPosition(D3DXVECTOR3((SCREEN_CENTER_X - num->intervalPosScr) - num->intervalPosScr/2*(digit-1), SCREEN_HEIGHT / 2 / 1.5, 0.0f));
 }
 
 //=============================================================================
@@ -188,8 +197,11 @@ void LinkLevelUpViewer::Set(int level, std::function<void()> callback)
 	//パラメータを受け取る
 	parameterBox = level;
 
-	anim[Text]->ResetAnim();
-	anim[BG]->ResetAnim();
+	for (int i = 0; i < AnimLayer::Max; i++)
+	{
+		anim[i]->ResetAnim();
+	}
+	SetNumPos(level);
 
 	//再生状態にする
 	isPlaying = true;

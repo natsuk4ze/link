@@ -15,6 +15,9 @@
 class ResultScoreViewer;
 class ResultViewerParam;
 class BaseViewer;
+class GuideActor;
+class SubScreen;
+class Camera;
 
 //*****************************************************************************
 // クラス定義
@@ -22,6 +25,13 @@ class BaseViewer;
 class ResultViewer
 {
 public:
+	enum ResultAnimation
+	{
+		PlayingIn,
+		Idle,
+		PlayingOut
+	};
+
 	ResultViewer();
 	~ResultViewer();
 
@@ -34,12 +44,24 @@ public:
 	//パラメータの受け取り処理
 	void ReceiveParam(int cityScore,int worldScore,int spaceScore);
 
+	//スコアビューアのアニメーション再生中判定
+	ResultAnimation IsPlayingAnimation() const;
+
 private:
 	std::vector <BaseViewer*> resultViewer;
 	ResultScoreViewer * scoreViewer;
 	ResultViewerParam *viewerParam;
 
 	bool isActive;
+
+	//画面右に表示するロボ
+	GuideActor* actor;
+
+	//ロボを描画するレンダリングターゲット
+	SubScreen* screen;
+
+	//ロボ描画用のカメラ
+	Camera *camera;
 };
 
 #endif

@@ -12,6 +12,8 @@
 #include "PolygonResource.h"
 #include "AnimationResource.h"
 
+#include "FontManager.h"
+
 /**************************************
 ƒ}ƒNƒ’è‹`
 ***************************************/
@@ -269,5 +271,5 @@ void ResourceManager::AllRelease()
 	}
 	skinMeshPool.clear();
 
-
+	FontManager::Instance()->ClearAll();
 }

@@ -24,6 +24,7 @@ class BoardPolygon
 public:
 	//コンストラクタ、デストラクタ
 	BoardPolygon();
+	BoardPolygon(SpriteEffect* effect);
 	~BoardPolygon();
 
 	//描画処理
@@ -37,10 +38,6 @@ public:
 
 	//ディフューズ設定処理
 	void SetDiffuse(const D3DXCOLOR& color);
-
-	void SetAlpha(const float Alpha);
-
-	D3DXCOLOR GetDiffuse(void) const;
 
 protected:
 	LPDIRECT3DDEVICE9 pDevice;

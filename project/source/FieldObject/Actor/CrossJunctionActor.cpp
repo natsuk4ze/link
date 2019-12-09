@@ -118,3 +118,18 @@ void CrossJunctionActor::Rotate(float y)
 		euler.y += 90.0f;
 	}
 }
+
+//=====================================
+// ŠCã”»’èÝ’è
+//=====================================
+void CrossJunctionActor::OnSea(bool state)
+{
+	using Field::Actor::ActorLoader;
+
+	onWater = state;
+
+	if (!onWater)
+		ResourceManager::Instance()->GetMesh(ActorLoader::CrossTag[Field::FieldLevel::World].c_str(), mesh);
+	else
+		ResourceManager::Instance()->GetMesh(ActorLoader::WaterCross.c_str(), mesh);
+}

@@ -17,7 +17,7 @@
 EventMessage::EventMessage()
 {
 	//テキスト
-	text = new TextViewer("data/TEXTURE/Viewer/EventViewer/EventMessage/Text_cinecaption226.ttf",40);
+	text = new TextViewer("しねきゃぷしょん",40);
 	text->SetColor(SET_COLOR_NOT_COLORED);
 	text->SetPos((int)(SCREEN_WIDTH / 10 * 8.6), (int)(SCREEN_HEIGHT*1.5));
 

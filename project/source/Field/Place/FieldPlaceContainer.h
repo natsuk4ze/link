@@ -91,6 +91,9 @@ namespace Field::Model
 		//街作成処理
 		void CreateTown(const PlaceModel* target);
 
+		//アトランティス作成処理
+		std::vector<const PlaceModel*> CreateAtlantis(const PlaceModel* target);
+
 		//パッセンジャー出発ファンクタ設定
 		void SetDepartPassengerFanctor(const TownAction& action);
 

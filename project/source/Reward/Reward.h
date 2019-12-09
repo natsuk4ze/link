@@ -8,10 +8,11 @@
 #ifndef _REWARD_H_
 #define _REWARD_H_
 
-#include "RewardController.h"
+#include "../../main.h"
 #include <string>
-
+#include "RewardConfig.h"
 namespace RC = RewardConfig;
+class Name;
 //**************************************
 // クラス定義
 //**************************************
@@ -22,10 +23,10 @@ public:
 	~Reward();
 
 	// 達成者の名前をセット
-	void SetName(int BuffNo, int AlphabetNo);
+	void SetName(const Name& name);
 
 	// 達成者の名前を確認
-	int GetName(int BuffNo);
+	Name* GetName();
 
 	// 今回のプレイで達成したかチェック
 	bool CheckAchieved();
@@ -46,7 +47,7 @@ protected:
 	RC::Type type;	// リワードの種類
 	bool firstAchieve;				// 最初の到達確認
 	bool achieve;					// 到達確認
-	int name[3];					// 達成者の名前
+	Name* name;						// 達成者の名前
 
 	const int MaxData;
 };

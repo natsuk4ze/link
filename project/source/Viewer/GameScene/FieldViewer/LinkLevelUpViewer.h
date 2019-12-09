@@ -40,28 +40,18 @@ private:
 		Max
 	};
 
-	//テキスト
 	BaseViewerDrawer *text;
-
-	//月桂樹
 	BaseViewerDrawer *laurel;
-
-	//数字
 	CountViewerDrawer *num;
-
-	//＋
 	BaseViewerDrawer *plus;
-
-	//アニメーション
 	ViewerAnimater *anim[AnimLayer::Max];
 
 	//コールバック
 	std::function<void()> Callback;
 
-	//背景出現処理
 	void AppearBG(void);
-	//背景消失処理
 	void DisAppearBG(void);
+	void SetNumPos(int level);
 
 	//パラメータを受け取る箱
 	int parameterBox;

@@ -18,6 +18,7 @@
 #include "../../../Framework/Tween/Tween.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../Framework/Sound/SoundEffect.h"
+#include "../../Sound/SoundConfig.h"
 
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
@@ -239,15 +240,15 @@ void AILevelDecreaseEvent::EventOver(void)
 
 	if (success)
 	{
-		GuideViewer::Instance()->SetMessage("‰F’ˆl‚ÌNU‚ðH‚¢Ž~‚ß‚Ü‚µ‚½");
-		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Salute);
-		SE::Play(SE::VoiceType::UFOSuccess, 1.0);
+		GuideViewer::Instance()->SetData("‰F’ˆl‚ÌNU‚ðH‚¢Ž~‚ß‚Ü‚µ‚½",
+			GuideActor::AnimState::Salute,
+			SoundConfig::UFOSuccess);
 	}
 	else
 	{
-		GuideViewer::Instance()->SetMessage("ƒŠƒ“ƒNƒŒƒxƒ‹‚ª‰º‚ª‚è‚Ü‚·");
-		GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::Pain);
-		SE::Play(SE::VoiceType::UFOFailed, 1.0);
+		GuideViewer::Instance()->SetData("ƒŠƒ“ƒNƒŒƒxƒ‹‚ª‰º‚ª‚è‚Ü‚·",
+			GuideActor::AnimState::Pain,
+			SoundConfig::UFOFailed);
 	}
 }
 
@@ -291,7 +292,7 @@ void AILevelDecreaseEvent::CountdownStart(void)
 	guideActor->SetPosition(TownPos);
 	guideActor->Move(guidePos, 60);
 
-	guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle);
+	guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle, true);
 
 	guideActor->SetActive(true);
 
@@ -330,7 +331,7 @@ void AILevelDecreaseEvent::ReceiveBeatResult(bool IsSuccess)
 		success = false;
 
 		//ƒKƒCƒhƒLƒƒƒ‰‚ÉŽ¸”sƒ‚[ƒVƒ‡ƒ“‚ð‚³‚¹‚é
-		guideActor->ChangeAnim(GuideActor::AnimState::Defeat);
+		guideActor->ChangeAnim(GuideActor::AnimState::Defeat, true);
 	}
 }
 

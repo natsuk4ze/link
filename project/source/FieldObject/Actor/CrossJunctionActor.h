@@ -31,6 +31,8 @@ public:
 	void Uninit() override;
 	void Draw() override;
 	void Rotate(float y) override;
+	
+	void OnSea(bool state) override;
 
 private:
 	std::vector<BaseEmitter*> emitterContainer;

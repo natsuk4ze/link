@@ -100,3 +100,18 @@ void StraightRoadActor::Rotate(float y)
 		emitter->SetRotatition(euler);
 	}
 }
+
+//=====================================
+// ŠCã”»’èÝ’è
+//=====================================
+void StraightRoadActor::OnSea(bool state)
+{
+	using Field::Actor::ActorLoader;
+
+	this->onWater = state;
+
+	if (!onWater)
+		ResourceManager::Instance()->GetMesh(ActorLoader::StraightTag[Field::FieldLevel::World].c_str(), mesh);
+	else
+		ResourceManager::Instance()->GetMesh(ActorLoader::WaterStraight.c_str(), mesh);
+}

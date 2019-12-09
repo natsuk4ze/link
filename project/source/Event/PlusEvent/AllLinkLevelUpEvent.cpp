@@ -8,6 +8,7 @@
 #include "AllLinkLevelUpEvent.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../Framework/Sound/SoundEffect.h"
+#include "../../Sound/SoundConfig.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -40,9 +41,9 @@ const std::string AllLinkLevelUpEvent::SpaceMessage[] = {
 AllLinkLevelUpEvent::AllLinkLevelUpEvent() :
 	EventBase(false)
 {
-	GuideViewer::Instance()->SetMessage("全ての町のリンクレベルが上昇しました");
-	GuideViewer::Instance()->ChangeAnim(GuideActor::AnimState::FistPump);
-	SE::Play(SE::VoiceType::AllLinkLevelUp, 1.0);
+	GuideViewer::Instance()->SetData("全ての町のリンクレベルが上昇しました",
+		GuideActor::AnimState::FistPump,
+		SoundConfig::AllLinkLevelUp);
 }
 
 //=============================================================================

@@ -100,10 +100,7 @@ void GameScene::Init()
 	GuideViewer::Instance()->Init();
 
 	// リワードの作成
-	for (int i = 0; i < RC::Type::Max; i++)
-	{
-		RewardController::Instance()->Create(RC::Type(i), RC::MaxData[i]);
-	}
+	RewardController::Instance()->Create();
 
 	//レベル毎のパーティクルマネージャを選択
 	switch (level)
@@ -191,10 +188,13 @@ void GameScene::Update()
 	//ステートを更新
 	State next = fsm[currentState]->OnUpdate(*this);
 
+#ifdef _DEBUG
+	//imguiが使えないのでdebug用に使ってます（おーはま）
 	if (Keyboard::GetTrigger(DIK_R))
 	{
 		ChangeState(State::Result);
 	}
+#endif
 
 	//カメラ更新
 	ProfilerCPU::Instance()->Begin("Update Camera");
@@ -423,6 +423,10 @@ void GameScene::DebugTool()
 	if (Debug::Button("Add Time"))
 	{
 		remainTime += 30 * 10;
+	}
+	if (Debug::Button("Declease Time"))
+	{
+		remainTime -= 30 * 10;
 	}
 
 	Debug::NewLine();
