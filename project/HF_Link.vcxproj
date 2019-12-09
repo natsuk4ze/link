@@ -319,6 +319,7 @@
     <ClInclude Include="source\Viewer\GameScene\ParameterContainer\ResultViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryReelViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\ResultViewer\ResultScoreViewer.h" />
+    <ClInclude Include="source\Viewer\NameViewer\Name.h" />
     <ClInclude Include="source\Viewer\NameViewer\NameViewer.h" />
     <ClInclude Include="source\Viewer\TitleScene\SelectCamera.h" />
     <ClInclude Include="source\Viewer\TitleScene\SelectLogo.h" />
@@ -604,6 +605,7 @@
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryReelViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\ResultViewer\ResultScoreViewer.cpp" />
+    <ClCompile Include="source\Viewer\NameViewer\Name.cpp" />
     <ClCompile Include="source\Viewer\NameViewer\NameViewer.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\SelectCamera.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\SelectLogo.cpp" />

@@ -100,10 +100,7 @@ void GameScene::Init()
 	GuideViewer::Instance()->Init();
 
 	// リワードの作成
-	for (int i = 0; i < RC::Type::Max; i++)
-	{
-		RewardController::Instance()->Create(RC::Type(i), RC::MaxData[i]);
-	}
+	RewardController::Instance()->Create();
 
 	//レベル毎のパーティクルマネージャを選択
 	switch (level)
