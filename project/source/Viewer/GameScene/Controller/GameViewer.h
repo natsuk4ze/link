@@ -19,6 +19,7 @@ class LevelViewer;
 class GradeUpViewer;
 class GradeFrameViewer;
 class GradeNameViewer;
+class TimeUpViewer;
 
 //*****************************************************************************
 // クラス定義
@@ -54,6 +55,9 @@ public:
 
 	// グレードタイトル演出
 	void SetGradeTitle(int fieldLevel, std::function<void(void)> Callback = nullptr);
+	
+	//タイムアップ演出
+	void SetTimeUp(std::function<void(void)> callback = nullptr);
 
 	std::vector <BaseViewer*> gameViewer;
 
@@ -64,6 +68,7 @@ private:
 	GradeUpViewer *gradeUpViewer;
 	GradeFrameViewer *gradeFrameViewer;
 	GradeNameViewer *gradeNameViewer;
+	TimeUpViewer *timeUpViewer;
 
 	bool isActive;
 };
