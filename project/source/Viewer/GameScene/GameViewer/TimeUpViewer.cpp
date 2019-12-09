@@ -73,4 +73,5 @@ void TimeUpViewer::Set(std::function<void()> callback)
 	active = true;
 	tex->Expand(15, ExpandType::ToLeftRight, EaseType::OutCubic);
 	tex->SetVisible(true);
+	this->callback = callback;
 }

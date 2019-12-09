@@ -60,6 +60,9 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 	// クライアント更新
 	entity.Client->Update();
 
+	//ロジック以外を更新
+	entity.field->UpdateObject();
+
 	//とりあえずエンターが押されたらタイトルへ戻る
 	if (Keyboard::GetTrigger(DIK_RETURN))
 	{

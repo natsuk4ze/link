@@ -8,6 +8,7 @@
 #define _GAME_VIEWER_H_
 
 #include <vector>
+#include <functional>
 
 //*****************************************************************************
 // 前方宣言
@@ -20,6 +21,7 @@ class GradeUpViewer;
 class GradeFrameViewer;
 class GradeNameViewer;
 class TimeUpViewer;
+class GameViewerParam;
 
 //*****************************************************************************
 // クラス定義
