@@ -25,9 +25,12 @@ public:
 	enum Step
 	{
 		ScoreViewerIn,
-		InputWait,
-		NameEntryWait,
-		NameEntryFinish
+		ScoreInputWait,
+		ScoreNameEntryWait,
+		ScoreNameEntryFinish,
+		ScoreViewerOut,
+		AchieveViewerIn,
+		AhieveViewrOu
 	};
 };
 

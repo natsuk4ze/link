@@ -13,11 +13,17 @@
 // 前方宣言
 //*****************************************************************************
 class ResultScoreViewer;
+class ResultAchieveViewer;
 class ResultViewerParam;
 class BaseViewer;
 class GuideActor;
 class SubScreen;
 class Camera;
+
+namespace RewardConfig
+{
+	enum Type : int;
+}
 
 //*****************************************************************************
 // クラス定義
@@ -47,9 +53,13 @@ public:
 	//スコアビューアのアニメーション再生中判定
 	ResultAnimation IsPlayingAnimation() const;
 
+	//実績ビューワセット
+	void SetAchiveViewer(std::vector<RewardConfig::Type>& rewardContainer, std::function<void()> callback = nullptr);
+
 private:
 	std::vector <BaseViewer*> resultViewer;
 	ResultScoreViewer * scoreViewer;
+	ResultAchieveViewer *achieveViewer;
 	ResultViewerParam *viewerParam;
 
 	bool isActive;

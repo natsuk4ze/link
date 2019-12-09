@@ -75,11 +75,11 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 	case Step::ScoreViewerIn:
 		if (entity.resultViewer->IsPlayingAnimation() != ResultViewer::PlayingIn)
 		{
-			entity.step = Step::InputWait;
+			entity.step = Step::ScoreInputWait;
 		}
 		break;
 
-	case Step::InputWait:
+	case Step::ScoreInputWait:
 		if (Keyboard::GetTrigger(DIK_RETURN))
 		{
 			//ランキング更新があったらネームエントリーへ
@@ -87,22 +87,22 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 			if (entity.entiretyScore > lastScore)
 			{
 				entity.nemeEntryViewer->SetActive(true);
-				entity.step = Step::NameEntryWait;
+				entity.step = Step::ScoreNameEntryWait;
 			}
 			//それ以外は達成実績表示へ遷移
 			else
 			{
-				entity.step = Step::NameEntryFinish;
+				entity.step = Step::ScoreNameEntryFinish;
 			}
 		}
 		break;
 
-	case Step::NameEntryWait:
+	case Step::ScoreNameEntryWait:
 		//TODO:ネームエントリーの終了をコールバックで受け取るようにする
-		entity.step = Step::NameEntryFinish;
+		entity.step = Step::ScoreNameEntryFinish;
 		break;
 
-	case Step::NameEntryFinish:
+	case Step::ScoreNameEntryFinish:
 		//とりあえずエンターが押されたらタイトルへ戻る
 		if (Keyboard::GetTrigger(DIK_RETURN))
 		{
