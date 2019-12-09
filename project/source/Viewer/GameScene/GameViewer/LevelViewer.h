@@ -51,7 +51,7 @@ private:
 	BaseViewerDrawer *bg;
 	BaseViewerDrawer *place;
 
-	int currentScene;
+	int currentFieldLevel;
 
 	//数字ホッピング処理
 	void HopNumber(void);

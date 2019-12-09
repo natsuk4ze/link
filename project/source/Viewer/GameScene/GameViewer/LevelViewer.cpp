@@ -11,6 +11,11 @@
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerDrawer/CountViewerDrawer.h"
 
+#ifdef _DEBUG
+#include "../../../../Framework/Input/input.h"
+#include "../../../../Framework/Tool/DebugWindow.h"
+#endif
+
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
@@ -46,6 +51,7 @@ LevelViewer::LevelViewer()
 		circleGuage[i]->SetScale(D3DXVECTOR3(1.0f, 1.0f, 0.0f));
 		circleGuage[i]->SetPosition(D3DXVECTOR3(SCREEN_WIDTH / 10 * 9.30f, SCREEN_HEIGHT / 10 * 1.2f, 0.0f));
 		circleGuage[i]->SetFillStart(circleGuage[i]->Top);
+		circleGuage[i]->SetPercent(0.0f);
 	}
 }
 
@@ -79,6 +85,13 @@ void LevelViewer::Update(void)
 
 	//前フレームのパラメータとしてセット
 	lastParam[LevelAI] = (int)parameterBox[LevelAI];
+
+	if (isCurrentGreaterLast((int)parameterBox[CurrentFieldLevel]))
+	{
+		circleGuage[(int)parameterBox[CurrentFieldLevel]]->SetScale(D3DXVECTOR3(0.750f, 0.750f, 0.0f));
+	}
+
+	Debug::Text("currentFieldLevel:%d", (int)parameterBox[CurrentFieldLevel]);
 }
 
 //=============================================================================
@@ -92,9 +105,9 @@ void LevelViewer::Draw(void)
 	//背景を先に描画
 	bg->Draw();
 
+	circleGuage[(int)parameterBox[CurrentFieldLevel]]->SetPercent(drawingRatioLevel);
 	for (int i = 0; i < guageMax; i++)
 	{
-		circleGuage[i]->SetPercent(drawingRatioLevel);
 		circleGuage[i]->Draw();
 	}
 

@@ -52,6 +52,7 @@ GameViewer::~GameViewer()
 //=============================================================================
 void GameViewer::Update()
 {
+#ifdef _DEBUG
 	Debug::Begin("GradeUp");
 	if (Debug::Button("GradeUp"))
 		gradeUpViewer->SetGradeUp();
@@ -66,6 +67,7 @@ void GameViewer::Update()
 		});
 	});
 	Debug::End();
+#endif
 
 	for (unsigned int i = 0; i < gameViewer.size(); i++)
 	{
