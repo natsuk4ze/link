@@ -85,6 +85,14 @@ void TextViewer::SetText(const std::string & message)
 }
 
 /**************************************
+テキスト取得処理
+***************************************/
+std::string TextViewer::GetText() const
+{
+	return text;
+}
+
+/**************************************
 イタリック使用設定
 ***************************************/
 void TextViewer::UseItalic(bool state)

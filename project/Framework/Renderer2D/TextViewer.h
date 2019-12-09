@@ -26,17 +26,17 @@ public:
 	//水平方向のレイアウト
 	enum class HorizontalAlignment
 	{
-		Left = 0x00,
-		Center = 0x01,
-		Right = 0x02
+		Left = 0x00,		//左寄せ
+		Center = 0x01,		//中央寄せ
+		Right = 0x02		//右寄せ
 	};
 
 	//垂直方向のレイアウト
 	enum class VerticalAlignment
 	{
-		Top = 0x00,
-		Center = 0x04,
-		Bottom = 0x08
+		Top = 0x00,			//上寄せ
+		Center = 0x04,		//中央寄せ
+		Bottom = 0x08		//下寄せ
 	};
 	
 	//コンストラクタ
@@ -58,6 +58,9 @@ public:
 
 	//表示テキストセット処理
 	void SetText(const std::string& message);
+
+	//表示テキスト取得処理
+	std::string GetText() const;
 
 	//イタリック使用設定
 	void UseItalic(bool state);
