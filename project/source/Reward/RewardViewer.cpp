@@ -34,19 +34,6 @@ void RewardViewer::Update()
 {
 	CheckAchieved();
 	achieveViewer->Update();
-
-	Debug::Begin("RewardCheck");
-	Debug::Text("ButtonMashing %s", RewardController::Instance()->CheckAchieved(RC::Type::ButtonMashing) ? "true" : "false");
-	Debug::Text("Destructer %s", RewardController::Instance()->CheckAchieved(RC::Type::Destructer) ? "true" : "false");
-	Debug::Text("Artist %s", RewardController::Instance()->CheckAchieved(RC::Type::Artist) ? "true" : "false");
-	Debug::Text("Linker %s", RewardController::Instance()->CheckAchieved(RC::Type::Linker) ? "true" : "false");
-	Debug::Text("MinusMaster %s", RewardController::Instance()->CheckAchieved(RC::Type::MinusMaster) ? "true" : "false");
-	Debug::Text("PlusMaster %s", RewardController::Instance()->CheckAchieved(RC::Type::PlusMaster) ? "true" : "false");
-	Debug::Text("Pioneer %s", RewardController::Instance()->CheckAchieved(RC::Type::Pioneer) ? "true" : "false");
-	Debug::Text("MasterAI %s", RewardController::Instance()->CheckAchieved(RC::Type::MasterAI) ? "true" : "false");
-	Debug::Text("MinusComplete %s", RewardController::Instance()->CheckAchieved(RC::Type::MinusComplete) ? "true" : "false");
-	Debug::Text("PlusComplete %s", RewardController::Instance()->CheckAchieved(RC::Type::PlusComplete) ? "true" : "false");
-	Debug::End();
 }
 
 //=====================================
@@ -72,7 +59,7 @@ void RewardViewer::CheckAchieved()
 		if (achieved[i])
 			continue;
 
-		if (RewardController::Instance()->CheckAchieved(RC::Type(i)))
+		if (RewardController::Instance()->IsAchieved(RC::Type(i)))
 		{
 			achieved[i] = true;
 			achieveViewer->SetIndex(i);
