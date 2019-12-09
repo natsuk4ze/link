@@ -292,7 +292,7 @@ void AILevelDecreaseEvent::CountdownStart(void)
 	guideActor->SetPosition(TownPos);
 	guideActor->Move(guidePos, 60);
 
-	guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle);
+	guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle, true);
 
 	guideActor->SetActive(true);
 
@@ -331,7 +331,7 @@ void AILevelDecreaseEvent::ReceiveBeatResult(bool IsSuccess)
 		success = false;
 
 		//ガイドキャラに失敗モーションをさせる
-		guideActor->ChangeAnim(GuideActor::AnimState::Defeat);
+		guideActor->ChangeAnim(GuideActor::AnimState::Defeat, true);
 	}
 }
 

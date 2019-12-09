@@ -146,7 +146,7 @@ void CityDestroyEvent::Update()
 
 			guideActor->LookAt(MeteoritePos);
 
-			guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle);
+			guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle, true);
 
 			//カメラの移動
 			D3DXVECTOR3 nextCameraPos = Vector3::Normalize(diff) * 25.0f + MeteoritePos + Vector3::Back * 10.0f;
@@ -282,7 +282,7 @@ void CityDestroyEvent::CountdownStart(void)
 	EventState = State::BeatGameStart;
 
 	//ガイドアクターのアニメーション
-	guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle);
+	guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle, true);
 
 	TaskManager::Instance()->CreateDelayedTask(90, [&]()
 	{
