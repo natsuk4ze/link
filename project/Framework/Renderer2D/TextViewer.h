@@ -22,6 +22,23 @@
 class TextViewer : public GameObject
 {
 public:
+	
+	//水平方向のレイアウト
+	enum class HorizontalAlignment
+	{
+		Left = 0x00,
+		Center = 0x01,
+		Right = 0x02
+	};
+
+	//垂直方向のレイアウト
+	enum class VerticalAlignment
+	{
+		Top = 0x00,
+		Center = 0x04,
+		Bottom = 0x08
+	};
+	
 	//コンストラクタ
 	//fontName : 使用するフォントの名前 ※フォントファイルへのパスではないので注意
 	//size : 表示フォントサイズ
@@ -45,6 +62,12 @@ public:
 	//イタリック使用設定
 	void UseItalic(bool state);
 
+	//水平方向のレイアウト設定
+	void SetHorizontalAlignment(HorizontalAlignment alignment);
+
+	//垂直方向のレイアウト設定
+	void SetVerticalAlignment(VerticalAlignment alignment);
+
 private:
 	//フォントインターフェイス
 	LPD3DXFONT font;
@@ -66,12 +89,19 @@ private:
 	//イタリック使用
 	bool useItalic;
 
+	//レイアウト
+	HorizontalAlignment horizontal;
+	VerticalAlignment vertical;
+
 	//表示文字列
 #if _UNICODE
 	wstring str;
 #else
 	std::string text;
 #endif
+
+	//Rect計算処理
+	RECT GetRect() const;
 };
 
 #endif
