@@ -15,6 +15,8 @@
 #include "../../../Framework/Input/input.h"
 #include "../../../Framework/Transition/TransitionController.h"
 #include "../../../Framework/Network/UDPClient.h"
+#include "../../../Framework/Task/TaskManager.h"
+
 #include "../../Field/FieldController.h"
 
 //=====================================
@@ -22,6 +24,8 @@
 //=====================================
 void GameScene::GameResult::OnStart(GameScene & entity)
 {
+	entity.step = 0;
+
 	// 最下位のスコアを取得
 	entity.Client->GetLastScore();
 
@@ -50,6 +54,15 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	int worldScore = (int)entity.field->GetScore(Field::FieldLevel::World);
 	int spaceScore = (int)entity.field->GetScore(Field::FieldLevel::Space);
 	entity.resultViewer->ReceiveParam(cityScore, worldScore, spaceScore);
+
+	//全体スコアを計算
+	entity.entiretyScore = (int)(powf(10, 8) * spaceScore) + (int)(powf(10, 4) * worldScore) + spaceScore;
+ 
+	//遅延実行
+	TaskManager::Instance()->CreateDelayedTask(150, [&]()
+	{
+		entity.step++;
+	});
 }
 
 //=====================================
@@ -63,18 +76,54 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 	//ロジック以外を更新
 	entity.field->UpdateObject();
 
-	//とりあえずエンターが押されたらタイトルへ戻る
-	if (Keyboard::GetTrigger(DIK_RETURN))
+	switch (entity.step)
 	{
-		TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
+	case Step::ScoreViewerIn:
+
+		break;
+
+	case Step::InputWait:
+		if (Keyboard::GetTrigger(DIK_Z))
 		{
-			entity.level = 0;
-			entity.Clear();
-			entity.SetFieldLevel(0);
-			entity.field->Load();
-			entity.ChangeState(State::Title);
-		});
+			//ランキング更新があったらネームエントリーへ
+			long long lastScore = entity.Client->GetLastScore();
+			if (entity.entiretyScore > lastScore)
+			{
+				entity.nemeEntryViewer->SetActive(true);
+				entity.step = Step::NameEntryWait;
+			}
+			//それ以外は達成実績表示へ遷移
+			else
+			{
+				entity.step = Step::NameEntryFinish;
+			}
+		}
+		break;
+
+	case Step::NameEntryWait:
+		//TODO:ネームエントリーの終了をコールバックで受け取るようにする
+		entity.step = Step::NameEntryFinish;
+		break;
+
+	case Step::NameEntryFinish:
+		//とりあえずエンターが押されたらタイトルへ戻る
+		if (Keyboard::GetTrigger(DIK_RETURN))
+		{
+			TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
+			{
+				entity.level = 0;
+				entity.Clear();
+				entity.SetFieldLevel(0);
+				entity.field->Load();
+				entity.ChangeState(State::Title);
+			});
+		}
+		break;
+
+	default:
+		break;
 	}
+
 
 	return State::Result;
 }
