@@ -424,6 +424,10 @@ void GameScene::DebugTool()
 	{
 		remainTime += 30 * 10;
 	}
+	if (Debug::Button("Declease Time"))
+	{
+		remainTime -= 30 * 10;
+	}
 
 	Debug::NewLine();
 	if (Debug::Button("SendPacket"))

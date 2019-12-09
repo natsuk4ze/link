@@ -7,13 +7,19 @@
 //=====================================
 #include "GameFinish.h"
 #include "../../Field/Camera/FieldCamera.h"
+#include "../../Viewer/GameScene/Controller/GameViewer.h"
+#include "../../Field/FieldController.h"
 
 /**************************************
 入場処理
 ***************************************/
 void GameScene::GameFinish::OnStart(GameScene & entity)
 {
-	//スコアの保存とか終了テロップの再生とかをやる
+	//タイムアップ表示、表示が終わったらリザルトへ遷移
+	entity.gameViewer->SetTimeUp([&]()
+	{
+		entity.ChangeState(GameScene::State::Result);
+	});
 }
 
 /**************************************
@@ -21,7 +27,9 @@ void GameScene::GameFinish::OnStart(GameScene & entity)
 ***************************************/
 GameScene::State GameScene::GameFinish::OnUpdate(GameScene & entity)
 {
-	//今はとりあえず作っただけ
+	//ロジック以外を更新
+	entity.field->UpdateObject();
+
 	State next = State::Finish;
 	return next;
 }

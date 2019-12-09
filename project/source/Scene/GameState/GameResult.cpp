@@ -15,6 +15,8 @@
 #include "../../../Framework/Input/input.h"
 #include "../../../Framework/Transition/TransitionController.h"
 #include "../../../Framework/Network/UDPClient.h"
+#include "../../../Framework/Task/TaskManager.h"
+
 #include "../../Field/FieldController.h"
 
 //=====================================
@@ -22,6 +24,8 @@
 //=====================================
 void GameScene::GameResult::OnStart(GameScene & entity)
 {
+	entity.step = 0;
+
 	// 最下位のスコアを取得
 	entity.Client->GetLastScore();
 
@@ -29,13 +33,13 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	// カメラのモード切り替え
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::Arround);
 
-	// リザルト画面で使用するUIの描画をON
+	// リザルト画面で使用するUIの描画をON(ネームエントリーは最初はオフ）
 	entity.resultViewer->SetActive(true);
-	entity.nemeEntryViewer->SetActive(true);
 
 	// 使用しないUIの描画をOFF
 	entity.field->SetViewerActive(false);
 	entity.gameViewer->SetActive(false);
+	entity.nemeEntryViewer->SetActive(false);
 	GuideViewer::Instance()->SetActive(false);
 	//entity.guideViewer->SetActive(false);
 
@@ -50,6 +54,9 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	int worldScore = (int)entity.field->GetScore(Field::FieldLevel::World);
 	int spaceScore = (int)entity.field->GetScore(Field::FieldLevel::Space);
 	entity.resultViewer->ReceiveParam(cityScore, worldScore, spaceScore);
+
+	//全体スコアを計算
+	entity.entiretyScore = (int)(powf(10, 8) * spaceScore) + (int)(powf(10, 4) * worldScore) + cityScore;
 }
 
 //=====================================
@@ -60,18 +67,60 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 	// クライアント更新
 	entity.Client->Update();
 
-	//とりあえずエンターが押されたらタイトルへ戻る
-	if (Keyboard::GetTrigger(DIK_RETURN))
+	//ロジック以外を更新
+	entity.field->UpdateObject();
+
+	switch (entity.step)
 	{
-		TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
+	case Step::ScoreViewerIn:
+		if (entity.resultViewer->IsPlayingAnimation() != ResultViewer::PlayingIn)
 		{
-			entity.level = 0;
-			entity.Clear();
-			entity.SetFieldLevel(0);
-			entity.field->Load();
-			entity.ChangeState(State::Title);
-		});
+			entity.step = Step::InputWait;
+		}
+		break;
+
+	case Step::InputWait:
+		if (Keyboard::GetTrigger(DIK_RETURN))
+		{
+			//ランキング更新があったらネームエントリーへ
+			long long lastScore = entity.Client->GetLastScore();
+			if (entity.entiretyScore > lastScore)
+			{
+				entity.nemeEntryViewer->SetActive(true);
+				entity.step = Step::NameEntryWait;
+			}
+			//それ以外は達成実績表示へ遷移
+			else
+			{
+				entity.step = Step::NameEntryFinish;
+			}
+		}
+		break;
+
+	case Step::NameEntryWait:
+		//TODO:ネームエントリーの終了をコールバックで受け取るようにする
+		entity.step = Step::NameEntryFinish;
+		break;
+
+	case Step::NameEntryFinish:
+		//とりあえずエンターが押されたらタイトルへ戻る
+		if (Keyboard::GetTrigger(DIK_RETURN))
+		{
+			TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
+			{
+				entity.level = 0;
+				entity.Clear();
+				entity.SetFieldLevel(0);
+				entity.field->Load();
+				entity.ChangeState(State::Title);
+			});
+		}
+		break;
+
+	default:
+		break;
 	}
+
 
 	return State::Result;
 }

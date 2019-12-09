@@ -11,6 +11,7 @@
 #include "../GameViewer/GradeUpViewer.h"
 #include "../GameViewer/GradeFrameViewer.h"
 #include "../GameViewer/GradeNameViewer.h"
+#include "../GameViewer/TimeUpViewer.h"
 #include "../ParameterContainer/GameViewerParam.h"
 #include "GameViewer.h"
 
@@ -28,6 +29,7 @@ GameViewer::GameViewer()
 	gameViewer.push_back(gradeUpViewer = new GradeUpViewer());
 	gameViewer.push_back(gradeFrameViewer = new GradeFrameViewer());
 	gameViewer.push_back(gradeNameViewer = new GradeNameViewer());
+	gameViewer.push_back(timeUpViewer = new TimeUpViewer());
 }
 
 //*****************************************************************************
@@ -63,6 +65,8 @@ void GameViewer::Update()
 			gradeFrameViewer->SlideOut();
 		});
 	});
+	if (Debug::Button("TimeUp"))
+		timeUpViewer->Set();
 	Debug::End();
 
 	for (unsigned int i = 0; i < gameViewer.size(); i++)
@@ -173,4 +177,12 @@ void GameViewer::SetGradeTitle(int fieldLevel, std::function<void(void)> Callbac
 			});
 		});
 	});
+}
+
+//=============================================================================
+// タイムアップ演出
+//=============================================================================
+void GameViewer::SetTimeUp(std::function<void(void)> callback)
+{
+	timeUpViewer->Set(callback);
 }
