@@ -23,12 +23,18 @@
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../Viewer/GameScene/Controller/ResultViewer.h"
 #include "../../Viewer/GameScene/Controller/NameEntryViewer.h"
+#include "../../../Framework/Resource/FontManager.h"
+#include "../../Sound/SoundConfig.h"
 
 /**************************************
 入場処理
 ***************************************/
 void GameScene::GameInit::OnStart(GameScene & entity)
 {	
+	//テキストビューアで使用するフォントをロード
+	FontManager::Instance()->LoadFont("data/FONT/Makinas-4-Square.otf");
+	FontManager::Instance()->LoadFont("data/FONT/Text_cinecaption226.ttf");
+	
 	// イベント用モデル
 	ResourceManager::Instance()->LoadMesh("Meteor", "data/MODEL/Planet/Meteor.x");
 	ResourceManager::Instance()->LoadMesh("UFO", "data/MODEL/UFO/UFO.x");
@@ -67,9 +73,9 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	//NOTE : 今はお試し。本番ではちゃんとタグを用意する
 	BGM::Load("data/SOUND/BGM/Course_Select.wav", 0);
 	BGM::FadeIn(0, 0.1f, 30);
-	for (int i = 0; i < SE::VoiceType::Max; i++)
+	for (int i = 0; i < SoundConfig::Max; i++)
 	{
-		SE::Load(SE::path[i], SE::VoiceType(i));
+		SE::Load(SoundConfig::FilePath[i], SoundConfig::ID(i));
 	}
 
 	//制限時間読み込み

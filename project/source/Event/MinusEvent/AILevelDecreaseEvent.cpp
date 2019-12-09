@@ -18,6 +18,7 @@
 #include "../../../Framework/Tween/Tween.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../Framework/Sound/SoundEffect.h"
+#include "../../Sound/SoundConfig.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -241,13 +242,13 @@ void AILevelDecreaseEvent::EventOver(void)
 	{
 		GuideViewer::Instance()->SetData("宇宙人の侵攻を食い止めました",
 			GuideActor::AnimState::Salute,
-			SE::VoiceType::UFOSuccess);
+			SoundConfig::UFOSuccess);
 	}
 	else
 	{
 		GuideViewer::Instance()->SetData("リンクレベルが下がります",
 			GuideActor::AnimState::Pain,
-			SE::VoiceType::UFOFailed);
+			SoundConfig::UFOFailed);
 	}
 }
 

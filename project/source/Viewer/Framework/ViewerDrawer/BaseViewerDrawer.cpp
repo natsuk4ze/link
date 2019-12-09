@@ -5,14 +5,28 @@
 //
 //=============================================================================
 #include"../../../../main.h"
+#include "../../../../Framework/Resource/ResourceManager.h"
 #include "BaseViewerDrawer.h"
+
+//=============================================================================
+// コンストラクタ
+//=============================================================================
+BaseViewerDrawer::BaseViewerDrawer(D3DXVECTOR2 position, D3DXVECTOR2 size, const char* path)
+{
+	this->position.x = position.x;
+	this->position.y = position.y;
+	this->size.x = size.x;
+	this->size.y = size.y;
+
+	LoadTexture(path);
+	MakeVertex();
+}
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 BaseViewerDrawer::BaseViewerDrawer()
 {
-
 }
 
 //=============================================================================
@@ -21,19 +35,20 @@ BaseViewerDrawer::BaseViewerDrawer()
 BaseViewerDrawer::~BaseViewerDrawer()
 {
 	SAFE_RELEASE(texture);
-}
+}	
 
 //=============================================================================
 // テクスチャの読み込み
 //=============================================================================
 void BaseViewerDrawer::LoadTexture(const char *path)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	ResourceManager::Instance()->GetTexture(path,texture);
 
-	// テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,	// デバイスへのポインタ
-		path,							// ファイルのアドレス
-		&texture);						// 読み込むメモリー
+	//LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+	//D3DXCreateTextureFromFile(pDevice,
+	//	path,							
+	//	&texture);
 }
 
 //=============================================================================
@@ -110,14 +125,23 @@ void BaseViewerDrawer::SetTexture(int divX, int divY, int pattern)
 }
 
 //=============================================================================
+// 座標セット処理
+//=============================================================================
+void BaseViewerDrawer::SetPosition(const D3DXVECTOR3 pos)
+{
+	this->position = pos;
+}
+
+//=============================================================================
 //オブジェクトのアルファ値設定処理　（透過）
 //=============================================================================
 void BaseViewerDrawer::SetAlpha(float alpha)
 {
+	D3DXCOLOR c = vertexWk[3].diffuse;
 	vertexWk[0].diffuse =
 		vertexWk[1].diffuse =
 		vertexWk[2].diffuse =
-		vertexWk[3].diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, alpha);
+		vertexWk[3].diffuse = D3DXCOLOR(c.r, c.g, c.b, alpha);
 }
 
 //=============================================================================

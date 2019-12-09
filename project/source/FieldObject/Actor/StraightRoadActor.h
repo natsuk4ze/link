@@ -30,6 +30,8 @@ public:
 
 	void Rotate(float y) override;
 
+	void OnSea(bool state) override;
+
 private:
 	BaseEmitter * emitter;
 	bool onWater;

@@ -15,6 +15,8 @@
 前方宣言
 ***************************************/
 class InstancingMeshContainer;
+class SkyBox;
+class SpaceGrid;
 
 namespace Field::Actor
 {
@@ -34,8 +36,12 @@ namespace Field::Actor
 
 		bool EnableAtlantis(const FieldPosition& position) const;
 
+		static const char* SkyboxTexName[];
+
 	private:
-		InstancingMeshContainer * tearMesh;		//時空の裂け目のメッシュ
+		InstancingMeshContainer *tearMesh;		//時空の裂け目のメッシュ
+		SkyBox *skybox;
+		SpaceGrid *grid;
 	};
 }
 #endif

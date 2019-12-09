@@ -10,6 +10,27 @@
 #include <functional>
 #include "BaseTextureDrawer.h"
 
+enum ExpandType
+{
+	LeftToRight,
+	RightToLeft,
+	ExpandUpToDown,
+	ExpandDownToUp,
+	ToUpDown,
+	ToLeftRight,
+};
+
+enum CloseType
+{
+	FromUpDown,
+	FromLeftRight,
+	CloseLeftToRight,
+	CloseRightToLeft,
+	CloseUpToDown,
+	CloseDownToUp,
+};
+
+
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
@@ -42,13 +63,19 @@ private:
 	void SetTexture(void);
 	void Expand_LeftToRight(float Time);
 	void Expand_RightToLeft(float Time);
+	void Expand_UpToDown(float Time);
+	void Expand_DownToUp(float Time);
 	void Expand_ToUpDown(float Time);
 	void Expand_ToLeftRight(float Time);
-	void Close_UpDown(float Time);
-	void Close_LeftRight(float Time);
+	void Close_FromUpDown(float Time);
+	void Close_FromLeftRight(float Time);
+	void Close_LeftToRight(float Time);
+	void Close_RightToLeft(float Time);
+	void Close_UpToDown(float Time);
+	void Close_DownToUp(float Time);
 public:
 	// 分割ないテクスチャ用
-	TextureDrawer(D3DXVECTOR2 TextureSize, bool Visible = true);		
+	TextureDrawer(D3DXVECTOR2 TextureSize, bool Visible = true);
 	// 分割あるテクスチャ用
 	TextureDrawer(D3DXVECTOR2 TextureSize, int DevideX, int DevideY, bool Visible = true);
 	~TextureDrawer();
@@ -56,7 +83,7 @@ public:
 	void Update();
 	void SetPosition(D3DXVECTOR3 Pos);
 	void SetIndex(int Index);
-	void SetIndex(int x,int y);
+	void SetIndex(int x, int y);
 	void SetScale(float Scale);
 	void SetScale(float Duration, float Scale, EaseType Type = EaseType::Linear, std::function<void(void)> callback = nullptr);
 	void Expand(float Duration, ExpandType expandType, EaseType Type = EaseType::Linear, std::function<void(void)> callback = nullptr);

@@ -15,10 +15,10 @@ namespace Packet
 {
 	enum
 	{
-		InsertRank,
-		EventLive,
-		LevelUp,
-		GetLastScore,
+		InsertRank,		// ランキング追加
+		EventLive,		// イベント中継
+		LevelUp,		// レベルアップ
+		GetLastScore,	// 最下位のスコアを取得
 	};
 
 	enum
@@ -40,17 +40,5 @@ const int ServerPort = 8080;
 
 // パケットの先頭文字列
 const string PacketHeader = "これはLink専用の通信パケットです";	
-
-////*****************************************************************************
-//// クラス定義
-////*****************************************************************************
-//class PacketConfig
-//{
-//public:
-//	string Header = "これはLink専用の通信パケットです";	// パケットの先頭文字列
-//	int PacketType = 0;									// 起こる事件を種類
-//	string PlayerName = "000102";						// プレイヤーの名前
-//	int AILevel = 0;									// AIレベル
-//};
 
 #endif

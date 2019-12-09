@@ -8,6 +8,7 @@
 #include "TimeRecoveryEvent.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../Framework/Sound/SoundEffect.h"
+#include "../../Sound/SoundConfig.h"
 
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
@@ -32,7 +33,7 @@ TimeRecoveryEvent::TimeRecoveryEvent() :
 {
 	GuideViewer::Instance()->SetData("§ŒÀŠÔ‚ª‰ñ•œ‚µ‚Ü‚µ‚½",
 		GuideActor::AnimState::FistPump,
-		SE::VoiceType::TimeLimitHeal);
+		SoundConfig::TimeLimitHeal);
 }
 
 //=============================================================================

@@ -8,6 +8,7 @@
 #include "LinkLevelDecreaseEvent.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../Framework/Sound/SoundEffect.h"
+#include "../../Sound/SoundConfig.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -42,7 +43,7 @@ LinkLevelDecreaseEvent::LinkLevelDecreaseEvent() :
 {
 	GuideViewer::Instance()->SetData("リンクレベルが下がりました",
 		GuideActor::AnimState::Surprised,
-		SE::VoiceType::LinkLevelDown);
+		SoundConfig::LinkLevelDown);
 }
 
 //=============================================================================

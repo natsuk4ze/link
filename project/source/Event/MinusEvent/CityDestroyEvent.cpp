@@ -16,6 +16,7 @@
 #include "../../Viewer/GameScene/GuideViewer/GuideActor.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../Framework/Sound/SoundEffect.h"
+#include "../../Sound/SoundConfig.h"
 
 enum State
 {
@@ -253,13 +254,13 @@ void CityDestroyEvent::EventOver(void)
 	{
 		GuideViewer::Instance()->SetData("è¦Î‚Ì”j‰ó‚É¬Œ÷‚µ‚Ü‚µ‚½I",
 			GuideActor::AnimState::Clapping,
-			SE::VoiceType::MeteorBreakSuccess);
+			SoundConfig::MeteorBreakSuccess);
 	}
 	else
 	{
 		GuideViewer::Instance()->SetData("è¦Î‚Ì”j‰ó‚É¸”s‚µ‚Ü‚µ‚½...",
 			GuideActor::AnimState::Defeat,
-			SE::VoiceType::MeteorBreakFailed);
+			SoundConfig::MeteorBreakFailed);
 	}
 }
 

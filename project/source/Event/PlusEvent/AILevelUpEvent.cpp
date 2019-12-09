@@ -8,6 +8,7 @@
 #include "AILevelUpEvent.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../Framework/Sound/SoundEffect.h"
+#include "../../Sound/SoundConfig.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -27,7 +28,7 @@ AILevelUpEvent::AILevelUpEvent() :
 {
 	GuideViewer::Instance()->SetData("AIレベルにボーナスポイントが入りました",
 		GuideActor::AnimState::FistPump,
-		SE::VoiceType::AIBonus);
+		SoundConfig::AIBonus);
 }
 
 //=============================================================================

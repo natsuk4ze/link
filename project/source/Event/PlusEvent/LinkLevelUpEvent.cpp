@@ -8,6 +8,7 @@
 #include "LinkLevelUpEvent.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../Framework/Sound/SoundEffect.h"
+#include "../../Sound/SoundConfig.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -32,7 +33,7 @@ LinkLevelUpEvent::LinkLevelUpEvent() :
 {
 	GuideViewer::Instance()->SetData("町のリンクレベルが上昇しました",
 		GuideActor::AnimState::FistPump,
-		SE::VoiceType::LinkLevelUp);
+		SoundConfig::LinkLevelUp);
 }
 
 //=============================================================================

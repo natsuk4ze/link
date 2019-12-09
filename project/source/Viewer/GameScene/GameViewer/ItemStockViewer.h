@@ -27,6 +27,7 @@ public:
 
 	void Update(void);
 	void Draw(void);
+	void SetInDrawing(bool Flag) { this->InDrawing = Flag; };
 
 	//ƒpƒ‰ƒ[ƒ^‚ğó‚¯‚Æ‚é” 
 	int parameterBox;
@@ -36,6 +37,7 @@ private:
 	BaseViewerDrawer *icon;
 	CountViewerDrawer *num;
 	ViewerAnimater *anim;
+	bool InDrawing;
 };
 
 

@@ -6,8 +6,9 @@
 //=============================================================================
 #include "../../../../main.h"
 #include "../NameEntryViewer/NameEntryReelViewer.h"
-#include "../NameEntryViewer/NameEntryCursorViewer.h"
 #include "../NameEntryViewer/NameEntryInput.h"
+#include "../NameEntryViewer/NameEntryBgViewer.h"
+#include "../NameEntryViewer/NameEntryInfoViewer.h"
 #include "NameEntryViewer.h"
 
 #ifdef _DEBUG
@@ -19,13 +20,14 @@
 // コンストラクタ
 //*****************************************************************************
 NameEntryViewer::NameEntryViewer():
-	entryName(),
+	entryNameID(),
 	reelCnt()
 {
 	input = new NameEntryInput();
 
+	nameEntryViewer.push_back(bgViewer = new NameEntryBgViewer());
+	nameEntryViewer.push_back(infoViewer = new NameEntryInfoViewer());
 	nameEntryViewer.push_back(reelViewer = new NameEntryReelViewer());
-	nameEntryViewer.push_back(cursorViewer = new NameEntryCursorViewer());
 }
 
 //*****************************************************************************
@@ -54,7 +56,10 @@ void NameEntryViewer::Update()
 		return;
 
 #ifdef _DEBUG
-	Debug::Text(entryName.c_str());
+	for (int i = 0; i < entryNameMax; i++)
+	{
+		Debug::Text("nameID%d", entryNameID[i]);
+	}
 #endif
 
 	MoveCursor();
@@ -99,25 +104,15 @@ void NameEntryViewer::SetEntryName()
 	//エンターボタンが押された
 	if (input->GetFinishedEntry())
 	{
-		const int charTypeMax = 36;
-
-		//文字テーブル
-		std::string charTable[charTypeMax] =
-		{
-			"A","B","C","D","E","F",
-			"G","H","I","J","K","L",
-			"M","N","O","P","Q","R",
-			"S","T","U","V","W","X",
-			"Y","Z","!","?","*",".",
-			"/","\\","#","\"","%%","&"
-		};
-
-		entryName = {};
-
+		//初期化して
 		for (int i = 0; i < entryNameMax; i++)
 		{
-			int id = reelViewer->GetReelChar()[i];
-			entryName += charTable[id];
+			entryNameID[i] = {};
+		}
+		//ID格納
+		for (int i = 0; i < entryNameMax; i++)
+		{
+			entryNameID[i] = reelViewer->GetReelChar()[i];
 		}
 	}
 }
@@ -131,7 +126,6 @@ void NameEntryViewer::MoveCursor()
 	if (input->GetCursorRight())
 	{
 		if (reelCnt >= entryNameMax - 1) return;
-		cursorViewer->MoveCursorRight();
 		reelCnt++;
 	}
 
@@ -139,7 +133,6 @@ void NameEntryViewer::MoveCursor()
 	if (input->GetCursorLeft())
 	{
 		if (reelCnt <= 0) return;
-		cursorViewer->MoveCursorLeft();
 		reelCnt--;
 	}
 }
@@ -170,9 +163,9 @@ void NameEntryViewer::SetActive(bool flag)
 }
 
 //=============================================================================
-// 登録名取得処理
+// 登録名ID取得処理（文字テーブルの0～35までの値がentryNameMax個の配列）
 //=============================================================================
-std::string NameEntryViewer::GetEntryName()
+int* NameEntryViewer::GetEntryNameID()
 {
-	return entryName;
+	return entryNameID;
 }

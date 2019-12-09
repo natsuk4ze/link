@@ -14,7 +14,8 @@
 //*****************************************************************************
 class NameEntryInput;
 class NameEntryReelViewer;
-class NameEntryCursorViewer;
+class NameEntryBgViewer;
+class NameEntryInfoViewer;
 class BaseViewer;
 
 //*****************************************************************************
@@ -32,16 +33,15 @@ public:
 	//アクティブ状態をセット
 	void SetActive(bool flag);
 
-	std::string GetEntryName();
+	//登録名ID取得処理（文字テーブルの0～35までの値がentryNameMax個の配列）
+	int* GetEntryNameID();
 
 private:
 	std::vector <BaseViewer*> nameEntryViewer;
 	NameEntryInput *input;
 	NameEntryReelViewer *reelViewer;
-	NameEntryCursorViewer *cursorViewer;
-
-	//登録名
-	std::string entryName;
+	NameEntryBgViewer *bgViewer;
+	NameEntryInfoViewer *infoViewer;
 
 	//カーソル移動処理
 	void MoveCursor(void);
@@ -54,6 +54,9 @@ private:
 
 	//登録できる名前の最大数
 	static const int entryNameMax = 3;
+
+	//登録名の文字テーブルID
+	int entryNameID[entryNameMax];
 
 	//リールカウント
 	int reelCnt;

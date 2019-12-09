@@ -22,7 +22,7 @@
 GuideCallOutViewer::GuideCallOutViewer()
 {
 	//テキスト
-	text = new TextViewer("data/TEXTURE/Viewer/GuideViewer/GuideCallOutViewer/Text_cinecaption226.ttf", 25);
+	text = new TextViewer("しねきゃぷしょん", 25);
 	text->SetColor(SET_COLOR_BLACK);
 	text->SetPos((int)(SCREEN_WIDTH / 10 * 1.5f), (int)(SCREEN_HEIGHT/10*9.1f));
 

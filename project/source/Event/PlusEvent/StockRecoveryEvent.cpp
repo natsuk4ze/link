@@ -8,6 +8,7 @@
 #include "StockRecoveryEvent.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../Framework/Sound/SoundEffect.h"
+#include "../../Sound/SoundConfig.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -42,7 +43,7 @@ StockRecoveryEvent::StockRecoveryEvent() :
 {
 	GuideViewer::Instance()->SetData("ドリルのストックが回復しました",
 		GuideActor::AnimState::Cheering,
-		SE::VoiceType::StockRecovery);
+		SoundConfig::StockRecovery);
 }
 
 //=============================================================================
