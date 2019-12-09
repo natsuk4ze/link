@@ -101,7 +101,7 @@ void TitleViewer::SetNextScene(GameScene& entity)
 		else if (selectViewer->CheckNextScene() == 1)
 		{
 			// トロフィー確認
-			rewardViewer->Init();
+			rewardViewer->isPlaying = true;
 		}
 		else if (selectViewer->CheckNextScene() == 2)
 		{

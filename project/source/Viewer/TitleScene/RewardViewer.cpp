@@ -8,6 +8,7 @@
 #include "RewardViewer.h"
 #include "../../Viewer/Framework/ViewerDrawer/TextureDrawer.h"
 #include "../../Reward/RewardController.h"
+#include "../../Viewer/NameViewer/Name.h"
 
 #include "../../../Framework/Task/TaskManager.h"
 #include "../../../Framework/Renderer2D/TextViewer.h"
@@ -92,26 +93,6 @@ RewardViewer::~RewardViewer()
 {
 	Utility::DeleteContainer(TextureVec);
 	SAFE_DELETE(Text);
-}
-
-//=============================================================================
-// 初期化
-//=============================================================================
-void RewardViewer::Init(void)
-{
-	isPlaying = true;
-
-	//const int NameDigitalMax = 3;
-
-	//int Num = 0;
-	//for (auto &Name : PlayerNameInt)
-	//{
-	//	if (RewardController::Instance()->CheckFirstAchieved((RC::Type)Num))
-	//	{
-	//		// 最初の達成者の名前を取得
-	//	}
-	//	Num++;
-	//}
 }
 
 //=============================================================================
@@ -283,14 +264,17 @@ void RewardViewer::ReceiveName(RewardConfig::Type rewardType)
 {
 	PlayerNameInt.clear();
 
-	if (RewardController::Instance()->CheckFirstAchieved(rewardType))
+	if (RewardController::Instance()->IsFirstAchieved(rewardType))
 	{
 		FirstAchiever->SetVisible(true);
 		PlayerName->SetVisible(true);
 		Unachieved->SetVisible(false);
 
 		// コントローラーから達成者の名前を取得
-		//RewardController::Instance()->GetName();
+		Name* name = RewardController::Instance()->GetName(rewardType);
+		PlayerNameInt.push_back(name->Get(0));
+		PlayerNameInt.push_back(name->Get(1));
+		PlayerNameInt.push_back(name->Get(2));
 	}
 	else
 	{

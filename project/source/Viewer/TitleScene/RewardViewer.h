@@ -39,7 +39,6 @@ private:
 public:
 	RewardViewer();
 	~RewardViewer();
-	void Init(void);
 	void Update(void);
 	void Draw(void);
 };
