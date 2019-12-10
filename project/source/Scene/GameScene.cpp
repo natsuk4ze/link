@@ -35,7 +35,7 @@
 #include "../Viewer/TitleScene/TitleViewer.h"
 #include "../Reward/RewardConfig.h"
 #include "../Reward/RewardController.h"
-#include "../Reward/RewardViewer.h"
+#include "../Reward/RewardNotifier.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
@@ -50,6 +50,7 @@
 #include "GameState/GameResult.h"
 #include "GameState\GameTransitionOut.h"
 #include "GameState\GameTransitionIn.h"
+#include "GameState\GameAchieveResult.h"
 
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Sound/BackgroundMusic.h"
@@ -94,16 +95,13 @@ void GameScene::Init()
 	resultViewer = new ResultViewer();
 	nemeEntryViewer = new NameEntryViewer();
 	titleViewer = new TitleViewer();
-	rewardViewer = new RewardViewer();
+	rewardNotifier = new RewardNotifier();
 
 	// ガイドビュアーの初期化
 	GuideViewer::Instance()->Init();
 
 	// リワードの作成
-	for (int i = 0; i < RC::Type::Max; i++)
-	{
-		RewardController::Instance()->Create(RC::Type(i), RC::MaxData[i]);
-	}
+	RewardController::Instance()->Create();
 
 	//レベル毎のパーティクルマネージャを選択
 	switch (level)
@@ -134,6 +132,7 @@ void GameScene::Init()
 	fsm[State::Result] = new GameResult();
 	fsm[State::TransitionOut] = new GameTransitionOut();
 	fsm[State::TransitionIn] = new GameTransitionIn();
+	fsm[State::AchieveResult] = new GameAchieveResult();
 
 	//デリゲートを作成して設定
 	auto onBuildRoad = std::bind(&GameScene::OnBuildRoad, this, std::placeholders::_1);
@@ -166,7 +165,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(resultViewer);
 	SAFE_DELETE(nemeEntryViewer);
 	SAFE_DELETE(titleViewer);
-	SAFE_DELETE(rewardViewer);
+	SAFE_DELETE(rewardNotifier);
 
 	// ガイドビュアーの削除
 	GuideViewer::Instance()->Uninit();
@@ -224,7 +223,7 @@ void GameScene::Update()
 	resultViewer->Update();
 	nemeEntryViewer->Update();
 	titleViewer->Update();
-	rewardViewer->Update();
+	rewardNotifier->Update();
 
 	//パーティクル更新
 	ProfilerCPU::Instance()->Begin("Update Particle");
@@ -301,7 +300,7 @@ void GameScene::Draw()
 	resultViewer->Draw();
 	nemeEntryViewer->Draw();
 	titleViewer->Draw();
-	rewardViewer->Draw();
+	rewardNotifier->Draw();
 
 	//*******別ウインドウを作成するため最後*******
 	GuideViewer::Instance()->Draw();
@@ -427,6 +426,10 @@ void GameScene::DebugTool()
 	{
 		remainTime += 30 * 10;
 	}
+	if (Debug::Button("Declease Time"))
+	{
+		remainTime -= 30 * 10;
+	}
 
 	Debug::NewLine();
 	if (Debug::Button("SendPacket"))
@@ -482,6 +485,13 @@ void GameScene::DebugTool()
 	Debug::Slider("threthold", threthold, Vector3::Zero, Vector3::One);
 	bloomController->SetPower(power.x, power.y, power.z);
 	bloomController->SetThrethold(threthold.x, threthold.y, threthold.z);
+
+	Debug::NewLine();
+	Debug::Text("Achieve");
+	Debug::CheckBox("Use DebugAchieve", debugReward);
+	for (int i = 0; i < 10; i += 2)
+	{
+	}
 
 	Debug::End();
 }
@@ -572,6 +582,6 @@ void GameScene::Clear()
 	Debug::Log("Clear Event : %f", ProfilerCPU::CalcElapsed(start, end));
 
 	// リワードをリセット
-	rewardViewer->ResetAchieved();
+	rewardNotifier->ResetAchieved();
 	RewardController::Instance()->ResetAllRewardData();
 }

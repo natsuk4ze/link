@@ -41,7 +41,7 @@ namespace Field
 	***************************************/
 	bool FieldController::FieldInput::GetBuildTrigger()
 	{
-		if (Keyboard::GetTrigger(DIK_Z))
+		if (Keyboard::GetTrigger(DIK_Z) || GamePad::GetTrigger(0, BUTTON_C))
 			return true;
 
 		return false;
@@ -52,7 +52,7 @@ namespace Field
 	***************************************/
 	bool FieldController::FieldInput::GetDevelopTrigger()
 	{
-		if (Keyboard::GetTrigger(DIK_X))
+		if (Keyboard::GetTrigger(DIK_X) || GamePad::GetTrigger(0, BUTTON_X))
 			return true;
 
 		return false;
@@ -64,7 +64,7 @@ namespace Field
 	bool FieldController::FieldInput::GetBuildCancel()
 	{
 		//Xキーのトリガー入力を検出したらキャンセル
-		if (Keyboard::GetTrigger(DIK_X))
+		if (Keyboard::GetTrigger(DIK_X) || GamePad::GetTrigger(0, BUTTON_X))
 			return true;
 
 		return false;
@@ -76,7 +76,7 @@ namespace Field
 	bool FieldController::FieldInput::GetDevelopCancel()
 	{
 		//Zキーのトリガーを検出したらキャンセル
-		if (Keyboard::GetTrigger(DIK_Z))
+		if (Keyboard::GetTrigger(DIK_Z) || GamePad::GetTrigger(0, BUTTON_C))
 			return true;
 
 		return false;
@@ -153,7 +153,7 @@ namespace Field
 	bool FieldController::FieldInput::CheckRotateCamera()
 	{
 		//とりあえずCキーで切り替え
-		return Keyboard::GetTrigger(DIK_C);
+		return Keyboard::GetTrigger(DIK_C) || GamePad::GetTrigger(0, BUTTON_A);
 	}
 
 	/**************************************

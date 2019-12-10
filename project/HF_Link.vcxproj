@@ -93,11 +93,13 @@
     <ClInclude Include="Framework\Renderer3D\BoardPolygon.h" />
     <ClInclude Include="Framework\Renderer3D\InstancingMeshContainer.h" />
     <ClInclude Include="Framework\Renderer3D\MeshContainer.h" />
+    <ClInclude Include="Framework\Renderer3D\MeshField.h" />
     <ClInclude Include="Framework\Renderer3D\MophingMeshContainer.h" />
     <ClInclude Include="Framework\Renderer3D\SkyBox.h" />
     <ClInclude Include="Framework\Renderer3D\TransformObject.h" />
     <ClInclude Include="Framework\Renderer3D\Viewer3D.h" />
     <ClInclude Include="Framework\Resource\AnimationResource.h" />
+    <ClInclude Include="Framework\Resource\FontManager.h" />
     <ClInclude Include="Framework\Resource\MeshResource.h" />
     <ClInclude Include="Framework\Resource\PolygonResource.h" />
     <ClInclude Include="Framework\Resource\ResourceManager.h" />
@@ -225,6 +227,7 @@
     <ClInclude Include="source\Field\Controller\FieldInput.h" />
     <ClInclude Include="source\Field\Object\FieldSkyBox.h" />
     <ClInclude Include="source\Field\Object\SpaceBackGroundContainer.h" />
+    <ClInclude Include="source\Field\Object\SpaceGrid.h" />
     <ClInclude Include="source\Field\Object\WaterHeightController.h" />
     <ClInclude Include="source\Field\Object\WorldBackGroundContainer.h" />
     <ClInclude Include="source\Field\PlaceActorController.h" />
@@ -245,12 +248,13 @@
     <ClInclude Include="source\Reward\AchieveViewer.h" />
     <ClInclude Include="source\Reward\MaxCheckReward.h" />
     <ClInclude Include="source\Reward\RewardConfig.h" />
-    <ClInclude Include="source\Reward\RewardViewer.h" />
+    <ClInclude Include="source\Reward\RewardNotifier.h" />
     <ClInclude Include="source\Reward\StateReward.h" />
     <ClInclude Include="source\Reward\CountupReward.h" />
     <ClInclude Include="source\Reward\Reward.h" />
     <ClInclude Include="source\Reward\RewardController.h" />
     <ClInclude Include="source\Scene\GameScene.h" />
+    <ClInclude Include="source\Scene\GameState\GameAchieveResult.h" />
     <ClInclude Include="source\Scene\GameState\GameFarView.h" />
     <ClInclude Include="source\Scene\GameState\GameFinish.h" />
     <ClInclude Include="source\Scene\GameState\GameIdle.h" />
@@ -268,7 +272,9 @@
     <ClInclude Include="source\Scene\TitleScene.h" />
     <ClInclude Include="source\Score\Score.h" />
     <ClInclude Include="source\Shader\RiverEffect.h" />
+    <ClInclude Include="source\Shader\SpaceGridEffect.h" />
     <ClInclude Include="source\Shader\WhirlPoolEffect.h" />
+    <ClInclude Include="source\Sound\SoundConfig.h" />
     <ClInclude Include="source\SubScreen\SubScreen.h" />
     <ClInclude Include="source\Viewer\Framework\BaseViewer.h" />
     <ClInclude Include="source\Viewer\Framework\ViewerAnimater\ViewerAnimater.h" />
@@ -293,6 +299,7 @@
     <ClInclude Include="source\Viewer\GameScene\GameViewer\GradeFrameViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\GradeNameViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\GradeUpViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\GameViewer\TimeUpViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.h" />
@@ -312,8 +319,11 @@
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.h" />
     <ClInclude Include="source\Viewer\GameScene\ParameterContainer\ResultViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryReelViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\ResultViewer\ResultAchieveViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\ResultViewer\ResultScoreViewer.h" />
+    <ClInclude Include="source\Viewer\NameViewer\Name.h" />
     <ClInclude Include="source\Viewer\NameViewer\NameViewer.h" />
+    <ClInclude Include="source\Viewer\TitleScene\RewardViewer.h" />
     <ClInclude Include="source\Viewer\TitleScene\SelectCamera.h" />
     <ClInclude Include="source\Viewer\TitleScene\SelectLogo.h" />
     <ClInclude Include="source\Viewer\TitleScene\SelectViewer.h" />
@@ -385,11 +395,13 @@
     <ClCompile Include="Framework\Renderer3D\BoardPolygon.cpp" />
     <ClCompile Include="Framework\Renderer3D\InstancingMeshContainer.cpp" />
     <ClCompile Include="Framework\Renderer3D\MeshContainer.cpp" />
+    <ClCompile Include="Framework\Renderer3D\MeshField.cpp" />
     <ClCompile Include="Framework\Renderer3D\MophingMeshContainer.cpp" />
     <ClCompile Include="Framework\Renderer3D\SkyBox.cpp" />
     <ClCompile Include="Framework\Renderer3D\TransformObject.cpp" />
     <ClCompile Include="Framework\Renderer3D\Viewer3D.cpp" />
     <ClCompile Include="Framework\Resource\AnimationResource.cpp" />
+    <ClCompile Include="Framework\Resource\FontManager.cpp" />
     <ClCompile Include="Framework\Resource\MeshResource.cpp" />
     <ClCompile Include="Framework\Resource\PolygonResource.cpp" />
     <ClCompile Include="Framework\Resource\ResourceManager.cpp" />
@@ -511,6 +523,7 @@
     <ClCompile Include="source\Field\Controller\FieldInput.cpp" />
     <ClCompile Include="source\Field\Object\FieldSkyBox.cpp" />
     <ClCompile Include="source\Field\Object\SpaceBackGroundContainer.cpp" />
+    <ClCompile Include="source\Field\Object\SpaceGrid.cpp" />
     <ClCompile Include="source\Field\Object\WaterHeightController.cpp" />
     <ClCompile Include="source\Field\Object\WorldBackGroundContainer.cpp" />
     <ClCompile Include="source\Field\PlaceActorController.cpp" />
@@ -528,12 +541,13 @@
     <ClCompile Include="source\ModelView\ModelViewCamera.cpp" />
     <ClCompile Include="source\Reward\AchieveViewer.cpp" />
     <ClCompile Include="source\Reward\MaxCheckReward.cpp" />
-    <ClCompile Include="source\Reward\RewardViewer.cpp" />
+    <ClCompile Include="source\Reward\RewardNotifier.cpp" />
     <ClCompile Include="source\Reward\StateReward.cpp" />
     <ClCompile Include="source\Reward\CountupReward.cpp" />
     <ClCompile Include="source\Reward\Reward.cpp" />
     <ClCompile Include="source\Reward\RewardController.cpp" />
     <ClCompile Include="source\Scene\GameScene.cpp" />
+    <ClCompile Include="source\Scene\GameState\GameAchieveResult.cpp" />
     <ClCompile Include="source\Scene\GameState\GameFarView.cpp" />
     <ClCompile Include="source\Scene\GameState\GameFinish.cpp" />
     <ClCompile Include="source\Scene\GameState\GameIdle.cpp" />
@@ -551,7 +565,9 @@
     <ClCompile Include="source\Scene\TitleScene.cpp" />
     <ClCompile Include="source\Score\Score.cpp" />
     <ClCompile Include="source\Shader\RiverEffect.cpp" />
+    <ClCompile Include="source\Shader\SpaceGridEffect.cpp" />
     <ClCompile Include="source\Shader\WhirlPoolEffect.cpp" />
+    <ClCompile Include="source\Sound\SoundConfig.cpp" />
     <ClCompile Include="source\SubScreen\SubScreen.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerAnimater\ViewerAnimater.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerDrawer\BaseTextureDrawer.cpp" />
@@ -583,6 +599,7 @@
     <ClCompile Include="source\Viewer\GameScene\GameViewer\LevelViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\ItemStockViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\TimerViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\GameViewer\TimeUpViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideActor.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideCamera.cpp" />
@@ -591,8 +608,11 @@
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryReelViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\ResultViewer\ResultAchieveViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\ResultViewer\ResultScoreViewer.cpp" />
+    <ClCompile Include="source\Viewer\NameViewer\Name.cpp" />
     <ClCompile Include="source\Viewer\NameViewer\NameViewer.cpp" />
+    <ClCompile Include="source\Viewer\TitleScene\RewardViewer.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\SelectCamera.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\SelectLogo.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\SelectViewer.cpp" />
@@ -602,6 +622,12 @@
   <ItemGroup>
     <None Include="imgui.ini" />
     <FxCompile Include="Shaders\MophingMesh.fx">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">2.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">2.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="source\Shader\SpaceGridRenderer.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">2.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Effect</ShaderType>

@@ -189,6 +189,12 @@ namespace Field::Actor
 		loader.LoadConfig();
 		loader.LoadResource();
 
+		//グリッド用の板ポリゴンを作成
+		ResourceManager::Instance()->MakePolygon("SpaceGrid",
+			"data/TEXTURE/Field/spaceGrid.png",
+			{ 250.0f, 250.0f },
+			{ 0.02f, 0.02f });
+
 		PassengerController::LoadResource();
 	}
 
@@ -380,7 +386,7 @@ namespace Field::Actor
 	/**************************************
 	アトランティス出現
 	***************************************/
-	void PlaceActorController::SetAtlantis(const Model::PlaceModel * place)
+	void PlaceActorController::SetAtlantis(const Model::PlaceModel * place, std::vector<const Model::PlaceModel*>& container)
 	{
 		//街作成
 		const D3DXVECTOR3 InitOffset = Vector3::Down * 10.0f;
@@ -399,6 +405,26 @@ namespace Field::Actor
 
 		//パッセンジャー側に地形の変化を通知
 		passengerController->RewriteMap(place->GetPosition(), PassengerController::Geography::Ground);
+
+		//アトランティスの周囲8マスのアクターを変化
+		for (auto&& place : container)
+		{
+			unsigned placeID = place->ID();
+			if (actorContainer.count(placeID) == 0)
+				continue;
+
+			//渦潮だった箇所のアクターを削除
+			if (place->IsType(Model::PlaceType::None))
+			{
+				EraseFromContainer(placeID);
+			}
+			//道、交差点を陸上判定に変更
+			else
+			{
+				actorContainer[placeID]->OnSea(false);
+			}
+		}
+		
 	}
 
 	/**************************************

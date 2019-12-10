@@ -70,11 +70,6 @@ GuideActor::GuideActor() :
 		{
 			anim->SetFinishTransition(AnimState(i), AnimState(i));
 		}
-		//YeahとDefeatも続ける
-		else if (i == Yeah || i == Defeat)
-		{
-			anim->SetFinishTransition(AnimState(i), AnimState(i));
-		}
 		// とりあえず全部アニメーション終了したらアイドルに戻す
 		else
 		{
@@ -133,8 +128,18 @@ void GuideActor::LookAt(const D3DXVECTOR3 & pos)
 //=====================================
 // アニメーション切り替え
 //=====================================
-void GuideActor::ChangeAnim(AnimState next)
+void GuideActor::ChangeAnim(AnimState next, bool animLoop)
 {
+	//ループ設定
+	if (animLoop)
+	{
+		anim->SetFinishTransition(next, next);
+	}
+	else
+	{
+		anim->SetFinishTransition(next, AnimState::Idle);
+	}
+
 	anim->ChangeAnim((UINT)next, true);
 }
 
@@ -174,7 +179,7 @@ void GuideActor::StartPunsh()
 void GuideActor::EndPunch(bool result)
 {
 	AnimState next = result ? AnimState::Yeah : AnimState::Defeat;
-	ChangeAnim(next);
+	ChangeAnim(next, true);
 
 	if (punchEmitter != nullptr)
 		punchEmitter->SetActive(false);

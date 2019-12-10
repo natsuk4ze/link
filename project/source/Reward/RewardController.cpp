@@ -10,34 +10,38 @@
 #include "CountupReward.h"
 #include "StateReward.h"
 #include "MaxCheckReward.h"
+#include <algorithm>
 
 //=====================================
 // データ作成
 //=====================================
-void RewardController::Create(RC::Type type, int maxData)
+void RewardController::Create()
 {
-	if (rewardPool.count(type) == 0)
+	for (int i = 0; i < RC::Type::Max; i++)
 	{
-		if (type == RC::MinusComplete || type == RC::PlusComplete)
+		if (rewardPool.count(RC::Type(i)) == 0)
 		{
-			Reward* reward = new StateReward(type, maxData);
-			rewardPool.emplace(type, reward);
-		}
-		else if (type == RC::Linker || type == RC::MasterAI)
-		{
-			Reward* reward = new MaxCheckReward(type, maxData);
-			rewardPool.emplace(type, reward);
+			if (RC::Type(i) == RC::MinusComplete || RC::Type(i) == RC::PlusComplete)
+			{
+				Reward* reward = new StateReward(RC::Type(i), RC::MaxData[i]);
+				rewardPool.emplace(RC::Type(i), reward);
+			}
+			else if (RC::Type(i) == RC::Linker || RC::Type(i) == RC::MasterAI)
+			{
+				Reward* reward = new MaxCheckReward(RC::Type(i), RC::MaxData[i]);
+				rewardPool.emplace(RC::Type(i), reward);
+			}
+			else
+			{
+				Reward* reward = new CountupReward(RC::Type(i), RC::MaxData[i]);
+				rewardPool.emplace(RC::Type(i), reward);
+			}
 		}
 		else
 		{
-			Reward* reward = new CountupReward(type, maxData);
-			rewardPool.emplace(type, reward);
+			char message[64];
+			MessageBox(0, message, "This reward already exists", 0);
 		}
-	}
-	else
-	{
-		char message[64];
-		MessageBox(0, message, "This reward already exists", 0);
 	}
 }
 
@@ -56,25 +60,76 @@ void RewardController::AllDelete()
 //=====================================
 // 到達確認
 //=====================================
-bool RewardController::CheckAchieved(RC::Type rewardType)
+std::vector<RC::Type> RewardController::IsAllAchieved()
 {
-	return rewardPool[rewardType]->CheckAchieved();
+	std::vector<RC::Type> ret;
+
+	for (int i = 0; i < RC::Type::Max; i++)
+	{
+		if (rewardPool[RC::Type(i)]->CheckAchieved())
+		{
+			ret.push_back(RC::Type(i));
+		}
+	}
+
+	return ret;
 }
 
 //=====================================
 // 到達確認
 //=====================================
-bool RewardController::CheckFirstAchieved(RC::Type rewardType)
+bool RewardController::FindFirstAchieved()
+{
+	auto itr = std::find_if(rewardPool.begin(), rewardPool.end(), [](std::pair<RC::Type, Reward*> a) {
+		return a.second->CheckFirstAchieved(); 
+	});
+
+	if (itr == rewardPool.end())
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+//=====================================
+// 到達確認
+//=====================================
+bool RewardController::IsAchieved(RC::Type type)
+{
+	return rewardPool[type]->CheckAchieved();
+}
+
+//=====================================
+// 到達確認
+//=====================================
+bool RewardController::IsFirstAchieved(RC::Type rewardType)
 {
 	return rewardPool[rewardType]->CheckFirstAchieved();
 }
 
 //=====================================
-// 名前の取得（一文字ずつ）
+// 到達したデータをセット
 //=====================================
-int RewardController::GetName(RC::Type rewardType, int alphabetNo)
+void RewardController::SetFirstAchieved(const Name& name)
 {
-	return rewardPool[rewardType]->GetName(alphabetNo);
+	for (int i = 0; i < RC::Type::Max; i++)
+	{
+		if (rewardPool[RC::Type(i)]->CheckFirstAchieved())
+		{
+			rewardPool[RC::Type(i)]->SetName(name);
+		}
+	}
+}
+
+//=====================================
+// 名前の取得
+//=====================================
+Name* RewardController::GetName(RC::Type rewardType)
+{
+	return rewardPool[rewardType]->GetName();
 }
 
 //=====================================

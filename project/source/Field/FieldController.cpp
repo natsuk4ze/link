@@ -515,8 +515,8 @@ namespace Field
 		//アトランティス出現
 		handler.functerPlace[Handler::FuncterID_Place::SetAtlantis] = [&](auto place)
 		{
-			placeContainer->CreateTown(place);
-			placeActController->SetAtlantis(place);
+			std::vector<const Model::PlaceModel*> container = placeContainer->CreateAtlantis(place);
+			placeActController->SetAtlantis(place, container);
 		};
 	}
 

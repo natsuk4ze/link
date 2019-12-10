@@ -6,6 +6,7 @@
 //
 //=====================================
 #include "TextViewer.h"
+#include "../Resource/FontManager.h"
 
 /**************************************
 コンストラクタ
@@ -17,11 +18,13 @@ TextViewer::TextViewer(const char * fontName, int fontSize) :
 	posY(10),
 	lineNum(1),
 	color(0xffffffff),
-	text("")
+	text(""),
+	useItalic(false),
+	horizontal(HorizontalAlignment::Center),
+	vertical(VerticalAlignment::Center)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-	D3DXCreateFont(pDevice, fontSize, 0, 0, D3DX_DEFAULT, false, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, _T(fontName), &font);
+	font = FontManager::Instance()->GetFont(fontName, fontSize);
+	italicFont = FontManager::Instance()->GetItalicFont(fontName, fontSize);
 }
 
 /**************************************
@@ -30,22 +33,28 @@ TextViewer::TextViewer(const char * fontName, int fontSize) :
 TextViewer::~TextViewer()
 {
 	SAFE_RELEASE(font);
+	SAFE_RELEASE(italicFont);
 }
 
 /**************************************
 描画処理
 ***************************************/
-void TextViewer::Draw()
+void TextViewer::Draw(void)
 {
-	//テキストを中央寄せで表示するためのRectを計算
-	LONG left = posX - text.length() * fontSize / 2;
-	LONG top =  posY - fontSize / 2 *lineNum;
-	LONG right = left + text.length() * fontSize;
-	LONG bottom = top + fontSize *lineNum;
+	if (!active)
+		return;
+
+	D3DXVECTOR3 position = transform->GetPosition();
+	posX = (int)position.x;
+	posY = (int)position.y;
 
 	//描画
-	RECT rect = { left, top, right, bottom};
-	font->DrawText(NULL, text.c_str(), -1, &rect, DT_CENTER | DT_VCENTER, color);
+	RECT rect = GetRect();
+
+	if(!useItalic)
+		font->DrawText(NULL, text.c_str(), -1, &rect, (WORD)horizontal | (WORD)vertical | DT_NOCLIP, color);
+	else
+		italicFont->DrawText(NULL, text.c_str(), -1, &rect, (WORD)horizontal | (WORD)vertical | DT_NOCLIP, color);
 }
 
 /**************************************
@@ -53,8 +62,7 @@ void TextViewer::Draw()
 ***************************************/
 void TextViewer::SetPos(int x, int y)
 {
-	posX = x;
-	posY = y;
+	transform->SetPosition({ (float)x, (float)y, 0.0f });
 }
 
 /**************************************
@@ -63,14 +71,6 @@ void TextViewer::SetPos(int x, int y)
 void TextViewer::SetColor(const D3DXCOLOR & color)
 {
 	this->color = color;
-}
-
-//=============================================================================
-// 座標ゲット処理
-//=============================================================================
-D3DXVECTOR2 TextViewer::GetPosition(void) const
-{
-	return D3DXVECTOR2((float)this->posX, (float)this->posY);
 }
 
 /**************************************
@@ -85,17 +85,60 @@ void TextViewer::SetText(const std::string & message)
 }
 
 /**************************************
-フォントロード処理
+テキスト取得処理
 ***************************************/
-void TextViewer::LoadFont(const char * fontFileName)
+std::string TextViewer::GetText() const
 {
-	AddFontResource(fontFileName);
+	return text;
 }
 
 /**************************************
-フォントリムーブ処理
+イタリック使用設定
 ***************************************/
-void TextViewer::RemoveFont(const char * fontFileName)
+void TextViewer::UseItalic(bool state)
 {
-	RemoveFontResource(fontFileName);
+	useItalic = state;
+}
+
+/**************************************
+水平方向のレイアウト設定
+***************************************/
+void TextViewer::SetHorizontalAlignment(HorizontalAlignment alignment)
+{
+	horizontal = alignment;
+}
+
+/**************************************
+垂直方向のレイアウト設定
+***************************************/
+void TextViewer::SetVerticalAlignment(VerticalAlignment alignment)
+{
+	vertical = alignment;
+}
+
+/**************************************
+Rect計算処理
+***************************************/
+RECT TextViewer::GetRect() const
+{
+	//テキストを中央寄せで表示するためのRectを計算
+	LONG top = posY - fontSize / 2 * lineNum;
+	LONG bottom = top + fontSize * lineNum;
+
+	LONG left = posX;
+
+	//NOTE:改行に対応してない
+	if (horizontal == HorizontalAlignment::Center)
+		left -= text.length() * fontSize / 2;
+	else if (horizontal == HorizontalAlignment::Right)
+		left -= text.length() * fontSize;
+
+	LONG right = posX;
+
+	if (horizontal == HorizontalAlignment::Center)
+		right += text.length() * fontSize / 2;
+	else if (horizontal == HorizontalAlignment::Left)
+		right += text.length() * fontSize;
+
+	return { left, top, right, bottom};
 }

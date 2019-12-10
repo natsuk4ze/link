@@ -13,6 +13,8 @@
 class TitleLogo;
 class SelectViewer;
 class GameScene;
+class RewardViewer;
+
 //**************************************
 // クラス定義
 //**************************************
@@ -21,6 +23,7 @@ class TitleViewer
 private:
 	TitleLogo* logo;
 	SelectViewer* selectViewer;
+	RewardViewer* rewardViewer;
 
 	bool isActive;
 
@@ -35,6 +38,8 @@ public:
 
 	bool CheckSceneChange();
 	void SetNextScene(GameScene& entity);
+	// セレクトロゴの表示が"ゲーム開始"に設定する
+	void InitSelectLogo(void);
 };
 
 #endif

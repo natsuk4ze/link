@@ -48,10 +48,10 @@ ResultScoreViewer::ResultScoreViewer() :
 			D3DXVECTOR2(1024 / 2.0f, 1024 / 8.0f),"data/TEXTURE/Viewer/ResultViewer/ResultScoreViewer/FieldText.png");
 		fieldText[i]->SetTexture(1, 4,i);
 
-		scoreText[i] = new TextViewer("data/FONT/Makinas-4-Square.otf", 70);
+		scoreText[i] = new TextViewer("マキナス 4 Square", 70);
 		scoreText[i]->SetPos((int)(-SCREEN_WIDTH*2), (int)(bg[i]->position.y - 40.0f));
 
-		rewardText[i] = new TextViewer("data/FONT/Makinas-4-Square.otf", 40);
+		rewardText[i] = new TextViewer("マキナス 4 Square", 70);
 		rewardText[i]->SetPos((int)(-SCREEN_WIDTH*2), (int)(bg[i]->position.y + 40.0f));
 	}
 
@@ -126,7 +126,8 @@ void ResultScoreViewer::Update(void)
 		{
 			anim[AnimType::TelopIn]->SetPlayFinished(isInPlaying, [=]
 			{
-				this->CallbackInFin();
+				if(this->CallbackInFin != nullptr)
+					this->CallbackInFin();
 			});
 		});
 	}
@@ -392,6 +393,7 @@ void ResultScoreViewer::SetTelopIn(std::function<void()> CallbackInFin)
 {
 	this->CallbackInFin = CallbackInFin;
 	isInPlaying = true;
+	anim[AnimType::TelopIn]->ResetAnim();
 }
 
 //=============================================================================
@@ -401,4 +403,21 @@ void ResultScoreViewer::SetTelopOut()
 {
 	GetStopPos();
 	isOutPlaying = true;
+	anim[AnimType::TelopOut]->ResetAnim();
+}
+
+//=============================================================================
+// テロップスクリーンイン再生中判定
+//=============================================================================
+bool ResultScoreViewer::IsPlayingIn() const
+{
+	return isInPlaying;
+}
+
+//=============================================================================
+// テロップスクリーンアウト再生中判定
+//=============================================================================
+bool ResultScoreViewer::IsPlayingOut() const
+{
+	return isOutPlaying;
 }

@@ -12,6 +12,9 @@
 #include "../../../../Framework/PostEffect/Effect/CRTFilter.h"
 #include <string>
 #include "GuideActor.h"
+#include <deque>
+#include "../../../../Framework/Sound/SoundEffect.h"
+#include "../../../Sound/SoundConfig.h"
 
 //*****************************************************************************
 // 前方宣言
@@ -24,10 +27,42 @@ class SubScreen;
 //**************************************
 // クラス定義
 //**************************************
+struct GuideViewerData
+{
+	std::string message;
+	GuideActor::AnimState animation;
+	SoundConfig::ID voice;
+	GuideViewerData(std::string message, GuideActor::AnimState next, SoundConfig::ID voice) {
+		this->message = message;
+		this->animation = next;
+		this->voice = voice;
+	}
+};
+
+//**************************************
+// クラス定義
+//**************************************
 class GuideViewer :
 	public BaseSingleton<GuideViewer>
 {
 	friend class BaseSingleton<GuideViewer>;
+public:
+	void Init();	// 各種インスタンスの初期化
+	void Uninit();	// 各種インスタンスの削除
+
+	void Update();
+	void Draw();
+
+	void SetActive(bool flag);
+
+	// メッセージをセット
+	void SetMessage(const std::string &message);
+	// アニメーションを変更
+	void ChangeAnim(GuideActor::AnimState next);
+
+	// 上の２つ＆VOICEの再生をまとめて行う
+	void SetData(const std::string& message, GuideActor::AnimState next, SoundConfig::ID voice);
+
 private:
 	// 各種インスタンス用ポインタ
 	GuideActor* actor;
@@ -37,6 +72,9 @@ private:
 	GuideCallOutViewer *callOutViewer;
 	SubScreen* subScreen;
 
+	std::deque<GuideViewerData*> que;	// アニメーション、メッセージ、SEを順番に収納するキュー
+	SoundConfig::ID prev;
+	int cntQue;
 	bool isActive;	// 描画可否判定
 
 	static const D3DXVECTOR2 SubScreenPosition;
@@ -45,18 +83,8 @@ private:
 	GuideViewer() {}
 	~GuideViewer() {}
 
-public:
-	void Init();	// 各種インスタンスの初期化
-	void Uninit();	// 各種インスタンスの削除
+	void UpdateDeque();
 
-	void Update();
-	void Draw();
-
-	void ChangeAnim(GuideActor::AnimState next);
-	void SetActive(bool flag);
-
-	// メッセージをセット
-	void SetMessage(const std::string &message);
 };
 
 #endif

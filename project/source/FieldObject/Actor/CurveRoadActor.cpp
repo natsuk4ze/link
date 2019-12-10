@@ -117,3 +117,17 @@ void CurveRoadActor::Rotate(float y)
 		}
 	}
 }
+
+//=====================================
+// ŠCã”»’èÝ’è
+//=====================================
+void CurveRoadActor::OnSea(bool state)
+{
+	this->onWater = state;
+
+	using Field::Actor::ActorLoader;
+	if (!onWater)
+		ResourceManager::Instance()->GetMesh(ActorLoader::CurveTag[Field::FieldLevel::World].c_str(), mesh);
+	else
+		ResourceManager::Instance()->GetMesh(ActorLoader::WaterCurve.c_str(), mesh);
+}

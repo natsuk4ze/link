@@ -81,8 +81,11 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	void SetTelopIn(std::function<void()> CallbackInFin);
+	void SetTelopIn(std::function<void()> CallbackInFin = nullptr);
 	void SetTelopOut();
+
+	bool IsPlayingIn() const;
+	bool IsPlayingOut() const;
 
 	//ƒpƒ‰ƒ[ƒ^‚ğó‚¯‚Æ‚é” 
 	int parameterBoxScore[3];

@@ -43,7 +43,7 @@ class GuideViewer;
 class ResultViewer;
 class NameEntryViewer;
 class TitleViewer;
-class RewardViewer;
+class RewardNotifier;
 
 /**************************************
 クラス定義
@@ -72,6 +72,7 @@ public:
 		Result,
 		TransitionOut,
 		TransitionIn,
+		AchieveResult,
 		Max
 	};
 
@@ -101,11 +102,18 @@ private:
 	ResultViewer*resultViewer;					//リザルトビュアー
 	NameEntryViewer *nemeEntryViewer;			//名前登録ビュアー
 	TitleViewer* titleViewer;					// タイトルビュアー
-	RewardViewer* rewardViewer;					// リワードビュアー
+	RewardNotifier* rewardNotifier;					// リワードビュアー
 
 	int remainTime;								//制限時間
 
 	int cntFrame;								//フレームカウンタ
+
+	int step;									//各ステートの現在ステップ
+
+	long long entiretyScore;					//全レベルの合計スコア
+
+	bool debugReward;							//実績リザルト画面でデバッグを使用するか
+	bool debugAchievedResult[10];				//デバッグ用の達成実績
 
 	//ポストエフェクト関連
 	BloomController *bloomController;			//ブルームエフェクトのコントローラ
@@ -144,6 +152,7 @@ private:
 	class GameResult;
 	class GameTransitionOut;
 	class GameTransitionIn;
+	class GameAchieveResult;
 
 	//デバッグ用フィールドレベル
 	static int level;

@@ -208,12 +208,17 @@ namespace Field::Actor
 		{
 			for (int z = -1; z <= 1; z++)
 			{
-				D3DXVECTOR3 worldPosition = (position + FieldPosition(x, z)).ConvertToWorldPosition();
+				FieldPosition fieldPos = position + FieldPosition(x, z);
+				D3DXVECTOR3 worldPosition = fieldPos.ConvertToWorldPosition();
 				PlaceActor *actor = ObjectPool::Instance()->Create<NoneActor>(worldPosition + InitOffset, FieldLevel::City);
 				groundContainer.push_back(actor);
 
 				//海からせり上がってくるアニメーション
 				Tween::Move(*actor, worldPosition + InitOffset, worldPosition, 60, EaseType::InOutCirc);
+
+				//地形情報の更新
+				auto itr = std::remove(seaMap.begin(), seaMap.end(), fieldPos);
+				seaMap.erase(itr, seaMap.end());
 			}
 		}
 	}

@@ -180,13 +180,11 @@ namespace GamePad
 			{
 				padAxislRx[i] = (float)(dijs.lRx);
 				padAxislRy[i] = (float)(dijs.lRy);
-
 			}
 			else
 			{
 				padAxislRx[i] = (float)(dijs.lZ + dijs.lRx);
 				padAxislRy[i] = (float)(dijs.lRz + dijs.lRy);
-
 			}
 
 			// ３２の各ビットに意味を持たせ、ボタン押下に応じてビットをオンにする
@@ -297,7 +295,35 @@ namespace GamePad
 				}
 			}
 		}
-
+//
+//#if _DEBUG
+//		Debug::Begin("Gamepad's Button Trigger");
+//		if (dijs.rgbButtons[0] & 0x80)
+//		Debug::Text("Button A");
+//		if (dijs.rgbButtons[1] & 0x80)
+//			Debug::Text("Button B");
+//		if (dijs.rgbButtons[2] & 0x80)
+//			Debug::Text("Button C");
+//		if (dijs.rgbButtons[3] & 0x80)
+//			Debug::Text("Button X");
+//		if (dijs.rgbButtons[4] & 0x80)
+//			Debug::Text("Button Y");
+//		if (dijs.rgbButtons[5] & 0x80)
+//			Debug::Text("Button Z");
+//		if (dijs.rgbButtons[6] & 0x80)
+//			Debug::Text("Button L");
+//		if (dijs.rgbButtons[7] & 0x80)
+//			Debug::Text("Button R");
+//		if (dijs.rgbButtons[8] & 0x80)
+//			Debug::Text("Button Start");
+//
+//		for (int i = 0; i < 31; i++)
+//		{
+//			if (dijs.rgbButtons[i] != NULL)
+//				Debug::Text("%d", i);
+//		}
+//		Debug::End();
+//#endif
 	}
 
 	/**************************************

@@ -21,6 +21,15 @@ class GameScene::GameResult :
 public:
 	State OnUpdate(GameScene& entity);
 	void OnStart(GameScene& entity);
+
+	enum Step
+	{
+		ScoreViewerIn,
+		ScoreInputWait,
+		ScoreNameEntryWait,
+		ScoreNameEntryFinish,
+		ScoreViewerOut,
+	};
 };
 
 #endif

@@ -64,7 +64,7 @@ public:
 
 	void LookAt(const D3DXVECTOR3& pos);
 
-	void ChangeAnim(AnimState next);
+	void ChangeAnim(AnimState next, bool animLoop = false);
 
 	void Move(const D3DXVECTOR3& target, int duration);
 
