@@ -48,7 +48,7 @@ public:
 	~TextViewer();
 
 	//描画処理
-	void Draw(bool FromLeft = false);
+	void Draw(void);
 
 	//座標セット処理
 	void SetPos(int x, int y);

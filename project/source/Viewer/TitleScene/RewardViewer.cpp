@@ -82,6 +82,7 @@ RewardViewer::RewardViewer(void)
 	Text = new TextViewer("Makinas-4-Square", 60);
 	Text->SetPos(480, 980);
 	Text->SetText(RewardText[0]);
+	Text->SetHorizontalAlignment(TextViewer::HorizontalAlignment::Left);
 
 	PlayerNameInt.reserve(3);
 }
@@ -169,7 +170,7 @@ void RewardViewer::Draw()
 	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 
 	// テキスト
-	Text->Draw(true);
+	Text->Draw();
 }
 
 //=============================================================================
