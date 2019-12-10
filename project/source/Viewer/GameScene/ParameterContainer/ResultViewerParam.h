@@ -15,7 +15,11 @@ class ResultViewerParam
 public:
 	const static int fieldTypeMax = 3;
 
+	//Cityスコア,Worldスコア,Spaceスコア
 	int score[fieldTypeMax];
+
+	//Cityで達成したリワード数,Worldで達成したリワード数、Spaceで達成したリワードの数
+	int completedRewardNum[fieldTypeMax];
 };
 
 #endif
