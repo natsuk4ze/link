@@ -52,11 +52,16 @@ void ResultViewer::Update()
 	{
 		resultViewer[i]->Update();
 	}
-
-	//if (Keyboard::GetTrigger(DIK_S))
-	//{
-	//	scoreViewer->Set();
-	//}
+	if (Keyboard::GetTrigger(DIK_1))
+	{
+		scoreViewer->SetTelopIn([=]
+		{
+		});
+	}
+	if (Keyboard::GetTrigger(DIK_4))
+	{
+		scoreViewer->SetTelopOut();
+	}
 }
 
 //=============================================================================
@@ -101,9 +106,33 @@ void ResultViewer::ReceiveParam(int cityScore, int worldScore, int spaceScore)
 }
 
 //=============================================================================
-// 描画可否判定のセット
+// 描画可否判定のセット処理
 //=============================================================================
 void ResultViewer::SetActive(bool flag)
 {
 	isActive = flag;
+}
+
+//=============================================================================
+// 描画可否判定のゲット処理
+//=============================================================================
+bool ResultViewer::GetIsActive()
+{
+	return isActive;
+}
+
+//=============================================================================
+// リザルトスコアビュアーのイン処理
+//=============================================================================
+void ResultViewer::InResultScoreViewer(std::function<void()> CallbackInFin)
+{
+	scoreViewer->SetTelopIn(CallbackInFin);
+}
+
+//=============================================================================
+// リザルトスコアビュアーのアウト処理
+//=============================================================================
+void ResultViewer::OutResultScoreViewer()
+{
+	scoreViewer->SetTelopOut();
 }

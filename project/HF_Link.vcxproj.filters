@@ -298,7 +298,6 @@
     <ClCompile Include="source\Viewer\GameScene\GameViewer\GradeFrameViewer.cpp" />
     <ClCompile Include="source\Effect\Game\General\GaugeDebris.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInfoViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -601,7 +600,6 @@
     <ClInclude Include="source\Viewer\GameScene\GameViewer\GradeFrameViewer.h" />
     <ClInclude Include="source\Effect\Game\General\GaugeDebris.h" />
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInfoViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

@@ -8,6 +8,7 @@
 #define _RESULT_VIEWER_H_
 
 #include <vector>
+#include <functional>
 
 //*****************************************************************************
 // 前方宣言
@@ -33,6 +34,11 @@ public:
 
 	//パラメータの受け取り処理
 	void ReceiveParam(int cityScore,int worldScore,int spaceScore);
+
+	bool GetIsActive();
+
+	void InResultScoreViewer(std::function<void()> CallbackInFin);
+	void OutResultScoreViewer();
 
 private:
 	std::vector <BaseViewer*> resultViewer;

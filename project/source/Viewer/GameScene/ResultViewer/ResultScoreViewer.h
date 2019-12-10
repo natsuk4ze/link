@@ -7,8 +7,9 @@
 #ifndef _RESULT_SCORE_VIEWER_H_
 #define _RESULT_SCORE_VIEWER_H_
 
-#include "../../Framework/BaseViewer.h"
+#include <functional>
 #include "../../../../main.h"
+#include "../../Framework/BaseViewer.h"
 
 //*****************************************************************************
 // 前方宣言
@@ -62,6 +63,7 @@ private:
 	bool isInPlaying;
 	bool isOutPlaying;
 
+	std::function<void()> CallbackInFin = nullptr;
 public:
 	ResultScoreViewer();
 	~ResultScoreViewer();
@@ -69,7 +71,7 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	void SetTelopIn();
+	void SetTelopIn(std::function<void()> CallbackInFin);
 	void SetTelopOut();
 
 	//パラメータを受けとる箱
