@@ -52,6 +52,7 @@ void ResultViewer::Update()
 	{
 		resultViewer[i]->Update();
 	}
+#ifdef _DEBUG
 	if (Keyboard::GetTrigger(DIK_1))
 	{
 		scoreViewer->SetTelopIn([=]
@@ -62,6 +63,7 @@ void ResultViewer::Update()
 	{
 		scoreViewer->SetTelopOut();
 	}
+#endif
 }
 
 //=============================================================================

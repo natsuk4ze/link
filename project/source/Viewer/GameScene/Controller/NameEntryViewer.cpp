@@ -59,6 +59,15 @@ void NameEntryViewer::Update()
 	{
 		Debug::Text("nameID%d", entryNameID[i]);
 	}
+	if (Keyboard::GetTrigger(DIK_2))
+	{
+		SlideNameEntryViewer(true);
+	}
+	if (Keyboard::GetTrigger(DIK_3))
+	{
+		SlideNameEntryViewer(false);
+	}
+
 #endif
 
 	MoveCursor();
@@ -68,15 +77,6 @@ void NameEntryViewer::Update()
 	for (unsigned int i = 0; i < nameEntryViewer.size(); i++)
 	{
 		nameEntryViewer[i]->Update();
-	}
-
-	if (Keyboard::GetTrigger(DIK_2))
-	{
-		SlideNameEntryViewer(true);
-	}
-	if (Keyboard::GetTrigger(DIK_3))
-	{
-		SlideNameEntryViewer(false);
 	}
 }
 
