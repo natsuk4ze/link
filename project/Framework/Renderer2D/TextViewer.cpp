@@ -19,7 +19,9 @@ TextViewer::TextViewer(const char * fontName, int fontSize) :
 	lineNum(1),
 	color(0xffffffff),
 	text(""),
-	useItalic(false)
+	useItalic(false),
+	horizontal(HorizontalAlignment::Center),
+	vertical(VerticalAlignment::Center)
 {
 	font = FontManager::Instance()->GetFont(fontName, fontSize);
 	italicFont = FontManager::Instance()->GetItalicFont(fontName, fontSize);
@@ -39,34 +41,20 @@ TextViewer::~TextViewer()
 ***************************************/
 void TextViewer::Draw(bool FromLeft)
 {
-	if (!FromLeft)
-	{
-		//テキストを中央寄せで表示するためのRectを計算
-		LONG left = posX - text.length() * fontSize / 2;
-		LONG top = posY - fontSize / 2 * lineNum;
-		LONG right = left + text.length() * fontSize;
-		LONG bottom = top + fontSize * lineNum;
+	if (!active)
+		return;
 
-		//描画
-		RECT rect = { left, top, right, bottom };
+	D3DXVECTOR3 position = transform->GetPosition();
+	posX = (int)position.x;
+	posY = (int)position.y;
 
-		if (!useItalic)
-			font->DrawText(NULL, text.c_str(), -1, &rect, DT_CENTER | DT_VCENTER | DT_NOCLIP, color);
-		else
-			italicFont->DrawText(NULL, text.c_str(), -1, &rect, DT_CENTER | DT_VCENTER | DT_NOCLIP, color);
-	}
+	//描画
+	RECT rect = GetRect();
+
+	if(!useItalic)
+		font->DrawText(NULL, text.c_str(), -1, &rect, (WORD)horizontal | (WORD)vertical | DT_NOCLIP, color);
 	else
-	{
-		//テキストを左詰めで表示するためのRectを計算
-		LONG left = posX;
-		LONG top = posY - fontSize / 2 * lineNum;
-		LONG right = left + text.length() * fontSize;
-		LONG bottom = top + fontSize * lineNum;
-
-		//描画
-		RECT rect = { left, top, right, bottom };
-		font->DrawText(NULL, text.c_str(), -1, &rect, DT_LEFT | DT_VCENTER, color);
-	}
+		italicFont->DrawText(NULL, text.c_str(), -1, &rect, (WORD)horizontal | (WORD)vertical | DT_NOCLIP, color);
 }
 
 /**************************************
@@ -74,8 +62,7 @@ void TextViewer::Draw(bool FromLeft)
 ***************************************/
 void TextViewer::SetPos(int x, int y)
 {
-	posX = x;
-	posY = y;
+	transform->SetPosition({ (float)x, (float)y, 0.0f });
 }
 
 /**************************************
@@ -98,9 +85,60 @@ void TextViewer::SetText(const std::string & message)
 }
 
 /**************************************
+テキスト取得処理
+***************************************/
+std::string TextViewer::GetText() const
+{
+	return text;
+}
+
+/**************************************
 イタリック使用設定
 ***************************************/
 void TextViewer::UseItalic(bool state)
 {
 	useItalic = state;
+}
+
+/**************************************
+水平方向のレイアウト設定
+***************************************/
+void TextViewer::SetHorizontalAlignment(HorizontalAlignment alignment)
+{
+	horizontal = alignment;
+}
+
+/**************************************
+垂直方向のレイアウト設定
+***************************************/
+void TextViewer::SetVerticalAlignment(VerticalAlignment alignment)
+{
+	vertical = alignment;
+}
+
+/**************************************
+Rect計算処理
+***************************************/
+RECT TextViewer::GetRect() const
+{
+	//テキストを中央寄せで表示するためのRectを計算
+	LONG top = posY - fontSize / 2 * lineNum;
+	LONG bottom = top + fontSize * lineNum;
+
+	LONG left = posX;
+
+	//NOTE:改行に対応してない
+	if (horizontal == HorizontalAlignment::Center)
+		left -= text.length() * fontSize / 2;
+	else if (horizontal == HorizontalAlignment::Right)
+		left -= text.length() * fontSize;
+
+	LONG right = posX;
+
+	if (horizontal == HorizontalAlignment::Center)
+		right += text.length() * fontSize / 2;
+	else if (horizontal == HorizontalAlignment::Left)
+		right += text.length() * fontSize;
+
+	return { left, top, right, bottom};
 }

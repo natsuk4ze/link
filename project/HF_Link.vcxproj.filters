@@ -308,6 +308,7 @@
     <ClCompile Include="source\Sound\SoundConfig.cpp" />
     <ClCompile Include="source\Viewer\NameViewer\Name.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\TimeUpViewer.cpp" />
+    <ClCompile Include="source\Viewer\GameScene\ResultViewer\ResultAchieveViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -619,6 +620,7 @@
     <ClInclude Include="source\Sound\SoundConfig.h" />
     <ClInclude Include="source\Viewer\NameViewer\Name.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\TimeUpViewer.h" />
+    <ClInclude Include="source\Viewer\GameScene\ResultViewer\ResultAchieveViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
