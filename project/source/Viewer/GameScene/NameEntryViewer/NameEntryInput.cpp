@@ -28,7 +28,7 @@ NameEntryInput::~NameEntryInput()
 bool NameEntryInput::GetReelUp()
 {
 	//上ボタンが押された
-	if (Keyboard::GetTrigger(DIK_UP)) return true;
+	if (Keyboard::GetTrigger(DIK_UP) || GamePad::GetTriggerPOV(0, POV_UP)) return true;
 	return false;
 }
 
@@ -38,7 +38,7 @@ bool NameEntryInput::GetReelUp()
 bool NameEntryInput::GetReelDown()
 {
 	//下ボタンが押された
-	if (Keyboard::GetTrigger(DIK_DOWN)) return true;
+	if (Keyboard::GetTrigger(DIK_DOWN) || GamePad::GetTriggerPOV(0, POV_DOWN)) return true;
 	return false;
 }
 
@@ -48,7 +48,7 @@ bool NameEntryInput::GetReelDown()
 bool NameEntryInput::GetCursorLeft()
 {
 	//左ボタンが押された
-	if (Keyboard::GetTrigger(DIK_LEFT)) return true;
+	if (Keyboard::GetTrigger(DIK_LEFT) || GamePad::GetTriggerPOV(0, POV_LEFT)) return true;
 	return false;
 }
 
@@ -58,7 +58,7 @@ bool NameEntryInput::GetCursorLeft()
 bool NameEntryInput::GetCursorRight()
 {
 	//右ボタンが押された
-	if (Keyboard::GetTrigger(DIK_RIGHT)) return true;
+	if (Keyboard::GetTrigger(DIK_RIGHT) || GamePad::GetTriggerPOV(0, POV_RIGHT)) return true;
 	return false;
 }
 
@@ -68,6 +68,6 @@ bool NameEntryInput::GetCursorRight()
 bool NameEntryInput::GetFinishedEntry()
 {
 	//エンターキーが押された
-	if (Keyboard::GetTrigger(DIK_RETURN)) return true;
+	if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C)) return true;
 	return false;
 }

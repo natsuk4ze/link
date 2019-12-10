@@ -43,7 +43,7 @@ class GuideViewer;
 class ResultViewer;
 class NameEntryViewer;
 class TitleViewer;
-class RewardViewer;
+class RewardNotifier;
 
 /**************************************
 クラス定義
@@ -102,7 +102,7 @@ private:
 	ResultViewer*resultViewer;					//リザルトビュアー
 	NameEntryViewer *nemeEntryViewer;			//名前登録ビュアー
 	TitleViewer* titleViewer;					// タイトルビュアー
-	RewardViewer* rewardViewer;					// リワードビュアー
+	RewardNotifier* rewardNotifier;					// リワードビュアー
 
 	int remainTime;								//制限時間
 

@@ -35,7 +35,7 @@
 #include "../Viewer/TitleScene/TitleViewer.h"
 #include "../Reward/RewardConfig.h"
 #include "../Reward/RewardController.h"
-#include "../Reward/RewardViewer.h"
+#include "../Reward/RewardNotifier.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
@@ -95,7 +95,7 @@ void GameScene::Init()
 	resultViewer = new ResultViewer();
 	nemeEntryViewer = new NameEntryViewer();
 	titleViewer = new TitleViewer();
-	rewardViewer = new RewardViewer();
+	rewardNotifier = new RewardNotifier();
 
 	// ガイドビュアーの初期化
 	GuideViewer::Instance()->Init();
@@ -165,7 +165,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(resultViewer);
 	SAFE_DELETE(nemeEntryViewer);
 	SAFE_DELETE(titleViewer);
-	SAFE_DELETE(rewardViewer);
+	SAFE_DELETE(rewardNotifier);
 
 	// ガイドビュアーの削除
 	GuideViewer::Instance()->Uninit();
@@ -223,7 +223,7 @@ void GameScene::Update()
 	resultViewer->Update();
 	nemeEntryViewer->Update();
 	titleViewer->Update();
-	rewardViewer->Update();
+	rewardNotifier->Update();
 
 	//パーティクル更新
 	ProfilerCPU::Instance()->Begin("Update Particle");
@@ -300,7 +300,7 @@ void GameScene::Draw()
 	resultViewer->Draw();
 	nemeEntryViewer->Draw();
 	titleViewer->Draw();
-	rewardViewer->Draw();
+	rewardNotifier->Draw();
 
 	//*******別ウインドウを作成するため最後*******
 	GuideViewer::Instance()->Draw();
@@ -582,6 +582,6 @@ void GameScene::Clear()
 	Debug::Log("Clear Event : %f", ProfilerCPU::CalcElapsed(start, end));
 
 	// リワードをリセット
-	rewardViewer->ResetAchieved();
+	rewardNotifier->ResetAchieved();
 	RewardController::Instance()->ResetAllRewardData();
 }

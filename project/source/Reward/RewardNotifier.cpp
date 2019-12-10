@@ -1,11 +1,11 @@
 //=====================================
 //
-// リワードビュアー[RewardViewer.cpp]
-// 機能：各リワードを表示するクラス
+// RewardNotifierクラス[RewardNotifier.cpp]
+// 機能：ゲーム内リワード達成を通知するクラス
 // Author:GP12B332 19 染谷武志
 //
 //=====================================
-#include "RewardViewer.h"
+#include "RewardNotifier.h"
 #include "RewardController.h"
 #include "../../Framework/Tool/DebugWindow.h"
 #include "AchieveViewer.h"
@@ -13,7 +13,7 @@
 //=====================================
 // コンストラクタ
 //=====================================
-RewardViewer::RewardViewer() :
+RewardNotifier::RewardNotifier() :
 	achieved()
 {
 	achieveViewer = new AchieveViewer();
@@ -22,7 +22,7 @@ RewardViewer::RewardViewer() :
 //=====================================
 // デストラクタ
 //=====================================
-RewardViewer::~RewardViewer()
+RewardNotifier::~RewardNotifier()
 {
 	SAFE_DELETE(achieveViewer);
 }
@@ -30,7 +30,7 @@ RewardViewer::~RewardViewer()
 //=====================================
 // 更新
 //=====================================
-void RewardViewer::Update()
+void RewardNotifier::Update()
 {
 	CheckAchieved();
 	achieveViewer->Update();
@@ -39,7 +39,7 @@ void RewardViewer::Update()
 //=====================================
 // 描画
 //=====================================
-void RewardViewer::Draw()
+void RewardNotifier::Draw()
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
@@ -52,7 +52,7 @@ void RewardViewer::Draw()
 //=====================================
 // リワード到達確認
 //=====================================
-void RewardViewer::CheckAchieved()
+void RewardNotifier::CheckAchieved()
 {
 	for (int i = 0; i < RC::Type::Max; i++)
 	{
@@ -71,7 +71,7 @@ void RewardViewer::CheckAchieved()
 //=====================================
 // リワード到達確認のリセット
 //=====================================
-void RewardViewer::ResetAchieved()
+void RewardNotifier::ResetAchieved()
 {
 	for (int i = 0; i < RC::Type::Max; i++)
 	{

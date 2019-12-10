@@ -248,7 +248,7 @@
     <ClInclude Include="source\Reward\AchieveViewer.h" />
     <ClInclude Include="source\Reward\MaxCheckReward.h" />
     <ClInclude Include="source\Reward\RewardConfig.h" />
-    <ClInclude Include="source\Reward\RewardViewer.h" />
+    <ClInclude Include="source\Reward\RewardNotifier.h" />
     <ClInclude Include="source\Reward\StateReward.h" />
     <ClInclude Include="source\Reward\CountupReward.h" />
     <ClInclude Include="source\Reward\Reward.h" />
@@ -324,6 +324,7 @@
     <ClInclude Include="source\Viewer\GameScene\ResultViewer\ResultScoreViewer.h" />
     <ClInclude Include="source\Viewer\NameViewer\Name.h" />
     <ClInclude Include="source\Viewer\NameViewer\NameViewer.h" />
+    <ClInclude Include="source\Viewer\TitleScene\RewardViewer.h" />
     <ClInclude Include="source\Viewer\TitleScene\SelectCamera.h" />
     <ClInclude Include="source\Viewer\TitleScene\SelectLogo.h" />
     <ClInclude Include="source\Viewer\TitleScene\SelectViewer.h" />
@@ -541,7 +542,7 @@
     <ClCompile Include="source\ModelView\ModelViewCamera.cpp" />
     <ClCompile Include="source\Reward\AchieveViewer.cpp" />
     <ClCompile Include="source\Reward\MaxCheckReward.cpp" />
-    <ClCompile Include="source\Reward\RewardViewer.cpp" />
+    <ClCompile Include="source\Reward\RewardNotifier.cpp" />
     <ClCompile Include="source\Reward\StateReward.cpp" />
     <ClCompile Include="source\Reward\CountupReward.cpp" />
     <ClCompile Include="source\Reward\Reward.cpp" />
@@ -613,6 +614,7 @@
     <ClCompile Include="source\Viewer\GameScene\ResultViewer\ResultScoreViewer.cpp" />
     <ClCompile Include="source\Viewer\NameViewer\Name.cpp" />
     <ClCompile Include="source\Viewer\NameViewer\NameViewer.cpp" />
+    <ClCompile Include="source\Viewer\TitleScene\RewardViewer.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\SelectCamera.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\SelectLogo.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\SelectViewer.cpp" />

@@ -39,7 +39,7 @@ TextViewer::~TextViewer()
 /**************************************
 •`‰æˆ—
 ***************************************/
-void TextViewer::Draw()
+void TextViewer::Draw(void)
 {
 	if (!active)
 		return;

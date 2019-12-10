@@ -52,22 +52,22 @@ GameViewer::~GameViewer()
 //=============================================================================
 void GameViewer::Update()
 {
-	Debug::Begin("GradeUp");
-	if (Debug::Button("GradeUp"))
-		gradeUpViewer->SetGradeUp();
-	if (Debug::Button("Slide"))
-		gradeFrameViewer->SlideIn();
-	if (Debug::Button("GradeTitle"))
-		gradeFrameViewer->SlideIn([&]()
-	{
-		gradeNameViewer->SetGradeName(Field::World, [&]()
-		{
-			gradeFrameViewer->SlideOut();
-		});
-	});
-	if (Debug::Button("TimeUp"))
-		timeUpViewer->Set();
-	Debug::End();
+	//Debug::Begin("GradeUp");
+	//if (Debug::Button("GradeUp"))
+	//	gradeUpViewer->SetGradeUp();
+	//if (Debug::Button("Slide"))
+	//	gradeFrameViewer->SlideIn();
+	//if (Debug::Button("GradeTitle"))
+	//	gradeFrameViewer->SlideIn([&]()
+	//{
+	//	gradeNameViewer->SetGradeName(Field::World, [&]()
+	//	{
+	//		gradeFrameViewer->SlideOut();
+	//	});
+	//});
+	//if (Debug::Button("TimeUp"))
+	//	timeUpViewer->Set();
+	//Debug::End();
 
 	for (unsigned int i = 0; i < gameViewer.size(); i++)
 	{

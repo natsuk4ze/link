@@ -13,6 +13,8 @@
 class TitleLogo;
 class SelectViewer;
 class GameScene;
+class RewardViewer;
+
 //**************************************
 // ƒNƒ‰ƒX’è‹`
 //**************************************
@@ -21,6 +23,7 @@ class TitleViewer
 private:
 	TitleLogo* logo;
 	SelectViewer* selectViewer;
+	RewardViewer* rewardViewer;
 
 	bool isActive;
 

@@ -26,7 +26,7 @@ public:
 
 	void Set(int first, int second, int third);
 
-	Name* Get();
+	int Get(int No);
 };
 
 #endif
