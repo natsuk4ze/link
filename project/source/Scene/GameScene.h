@@ -112,6 +112,9 @@ private:
 
 	long long entiretyScore;					//全レベルの合計スコア
 
+	bool debugReward;							//実績リザルト画面でデバッグを使用するか
+	bool debugAchievedResult[10];				//デバッグ用の達成実績
+
 	//ポストエフェクト関連
 	BloomController *bloomController;			//ブルームエフェクトのコントローラ
 

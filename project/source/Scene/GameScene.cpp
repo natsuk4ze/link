@@ -486,6 +486,13 @@ void GameScene::DebugTool()
 	bloomController->SetPower(power.x, power.y, power.z);
 	bloomController->SetThrethold(threthold.x, threthold.y, threthold.z);
 
+	Debug::NewLine();
+	Debug::Text("Achieve");
+	Debug::CheckBox("Use DebugAchieve", debugReward);
+	for (int i = 0; i < 10; i += 2)
+	{
+	}
+
 	Debug::End();
 }
 
