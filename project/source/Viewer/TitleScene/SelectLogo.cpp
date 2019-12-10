@@ -15,8 +15,8 @@ const float SelectLogo::Distance = 75.0f;
 const int SelectLogo::MoveFrame = 10;
 const D3DXVECTOR3 SelectLogo::InitLogoPos[] = {
 	D3DXVECTOR3(0.0f, 0.0f, -Distance),
+	D3DXVECTOR3(Distance * sinf(D3DXToRadian(60)), 0.0f, Distance * cosf(D3DXToRadian(60))),
 	D3DXVECTOR3(Distance * sinf(D3DXToRadian(-60)), 0.0f, Distance * cosf(D3DXToRadian(-60))),
-	D3DXVECTOR3(Distance * sinf(D3DXToRadian(60)), 0.0f, Distance * cosf(D3DXToRadian(60)))
 };
 const float SelectLogo::InitAngle[] = {
 	180.0f, 60.0f, -60.0f

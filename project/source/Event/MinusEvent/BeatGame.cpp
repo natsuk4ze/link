@@ -106,7 +106,7 @@ void BeatGame::Update()
 		countFrame++;
 
 		//入力カウントを更新(*注意：本番はどのキー入力でもOKにする？)
-		if (Keyboard::GetTrigger(DIK_C))
+		if (Keyboard::GetTrigger(DIK_C) || GamePad::GetTrigger(0, BUTTON_A))
 		{
 			countInput++;
 		}

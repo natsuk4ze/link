@@ -80,7 +80,7 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 		break;
 
 	case Step::ScoreInputWait:
-		if (Keyboard::GetTrigger(DIK_RETURN))
+		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 		{
 			//ランキング更新があったらネームエントリーへ
 			long long lastScore = entity.Client->GetLastScore();
@@ -104,7 +104,7 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 
 	case Step::ScoreNameEntryFinish:
 		//とりあえずエンターが押されたらタイトルへ戻る
-		if (Keyboard::GetTrigger(DIK_RETURN))
+		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 		{
 			TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
 			{

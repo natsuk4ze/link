@@ -59,7 +59,7 @@ void Name::Set(int first, int second, int third)
 //=====================================
 // ƒQƒbƒg
 //=====================================
-Name * Name::Get()
+int Name::Get(int No)
 {
-	return this;
+	return num[No];
 }

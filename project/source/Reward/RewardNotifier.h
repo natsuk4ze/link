@@ -1,12 +1,12 @@
 //=====================================
 //
-// リワードビュアー[RewardViewer.h]
-// 機能：各リワードを表示するクラス
+// RewardNotifierクラス[RewardNotifier.h]
+// 機能：ゲーム内リワード達成を通知するクラス
 // Author:GP12B332 19 染谷武志
 //
 //=====================================
-#ifndef _REWARDVIEWER_H_
-#define _REWARDVIEWER_H_
+#ifndef _RewardNotifier_H_
+#define _RewardNotifier_H_
 
 #include "RewardController.h"
 
@@ -15,15 +15,15 @@ namespace RC = RewardConfig;
 //**************************************
 // クラス定義
 //**************************************
-class RewardViewer
+class RewardNotifier
 {
 private:
 	AchieveViewer* achieveViewer;
 	bool achieved[RC::Type::Max];
 
 public:
-	RewardViewer();
-	~RewardViewer();
+	RewardNotifier();
+	~RewardNotifier();
 
 	void Update();
 	void Draw();

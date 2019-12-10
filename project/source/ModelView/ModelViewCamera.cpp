@@ -33,22 +33,22 @@ void ModelViewCamera::Update()
 {
 	const float MoveSpeed = 2.0f;
 
-	if (Keyboard::GetPress(DIK_LEFT))
+	if (Keyboard::GetPress(DIK_LEFT) || GamePad::GetTriggerPOV(0, POV_LEFT))
 	{
 		transform->Move(Vector3::Left * MoveSpeed);
 		transform->LookAt(transform->GetPosition() + Vector3::Down);
 	}
-	if (Keyboard::GetPress(DIK_RIGHT))
+	if (Keyboard::GetPress(DIK_RIGHT) || GamePad::GetTriggerPOV(0, POV_RIGHT))
 	{
 		transform->Move(Vector3::Right * MoveSpeed);
 		transform->LookAt(transform->GetPosition() + Vector3::Down);
 	}
-	if (Keyboard::GetPress(DIK_UP))
+	if (Keyboard::GetPress(DIK_UP) || GamePad::GetTriggerPOV(0, POV_UP))
 	{
 		transform->Move(Vector3::Forward * MoveSpeed);
 		transform->LookAt(transform->GetPosition() + Vector3::Down);
 	}
-	if (Keyboard::GetPress(DIK_DOWN))
+	if (Keyboard::GetPress(DIK_DOWN) || GamePad::GetTriggerPOV(0, POV_DOWN))
 	{
 		transform->Move(Vector3::Back * MoveSpeed);
 		transform->LookAt(transform->GetPosition() + Vector3::Down);

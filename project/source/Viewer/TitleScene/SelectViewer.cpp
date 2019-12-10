@@ -77,7 +77,7 @@ void SelectViewer::Update()
 	// 描画順をソート（奥のものから先に描画するように）
 	std::sort(logo.begin(), logo.end(), std::greater<>());
 
-	if (Keyboard::GetPress(DIK_RIGHT))
+	if (Keyboard::GetPress(DIK_RIGHT) || GamePad::GetTriggerPOV(0,POV_RIGHT))
 	{
 		if (logo[0]->Moveable())
 		{
@@ -88,7 +88,7 @@ void SelectViewer::Update()
 			}
 		}
 	}
-	if (Keyboard::GetPress(DIK_LEFT))
+	if (Keyboard::GetPress(DIK_LEFT) || GamePad::GetTriggerPOV(0, POV_LEFT))
 	{
 		if (logo[0]->Moveable())
 		{
