@@ -24,6 +24,10 @@ void GameScene::GameAchieveResult::OnStart(GameScene & entity)
 	Debug::Log("AchieveResult is Started");
 
 	auto rewardContainer = RewardController::Instance()->IsAllAchieved();
+	for (int i = 0; i < RewardConfig::Max; i++)
+	{
+		rewardContainer.push_back(RewardConfig::Type(i));
+	}
 
 	//実績がなかったらタイトルへ遷移
 	if (rewardContainer.empty())
@@ -33,13 +37,13 @@ void GameScene::GameAchieveResult::OnStart(GameScene & entity)
 	//あったら表示開始
 	else
 	{
+		entity.resultViewer->SetAchieveViewerActive(true);
 		entity.resultViewer->SetAchiveViewer(rewardContainer, [&]()
 		{
 			entity.step++;
 		});
 		entity.step = Step::AchieveViewerIn;
 	}
-
 }
 
 /**************************************
@@ -62,7 +66,7 @@ GameScene::State GameScene::GameAchieveResult::OnUpdate(GameScene & entity)
 			//初達成の実績があったらネームエントリー
 			if (RewardController::Instance()->FindFirstAchieved())
 			{
-				entity.step == Step::AchieveInputWait;
+				entity.step = Step::AchieveInputWait;
 			}
 			//なかったらタイトルへ
 			else

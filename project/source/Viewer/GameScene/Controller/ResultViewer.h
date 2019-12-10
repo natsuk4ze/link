@@ -60,6 +60,8 @@ public:
 	//スコアビューワをスライドインさせる
 	void SlideScoreViewer(bool isIn);
 
+	void SetAchieveViewerActive(bool Flag);
+
 private:
 	std::vector <BaseViewer*> resultViewer;
 	ResultScoreViewer * scoreViewer;

@@ -145,3 +145,11 @@ int SelectViewer::CheckNextScene()
 {
 	return nextMode;
 }
+
+//=====================================
+// セレクトロゴの表示が"ゲーム開始"に設定する
+//=====================================
+void SelectViewer::InitSelectLogo(void)
+{
+	//nextMode = Mode::GameStart;
+}

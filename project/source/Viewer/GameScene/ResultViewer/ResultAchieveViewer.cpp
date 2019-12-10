@@ -24,6 +24,9 @@ const D3DXVECTOR3 ResultAchieveViewer::InitTextPos = { -ResultAchieveViewer::Siz
 ***************************************/
 ResultAchieveViewer::ResultAchieveViewer()
 {
+	// 非表示する
+	isPlaying = false;
+
 	const D3DXVECTOR2 SizeBG = { 1200.0f, SizeTextFont * 10.5f };
 	bg = new TextureDrawer(SizeBG, false);
 	bg->LoadTexture("data/TEXTURE/Viewer/ResultViewer/ResultScoreViewer/scoreBG.png");
@@ -69,6 +72,9 @@ ResultAchieveViewer::~ResultAchieveViewer()
 ***************************************/
 void ResultAchieveViewer::Update()
 {
+	if (!isPlaying)
+		return;
+
 	bg->Update();
 	title->Update();
 }
@@ -78,6 +84,9 @@ void ResultAchieveViewer::Update()
 ***************************************/
 void ResultAchieveViewer::Draw()
 {
+	if (!isPlaying)
+		return;
+
 	bg->Draw();
 	title->Draw();
 
@@ -95,7 +104,7 @@ void ResultAchieveViewer::SetReward(std::vector<RewardConfig::Type>& rewardConta
 	using RewardConfig::RewardName;
 
 	//達成している実績名をテキストビューワに設定
-	for(unsigned i = 0; i < textContainer.size(); i++)
+	for (unsigned i = 0; i < textContainer.size(); i++)
 	{
 		TextViewer *text = textContainer[i];
 
@@ -120,9 +129,10 @@ void ResultAchieveViewer::StartAnim(std::function<void()> callback)
 
 	//アニメーション開始
 	bg->Expand(30, ExpandType::LeftToRight, EaseType::OutCubic);
-	title->Move(30, DestTitlePos, EaseType::OutCubic, [this]()
+	title->Move(30, DestTitlePos, EaseType::OutCubic, [this, callback]()
 	{
 		SlideinText();
+		callback();
 	});
 }
 

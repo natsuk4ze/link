@@ -29,6 +29,7 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 
 	// タイトル画面で使用するUIの描画をON
 	entity.titleViewer->SetActive(true);
+	//entity.titleViewer->InitSelectLogo();
 
 	// 使用しないUIの描画をOFF
 	entity.field->SetViewerActive(false);
