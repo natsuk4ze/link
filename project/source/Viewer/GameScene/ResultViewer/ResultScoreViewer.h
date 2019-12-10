@@ -7,8 +7,9 @@
 #ifndef _RESULT_SCORE_VIEWER_H_
 #define _RESULT_SCORE_VIEWER_H_
 
-#include "../../Framework/BaseViewer.h"
+#include <functional>
 #include "../../../../main.h"
+#include "../../Framework/BaseViewer.h"
 
 //*****************************************************************************
 // 前方宣言
@@ -23,12 +24,20 @@ class TextViewer;
 class ResultScoreViewer :public BaseViewer
 {
 private:
-	enum AnimLayer
+	enum AnimType
 	{
 		TelopIn,
 		TelopOut,
 		Max
 	};
+	enum TelopType
+	{
+		City,
+		World,
+		Space,
+		Risult
+	};
+
 	const static int telopMax = 4;
 
 	BaseViewerDrawer *bg[telopMax];
@@ -38,7 +47,8 @@ private:
 	ViewerAnimater*anim[Max];
 
 	int score[telopMax];
-	int completeRewardNum[telopMax];
+	int connectedCity[telopMax];
+	int builtRoad[telopMax];
 
 	//テロップスクリーンイン
 	void InCityTelop();
@@ -58,10 +68,12 @@ private:
 
 	void GetStopPos();
 	void SetText();
+	void SetRecievedParam();
 
 	bool isInPlaying;
 	bool isOutPlaying;
 
+	std::function<void()> CallbackInFin = nullptr;
 public:
 	ResultScoreViewer();
 	~ResultScoreViewer();
@@ -69,14 +81,16 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	void SetTelopIn();
+	void SetTelopIn(std::function<void()> CallbackInFin = nullptr);
 	void SetTelopOut();
 
 	bool IsPlayingIn() const;
 	bool IsPlayingOut() const;
 
 	//パラメータを受けとる箱
-	int parameterBox[3];
+	int parameterBoxScore[3];
+	int parameterBoxCity[3];
+	int parameterBoxRoad[3];
 };
 
 #endif

@@ -87,11 +87,6 @@ void ResultViewer::Update()
 	actor->Update();
 	camera->Update();
 
-	//if (Keyboard::GetTrigger(DIK_S))
-	//{
-	//	scoreViewer->Set();
-	//}
-
 #ifdef _DEBUG
 	Debug::Begin("DebugTool");
 	if (Debug::Button("View Achieve"))
@@ -105,6 +100,17 @@ void ResultViewer::Update()
 		achieveViewer->StartAnim();
 	}
 	Debug::End();
+
+	if (Keyboard::GetTrigger(DIK_1))
+	{
+		scoreViewer->SetTelopIn([=]
+		{
+		});
+	}
+	if (Keyboard::GetTrigger(DIK_4))
+	{
+		scoreViewer->SetTelopOut();
+	}
 #endif
 }
 
@@ -166,7 +172,7 @@ void ResultViewer::ReceiveParam(int cityScore, int worldScore, int spaceScore)
 		viewerParam->score[i] = param[i];
 
 		//コンテナからビュアーに渡す
-		scoreViewer->parameterBox[i] = viewerParam->score[i];
+		scoreViewer->parameterBoxScore[i] = viewerParam->score[i];
 	}
 }
 
@@ -213,9 +219,33 @@ void ResultViewer::SetAchieveViewerActive(bool Flag)
 }
 
 //=============================================================================
-// 描画可否判定のセット
+// 描画可否判定のセット処理
 //=============================================================================
 void ResultViewer::SetActive(bool flag)
 {
 	isActive = flag;
+}
+
+//=============================================================================
+// 描画可否判定のゲット処理
+//=============================================================================
+bool ResultViewer::GetIsActive()
+{
+	return isActive;
+}
+
+//=============================================================================
+// リザルトスコアビュアーのイン処理
+//=============================================================================
+void ResultViewer::InResultScoreViewer(std::function<void()> CallbackInFin)
+{
+	scoreViewer->SetTelopIn(CallbackInFin);
+}
+
+//=============================================================================
+// リザルトスコアビュアーのアウト処理
+//=============================================================================
+void ResultViewer::OutResultScoreViewer()
+{
+	scoreViewer->SetTelopOut();
 }

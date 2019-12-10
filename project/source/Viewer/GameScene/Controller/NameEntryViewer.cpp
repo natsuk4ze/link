@@ -8,7 +8,7 @@
 #include "../NameEntryViewer/NameEntryReelViewer.h"
 #include "../NameEntryViewer/NameEntryInput.h"
 #include "../NameEntryViewer/NameEntryBgViewer.h"
-#include "../NameEntryViewer/NameEntryInfoViewer.h"
+
 #include "NameEntryViewer.h"
 
 #ifdef _DEBUG
@@ -26,7 +26,6 @@ NameEntryViewer::NameEntryViewer():
 	input = new NameEntryInput();
 
 	nameEntryViewer.push_back(bgViewer = new NameEntryBgViewer());
-	nameEntryViewer.push_back(infoViewer = new NameEntryInfoViewer());
 	nameEntryViewer.push_back(reelViewer = new NameEntryReelViewer());
 }
 
@@ -60,6 +59,15 @@ void NameEntryViewer::Update()
 	{
 		Debug::Text("nameID%d", entryNameID[i]);
 	}
+	if (Keyboard::GetTrigger(DIK_2))
+	{
+		SlideNameEntryViewer(true);
+	}
+	if (Keyboard::GetTrigger(DIK_3))
+	{
+		SlideNameEntryViewer(false);
+	}
+
 #endif
 
 	MoveCursor();
@@ -127,6 +135,7 @@ void NameEntryViewer::MoveCursor()
 	{
 		if (reelCnt >= entryNameMax - 1) return;
 		reelCnt++;
+		reelViewer->MoveCursorRight();
 	}
 
 	//左ボタンが押された
@@ -134,6 +143,7 @@ void NameEntryViewer::MoveCursor()
 	{
 		if (reelCnt <= 0) return;
 		reelCnt--;
+		reelViewer->MoveCursorLeft();
 	}
 }
 
@@ -163,9 +173,36 @@ void NameEntryViewer::SetActive(bool flag)
 }
 
 //=============================================================================
+// 描画可否判定のゲット
+//=============================================================================
+bool NameEntryViewer::GetIsActive()
+{
+	return isActive;
+}
+
+//=============================================================================
 // 登録名ID取得処理（文字テーブルの0～35までの値がentryNameMax個の配列）
 //=============================================================================
 int* NameEntryViewer::GetEntryNameID()
 {
 	return entryNameID;
+}
+
+//=============================================================================
+// 名前登録ビュアーのスライド処理
+//=============================================================================
+void NameEntryViewer::SlideNameEntryViewer(bool isIn)
+{
+	if (isIn)
+	{
+		bgViewer->SetBgIn([=]
+		{
+			reelViewer->SetTelopIn();
+		});
+	}
+	else
+	{
+		bgViewer->SetBgOut();
+		reelViewer->SetTelopOut();
+	}
 }

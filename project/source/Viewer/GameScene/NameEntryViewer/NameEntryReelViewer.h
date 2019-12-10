@@ -1,4 +1,3 @@
-
 //=============================================================================
 //
 // 名前入力リール処理 [NameEntryReelViewer.h]
@@ -8,12 +7,15 @@
 #ifndef _NAME_ENTRY_REEL_VIEWER_H_
 #define _NAME_ENTRY_REEL_VIEWER_H_
 
+#include <functional>
 #include "../../Framework/BaseViewer.h"
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
 class BaseViewerDrawer;
+class TextViewer;
+class ViewerAnimater;
 
 //*****************************************************************************
 // クラス定義
@@ -36,7 +38,20 @@ public:
 	//リールの文字を取得する
 	int* GetReelChar(void);
 
+	void MoveCursorRight(void);
+	void MoveCursorLeft(void);
+
+	void SetTelopIn();
+	void SetTelopOut();
+
 private:
+
+	enum AnimScene
+	{
+		TelopIn,
+		TelopOut,
+		Max
+	};
 
 	//登録できる名前の最大数
 	static const int entryNameMax = 3;
@@ -47,8 +62,18 @@ private:
 	//リールに表示されている文字
 	int character[entryNameMax];
 
-	//リール
+	bool isInPlaying;
+	bool isOutPlaying;
+
 	BaseViewerDrawer * reel[entryNameMax];
+	BaseViewerDrawer * cursor;
+	BaseViewerDrawer * bg;
+	TextViewer *text;
+	TextViewer *underBar;
+	ViewerAnimater *anim[AnimScene::Max];
+
+	void InReel(std::function<void()> Callback);
+	void OutReel(std::function<void()> Callback);
 };
 
 #endif

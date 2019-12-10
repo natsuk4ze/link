@@ -24,6 +24,9 @@ public:
 
 	//ストック数
 	int stockNum;
+
+	//現在のフィールドレベル
+	int currentFieldLevel;
 };
 
 #endif

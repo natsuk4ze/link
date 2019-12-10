@@ -90,10 +90,14 @@ void ViewerAnimater::Hop(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start, c
 
 	if (Callback) Callback();
 
-	if (frameCnt <= duration/2) 
-	viewer.size.y = Easing::EaseValue(animTime*2, start.y, start.y + value.y, OutCubic);
+	if (frameCnt <= duration / 2)
+	{
+		viewer.size.x = Easing::EaseValue(animTime * 2, start.x, start.x + value.x, OutCubic);
+		viewer.size.y = Easing::EaseValue(animTime * 2, start.y, start.y + value.y, OutCubic);
+	}
 	else
 	{
+		viewer.size.x = Easing::EaseValue(animTime * 2, start.x + value.x, start.x, OutCubic);
 		viewer.size.y = Easing::EaseValue(animTime * 2, start.y + value.y, start.y, OutCubic);
 	}
 
@@ -248,9 +252,13 @@ void ViewerAnimater::SubHop(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start
 	if (Callback) Callback();
 
 	if (frameCnt <= duration / 2)
+	{
+		viewer.size.x = Easing::EaseValue(animTime * 2, start.x, start.x + value.x, OutCubic);
 		viewer.size.y = Easing::EaseValue(animTime * 2, start.y, start.y + value.y, OutCubic);
+	}
 	else
 	{
+		viewer.size.x = Easing::EaseValue(animTime * 2, start.x + value.x, start.x, OutCubic);
 		viewer.size.y = Easing::EaseValue(animTime * 2, start.y + value.y, start.y, OutCubic);
 	}
 }

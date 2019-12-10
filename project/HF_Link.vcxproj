@@ -302,7 +302,6 @@
     <ClInclude Include="source\Viewer\GameScene\GameViewer\TimeUpViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInfoViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.h" />
     <ClInclude Include="source\Viewer\GameScene\ParameterContainer\EventViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.h" />
@@ -607,7 +606,6 @@
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GuideViewer\GuideViewerBG.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInfoViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryReelViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\ResultViewer\ResultAchieveViewer.cpp" />

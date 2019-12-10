@@ -52,23 +52,6 @@ GameViewer::~GameViewer()
 //=============================================================================
 void GameViewer::Update()
 {
-	//Debug::Begin("GradeUp");
-	//if (Debug::Button("GradeUp"))
-	//	gradeUpViewer->SetGradeUp();
-	//if (Debug::Button("Slide"))
-	//	gradeFrameViewer->SlideIn();
-	//if (Debug::Button("GradeTitle"))
-	//	gradeFrameViewer->SlideIn([&]()
-	//{
-	//	gradeNameViewer->SetGradeName(Field::World, [&]()
-	//	{
-	//		gradeFrameViewer->SlideOut();
-	//	});
-	//});
-	//if (Debug::Button("TimeUp"))
-	//	timeUpViewer->Set();
-	//Debug::End();
-
 	for (unsigned int i = 0; i < gameViewer.size(); i++)
 	{
 		gameViewer[i]->Update();
@@ -113,6 +96,7 @@ void GameViewer::ReceiveParam(GameViewerParam &param)
 	//AIレベルビュアー
 	levelViewer->parameterBox[levelViewer->LevelAI] = (float)param.levelAI;
 	levelViewer->parameterBox[levelViewer->RatioLevel] = param.ratioLevel;
+	levelViewer->parameterBox[levelViewer->CurrentFieldLevel] = (float)param.currentFieldLevel;
 }
 
 //=============================================================================

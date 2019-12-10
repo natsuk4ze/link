@@ -16,6 +16,7 @@ class NameEntryInput;
 class NameEntryReelViewer;
 class NameEntryBgViewer;
 class NameEntryInfoViewer;
+class NameEntryCursorViewer;
 class BaseViewer;
 
 //*****************************************************************************
@@ -33,15 +34,17 @@ public:
 	//アクティブ状態をセット
 	void SetActive(bool flag);
 
+	bool GetIsActive();
+
 	//登録名ID取得処理（文字テーブルの0～35までの値がentryNameMax個の配列）
 	int* GetEntryNameID();
 
+	void SlideNameEntryViewer(bool isIn);
 private:
 	std::vector <BaseViewer*> nameEntryViewer;
 	NameEntryInput *input;
 	NameEntryReelViewer *reelViewer;
 	NameEntryBgViewer *bgViewer;
-	NameEntryInfoViewer *infoViewer;
 
 	//カーソル移動処理
 	void MoveCursor(void);

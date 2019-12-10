@@ -51,6 +51,11 @@ public:
 	//パラメータの受け取り処理
 	void ReceiveParam(int cityScore,int worldScore,int spaceScore);
 
+	bool GetIsActive();
+
+	void InResultScoreViewer(std::function<void()> CallbackInFin);
+	void OutResultScoreViewer();
+
 	//スコアビューアのアニメーション再生中判定
 	ResultAnimation IsPlayingAnimation() const;
 
