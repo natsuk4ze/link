@@ -78,5 +78,23 @@
 	"Ground":"data/MODEL/PlaceActor/ground.x",
 
 	"River":"川のモデル",
-	"River":"data/MODEL/PlaceActor/river.x"
+	"River":"data/MODEL/PlaceActor/river.x",
+
+	"City-Town-S":"町レベルの町モデル（小）",
+	"City-Town-S":"data/MODEL/PlaceActor/small town.x",
+
+	"City-Town-M":"町レベルの町モデル（中）",
+	"City-Town-M":"data/MODEL/PlaceActor/town.x",
+
+	"City-Town-L":"町レベルの町モデル（大）",
+	"City-Town-L":"data/MODEL/PlaceActor/town.x",
+
+	"World-Town-S":"世界レベルの町モデル（小）",
+	"World-Town-S":"data/MODEL/PlaceActor/Big country.x",
+
+	"World-Town-M":"世界レベルの町モデル（中）",
+	"World-Town-M":"data/MODEL/PlaceActor/Big country.x",
+
+	"World-Town-L":"世界レベルの町モデル（大）",
+	"World-Town-L":"data/MODEL/PlaceActor/Big country.x"
 }
