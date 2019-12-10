@@ -146,9 +146,6 @@ void ResultViewer::Draw(void)
 
 	for (unsigned int i = 0; i < resultViewer.size(); i++)
 	{
-		if (i == 0)
-			continue;
-
 		resultViewer[i]->Draw();
 	}
 
