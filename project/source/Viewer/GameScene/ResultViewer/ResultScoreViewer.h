@@ -24,12 +24,20 @@ class TextViewer;
 class ResultScoreViewer :public BaseViewer
 {
 private:
-	enum AnimLayer
+	enum AnimType
 	{
 		TelopIn,
 		TelopOut,
 		Max
 	};
+	enum TelopType
+	{
+		City,
+		World,
+		Space,
+		Risult
+	};
+
 	const static int telopMax = 4;
 
 	BaseViewerDrawer *bg[telopMax];
@@ -39,7 +47,8 @@ private:
 	ViewerAnimater*anim[Max];
 
 	int score[telopMax];
-	int completeRewardNum[telopMax];
+	int connectedCity[telopMax];
+	int builtRoad[telopMax];
 
 	//テロップスクリーンイン
 	void InCityTelop();
@@ -59,6 +68,7 @@ private:
 
 	void GetStopPos();
 	void SetText();
+	void SetRecievedParam();
 
 	bool isInPlaying;
 	bool isOutPlaying;
@@ -75,7 +85,9 @@ public:
 	void SetTelopOut();
 
 	//パラメータを受けとる箱
-	int parameterBox[3];
+	int parameterBoxScore[3];
+	int parameterBoxCity[3];
+	int parameterBoxRoad[3];
 };
 
 #endif

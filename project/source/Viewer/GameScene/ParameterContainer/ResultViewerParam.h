@@ -18,8 +18,11 @@ public:
 	//Cityスコア,Worldスコア,Spaceスコア
 	int score[fieldTypeMax];
 
-	//Cityで達成したリワード数,Worldで達成したリワード数、Spaceで達成したリワードの数
-	int completedRewardNum[fieldTypeMax];
+	//Cityで作った道の数,Worldで作った道の数、Spaceで作った道の数
+	int builtRoad[fieldTypeMax];
+
+	//Cityで繋がった街の数,Worldで繋がった街の数、Spaceで繋がった街の数
+	int connectedCity[fieldTypeMax];
 };
 
 #endif
