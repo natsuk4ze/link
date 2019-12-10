@@ -35,6 +35,7 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 
 	// リザルト画面で使用するUIの描画をON(ネームエントリーは最初はオフ）
 	entity.resultViewer->SetActive(true);
+	entity.resultViewer->SlideScoreViewer(true);
 
 	// 使用しないUIの描画をOFF
 	entity.field->SetViewerActive(false);
@@ -103,21 +104,23 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 		break;
 
 	case Step::ScoreNameEntryFinish:
-		//とりあえずエンターが押されたらタイトルへ戻る
+		//エンターキーが押されたらスコアビューワをスライドアウトさせる
 		if (Keyboard::GetTrigger(DIK_RETURN))
 		{
-			TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
-			{
-				entity.level = 0;
-				entity.Clear();
-				entity.SetFieldLevel(0);
-				entity.field->Load();
-				entity.ChangeState(State::Title);
-			});
+			entity.resultViewer->SlideScoreViewer(false);
+			entity.step = Step::ScoreViewerOut;
+		}
+		break;
+
+	case Step::ScoreViewerOut:
+		if (entity.resultViewer->IsPlayingAnimation() != ResultViewer::PlayingOut)
+		{
+			entity.ChangeState(State::AchieveResult);
 		}
 		break;
 
 	default:
+
 		break;
 	}
 

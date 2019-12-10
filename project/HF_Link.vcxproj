@@ -254,6 +254,7 @@
     <ClInclude Include="source\Reward\Reward.h" />
     <ClInclude Include="source\Reward\RewardController.h" />
     <ClInclude Include="source\Scene\GameScene.h" />
+    <ClInclude Include="source\Scene\GameState\GameAchieveResult.h" />
     <ClInclude Include="source\Scene\GameState\GameFarView.h" />
     <ClInclude Include="source\Scene\GameState\GameFinish.h" />
     <ClInclude Include="source\Scene\GameState\GameIdle.h" />
@@ -546,6 +547,7 @@
     <ClCompile Include="source\Reward\Reward.cpp" />
     <ClCompile Include="source\Reward\RewardController.cpp" />
     <ClCompile Include="source\Scene\GameScene.cpp" />
+    <ClCompile Include="source\Scene\GameState\GameAchieveResult.cpp" />
     <ClCompile Include="source\Scene\GameState\GameFarView.cpp" />
     <ClCompile Include="source\Scene\GameState\GameFinish.cpp" />
     <ClCompile Include="source\Scene\GameState\GameIdle.cpp" />

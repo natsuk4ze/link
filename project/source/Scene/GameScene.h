@@ -72,6 +72,7 @@ public:
 		Result,
 		TransitionOut,
 		TransitionIn,
+		AchieveResult,
 		Max
 	};
 
@@ -148,6 +149,7 @@ private:
 	class GameResult;
 	class GameTransitionOut;
 	class GameTransitionIn;
+	class GameAchieveResult;
 
 	//デバッグ用フィールドレベル
 	static int level;

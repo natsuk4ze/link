@@ -50,6 +50,7 @@
 #include "GameState/GameResult.h"
 #include "GameState\GameTransitionOut.h"
 #include "GameState\GameTransitionIn.h"
+#include "GameState\GameAchieveResult.h"
 
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Sound/BackgroundMusic.h"
@@ -131,6 +132,7 @@ void GameScene::Init()
 	fsm[State::Result] = new GameResult();
 	fsm[State::TransitionOut] = new GameTransitionOut();
 	fsm[State::TransitionIn] = new GameTransitionIn();
+	fsm[State::AchieveResult] = new GameAchieveResult();
 
 	//ƒfƒŠƒQ[ƒg‚ğì¬‚µ‚Äİ’è
 	auto onBuildRoad = std::bind(&GameScene::OnBuildRoad, this, std::placeholders::_1);

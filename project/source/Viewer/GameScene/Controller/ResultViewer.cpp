@@ -194,6 +194,17 @@ void ResultViewer::SetAchiveViewer(std::vector<RewardConfig::Type>& rewardContai
 }
 
 //=============================================================================
+// スコアビューワのスライドイン処理
+//=============================================================================
+void ResultViewer::SlideScoreViewer(bool isIn)
+{
+	if (isIn)
+		scoreViewer->SetTelopIn();
+	else
+		scoreViewer->SetTelopOut();
+}
+
+//=============================================================================
 // 描画可否判定のセット
 //=============================================================================
 void ResultViewer::SetActive(bool flag)
