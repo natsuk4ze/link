@@ -50,6 +50,7 @@
 #include "GameState/GameResult.h"
 #include "GameState\GameTransitionOut.h"
 #include "GameState\GameTransitionIn.h"
+#include "GameState\GameAchieveResult.h"
 
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Sound/BackgroundMusic.h"
@@ -131,6 +132,7 @@ void GameScene::Init()
 	fsm[State::Result] = new GameResult();
 	fsm[State::TransitionOut] = new GameTransitionOut();
 	fsm[State::TransitionIn] = new GameTransitionIn();
+	fsm[State::AchieveResult] = new GameAchieveResult();
 
 	//ƒfƒŠƒQ[ƒg‚ðì¬‚µ‚ÄÝ’è
 	auto onBuildRoad = std::bind(&GameScene::OnBuildRoad, this, std::placeholders::_1);
@@ -483,6 +485,13 @@ void GameScene::DebugTool()
 	Debug::Slider("threthold", threthold, Vector3::Zero, Vector3::One);
 	bloomController->SetPower(power.x, power.y, power.z);
 	bloomController->SetThrethold(threthold.x, threthold.y, threthold.z);
+
+	Debug::NewLine();
+	Debug::Text("Achieve");
+	Debug::CheckBox("Use DebugAchieve", debugReward);
+	for (int i = 0; i < 10; i += 2)
+	{
+	}
 
 	Debug::End();
 }

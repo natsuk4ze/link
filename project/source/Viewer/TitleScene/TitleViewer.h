@@ -38,6 +38,8 @@ public:
 
 	bool CheckSceneChange();
 	void SetNextScene(GameScene& entity);
+	// セレクトロゴの表示が"ゲーム開始"に設定する
+	void InitSelectLogo(void);
 };
 
 #endif

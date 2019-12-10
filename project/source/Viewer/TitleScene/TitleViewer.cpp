@@ -110,3 +110,11 @@ void TitleViewer::SetNextScene(GameScene& entity)
 		}
 	}
 }
+
+//=====================================
+// セレクトロゴの表示が"ゲーム開始"に設定する
+//=====================================
+void TitleViewer::InitSelectLogo(void)
+{
+	//selectViewer->InitSelectLogo();
+}

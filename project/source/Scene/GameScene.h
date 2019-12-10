@@ -72,6 +72,7 @@ public:
 		Result,
 		TransitionOut,
 		TransitionIn,
+		AchieveResult,
 		Max
 	};
 
@@ -111,6 +112,9 @@ private:
 
 	long long entiretyScore;					//全レベルの合計スコア
 
+	bool debugReward;							//実績リザルト画面でデバッグを使用するか
+	bool debugAchievedResult[10];				//デバッグ用の達成実績
+
 	//ポストエフェクト関連
 	BloomController *bloomController;			//ブルームエフェクトのコントローラ
 
@@ -148,6 +152,7 @@ private:
 	class GameResult;
 	class GameTransitionOut;
 	class GameTransitionIn;
+	class GameAchieveResult;
 
 	//デバッグ用フィールドレベル
 	static int level;

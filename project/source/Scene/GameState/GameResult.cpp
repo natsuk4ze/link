@@ -27,7 +27,7 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	entity.step = 0;
 
 	// 最下位のスコアを取得
-	entity.Client->GetLastScore();
+	//entity.Client->GetLastScore();
 
 	//スコア表示、名前入力などなど
 	// カメラのモード切り替え
@@ -35,6 +35,8 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 
 	// リザルト画面で使用するUIの描画をON(ネームエントリーは最初はオフ）
 	entity.resultViewer->SetActive(true);
+	entity.resultViewer->SlideScoreViewer(true);
+	entity.resultViewer->SetAchieveViewerActive(false);
 
 	// 使用しないUIの描画をOFF
 	entity.field->SetViewerActive(false);
@@ -103,21 +105,24 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 		break;
 
 	case Step::ScoreNameEntryFinish:
-		//とりあえずエンターが押されたらタイトルへ戻る
+		//エンターキーが押されたらスコアビューワをスライドアウトさせる
 		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 		{
-			TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
-			{
-				entity.level = 0;
-				entity.Clear();
-				entity.SetFieldLevel(0);
-				entity.field->Load();
-				entity.ChangeState(State::Title);
-			});
+			entity.resultViewer->SlideScoreViewer(false);
+			entity.nemeEntryViewer->SetActive(false);
+			entity.step = Step::ScoreViewerOut;
+		}
+		break;
+
+	case Step::ScoreViewerOut:
+		if (entity.resultViewer->IsPlayingAnimation() != ResultViewer::PlayingOut)
+		{
+			entity.ChangeState(State::AchieveResult);
 		}
 		break;
 
 	default:
+
 		break;
 	}
 

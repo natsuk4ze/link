@@ -8,6 +8,7 @@
 #define _RESULT_VIEWER_H_
 
 #include <vector>
+#include <functional>
 
 //*****************************************************************************
 // 前方宣言
@@ -55,6 +56,11 @@ public:
 
 	//実績ビューワセット
 	void SetAchiveViewer(std::vector<RewardConfig::Type>& rewardContainer, std::function<void()> callback = nullptr);
+
+	//スコアビューワをスライドインさせる
+	void SlideScoreViewer(bool isIn);
+
+	void SetAchieveViewerActive(bool Flag);
 
 private:
 	std::vector <BaseViewer*> resultViewer;

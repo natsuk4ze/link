@@ -28,9 +28,6 @@ ResultScoreViewer::ResultScoreViewer() :
 	isInPlaying(false),
 	isOutPlaying(false)
 {
-	//‘¦Ä¶ŠJŽn
-	SetTelopIn();
-
 	const D3DXCOLOR telopColor[telopMax] = {
 		D3DXCOLOR(0.0f, 104 / 255.0f, 98 / 255.0f, 0.9f),
 		D3DXCOLOR(118/255.0f,0.0f,0.0f,0.9f),
@@ -374,6 +371,7 @@ void ResultScoreViewer::OutResultTelop()
 void ResultScoreViewer::SetTelopIn()
 {
 	isInPlaying = true;
+	anim[AnimLayer::TelopIn]->ResetAnim();
 }
 
 //=============================================================================
@@ -383,6 +381,7 @@ void ResultScoreViewer::SetTelopOut()
 {
 	GetStopPos();
 	isOutPlaying = true;
+	anim[AnimLayer::TelopOut]->ResetAnim();
 }
 
 //=============================================================================
