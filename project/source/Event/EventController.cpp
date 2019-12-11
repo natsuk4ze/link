@@ -400,7 +400,7 @@ bool EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 				// CSVデータから発生したイベントの資料を削除
 				EventPlace = EventCSVData.erase(EventPlace);
 
-				//イベントインフォのエミッタを停止z
+				//イベントインフォのエミッタを停止
 				infoEmitterContainer[PlacePos]->SetActive(false);
 				infoEmitterContainer.erase(PlacePos);
 			}
@@ -425,19 +425,25 @@ void EventController::ReceiveFieldEventHandler(FieldEventHandler *Ptr)
 	EventBase::ReceiveFieldEventHandler(Ptr);
 }
 
-//=============================================================================
-// ビューワパラメータ埋め込み処理
-//=============================================================================
-void EventController::EmbedViewerParam(EventViewerParam& param)
-{
-	param.isStockSealed = this->InBanStock;
-}
+////=============================================================================
+//// ビューワパラメータ埋め込み処理
+////=============================================================================
+//void EventController::EmbedViewerParam(EventViewerParam& param)
+//{
+//	param.isStockSealed = this->InBanStock;
+//	eventViewer->ReceiveParam(param);
+//}
 
 //=============================================================================
 // ストック使用禁止の設置
 //=============================================================================
 void EventController::SetBanStock(bool Flag)
 {
+	if (Flag && !InBanStock)
+	{
+		eventViewer->SetBanIcon();
+	}
+
 	InBanStock = Flag;
 }
 

@@ -303,7 +303,6 @@
     <ClCompile Include="source\Field\Object\SpaceGrid.cpp" />
     <ClCompile Include="source\Shader\SpaceGridEffect.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInfoViewer.cpp" />
     <ClCompile Include="Framework\Resource\FontManager.cpp" />
     <ClCompile Include="source\Sound\SoundConfig.cpp" />
     <ClCompile Include="source\Viewer\NameViewer\Name.cpp" />
@@ -582,7 +581,6 @@
     <ClInclude Include="source\Viewer\GameScene\Controller\EventViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\GuideViewer\GuideCallOutViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInput.h" />
-    <ClInclude Include="source\Viewer\GameScene\ParameterContainer\EventViewerParam.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\FieldErrorMessage.h" />
     <ClInclude Include="source\Viewer\GameScene\Controller\FieldViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\FieldViewer\LinkLevelUpViewer.h" />
@@ -616,7 +614,6 @@
     <ClInclude Include="source\Field\Object\SpaceGrid.h" />
     <ClInclude Include="source\Shader\SpaceGridEffect.h" />
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInfoViewer.h" />
     <ClInclude Include="Framework\Resource\FontManager.h" />
     <ClInclude Include="source\Sound\SoundConfig.h" />
     <ClInclude Include="source\Viewer\NameViewer\Name.h" />
