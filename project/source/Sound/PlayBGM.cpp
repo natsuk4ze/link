@@ -14,14 +14,23 @@
 void PlayBGM::FadeIn(SoundConfig::BGMID tag, float volume, int duration)
 {
 	BGM::FadeIn(tag, volume, duration);
+	current = tag;
 }
 
 //=====================================
 // フェードアウト
 //=====================================
-void PlayBGM::FadeOut(SoundConfig::BGMID tag, float volume, bool flagStop)
+void PlayBGM::FadeOut(SoundConfig::BGMID tag, float volume, int duration, bool flagStop)
 {
-	BGM::Fade(tag, volume, flagStop);
+	BGM::Fade(tag, volume, duration, flagStop);
+}
+
+//=====================================
+// フェードアウト
+//=====================================
+void PlayBGM::FadeOut()
+{
+	BGM::Fade(current, 0.1f, 30, true);
 }
 
 //=====================================
@@ -31,6 +40,15 @@ void PlayBGM::Pause(SoundConfig::BGMID tag)
 {
 	BGM::Stop(tag);
 	prev = tag;
+}
+
+//=====================================
+// 一時停止
+//=====================================
+void PlayBGM::Pause()
+{
+	BGM::Stop(current);
+	prev = current;
 }
 
 //=====================================

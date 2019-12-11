@@ -21,10 +21,12 @@ class PlayBGM :
 public:
 	// フェードイン、フェードアウト
 	void FadeIn(SoundConfig::BGMID tag, float volume, int duration);
-	void FadeOut(SoundConfig::BGMID tag, float volume, bool flagStop);
+	void FadeOut(SoundConfig::BGMID tag, float volume, int duration, bool flagStop);
+	void FadeOut();
 
 	// 一時停止、再生再開
 	void Pause(SoundConfig::BGMID tag);
+	void Pause();
 	void Resume(SoundConfig::BGMID tag);
 	
 	// 直前に再生していたBGMを一時停止から復帰させる
@@ -34,6 +36,7 @@ private:
 	PlayBGM(){}
 	~PlayBGM(){}
 
+	SoundConfig::BGMID current;
 	SoundConfig::BGMID prev;
 };
 

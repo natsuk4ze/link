@@ -15,6 +15,7 @@
 #include "../../Viewer/GameScene/Controller/NameEntryViewer.h"
 #include "../../../Framework/Transition/TransitionController.h"
 #include "../../../Framework/Serial/SerialWrapper.h"
+#include "../../Sound/PlayBGM.h"
 
 //=====================================
 // 入場処理
@@ -40,6 +41,9 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 
 	//モータの角度を初期化
 	entity.serial->Write(GameScene::AngleTable[0]);
+
+	// タイトルのBGMを開始
+	PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Title, 0.1f, 30);
 }
 
 //=====================================

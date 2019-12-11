@@ -27,7 +27,6 @@ public:
 		City,
 		World,
 		Space,
-		CreationEvent,
 		DestroyEvent,
 		UFOEvent,
 		AIBurstEvent,

@@ -11,16 +11,14 @@ staticÉÅÉìÉo
 ***************************************/
 const char* SoundConfig::BGMPath[BGMID::BGMMax]
 {
-	{"data/SOUND/BGM/Course_Select.wav"},
-	{"data/SOUND/BGM/little-archemist_loop.wav"},
-	{"data/SOUND/BGM/Es-STAGE1_loop.wav"},
-	{"data/SOUND/BGM/Labyrinth-Of-Time_loop.wav"},
 	{"data/SOUND/BGM/MusMus-BGM-052.wav"},
 	{"data/SOUND/BGM/MusMus-BGM-067.wav"},
-	{"data/SOUND/BGM/Mystic Edge.wav"},
+	{"data/SOUND/BGM/Es-STAGE1_loop.wav"},
+	{"data/SOUND/BGM/Labyrinth-Of-Time_loop.wav"},
+	{"data/SOUND/BGM/Mystic Edge.wav"},			// å„Ç≈ïœçX
+	{"data/SOUND/BGM/Course_Select.wav"},			// å„Ç≈ïœçX
 	{"data/SOUND/BGM/Crasher_loop.wav"},
-	{"data/SOUND/BGM/MusMus-CT-NV-TT.wav"},
-
+	{"data/SOUND/BGM/MusMus-CT-NV-TT.wav"}
 };
 
 const char* SoundConfig::VoicePath[VoiceID::VoiceMax]

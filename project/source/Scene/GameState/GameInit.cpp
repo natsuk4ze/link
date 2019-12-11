@@ -25,6 +25,7 @@
 #include "../../Viewer/GameScene/Controller/NameEntryViewer.h"
 #include "../../../Framework/Resource/FontManager.h"
 #include "../../Sound/SoundConfig.h"
+#include "../../../Framework/Sound/BackgroundMusic.h"
 
 /**************************************
 入場処理
@@ -71,11 +72,15 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 
 	//サウンド読み込み
 	//NOTE : 今はお試し。本番ではちゃんとタグを用意する
-	BGM::Load("data/SOUND/BGM/Course_Select.wav", 0);
-	BGM::FadeIn(0, 0.1f, 30);
-	for (int i = 0; i < SoundConfig::Max; i++)
+	//BGM::Load("data/SOUND/BGM/Course_Select.wav", 0);
+	//BGM::FadeIn(0, 0.1f, 30);
+	for (int i = 0; i < SoundConfig::VoiceMax; i++)
 	{
-		SE::Load(SoundConfig::FilePath[i], SoundConfig::ID(i));
+		SE::Load(SoundConfig::VoicePath[i], SoundConfig::VoiceID(i));
+	}
+	for (int i = 0; i < SoundConfig::BGMMax; i++)
+	{
+		BGM::Load(SoundConfig::BGMPath[i], SoundConfig::BGMID(i));
 	}
 
 	//制限時間読み込み

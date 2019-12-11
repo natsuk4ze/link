@@ -305,6 +305,7 @@
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInfoViewer.cpp" />
     <ClCompile Include="Framework\Resource\FontManager.cpp" />
     <ClCompile Include="source\Sound\SoundConfig.cpp" />
+    <ClCompile Include="source\Sound\PlayBGM.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -613,6 +614,7 @@
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInfoViewer.h" />
     <ClInclude Include="Framework\Resource\FontManager.h" />
     <ClInclude Include="source\Sound\SoundConfig.h" />
+    <ClInclude Include="source\Sound\PlayBGM.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

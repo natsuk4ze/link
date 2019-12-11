@@ -13,6 +13,7 @@
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../Framework/Sound/SoundEffect.h"
 #include "../../Sound/SoundConfig.h"
+#include "../../Sound/PlayBGM.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -40,6 +41,7 @@ BanStockUseEvent::BanStockUseEvent(EventViewer* eventViewer,
 	eventViewer(eventViewer),
 	beatViewer(beatViewer)
 {
+	PlayBGM::Instance()->Pause();
 }
 
 //=============================================================================
@@ -69,7 +71,10 @@ void BanStockUseEvent::Init()
 	GameParticleManager::Instance()->SetAngryFaceEffect();
 
 	// 怒り顔エフェクト終わるまで待つ
-	TaskManager::Instance()->CreateDelayedTask(150, [&]() {	beatGame->CountdownStart(); });
+	TaskManager::Instance()->CreateDelayedTask(150, [&]() {	
+		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::AIBurstEvent, 0.1f, 30);
+		beatGame->CountdownStart(); 
+	});
 
 	// 初期化終了
 	Initialized = true;
@@ -133,7 +138,6 @@ void BanStockUseEvent::EventOver(void)
 	GuideViewer::Instance()->SetData("AIの暴走を食い止めました",
 		GuideActor::AnimState::Salute, 
 		SoundConfig::AIOutofControllStop);
-
 }
 
 //=============================================================================
@@ -158,5 +162,7 @@ void BanStockUseEvent::ReceiveBeatResult(bool IsSuccess)
 			GuideActor::AnimState::Pain,
 			SoundConfig::AIOutofControll);
 	}
+	PlayBGM::Instance()->FadeOut();
+	PlayBGM::Instance()->ResumePrev();
 }
 

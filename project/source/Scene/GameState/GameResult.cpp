@@ -16,6 +16,8 @@
 #include "../../../Framework/Transition/TransitionController.h"
 #include "../../../Framework/Network/UDPClient.h"
 #include "../../Field/FieldController.h"
+#include "../../Sound/PlayBGM.h"
+#include "../../Sound/SoundConfig.h"
 
 //=====================================
 // 入場処理
@@ -50,6 +52,8 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	int worldScore = (int)entity.field->GetScore(Field::FieldLevel::World);
 	int spaceScore = (int)entity.field->GetScore(Field::FieldLevel::Space);
 	entity.resultViewer->ReceiveParam(cityScore, worldScore, spaceScore);
+
+	PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Result, 0.1f, 30);
 }
 
 //=====================================
@@ -63,6 +67,7 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 	//とりあえずエンターが押されたらタイトルへ戻る
 	if (Keyboard::GetTrigger(DIK_RETURN))
 	{
+		PlayBGM::Instance()->FadeOut(SoundConfig::BGMID::Result, 0.1f, 30, true);
 		TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
 		{
 			entity.level = 0;

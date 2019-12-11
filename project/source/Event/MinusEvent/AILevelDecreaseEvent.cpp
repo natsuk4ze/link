@@ -19,6 +19,7 @@
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../Framework/Sound/SoundEffect.h"
 #include "../../Sound/SoundConfig.h"
+#include "../../Sound/PlayBGM.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -59,7 +60,7 @@ AILevelDecreaseEvent::AILevelDecreaseEvent(EventViewer* eventViewer, EventCamera
 	beatViewer(beatViewer),
 	success(false)
 {
-
+	PlayBGM::Instance()->Pause();
 }
 
 //=============================================================================
@@ -104,7 +105,10 @@ void AILevelDecreaseEvent::Init()
 	// テロップ設置
 	eventViewer->SetEventTelop(EventTelop::Alien, [&]()
 	{
-		camera->Translation(TownPos, 30, [&]() {UFODebutStart(); });
+		camera->Translation(TownPos, 30, [&]() {
+			PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::UFOEvent, 0.1f, 30);
+			UFODebutStart(); 
+		});
 	});
 
 	// ゲーム進行停止
@@ -156,12 +160,14 @@ void AILevelDecreaseEvent::Update()
 			camera->Return(30, [&]() { EventOver(); });
 		});
 		EventState = EffectHappend;
+		PlayBGM::Instance()->FadeOut();
 		break;
 
 		// AIレベル減らす
 	case BeatGameFail:
 
 		UFO->Update();
+		PlayBGM::Instance()->FadeOut();
 
 		break;
 
@@ -250,6 +256,7 @@ void AILevelDecreaseEvent::EventOver(void)
 			GuideActor::AnimState::Pain,
 			SoundConfig::UFOFailed);
 	}
+	PlayBGM::Instance()->ResumePrev();
 }
 
 //=============================================================================
