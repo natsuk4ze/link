@@ -38,7 +38,7 @@ GameScene::State GameScene::GameTransitionOut::OnUpdate(GameScene & entity)
 	//雲パーティクル発生
 	if (entity.cntFrame == 45)
 	{
-		entity.serial->Write(GameScene::AngleTable[level]);
+		entity.RotateMotor(level);
 		GameParticleManager::Instance()->Generate(GameParticle::Cloud, Vector3::Zero);
 	}
 

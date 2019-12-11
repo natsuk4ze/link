@@ -136,6 +136,9 @@ private:
 	//クリア処理
 	void Clear();
 
+	//モータ回転処理
+	void RotateMotor(int level);
+
 	//static定数メンバ
 	static const float BloomPower[3];
 	static const float BloomThrethold[3];

@@ -40,7 +40,7 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	entity.nemeEntryViewer->SetActive(false);
 
 	//ƒ‚[ƒ^‚ÌŠp“x‚ð‰Šú‰»
-	entity.serial->Write(GameScene::AngleTable[0]);
+	entity.RotateMotor(0);
 }
 
 //=====================================

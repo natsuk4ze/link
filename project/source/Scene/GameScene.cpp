@@ -585,3 +585,14 @@ void GameScene::Clear()
 	rewardNotifier->ResetAchieved();
 	RewardController::Instance()->ResetAllRewardData();
 }
+
+/**************************************
+ƒ‚[ƒ^‰ñ“]ˆ—
+***************************************/
+void GameScene::RotateMotor(int level)
+{
+	char buf[2] = { 'r', AngleTable[level] };
+	size_t numPut = serial->Write(buf, 2);
+
+	Debug::Log("Serial : Putnum %d", numPut);
+}
