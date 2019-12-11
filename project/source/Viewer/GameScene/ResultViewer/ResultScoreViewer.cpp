@@ -14,8 +14,8 @@
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-static const D3DXVECTOR2 scoreTextGapPos = D3DXVECTOR2(-60.0f,-40.0f);
-static const D3DXVECTOR2 rewardTextGapPos = D3DXVECTOR2(60.0f, 35.0f);
+static const D3DXVECTOR2 scoreTextGapPos = D3DXVECTOR2(-120.0f,-40.0f);
+static const D3DXVECTOR2 rewardTextGapPos = D3DXVECTOR2(-120.0f, 35.0f);
 static const float fieldTelopGapPos = 200.0f;
 
 //*****************************************************************************
@@ -40,7 +40,7 @@ ResultScoreViewer::ResultScoreViewer() :
 
 	for (int i = 0; i < telopMax; i++)
 	{
-		bg[i] = new BaseViewerDrawer(D3DXVECTOR2(-SCREEN_WIDTH*2,SCREEN_HEIGHT / 10 * 2.0f +i* 240.0f),
+		bg[i] = new BaseViewerDrawer(D3DXVECTOR2(-SCREEN_WIDTH*2,SCREEN_HEIGHT / 10 * 1.70f +i* 250.0f),
 			D3DXVECTOR2(1700.0f, 160.0f), "data/TEXTURE/Viewer/ResultViewer/ResultScoreViewer/ScoreBG.png");
 		bg[i]->SetColor(telopColor[i]);
 
@@ -48,11 +48,13 @@ ResultScoreViewer::ResultScoreViewer() :
 			D3DXVECTOR2(1024 / 2.0f, 1024 / 8.0f),"data/TEXTURE/Viewer/ResultViewer/ResultScoreViewer/FieldText.png");
 		fieldText[i]->SetTexture(1, 4,i);
 
-		scoreText[i] = new TextViewer("マキナス 4 Square", 70);
+		scoreText[i] = new TextViewer("マキナス 4 Square", 80);
 		scoreText[i]->SetPos((int)(-SCREEN_WIDTH*2), (int)(bg[i]->position.y - 40.0f));
+		scoreText[i]->SetHorizontalAlignment(TextViewer::HorizontalAlignment::Left);
 
-		rewardText[i] = new TextViewer("マキナス 4 Square", 70);
+		rewardText[i] = new TextViewer("マキナス 4 Square", 40);
 		rewardText[i]->SetPos((int)(-SCREEN_WIDTH*2), (int)(bg[i]->position.y + 40.0f));
+		rewardText[i]->SetHorizontalAlignment(TextViewer::HorizontalAlignment::Left);
 	}
 
 	anim[AnimType::TelopIn] = new ViewerAnimater();
@@ -165,7 +167,7 @@ void ResultScoreViewer::SetText()
 	//引数でスコアを表示できるようにする
 	for (int i = 0; i < telopMax; i++)
 	{
-		rewardText[i]->SetText("作った道の数：10　繋がった街の数：10");
+		rewardText[i]->SetText("作った道の数　：10\n繋がった街の数：10");
 	}
 	scoreText[0]->SetText("9999兆9999億9999万9999");
 	scoreText[1]->SetText("スコア：9999");
@@ -261,7 +263,7 @@ void ResultScoreViewer::InWorldTelop()
 	});
 
 	scoreText[index]->SetPos((int)(fieldText[index]->position.x + scoreTextGapPos.x), (int)(bg[index]->position.y + scoreTextGapPos.y));
-	rewardText[index]->SetPos((int)(fieldText[index]->position.x + rewardTextGapPos.x-34.0f), (int)(bg[index]->position.y + rewardTextGapPos.y));
+	rewardText[index]->SetPos((int)(fieldText[index]->position.x + rewardTextGapPos.x), (int)(bg[index]->position.y + rewardTextGapPos.y));
 }
 
 //=============================================================================
@@ -288,7 +290,7 @@ void ResultScoreViewer::InSpaceTelop()
 	});
 
 	scoreText[index]->SetPos((int)(fieldText[index]->position.x + scoreTextGapPos.x), (int)(bg[index]->position.y + scoreTextGapPos.y));
-	rewardText[index]->SetPos((int)(fieldText[index]->position.x + rewardTextGapPos.x - 34.0f), (int)(bg[index]->position.y + rewardTextGapPos.y));
+	rewardText[index]->SetPos((int)(fieldText[index]->position.x + rewardTextGapPos.x), (int)(bg[index]->position.y + rewardTextGapPos.y));
 }
 
 //=============================================================================
@@ -314,8 +316,8 @@ void ResultScoreViewer::InResultTelop()
 		});
 	});
 
-	scoreText[index]->SetPos((int)(fieldText[index]->position.x + scoreTextGapPos.x+290.0f), (int)(bg[index]->position.y + scoreTextGapPos.y));
-	rewardText[index]->SetPos((int)(fieldText[index]->position.x + rewardTextGapPos.x+100.0f), (int)(bg[index]->position.y + rewardTextGapPos.y));
+	scoreText[index]->SetPos((int)(fieldText[index]->position.x + scoreTextGapPos.x), (int)(bg[index]->position.y + scoreTextGapPos.y));
+	rewardText[index]->SetPos((int)(fieldText[index]->position.x + rewardTextGapPos.x), (int)(bg[index]->position.y + rewardTextGapPos.y));
 }
 
 //=============================================================================
@@ -382,8 +384,8 @@ void ResultScoreViewer::OutResultTelop()
 		anim[AnimType::TelopOut]->SubMove(*fieldText[index], D3DXVECTOR2(fieldTextStopPos[index].x, fieldText[index]->position.y), D3DXVECTOR2(telopPosX - fieldTelopGapPos * 1.5f, fieldText[index]->position.y), OutCirc);
 	});
 
-	scoreText[index]->SetPos((int)(bg[index]->position.x + scoreTextGapPos.x + 350.0f), (int)(bg[index]->position.y + scoreTextGapPos.y));
-	rewardText[index]->SetPos((int)(bg[index]->position.x + rewardTextGapPos.x - 370.0f), (int)(bg[index]->position.y + rewardTextGapPos.y));
+	scoreText[index]->SetPos((int)(bg[index]->position.x + scoreTextGapPos.x), (int)(bg[index]->position.y + scoreTextGapPos.y));
+	rewardText[index]->SetPos((int)(bg[index]->position.x + rewardTextGapPos.x), (int)(bg[index]->position.y + rewardTextGapPos.y));
 }
 
 //=============================================================================

@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// Gameビュアー管理処理 [GameViewer.cpp]
+// Gameビュアーコントロール処理 [GameViewer.cpp]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
@@ -15,8 +15,10 @@
 #include "../ParameterContainer/GameViewerParam.h"
 #include "GameViewer.h"
 
+#ifdef _DEBUG
 #include "../../../../Framework/Input/input.h"
 #include "../../../../Framework/Tool/DebugWindow.h"
+#endif
 
 //*****************************************************************************
 // コンストラクタ
