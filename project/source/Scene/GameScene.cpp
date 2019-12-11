@@ -66,7 +66,7 @@ staticメンバ
 int GameScene::level = 0;		//デバッグ用フィールドレベル（本番では非staticメンバにする
 const float GameScene::BloomPower[] = { 0.6f, 0.55f, 0.50f };		//ブルームの強さ
 const float GameScene::BloomThrethold[] = { 0.6f, 0.5f, 0.4f };		//ブルームをかける輝度の閾値
-const char GameScene::AngleTable[3] = { 3, 24, 50 };
+const unsigned char GameScene::AngleTable[3] = { 90, 120, 150 };
 
 /**************************************
 初期化処理
