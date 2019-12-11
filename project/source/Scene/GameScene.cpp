@@ -214,8 +214,8 @@ void GameScene::Update()
 	gameViewer->ReceiveParam(gameParam);
 
 	// イベントビューアに必要なパラメータを渡す
-	EventViewerParam eventParam;
-	eventController->EmbedViewerParam(eventParam);
+	//EventViewerParam eventParam;
+	//eventController->EmbedViewerParam(eventParam);
 
 	//ビュアー更新
 	gameViewer->Update();

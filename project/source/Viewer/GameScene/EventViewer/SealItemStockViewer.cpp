@@ -5,9 +5,9 @@
 //
 //=============================================================================
 #include "../../../../main.h"
-#include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
-#include "../../../../Framework/Math/Easing.h"
 #include "SealItemStockViewer.h"
+#include "../../Framework/ViewerDrawer/TextureDrawer.h"
+#include "../../../../Framework/Math/Easing.h"
 
 #ifdef _DEBUG
 #include "../../../../Framework/Input/input.h"
@@ -18,12 +18,9 @@
 // 暫定的にサイズダウン、フェードアウトを実行。
 //*****************************************************************************
 
-//*****************************************************************************
-// グローバル変数
-//*****************************************************************************
-
 //アイコンの初期サイズ
-D3DXVECTOR3 initIconSize(400.0f, 400.0f, 0.0f);
+const D3DXVECTOR2 initIconSize = D3DXVECTOR2(400.0f, 400.0f);
+const float ScaleNum = 0.5f;
 
 //*****************************************************************************
 // コンストラクタ
@@ -31,12 +28,17 @@ D3DXVECTOR3 initIconSize(400.0f, 400.0f, 0.0f);
 SealItemStockViewer::SealItemStockViewer()
 {
 	//アイコン
-	icon = new BaseViewerDrawer();
-	icon->LoadTexture("data/TEXTURE/Viewer/EventViewer/SealItemStockViewer/SealIcon.png");
-	icon->size = initIconSize;
-	icon->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	icon->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.5f, SCREEN_HEIGHT / 10 * 3.5f, 0.0f);
-	icon->MakeVertex();
+	Icon = new TextureDrawer(D3DXVECTOR2(800.0f, 400.0f), 2, 1);
+	Icon->LoadTexture("data/TEXTURE/Viewer/EventViewer/SealItemStockViewer/SealIcon.png");
+	Icon->SetPosition(D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.47f, SCREEN_HEIGHT / 10 * 3.5f, 0.0f));
+	Icon->SetIndex(0);
+
+	//アイコン(白)
+	Icon_White = new TextureDrawer(D3DXVECTOR2(800.0f, 400.0f), 2, 1, false);
+	Icon_White->LoadTexture("data/TEXTURE/Viewer/EventViewer/SealItemStockViewer/SealIcon.png");
+	Icon_White->SetPosition(D3DXVECTOR3(SCREEN_WIDTH / 10 * 0.47f, SCREEN_HEIGHT / 10 * 3.5f, 0.0f));
+	Icon_White->SetIndex(1);
+	Icon_White->SetSize(initIconSize * ScaleNum);
 }
 
 //*****************************************************************************
@@ -44,7 +46,8 @@ SealItemStockViewer::SealItemStockViewer()
 //*****************************************************************************
 SealItemStockViewer::~SealItemStockViewer()
 {
-	SAFE_DELETE(icon);
+	SAFE_DELETE(Icon);
+	SAFE_DELETE(Icon_White);
 }
 
 //=============================================================================
@@ -52,11 +55,11 @@ SealItemStockViewer::~SealItemStockViewer()
 //=============================================================================
 void SealItemStockViewer::Update(void)
 {
-	//アニメーション再生制御
-	HandlePlayAnim();
+	if (!isPlaying)
+		return;
 
-	//アニメーション再生
-	Play();
+	Icon_White->Update();
+	Icon->Update();
 }
 
 //=============================================================================
@@ -65,121 +68,39 @@ void SealItemStockViewer::Update(void)
 void SealItemStockViewer::Draw(void)
 {
 	//プレイ中なら描画
-	if (!isPlaying) return;
+	if (!isPlaying)
+		return;
 
-	icon->Draw();
+	Icon_White->Draw();
+	Icon->Draw();
 }
 
+
 //=============================================================================
-// 再生処理
+// 封印のカウントダウンを開始
 //=============================================================================
-void SealItemStockViewer::Play(void)
+void SealItemStockViewer::CountDownStart(void)
 {
-	//プレイ中なら実行
-	if (!isPlaying) return;
-
-	//フレーム更新
-	countFrame++;
-
-	//時間更新
-	animTime = countFrame / 30.0f;
-
-	//封印された
-	if (isSealed)
+	Icon_White->Expand(285.0f, ExpandType::ExpandUpToDown);
+	Icon->Close(285.0f, CloseType::CloseUpToDown, EaseType::Linear, [&]()
 	{
-		//封印アニメーションを再生
-		PlaySealAnim();
-	}
-
-	//封印が解かれた
-	if (isUnSealed)
-	{
-		//封印解除アニメーションを再生
-		PlayUnSealAnim();
-	}
-}
-
-//=============================================================================
-// 封印アニメーション再生処理
-//=============================================================================
-void SealItemStockViewer::PlaySealAnim(void)
-{
-	//イージングのスタートとゴールを設定
-	float easingStart = 400.0f;
-	float easingGoal = 200.0f;
-
-	icon->size.x = Easing::EaseValue(animTime, easingStart, easingGoal, InCubic);
-	icon->size.y = Easing::EaseValue(animTime, easingStart, easingGoal, InCubic);
-
-	if (icon->size.y == easingGoal)
-	{
-		isSealed = false;
-	}
-}
-
-//=============================================================================
-// 封印解除アニメーション再生処理
-//=============================================================================
-void SealItemStockViewer::PlayUnSealAnim(void)
-{
-	//イージングのスタートとゴールを設定
-	float easingStart = 1.0f;
-	float easingGoal = 0.0f;
-
-	//テクスチャのα値
-	float alpha;
-
-	alpha = Easing::EaseValue(animTime, easingStart, easingGoal, OutCubic);
-	icon->SetAlpha(alpha);
-
-	if (alpha == easingGoal)
-	{
-		isUnSealed = false;
-
-		//再生終了
 		isPlaying = false;
-	}
+	});
 }
 
 //=============================================================================
-// 再生制御処理
+// ストック封印アイコンを設置する
 //=============================================================================
-void SealItemStockViewer::HandlePlayAnim(void)
+void SealItemStockViewer::SetBanIcon(void)
 {
-	currentParam = parameterBox;
+	// 初期化
+	isPlaying = true;
+	Icon->SetSize(initIconSize);
+	Icon->SetVisible(true);
+	Icon_White->SetVisible(false);
 
-	//前フレームでは封印されてなかったのに現在フレームでは封印されてる
-	if (currentParam == true && lastParam == false)
+	Icon->SetScale(15.0f, 0.5f, EaseType::Linear, [&]()
 	{
-		//封印解除中なら強制終了
-		isUnSealed = false;
-
-		//フレームカウントリセット
-		countFrame = 0;
-
-		//アイコンのサイズとα値を初期化
-		icon->size = initIconSize;
-		icon->SetAlpha(1.0f);
-
-		//封印状態に移行
-		isSealed = true;
-
-		//再生中に移行
-		isPlaying = true;
-	}
-
-	//前フレームでは封印されてたのに現在フレームでは封印されてない
-	if (currentParam == false && lastParam == true)
-	{
-		//封印中なら強制終了
-		isSealed = false;
-
-		//フレームカウントをリセット
-		countFrame = 0;
-
-		//封印解除状態に移行
-		isUnSealed = true;
-	}
-
-	lastParam = parameterBox;
+		CountDownStart();
+	});
 }
