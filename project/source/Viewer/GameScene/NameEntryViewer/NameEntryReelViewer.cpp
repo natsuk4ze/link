@@ -21,7 +21,6 @@ static const float intervalReelPos = 166.50f;
 // コンストラクタ
 //*****************************************************************************
 NameEntryReelViewer::NameEntryReelViewer():
-	character(),
 	isInPlaying(false),
 	isOutPlaying(false)
 {
@@ -241,6 +240,8 @@ int* NameEntryReelViewer::GetReelChar()
 //=============================================================================
 void NameEntryReelViewer::SetTelopIn()
 {
+	//文字列初期化
+	character[entryNameMax] = {};
 	isInPlaying = true;
 }
 
