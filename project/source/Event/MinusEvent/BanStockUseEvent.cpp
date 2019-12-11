@@ -13,6 +13,7 @@
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../Framework/Sound/SoundEffect.h"
 #include "../../Sound/SoundConfig.h"
+#include "../../Booth/BoothController.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -64,6 +65,9 @@ void BanStockUseEvent::Init()
 
 	// テロップ設置
 	eventViewer->SetEventTelop(EventTelop::AI_Strike, nullptr);
+
+	//ブースのLEDを点滅させる
+	BoothController::Instance()->BlinkLED(false);
 
 	// 怒り顔エフェクト設置
 	GameParticleManager::Instance()->SetAngryFaceEffect();

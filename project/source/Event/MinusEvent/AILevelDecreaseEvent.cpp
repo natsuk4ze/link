@@ -19,6 +19,7 @@
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../Framework/Sound/SoundEffect.h"
 #include "../../Sound/SoundConfig.h"
+#include "../../Booth/BoothController.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -107,6 +108,9 @@ void AILevelDecreaseEvent::Init()
 		camera->Translation(TownPos, 30, [&]() {UFODebutStart(); });
 	});
 
+	//ブースのLEDを点滅させる
+	BoothController::Instance()->BlinkLED(false);
+		
 	// ゲーム進行停止
 	fieldEventHandler->PauseGame();
 

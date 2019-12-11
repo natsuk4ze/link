@@ -18,6 +18,7 @@
 #include "../../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../../Framework/Sound/SoundEffect.h"
 #include "../../../Sound/SoundConfig.h"
+#include "../../../Booth/BoothController.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -69,6 +70,9 @@ NewTownEventCtrl::~NewTownEventCtrl()
 void NewTownEventCtrl::Init()
 {
 	NewTownEvent->Init();
+
+	//ブースのLEDを点滅させる
+	BoothController::Instance()->BlinkLED(true);
 
 	// 初期化終了
 	Initialized = true;
