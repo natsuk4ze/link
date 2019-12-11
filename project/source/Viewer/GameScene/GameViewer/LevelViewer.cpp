@@ -86,13 +86,10 @@ void LevelViewer::Update(void)
 	//前フレームのパラメータとしてセット
 	lastParam[LevelAI] = (int)parameterBox[LevelAI];
 
-	//if (isCurrentGreaterLast((int)parameterBox[CurrentFieldLevel]))
-	//{
-	//	circleGuage[(int)parameterBox[CurrentFieldLevel]]->SetScale(D3DXVECTOR3(0.750f, 0.750f, 0.0f));
-	//}
-
 #ifdef _DEBUG
-	Debug::Text("currentFieldLevel:%d", (int)parameterBox[CurrentFieldLevel]);
+	Debug::Begin("LevelViewer");
+	Debug::Text("currentFieldLevel:%d", parameterBox[CurrentFieldLevel]);
+	Debug::End();
 #endif
 }
 
@@ -110,6 +107,8 @@ void LevelViewer::Draw(void)
 	circleGuage[(int)parameterBox[CurrentFieldLevel]]->SetPercent(drawingRatioLevel);
 	for (int i = 0; i < guageMax; i++)
 	{
+		circleGuage[i]->SetScale(D3DXVECTOR3(1.0f - (0.10f*(parameterBox[CurrentFieldLevel] - i)),
+			1.0f - (0.10f*(parameterBox[CurrentFieldLevel] - i)), 0.0f));
 		circleGuage[i]->Draw();
 	}
 

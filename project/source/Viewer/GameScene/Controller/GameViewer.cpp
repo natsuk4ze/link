@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// Gameビュアー管理処理 [GameViewer.cpp]
+// Gameビュアーコントロール処理 [GameViewer.cpp]
 // Author : Yu Oohama (bnban987@gmail.com)
 //
 //=============================================================================
@@ -15,8 +15,10 @@
 #include "../ParameterContainer/GameViewerParam.h"
 #include "GameViewer.h"
 
+#ifdef _DEBUG
 #include "../../../../Framework/Input/input.h"
 #include "../../../../Framework/Tool/DebugWindow.h"
+#endif
 
 //*****************************************************************************
 // コンストラクタ
@@ -97,10 +99,17 @@ void GameViewer::ReceiveParam(GameViewerParam &param)
 	levelViewer->parameterBox[levelViewer->LevelAI] = (float)param.levelAI;
 	levelViewer->parameterBox[levelViewer->RatioLevel] = param.ratioLevel;
 	levelViewer->parameterBox[levelViewer->CurrentFieldLevel] = (float)param.currentFieldLevel;
+
+#ifdef _DEBUG
+	Debug::Begin("GameViewer");
+	Debug::Text("currentFieldLevel:%d", levelViewer->parameterBox[levelViewer->CurrentFieldLevel]);
+	Debug::End();
+#endif
 }
 
 //=============================================================================
 // 描画可否判定のセット
+
 //=============================================================================
 void GameViewer::SetActive(bool flag)
 {
