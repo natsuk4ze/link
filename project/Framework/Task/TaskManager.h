@@ -34,6 +34,9 @@ public:
 	//定期タスク作成処理
 	TaskHandle CreatePeriodicTask(int interval, const std::function<void(void)>& task);
 
+	//クリア処理
+	void ClearAll();
+
 private:
 	//更新処理
 	void Update();

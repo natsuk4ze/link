@@ -37,6 +37,14 @@ TaskHandle TaskManager::CreatePeriodicTask(int interval, const std::function<voi
 }
 
 /**************************************
+クリア処理
+***************************************/
+void TaskManager::ClearAll()
+{
+	taskList.clear();
+}
+
+/**************************************
 TaskManager更新処理
 ***************************************/
 void TaskManager::Update()

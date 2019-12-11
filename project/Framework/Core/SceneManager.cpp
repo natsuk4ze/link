@@ -12,6 +12,7 @@
 #include "../Sound/SoundEffect.h"
 #include "../Sound/BackgroundMusic.h"
 #include "../Core/ObjectPool.h"
+#include "../Task/TaskManager.h"
 
 using namespace std;
 /**************************************
@@ -75,6 +76,7 @@ void SceneManager::_ChengeScene(const int sceneID)
 		ProfilerCPU::Instance()->Clear();
 		Tween::mInstance->ClearAll();
 
+
 		//NOTE:重いかも？
 		BGM::Clear();
 		SE::Clear();
@@ -128,6 +130,7 @@ void SceneManager::Uninit()
 		ResourceManager::Instance()->AllRelease();
 		ProfilerCPU::Instance()->Clear();
 		Tween::mInstance->ClearAll();
+		TaskManager::Instance()->ClearAll();
 
 		//NOTE:重いかも？
 		BGM::Clear();
