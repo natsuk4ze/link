@@ -14,7 +14,7 @@
 #include "../../Viewer/GameScene/Controller/ResultViewer.h"
 #include "../../Viewer/GameScene/Controller/NameEntryViewer.h"
 #include "../../../Framework/Transition/TransitionController.h"
-#include "../../../Framework/Serial/SerialWrapper.h"
+#include "../../Booth/BoothController.h"
 
 //=====================================
 // “üêˆ—
@@ -40,7 +40,7 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	entity.nemeEntryViewer->SetActive(false);
 
 	//ƒ‚[ƒ^‚ÌŠp“x‚ð‰Šú‰»
-	entity.RotateMotor(0);
+	BoothController::Instance()->RotateTable(GameScene::AngleTable[0]);
 }
 
 //=====================================

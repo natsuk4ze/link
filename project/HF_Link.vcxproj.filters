@@ -224,7 +224,6 @@
     <ClCompile Include="source\Field\State\FieldControllerIdle.cpp" />
     <ClCompile Include="source\Field\State\UseItem.cpp" />
     <ClCompile Include="source\GameMain.cpp" />
-    <ClCompile Include="source\ModelView\ModelViewCamera.cpp" />
     <ClCompile Include="source\Reward\AchieveViewer.cpp" />
     <ClCompile Include="source\Reward\MaxCheckReward.cpp" />
     <ClCompile Include="source\Reward\StateReward.cpp" />
@@ -303,13 +302,14 @@
     <ClCompile Include="source\Field\Object\SpaceGrid.cpp" />
     <ClCompile Include="source\Shader\SpaceGridEffect.cpp" />
     <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.cpp" />
-    <ClCompile Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInfoViewer.cpp" />
     <ClCompile Include="Framework\Resource\FontManager.cpp" />
     <ClCompile Include="source\Sound\SoundConfig.cpp" />
     <ClCompile Include="source\Viewer\NameViewer\Name.cpp" />
     <ClCompile Include="source\Viewer\GameScene\GameViewer\TimeUpViewer.cpp" />
     <ClCompile Include="source\Viewer\GameScene\ResultViewer\ResultAchieveViewer.cpp" />
     <ClCompile Include="source\Scene\GameState\GameAchieveResult.cpp" />
+    <ClCompile Include="source\ModelView\ModelViewCamera.cpp" />
+    <ClCompile Include="source\Booth\BoothController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -532,7 +532,6 @@
     <ClInclude Include="source\Field\State\UseItem.h" />
     <ClInclude Include="source\GameConfig.h" />
     <ClInclude Include="source\GameMain.h" />
-    <ClInclude Include="source\ModelView\ModelViewCamera.h" />
     <ClInclude Include="source\Reward\AchieveViewer.h" />
     <ClInclude Include="source\Reward\MaxCheckReward.h" />
     <ClInclude Include="source\Reward\RewardConfig.h" />
@@ -616,13 +615,14 @@
     <ClInclude Include="source\Field\Object\SpaceGrid.h" />
     <ClInclude Include="source\Shader\SpaceGridEffect.h" />
     <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryBgViewer.h" />
-    <ClInclude Include="source\Viewer\GameScene\NameEntryViewer\NameEntryInfoViewer.h" />
     <ClInclude Include="Framework\Resource\FontManager.h" />
     <ClInclude Include="source\Sound\SoundConfig.h" />
     <ClInclude Include="source\Viewer\NameViewer\Name.h" />
     <ClInclude Include="source\Viewer\GameScene\GameViewer\TimeUpViewer.h" />
     <ClInclude Include="source\Viewer\GameScene\ResultViewer\ResultAchieveViewer.h" />
     <ClInclude Include="source\Scene\GameState\GameAchieveResult.h" />
+    <ClInclude Include="source\ModelView\ModelViewCamera.h" />
+    <ClInclude Include="source\Booth\BoothController.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

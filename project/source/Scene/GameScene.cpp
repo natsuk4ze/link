@@ -36,6 +36,7 @@
 #include "../Reward/RewardConfig.h"
 #include "../Reward/RewardController.h"
 #include "../Reward/RewardNotifier.h"
+#include "../Booth/BoothController.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
@@ -169,6 +170,9 @@ void GameScene::Uninit()
 
 	// ガイドビュアーの削除
 	GuideViewer::Instance()->Uninit();
+
+	//ブース制御終了
+	BoothController::Instance()->Uninit();
 
 	//パーティクル終了
 	particleManager->Uninit();
@@ -584,15 +588,4 @@ void GameScene::Clear()
 	// リワードをリセット
 	rewardNotifier->ResetAchieved();
 	RewardController::Instance()->ResetAllRewardData();
-}
-
-/**************************************
-モータ回転処理
-***************************************/
-void GameScene::RotateMotor(int level)
-{
-	char buf[2] = { 'r', AngleTable[level] };
-	size_t numPut = serial->Write(buf, 2);
-
-	Debug::Log("Serial : Putnum %d", numPut);
 }

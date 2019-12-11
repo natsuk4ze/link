@@ -12,7 +12,7 @@
 #include "../../Effect/GameParticleManager.h"
 #include "../../Event/EventController.h"
 #include "../../Field/FieldController.h"
-#include "../../../Framework/Serial/SerialWrapper.h"
+#include "../../Booth/BoothController.h"
 
 /**************************************
 入場処理
@@ -38,7 +38,7 @@ GameScene::State GameScene::GameTransitionOut::OnUpdate(GameScene & entity)
 	//雲パーティクル発生
 	if (entity.cntFrame == 45)
 	{
-		entity.RotateMotor(level);
+		BoothController::Instance()->RotateTable(GameScene::AngleTable[level]);
 		GameParticleManager::Instance()->Generate(GameParticle::Cloud, Vector3::Zero);
 	}
 
