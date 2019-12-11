@@ -1,0 +1,8 @@
+・IDE
+https://www.arduino.cc/en/main/software
+
+・VarSpeedServo
+https://github.com/netlabtoolkit/VarSpeedServo
+
+・Adafruit_NeoPixels
+https://github.com/adafruit/Adafruit_NeoPixel

@@ -36,6 +36,7 @@
 #include "../Reward/RewardConfig.h"
 #include "../Reward/RewardController.h"
 #include "../Reward/RewardNotifier.h"
+#include "../Booth/BoothController.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
@@ -66,7 +67,7 @@ staticメンバ
 int GameScene::level = 0;		//デバッグ用フィールドレベル（本番では非staticメンバにする
 const float GameScene::BloomPower[] = { 0.6f, 0.55f, 0.50f };		//ブルームの強さ
 const float GameScene::BloomThrethold[] = { 0.6f, 0.5f, 0.4f };		//ブルームをかける輝度の閾値
-const char GameScene::AngleTable[3] = { 3, 24, 50 };
+const unsigned char GameScene::AngleTable[3] = { 90, 120, 150 };
 
 /**************************************
 初期化処理
@@ -169,6 +170,9 @@ void GameScene::Uninit()
 
 	// ガイドビュアーの削除
 	GuideViewer::Instance()->Uninit();
+
+	//ブース制御終了
+	BoothController::Instance()->Uninit();
 
 	//パーティクル終了
 	particleManager->Uninit();

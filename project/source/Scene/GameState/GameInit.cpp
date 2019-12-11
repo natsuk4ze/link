@@ -25,12 +25,16 @@
 #include "../../Viewer/GameScene/Controller/NameEntryViewer.h"
 #include "../../../Framework/Resource/FontManager.h"
 #include "../../Sound/SoundConfig.h"
+#include "../../Booth/BoothController.h"
 
 /**************************************
 入場処理
 ***************************************/
 void GameScene::GameInit::OnStart(GameScene & entity)
 {	
+	//ブース制御のシリアル通信開始
+	BoothController::Instance()->Init();
+
 	//テキストビューアで使用するフォントをロード
 	FontManager::Instance()->LoadFont("data/FONT/Makinas-4-Square.otf");
 	FontManager::Instance()->LoadFont("data/FONT/Text_cinecaption226.ttf");

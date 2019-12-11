@@ -134,6 +134,7 @@
     <ClInclude Include="Library\nameof\nameof.hpp" />
     <ClInclude Include="Library\picojson\picojson.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="source\Booth\BoothController.h" />
     <ClInclude Include="source\Effect\CityParticleManager.h" />
     <ClInclude Include="source\Effect\GameParticleManager.h" />
     <ClInclude Include="source\Effect\Game\General\AngryFace.h" />
@@ -430,6 +431,7 @@
     <ClCompile Include="Library\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Library\json11\json11.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="source\Booth\BoothController.cpp" />
     <ClCompile Include="source\Effect\CityParticleManager.cpp" />
     <ClCompile Include="source\Effect\GameParticleManager.cpp" />
     <ClCompile Include="source\Effect\Game\General\AngryFace.cpp" />
