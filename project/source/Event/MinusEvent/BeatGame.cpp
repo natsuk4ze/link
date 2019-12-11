@@ -118,7 +118,10 @@ void BeatGame::Update()
 		if (IsSuccess())
 		{
 			//結果を通知
-			onFinishBeat(true);
+			if (onFinishBeat != nullptr)
+			{
+				onFinishBeat(true);
+			}
 
 			//成功リザルトを表示
 			beatGameViewer->SetResult(BeatResultViewer::Success, [&]() {EventOver(); });
