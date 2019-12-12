@@ -1,13 +1,9 @@
 #include <Adafruit_NeoPixel.h>
-#include <VarSpeedServo.h>
 
 /*******************************************************
    マクロ定義
  *******************************************************/
-#define LED_PIN 6
-#define INPUT_PIN 2
-#define OUTPUT_PIN 3
-#define SERVO_PIN 9
+#define LED_PIN 3
 
 #define LED_NUM 30
 #define DELAYVAL 10
@@ -22,7 +18,7 @@
    RGB設定
  *******************************************************/
 int colorMinus[3] = {255, 0, 0};
-int colorPlus[3] = {0, 150, 255};
+int colorPlus[3] = {0, 50, 255};
 
 /*******************************************************
    プロトタイプ宣言
@@ -34,7 +30,6 @@ void IdleBlinkTape();
   グローバル変数
  *******************************************************/
 Adafruit_NeoPixel pixels(LED_NUM, LED_PIN, NEO_GRB + NEO_KHZ800);
-VarSpeedServo myServo;
 
 char inBlink;       //イベントの点滅中か
 char isLightup;     //ライトアップするかどうか
@@ -55,13 +50,6 @@ void setup() {
   inBlink = FALSE;
   isLightup = TRUE;
   cntFrame = 0;
-
-  //サーボモータの初期化
-  myServo.attach(SERVO_PIN);
-
-  //入出力ピンの初期化
-  pinMode(INPUT_PIN, INPUT);
-  pinMode(OUTPUT_PIN, OUTPUT);
 }
 
 /*******************************************************
@@ -74,24 +62,18 @@ void loop()
   {
     char head = Serial.read();
     //'p'を受信したらプラスイベントのLED制御
-    if (head == 'p' && !digitalRead(INPUT_PIN))
+    if (head == 'p')
     {
       EventBlinkTape(colorPlus[0], colorPlus[1], colorPlus[2]);
     }
     //'m'を受信したらマイナスイベントのLED制御
-    else if (head == 'm' && !digitalRead(INPUT_PIN))
+    else if (head == 'm')
     {
       EventBlinkTape(colorMinus[0], colorMinus[1], colorMinus[2]);
     }
-    //'r'を受信したらサーボの回転
-    else if (head == 'r')
-    {
-      unsigned char angle = Serial.read();
-      myServo.write(angle, 5, true);
-    }
   }
 
-  if (inBlink == FALSE && !digitalRead(INPUT_PIN))
+  if (inBlink == FALSE)
   {
     IdleBlinkTape();
   }
@@ -103,7 +85,6 @@ void loop()
 void EventBlinkTape(int r, int g, int b)
 {
   inBlink = TRUE;
-  digitalWrite(OUTPUT_PIN, HIGH);
 
   pixels.clear();
 
@@ -128,7 +109,6 @@ void EventBlinkTape(int r, int g, int b)
 
   cntFrame = 0;
   isLightup = FALSE;
-  digitalWrite(OUTPUT_PIN, LOW);
 }
 
 /*******************************************************
@@ -141,13 +121,14 @@ void IdleBlinkTape()
   {
     cntFrame = 0;
     isLightup = 1 - isLightup;
+    pixels.clear();
   }
 
   int color = isLightup == TRUE ? 200 : 0;
 
   for (int i = 0; i < LED_NUM; i++)
   {
-    pixels.setPixelColor(i, pixels.Color(color, color, color));
+    pixels.setPixelColor(i, pixels.Color(0, color, 0));
   }
   pixels.show();
 }

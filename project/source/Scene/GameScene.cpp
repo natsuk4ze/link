@@ -67,7 +67,7 @@ staticメンバ
 int GameScene::level = 0;		//デバッグ用フィールドレベル（本番では非staticメンバにする
 const float GameScene::BloomPower[] = { 0.6f, 0.55f, 0.50f };		//ブルームの強さ
 const float GameScene::BloomThrethold[] = { 0.6f, 0.5f, 0.4f };		//ブルームをかける輝度の閾値
-const unsigned char GameScene::AngleTable[3] = { 90, 120, 150 };
+const unsigned char GameScene::AngleTable[3] = { 45, 75, 105 };
 
 /**************************************
 初期化処理
@@ -91,7 +91,6 @@ void GameScene::Init()
 	eventHandler = new FieldEventHandler();
 	eventController->ReceiveFieldEventHandler(eventHandler);
 	bloomController = new BloomController();
-	serial = new SerialWrapper(3);								//TODO:ポート番号を変えられるようにする
 	Client = new UDPClient();
 	resultViewer = new ResultViewer();
 	nemeEntryViewer = new NameEntryViewer();
@@ -160,9 +159,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(eventController);
 	SAFE_DELETE(bloomController);
 	SAFE_DELETE(eventHandler);
-	SAFE_DELETE(serial);
 	SAFE_DELETE(Client);
-	//SAFE_DELETE(guideViewer);
 	SAFE_DELETE(resultViewer);
 	SAFE_DELETE(nemeEntryViewer);
 	SAFE_DELETE(titleViewer);

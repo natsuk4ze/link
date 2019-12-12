@@ -25,7 +25,7 @@ public:
 	void Init();
 	void Uninit();
 
-	void RotateTable(char angle);
+	void RotateTable(unsigned char angle);
 
 	void BlinkLED(bool isPlus);
 
