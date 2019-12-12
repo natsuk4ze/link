@@ -78,9 +78,9 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	//NOTE : 今はお試し。本番ではちゃんとタグを用意する
 	//BGM::Load("data/SOUND/BGM/Course_Select.wav", 0);
 	//BGM::FadeIn(0, 0.1f, 30);
-	for (int i = 0; i < SoundConfig::VoiceMax; i++)
+	for (int i = 0; i < SoundConfig::SEMax; i++)
 	{
-		SE::Load(SoundConfig::VoicePath[i], SoundConfig::VoiceID(i));
+		SE::Load(SoundConfig::SEPath[i], SoundConfig::SEID(i));
 	}
 	for (int i = 0; i < SoundConfig::BGMMax; i++)
 	{

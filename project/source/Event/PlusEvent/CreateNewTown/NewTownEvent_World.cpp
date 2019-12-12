@@ -13,6 +13,7 @@
 #include "../../../Field/Camera/EventCamera.h"
 #include "../../../Sound/PlayBGM.h"
 #include "../../../Sound/SoundConfig.h"
+#include "../../../../Framework/Sound/SoundEffect.h"
 
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
@@ -108,6 +109,8 @@ void NewTownEvent_World::CreateNewTown(void)
 	{
 		camera->Return(15, EventOverFunc);
 	});
+
+	SE::Play(SoundConfig::SEID::CreationEvent, 1.0f);
 }
 
 ////=============================================================================

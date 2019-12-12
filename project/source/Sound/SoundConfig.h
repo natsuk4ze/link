@@ -35,9 +35,10 @@ public:
 		BGMMax
 	};
 
-	// Voiceの通し番号
-	enum VoiceID
+	// SEの通し番号
+	enum SEID
 	{
+		// *** Voice ***
 		AIBonus,				// AIレベルにボーナス（茶柱イベント）
 		AIOutofControll,		// AI暴走
 		AIOutofControllStop,	// AI暴走阻止
@@ -55,12 +56,19 @@ public:
 		UFOFailed,				// UFOイベント失敗
 		UFOSuccess,				// UFOイベント成功
 
-		VoiceMax
+		// *** ME ***
+		CreationEvent,
+		FieldLevelUp,
+		Finish,
+
+		// *** SE ***
+
+		SEMax
 	};
 
 	//音声ファイルのパス
 	static const char* BGMPath[BGMID::BGMMax];
-	static const char* VoicePath[VoiceID::VoiceMax];
+	static const char* SEPath[SEID::SEMax];
 
 	//ボイスSEの音量
 	static const float VolumeVoice;

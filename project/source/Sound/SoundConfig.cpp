@@ -21,8 +21,9 @@ const char* SoundConfig::BGMPath[BGMID::BGMMax]
 	{"data/SOUND/BGM/MusMus-CT-NV-TT.wav"}
 };
 
-const char* SoundConfig::VoicePath[VoiceID::VoiceMax]
+const char* SoundConfig::SEPath[SEID::SEMax]
 {
+	// *** Voice ***
 	{"data/SOUND/VOICE/robo/AIBonus.wav"},
 	{"data/SOUND/VOICE/robo/AIOutofControll.wav"},
 	{"data/SOUND/VOICE/robo/AIOutofControllStop.wav"},
@@ -38,7 +39,15 @@ const char* SoundConfig::VoicePath[VoiceID::VoiceMax]
 	{"data/SOUND/VOICE/robo/NewTown.wav"},
 	{"data/SOUND/VOICE/robo/TimeLimitHeal.wav"},
 	{"data/SOUND/VOICE/robo/UMAFailed.wav"},
-	{"data/SOUND/VOICE/robo/UMAStop.wav"}
+	{"data/SOUND/VOICE/robo/UMAStop.wav"},
+
+	// *** ME ***
+	{"data/SOUND/ME/MusMus-JGL-004.wav"},
+	{"data/SOUND/ME/MusMus-JGL-023.wav"},
+	{"data/SOUND/ME/MusMus-JGL-026.wav"},
+
+	// *** SE ***
+
 };
 
 const float SoundConfig::VolumeVoice = 1.0f;

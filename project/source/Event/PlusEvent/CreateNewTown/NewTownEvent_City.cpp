@@ -10,6 +10,8 @@
 #include "../../../Effect/CityParticleManager.h"
 #include "../../../../Framework/Task/TaskManager.h"
 #include "../../../Field/Camera/EventCamera.h"
+#include "../../../../Framework/Sound/SoundEffect.h"
+#include "../../../Sound/SoundConfig.h"
 
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
@@ -103,4 +105,6 @@ void NewTownEvent_City::CreateNewTown(void)
 	{
 		camera->Return(15, EventOverFunc);
 	});
+
+	SE::Play(SoundConfig::SEID::CreationEvent, 1.0f);
 }

@@ -8,6 +8,8 @@
 #include "GameLevelUp.h"
 #include "../../Field/FieldController.h"
 #include "../../Viewer/GameScene/Controller/GameViewer.h"
+#include "../../Sound/SoundConfig.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 
 /**************************************
 ì¸èÍèàóù
@@ -27,6 +29,8 @@ void GameScene::GameLevelUp::OnStart(GameScene & entity)
 		entity.OnLevelUp();
 		entity.ChangeState(GameScene::State::TransitionOut);
 	});
+
+	SE::Play(SoundConfig::SEID::FieldLevelUp, 1.0f);
 }
 
 /**************************************
