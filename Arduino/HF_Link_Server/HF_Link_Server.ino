@@ -19,11 +19,23 @@
  *******************************************************/
 int colorMinus[3] = {255, 0, 0};
 int colorPlus[3] = {0, 50, 255};
+int colorGradeUp[3] = {0, 255 ,0};
+int colorRank[7][3] = 
+{
+    {255, 0, 0},
+    {255, 165, 0},
+    {255, 255, 0},
+    {0, 128, 0},
+    {0, 255, 255},
+    {0, 0, 255},
+    {128, 0, 128},
+};
 
 /*******************************************************
    プロトタイプ宣言
  *******************************************************/
 void EventBlinkTape(int r, int g, int b);
+void RankingBlinkTape(void);
 void IdleBlinkTape();
 
 /*******************************************************
@@ -71,6 +83,16 @@ void loop()
     {
       EventBlinkTape(colorMinus[0], colorMinus[1], colorMinus[2]);
     }
+    //'g'を受信したらグレードアップのLED制御
+    else if (head == 'g')
+    {
+      EventBlinkTape(colorGradeUp[0], colorGradeUp[1], colorGradeUp[2]);
+    }
+    //'m'を受信したらランキング追加のLED制御
+    else if (head == 'r')
+    {
+      RankingBlinkTape();
+    }
   }
 
   if (inBlink == FALSE)
@@ -88,10 +110,46 @@ void EventBlinkTape(int r, int g, int b)
 
   pixels.clear();
 
-  for (int j = 0; j < 5; j++)
+  for (int j = 0; j < 10; j++)
   {
     for (int i = 0; i < LED_NUM; i++)
     {
+      pixels.setPixelColor(i, pixels.Color(r, g, b));
+      pixels.show();
+      delay(DELAYVAL);
+    }
+    for (int i = 0; i < LED_NUM; i++)
+    {
+      pixels.setPixelColor(i, pixels.Color(0, 0, 0));
+      pixels.show();
+      delay(DELAYVAL);
+    }
+  }
+
+  inBlink = FALSE;
+  pixels.clear();
+
+  cntFrame = 0;
+  isLightup = FALSE;
+}
+
+/*******************************************************
+   ランキング追加時の点滅処理
+ *******************************************************/
+void RankingBlinkTape(void)
+{
+  inBlink = TRUE;
+
+  pixels.clear();
+
+  for (int j = 0; j < 10; j++)
+  {
+    for (int i = 0; i < LED_NUM; i++)
+    {
+      int Num = i % 7;
+      int r = colorRank[Num][0];
+      int g = colorRank[Num][1];
+      int b = colorRank[Num][2];
       pixels.setPixelColor(i, pixels.Color(r, g, b));
       pixels.show();
       delay(DELAYVAL);
@@ -124,11 +182,11 @@ void IdleBlinkTape()
     pixels.clear();
   }
 
-  int color = isLightup == TRUE ? 200 : 0;
+  int color = isLightup == TRUE ? 255 : 0;
 
   for (int i = 0; i < LED_NUM; i++)
   {
-    pixels.setPixelColor(i, pixels.Color(0, color, 0));
+    pixels.setPixelColor(i, pixels.Color(color, color, color));
   }
   pixels.show();
 }
