@@ -44,6 +44,7 @@ class ResultViewer;
 class NameEntryViewer;
 class TitleViewer;
 class RewardNotifier;
+class PresenDebugController;
 
 /**************************************
 クラス定義
@@ -116,6 +117,9 @@ private:
 	//ポストエフェクト関連
 	BloomController *bloomController;			//ブルームエフェクトのコントローラ
 
+	//デバッグ操作用コントローラ
+	PresenDebugController *debugController;
+
 	//イベントコントローラへのPlace受け渡し処理
 	void OnBuildRoad(Route& route);
 
@@ -154,5 +158,7 @@ private:
 
 	//デバッグ用フィールドレベル
 	static int level;
+
+	friend class PresenDebugController;
 };
 #endif

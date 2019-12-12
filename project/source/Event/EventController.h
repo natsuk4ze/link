@@ -71,6 +71,8 @@ public:
 	void SetInPause(bool Flag);
 	bool GetInPause(void);
 	bool EventDebug(int fieldLevel);
+
+	friend class PresenDebugController;
 };
 
 #endif

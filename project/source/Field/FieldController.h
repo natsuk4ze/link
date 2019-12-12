@@ -200,6 +200,8 @@ namespace Field
 		class IdleState;
 		class BuildRoadState;
 		class UseItemState;
+
+		friend class PresenDebugController;
 	};
 }
 #endif

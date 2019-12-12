@@ -246,6 +246,7 @@
     <ClInclude Include="source\GameConfig.h" />
     <ClInclude Include="source\GameMain.h" />
     <ClInclude Include="source\ModelView\ModelViewCamera.h" />
+    <ClInclude Include="source\Presen\PresenDebugController.h" />
     <ClInclude Include="source\Reward\AchieveViewer.h" />
     <ClInclude Include="source\Reward\MaxCheckReward.h" />
     <ClInclude Include="source\Reward\RewardConfig.h" />
@@ -541,6 +542,7 @@
     <ClCompile Include="source\Field\State\UseItem.cpp" />
     <ClCompile Include="source\GameMain.cpp" />
     <ClCompile Include="source\ModelView\ModelViewCamera.cpp" />
+    <ClCompile Include="source\Presen\PresenDebugController.cpp" />
     <ClCompile Include="source\Reward\AchieveViewer.cpp" />
     <ClCompile Include="source\Reward\MaxCheckReward.cpp" />
     <ClCompile Include="source\Reward\RewardNotifier.cpp" />
