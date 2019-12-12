@@ -1,7 +1,7 @@
-//=====================================
+ï»¿//=====================================
 //
-//ƒQ[ƒ€ƒpƒbƒhƒwƒbƒ_[Gamepad.h]
-//Author:GP12B332 21 —§‰Ô—Y‘¾
+//ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ãƒ˜ãƒƒãƒ€[Gamepad.h]
+//Author:GP12B332 21 ç«‹èŠ±é›„å¤ª
 //
 //=====================================
 #ifndef _GAMEPAD_H_
@@ -10,37 +10,37 @@
 #include "../../main.h"
 
 /**************************************
-ƒ}ƒNƒ’è‹`
+ãƒã‚¯ãƒ­å®šç¾©
 ***************************************/
-#define BUTTON_UP		0x00000001l	// •ûŒüƒL[ã(.IY<0)
-#define BUTTON_DOWN		0x00000002l	// •ûŒüƒL[‰º(.IY>0)
-#define BUTTON_LEFT		0x00000004l	// •ûŒüƒL[¶(.IX<0)
-#define BUTTON_RIGHT	0x00000008l	// •ûŒüƒL[‰E(.IX>0)
-#define BUTTON_A		0x00000010l	// ‚`ƒ{ƒ^ƒ“(.rgbButtons[0]&0x80)
-#define BUTTON_B		0x00000020l	// ‚aƒ{ƒ^ƒ“(.rgbButtons[1]&0x80)
-#define BUTTON_C		0x00000040l	// ‚bƒ{ƒ^ƒ“(.rgbButtons[2]&0x80)
-#define BUTTON_X		0x00000080l	// ‚wƒ{ƒ^ƒ“(.rgbButtons[3]&0x80)
-#define BUTTON_Y		0x00000100l	// ‚xƒ{ƒ^ƒ“(.rgbButtons[4]&0x80)
-#define BUTTON_Z		0x00000200l	// ‚yƒ{ƒ^ƒ“(.rgbButtons[5]&0x80)
-#define BUTTON_L		0x00000400l	// ‚kƒ{ƒ^ƒ“(.rgbButtons[6]&0x80)
-#define BUTTON_R		0x00000800l	// ‚qƒ{ƒ^ƒ“(.rgbButtons[7]&0x80)
-#define BUTTON_START	0x00001000l	// ‚r‚s‚`‚q‚sƒ{ƒ^ƒ“(.rgbButtons[8]&0x80)
-#define BUTTON_M		0x00002000l	// ‚lƒ{ƒ^ƒ“(.rgbButtons[9]&0x80)
-#define GAMEPADMAX		4			// “¯‚ÉÚ‘±‚·‚éƒWƒ‡ƒCƒpƒbƒh‚ÌÅ‘å”‚ğƒZƒbƒg
-#define PADBUTTON_MAX	14			// “ü—Í‚Ég‚¦‚éƒ{ƒ^ƒ“‚ÌÅ‘å”
+#define BUTTON_UP		0x00000001l	// æ–¹å‘ã‚­ãƒ¼ä¸Š(.IY<0)
+#define BUTTON_DOWN		0x00000002l	// æ–¹å‘ã‚­ãƒ¼ä¸‹(.IY>0)
+#define BUTTON_LEFT		0x00000004l	// æ–¹å‘ã‚­ãƒ¼å·¦(.IX<0)
+#define BUTTON_RIGHT	0x00000008l	// æ–¹å‘ã‚­ãƒ¼å³(.IX>0)
+#define BUTTON_A		0x00000010l	// ï¼¡ãƒœã‚¿ãƒ³(.rgbButtons[0]&0x80)ã€ã‚¢ã‚±ã‚³ãƒ³ã®â˜ãƒœã‚¿ãƒ³
+#define BUTTON_B		0x00000020l	// ï¼¢ãƒœã‚¿ãƒ³(.rgbButtons[1]&0x80)ã€ã‚¢ã‚±ã‚³ãƒ³ã®âœ–ãƒœã‚¿ãƒ³
+#define BUTTON_C		0x00000040l	// ï¼£ãƒœã‚¿ãƒ³(.rgbButtons[2]&0x80)ã€ã‚¢ã‚±ã‚³ãƒ³ã®ã€‡ãƒœã‚¿ãƒ³
+#define BUTTON_X		0x00000080l	// ï¼¸ãƒœã‚¿ãƒ³(.rgbButtons[3]&0x80)ã€ã‚¢ã‚±ã‚³ãƒ³ã®â–³ãƒœã‚¿ãƒ³
+#define BUTTON_Y		0x00000100l	// ï¼¹ãƒœã‚¿ãƒ³(.rgbButtons[4]&0x80)ã€ã‚¢ã‚±ã‚³ãƒ³ã®L1ãƒœã‚¿ãƒ³
+#define BUTTON_Z		0x00000200l	// ï¼ºãƒœã‚¿ãƒ³(.rgbButtons[5]&0x80)ã€ã‚¢ã‚±ã‚³ãƒ³ã®R1ãƒœã‚¿ãƒ³
+#define BUTTON_L		0x00000400l	// ï¼¬ãƒœã‚¿ãƒ³(.rgbButtons[6]&0x80)ã€ã‚¢ã‚±ã‚³ãƒ³ã®Shareãƒœã‚¿ãƒ³
+#define BUTTON_R		0x00000800l	// ï¼²ãƒœã‚¿ãƒ³(.rgbButtons[7]&0x80)ã€ã‚¢ã‚±ã‚³ãƒ³ã®Optionsãƒœã‚¿ãƒ³
+#define BUTTON_START	0x00001000l	// ï¼³ï¼´ï¼¡ï¼²ï¼´ãƒœã‚¿ãƒ³(.rgbButtons[8]&0x80)
+#define BUTTON_M		0x00002000l	// ï¼­ãƒœã‚¿ãƒ³(.rgbButtons[9]&0x80)
+#define GAMEPADMAX		4			// åŒæ™‚ã«æ¥ç¶šã™ã‚‹ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰ã®æœ€å¤§æ•°ã‚’ã‚»ãƒƒãƒˆ
+#define PADBUTTON_MAX	14			// å…¥åŠ›ã«ä½¿ãˆã‚‹ãƒœã‚¿ãƒ³ã®æœ€å¤§æ•°
 
-#define POV_UP			(0x0001)			//ƒnƒbƒgƒXƒCƒbƒ`‚Ìã
-#define POV_RIGHTUP		(0x0002)			//ƒnƒbƒgƒXƒCƒbƒ`‚Ì‰Eã
-#define POV_RIGHT		(0x0004)			//ƒnƒbƒgƒXƒCƒbƒ`‚Ì‰E
-#define POV_RIGHTDOWN	(0x0008)			//ƒnƒbƒgƒXƒCƒbƒ`‚Ì‰E‰º
-#define POV_DOWN		(0x0010)			//ƒnƒbƒgƒXƒCƒbƒ`‚Ì‰º
-#define POV_LEFTDOWN	(0x0020)			//ƒnƒbƒgƒXƒCƒbƒ`‚Ì¶‰º
-#define POV_LEFT		(0x0040)			//ƒnƒbƒgƒXƒCƒbƒ`‚Ì¶
-#define POV_LEFTUP		(0x0080)			//ƒnƒbƒgƒXƒCƒbƒ`‚Ì¶ã
+#define POV_UP			(0x0001)			//ãƒãƒƒãƒˆã‚¹ã‚¤ãƒƒãƒã®ä¸Š
+#define POV_RIGHTUP		(0x0002)			//ãƒãƒƒãƒˆã‚¹ã‚¤ãƒƒãƒã®å³ä¸Š
+#define POV_RIGHT		(0x0004)			//ãƒãƒƒãƒˆã‚¹ã‚¤ãƒƒãƒã®å³
+#define POV_RIGHTDOWN	(0x0008)			//ãƒãƒƒãƒˆã‚¹ã‚¤ãƒƒãƒã®å³ä¸‹
+#define POV_DOWN		(0x0010)			//ãƒãƒƒãƒˆã‚¹ã‚¤ãƒƒãƒã®ä¸‹
+#define POV_LEFTDOWN	(0x0020)			//ãƒãƒƒãƒˆã‚¹ã‚¤ãƒƒãƒã®å·¦ä¸‹
+#define POV_LEFT		(0x0040)			//ãƒãƒƒãƒˆã‚¹ã‚¤ãƒƒãƒã®å·¦
+#define POV_LEFTUP		(0x0080)			//ãƒãƒƒãƒˆã‚¹ã‚¤ãƒƒãƒã®å·¦ä¸Š
 #define POV_MAX			(8)
 
 /**************************************
-ƒNƒ‰ƒX’è‹`
+ã‚¯ãƒ©ã‚¹å®šç¾©
 ***************************************/
 namespace GamePad
 {

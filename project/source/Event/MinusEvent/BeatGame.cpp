@@ -106,7 +106,7 @@ void BeatGame::Update()
 		countFrame++;
 
 		//入力カウントを更新(*注意：本番はどのキー入力でもOKにする？)
-		if (Keyboard::GetTrigger(DIK_C))
+		if (Keyboard::GetTrigger(DIK_C) || GamePad::GetTrigger(0, BUTTON_A))
 		{
 			countInput++;
 		}
@@ -118,7 +118,10 @@ void BeatGame::Update()
 		if (IsSuccess())
 		{
 			//結果を通知
-			onFinishBeat(true);
+			if (onFinishBeat != nullptr)
+			{
+				onFinishBeat(true);
+			}
 
 			//成功リザルトを表示
 			beatGameViewer->SetResult(BeatResultViewer::Success, [&]() {EventOver(); });
@@ -137,7 +140,10 @@ void BeatGame::Update()
 		if (IsFailed())
 		{
 			//結果を通知
-			onFinishBeat(false);
+			if (onFinishBeat != nullptr)
+			{
+				onFinishBeat(false);
+			}
 
 			//失敗リザルトを表示
 			beatGameViewer->SetResult(BeatResultViewer::Failed, [&]() {EventOver(); });

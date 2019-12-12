@@ -6,6 +6,7 @@
 //
 //=====================================
 #include "Reward.h"
+#include "../Viewer/NameViewer/Name.h"
 
 //=====================================
 // コンストラクタ
@@ -13,6 +14,7 @@
 Reward::Reward(RC::Type type, int maxdata) :
 	type(type), achieve(false), firstAchieve(false), name(), MaxData(maxdata)
 {
+	name = new Name();
 }
 
 //=====================================
@@ -20,22 +22,24 @@ Reward::Reward(RC::Type type, int maxdata) :
 //=====================================
 Reward::~Reward()
 {
+	SAFE_DELETE(name);
 }
 
 //=====================================
 // 名前のセット
 //=====================================
-void Reward::SetName(int BuffNo, int AlphabetNo)
+void Reward::SetName(const Name& name)
 {
-	this->name[BuffNo] = AlphabetNo;
+	this->name = new Name(name);
+	firstAchieve = true;
 }
 
 //=====================================
 // 名前の取得
 //=====================================
-int Reward::GetName(int BuffNo)
+Name* Reward::GetName()
 {
-	return this->name[BuffNo];
+	return name;
 }
 
 //=====================================

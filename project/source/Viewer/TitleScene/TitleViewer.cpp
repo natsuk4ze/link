@@ -8,6 +8,7 @@
 #include "TitleViewer.h"
 #include "TitleLogo.h"
 #include "SelectViewer.h"
+#include "RewardViewer.h"
 #include "../../../Framework/Input/input.h"
 #include "../../Scene/GameScene.h"
 #include "../../Sound/PlayBGM.h"
@@ -20,6 +21,7 @@ TitleViewer::TitleViewer()
 {
 	logo = new TitleLogo();
 	selectViewer = new SelectViewer();
+	rewardViewer = new RewardViewer();
 }
 
 //=====================================
@@ -29,6 +31,7 @@ TitleViewer::~TitleViewer()
 {
 	SAFE_DELETE(logo);
 	SAFE_DELETE(selectViewer);
+	SAFE_DELETE(rewardViewer);
 }
 
 //=====================================
@@ -37,7 +40,14 @@ TitleViewer::~TitleViewer()
 void TitleViewer::Update()
 {
 	logo->Update();
-	selectViewer->Update();
+	if (!rewardViewer->isPlaying)
+	{
+		selectViewer->Update();
+	}
+	else
+	{
+		rewardViewer->Update();
+	}
 }
 
 //=====================================
@@ -48,10 +58,17 @@ void TitleViewer::Draw()
 	if (!isActive)
 		return;
 
-	logo->Draw();
+	if (!rewardViewer->isPlaying)
+	{
+		logo->Draw();
 
-	// 別ウインドウを作成するので最後
-	selectViewer->Draw();
+		// 別ウインドウを作成するので最後
+		selectViewer->Draw();
+	}
+	else
+	{
+		rewardViewer->Draw();
+	}
 }
 
 //=====================================
@@ -67,7 +84,7 @@ void TitleViewer::SetActive(bool flag)
 //=====================================
 bool TitleViewer::CheckSceneChange()
 {
-	return Keyboard::GetTrigger(DIK_RETURN);
+	return Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C);
 }
 
 //=====================================
@@ -75,19 +92,33 @@ bool TitleViewer::CheckSceneChange()
 //=====================================
 void TitleViewer::SetNextScene(GameScene& entity)
 {
-	if (selectViewer->CheckNextScene() == 0)
+	// リワードビューアが表示していなければ
+	if (!rewardViewer->isPlaying)
 	{
-		PlayBGM::Instance()->FadeOut(SoundConfig::BGMID::Title, 0.1f, 30, true);
-		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.1f, 30);
-		entity.ChangeState(GameScene::State::Idle);
+		if (selectViewer->CheckNextScene() == 0)
+		{
+			// ゲーム開始
+			PlayBGM::Instance()->FadeOut(SoundConfig::BGMID::Title, 0.1f, 30, true);
+			PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.1f, 30);
+			entity.ChangeState(GameScene::State::Idle);
+		}
+		else if (selectViewer->CheckNextScene() == 1)
+		{
+			// トロフィー確認
+			rewardViewer->isPlaying = true;
+		}
+		else if (selectViewer->CheckNextScene() == 2)
+		{
+			// ゲーム終了
+			PostQuitMessage(0);
+		}
 	}
-	else if (selectViewer->CheckNextScene() == 1)
-	{
-		// トロフィー確認
-	}
-	else if (selectViewer->CheckNextScene() == 2)
-	{
-		// ゲーム終了
-		PostQuitMessage(0);
-	}
+}
+
+//=====================================
+// セレクトロゴの表示が"ゲーム開始"に設定する
+//=====================================
+void TitleViewer::InitSelectLogo(void)
+{
+	//selectViewer->InitSelectLogo();
 }

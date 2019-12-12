@@ -34,6 +34,8 @@ public:
 	void Draw();
 
 	int CheckNextScene();
+	// セレクトロゴの表示が"ゲーム開始"に設定する
+	void InitSelectLogo(void);
 
 private:
 	SubScreen* subScreen;

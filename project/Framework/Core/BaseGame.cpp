@@ -114,11 +114,11 @@ void BaseGame::Draw()
 		RendererEffect::SetLight(i, Light::GetData(i));
 	}
 
-	//トランジションマスクを描画
-	TransitionController::Instance()->DrawMask();
-
 	//シーンを描画
 	sceneManager->Draw();
+
+	//トランジションマスクを描画
+	TransitionController::Instance()->DrawMask();
 
 	//トランジション背景を描画
 	TransitionController::Instance()->DrawTransition();

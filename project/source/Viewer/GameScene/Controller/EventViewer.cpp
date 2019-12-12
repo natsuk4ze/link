@@ -173,9 +173,17 @@ void EventViewer::SetEventTelop(EventTelop::TelopID id, std::function<void(void)
 }
 
 //=============================================================================
+// ストック封印アイコンを設置
+//=============================================================================
+void EventViewer::SetBanIcon(void)
+{
+	sealStockViewer->SetBanIcon();
+}
+
+//=============================================================================
 // パラメータ受け取り処理
 //=============================================================================
 void EventViewer::ReceiveParam(EventViewerParam &param)
 {
-	sealStockViewer->parameterBox = param.isStockSealed;
+	//sealStockViewer->parameterBox = param.isStockSealed;
 }

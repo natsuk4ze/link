@@ -41,6 +41,7 @@ public:
 	void SetEventTelop(EventTelop::TelopID id, std::function<void(void)> Callback = nullptr);
 
 	//ƒpƒ‰ƒ[ƒ^ó‚¯æ‚è
+	void SetBanIcon(void);
 	void ReceiveParam(EventViewerParam &param);
 
 private:

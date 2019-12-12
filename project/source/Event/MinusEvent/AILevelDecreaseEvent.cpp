@@ -20,6 +20,7 @@
 #include "../../../Framework/Sound/SoundEffect.h"
 #include "../../Sound/SoundConfig.h"
 #include "../../Sound/PlayBGM.h"
+#include "../../Booth/BoothController.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -111,6 +112,9 @@ void AILevelDecreaseEvent::Init()
 		});
 	});
 
+	//ブースのLEDを点滅させる
+	BoothController::Instance()->BlinkLED(false);
+		
 	// ゲーム進行停止
 	fieldEventHandler->PauseGame();
 
@@ -299,7 +303,7 @@ void AILevelDecreaseEvent::CountdownStart(void)
 	guideActor->SetPosition(TownPos);
 	guideActor->Move(guidePos, 60);
 
-	guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle);
+	guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle, true);
 
 	guideActor->SetActive(true);
 
@@ -338,7 +342,7 @@ void AILevelDecreaseEvent::ReceiveBeatResult(bool IsSuccess)
 		success = false;
 
 		//ガイドキャラに失敗モーションをさせる
-		guideActor->ChangeAnim(GuideActor::AnimState::Defeat);
+		guideActor->ChangeAnim(GuideActor::AnimState::Defeat, true);
 	}
 }
 

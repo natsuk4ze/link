@@ -17,6 +17,7 @@ void GameScene::GameLevelUp::OnStart(GameScene & entity)
 	//TODO:レベルアップ時の演出を再生する
 	// スコアの加算
 	entity.field->SetScore();
+
 	//本来は演出終了のコールバックで遷移させる
 
 	// グレードアップ

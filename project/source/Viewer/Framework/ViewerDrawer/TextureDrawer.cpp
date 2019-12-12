@@ -66,9 +66,6 @@ void TextureDrawer::Update()
 		if (CountFrame >= Duration)
 		{
 			StartPos = DestPos;
-			InMove = false;
-			if (Callback != nullptr)
-				Callback();
 		}
 	}
 
@@ -81,9 +78,6 @@ void TextureDrawer::Update()
 		if (CountFrame >= Duration)
 		{
 			StartSize = Size;
-			InScale = false;
-			if (Callback != nullptr)
-				Callback();
 		}
 	}
 
@@ -96,9 +90,6 @@ void TextureDrawer::Update()
 		if (CountFrame >= Duration)
 		{
 			StartAlpha = DestAlpha;
-			InFade = false;
-			if (Callback != nullptr)
-				Callback();
 		}
 	}
 
@@ -128,13 +119,6 @@ void TextureDrawer::Update()
 		else if (expandType == ExpandType::ToLeftRight)
 		{
 			Expand_ToLeftRight(Time);
-		}
-
-		if (CountFrame >= Duration)
-		{
-			InExpand = false;
-			if (Callback != nullptr)
-				Callback();
 		}
 	}
 
@@ -169,10 +153,18 @@ void TextureDrawer::Update()
 		if (CountFrame >= Duration)
 		{
 			Visible = false;
-			InClose = false;
-			if (Callback != nullptr)
-				Callback();
 		}
+	}
+
+	if (CountFrame >= Duration)
+	{
+		InMove = false;
+		InScale = false;
+		InFade = false;
+		InExpand = false;
+		InClose = false;
+		if (Callback != nullptr)
+			Callback();
 	}
 }
 
@@ -466,6 +458,9 @@ void TextureDrawer::Move(float Duration, D3DXVECTOR3 GoalPos, EaseType Type, std
 	DestPos = GoalPos;
 	easeType = Type;
 	Callback = callback;
+
+	// UVÇÃèâä˙âª
+	SetTexture();
 }
 
 //=============================================================================
@@ -480,6 +475,9 @@ void TextureDrawer::Fade(float Duration, float DestAlpha, std::function<void(voi
 	StartAlpha = Color.a;
 	this->DestAlpha = DestAlpha;
 	Callback = callback;
+
+	// UVÇÃèâä˙âª
+	SetTexture();
 }
 
 //=============================================================================
@@ -545,6 +543,7 @@ void TextureDrawer::SetIndex(int x, int y)
 void TextureDrawer::SetScale(float Scale)
 {
 	Size *= Scale;
+	SetVertex();
 }
 
 //=============================================================================
@@ -559,4 +558,7 @@ void TextureDrawer::SetScale(float Duration, float Scale, EaseType Type, std::fu
 	DestScale = Scale;
 	easeType = Type;
 	Callback = callback;
+
+	// UVÇÃèâä˙âª
+	SetTexture();
 }

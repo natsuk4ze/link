@@ -18,6 +18,7 @@
 #include "../../../Framework/Sound/SoundEffect.h"
 #include "../../Sound/SoundConfig.h"
 #include "../../Sound/PlayBGM.h"
+#include "../../Booth/BoothController.h"
 
 enum State
 {
@@ -108,6 +109,9 @@ void CityDestroyEvent::Init()
 		camera->Translation(TownPos, 30, [&]() {MeteorFallStart(); });
 	});
 
+	//ブースのLEDを点滅させる
+	BoothController::Instance()->BlinkLED(false);
+
 	// 初期化終了
 	Initialized = true;
 }
@@ -149,7 +153,7 @@ void CityDestroyEvent::Update()
 
 			guideActor->LookAt(MeteoritePos);
 
-			guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle);
+			guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle, true);
 
 			//カメラの移動
 			D3DXVECTOR3 nextCameraPos = Vector3::Normalize(diff) * 25.0f + MeteoritePos + Vector3::Back * 10.0f;
@@ -288,7 +292,7 @@ void CityDestroyEvent::CountdownStart(void)
 	EventState = State::BeatGameStart;
 
 	//ガイドアクターのアニメーション
-	guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle);
+	guideActor->ChangeAnim(GuideActor::AnimState::FightingIdle, true);
 
 	TaskManager::Instance()->CreateDelayedTask(90, [&]()
 	{

@@ -16,6 +16,7 @@
 #include "../../../Framework/Transition/TransitionController.h"
 #include "../../../Framework/Serial/SerialWrapper.h"
 #include "../../Sound/PlayBGM.h"
+#include "../../Booth/BoothController.h"
 
 //=====================================
 // 入場処理
@@ -30,6 +31,7 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 
 	// タイトル画面で使用するUIの描画をON
 	entity.titleViewer->SetActive(true);
+	//entity.titleViewer->InitSelectLogo();
 
 	// 使用しないUIの描画をOFF
 	entity.field->SetViewerActive(false);
@@ -39,11 +41,11 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	entity.resultViewer->SetActive(false);
 	entity.nemeEntryViewer->SetActive(false);
 
-	//モータの角度を初期化
-	entity.serial->Write(GameScene::AngleTable[0]);
-
 	// タイトルのBGMを開始
 	PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Title, 0.1f, 30);
+
+	//モータの角度を初期化
+	BoothController::Instance()->RotateTable(GameScene::AngleTable[0]);
 }
 
 //=====================================
@@ -56,6 +58,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 	// シーンチェンジ
 	if (entity.titleViewer->CheckSceneChange())
 	{
+		entity.remainTime = 30 * 180;
 		entity.titleViewer->SetNextScene(entity);
 	}
 

@@ -43,6 +43,7 @@ void BaseTextureDrawer::LoadTexture(LPDIRECT3DTEXTURE9 *Texture)
 	this->Texture = *Texture;
 }
 
+
 //=============================================================================
 // オブジェクト描画処理
 //=============================================================================
@@ -62,6 +63,14 @@ void BaseTextureDrawer::Draw()
 
 	// ポリゴンの描画
 	Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_POLYGON, Vertex, sizeof(VERTEX_2D));
+}
+
+//=============================================================================
+// サイズを設置
+//=============================================================================
+void BaseTextureDrawer::SetSize(D3DXVECTOR2 Size)
+{
+	this->Size = Size;
 }
 
 //=============================================================================

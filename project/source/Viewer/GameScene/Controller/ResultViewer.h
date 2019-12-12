@@ -8,13 +8,23 @@
 #define _RESULT_VIEWER_H_
 
 #include <vector>
+#include <functional>
 
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
 class ResultScoreViewer;
+class ResultAchieveViewer;
 class ResultViewerParam;
 class BaseViewer;
+class GuideActor;
+class SubScreen;
+class Camera;
+
+namespace RewardConfig
+{
+	enum Type : int;
+}
 
 //*****************************************************************************
 // クラス定義
@@ -22,6 +32,13 @@ class BaseViewer;
 class ResultViewer
 {
 public:
+	enum ResultAnimation
+	{
+		PlayingIn,
+		Idle,
+		PlayingOut
+	};
+
 	ResultViewer();
 	~ResultViewer();
 
@@ -34,12 +51,38 @@ public:
 	//パラメータの受け取り処理
 	void ReceiveParam(int cityScore,int worldScore,int spaceScore);
 
+	bool GetIsActive();
+
+	void InResultScoreViewer(std::function<void()> CallbackInFin);
+	void OutResultScoreViewer();
+
+	//スコアビューアのアニメーション再生中判定
+	ResultAnimation IsPlayingAnimation() const;
+
+	//実績ビューワセット
+	void SetAchiveViewer(std::vector<RewardConfig::Type>& rewardContainer, std::function<void()> callback = nullptr);
+
+	//スコアビューワをスライドインさせる
+	void SlideScoreViewer(bool isIn);
+
+	void SetAchieveViewerActive(bool Flag);
+
 private:
 	std::vector <BaseViewer*> resultViewer;
 	ResultScoreViewer * scoreViewer;
+	ResultAchieveViewer *achieveViewer;
 	ResultViewerParam *viewerParam;
 
 	bool isActive;
+
+	//画面右に表示するロボ
+	GuideActor* actor;
+
+	//ロボを描画するレンダリングターゲット
+	SubScreen* screen;
+
+	//ロボ描画用のカメラ
+	Camera *camera;
 };
 
 #endif
