@@ -65,4 +65,5 @@ void PlayBGM::Resume(SoundConfig::BGMID tag)
 void PlayBGM::ResumePrev()
 {
 	BGM::Resume(prev);
+	current = prev;
 }
