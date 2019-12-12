@@ -42,19 +42,17 @@ NewTownEventCtrl::NewTownEventCtrl(EventViewer *Ptr, int FieldLevel, EventCamera
 
 	if (FieldLevel == Field::City)
 	{
-		PlayBGM::Instance()->Pause(SoundConfig::BGMID::City);
 		NewTownEvent = new NewTownEvent_City(Ptr, [&]() {EventOver(); }, camera);
 	}
 	else if (FieldLevel == Field::World)
 	{
-		PlayBGM::Instance()->Pause(SoundConfig::BGMID::Space);
 		NewTownEvent = new NewTownEvent_World(Ptr, [&]() {EventOver(); }, camera);
 	}
 	else if (FieldLevel == Field::Space)
 	{
-		PlayBGM::Instance()->Pause(SoundConfig::BGMID::World);
 		NewTownEvent = new NewTownEvent_Space(Ptr, [&]() {EventOver(); }, camera);
 	}
+	PlayBGM::Instance()->Pause();
 }
 
 //=============================================================================

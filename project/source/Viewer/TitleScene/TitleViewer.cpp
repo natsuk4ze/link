@@ -98,7 +98,7 @@ void TitleViewer::SetNextScene(GameScene& entity)
 		if (selectViewer->CheckNextScene() == 0)
 		{
 			// ƒQ[ƒ€ŠJŽn
-			PlayBGM::Instance()->FadeOut(SoundConfig::BGMID::Title, 0.1f, 30, true);
+			PlayBGM::Instance()->FadeOut();
 			PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.1f, 30);
 			entity.ChangeState(GameScene::State::Idle);
 		}

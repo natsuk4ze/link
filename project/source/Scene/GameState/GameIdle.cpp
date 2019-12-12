@@ -45,39 +45,21 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 	//残り時間が0になったら終了
 	if (entity.remainTime == 0)
 	{
-		if (level == 0)
-		{
-			PlayBGM::Instance()->FadeOut(SoundConfig::BGMID::City, 0.1f, 30, true);
-		}
-		else if (level == 1)
-		{
-			PlayBGM::Instance()->FadeOut(SoundConfig::BGMID::World, 0.1f, 30, true);
-		}
-		else
-		{
-			PlayBGM::Instance()->FadeOut(SoundConfig::BGMID::Space, 0.1f, 30, true);
-		}
+		PlayBGM::Instance()->FadeOut();
 		entity.field->SetScore();
 		entity.ChangeState(State::Finish);
 	}
 	//AI発展レベルが最大に到達していたらレベルアップ
 	else if (entity.field->ShouldLevelUp())
 	{
-		if (level == 0)
+		PlayBGM::Instance()->FadeOut();
+
+		if(level < 2)
 		{
-			PlayBGM::Instance()->FadeOut(SoundConfig::BGMID::City, 0.1f, 30, true);
-			entity.ChangeState(State::LevelUp);
-		}
-		else if (level == 1)
-		{
-			PlayBGM::Instance()->FadeOut(SoundConfig::BGMID::World, 0.1f, 30, true);
 			entity.ChangeState(State::LevelUp);
 		}
 		else
-		{
-			PlayBGM::Instance()->FadeOut(SoundConfig::BGMID::Space, 0.1f, 30, true);
 			entity.ChangeState(State::Result);
-		}
 	}
 	//遠景モードへの遷移確認
 	else if (entity.field->ShouldSwicthCamera())
