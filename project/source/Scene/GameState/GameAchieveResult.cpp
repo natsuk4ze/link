@@ -26,10 +26,6 @@ void GameScene::GameAchieveResult::OnStart(GameScene & entity)
 	Debug::Log("AchieveResult is Started");
 
 	auto rewardContainer = RewardController::Instance()->IsAllAchieved();
-	for (int i = 0; i < RewardConfig::Max; i++)
-	{
-		rewardContainer.push_back(RewardConfig::Type(i));
-	}
 
 	//実績がなかったらタイトルへ遷移
 	if (rewardContainer.empty())
@@ -63,7 +59,7 @@ GameScene::State GameScene::GameAchieveResult::OnUpdate(GameScene & entity)
 		break;
 
 	case Step::AchieveInputWait:
-		if (Keyboard::GetTrigger(DIK_RETURN))
+		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 		{
 			//初達成の実績があったらネームエントリー
 			if (RewardController::Instance()->FindFirstAchieved())

@@ -115,7 +115,7 @@ void NameEntryViewer::SetEntryName()
 		//初期化して
 		for (int i = 0; i < entryNameMax; i++)
 		{
-			entryNameID[i] = {};
+			entryNameID[i] = 0;
 		}
 		//ID格納
 		for (int i = 0; i < entryNameMax; i++)
@@ -124,6 +124,8 @@ void NameEntryViewer::SetEntryName()
 		}
 	}
 }
+
+
 
 //=============================================================================
 // カーソルビュアー移動処理
@@ -183,9 +185,30 @@ bool NameEntryViewer::GetIsActive()
 //=============================================================================
 // 登録名ID取得処理（文字テーブルの0～35までの値がentryNameMax個の配列）
 //=============================================================================
-int* NameEntryViewer::GetEntryNameID()
+std::string NameEntryViewer::GetEntryNameID()
 {
-	return entryNameID;
+	std::string NameStr;
+	NameStr += IntToString(entryNameID[0]);
+	NameStr += IntToString(entryNameID[1]);
+	NameStr += IntToString(entryNameID[2]);
+	return NameStr;
+}
+
+//=============================================================================
+// int型のネームがstring型に変換
+//=============================================================================
+std::string NameEntryViewer::IntToString(int NameInt)
+{
+	if (NameInt >= 0 && NameInt < 10)
+	{
+		return "0" + std::to_string(NameInt);
+	}
+	else if (NameInt >= 10)
+	{
+		return std::to_string(NameInt);
+	}
+
+	return "00";
 }
 
 //=============================================================================

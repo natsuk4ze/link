@@ -225,7 +225,6 @@ void GameScene::Update()
 	gameViewer->Update();
 	GuideViewer::Instance()->Update();
 	resultViewer->Update();
-	nemeEntryViewer->Update();
 	titleViewer->Update();
 	rewardNotifier->Update();
 
@@ -438,7 +437,7 @@ void GameScene::DebugTool()
 	Debug::NewLine();
 	if (Debug::Button("SendPacket"))
 	{
-		UDPClient::SendRankPacket("000102","123456789");
+		UDPClient::SendRankPacket("000102", "123456789");
 	}
 	Debug::SameLine();
 	if (Debug::Button("GetLastScore"))
@@ -511,7 +510,10 @@ void GameScene::SetFieldLevel(int level)
 	field->SetLevel((Field::FieldLevel)level);
 
 	// フィールドレベルアップパケットを送信
-	UDPClient::SendLevelUpPacket();
+	if (level != Field::FieldLevel::City)
+	{
+		UDPClient::SendLevelUpPacket();
+	}
 
 	//レベル固有のパーティクルマネージャ初期化
 	start = ProfilerCPU::GetCounter();
