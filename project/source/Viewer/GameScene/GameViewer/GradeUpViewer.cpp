@@ -112,7 +112,7 @@ void GradeUpViewer::TextPopUp(void)
 void GradeUpViewer::GradeUpFadeOut()
 {
 	// 画面上方に移動しながらフェイドアウト
-	GradeUpText->Move(60.0f, D3DXVECTOR3(SCREEN_CENTER_X, -384.0f, 0.0f), EaseType::OutCubic);
+	GradeUpText->Move(60.0f, D3DXVECTOR3(SCREEN_CENTER_X, -384.0f, 0.0f), EaseType::InCubic);
 	GradeUpText->Fade(60.0f, 0.0f);
 
 	// フェイドアウト
