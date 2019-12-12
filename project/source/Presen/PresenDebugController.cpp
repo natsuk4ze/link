@@ -1,0 +1,95 @@
+//=====================================
+//
+//PresenDebugController.cpp
+//機能:プレゼン用のデバッグ操作クラス
+//Author:GP12B332 21 立花雄太
+//
+//=====================================
+#include "PresenDebugController.h"
+#include "../../Framework/Tool/DebugWindow.h"
+#include "../../Framework/Input/Gamepad.h"
+
+#include "../Event/EventController.h"
+#include "../Event/EventBase.h"
+#include "../Event/MinusEvent/CityDestroyEvent.h"
+#include "../Viewer/GameScene/Controller/EventViewer.h"
+
+/**************************************
+コンストラクタ
+***************************************/
+PresenDebugController::PresenDebugController(GameScene * scene) :
+	scene(scene)
+{
+}
+
+/**************************************
+デストラクタ
+***************************************/
+PresenDebugController::~PresenDebugController()
+{
+}
+
+/**************************************
+更新処理
+***************************************/
+void PresenDebugController::Update()
+{
+	//XボタンでAIレベル減少
+	if (GamePad::GetTrigger(0, BUTTON_B))
+	{
+		_DecreaseLevelAI();
+	}
+	//L1ボタンで隕石召喚
+	if (GamePad::GetTrigger(0, BUTTON_Y))
+	{
+		_RaiseMeteorEvent();
+	}
+	//L2ボタンで強制レベルアップ
+	if (GamePad::GetTrigger(0, BUTTON_L))
+	{
+		_ForceLevelUp();
+	}
+	//R2ボタンで強制タイムアップ
+	if (GamePad::GetTrigger(0, BUTTON_R))
+	{
+		_ForceTimeUp();
+	}
+}
+
+/**************************************
+隕石イベント発生処理
+***************************************/
+void PresenDebugController::_RaiseMeteorEvent()
+{
+	if (scene->currentState != GameScene::Idle)
+		return;
+
+	EventController *controller = scene->eventController;
+	EventBase *ptr = new CityDestroyEvent(controller->eventViewer, controller->beatViewer, controller->camera);
+
+	controller->eventViewer->SetEventMessage(ptr->GetEventMessage(scene->level));
+	controller->EventVec.push_back(ptr);
+
+	scene->ChangeState(GameScene::Pause);
+}
+
+/**************************************
+強制レベルアップ
+***************************************/
+void PresenDebugController::_ForceLevelUp()
+{
+}
+
+/**************************************
+AIレベル減少
+***************************************/
+void PresenDebugController::_DecreaseLevelAI()
+{
+}
+
+/**************************************
+強制タイムアップ
+***************************************/
+void PresenDebugController::_ForceTimeUp()
+{
+}

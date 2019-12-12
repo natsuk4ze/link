@@ -37,6 +37,7 @@
 #include "../Reward/RewardController.h"
 #include "../Reward/RewardNotifier.h"
 #include "../Booth/BoothController.h"
+#include "../Presen/PresenDebugController.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
@@ -96,6 +97,7 @@ void GameScene::Init()
 	nemeEntryViewer = new NameEntryViewer();
 	titleViewer = new TitleViewer();
 	rewardNotifier = new RewardNotifier();
+	debugController = new PresenDebugController(this);
 
 	// ガイドビュアーの初期化
 	GuideViewer::Instance()->Init();
@@ -164,6 +166,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(nemeEntryViewer);
 	SAFE_DELETE(titleViewer);
 	SAFE_DELETE(rewardNotifier);
+	SAFE_DELETE(debugController);
 
 	// ガイドビュアーの削除
 	GuideViewer::Instance()->Uninit();
@@ -187,6 +190,9 @@ void GameScene::Uninit()
 void GameScene::Update()
 {
 	ProfilerCPU::Instance()->BeginLabel("GameScene");
+
+	//デバッグ操作の更新
+	debugController->Update();
 
 	//ステートを更新
 	State next = fsm[currentState]->OnUpdate(*this);
