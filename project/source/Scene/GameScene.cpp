@@ -583,8 +583,4 @@ void GameScene::Clear()
 	end = ProfilerCPU::GetCounter();
 
 	Debug::Log("Clear Event : %f", ProfilerCPU::CalcElapsed(start, end));
-
-	// リワードをリセット
-	rewardNotifier->ResetAchieved();
-	RewardController::Instance()->ResetAllRewardData();
 }

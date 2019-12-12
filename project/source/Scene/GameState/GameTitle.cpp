@@ -17,6 +17,8 @@
 #include "../../../Framework/Serial/SerialWrapper.h"
 #include "../../Sound/PlayBGM.h"
 #include "../../Booth/BoothController.h"
+#include "../../Reward/RewardNotifier.h"
+#include "../../Reward/RewardController.h"
 
 //=====================================
 // 入場処理
@@ -25,6 +27,11 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 {
 	// シーンチェンジ
 	TransitionController::Instance()->SetTransition(true, TransitionType::HexaPop);
+
+	//実績のリセット
+	// リワードをリセット
+	entity.rewardNotifier->ResetAchieved();
+	RewardController::Instance()->ResetAllRewardData();
 
 	// カメラのモード切替
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::Arround);
