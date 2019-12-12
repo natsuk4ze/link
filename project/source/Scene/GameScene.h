@@ -96,9 +96,7 @@ private:
 	GameParticleManager *particleManager;		//パーティクルマネージャ
 	SceneParticleManager *levelParticleManager;	//レベル個別のパーティクルマネージャ
 	FieldEventHandler* eventHandler;			//イベントハンドラ
-	SerialWrapper *serial;						//シリアル通信
 	UDPClient *Client;							//クライアント
-	//GuideViewer* guideViewer;					//ガイドビュアー
 	ResultViewer*resultViewer;					//リザルトビュアー
 	NameEntryViewer *nemeEntryViewer;			//名前登録ビュアー
 	TitleViewer* titleViewer;					// タイトルビュアー

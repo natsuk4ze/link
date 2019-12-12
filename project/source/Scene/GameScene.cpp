@@ -91,7 +91,6 @@ void GameScene::Init()
 	eventHandler = new FieldEventHandler();
 	eventController->ReceiveFieldEventHandler(eventHandler);
 	bloomController = new BloomController();
-	serial = new SerialWrapper(3);								//TODO:É|Å[Égî‘çÜÇïœÇ¶ÇÁÇÍÇÈÇÊÇ§Ç…Ç∑ÇÈ
 	Client = new UDPClient();
 	resultViewer = new ResultViewer();
 	nemeEntryViewer = new NameEntryViewer();
@@ -160,9 +159,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(eventController);
 	SAFE_DELETE(bloomController);
 	SAFE_DELETE(eventHandler);
-	SAFE_DELETE(serial);
 	SAFE_DELETE(Client);
-	//SAFE_DELETE(guideViewer);
 	SAFE_DELETE(resultViewer);
 	SAFE_DELETE(nemeEntryViewer);
 	SAFE_DELETE(titleViewer);
