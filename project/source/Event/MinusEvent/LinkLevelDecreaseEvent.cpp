@@ -41,7 +41,7 @@ const std::string LinkLevelDecreaseEvent::SpaceMessage[] = {
 LinkLevelDecreaseEvent::LinkLevelDecreaseEvent() :
 	EventBase(false)
 {
-	GuideViewer::Instance()->SetData("リンクレベルが下がりました",
+	GuideViewer::Instance()->SetData("リンクレベルが減少",
 		GuideActor::AnimState::Surprised,
 		SoundConfig::LinkLevelDown);
 }
