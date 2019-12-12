@@ -49,6 +49,7 @@ private:
 	CircleGauge *circleGuage[guageMax];
 	CountViewerDrawer *num;
 	BaseViewerDrawer *bg;
+	BaseViewerDrawer *text;
 	BaseViewerDrawer *place;
 
 	int currentFieldLevel;

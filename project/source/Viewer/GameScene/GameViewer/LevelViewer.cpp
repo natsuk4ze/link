@@ -38,6 +38,10 @@ LevelViewer::LevelViewer()
 	bg = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.30f, SCREEN_HEIGHT / 10 * 1.20f),
 		D3DXVECTOR2(250.0f, 250.0f), "data/TEXTURE/Viewer/GameViewer/LevelViewer/BG.png");
 
+	//ÉeÉLÉXÉg
+	text = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.30f, SCREEN_HEIGHT / 10 * 0.60f),
+		D3DXVECTOR2(180.0f, 49.0f), "data/TEXTURE/Viewer/GameViewer/LevelViewer/Text.png");
+
 	//à ÇÃäøêîéö
 	place = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.90f, SCREEN_HEIGHT / 10 * 1.20f),
 		D3DXVECTOR2(100.0f, 100.0f), "data/TEXTURE/Viewer/GameViewer/LevelViewer/PlaceText.png");
@@ -62,6 +66,7 @@ LevelViewer::~LevelViewer()
 {
 	SAFE_DELETE(num);
 	SAFE_DELETE(bg);
+	SAFE_DELETE(text);
 	SAFE_DELETE(place);
 	for (int i = 0; i < guageMax; i++)
 	{
@@ -98,8 +103,7 @@ void LevelViewer::Update(void)
 //=============================================================================
 void LevelViewer::Draw(void)
 {
-	if (!isPlaying)
-		return;
+	if (!isPlaying) return;
 
 	//îwåiÇêÊÇ…ï`âÊ
 	bg->Draw();
@@ -114,6 +118,8 @@ void LevelViewer::Draw(void)
 
 	num->DrawCounter(num->baseNumber, (int)parameterBox[LevelAI], num->placeMax,
 		num->intervalPosScr, num->intervalPosTex);
+
+	text->Draw();
 
 	//place->Draw();
 }
