@@ -96,6 +96,16 @@ void LevelViewer::Update(void)
 	Debug::Text("currentFieldLevel:%d", parameterBox[CurrentFieldLevel]);
 	Debug::End();
 #endif
+
+	//ƒQ[ƒW‰Šú‰»
+	if ((int)parameterBox[CurrentFieldLevel] == 0)
+	{
+		for (int i = 0; i < guageMax; i++)
+		{
+			if (i == 0)continue;
+			circleGuage[i]->SetPercent(0.0f);
+		}
+	}
 }
 
 //=============================================================================
@@ -109,6 +119,7 @@ void LevelViewer::Draw(void)
 	bg->Draw();
 
 	circleGuage[(int)parameterBox[CurrentFieldLevel]]->SetPercent(drawingRatioLevel);
+
 	for (int i = 0; i < guageMax; i++)
 	{
 		circleGuage[i]->SetScale(D3DXVECTOR3(1.0f - (0.10f*(parameterBox[CurrentFieldLevel] - i)),
