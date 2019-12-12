@@ -14,6 +14,8 @@
 #include "../Event/MinusEvent/CityDestroyEvent.h"
 #include "../Viewer/GameScene/Controller/EventViewer.h"
 
+#include "../Field/FieldController.h"
+
 /**************************************
 コンストラクタ
 ***************************************/
@@ -78,6 +80,15 @@ void PresenDebugController::_RaiseMeteorEvent()
 ***************************************/
 void PresenDebugController::_ForceLevelUp()
 {
+	if (scene->currentState != GameScene::Idle)
+		return;
+
+	Field::FieldController *controller = scene->field;
+	controller->developmentLevelAI = 9999.0f;
+	controller->realDevelopmentLevelAI = 9999.9f;
+
+	controller->SetScore();
+	scene->ChangeState(GameScene::LevelUp);
 }
 
 /**************************************
@@ -85,6 +96,11 @@ AIレベル減少
 ***************************************/
 void PresenDebugController::_DecreaseLevelAI()
 {
+	if (scene->currentState != GameScene::Idle)
+		return;
+
+	Field::FieldController *controller = scene->field;
+	controller->developmentLevelAI -= 50.0f;
 }
 
 /**************************************
@@ -92,4 +108,8 @@ void PresenDebugController::_DecreaseLevelAI()
 ***************************************/
 void PresenDebugController::_ForceTimeUp()
 {
+	if (scene->currentState != GameScene::Idle)
+		return;
+
+	scene->remainTime = 0;
 }
