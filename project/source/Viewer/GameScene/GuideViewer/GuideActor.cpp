@@ -164,7 +164,7 @@ void GuideActor::Move(const D3DXVECTOR3 & target, int duration)
 //=====================================
 void GuideActor::StartPunsh()
 {
-	ChangeAnim(AnimState::Rush);
+	ChangeAnim(AnimState::Rush, true);
 
 	Transform emitterTransform = *transform;
 	emitterTransform.Move(transform->Up() * 3.0f + transform->Forward() * -0.5f);
