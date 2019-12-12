@@ -13,6 +13,8 @@
 #include "../../../Framework/Tool/DebugWindow.h"
 #include "../../../Framework/Transition/TransitionController.h"
 #include "../../../Framework/Input/input.h"
+#include "../../Sound/PlayBGM.h"
+#include "../../Sound/SoundConfig.h"
 
 #include <functional>
 
@@ -84,6 +86,8 @@ GameScene::State GameScene::GameAchieveResult::OnUpdate(GameScene & entity)
 ***************************************/
 void GameScene::GameAchieveResult::TransitionToTitle(GameScene& entity)
 {
+	PlayBGM::Instance()->FadeOut(SoundConfig::BGMID::Result, 0.1f, 30, true);
+
 	TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
 	{
 		entity.level = 0;

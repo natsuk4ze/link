@@ -17,6 +17,7 @@
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../Framework/Sound/SoundEffect.h"
 #include "../../Sound/SoundConfig.h"
+#include "../../Sound/PlayBGM.h"
 #include "../../Booth/BoothController.h"
 
 enum State
@@ -55,6 +56,7 @@ CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer, BeatGameViewer* bea
 	beatViewer(beatViewer),
 	success(false)
 {
+	PlayBGM::Instance()->Pause();
 }
 
 //=============================================================================
@@ -103,6 +105,7 @@ void CityDestroyEvent::Init()
 	// テロップ設置
 	eventViewer->SetEventTelop(EventTelop::Meteorite, [&]()
 	{
+		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::DestroyEvent, 0.1f, 30);
 		camera->Translation(TownPos, 30, [&]() {MeteorFallStart(); });
 	});
 
@@ -170,6 +173,7 @@ void CityDestroyEvent::Update()
 		// 隕石撃破
 	case BeatGameSuccess:
 
+		PlayBGM::Instance()->FadeOut();
 		// 隕石撃破エフェクト
 		GameParticleManager::Instance()->SetMeteorExplosionEffect(MeteoritePos);
 		// 30フレームの遅延を設置
@@ -184,6 +188,7 @@ void CityDestroyEvent::Update()
 		// 隕石落下
 	case BeatGameFail:
 
+		PlayBGM::Instance()->FadeOut();
 		Distance = D3DXVec3LengthSq(&D3DXVECTOR3(MeteoritePos - TownPos));
 
 		if (Distance > pow(3.0f, 2))
@@ -266,6 +271,7 @@ void CityDestroyEvent::EventOver(void)
 			GuideActor::AnimState::Defeat,
 			SoundConfig::MeteorBreakFailed);
 	}
+	PlayBGM::Instance()->ResumePrev();
 }
 
 //=============================================================================

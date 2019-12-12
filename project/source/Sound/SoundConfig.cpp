@@ -9,7 +9,19 @@
 /**************************************
 staticÉÅÉìÉo
 ***************************************/
-const char* SoundConfig::FilePath[ID::Max]
+const char* SoundConfig::BGMPath[BGMID::BGMMax]
+{
+	{"data/SOUND/BGM/MusMus-BGM-052.wav"},
+	{"data/SOUND/BGM/MusMus-BGM-067.wav"},
+	{"data/SOUND/BGM/Es-STAGE1_loop.wav"},
+	{"data/SOUND/BGM/Labyrinth-Of-Time_loop.wav"},
+	{"data/SOUND/BGM/Battle-Forbidden_loop.wav"},
+	{"data/SOUND/BGM/Battle-Noble_loop.wav"},
+	{"data/SOUND/BGM/Crasher_loop.wav"},
+	{"data/SOUND/BGM/MusMus-CT-NV-TT.wav"}
+};
+
+const char* SoundConfig::VoicePath[VoiceID::VoiceMax]
 {
 	{"data/SOUND/VOICE/robo/AIBonus.wav"},
 	{"data/SOUND/VOICE/robo/AIOutofControll.wav"},

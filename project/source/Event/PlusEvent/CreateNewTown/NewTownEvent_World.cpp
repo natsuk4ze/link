@@ -11,6 +11,8 @@
 #include "../../../Effect/WorldParticleManager.h"
 #include "../../../../Framework/Task/TaskManager.h"
 #include "../../../Field/Camera/EventCamera.h"
+#include "../../../Sound/PlayBGM.h"
+#include "../../../Sound/SoundConfig.h"
 
 //*****************************************************************************
 // É}ÉNÉçíËã`

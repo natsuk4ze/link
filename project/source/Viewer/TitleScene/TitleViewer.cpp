@@ -11,6 +11,8 @@
 #include "RewardViewer.h"
 #include "../../../Framework/Input/input.h"
 #include "../../Scene/GameScene.h"
+#include "../../Sound/PlayBGM.h"
+#include "../../Sound/SoundConfig.h"
 
 //=====================================
 // コンストラクタ
@@ -96,6 +98,8 @@ void TitleViewer::SetNextScene(GameScene& entity)
 		if (selectViewer->CheckNextScene() == 0)
 		{
 			// ゲーム開始
+			PlayBGM::Instance()->FadeOut(SoundConfig::BGMID::Title, 0.1f, 30, true);
+			PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.1f, 30);
 			entity.ChangeState(GameScene::State::Idle);
 		}
 		else if (selectViewer->CheckNextScene() == 1)

@@ -275,6 +275,7 @@
     <ClInclude Include="source\Shader\RiverEffect.h" />
     <ClInclude Include="source\Shader\SpaceGridEffect.h" />
     <ClInclude Include="source\Shader\WhirlPoolEffect.h" />
+    <ClInclude Include="source\Sound\PlayBGM.h" />
     <ClInclude Include="source\Sound\SoundConfig.h" />
     <ClInclude Include="source\SubScreen\SubScreen.h" />
     <ClInclude Include="source\Viewer\Framework\BaseViewer.h" />
@@ -568,6 +569,7 @@
     <ClCompile Include="source\Shader\RiverEffect.cpp" />
     <ClCompile Include="source\Shader\SpaceGridEffect.cpp" />
     <ClCompile Include="source\Shader\WhirlPoolEffect.cpp" />
+    <ClCompile Include="source\Sound\PlayBGM.cpp" />
     <ClCompile Include="source\Sound\SoundConfig.cpp" />
     <ClCompile Include="source\SubScreen\SubScreen.cpp" />
     <ClCompile Include="source\Viewer\Framework\ViewerAnimater\ViewerAnimater.cpp" />

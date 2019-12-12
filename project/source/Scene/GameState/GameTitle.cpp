@@ -14,6 +14,8 @@
 #include "../../Viewer/GameScene/Controller/ResultViewer.h"
 #include "../../Viewer/GameScene/Controller/NameEntryViewer.h"
 #include "../../../Framework/Transition/TransitionController.h"
+#include "../../../Framework/Serial/SerialWrapper.h"
+#include "../../Sound/PlayBGM.h"
 #include "../../Booth/BoothController.h"
 
 //=====================================
@@ -38,6 +40,9 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	//entity.guideViewer->SetActive(false);
 	entity.resultViewer->SetActive(false);
 	entity.nemeEntryViewer->SetActive(false);
+
+	// タイトルのBGMを開始
+	PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Title, 0.1f, 30);
 
 	//モータの角度を初期化
 	BoothController::Instance()->RotateTable(GameScene::AngleTable[0]);

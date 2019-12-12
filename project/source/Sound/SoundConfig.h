@@ -20,8 +20,23 @@
 class SoundConfig
 {
 public:
-	//SEの通し番号
-	enum ID
+	// BGMの通し番号
+	enum BGMID
+	{
+		Title,
+		City,
+		World,
+		Space,
+		DestroyEvent,
+		UFOEvent,
+		AIBurstEvent,
+		Result,
+
+		BGMMax
+	};
+
+	// Voiceの通し番号
+	enum VoiceID
 	{
 		AIBonus,				// AIレベルにボーナス（茶柱イベント）
 		AIOutofControll,		// AI暴走
@@ -40,11 +55,12 @@ public:
 		UFOFailed,				// UFOイベント失敗
 		UFOSuccess,				// UFOイベント成功
 
-		Max
+		VoiceMax
 	};
 
 	//音声ファイルのパス
-	static const char* FilePath[ID::Max];
+	static const char* BGMPath[BGMID::BGMMax];
+	static const char* VoicePath[VoiceID::VoiceMax];
 
 	//ボイスSEの音量
 	static const float VolumeVoice;

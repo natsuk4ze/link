@@ -31,8 +31,8 @@ struct GuideViewerData
 {
 	std::string message;
 	GuideActor::AnimState animation;
-	SoundConfig::ID voice;
-	GuideViewerData(std::string message, GuideActor::AnimState next, SoundConfig::ID voice) {
+	SoundConfig::VoiceID voice;
+	GuideViewerData(std::string message, GuideActor::AnimState next, SoundConfig::VoiceID voice) {
 		this->message = message;
 		this->animation = next;
 		this->voice = voice;
@@ -61,7 +61,7 @@ public:
 	void ChangeAnim(GuideActor::AnimState next);
 
 	// 上の２つ＆VOICEの再生をまとめて行う
-	void SetData(const std::string& message, GuideActor::AnimState next, SoundConfig::ID voice);
+	void SetData(const std::string& message, GuideActor::AnimState next, SoundConfig::VoiceID voice);
 
 private:
 	// 各種インスタンス用ポインタ
@@ -73,7 +73,7 @@ private:
 	SubScreen* subScreen;
 
 	std::deque<GuideViewerData*> que;	// アニメーション、メッセージ、SEを順番に収納するキュー
-	SoundConfig::ID prev;
+	SoundConfig::VoiceID prev;
 	int cntQue;
 	bool isActive;	// 描画可否判定
 

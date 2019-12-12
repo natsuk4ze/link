@@ -18,6 +18,8 @@
 #include "../../../Framework/Task/TaskManager.h"
 
 #include "../../Field/FieldController.h"
+#include "../../Sound/PlayBGM.h"
+#include "../../Sound/SoundConfig.h"
 
 //=====================================
 // 入場処理
@@ -57,6 +59,8 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	int spaceScore = (int)entity.field->GetScore(Field::FieldLevel::Space);
 	entity.resultViewer->ReceiveParam(cityScore, worldScore, spaceScore);
 
+	PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Result, 0.1f, 30);
+
 	//全体スコアを計算
 	entity.entiretyScore = (int)(powf(10, 8) * spaceScore) + (int)(powf(10, 4) * worldScore) + cityScore;
 }
@@ -74,6 +78,7 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 
 	switch (entity.step)
 	{
+		//TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
 	case Step::ScoreViewerIn:
 		if (entity.resultViewer->IsPlayingAnimation() != ResultViewer::PlayingIn)
 		{

@@ -17,6 +17,9 @@
 #include "../../../Framework/Tool/ProfilerCPU.h"
 #include "../../../Framework/Tool/DebugWindow.h"
 
+#include "../../Sound/PlayBGM.h"
+#include "../../Sound/SoundConfig.h"
+
 /**************************************
 “üêˆ—
 ***************************************/
@@ -62,6 +65,14 @@ GameScene::State GameScene::GameTransitionIn::OnUpdate(GameScene & entity)
 			entity.field->SetViewerActive(true);
 			entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
 			entity.ChangeState(GameScene::Idle);
+			if (level == 1)
+			{
+				PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::World, 0.1f, 30);
+			}
+			else if (level == 2)
+			{
+				PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Space, 0.1f, 30);
+			}
 		});
 	}
 
