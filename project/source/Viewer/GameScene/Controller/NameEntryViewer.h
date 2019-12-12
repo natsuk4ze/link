@@ -8,6 +8,7 @@
 #define _NAME_ENTRY_VIEWER_H_
 
 #include <vector>
+#include <string>
 
 //*****************************************************************************
 // 前方宣言
@@ -37,7 +38,7 @@ public:
 	bool GetIsActive();
 
 	//登録名ID取得処理（文字テーブルの0～35までの値がentryNameMax個の配列）
-	int* GetEntryNameID();
+	std::string GetEntryNameID();
 
 	void SlideNameEntryViewer(bool isIn);
 private:
@@ -54,6 +55,9 @@ private:
 
 	//登録名セット処理
 	void SetEntryName();
+
+	// int型のネームがstring型に変換
+	std::string IntToString(int NameInt);
 
 	//登録できる名前の最大数
 	static const int entryNameMax = 3;

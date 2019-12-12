@@ -117,9 +117,8 @@ void UDPClient::SendRankPacket(string NameStr, string AILevel)
 //=============================================================================
 // ランキング追加パケット送信
 //=============================================================================
-void UDPClient::SendRankPacket(int NameInt, unsigned long long AILevel)
+void UDPClient::SendRankPacket(string NameStr, unsigned long long AILevel)
 {
-	string NameStr = std::to_string(NameInt);
 	string AILevelStr = std::to_string(AILevel);
 	SendRankPacket(NameStr, AILevelStr);
 }

@@ -42,7 +42,7 @@ public:
 	void Update(void);
 	void Draw(void);
 	static void SendRankPacket(string NameStr, string AILevel);
-	static void SendRankPacket(int NameInt, unsigned long long AILevel);
+	static void SendRankPacket(string NameStr, unsigned long long AILevel);
 	static void SendEventPacket(string EventNo, string FieldLevel);
 	static void SendEventPacket(int EventNo, int FieldLevel);
 	static void SendLevelUpPacket(void);
