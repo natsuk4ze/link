@@ -162,7 +162,7 @@ void BanStockUseEvent::ReceiveBeatResult(bool IsSuccess)
 		SetBanStock(true);
 		fieldEventHandler->ResumeGame();
 
-		GuideViewer::Instance()->SetData("一定時間ドリルが使えなくなります",
+		GuideViewer::Instance()->SetData("ドリルが使用不可",
 			GuideActor::AnimState::Pain,
 			SoundConfig::AIOutofControll);
 	}

@@ -80,7 +80,17 @@ std::vector<RC::Type> RewardController::IsAllAchieved()
 //=====================================
 bool RewardController::FindFirstAchieved()
 {
-	auto itr = std::find_if(rewardPool.begin(), rewardPool.end(), [](std::pair<RC::Type, Reward*> a) {
+	for (int i = 0; i < RC::Type::Max; i++)
+	{
+		if (rewardPool[RC::Type(i)]->CheckAchieved())
+		{
+			if (!rewardPool[RC::Type(i)]->CheckFirstAchieved())
+				return true;
+		}
+	}
+	return false;
+
+	/*auto itr = std::find_if(rewardPool.begin(), rewardPool.end(), [](std::pair<RC::Type, Reward*> a) {
 		return a.second->CheckFirstAchieved(); 
 	});
 
@@ -91,7 +101,7 @@ bool RewardController::FindFirstAchieved()
 	else
 	{
 		return true;
-	}
+	}*/
 }
 
 //=====================================

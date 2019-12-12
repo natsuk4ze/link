@@ -31,7 +31,7 @@ const std::string LinkLevelUpEvent::message[] = {
 LinkLevelUpEvent::LinkLevelUpEvent() :
 	EventBase(false)
 {
-	GuideViewer::Instance()->SetData("町のリンクレベルが上昇しました",
+	GuideViewer::Instance()->SetData("町のリンクレベルが上昇",
 		GuideActor::AnimState::FistPump,
 		SoundConfig::LinkLevelUp);
 }
