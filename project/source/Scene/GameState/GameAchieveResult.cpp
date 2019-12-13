@@ -15,6 +15,7 @@
 #include "../../../Framework/Input/input.h"
 #include "../../Sound/PlayBGM.h"
 #include "../../Sound/SoundConfig.h"
+#include "../../Viewer/GameScene/Controller/NameEntryViewer.h"
 
 #include <functional>
 
@@ -64,14 +65,30 @@ GameScene::State GameScene::GameAchieveResult::OnUpdate(GameScene & entity)
 			//初達成の実績があったらネームエントリー
 			if (RewardController::Instance()->FindFirstAchieved())
 			{
-				entity.step = Step::AchieveInputWait;
+				entity.nemeEntryViewer->SetActive(true);
+				entity.nemeEntryViewer->SlideNameEntryViewer(true);
+				entity.step = Step::AchieveNameEntryWait;
 			}
-			//なかったらタイトルへ
+			//なかったら遷移へ
 			else
 			{
 				TransitionToTitle(entity);
+				entity.step = Step::Transition;
 			}
 		}
+		break;
+
+	case Step::AchieveNameEntryWait:
+		//名前入力の終了待ち
+		if (entity.nemeEntryViewer->IsFinished())
+		{
+			entity.nemeEntryViewer->SlideNameEntryViewer(false);
+
+			//終了したら遷移
+			TransitionToTitle(entity);
+			entity.step = Step::Transition;
+		}
+		break;
 	}
 
 	return State::AchieveResult;
@@ -92,6 +109,4 @@ void GameScene::GameAchieveResult::TransitionToTitle(GameScene& entity)
 		entity.field->Load();
 		entity.ChangeState(State::Title);
 	});
-
-	entity.step = Transition;
 }

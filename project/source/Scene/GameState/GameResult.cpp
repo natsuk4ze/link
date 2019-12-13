@@ -116,7 +116,6 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 		//エンターキーが押されたらスコアビューワをスライドアウトさせる
 		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 		{
-			entity.resultViewer->SlideScoreViewer(false);
 			entity.nemeEntryViewer->SlideNameEntryViewer(false);
 			entity.step = Step::ScoreViewerOut;
 
@@ -128,7 +127,6 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 	case Step::ScoreViewerOut:
 		if (entity.resultViewer->IsPlayingAnimation() != ResultViewer::PlayingOut)
 		{
-			entity.resultViewer->SetActive(false);
 			entity.nemeEntryViewer->SetActive(false);
 			entity.ChangeState(State::AchieveResult);
 		}
