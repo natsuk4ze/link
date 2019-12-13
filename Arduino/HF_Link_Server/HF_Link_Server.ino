@@ -3,9 +3,9 @@
 /*******************************************************
    マクロ定義
  *******************************************************/
-#define LED_PIN 3
+#define LED_PIN 6
 
-#define LED_NUM 30
+#define LED_NUM 60
 #define DELAYVAL 10
 
 #define TRUE 1
@@ -19,16 +19,16 @@
  *******************************************************/
 int colorMinus[3] = {255, 0, 0};
 int colorPlus[3] = {0, 50, 255};
-int colorGradeUp[3] = {0, 255 ,0};
-int colorRank[7][3] = 
+int colorGradeUp[3] = {0, 255 , 0};
+int colorRank[7][3] =
 {
-    {255, 0, 0},
-    {255, 165, 0},
-    {255, 255, 0},
-    {0, 128, 0},
-    {0, 255, 255},
-    {0, 0, 255},
-    {128, 0, 128},
+  {255, 0, 0},
+  {255, 165, 0},
+  {255, 255, 0},
+  {0, 128, 0},
+  {0, 255, 255},
+  {0, 0, 255},
+  {128, 0, 128},
 };
 
 /*******************************************************
@@ -56,7 +56,8 @@ void setup() {
 
   //LED制御の初期化
   pixels.begin();
-  pixels.clear();
+  pixels.show();
+  pixels.setBrightness(20);
 
   //LED制御変数の初期化
   inBlink = FALSE;
@@ -94,6 +95,7 @@ void loop()
       RankingBlinkTape();
     }
   }
+  
 
   if (inBlink == FALSE)
   {
@@ -182,7 +184,7 @@ void IdleBlinkTape()
     pixels.clear();
   }
 
-  int color = isLightup == TRUE ? 255 : 0;
+  int color = isLightup == TRUE ? 200 : 0;
 
   for (int i = 0; i < LED_NUM; i++)
   {
