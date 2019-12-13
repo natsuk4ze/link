@@ -19,40 +19,24 @@ LinkLevelUpViewer::LinkLevelUpViewer() :
 	Callback(nullptr)
 {
 	//テキスト
-	text = new BaseViewerDrawer();
-	text->LoadTexture("data/TEXTURE/Viewer/FieldViewer/LinkLevelUpViewer/Text.png");
-	text->size = D3DXVECTOR3(750.0f, 140.0f, 0.0f);
-	text->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	text->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_HEIGHT / 3 * 2, 0.0f);
-	text->MakeVertex();
+	text = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_HEIGHT / 3 * 2), 
+		D3DXVECTOR2(750.0f, 140.0f),"data/TEXTURE/Viewer/FieldViewer/LinkLevelUpViewer/Text.png");
 	text->SetAlpha(0.0f);
 
 	//月桂樹
-	laurel = new BaseViewerDrawer();
-	laurel->LoadTexture("data/TEXTURE/Viewer/FieldViewer/LinkLevelUpViewer/Laurel.png");
-	laurel->size = D3DXVECTOR3(300.0f, 300.0f, 0.0f);
-	laurel->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_HEIGHT/2/1.5, 0.0f);
-	laurel->MakeVertex();
+	laurel = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_HEIGHT / 2 / 1.5),
+		D3DXVECTOR2(300.0f, 300.0f), "data/TEXTURE/Viewer/FieldViewer/LinkLevelUpViewer/Laurel.png");
 	laurel->SetAlpha(0.0f);
 
 	//数字
-	num = new CountViewerDrawer();
-	num->LoadTexture("data/TEXTURE/Viewer/FieldViewer/LinkLevelUpViewer/Number.png");
-	num->size = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	num->position = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_HEIGHT / 2/1.5, 0.0f);
-	num->intervalPosScr = 70.0f;
-	num->intervalPosTex = 0.1f;
-	num->placeMax = 2;
-	num->baseNumber = 10;
-	num->MakeVertex();
+	num = new CountViewerDrawer(D3DXVECTOR2(SCREEN_CENTER_X, SCREEN_HEIGHT / 2 / 1.5),
+		D3DXVECTOR2(0.0f, 0.0f), "data/TEXTURE/Viewer/FieldViewer/LinkLevelUpViewer/Number.png",
+		70.0f, 0.1f, 2);
 	num->SetAlpha(0.0f);
 
 	//＋
-	plus = new BaseViewerDrawer();
-	plus->LoadTexture("data/TEXTURE/Viewer/FieldViewer/LinkLevelUpViewer/Plus.png");
-	plus->size = D3DXVECTOR3(100.0f, 100.0f, 0.0f);
-	plus->position = D3DXVECTOR3(SCREEN_CENTER_X - num->intervalPosScr, SCREEN_HEIGHT / 2 / 1.5, 0.0f);
-	plus->MakeVertex();
+	plus = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_CENTER_X - num->intervalPosScr, SCREEN_HEIGHT / 2 / 1.5), 
+		D3DXVECTOR2(100.0f, 100.0f), "data/TEXTURE/Viewer/FieldViewer/LinkLevelUpViewer/Plus.png");
 	plus->SetAlpha(0.0f);
 
 	//アニメーション

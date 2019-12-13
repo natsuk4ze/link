@@ -114,8 +114,6 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 
 	case Step::ScoreNameEntryFinish:
 
-		entity.nemeEntryViewer->Update();
-
 		//エンターキーが押されたらスコアビューワをスライドアウトさせる
 		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 		{

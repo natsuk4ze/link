@@ -33,7 +33,7 @@ NameEntryReelViewer::NameEntryReelViewer():
 	for (int i = 0; i < entryNameMax; i++)
 	{
 		reel[i] = new BaseViewerDrawer(D3DXVECTOR2(animStartPosX + i * intervalReelPos, SCREEN_HEIGHT / 1.520f),
-			D3DXVECTOR2(180.0f, 180.0f), "data/TEXTURE/Viewer/NameEntryViewer/NameEntryReelViewer/Character.png");
+			D3DXVECTOR2(150.0f, 150.0f), "data/TEXTURE/Viewer/NameEntryViewer/NameEntryReelViewer/Character.png");
 		reel[i]->SetTexture(6, 6, 0);
 	}
 

@@ -51,14 +51,15 @@ NameEntryViewer::~NameEntryViewer()
 //=============================================================================
 void NameEntryViewer::Update()
 {
-	//if (!isActive)
-	//	return;
+	if (!isActive)
+		return;
 
 #ifdef _DEBUG
 	for (int i = 0; i < entryNameMax; i++)
 	{
 		Debug::Text("nameID%d", entryNameID[i]);
 	}
+
 	if (Keyboard::GetTrigger(DIK_2))
 	{
 		SlideNameEntryViewer(true);
@@ -85,8 +86,8 @@ void NameEntryViewer::Update()
 //=============================================================================
 void NameEntryViewer::Draw(void)
 {
-	//if (!isActive)
-	//	return;
+	if (!isActive)
+		return;
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 

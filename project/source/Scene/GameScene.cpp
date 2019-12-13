@@ -229,6 +229,7 @@ void GameScene::Update()
 	GuideViewer::Instance()->Update();
 	resultViewer->Update();
 	titleViewer->Update();
+	nemeEntryViewer->Update();
 	rewardNotifier->Update();
 
 	//パーティクル更新
