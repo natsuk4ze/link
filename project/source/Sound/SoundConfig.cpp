@@ -45,9 +45,27 @@ const char* SoundConfig::SEPath[SEID::SEMax]
 	{"data/SOUND/ME/MusMus-JGL-004.wav"},
 	{"data/SOUND/ME/MusMus-JGL-023.wav"},
 	{"data/SOUND/ME/MusMus-JGL-026.wav"},
+	{"data/SOUND/ME/CountDown.wav"},
 
 	// *** SE ***
-
+	{"data/SOUND/SE/kettei-02.wav"},
+	{"data/SOUND/SE/btn02.wav"},
+	{"data/SOUND/SE/btn03.wav"},
+	{"data/SOUND/SE/btn01.wav"},
+	{"data/SOUND/SE/Onmtp-Impact01-1.wav"},
+	{"data/SOUND/SE/punch_09.wav"},			// デュクシ
+	{"data/SOUND/SE/quiz-right_02.wav"},	// ピンポンピンポーン
+	{"data/SOUND/SE/quiz-wrong_02.wav"},	// ブブー
+	{"data/SOUND/SE/land-the-spaceship_02.wav"},	// っすぅーーーーーおぉーーーーーん（通り過ぎる音）
+	{"data/SOUND/SE/magic-electron3.wav"},
+	{"data/SOUND/SE/magic-quake2.wav"},
+	{"data/SOUND/SE/wind_04.wav"},			// ンゴオオオオオオオオオオオオ
+	{"data/SOUND/SE/alrat_02.wav"},			// 警告
+	{"data/SOUND/SE/othr11.wav"},
+	{"data/SOUND/SE/se-amd05.wav"},
+	{"data/SOUND/SE/chime_01.wav"},			// ピンポーン
+	{"data/SOUND/SE/blast_05.wav"},			// 爆発
+	{"data/SOUND/SE/fly-a-spaceship_04"}	// うにょにょにょ
 };
 
 const float SoundConfig::VolumeVoice = 1.0f;

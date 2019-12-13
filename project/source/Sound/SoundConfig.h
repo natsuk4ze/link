@@ -60,8 +60,27 @@ public:
 		CreationEvent,
 		FieldLevelUp,
 		Finish,
+		CountDown,
 
 		// *** SE ***
+		Select01,
+		Select02,
+		Select03,
+		MoveCursor,
+		Fall,
+		Beat,
+		BeatSuccess,
+		BeatFailed,
+		Transition,
+		NewContinentSE,
+		NewTownSE,
+		NewStarSE,
+		AIBurstSE,
+		Error,
+		EventHappen,
+		LinkUp,
+		Bom,
+		UFO,
 
 		SEMax
 	};
