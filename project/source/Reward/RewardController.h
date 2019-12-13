@@ -47,7 +47,7 @@ public:
 	bool ExistFirstAchieved();
 
 	// 今回のプレイで達成したリワードを全て達成済みにする（リザルト終了時）
-	void SetFirstAchieved(const Name& name);
+	void SetFirstAchieverName(const Name& name);
 
 	// **************リワード確認画面用************************
 	// 既に到達者がいるか（falseなら未達成）

@@ -82,11 +82,8 @@ bool RewardController::ExistFirstAchieved()
 {
 	for (int i = 0; i < RC::Type::Max; i++)
 	{
-		if (rewardPool[RC::Type(i)]->CheckAchieved())
-		{
-			if (!rewardPool[RC::Type(i)]->CheckFirstAchieved())
-				return true;
-		}
+		if (rewardPool[RC::Type(i)]->IsAchievedThisTime())
+			return true;
 	}
 	return false;
 
@@ -121,13 +118,15 @@ bool RewardController::IsFirstAchieved(RC::Type rewardType)
 }
 
 //=====================================
-// 到達したデータをセット
+// 初達成者の名前をセット
 //=====================================
-void RewardController::SetFirstAchieved(const Name& name)
+void RewardController::SetFirstAchieverName(const Name& name)
 {
 	for (int i = 0; i < RC::Type::Max; i++)
 	{
-		if (rewardPool[RC::Type(i)]->CheckFirstAchieved())
+		RewardConfig::Type key = RewardConfig::Type(i);
+
+		if (rewardPool[key]->IsAchievedThisTime())
 		{
 			rewardPool[RC::Type(i)]->SetName(name);
 		}
