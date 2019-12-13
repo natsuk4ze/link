@@ -170,9 +170,23 @@ void ResultScoreViewer::SetText()
 		rewardText[i]->SetText("作った道の数　：10\n繋がった街の数：10");
 	}
 	scoreText[0]->SetText("9999兆9999億9999万9999");
-	scoreText[1]->SetText("スコア：9999");
-	scoreText[2]->SetText("スコア：9999万");
-	scoreText[3]->SetText("スコア：9999億");
+
+	std::string strCityScore = std::to_string(score[City]);
+	scoreText[1]->SetText("スコア：" + strCityScore);
+
+	std::string strWorldScore = std::to_string(score[World]);
+	scoreText[2]->SetText("スコア：" + strWorldScore + "万");
+	
+	int spaceScoreTrillion = Math::Max(0, score[Space] - 10000);
+	int spaceScoreBillion = score[Space] - spaceScoreTrillion;
+
+	std::string strSpaceScore = std::to_string(spaceScoreBillion) + "億";
+	if (spaceScoreTrillion > 0)
+	{
+		strSpaceScore.insert(0, std::to_string(spaceScoreTrillion) + "兆");
+	}
+
+	scoreText[3]->SetText("スコア：" + strSpaceScore);
 }
 
 //=============================================================================
