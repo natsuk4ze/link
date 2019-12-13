@@ -43,6 +43,12 @@ public:
 	float parameterBox[Max];
 
 private:
+	enum FieldType
+	{
+		City,
+		World,
+		Space
+	};
 
 	const static int guageMax = 3;
 
@@ -51,12 +57,14 @@ private:
 	CountViewerDrawer *overflowNum;
 	BaseViewerDrawer *bg;
 	BaseViewerDrawer *text;
+	BaseViewerDrawer *plus;
 	BaseViewerDrawer *place;
-
-	int currentFieldLevel;
 
 	//数字ホッピング処理
 	void HopNumber(void);
+
+	//ゲージ割合セット
+	void SetGaugePer(void);
 
 	//描画用ratioLevel設定
 	void SetDrawingRatioLevel(void);
@@ -67,23 +75,14 @@ private:
 	//描画用ratioLevel減少
 	void DecreaseDrawingRatioLevel(void);
 
+	//漢数字の桁のテクスチャをセットする
+	void SetPlaceTex(void);
+
 	//オーバーフローしてるかどうかを返す
 	bool IsOverflowed(void);
 
-	//現在のパラメータ
-	int currentParam[Max];
-
-	//１フレーム前のパラメータ
-	int lastParam[Max];
-
 	//描画用ratioLevel
 	float drawingRatioLevel;
-
-	//LevelAIが増加中かどうか
-	bool isLevelAI_Increasing;
-
-	//LevelAIが減少中かどうか
-	bool isLevelAI_Decreasing;
 };
 
 #endif

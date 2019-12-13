@@ -29,12 +29,12 @@ public:
 	{
 		bool isGreater = false;
 
-		T currentParam = param;
-		if (currentParam < lastParam)
+		currentParam = param;
+		if (currentParam > lastParam)
 		{
 			isGreater = true;
 		}
-		T lastParam = param;
+		lastParam = param;
 
 		return isGreater;
 	};
