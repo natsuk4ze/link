@@ -230,6 +230,7 @@ void GameScene::Update()
 	resultViewer->Update();
 	titleViewer->Update();
 	rewardNotifier->Update();
+	nemeEntryViewer->Update();
 
 	//パーティクル更新
 	ProfilerCPU::Instance()->Begin("Update Particle");

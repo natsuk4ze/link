@@ -97,6 +97,7 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 			//ランキング更新があったらネームエントリーへ
 			if (entity.ShowNameEntry)
 			{
+				entity.nemeEntryViewer->Init();
 				entity.nemeEntryViewer->SetActive(true);
 				entity.nemeEntryViewer->SlideNameEntryViewer(true);
 				entity.step = Step::ScoreNameEntryWait;
@@ -111,19 +112,15 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 		break;
 
 	case Step::ScoreNameEntryWait:
-
-		//TODO:ネームエントリーの終了をコールバックで受け取るようにする
-		entity.step = Step::ScoreNameEntryFinish;
+		//エンターキーでネームエントリー終了
+		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
+			entity.step = Step::ScoreNameEntryFinish;
 		break;
 
 	case Step::ScoreNameEntryFinish:
-
-		entity.nemeEntryViewer->Update();
-
 		//エンターキーが押されたらスコアビューワをスライドアウトさせる
 		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 		{
-			entity.resultViewer->SlideScoreViewer(false);
 			entity.nemeEntryViewer->SlideNameEntryViewer(false);
 			entity.step = Step::ScoreViewerOut;
 
@@ -135,7 +132,6 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 	case Step::ScoreViewerOut:
 		if (entity.resultViewer->IsPlayingAnimation() != ResultViewer::PlayingOut)
 		{
-			entity.resultViewer->SetActive(false);
 			entity.nemeEntryViewer->SetActive(false);
 			entity.ChangeState(State::AchieveResult);
 		}

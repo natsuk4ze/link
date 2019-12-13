@@ -174,6 +174,8 @@ void ResultViewer::ReceiveParam(int cityScore, int worldScore, int spaceScore)
 		//コンテナからビュアーに渡す
 		scoreViewer->parameterBoxScore[i] = viewerParam->score[i];
 	}
+
+	scoreViewer->SetRecievedParam();
 }
 
 //=============================================================================
