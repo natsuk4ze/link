@@ -80,8 +80,8 @@ void GradeUpViewer::SetGradeUp(std::function<void(void)> callback)
 	AILevelTex->SetPosition(AILevelDefaultPos);
 
 	// 画面中央に移動しながら拡大
-	AILevelTex->Move(60.0f, D3DXVECTOR3(SCREEN_CENTER_X, 284.0f, 0.0f), EaseType::OutCubic);
-	AILevelTex->SetScale(60.0f, ScaleNum, EaseType::OutCubic, [&]()
+	AILevelTex->Move(30.0f, D3DXVECTOR3(SCREEN_CENTER_X, 284.0f, 0.0f), EaseType::OutCubic);
+	AILevelTex->SetScale(30.0f, ScaleNum, EaseType::OutCubic, [&]()
 	{
 		TextPopUp();
 	});
@@ -112,11 +112,11 @@ void GradeUpViewer::TextPopUp(void)
 void GradeUpViewer::GradeUpFadeOut()
 {
 	// 画面上方に移動しながらフェイドアウト
-	GradeUpText->Move(60.0f, D3DXVECTOR3(SCREEN_CENTER_X, -384.0f, 0.0f), EaseType::InCubic);
-	GradeUpText->Fade(60.0f, 0.0f);
+	GradeUpText->Move(30.0f, D3DXVECTOR3(SCREEN_CENTER_X, -384.0f, 0.0f), EaseType::InCubic);
+	GradeUpText->Fade(30.0f, 0.0f);
 
 	// フェイドアウト
-	AILevelTex->Fade(60.0f, 0.0f, [&]()
+	AILevelTex->Fade(30.0f, 0.0f, [&]()
 	{
 		isPlaying = false;
 		if (Callback != nullptr)
