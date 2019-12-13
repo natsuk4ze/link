@@ -73,10 +73,12 @@ void ViewerAnimater::Shake(BaseViewerDrawer & viewer, const D3DXVECTOR2 & start,
 	float radian = Easing::EaseValue(animTime, 0.0f, D3DX_PI * shakeNum, OutCirc);
 
 	viewer.position.x = start.x + shakeValue * sinf(radian);
+	viewer.position.y = start.y + shakeValue * sinf(radian);
 
 	//I—¹ˆ—
 	if (frameCnt < duration) return;
 	viewer.position.x = start.x;
+	viewer.position.y = start.y;
 	SetAnimFinished();
 }
 

@@ -51,8 +51,8 @@ NameEntryViewer::~NameEntryViewer()
 //=============================================================================
 void NameEntryViewer::Update()
 {
-	if (!isActive)
-		return;
+	//if (!isActive)
+	//	return;
 
 #ifdef _DEBUG
 	for (int i = 0; i < entryNameMax; i++)
@@ -85,8 +85,8 @@ void NameEntryViewer::Update()
 //=============================================================================
 void NameEntryViewer::Draw(void)
 {
-	if (!isActive)
-		return;
+	//if (!isActive)
+	//	return;
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
