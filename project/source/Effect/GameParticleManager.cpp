@@ -62,9 +62,9 @@ void GameParticleManager::Draw()
 {
 	SceneParticleManager::Draw();
 
-	Debug::Begin("GameParticle");
-	Debug::Text("Cloud : %d", controllers[GameParticle::Cloud]->GetParticleCount());
-	Debug::End();
+	//Debug::Begin("GameParticle");
+	//Debug::Text("Cloud : %d", controllers[GameParticle::Cloud]->GetParticleCount());
+	//Debug::End();
 }
 
 /**************************************

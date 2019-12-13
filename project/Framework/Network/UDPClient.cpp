@@ -167,9 +167,8 @@ void UDPClient::SendLevelUpPacket(void)
 unsigned __stdcall UDPClient::ThreadEntryPoint(void* This)
 {
 	UDPClient* Temp = (UDPClient*)This;
-	//Temp->InMultiThread = true;
 	Temp->GetScorePacket();					// 本当のセカンドスレッドの処理関数
-	_endthreadex(0);					// スレッドの実行停止
+	_endthreadex(0);						// スレッドの実行停止
 	return 0;
 }
 
@@ -198,12 +197,7 @@ void UDPClient::GetScorePacket(void)
 		{
 			LastScore = std::stoull(Message);
 			ReceiveSuccess = true;
-			//ThreadCount = SuspendThread(Thread);
 		}
-		//else
-		//{
-		//	break;
-		//}
 	}
 }
 
@@ -215,7 +209,6 @@ void UDPClient::TryGetLastScore(void)
 	// データ送信
 	string Message;
 	int AddressLength;
-	//InMultiThread = true;
 
 	AddressLength = sizeof(ServerAddress);
 
@@ -262,7 +255,7 @@ unsigned long long UDPClient::GetLastScore(void)
 	if (ReceiveSuccess)
 	{
 		// 成功
-		Text->SetIndex(0);
+		Text->SetVisible(false);
 		Text->Fade(60.0f, 0.0f, [&]()
 		{
 			InLoading = false;
@@ -272,6 +265,7 @@ unsigned long long UDPClient::GetLastScore(void)
 	else
 	{
 		// 失敗
+		Text->SetVisible(true);
 		Text->SetIndex(1);
 		Text->Fade(60.0f, 0.0f, [&]()
 		{

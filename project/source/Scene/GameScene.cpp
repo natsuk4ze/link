@@ -220,10 +220,6 @@ void GameScene::Update()
 	field->EmbedViewerParam(gameParam);
 	gameViewer->ReceiveParam(gameParam);
 
-	// イベントビューアに必要なパラメータを渡す
-	//EventViewerParam eventParam;
-	//eventController->EmbedViewerParam(eventParam);
-
 	//ビュアー更新
 	gameViewer->Update();
 	GuideViewer::Instance()->Update();
@@ -231,6 +227,7 @@ void GameScene::Update()
 	titleViewer->Update();
 	nemeEntryViewer->Update();
 	rewardNotifier->Update();
+	nemeEntryViewer->Update();
 
 	//パーティクル更新
 	ProfilerCPU::Instance()->Begin("Update Particle");
@@ -245,18 +242,18 @@ void GameScene::Update()
 	//デバッグ機能
 	DebugTool();
 
-	Debug::Begin("EventHandler");
-	if (Debug::Button("Pause"))
-		eventHandler->PauseGame();
-	if (Debug::Button("Resume"))
-		eventHandler->ResumeGame();
-	if (Debug::Button("GetTownPos"))
-		eventHandler->GetNewTownPosition();
-	if (Debug::Button("DestroyTown"))
-		eventHandler->DestroyTown(eventHandler->GetDestroyTarget());
-	if (Debug::Button("CreateTown"))
-		eventHandler->CreateNewTown(eventHandler->GetNewTownPosition());
-	Debug::End();
+	//Debug::Begin("EventHandler");
+	//if (Debug::Button("Pause"))
+	//	eventHandler->PauseGame();
+	//if (Debug::Button("Resume"))
+	//	eventHandler->ResumeGame();
+	//if (Debug::Button("GetTownPos"))
+	//	eventHandler->GetNewTownPosition();
+	//if (Debug::Button("DestroyTown"))
+	//	eventHandler->DestroyTown(eventHandler->GetDestroyTarget());
+	//if (Debug::Button("CreateTown"))
+	//	eventHandler->CreateNewTown(eventHandler->GetNewTownPosition());
+	//Debug::End();
 }
 
 /**************************************

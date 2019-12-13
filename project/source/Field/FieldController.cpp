@@ -255,6 +255,12 @@ namespace Field
 		onChangePlaceType = std::bind(&Actor::PlaceActorController::ChangeActor, placeActController, std::placeholders::_1);
 
 		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
+
+		// 町レベルに遷移する時に、ストック数をリセットする（ライ）
+		if (level == FieldLevel::City)
+		{
+			developper->ResetStock();
+		}
 	}
 
 	/**************************************

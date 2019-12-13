@@ -39,6 +39,9 @@ TitleViewer::~TitleViewer()
 //=====================================
 void TitleViewer::Update()
 {
+	if (!isActive)
+		return;
+
 	logo->Update();
 	if (!rewardViewer->isPlaying)
 	{

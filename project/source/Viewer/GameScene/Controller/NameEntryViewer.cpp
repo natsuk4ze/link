@@ -19,9 +19,10 @@
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-NameEntryViewer::NameEntryViewer():
+NameEntryViewer::NameEntryViewer() :
 	entryNameID(),
-	reelCnt()
+	reelCnt(),
+	NameEntered(false)
 {
 	input = new NameEntryInput();
 
@@ -46,6 +47,21 @@ NameEntryViewer::~NameEntryViewer()
 	nameEntryViewer.clear();
 }
 
+//*****************************************************************************
+// 初期化処理
+//*****************************************************************************
+void NameEntryViewer::Init(void)
+{
+	for (int i = 0; i < entryNameMax; i++)
+	{
+		entryNameID[i] = 0;
+	}
+
+	reelCnt = 0;
+
+	NameEntered = false;
+}
+
 //=============================================================================
 // 更新処理
 //=============================================================================
@@ -68,16 +84,21 @@ void NameEntryViewer::Update()
 	{
 		SlideNameEntryViewer(false);
 	}
-
 #endif
 
 	MoveCursor();
 	UpDownReel();
-	SetEntryName();
+	//SetEntryName();
 
 	for (unsigned int i = 0; i < nameEntryViewer.size(); i++)
 	{
 		nameEntryViewer[i]->Update();
+	}
+
+	//ID格納
+	for (int i = 0; i < entryNameMax; i++)
+	{
+		entryNameID[i] = reelViewer->GetReelChar()[i];
 	}
 }
 
@@ -118,15 +139,8 @@ void NameEntryViewer::SetEntryName()
 		{
 			entryNameID[i] = 0;
 		}
-		//ID格納
-		for (int i = 0; i < entryNameMax; i++)
-		{
-			entryNameID[i] = reelViewer->GetReelChar()[i];
-		}
 	}
 }
-
-
 
 //=============================================================================
 // カーソルビュアー移動処理
@@ -223,10 +237,16 @@ void NameEntryViewer::SlideNameEntryViewer(bool isIn)
 		{
 			reelViewer->SetTelopIn();
 		});
+
+		isActive = true;
 	}
+	// 退場処理
 	else
 	{
 		bgViewer->SetBgOut();
 		reelViewer->SetTelopOut();
+
+		// プレイヤーネームが入力された
+		NameEntered = true;
 	}
 }

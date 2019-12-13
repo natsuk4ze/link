@@ -29,6 +29,7 @@ public:
 	NameEntryViewer();
 	~NameEntryViewer();
 
+	void Init(void);
 	void Update(void);
 	void Draw(void);
 
@@ -41,6 +42,11 @@ public:
 	std::string GetEntryNameID();
 
 	void SlideNameEntryViewer(bool isIn);
+
+	// プレイヤーネームが入力されたフラグを制御する（ライ）
+	bool GetNameEntered(void) { return this->NameEntered; };
+	void SetNameEntered(bool Flag) { this->NameEntered = Flag; };
+
 private:
 	std::vector <BaseViewer*> nameEntryViewer;
 	NameEntryInput *input;
@@ -70,6 +76,9 @@ private:
 
 	//アクティブかどうか
 	bool isActive;
+
+	// プレイヤーネームが入力されたかどうか
+	bool NameEntered;
 };
 
 #endif

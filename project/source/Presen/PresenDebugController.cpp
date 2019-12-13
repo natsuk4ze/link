@@ -8,6 +8,7 @@
 #include "PresenDebugController.h"
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Input/Gamepad.h"
+#include "../../Framework/Input/Keyboard.h"
 
 #include "../Event/EventController.h"
 #include "../Event/EventBase.h"
@@ -56,6 +57,28 @@ void PresenDebugController::Update()
 	{
 		_ForceTimeUp();
 	}
+
+	//XボタンでAIレベル減少
+	if (Keyboard::GetPress(DIK_LCONTROL) && Keyboard::GetTrigger(DIK_1))
+	{
+		_DecreaseLevelAI();
+	}
+	//L1ボタンで隕石召喚
+	if (Keyboard::GetPress(DIK_LCONTROL) && Keyboard::GetTrigger(DIK_2))
+	{
+		_RaiseMeteorEvent();
+	}
+	//L2ボタンで強制レベルアップ
+	if (Keyboard::GetPress(DIK_LCONTROL) && Keyboard::GetTrigger(DIK_3))
+	{
+		_ForceLevelUp();
+	}
+	//R2ボタンで強制タイムアップ
+	if (Keyboard::GetPress(DIK_LCONTROL) && Keyboard::GetTrigger(DIK_4))
+	{
+		_ForceTimeUp();
+	}
+
 }
 
 /**************************************

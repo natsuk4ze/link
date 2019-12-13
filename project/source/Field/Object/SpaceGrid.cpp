@@ -27,7 +27,7 @@ SpaceGrid::SpaceGrid()
 
 	polygon->SetTexDiv({ 0.02f, 0.02f });
 
-	const D3DXVECTOR3 position = D3DXVECTOR3(250.0f, 0.0f, -250.0f) - D3DXVECTOR3(5.0f, 0.0f, 5.0f);
+	const D3DXVECTOR3 position = D3DXVECTOR3(250.0f, 0.0f, -250.0f) - D3DXVECTOR3(5.0f, 0.0f, -5.0f);
 	transform->SetPosition(position);
 	transform->Rotate(90.0f, Vector3::Right);
 }

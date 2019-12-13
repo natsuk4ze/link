@@ -35,15 +35,15 @@ namespace Field::Along
 	***************************************/
 	void AlongController::Update()
 	{
-		Debug::Begin("Along");
-		if (Debug::Button("Growth"))
-		{
-			for (auto&& pair : modelMap)
-			{
-				pair.second->CreateActor();
-			}
-		}
-		Debug::End();
+		//Debug::Begin("Along");
+		//if (Debug::Button("Growth"))
+		//{
+		//	for (auto&& pair : modelMap)
+		//	{
+		//		pair.second->CreateActor();
+		//	}
+		//}
+		//Debug::End();
 
 		for (auto&& pair : modelMap)
 		{
