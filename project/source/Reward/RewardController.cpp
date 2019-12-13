@@ -78,7 +78,7 @@ std::vector<RC::Type> RewardController::IsAllAchieved()
 //=====================================
 // “ž’BŠm”F
 //=====================================
-bool RewardController::FindFirstAchieved()
+bool RewardController::ExistFirstAchieved()
 {
 	for (int i = 0; i < RC::Type::Max; i++)
 	{

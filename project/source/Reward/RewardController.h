@@ -44,7 +44,7 @@ public:
 	std::vector<RC::Type> IsAllAchieved();
 
 	// 全リワードなかからどれかひとつでも初達成のものがあるか
-	bool FindFirstAchieved();
+	bool ExistFirstAchieved();
 
 	// 今回のプレイで達成したリワードを全て達成済みにする（リザルト終了時）
 	void SetFirstAchieved(const Name& name);
