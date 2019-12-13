@@ -8,6 +8,8 @@
 #ifndef _NAME_H_
 #define _NAME_H_
 
+#include <string>
+
 //**************************************
 // クラス定義
 //**************************************
@@ -19,6 +21,7 @@ private:
 public:
 	Name();
 	Name(int first, int second, int third);
+	Name(const std::string& name);
 	~Name();
 
 	// コピーコンストラクタ
