@@ -55,7 +55,6 @@ namespace Field
 		fieldBorder(InitFieldBorder),
 		cntFrame(0),
 		developmentLevelAI(0),
-		realDevelopmentLevelAI(0),
 		developSpeedBonus(1.0f),
 		currentLevel(level),
 		operationZ(OperationExplanationViewer::OperationID::Z_None),
@@ -278,7 +277,6 @@ namespace Field
 		//パラメータリセット
 		cntFrame = 0;
 		developmentLevelAI = 0.0f;
-		realDevelopmentLevelAI = 0.0f;
 		developSpeedBonus = 1.0f;
 		enableDevelop = true;
 		flgWaitPopup = false;
@@ -355,8 +353,8 @@ namespace Field
 		Debug::End();
 #endif
 
-		param.levelAI = (int)realDevelopmentLevelAI;
-		param.ratioLevel = (float)realDevelopmentLevelAI / MaxDevelopmentLevelAI;
+		param.levelAI = (int)developmentLevelAI;
+		param.ratioLevel = (float)developmentLevelAI / MaxDevelopmentLevelAI;
 		param.currentFieldLevel = (int)currentLevel;
 		developper->EmbedViewerParam(param);
 	}
@@ -375,8 +373,8 @@ namespace Field
 	bool FieldController::ShouldLevelUp()
 	{
 		//宇宙レベルではレベルアップしない
-		//if (currentLevel == FieldLevel::Space)
-		//	return false;
+		if (currentLevel == FieldLevel::Space)
+			return false;
 
 		//AI発展レベルが最大値に到達していたらレベルアップする
 		return developmentLevelAI >= MaxDevelopmentLevelAI;
@@ -554,13 +552,16 @@ namespace Field
 
 		float raiseValue = placeContainer->CalcDevelopmentLevelAI(developSpeedBonus);
 		float bonusSideWay = placeActController->GetSideWayBonus();
-		developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + raiseValue + bonusSideWay);
-		realDevelopmentLevelAI = Easing::EaseValue(developmentLevelAI / 9999.0f, 0.0f, 9999.0f, EaseType::OutSine);
+
+		//宇宙レベルでは最大値をとりあえず増やしてしまう
+		float MaxLevel = currentLevel == FieldLevel::Space ? MaxDevelopmentLevelAI * 1000.0f : MaxDevelopmentLevelAI;
+
+		developmentLevelAI = Math::Clamp(0.0f, MaxLevel, developmentLevelAI + raiseValue + bonusSideWay);
 
 		// リワードに反映
 		if (currentLevel == FieldLevel::Space)
 		{
-			RewardController::Instance()->SetRewardData(RC::Type::MasterAI, (int)(realDevelopmentLevelAI));
+			RewardController::Instance()->SetRewardData(RC::Type::MasterAI, (int)(developmentLevelAI));
 		}
 	}
 
@@ -635,6 +636,6 @@ namespace Field
 	***************************************/
 	void FieldController::SetScore()
 	{
-		score->SetScore((int)realDevelopmentLevelAI, currentLevel);
+		score->SetScore((int)developmentLevelAI, currentLevel);
 	}
 }

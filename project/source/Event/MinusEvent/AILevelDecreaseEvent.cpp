@@ -20,7 +20,6 @@
 #include "../../../Framework/Sound/SoundEffect.h"
 #include "../../Sound/SoundConfig.h"
 #include "../../Sound/PlayBGM.h"
-#include "../../Booth/BoothController.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -112,9 +111,6 @@ void AILevelDecreaseEvent::Init()
 		});
 	});
 
-	//ブースのLEDを点滅させる
-	BoothController::Instance()->BlinkLED(false);
-		
 	// ゲーム進行停止
 	fieldEventHandler->PauseGame();
 

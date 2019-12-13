@@ -18,7 +18,6 @@
 #include "../../../Framework/Sound/SoundEffect.h"
 #include "../../Sound/SoundConfig.h"
 #include "../../Sound/PlayBGM.h"
-#include "../../Booth/BoothController.h"
 
 enum State
 {
@@ -108,9 +107,6 @@ void CityDestroyEvent::Init()
 		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::DestroyEvent, 0.1f, 30);
 		camera->Translation(TownPos, 30, [&]() {MeteorFallStart(); });
 	});
-
-	//ブースのLEDを点滅させる
-	BoothController::Instance()->BlinkLED(false);
 
 	// 初期化終了
 	Initialized = true;
