@@ -27,7 +27,7 @@ NameEntryReelViewer::NameEntryReelViewer():
 	const D3DXVECTOR2 cursorPos = { SCREEN_WIDTH / 10 * 6.6250f, SCREEN_HEIGHT / 1.520f };
 	const D3DXVECTOR2 bgPos = { SCREEN_WIDTH / 10 * 7.50f, SCREEN_HEIGHT / 1.250f };
 	const D3DXVECTOR2 textPos = { (int)(SCREEN_WIDTH / 10 * 7.50f), (int)(SCREEN_HEIGHT / 1.250f) };
-	const D3DXVECTOR2 underBarPos = { (int)(SCREEN_WIDTH / 10 * 7.50f), (int)(SCREEN_HEIGHT / 1.5f) };
+	const D3DXVECTOR2 underBarPos = { (int)(SCREEN_WIDTH / 10 * 7.50f), (int)(SCREEN_HEIGHT / 1.45f) };
 	const float animStartPosX = SCREEN_WIDTH * 1.50f;
 
 	for (int i = 0; i < entryNameMax; i++)
@@ -242,6 +242,13 @@ void NameEntryReelViewer::SetTelopIn()
 {
 	//•¶Žš—ñ‰Šú‰»
 	character[entryNameMax] = {};
+
+	// UV‚Ì‰Šú‰»
+	for (int i = 0; i < entryNameMax; i++)
+	{
+		reel[i]->SetTexture(6, 6, 0);
+	}
+
 	isInPlaying = true;
 }
 

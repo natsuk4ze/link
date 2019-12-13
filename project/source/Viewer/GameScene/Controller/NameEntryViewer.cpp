@@ -184,7 +184,6 @@ void NameEntryViewer::UpDownReel()
 void NameEntryViewer::SetActive(bool flag)
 {
 	isActive = flag;
-
 }
 
 //=============================================================================
