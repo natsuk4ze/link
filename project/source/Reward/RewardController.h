@@ -41,7 +41,7 @@ public:
 
 	// **************リザルト画面用****************************
 	// 全リワードの到達確認（達成したリワードのENUMを全て列挙して返す）
-	std::vector<RC::Type> IsAllAchieved();
+	std::vector<RC::Type> GetAllAchieved();
 
 	// 全リワードなかからどれかひとつでも初達成のものがあるか
 	bool ExistFirstAchieved();

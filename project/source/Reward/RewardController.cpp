@@ -60,7 +60,7 @@ void RewardController::AllDelete()
 //=====================================
 // “ž’BŠm”F
 //=====================================
-std::vector<RC::Type> RewardController::IsAllAchieved()
+std::vector<RC::Type> RewardController::GetAllAchieved()
 {
 	std::vector<RC::Type> ret;
 
