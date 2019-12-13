@@ -13,6 +13,7 @@
 #include "../../Event/EventController.h"
 #include "../../Field/FieldController.h"
 #include "../../Booth/BoothController.h"
+#include "../../Viewer/GameScene/Controller/GameViewer.h"
 
 /**************************************
 “üêˆ—
@@ -23,6 +24,11 @@ void GameScene::GameTransitionOut::OnStart(GameScene & entity)
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::TransitionOut);
 
 	entity.cntFrame = 0;
+
+	//gamaeViewer‚ðƒIƒt‚É
+	entity.gameViewer->SetActive(false, GameViewer::ViewerNo::ItemStock);
+	entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Timer);
+	entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Level);
 }
 
 /**************************************

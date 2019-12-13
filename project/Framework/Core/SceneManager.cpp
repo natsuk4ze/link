@@ -75,7 +75,7 @@ void SceneManager::_ChengeScene(const int sceneID)
 		ResourceManager::Instance()->AllRelease();
 		ProfilerCPU::Instance()->Clear();
 		Tween::mInstance->ClearAll();
-
+		TaskManager::Instance()->ClearAll();
 
 		//NOTE:èdÇ¢Ç©Ç‡ÅH
 		BGM::Clear();

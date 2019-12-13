@@ -71,7 +71,7 @@ void GradeNameViewer::SetGradeName(int fieldLevel, std::function<void(void)> cal
 	Callback = callback;
 	isPlaying = true;
 
-	LineTex->Expand(30.0f, ExpandType::LeftToRight);
+	LineTex->Expand(30.0f, ExpandType::LeftToRight, EaseType::OutCubic);
 
 	// ‰Šú‰»
 	GradeTitle->SetPosition(TitleDefaultPos);
@@ -92,9 +92,9 @@ void GradeNameViewer::SetGradeName(int fieldLevel, std::function<void(void)> cal
 //=============================================================================
 void GradeNameViewer::GradeNameFade(void)
 {
-	LineTex->Close(30.0f, CloseType::CloseLeftToRight);
+	LineTex->Close(30.0f, CloseType::CloseLeftToRight, EaseType::InCubic);
 
-	GradeTitle->Move(30.0f, TitleDefaultPos, EaseType::OutQuart);
+	GradeTitle->Move(30.0f, TitleDefaultPos, EaseType::InQuart);
 	GradeTitle->Fade(30.0f, 0.0f, [&]()
 	{
 		isPlaying = false;

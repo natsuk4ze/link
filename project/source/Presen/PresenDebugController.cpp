@@ -85,7 +85,6 @@ void PresenDebugController::_ForceLevelUp()
 
 	Field::FieldController *controller = scene->field;
 	controller->developmentLevelAI = 9999.0f;
-	controller->realDevelopmentLevelAI = 9999.9f;
 
 	controller->SetScore();
 	scene->ChangeState(GameScene::LevelUp);

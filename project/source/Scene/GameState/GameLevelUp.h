@@ -23,5 +23,13 @@ class GameScene::GameLevelUp : public GameScene::SceneState
 public:
 	void OnStart(GameScene& entity);
 	State OnUpdate(GameScene& entity);
+
+private:
+	enum Step
+	{
+		WaitLevelPopup,
+		TelopIn,
+		Idle
+	};
 };
 #endif
