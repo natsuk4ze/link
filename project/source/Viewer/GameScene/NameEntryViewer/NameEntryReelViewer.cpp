@@ -20,7 +20,7 @@ static const float intervalReelPos = 166.50f;
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-NameEntryReelViewer::NameEntryReelViewer():
+NameEntryReelViewer::NameEntryReelViewer() :
 	isInPlaying(false),
 	isOutPlaying(false)
 {
@@ -52,7 +52,7 @@ NameEntryReelViewer::NameEntryReelViewer():
 	underBar->SetText("＿　＿　＿");
 
 	anim[AnimScene::TelopIn] = new ViewerAnimater();
-	std::vector<std::function<void()>> inVec = {[=]
+	std::vector<std::function<void()>> inVec = { [=]
 	{
 		InReel([=]
 		{
@@ -116,7 +116,7 @@ void NameEntryReelViewer::Update(void)
 			anim[AnimScene::TelopOut]->SetPlayFinished(isOutPlaying);
 		});
 	}
-	text->SetPos((int)bg->position.x,(int)bg->position.y);
+	text->SetPos((int)bg->position.x, (int)bg->position.y);
 	underBar->SetPos((int)bg->position.x, (int)(SCREEN_HEIGHT / 1.45f));
 }
 
@@ -240,12 +240,11 @@ int* NameEntryReelViewer::GetReelChar()
 //=============================================================================
 void NameEntryReelViewer::SetTelopIn()
 {
-	//文字列初期化
-	character[entryNameMax] = {};
-
-	// UVの初期化
 	for (int i = 0; i < entryNameMax; i++)
 	{
+		//文字列初期化
+		character[i] = 0;
+		// UVの初期化
 		reel[i]->SetTexture(6, 6, 0);
 	}
 
