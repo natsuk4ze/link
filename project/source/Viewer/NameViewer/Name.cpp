@@ -51,10 +51,7 @@ Name::~Name()
 //=====================================
 Name::Name(const Name & in)
 {
-	for (int i = 0; i < 3; i++)
-	{
-		num[i] = in.num[i];
-	}
+	Copy(in);
 }
 
 //=====================================
@@ -73,4 +70,15 @@ void Name::Set(int first, int second, int third)
 int Name::Get(int No)
 {
 	return num[No];
+}
+
+//=====================================
+// ƒRƒs[
+//=====================================
+void Name::Copy(const Name & rhs)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		num[i] = rhs.num[i];
+	}
 }

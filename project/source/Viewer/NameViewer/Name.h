@@ -30,6 +30,9 @@ public:
 	void Set(int first, int second, int third);
 
 	int Get(int No);
+
+	//ƒRƒs[ˆ—
+	void Copy(const Name& rhs);
 };
 
 #endif

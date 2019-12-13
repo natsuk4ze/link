@@ -30,7 +30,10 @@ Reward::~Reward()
 //=====================================
 void Reward::SetName(const Name& name)
 {
-	this->name = new Name(name);
+	//※この書き方だとコンストラクタでnewしたメモリが迷子になってリークするので注意
+	//this->name = new Name(name);
+
+	this->name->Copy(name);
 	firstAchieve = true;
 }
 
