@@ -117,7 +117,7 @@ void NameEntryReelViewer::Update(void)
 		});
 	}
 	text->SetPos((int)bg->position.x,(int)bg->position.y);
-	underBar->SetPos((int)bg->position.x, (int)(SCREEN_HEIGHT / 1.5f));
+	underBar->SetPos((int)bg->position.x, (int)(SCREEN_HEIGHT / 1.45f));
 }
 
 //=============================================================================

@@ -70,8 +70,8 @@ public:
 	void SetBanStock(bool Flag);
 	void SetInPause(bool Flag);
 	bool GetInPause(void);
-	void SetEventViewerActive(bool Flag);
 	bool EventDebug(int fieldLevel);
+	void ClearEventMessage(void);
 
 	friend class PresenDebugController;
 };

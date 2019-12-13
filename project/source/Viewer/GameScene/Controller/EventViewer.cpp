@@ -170,3 +170,16 @@ void EventViewer::SetBanIcon(std::function<bool(void)> getInPause)
 	sealStockViewer->SetBanIcon(getInPause);
 }
 
+//=============================================================================
+// イベントメッセージのクリア
+//=============================================================================
+void EventViewer::MessageClear(void)
+{
+	messageContainer.clear();
+
+	for (int i = 0; i < messageMax; i++)
+	{
+		eventMessage[i]->isPlaying = false;
+	}
+}
+

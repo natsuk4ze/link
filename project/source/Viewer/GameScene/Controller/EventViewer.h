@@ -43,6 +43,9 @@ public:
 	//ストック封印のアイコンを設置する
 	void SetBanIcon(std::function<bool(void)> getInPause);
 
+	// イベントメッセージのクリア
+	void MessageClear(void);
+
 private:
 	static const int messageMax = 5;
 

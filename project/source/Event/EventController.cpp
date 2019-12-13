@@ -127,7 +127,6 @@ void EventController::Init(int FieldLevel)
 	}
 
 	beatViewer->SetFieldLevel(FieldLevel);
-	SetEventViewerActive(true);
 }
 
 //=============================================================================
@@ -464,9 +463,9 @@ bool EventController::GetInPause(void)
 //=============================================================================
 // イベントビューアが表示するかどうか
 //=============================================================================
-void EventController::SetEventViewerActive(bool Flag)
+void EventController::ClearEventMessage(void)
 {
-	IsViewerPlaying = Flag;
+	eventViewer->MessageClear();
 }
 
 //=============================================================================
