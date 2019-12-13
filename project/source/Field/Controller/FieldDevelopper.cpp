@@ -212,15 +212,15 @@ namespace Field
 			}
 
 			stockNum -= cntMountain;
+
+			// リワードに反映
+			RewardController::Instance()->SetRewardData(RC::Type::Destructer, cntMountain);
 		}
 		else
 		{
 			//エラーメッセージを再生
 			entity->viewer->SetFieldErroMessage(FieldErrorMessage::ErroID::StockShortage);
 		}
-
-		// リワードに反映
-		RewardController::Instance()->SetRewardData(RC::Type::Destructer, cntMountain);
 
 		return end + 1;
 	}
