@@ -58,7 +58,10 @@ const char* EventCSVPath_Space = "data/FIELD/Space/Space_Event.csv";
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-EventController::EventController(int FieldLevel)
+EventController::EventController(int FieldLevel) :
+	InBanStock(false),
+	InPauseEvent(false),
+	IsViewerPlaying(true)
 {
 	eventViewer = new EventViewer();
 
@@ -215,6 +218,9 @@ void EventController::DrawEventObject()
 //=============================================================================
 void EventController::DrawEventViewer()
 {
+	if (!IsViewerPlaying)
+		return;
+
 	//ビートビューア描画
 	beatViewer->Draw();
 
@@ -425,15 +431,6 @@ void EventController::ReceiveFieldEventHandler(FieldEventHandler *Ptr)
 	EventBase::ReceiveFieldEventHandler(Ptr);
 }
 
-////=============================================================================
-//// ビューワパラメータ埋め込み処理
-////=============================================================================
-//void EventController::EmbedViewerParam(EventViewerParam& param)
-//{
-//	param.isStockSealed = this->InBanStock;
-//	eventViewer->ReceiveParam(param);
-//}
-
 //=============================================================================
 // ストック使用禁止の設置
 //=============================================================================
@@ -441,7 +438,7 @@ void EventController::SetBanStock(bool Flag)
 {
 	if (Flag && !InBanStock)
 	{
-		eventViewer->SetBanIcon();
+		eventViewer->SetBanIcon([&]() {return GetInPause(); });
 	}
 
 	InBanStock = Flag;
@@ -461,6 +458,14 @@ void EventController::SetInPause(bool Flag)
 bool EventController::GetInPause(void)
 {
 	return InPauseEvent;
+}
+
+//=============================================================================
+// イベントビューアが表示するかどうか
+//=============================================================================
+void EventController::ClearEventMessage(void)
+{
+	eventViewer->MessageClear();
 }
 
 //=============================================================================

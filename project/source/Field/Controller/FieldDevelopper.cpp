@@ -325,6 +325,14 @@ namespace Field
 	}
 
 	/**************************************
+	ストック数のリセット
+	***************************************/
+	void Field::FieldController::FieldDevelopper::ResetStock(void)
+	{
+		stockNum = InitStock;
+	}
+
+	/**************************************
 	ストック数埋め込み処理
 	***************************************/
 	void FieldController::FieldDevelopper::EmbedViewerParam(GameViewerParam & param)

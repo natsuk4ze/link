@@ -8,6 +8,7 @@
 #define _SEAL_STOCK_VIEWER_H_
 
 #include "../../Framework/BaseViewer.h"
+#include <functional>
 
 //*****************************************************************************
 // 前方宣言
@@ -23,6 +24,7 @@ private:
 	//アイコン
 	TextureDrawer *Icon;
 	TextureDrawer *Icon_White;
+	std::function<bool(void)> GetInPause;
 
 	void CountDownStart(void);
 
@@ -32,7 +34,7 @@ public:
 
 	void Update(void);
 	void Draw(void);
-	void SetBanIcon(void);
+	void SetBanIcon(std::function<bool(void)> func);
 };
 
 
