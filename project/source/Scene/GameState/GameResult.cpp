@@ -107,9 +107,9 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 		break;
 
 	case Step::ScoreNameEntryWait:
-
-		//TODO:ネームエントリーの終了をコールバックで受け取るようにする
-		entity.step = Step::ScoreNameEntryFinish;
+		//ネームエントリーが終了したら
+		if(entity.nemeEntryViewer->IsFinished())
+			entity.step = Step::ScoreNameEntryFinish;
 		break;
 
 	case Step::ScoreNameEntryFinish:

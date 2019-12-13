@@ -19,9 +19,10 @@
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-NameEntryViewer::NameEntryViewer():
+NameEntryViewer::NameEntryViewer() :
 	entryNameID(),
-	reelCnt()
+	reelCnt(),
+	isFinished(false)
 {
 	input = new NameEntryInput();
 
@@ -122,6 +123,8 @@ void NameEntryViewer::SetEntryName()
 		{
 			entryNameID[i] = reelViewer->GetReelChar()[i];
 		}
+
+		isFinished = true;
 	}
 }
 
@@ -222,10 +225,20 @@ void NameEntryViewer::SlideNameEntryViewer(bool isIn)
 		{
 			reelViewer->SetTelopIn();
 		});
+
+		isFinished = false;
 	}
 	else
 	{
 		bgViewer->SetBgOut();
 		reelViewer->SetTelopOut();
 	}
+}
+
+//=============================================================================
+// 終了判定
+//=============================================================================
+bool NameEntryViewer::IsFinished() const
+{
+	return isFinished;
 }
