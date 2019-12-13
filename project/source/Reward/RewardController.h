@@ -41,13 +41,13 @@ public:
 
 	// **************リザルト画面用****************************
 	// 全リワードの到達確認（達成したリワードのENUMを全て列挙して返す）
-	std::vector<RC::Type> IsAllAchieved();
+	std::vector<RC::Type> GetAllAchieved();
 
 	// 全リワードなかからどれかひとつでも初達成のものがあるか
-	bool FindFirstAchieved();
+	bool ExistFirstAchieved();
 
 	// 今回のプレイで達成したリワードを全て達成済みにする（リザルト終了時）
-	void SetFirstAchieved(const Name& name);
+	void SetFirstAchieverName(const Name& name);
 
 	// **************リワード確認画面用************************
 	// 既に到達者がいるか（falseなら未達成）

@@ -68,7 +68,6 @@ private:
 
 	void GetStopPos();
 	void SetText();
-	void SetRecievedParam();
 
 	bool isInPlaying;
 	bool isOutPlaying;
@@ -86,6 +85,8 @@ public:
 
 	bool IsPlayingIn() const;
 	bool IsPlayingOut() const;
+
+	void SetRecievedParam();
 
 	//ƒpƒ‰ƒ[ƒ^‚ğó‚¯‚Æ‚é” 
 	int parameterBoxScore[3];

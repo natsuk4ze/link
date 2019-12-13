@@ -29,6 +29,7 @@ public:
 	NameEntryViewer();
 	~NameEntryViewer();
 
+	void Init(void);
 	void Update(void);
 	void Draw(void);
 
@@ -41,6 +42,7 @@ public:
 	std::string GetEntryNameID();
 
 	void SlideNameEntryViewer(bool isIn);
+
 private:
 	std::vector <BaseViewer*> nameEntryViewer;
 	NameEntryInput *input;

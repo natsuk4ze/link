@@ -19,7 +19,7 @@
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-NameEntryViewer::NameEntryViewer():
+NameEntryViewer::NameEntryViewer() :
 	entryNameID(),
 	reelCnt()
 {
@@ -44,6 +44,19 @@ NameEntryViewer::~NameEntryViewer()
 
 	//インスタンスを入れた配列をクリア
 	nameEntryViewer.clear();
+}
+
+//*****************************************************************************
+// 初期化処理
+//*****************************************************************************
+void NameEntryViewer::Init(void)
+{
+	for (int i = 0; i < entryNameMax; i++)
+	{
+		entryNameID[i] = 0;
+	}
+
+	reelCnt = 0;
 }
 
 //=============================================================================
@@ -77,6 +90,12 @@ void NameEntryViewer::Update()
 	for (unsigned int i = 0; i < nameEntryViewer.size(); i++)
 	{
 		nameEntryViewer[i]->Update();
+	}
+
+	//ID格納
+	for (int i = 0; i < entryNameMax; i++)
+	{
+		entryNameID[i] = reelViewer->GetReelChar()[i];
 	}
 }
 
@@ -117,15 +136,8 @@ void NameEntryViewer::SetEntryName()
 		{
 			entryNameID[i] = 0;
 		}
-		//ID格納
-		for (int i = 0; i < entryNameMax; i++)
-		{
-			entryNameID[i] = reelViewer->GetReelChar()[i];
-		}
 	}
 }
-
-
 
 //=============================================================================
 // カーソルビュアー移動処理
@@ -172,6 +184,7 @@ void NameEntryViewer::UpDownReel()
 void NameEntryViewer::SetActive(bool flag)
 {
 	isActive = flag;
+
 }
 
 //=============================================================================

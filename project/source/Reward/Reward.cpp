@@ -30,7 +30,10 @@ Reward::~Reward()
 //=====================================
 void Reward::SetName(const Name& name)
 {
-	this->name = new Name(name);
+	//※この書き方だとコンストラクタでnewしたメモリが迷子になってリークするので注意
+	//this->name = new Name(name);
+
+	this->name->Copy(name);
 	firstAchieve = true;
 }
 
@@ -56,6 +59,15 @@ bool Reward::CheckAchieved()
 bool Reward::CheckFirstAchieved()
 {
 	return this->firstAchieve;
+}
+
+//=====================================
+// 今回のプレイで達成されたか
+//=====================================
+bool Reward::IsAchievedThisTime() const
+{
+	//今回で達成　かつ 初達成されていない
+	return achieve && !firstAchieve;
 }
 
 //=====================================

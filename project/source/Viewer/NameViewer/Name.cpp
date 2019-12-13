@@ -29,6 +29,17 @@ Name::Name(int first, int second, int third)
 }
 
 //=====================================
+// コンストラクタ
+//=====================================
+Name::Name(const std::string & name)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		num[i] = std::stoi(name.substr(i, 1));
+	}
+}
+
+//=====================================
 // デストラクタ
 //=====================================
 Name::~Name()
@@ -40,10 +51,7 @@ Name::~Name()
 //=====================================
 Name::Name(const Name & in)
 {
-	for (int i = 0; i < 3; i++)
-	{
-		num[i] = in.num[i];
-	}
+	Copy(in);
 }
 
 //=====================================
@@ -62,4 +70,15 @@ void Name::Set(int first, int second, int third)
 int Name::Get(int No)
 {
 	return num[No];
+}
+
+//=====================================
+// コピー
+//=====================================
+void Name::Copy(const Name & rhs)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		num[i] = rhs.num[i];
+	}
 }
