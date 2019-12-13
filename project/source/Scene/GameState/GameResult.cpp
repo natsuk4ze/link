@@ -37,6 +37,9 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	entity.resultViewer->SetActive(true);
 	entity.resultViewer->SlideScoreViewer(true);
 	entity.resultViewer->SetAchieveViewerActive(false);
+	
+	// ネームエントリーの初期化
+	entity.nemeEntryViewer->Init();
 
 	// 使用しないUIの描画をOFF
 	entity.field->SetViewerActive(false);
@@ -94,8 +97,6 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 			//ランキング更新があったらネームエントリーへ
 			if (entity.ShowNameEntry)
 			{
-				entity.nemeEntryViewer->Init();
-				entity.nemeEntryViewer->SetActive(true);
 				entity.nemeEntryViewer->SlideNameEntryViewer(true);
 				entity.step = Step::ScoreNameEntryWait;
 			}

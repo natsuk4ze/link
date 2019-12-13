@@ -21,7 +21,8 @@
 //*****************************************************************************
 NameEntryViewer::NameEntryViewer() :
 	entryNameID(),
-	reelCnt()
+	reelCnt(),
+	NameEntered(false)
 {
 	input = new NameEntryInput();
 
@@ -57,6 +58,8 @@ void NameEntryViewer::Init(void)
 	}
 
 	reelCnt = 0;
+
+	NameEntered = false;
 }
 
 //=============================================================================
@@ -64,8 +67,8 @@ void NameEntryViewer::Init(void)
 //=============================================================================
 void NameEntryViewer::Update()
 {
-	//if (!isActive)
-	//	return;
+	if (!isActive)
+		return;
 
 #ifdef _DEBUG
 	//for (int i = 0; i < entryNameMax; i++)
@@ -84,7 +87,7 @@ void NameEntryViewer::Update()
 
 	MoveCursor();
 	UpDownReel();
-	SetEntryName();
+	//SetEntryName();
 
 	for (unsigned int i = 0; i < nameEntryViewer.size(); i++)
 	{
@@ -233,10 +236,16 @@ void NameEntryViewer::SlideNameEntryViewer(bool isIn)
 		{
 			reelViewer->SetTelopIn();
 		});
+
+		isActive = true;
 	}
+	// 退場処理
 	else
 	{
 		bgViewer->SetBgOut();
 		reelViewer->SetTelopOut();
+
+		// プレイヤーネームが入力された
+		NameEntered = true;
 	}
 }

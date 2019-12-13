@@ -35,7 +35,7 @@ Name::Name(const std::string & name)
 {
 	for (int i = 0; i < 3; i++)
 	{
-		num[i] = std::stoi(name.substr(i, 1));
+		num[i] = std::stoi(name.substr(i * 2, 2));
 	}
 }
 
