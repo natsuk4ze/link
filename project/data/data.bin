@@ -1,1 +1,5 @@
-{"Key_FieldLevel":0,"Key_RemainTime":5400}
+{
+  "Key_FieldLevel": 0,
+  "Key_RemainTime": 5400,
+  "ComPort": 4
+}
