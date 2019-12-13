@@ -40,9 +40,8 @@ public:
 	//テロップをセット
 	void SetEventTelop(EventTelop::TelopID id, std::function<void(void)> Callback = nullptr);
 
-	//パラメータ受け取り
-	void SetBanIcon(void);
-	void ReceiveParam(EventViewerParam &param);
+	//ストック封印のアイコンを設置する
+	void SetBanIcon(std::function<bool(void)> getInPause);
 
 private:
 	static const int messageMax = 5;

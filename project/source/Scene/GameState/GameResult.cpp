@@ -12,6 +12,7 @@
 #include "../../Field/Camera/FieldCamera.h"
 #include "../../Viewer/GameScene/Controller/ResultViewer.h"
 #include "../../Viewer/GameScene/Controller/NameEntryViewer.h"
+#include "../../Event/EventController.h"
 #include "../../../Framework/Input/input.h"
 #include "../../../Framework/Transition/TransitionController.h"
 #include "../../../Framework/Network/UDPClient.h"
@@ -44,6 +45,7 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	entity.field->SetViewerActive(false);
 	entity.gameViewer->SetActive(false);
 	entity.nemeEntryViewer->SetActive(false);
+	entity.eventController->SetEventViewerActive(false);
 	GuideViewer::Instance()->SetActive(false);
 	//entity.guideViewer->SetActive(false);
 
@@ -63,6 +65,9 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 
 	//全体スコアを計算
 	entity.entiretyScore = (int)(powf(10, 8) * spaceScore) + (int)(powf(10, 4) * worldScore) + cityScore;
+
+	//ランキング更新があったらネームエントリーへ
+	entity.ShowNameEntry = entity.entiretyScore > entity.Client->GetLastScore() ? true : false;
 }
 
 //=====================================
@@ -90,8 +95,7 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 		{
 			//ランキング更新があったらネームエントリーへ
-			long long lastScore = entity.Client->GetLastScore();
-			if (entity.entiretyScore > lastScore)
+			if (entity.ShowNameEntry)
 			{
 				entity.nemeEntryViewer->SetActive(true);
 				entity.nemeEntryViewer->SlideNameEntryViewer(true);

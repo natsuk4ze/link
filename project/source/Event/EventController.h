@@ -44,6 +44,7 @@ private:
 
 	bool InBanStock;
 	bool InPauseEvent;
+	bool IsViewerPlaying;
 
 	std::map<Field::FieldPosition, BaseEmitter*> infoEmitterContainer;
 
@@ -66,10 +67,10 @@ public:
 	void DrawEventViewer(void);
 	bool CheckEventHappen(const std::vector<Field::Model::PlaceModel*>& route, int FieldLevel);
 	void ReceiveFieldEventHandler(FieldEventHandler *Ptr);
-	void EmbedViewerParam(EventViewerParam& param);
 	void SetBanStock(bool Flag);
 	void SetInPause(bool Flag);
 	bool GetInPause(void);
+	void SetEventViewerActive(bool Flag);
 	bool EventDebug(int fieldLevel);
 
 	friend class PresenDebugController;

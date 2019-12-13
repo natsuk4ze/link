@@ -109,7 +109,8 @@ private:
 
 	int step;									//各ステートの現在ステップ
 
-	long long entiretyScore;					//全レベルの合計スコア
+	unsigned long long entiretyScore;			//全レベルの合計スコア
+	bool ShowNameEntry;							//ネームエントリービューア表示のフラグ
 
 	bool debugReward;							//実績リザルト画面でデバッグを使用するか
 	bool debugAchievedResult[10];				//デバッグ用の達成実績

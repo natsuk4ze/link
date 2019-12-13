@@ -72,16 +72,6 @@ void EventViewer::Update()
 		SetEventTelop(eventTelop->Singularity, nullptr);
 	}
 
-	//if (Keyboard::GetTrigger(DIK_1))
-	//{
-	//	sealStockViewer->parameterBox = true;
-	//}
-
-	//if (Keyboard::GetTrigger(DIK_2))
-	//{
-	//	sealStockViewer->parameterBox = false;
-	//}
-
 	Debug::Begin("EventViewer");
 	Debug::Text("MessageSetCnt:%d", messageSetCnt);
 	Debug::End();
@@ -175,15 +165,8 @@ void EventViewer::SetEventTelop(EventTelop::TelopID id, std::function<void(void)
 //=============================================================================
 // ストック封印アイコンを設置
 //=============================================================================
-void EventViewer::SetBanIcon(void)
+void EventViewer::SetBanIcon(std::function<bool(void)> getInPause)
 {
-	sealStockViewer->SetBanIcon();
+	sealStockViewer->SetBanIcon(getInPause);
 }
 
-//=============================================================================
-// パラメータ受け取り処理
-//=============================================================================
-void EventViewer::ReceiveParam(EventViewerParam &param)
-{
-	//sealStockViewer->parameterBox = param.isStockSealed;
-}
