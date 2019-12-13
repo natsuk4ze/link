@@ -59,6 +59,15 @@ bool Reward::CheckFirstAchieved()
 }
 
 //=====================================
+// 今回のプレイで達成されたか
+//=====================================
+bool Reward::IsAchievedThisTime() const
+{
+	//今回で達成　かつ 初達成されていない
+	return achieve && !firstAchieve;
+}
+
+//=====================================
 // 達成のリセット
 //=====================================
 void Reward::ResetAchieved()
