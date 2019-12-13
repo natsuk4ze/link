@@ -209,6 +209,48 @@ void MorphingMeshContainer::SetChange(float t)
 }
 
 /**************************************
+登録したメッシュを解放
+***************************************/
+void MorphingMeshContainer::ReleaseRegistration()
+{
+	//メッシュ解放
+	for (auto&& mesh : meshTable)
+	{
+		SAFE_RELEASE(mesh);
+	}
+
+	//テクスチャ解放
+	for (auto&& container : textureContainer)
+	{
+		for (auto&& texture : container)
+		{
+			SAFE_RELEASE(texture);
+		}
+		container.clear();
+	}
+	textureContainer.clear();
+
+	//マテリアル解放
+	for (auto&& container : materialContainer)
+	{
+		container.clear();
+	}
+	materialContainer.clear();
+
+	//インデックスバッファ解放
+	SAFE_RELEASE(indexBuff);
+
+	//頂点宣言解放
+	SAFE_RELEASE(declare);
+	fvf = 0;
+
+	//頂点属性テーブル解放
+	attributeTable.clear();
+
+	currentIndex = nextIndex = -1;
+}
+
+/**************************************
 Draw()を禁止するためにprivate化
 ***************************************/
 void MorphingMeshContainer::Draw() {}
