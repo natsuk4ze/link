@@ -83,7 +83,9 @@ void MorphingMeshContainer::RegisterVertex(unsigned index)
 	for(unsigned i = 0; i < materialNum; i++)
 	{
 		textureContainer[index][i] = textures[i];
-		textures[i]->AddRef();
+
+		if(textures[i] != NULL)
+			textures[i]->AddRef();
 	}
 
 
@@ -218,6 +220,7 @@ void MorphingMeshContainer::ReleaseRegistration()
 	{
 		SAFE_RELEASE(mesh);
 	}
+	meshTable.clear();
 
 	//テクスチャ解放
 	for (auto&& container : textureContainer)

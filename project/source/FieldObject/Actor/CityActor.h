@@ -10,8 +10,9 @@
 
 #include "PlaceActor.h"
 //**************************************
-// マクロ定義
+// 前方宣言
 //**************************************
+class MorphingMeshContainer;
 
 //**************************************
 // クラス定義
@@ -24,6 +25,16 @@ public:
 	~CityActor();
 
 	void Init(const D3DXVECTOR3& pos, Field::FieldLevel currentLevel) override;
+	void Uninit() override;
+	void Draw() override;
+
+	void StartMorph(int next);
+
+private:
+	MorphingMeshContainer * morphContainer;		//モーフィング用メッシュコンテナ
+	bool useMorphing;							//モーフィングを使用するかどうか
+	bool inMorphing;							//モーフィング中華どうか
+	int cntFrameMorphing;						//モーフィング中のカウンタ
 };
 
 #endif
