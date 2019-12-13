@@ -93,6 +93,7 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 			long long lastScore = entity.Client->GetLastScore();
 			if (entity.entiretyScore > lastScore)
 			{
+				entity.nemeEntryViewer->Init();
 				entity.nemeEntryViewer->SetActive(true);
 				entity.nemeEntryViewer->SlideNameEntryViewer(true);
 				entity.step = Step::ScoreNameEntryWait;
@@ -107,8 +108,8 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 		break;
 
 	case Step::ScoreNameEntryWait:
-		//ネームエントリーが終了したら
-		if(entity.nemeEntryViewer->IsFinished())
+		//エンターキーでネームエントリー終了
+		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 			entity.step = Step::ScoreNameEntryFinish;
 		break;
 

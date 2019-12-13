@@ -29,6 +29,7 @@ public:
 	NameEntryViewer();
 	~NameEntryViewer();
 
+	void Init(void);
 	void Update(void);
 	void Draw(void);
 
@@ -41,9 +42,6 @@ public:
 	std::string GetEntryNameID();
 
 	void SlideNameEntryViewer(bool isIn);
-
-	//終了判定
-	bool IsFinished() const;
 
 private:
 	std::vector <BaseViewer*> nameEntryViewer;
@@ -74,9 +72,6 @@ private:
 
 	//アクティブかどうか
 	bool isActive;
-
-	//終了したかどうか
-	bool isFinished;
 };
 
 #endif

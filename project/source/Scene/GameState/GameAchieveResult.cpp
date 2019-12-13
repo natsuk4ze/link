@@ -16,6 +16,7 @@
 #include "../../Sound/PlayBGM.h"
 #include "../../Sound/SoundConfig.h"
 #include "../../Viewer/GameScene/Controller/NameEntryViewer.h"
+#include "../../Viewer/NameViewer/Name.h"
 
 #include <functional>
 
@@ -26,12 +27,13 @@ void GameScene::GameAchieveResult::OnStart(GameScene & entity)
 {
 	Debug::Log("AchieveResult is Started");
 
-	auto rewardContainer = RewardController::Instance()->IsAllAchieved();
+	auto rewardContainer = RewardController::Instance()->GetAllAchieved();
 
 	//実績がなかったらタイトルへ遷移
 	if (rewardContainer.empty())
 	{
 		TransitionToTitle(entity);
+		entity.step = Step::Transition;
 	}
 	//あったら表示開始
 	else
@@ -63,8 +65,9 @@ GameScene::State GameScene::GameAchieveResult::OnUpdate(GameScene & entity)
 		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 		{
 			//初達成の実績があったらネームエントリー
-			if (RewardController::Instance()->FindFirstAchieved())
+			if (RewardController::Instance()->ExistFirstAchieved())
 			{
+				entity.nemeEntryViewer->Init();
 				entity.nemeEntryViewer->SetActive(true);
 				entity.nemeEntryViewer->SlideNameEntryViewer(true);
 				entity.step = Step::AchieveNameEntryWait;
@@ -80,9 +83,12 @@ GameScene::State GameScene::GameAchieveResult::OnUpdate(GameScene & entity)
 
 	case Step::AchieveNameEntryWait:
 		//名前入力の終了待ち
-		if (entity.nemeEntryViewer->IsFinished())
+		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 		{
 			entity.nemeEntryViewer->SlideNameEntryViewer(false);
+
+			//ネームを保存
+			RewardController::Instance()->SetFirstAchieverName(entity.nemeEntryViewer->GetEntryNameID());
 
 			//終了したら遷移
 			TransitionToTitle(entity);
