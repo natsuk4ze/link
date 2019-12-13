@@ -34,6 +34,10 @@ LevelViewer::LevelViewer()
 	num = new CountViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.80f, SCREEN_HEIGHT / 10 * 1.30f),D3DXVECTOR2(initNumSize.x, initNumSize.y), 
 		"data/TEXTURE/Viewer/GameViewer/LevelViewer/Number.png", 65.0f, 0.1f, 4);
 
+	//オーバーフロー用の数字
+	overflowNum = new CountViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.90f, SCREEN_HEIGHT / 10 * 2.20f), D3DXVECTOR2(initNumSize.x/2, initNumSize.y/2),
+		"data/TEXTURE/Viewer/GameViewer/LevelViewer/Number.png", 35.0f, 0.1f, 6);
+
 	//背景
 	bg = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.30f, SCREEN_HEIGHT / 10 * 1.20f),
 		D3DXVECTOR2(250.0f, 250.0f), "data/TEXTURE/Viewer/GameViewer/LevelViewer/BG.png");
@@ -65,6 +69,7 @@ LevelViewer::LevelViewer()
 LevelViewer::~LevelViewer()
 {
 	SAFE_DELETE(num);
+	SAFE_DELETE(overflowNum);
 	SAFE_DELETE(bg);
 	SAFE_DELETE(text);
 	SAFE_DELETE(place);
@@ -93,7 +98,8 @@ void LevelViewer::Update(void)
 
 #ifdef _DEBUG
 	Debug::Begin("LevelViewer");
-	Debug::Text("currentFieldLevel:%d", parameterBox[CurrentFieldLevel]);
+	Debug::Text("AILevel:%f", parameterBox[LevelAI]);
+	Debug::Text("currentFieldLevel:%f", parameterBox[CurrentFieldLevel]);
 	Debug::End();
 #endif
 
@@ -106,6 +112,7 @@ void LevelViewer::Update(void)
 			circleGuage[i]->SetPercent(0.0f);
 		}
 	}
+	circleGuage[(int)parameterBox[CurrentFieldLevel]]->SetPercent(drawingRatioLevel);
 }
 
 //=============================================================================
@@ -117,8 +124,6 @@ void LevelViewer::Draw(void)
 
 	//背景を先に描画
 	bg->Draw();
-
-	circleGuage[(int)parameterBox[CurrentFieldLevel]]->SetPercent(drawingRatioLevel);
 
 	for (int i = 0; i < guageMax; i++)
 	{
@@ -132,6 +137,12 @@ void LevelViewer::Draw(void)
 
 	text->Draw();
 
+	//オーバーフロー中なら描画（調整中）
+	if (IsOverflowed())
+	{
+		overflowNum->DrawCounter(overflowNum->baseNumber, (int)parameterBox[LevelAI]-9999,
+			overflowNum->intervalPosScr, overflowNum->intervalPosTex);
+	}
 	//place->Draw();
 }
 
@@ -256,4 +267,13 @@ void LevelViewer::DecreaseDrawingRatioLevel(void)
 			drawingRatioLevel = 1.0f;
 		}
 	}
+}
+
+//=============================================================================
+//　オーバーフローしてるかどうかを返す処理
+//=============================================================================
+bool LevelViewer::IsOverflowed(void)
+{
+	//宇宙レベルでAIレベルが9999を超えたらオーバーフロー発生
+	return (parameterBox[CurrentFieldLevel] == 2) && (parameterBox[LevelAI]>9999);
 }

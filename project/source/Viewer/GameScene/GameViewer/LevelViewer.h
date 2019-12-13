@@ -48,6 +48,7 @@ private:
 
 	CircleGauge *circleGuage[guageMax];
 	CountViewerDrawer *num;
+	CountViewerDrawer *overflowNum;
 	BaseViewerDrawer *bg;
 	BaseViewerDrawer *text;
 	BaseViewerDrawer *place;
@@ -65,6 +66,9 @@ private:
 
 	//描画用ratioLevel減少
 	void DecreaseDrawingRatioLevel(void);
+
+	//オーバーフローしてるかどうかを返す
+	bool IsOverflowed(void);
 
 	//現在のパラメータ
 	int currentParam[Max];

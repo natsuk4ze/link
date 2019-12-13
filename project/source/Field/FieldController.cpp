@@ -375,8 +375,8 @@ namespace Field
 	bool FieldController::ShouldLevelUp()
 	{
 		//宇宙レベルではレベルアップしない
-		//if (currentLevel == FieldLevel::Space)
-		//	return false;
+		if (currentLevel == FieldLevel::Space)
+			return false;
 
 		//AI発展レベルが最大値に到達していたらレベルアップする
 		return developmentLevelAI >= MaxDevelopmentLevelAI;
