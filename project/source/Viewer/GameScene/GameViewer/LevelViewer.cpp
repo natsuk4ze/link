@@ -257,5 +257,5 @@ void LevelViewer::SetPlaceTex(void)
 bool LevelViewer::IsOverflowed(void)
 {
 	//宇宙レベルでAIレベルが9999を超えたらオーバーフロー発生
-	return (parameterBox[CurrentFieldLevel] == FieldType::Space) && (parameterBox[LevelAI]>9999);
+	return (parameterBox[CurrentFieldLevel] == FieldType::Space) && (parameterBox[LevelAI] > 9999);
 }
