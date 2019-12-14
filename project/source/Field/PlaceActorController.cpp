@@ -436,6 +436,20 @@ namespace Field::Actor
 	}
 
 	/**************************************
+	作った交差点の数を取得
+	***************************************/
+	int Field::Actor::PlaceActorController::GetJunctionNum(void)
+	{
+		int JunctionNum = 0;
+		for (auto & Actor : actorContainer)
+		{
+			if (Actor.second->IsType(PlaceType::Junction))
+				JunctionNum++;
+		}
+		return JunctionNum;
+	}
+
+	/**************************************
 	ロードセット処理
 	***************************************/
 	void PlaceActorController::SetRoad(const Model::PlaceModel * place, int delay)

@@ -17,7 +17,8 @@
 void GameScene::GameLevelUp::OnStart(GameScene & entity)
 {
 	// スコアの加算
-	entity.field->SetScore();
+	entity.field->SetResultPara();
+	//entity.field->SetScore();
 
 	//ステップを初期化
 	entity.step = Step::WaitLevelPopup;

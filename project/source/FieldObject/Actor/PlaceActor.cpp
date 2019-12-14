@@ -130,6 +130,14 @@ void PlaceActor::OnSea(bool state)
 }
 
 //=====================================
+// モデル種類判定
+//=====================================
+bool PlaceActor::IsType(Field::Model::PlaceType Type)
+{
+	return this->type == Type ? true : false;
+}
+
+//=====================================
 // デバッグ
 //=====================================
 #if _DEBUG

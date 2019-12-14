@@ -256,10 +256,12 @@ namespace Field
 
 		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
 
-		// 町レベルに遷移する時に、ストック数をリセットする（ライ）
 		if (level == FieldLevel::City)
 		{
+			// 町レベルに遷移する時に、ストック数をリセットする（ライ）
 			developper->ResetStock();
+			// リザルト画面用のパラメータをリセットする
+			ResultPara.Clear();
 		}
 	}
 
@@ -630,6 +632,24 @@ namespace Field
 	}
 
 	/**************************************
+	リザルト画面用のパラメータを設定する
+	***************************************/
+	void FieldController::SetResultPara(void)
+	{
+		ResultPara.score[currentLevel] = (int)developmentLevelAI;
+		ResultPara.builtRoad[currentLevel] = GetRoadNum();
+		ResultPara.connectedCity[currentLevel] = GetTownNum();
+	}
+
+	/**************************************
+	リザルト画面用のパラメータを取得する
+	***************************************/
+	ResultViewerParam * FieldController::GetResultPara(void)
+	{
+		return &this->ResultPara;
+	}
+
+	/**************************************
 	スコアの取得
 	***************************************/
 	int FieldController::GetScore(FieldLevel current)
@@ -642,6 +662,29 @@ namespace Field
 	***************************************/
 	void FieldController::SetScore()
 	{
+		ResultPara.score[currentLevel] = (int)developmentLevelAI;
 		score->SetScore((int)developmentLevelAI, currentLevel);
+	}
+
+	/**************************************
+	作った道の数を取得
+	***************************************/
+	int FieldController::GetRoadNum(void)
+	{
+		int RoadNum = 0;
+		for (auto & Route : routeContainer)
+		{
+			RoadNum += Route->GetRoadNum();
+		}
+
+		return placeActController->GetJunctionNum() + RoadNum;
+	}
+
+	/**************************************
+	繋がった町の数を取得
+	***************************************/
+	int FieldController::GetTownNum(void)
+	{
+		return placeContainer->GetTownNum();
 	}
 }

@@ -44,6 +44,7 @@ public:
 	void SetColor(const D3DXCOLOR& color);				// メッシュの色変更
 	void ResetTransform();								// 座標、回転、大きさをリセットする
 	virtual void OnSea(bool state);								//海上判定セット
+	bool IsType(Field::Model::PlaceType Type);
 
 	static const D3DXVECTOR3 SizeCullingBox;			//視錐台カリングに使用するボックスの大きさ
 

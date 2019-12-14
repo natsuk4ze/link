@@ -11,6 +11,9 @@
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
 #include "../../Framework/ViewerAnimater/ViewerAnimater.h"
 
+using std::to_string;
+using std::string;
+
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
@@ -22,12 +25,12 @@ static const float fieldTelopGapPos = 200.0f;
 // コンストラクタ
 //*****************************************************************************
 ResultScoreViewer::ResultScoreViewer() :
-	parameterBoxScore(),
-	parameterBoxRoad(),
-	parameterBoxCity(),
-	score(),
-	connectedCity(),
-	builtRoad(),
+	//parameterBoxScore(),
+	//parameterBoxRoad(),
+	//parameterBoxCity(),
+	//score(),
+	//connectedCity(),
+	//builtRoad(),
 	isInPlaying(false),
 	isOutPlaying(false)
 {
@@ -97,7 +100,7 @@ ResultScoreViewer::ResultScoreViewer() :
 	anim[AnimType::TelopOut]->SetAnimBehavior(outVec);
 
 	//パラメータセット
-	SetRecievedParam();
+	//SetRecievedParam();
 }
 
 //*****************************************************************************
@@ -121,7 +124,7 @@ ResultScoreViewer::~ResultScoreViewer()
 //=============================================================================
 void ResultScoreViewer::Update(void)
 {
-	SetText();
+	//SetText();
 	if (isInPlaying)
 	{
 		anim[AnimType::TelopIn]->PlayAnim([=]
@@ -159,58 +162,135 @@ void ResultScoreViewer::Draw(void)
 	}
 }
 
-//=============================================================================
-// テキスト表示セット処理
-//=============================================================================
-void ResultScoreViewer::SetText()
-{
-	//引数でスコアを表示できるようにする
-	for (int i = 0; i < telopMax; i++)
-	{
-		rewardText[i]->SetText("作った道の数　：10\n繋がった街の数：10");
-	}
-	scoreText[0]->SetText("9999兆9999億9999万9999");
-
-	std::string strCityScore = std::to_string(score[City]);
-	scoreText[1]->SetText("スコア：" + strCityScore);
-
-	std::string strWorldScore = std::to_string(score[World]);
-	scoreText[2]->SetText("スコア：" + strWorldScore + "万");
-	
-	int spaceScoreTrillion = Math::Max(0, score[Space] - 10000);
-	int spaceScoreBillion = score[Space] - spaceScoreTrillion;
-
-	std::string strSpaceScore = std::to_string(spaceScoreBillion) + "億";
-	if (spaceScoreTrillion > 0)
-	{
-		strSpaceScore.insert(0, std::to_string(spaceScoreTrillion) + "兆");
-	}
-
-	scoreText[3]->SetText("スコア：" + strSpaceScore);
-}
+////=============================================================================
+//// テキスト表示セット処理
+////=============================================================================
+//void ResultScoreViewer::SetText()
+//{
+//	//引数でスコアを表示できるようにする
+//	for (int i = 0; i < telopMax; i++)
+//	{
+//		rewardText[i]->SetText("作った道の数　：10\n繋がった街の数：10");
+//	}
+//	scoreText[0]->SetText("9999兆9999億9999万9999");
+//
+//	std::string strCityScore = std::to_string(score[City]);
+//	scoreText[1]->SetText("スコア：" + strCityScore);
+//
+//	std::string strWorldScore = std::to_string(score[World]);
+//	scoreText[2]->SetText("スコア：" + strWorldScore + "万");
+//	
+//	int spaceScoreTrillion = Math::Max(0, score[Space] - 10000);
+//	int spaceScoreBillion = score[Space] - spaceScoreTrillion;
+//
+//	std::string strSpaceScore = std::to_string(spaceScoreBillion) + "億";
+//	if (spaceScoreTrillion > 0)
+//	{
+//		strSpaceScore.insert(0, std::to_string(spaceScoreTrillion) + "兆");
+//	}
+//
+//	scoreText[3]->SetText("スコア：" + strSpaceScore);
+//}
 
 //=============================================================================
 // 受け取ったパラメータをセットする処理
 //=============================================================================
-void ResultScoreViewer::SetRecievedParam()
+void ResultScoreViewer::ReceiveParam(const ResultViewerParam& ResultPara)
 {
+	string BuildRoad;
+	string ConnectedCity;
+
+	//引数でスコアを表示できるようにする
+	// scoreText[0] = Total Result
+	// scoreText[1] = City
+	// scoreText[2] = World
+	// scoreText[3] = Spcae
+
+	// City Level
+	scoreText[1]->SetText("スコア：" + to_string(ResultPara.score[City]));
+	BuildRoad = "作った道の数　：" + to_string(ResultPara.builtRoad[City]);
+	ConnectedCity = "繋がった街の数：" + to_string(ResultPara.connectedCity[City]);
+	rewardText[1]->SetText(BuildRoad + "\n" + ConnectedCity);
+
+	// World Level
+	scoreText[2]->SetText("スコア：" + to_string(ResultPara.score[World]) + "万");
+	BuildRoad = "作った道の数　：" + to_string(ResultPara.builtRoad[World]);
+	ConnectedCity = "繋がった街の数：" + to_string(ResultPara.connectedCity[World]);
+	rewardText[2]->SetText(BuildRoad + "\n" + ConnectedCity);
+
+	// Space Level
+	// 億
+	int BillionNum = ResultPara.score[Space] % 10000;
+	// 兆
+	int TrillionNum = ResultPara.score[Space] / 10000;
+	if (ResultPara.score[Space] <= 9999)
+	{
+		scoreText[3]->SetText("スコア：" + to_string(ResultPara.score[Space]) + "億");
+	}
+	else
+	{
+		scoreText[3]->SetText("スコア：" + to_string(TrillionNum) + "兆" + to_string(BillionNum) + "億");
+	}
+	BuildRoad = "作った道の数　：" + to_string(ResultPara.builtRoad[Space]);
+	ConnectedCity = "繋がった街の数：" + to_string(ResultPara.connectedCity[Space]);
+	rewardText[3]->SetText(BuildRoad + "\n" + ConnectedCity);
+
+	// Total Result
+
+	if (ResultPara.score[Space] > 9999)
+	{
+		string TotalScoreStr = 
+			to_string(TrillionNum) + "兆" +
+			to_string(BillionNum) + "億" +
+			to_string(ResultPara.score[World]) + "万" +
+			to_string(ResultPara.score[City]);
+		scoreText[0]->SetText(TotalScoreStr);
+	}
+	else if (ResultPara.score[Space] > 0 && ResultPara.score[Space] < 9999)
+	{
+		string TotalScoreStr = 
+			to_string(ResultPara.score[Space]) + "億" +
+			to_string(ResultPara.score[World]) + "万" +
+			to_string(ResultPara.score[City]);
+		scoreText[0]->SetText(TotalScoreStr);
+	}
+	else if (ResultPara.score[Space] == 0 && ResultPara.score[World] != 0)
+	{
+		string TotalScoreStr =
+			to_string(ResultPara.score[World]) + "万" +
+			to_string(ResultPara.score[City]);
+		scoreText[0]->SetText(TotalScoreStr);
+	}
+	else if (ResultPara.score[World] == 0 && ResultPara.score[City] != 0)
+	{
+		string TotalScoreStr = to_string(ResultPara.score[City]);
+		scoreText[0]->SetText(TotalScoreStr);
+	}
+	int TotalRoadNum = ResultPara.builtRoad[City] + ResultPara.builtRoad[World] + ResultPara.builtRoad[Space];
+	int TotalCityNum = ResultPara.connectedCity[City] + ResultPara.connectedCity[World] + ResultPara.connectedCity[Space];
+	BuildRoad = "作った道の数　：" + to_string(TotalRoadNum);
+	ConnectedCity = "繋がった街の数：" + to_string(TotalCityNum);
+	rewardText[0]->SetText(BuildRoad + "\n" + ConnectedCity);
+
+#if 0
 	//スコア
 	score[City] = parameterBoxScore[City];
 	score[World] = parameterBoxScore[World];
 	score[Space] = parameterBoxScore[Space] % 99990000;
-	score[Risult] = (int)parameterBoxScore[2] / 10000;//スコアは分けて表示するので別々にパラメータを格納
+	score[Result] = (int)parameterBoxScore[2] / 10000;//スコアは分けて表示するので別々にパラメータを格納
 
 	//作った道
 	builtRoad[City] = parameterBoxRoad[City];
 	builtRoad[World] = parameterBoxRoad[World];
 	builtRoad[Space] = parameterBoxRoad[Space];
-	builtRoad[Risult] = parameterBoxRoad[City] + parameterBoxRoad[World] + parameterBoxRoad[Space];
+	builtRoad[Result] = parameterBoxRoad[City] + parameterBoxRoad[World] + parameterBoxRoad[Space];
 
 	//繋がった街
 	connectedCity[City] = parameterBoxCity[City];
 	connectedCity[World] = parameterBoxCity[World];
 	connectedCity[Space] = parameterBoxCity[Space];
-	connectedCity[Risult] = parameterBoxCity[City] + parameterBoxCity[World] + parameterBoxCity[Space];
+	connectedCity[Result] = parameterBoxCity[City] + parameterBoxCity[World] + parameterBoxCity[Space];
+#endif
 }
 
 //=============================================================================

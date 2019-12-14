@@ -57,7 +57,8 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 		{
 			PlayBGM::Instance()->FadeOut(SoundConfig::BGMID::Space, 0.1f, 30, true);
 		}
-		entity.field->SetScore();
+		//entity.field->SetScore();
+		entity.field->SetResultPara();
 		entity.ChangeState(State::Finish);
 	}
 	//AI発展レベルが最大に到達していたらレベルアップ
