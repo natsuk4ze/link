@@ -28,6 +28,7 @@ namespace Field::Model
 	using JunctionContainer = std::unordered_map<unsigned, JunctionModel*>;
 	using TownContainer = std::unordered_map<unsigned, TownModel*>;
 	using TownAction = std::function<void(const PlaceModel *start, const PlaceModel *goal, const PlaceModel* town)>;
+	using MorphAction = std::function<void(const PlaceModel*, int next)>;
 
 	/**************************************
 	クラス定義
@@ -97,6 +98,9 @@ namespace Field::Model
 		//パッセンジャー出発ファンクタ設定
 		void SetDepartPassengerFanctor(const TownAction& action);
 
+		//モーフィングファンクタ設定
+		void SetMorphingFantor(const MorphAction& action);
+
 		//すべての町の発展レベルを取得する
 		std::vector<PlaceData> GetAllTownLevel();
 
@@ -125,6 +129,7 @@ namespace Field::Model
 		float trafficJamBias;					//混雑度バイアス
 
 		TownAction onDepartPassenger;			//街からパッセンジャーが出る時に呼ぶファンクタ
+		MorphAction onStartMorph;				//モーフィング開始ファンクタ
 
 		//隣接プレイス作成内部処理
 		void MakeAdjacency();

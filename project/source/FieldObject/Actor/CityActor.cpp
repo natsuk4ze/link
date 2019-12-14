@@ -14,6 +14,11 @@
 #define USE_MORPHING
 
 //=====================================
+// staticメンバ
+//=====================================
+const int CityActor::DurationMorphing = 30;
+
+//=====================================
 // コンストラクタ
 //=====================================
 CityActor::CityActor()
@@ -44,11 +49,14 @@ void CityActor::Init(const D3DXVECTOR3 & pos, Field::FieldLevel currentLevel)
 	switch (currentLevel)
 	{
 	case Field::FieldLevel::City:
-		for (int i = 0; i < 3; i++)
-		{
-			ResourceManager::Instance()->GetMesh(ActorLoader::CityTownTag[i].c_str(), morphContainer);
-			morphContainer->RegisterVertex(i);
-		}
+
+		ResourceManager::Instance()->GetMesh(ActorLoader::CityTownTag[2].c_str(), morphContainer);
+		morphContainer->RegisterVertex(2);
+		ResourceManager::Instance()->GetMesh(ActorLoader::CityTownTag[0].c_str(), morphContainer);
+		morphContainer->RegisterVertex(0);
+		ResourceManager::Instance()->GetMesh(ActorLoader::CityTownTag[1].c_str(), morphContainer);
+		morphContainer->RegisterVertex(1);
+
 		morphContainer->SetCurrent(0);
 		morphContainer->SetNext(1);
 		useMorphing = true;
@@ -87,23 +95,40 @@ void CityActor::Uninit()
 }
 
 //=====================================
+// 更新処理
+//=====================================
+void CityActor::Update()
+{
+	if (inMorphing)
+	{
+		cntFrameMorphing++;
+
+		if (cntFrameMorphing == DurationMorphing)
+			inMorphing = false;
+	}
+}
+
+//=====================================
 // 描画処理
 //=====================================
 void CityActor::Draw()
 {
+#ifdef USE_MORPHING
 	if (useMorphing)
 	{
-		cntFrameMorphing = Math::WrapAround(0, 60, ++cntFrameMorphing);
-
-		float t = (float)cntFrameMorphing / 60;
-
+		float t = (float)cntFrameMorphing / DurationMorphing;
+		float changeValue = Easing::EaseValue(t, 0.0f, 1.0f, EaseType::InOutCirc);
 		morphContainer->SetChange(t);
+
 		morphContainer->Draw(transform->GetMatrix());
 	}
 	else
 	{
 		PlaceActor::Draw();
 	}
+#else
+	PlaceActor::Draw();
+#endif
 }
 
 //=====================================
@@ -111,4 +136,12 @@ void CityActor::Draw()
 //=====================================
 void CityActor::StartMorph(int next)
 {
+	cntFrameMorphing = 0;
+
+	morphContainer->SetCurrent(currentMorphing);
+	
+	currentMorphing = next;
+	morphContainer->SetNext(next);
+
+	inMorphing = true;
 }
