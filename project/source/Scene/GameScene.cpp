@@ -225,6 +225,7 @@ void GameScene::Update()
 	GuideViewer::Instance()->Update();
 	resultViewer->Update();
 	titleViewer->Update();
+	nemeEntryViewer->Update();
 	rewardNotifier->Update();
 	nemeEntryViewer->Update();
 
