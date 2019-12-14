@@ -16,7 +16,7 @@
 //=====================================
 // staticメンバ
 //=====================================
-const int CityActor::DurationMorphing = 30;
+const int CityActor::DurationMorphing = 15;
 
 //=====================================
 // コンストラクタ
@@ -117,7 +117,7 @@ void CityActor::Draw()
 	if (useMorphing)
 	{
 		float t = (float)cntFrameMorphing / DurationMorphing;
-		float changeValue = Easing::EaseValue(t, 0.0f, 1.0f, EaseType::InOutCirc);
+		float changeValue = Easing::EaseValue(t, 0.0f, 1.0f, EaseType::OutExpo);
 		morphContainer->SetChange(t);
 
 		morphContainer->Draw(transform->GetMatrix());
