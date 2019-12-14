@@ -10,6 +10,7 @@
 #include <functional>
 #include "../../../../main.h"
 #include "../../Framework/BaseViewer.h"
+#include "../ParameterContainer/ResultViewerParam.h"
 
 //*****************************************************************************
 // 前方宣言
@@ -35,7 +36,7 @@ private:
 		City,
 		World,
 		Space,
-		Risult
+		Result,
 	};
 
 	const static int telopMax = 4;
@@ -46,9 +47,9 @@ private:
 	TextViewer *rewardText[telopMax];
 	ViewerAnimater*anim[Max];
 
-	int score[telopMax];
-	int connectedCity[telopMax];
-	int builtRoad[telopMax];
+	//int score[telopMax];
+	//int connectedCity[telopMax];
+	//int builtRoad[telopMax];
 
 	//テロップスクリーンイン
 	void InCityTelop();
@@ -67,7 +68,7 @@ private:
 	D3DXVECTOR2 fieldTextStopPos[telopMax];
 
 	void GetStopPos();
-	void SetText();
+	//void SetText();
 
 	bool isInPlaying;
 	bool isOutPlaying;
@@ -86,12 +87,12 @@ public:
 	bool IsPlayingIn() const;
 	bool IsPlayingOut() const;
 
-	void SetRecievedParam();
+	void ReceiveParam(const ResultViewerParam& ResultPara);
 
 	//パラメータを受けとる箱
-	int parameterBoxScore[3];
-	int parameterBoxCity[3];
-	int parameterBoxRoad[3];
+	//int parameterBoxScore[3];
+	//int parameterBoxCity[3];
+	//int parameterBoxRoad[3];
 };
 
 #endif

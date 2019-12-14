@@ -103,6 +103,9 @@ namespace Field::Model
 		//ƒŠƒ“ƒNƒŒƒxƒ‹Žæ“¾
 		int GetLinkLevel();
 
+		// Œq‚ª‚Á‚½’¬‚Ì”‚ðŽæ“¾
+		int GetTownNum(void) { return this->townContainer.size(); };
+
 #ifdef DEBUG_PLACEMODEL
 		void DrawDebug();
 #endif

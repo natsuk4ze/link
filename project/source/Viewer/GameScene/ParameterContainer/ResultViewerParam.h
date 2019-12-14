@@ -16,13 +16,24 @@ public:
 	const static int fieldTypeMax = 3;
 
 	//Cityスコア,Worldスコア,Spaceスコア
-	int score[fieldTypeMax];
+	int score[fieldTypeMax] = { 0,0,0 };
 
 	//Cityで作った道の数,Worldで作った道の数、Spaceで作った道の数
-	int builtRoad[fieldTypeMax];
+	int builtRoad[fieldTypeMax] = { 0,0,0 };
 
 	//Cityで繋がった街の数,Worldで繋がった街の数、Spaceで繋がった街の数
-	int connectedCity[fieldTypeMax];
+	int connectedCity[fieldTypeMax] = { 0,0,0 };
+
+	// パラメータをクリアする
+	void Clear(void)
+	{
+		for (int i = 0; i < fieldTypeMax; i++)
+		{
+			score[i] = 0;
+			builtRoad[i] = 0;
+			connectedCity[i] = 0;
+		}
+	}
 };
 
 #endif

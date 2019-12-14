@@ -37,7 +37,7 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	entity.resultViewer->SetActive(true);
 	entity.resultViewer->SlideScoreViewer(true);
 	entity.resultViewer->SetAchieveViewerActive(false);
-	
+
 	// ネームエントリーの初期化
 	entity.nemeEntryViewer->Init();
 
@@ -52,19 +52,24 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	//宇宙レベルのスコアを保存
 	if (level == 2)
 	{
-		entity.field->SetScore();
+		entity.field->SetResultPara();
+		//entity.field->SetScore();
 	}
 
 	// リザルト用のUIにAI発展レベルを渡す
-	int cityScore = (int)entity.field->GetScore(Field::FieldLevel::City);
-	int worldScore = (int)entity.field->GetScore(Field::FieldLevel::World);
-	int spaceScore = (int)entity.field->GetScore(Field::FieldLevel::Space);
-	entity.resultViewer->ReceiveParam(cityScore, worldScore, spaceScore);
+	//int cityScore = (int)entity.field->GetScore(Field::FieldLevel::City);
+	//int worldScore = (int)entity.field->GetScore(Field::FieldLevel::World);
+	//int spaceScore = (int)entity.field->GetScore(Field::FieldLevel::Space);
+	ResultViewerParam* Prarm = entity.field->GetResultPara();
+	entity.resultViewer->ReceiveParam(*Prarm);
 
 	PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Result, 0.1f, 30);
 
 	//全体スコアを計算
-	entity.entiretyScore = (int)(powf(10, 8) * spaceScore) + (int)(powf(10, 4) * worldScore) + cityScore;
+	string TotalScore = std::to_string(Prarm->score[Field::FieldLevel::Space]) +
+		std::to_string(Prarm->score[Field::FieldLevel::World]) +
+		std::to_string(Prarm->score[Field::FieldLevel::City]);
+	entity.entiretyScore = std::stoull(TotalScore);
 
 	//ランキング更新があったらネームエントリーへ
 	entity.ShowNameEntry = entity.entiretyScore > entity.Client->GetLastScore() ? true : false;
@@ -113,7 +118,7 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 
 		//エンターキーでネームエントリー終了
 		//if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
-			entity.step = Step::ScoreNameEntryFinish;
+		entity.step = Step::ScoreNameEntryFinish;
 		break;
 
 	case Step::ScoreNameEntryFinish:

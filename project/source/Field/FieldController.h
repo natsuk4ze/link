@@ -13,6 +13,7 @@
 #include "Place\PlaceConfig.h"
 #include "FieldConfig.h"
 #include "../Viewer/GameScene/ParameterContainer/GameViewerParam.h"
+#include "../Viewer/GameScene/ParameterContainer/ResultViewerParam.h"
 
 #include <functional>
 #include <vector>
@@ -116,7 +117,11 @@ namespace Field
 		// UI描画可否判定
 		void SetViewerActive(bool flag);
 
-		// スコア処理
+		// リザルト画面用のパラメータを設定する
+		void SetResultPara(void);
+
+		// リザルト画面用のパラメータを取得する
+		ResultViewerParam* GetResultPara(void);
 		int GetScore(FieldLevel current);
 		void SetScore();
 
@@ -142,6 +147,7 @@ namespace Field
 		InfoController* infoController;						//インフォメーションコントローラ
 		FieldViewer *viewer;								//フィールド情報を表示するビューワ
 		Score* score;										//スコア管理
+		ResultViewerParam ResultPara;						//リザルト画面用のパラメータを管理するクラス
 
 		FieldDevelopper *developper;						//フィールド開発の内部クラス
 		FieldInput *input;									//フィールド入力の内部クラス
@@ -179,7 +185,7 @@ namespace Field
 
 		//カーソル位置のプレイスを取得
 		Model::PlaceModel* GetPlace();
-		
+
 		//AI発展レベルの計算、加算
 		void CalcDevelopmentLevelAI();
 
@@ -194,6 +200,12 @@ namespace Field
 
 		//操作説明のセット
 		void SetOperationExplanation();
+
+		// 作った道の数を取得
+		int GetRoadNum(void);
+
+		// 繋がった町の数を取得
+		int GetTownNum(void);
 
 		//各ステートクラスの前方宣言
 		class IdleState;

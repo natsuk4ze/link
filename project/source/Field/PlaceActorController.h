@@ -101,6 +101,9 @@ namespace Field::Actor
 		//海判定
 		bool IsOnSea(const FieldPosition& position) const;
 
+		// 作った交差点の数を取得
+		int GetJunctionNum(void);
+
 		//定数メンバ
 		static const D3DXVECTOR3 PositionEmitSmog;		//道落下時の煙発生位置
 		static const float PlacePositionOffset;			//アクター同士の配置間隔
