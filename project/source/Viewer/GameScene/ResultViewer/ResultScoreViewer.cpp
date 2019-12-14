@@ -244,7 +244,7 @@ void ResultScoreViewer::ReceiveParam(const ResultViewerParam& ResultPara)
 			to_string(BillionNum) + "億" +
 			to_string(ResultPara.score[World]) + "万" +
 			to_string(ResultPara.score[City]);
-		scoreText[0]->SetText(TotalScoreStr);
+		scoreText[0]->SetText("合計スコア：" + TotalScoreStr);
 	}
 	else if (ResultPara.score[Space] > 0 && ResultPara.score[Space] < 9999)
 	{
@@ -252,19 +252,23 @@ void ResultScoreViewer::ReceiveParam(const ResultViewerParam& ResultPara)
 			to_string(ResultPara.score[Space]) + "億" +
 			to_string(ResultPara.score[World]) + "万" +
 			to_string(ResultPara.score[City]);
-		scoreText[0]->SetText(TotalScoreStr);
+		scoreText[0]->SetText("合計スコア：" + TotalScoreStr);
 	}
 	else if (ResultPara.score[Space] == 0 && ResultPara.score[World] != 0)
 	{
 		string TotalScoreStr =
 			to_string(ResultPara.score[World]) + "万" +
 			to_string(ResultPara.score[City]);
-		scoreText[0]->SetText(TotalScoreStr);
+		scoreText[0]->SetText("合計スコア：" + TotalScoreStr);
 	}
 	else if (ResultPara.score[World] == 0 && ResultPara.score[City] != 0)
 	{
 		string TotalScoreStr = to_string(ResultPara.score[City]);
-		scoreText[0]->SetText(TotalScoreStr);
+		scoreText[0]->SetText("合計スコア：" + TotalScoreStr);
+	}
+	else if (ResultPara.score[City] == 0)
+	{
+		scoreText[0]->SetText("合計スコア：0");
 	}
 	int TotalRoadNum = ResultPara.builtRoad[City] + ResultPara.builtRoad[World] + ResultPara.builtRoad[Space];
 	int TotalCityNum = ResultPara.connectedCity[City] + ResultPara.connectedCity[World] + ResultPara.connectedCity[Space];

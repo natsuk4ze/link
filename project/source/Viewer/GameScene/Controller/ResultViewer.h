@@ -49,7 +49,6 @@ public:
 	void SetActive(bool flag);
 
 	//ƒpƒ‰ƒ[ƒ^‚Ìó‚¯æ‚èˆ—
-	//void ReceiveParam(int cityScore,int worldScore,int spaceScore);
 	void ReceiveParam(const ResultViewerParam& ResultPara);
 
 	bool GetIsActive();

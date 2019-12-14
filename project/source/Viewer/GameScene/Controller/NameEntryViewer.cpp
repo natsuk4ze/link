@@ -71,19 +71,19 @@ void NameEntryViewer::Update()
 		return;
 
 #ifdef _DEBUG
-	for (int i = 0; i < entryNameMax; i++)
-	{
-		Debug::Text("nameID%d", entryNameID[i]);
-	}
+	//for (int i = 0; i < entryNameMax; i++)
+	//{
+	//	Debug::Text("nameID%d", entryNameID[i]);
+	//}
 
-	if (Keyboard::GetTrigger(DIK_2))
-	{
-		SlideNameEntryViewer(true);
-	}
-	if (Keyboard::GetTrigger(DIK_3))
-	{
-		SlideNameEntryViewer(false);
-	}
+	//if (Keyboard::GetTrigger(DIK_2))
+	//{
+	//	SlideNameEntryViewer(true);
+	//}
+	//if (Keyboard::GetTrigger(DIK_3))
+	//{
+	//	SlideNameEntryViewer(false);
+	//}
 #endif
 
 	MoveCursor();
@@ -237,7 +237,6 @@ void NameEntryViewer::SlideNameEntryViewer(bool isIn)
 		{
 			reelViewer->SetTelopIn();
 		});
-
 		isActive = true;
 	}
 	// ‘Şêˆ—

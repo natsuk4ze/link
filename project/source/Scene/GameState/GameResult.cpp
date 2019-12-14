@@ -39,12 +39,12 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	entity.resultViewer->SetAchieveViewerActive(false);
 
 	// ネームエントリーの初期化
-	entity.nemeEntryViewer->Init();
+	entity.nameEntryViewer->Init();
 
 	// 使用しないUIの描画をOFF
 	entity.field->SetViewerActive(false);
 	entity.gameViewer->SetActive(false);
-	entity.nemeEntryViewer->SetActive(false);
+	entity.nameEntryViewer->SetActive(false);
 	entity.eventController->ClearEventMessage();
 	GuideViewer::Instance()->SetActive(false);
 	//entity.guideViewer->SetActive(false);
@@ -102,7 +102,7 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 			//ランキング更新があったらネームエントリーへ
 			if (entity.ShowNameEntry)
 			{
-				entity.nemeEntryViewer->SlideNameEntryViewer(true);
+				entity.nameEntryViewer->SlideNameEntryViewer(true);
 				entity.step = Step::ScoreNameEntryWait;
 			}
 			//それ以外は達成実績表示へ遷移
@@ -127,18 +127,18 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 		{
 			entity.resultViewer->SlideScoreViewer(false);
-			entity.nemeEntryViewer->SlideNameEntryViewer(false);
+			entity.nameEntryViewer->SlideNameEntryViewer(false);
 			entity.step = Step::ScoreViewerOut;
 
 			// サーバーにランキングパケットを送信
-			entity.Client->SendRankPacket(entity.nemeEntryViewer->GetEntryNameID(), entity.entiretyScore);
+			entity.Client->SendRankPacket(entity.nameEntryViewer->GetEntryNameID(), entity.entiretyScore);
 		}
 		break;
 
 	case Step::ScoreViewerOut:
 		if (entity.resultViewer->IsPlayingAnimation() != ResultViewer::PlayingOut)
 		{
-			entity.nemeEntryViewer->SetActive(false);
+			entity.nameEntryViewer->SetActive(false);
 			entity.ChangeState(State::AchieveResult);
 		}
 		break;

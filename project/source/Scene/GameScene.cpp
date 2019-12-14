@@ -94,7 +94,7 @@ void GameScene::Init()
 	bloomController = new BloomController();
 	Client = new UDPClient();
 	resultViewer = new ResultViewer();
-	nemeEntryViewer = new NameEntryViewer();
+	nameEntryViewer = new NameEntryViewer();
 	titleViewer = new TitleViewer();
 	rewardNotifier = new RewardNotifier();
 	debugController = new PresenDebugController(this);
@@ -163,7 +163,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(eventHandler);
 	SAFE_DELETE(Client);
 	SAFE_DELETE(resultViewer);
-	SAFE_DELETE(nemeEntryViewer);
+	SAFE_DELETE(nameEntryViewer);
 	SAFE_DELETE(titleViewer);
 	SAFE_DELETE(rewardNotifier);
 	SAFE_DELETE(debugController);
@@ -225,9 +225,8 @@ void GameScene::Update()
 	GuideViewer::Instance()->Update();
 	resultViewer->Update();
 	titleViewer->Update();
-	nemeEntryViewer->Update();
+	nameEntryViewer->Update();
 	rewardNotifier->Update();
-	nemeEntryViewer->Update();
 
 	//パーティクル更新
 	ProfilerCPU::Instance()->Begin("Update Particle");
@@ -302,7 +301,7 @@ void GameScene::Draw()
 	gameViewer->Draw();
 	eventController->DrawEventViewer();
 	resultViewer->Draw();
-	nemeEntryViewer->Draw();
+	nameEntryViewer->Draw();
 	titleViewer->Draw();
 	rewardNotifier->Draw();
 

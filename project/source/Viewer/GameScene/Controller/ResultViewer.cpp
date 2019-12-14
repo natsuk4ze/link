@@ -233,17 +233,6 @@ void ResultViewer::SetActive(bool flag)
 //=============================================================================
 void ResultViewer::ReceiveParam(const ResultViewerParam & ResultPara)
 {
-	//int param[ResultViewerParam::fieldTypeMax] = { cityScore ,worldScore ,spaceScore };
-
-	//for (int i = 0; i < ResultViewerParam::fieldTypeMax; i++)
-	//{
-	//	//コンテナに入れて
-	//	viewerParam->score[i] = param[i];
-
-	//	//コンテナからビュアーに渡す
-	//	scoreViewer->parameterBoxScore[i] = viewerParam->score[i];
-	//}
-
 	scoreViewer->ReceiveParam(ResultPara);
 }
 

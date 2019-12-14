@@ -50,7 +50,7 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	GuideViewer::Instance()->SetActive(false);
 	//entity.guideViewer->SetActive(false);
 	entity.resultViewer->SetActive(false);
-	entity.nemeEntryViewer->SetActive(false);
+	entity.nameEntryViewer->SetActive(false);
 
 	//パーティクル初期化
 	entity.levelParticleManager->Init();

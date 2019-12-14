@@ -77,7 +77,7 @@ namespace Field
 		input = new FieldInput(this);
 		placeContainer = new Model::PlaceContainer();
 		viewer = new FieldViewer();
-		score = new Score();
+		//score = new Score();
 
 		//フィールドレベル設定
 		SetLevel(currentLevel);
@@ -123,7 +123,7 @@ namespace Field
 		SAFE_DELETE(input);
 		SAFE_DELETE(infoController);
 		SAFE_DELETE(viewer);
-		SAFE_DELETE(score);
+		//SAFE_DELETE(score);
 
 		//ステートマシン削除
 		Utility::DeleteContainer(fsm);
@@ -647,23 +647,6 @@ namespace Field
 	ResultViewerParam * FieldController::GetResultPara(void)
 	{
 		return &this->ResultPara;
-	}
-
-	/**************************************
-	スコアの取得
-	***************************************/
-	int FieldController::GetScore(FieldLevel current)
-	{
-		return score->GetScore(current);
-	}
-
-	/**************************************
-	スコアのセット
-	***************************************/
-	void FieldController::SetScore()
-	{
-		ResultPara.score[currentLevel] = (int)developmentLevelAI;
-		score->SetScore((int)developmentLevelAI, currentLevel);
 	}
 
 	/**************************************

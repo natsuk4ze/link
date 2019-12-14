@@ -99,9 +99,9 @@ private:
 	FieldEventHandler* eventHandler;			//イベントハンドラ
 	UDPClient *Client;							//クライアント
 	ResultViewer*resultViewer;					//リザルトビュアー
-	NameEntryViewer *nemeEntryViewer;			//名前登録ビュアー
+	NameEntryViewer *nameEntryViewer;			//名前登録ビュアー
 	TitleViewer* titleViewer;					// タイトルビュアー
-	RewardNotifier* rewardNotifier;					// リワードビュアー
+	RewardNotifier* rewardNotifier;				// リワードビュアー
 
 	int remainTime;								//制限時間
 

@@ -122,8 +122,6 @@ namespace Field
 
 		// リザルト画面用のパラメータを取得する
 		ResultViewerParam* GetResultPara(void);
-		int GetScore(FieldLevel current);
-		void SetScore();
 
 	private:
 		//内部クラス前方宣言
@@ -146,7 +144,7 @@ namespace Field
 		Actor::PlaceActorController* placeActController;	//プレイスアクターコントローラ
 		InfoController* infoController;						//インフォメーションコントローラ
 		FieldViewer *viewer;								//フィールド情報を表示するビューワ
-		Score* score;										//スコア管理
+		//Score* score;										//スコア管理
 		ResultViewerParam ResultPara;						//リザルト画面用のパラメータを管理するクラス
 
 		FieldDevelopper *developper;						//フィールド開発の内部クラス

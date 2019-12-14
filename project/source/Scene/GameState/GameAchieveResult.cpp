@@ -69,9 +69,9 @@ GameScene::State GameScene::GameAchieveResult::OnUpdate(GameScene & entity)
 			if (RewardController::Instance()->ExistFirstAchieved())
 			{
 				// まだ名前が入力されなかったら
-				if (!entity.nemeEntryViewer->GetNameEntered())
+				if (!entity.nameEntryViewer->GetNameEntered())
 				{
-					entity.nemeEntryViewer->SlideNameEntryViewer(true);
+					entity.nameEntryViewer->SlideNameEntryViewer(true);
 					entity.step = Step::AchieveNameEntryWait;
 				}
 				else
@@ -92,7 +92,7 @@ GameScene::State GameScene::GameAchieveResult::OnUpdate(GameScene & entity)
 		//名前入力の終了待ち
 		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 		{
-			entity.nemeEntryViewer->SlideNameEntryViewer(false);
+			entity.nameEntryViewer->SlideNameEntryViewer(false);
 
 			//終了したら遷移
 			entity.step = Step::AchieveNameEntryFinish;
@@ -102,7 +102,7 @@ GameScene::State GameScene::GameAchieveResult::OnUpdate(GameScene & entity)
 	case Step::AchieveNameEntryFinish:
 
 		//ネームを保存
-		RewardController::Instance()->SetFirstAchieverName(entity.nemeEntryViewer->GetEntryNameID());
+		RewardController::Instance()->SetFirstAchieverName(entity.nameEntryViewer->GetEntryNameID());
 
 		//遷移
 		TransitionToTitle(entity);

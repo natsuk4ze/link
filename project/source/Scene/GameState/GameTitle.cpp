@@ -46,7 +46,7 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	GuideViewer::Instance()->SetActive(false);
 	//entity.guideViewer->SetActive(false);
 	entity.resultViewer->SetActive(false);
-	entity.nemeEntryViewer->SetActive(false);
+	entity.nameEntryViewer->SetActive(false);
 
 	// タイトルのBGMを開始
 	PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Title, 0.1f, 30);
