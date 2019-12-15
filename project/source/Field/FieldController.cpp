@@ -38,6 +38,9 @@
 #include "../../Framework/Math/Easing.h"
 #include "../Reward/RewardController.h"
 
+#include "../../Framework/Sound/SoundEffect.h"
+#include "../Sound/SoundConfig.h"
+
 namespace Field
 {
 	/**************************************
@@ -569,6 +572,7 @@ namespace Field
 	***************************************/
 	void FieldController::OnConnectedTown(const Model::PlaceModel * town, const Model::PlaceModel * gate)
 	{
+		SE::Play(SoundConfig::SEID::Select01, 1.0f);
 		placeContainer->OnConnectedTown(town, gate);
 		placeActController->OnConnectedTown(town);
 	}

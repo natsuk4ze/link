@@ -36,6 +36,8 @@
 #include "../FieldObject/Animation/ActorAnimation.h"
 #include "ActorLoader.h"
 #include "../Field/Object/WaterHeightController.h"
+#include "../../Framework/Sound/SoundEffect.h"
+#include "../Sound/SoundConfig.h"
 
 namespace Field::Actor
 {
@@ -535,7 +537,9 @@ namespace Field::Actor
 		actor->Rotate(rotateAngle);
 
 		// 生成アニメーション
-		ActorAnimation::FallAndExpantion(*actor);
+		ActorAnimation::FallAndExpantion(*actor, []() {
+			SE::Play(SoundConfig::SEID::Fall, 1.0f);
+		});
 
 		AddContainer(place->ID(), actor);
 
@@ -562,7 +566,9 @@ namespace Field::Actor
 			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::CrossJunction, onWater);
 
 			// 生成アニメーション
-			ActorAnimation::RotateAndExpantion(*actor);
+			ActorAnimation::RotateAndExpantion(*actor, []() {
+				SE::Play(SoundConfig::SEID::Fall, 1.0f);
+			});
 			AddContainer(place->ID(), actor);
 
 		}
@@ -588,7 +594,9 @@ namespace Field::Actor
 			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::T_Junction, onWater);
 
 			// 生成アニメーション
-			ActorAnimation::RotateAndExpantion(*actor);
+			ActorAnimation::RotateAndExpantion(*actor, []() {
+				SE::Play(SoundConfig::SEID::Fall, 1.0f);
+			});
 		}
 
 		//A*に登録
@@ -610,7 +618,9 @@ namespace Field::Actor
 		actor->Rotate(rotateAngle);
 
 		//アニメーション
-		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
+		ActorAnimation::ExpantionYAndReturnToOrigin(*actor, []() {
+			SE::Play(SoundConfig::SEID::Fall, 1.0f);
+		});
 
 		AddContainer(place->ID(), actor);
 	}
@@ -651,6 +661,7 @@ namespace Field::Actor
 			ActorAnimation::FallAndExpantion(*actor, [=]()
 		{
 			GameParticleManager::Instance()->Generate(GameParticle::ColorfulDebis, actorPos + PositionEmitSmog);
+			SE::Play(SoundConfig::SEID::Fall, 1.0f);
 		});
 
 		else
@@ -660,6 +671,7 @@ namespace Field::Actor
 				ActorAnimation::FallAndExpantion(*actor, [=]()
 				{
 					GameParticleManager::Instance()->Generate(GameParticle::ColorfulDebis, actorPos + PositionEmitSmog);
+					SE::Play(SoundConfig::SEID::Fall, 1.0f);
 				});
 			});
 		}

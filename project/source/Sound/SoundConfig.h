@@ -63,24 +63,27 @@ public:
 		CountDown,
 
 		// *** SE ***
-		Select01,
-		Select02,
-		Select03,
-		MoveCursor,
-		Fall,
-		Beat,
-		BeatSuccess,
-		BeatFailed,
-		Transition,
-		NewContinentSE,
-		NewTownSE,
-		NewStarSE,
-		AIBurstSE,
-		Error,
-		EventHappen,
-		LinkUp,
-		Bom,
-		UFO,
+		Select01,			// 決定、道終点
+		Select02,			// 道始点
+		Select03,			// 道始点（ドリル）
+		MoveCursor,			// カーソル移動
+		Fall,				// 道落下
+		Beat,				// 連打
+		BeatStart,			// 連打ゲームスタート
+		BeatFinish,			// 連打ゲーム終了
+		BeatSuccess,		// 連打ゲーム成功
+		BeatFailed,			// 連打ゲーム失敗
+		Transition,			// シーンチェンジ
+		NewTownSE,			// 新しい町出現
+		NewContinentSE,		// 新大陸出現
+		NewStarSE,			// 新しい星誕生
+		AIBurstSE,			// AI暴走
+		Error,				// そこに道は置けません
+		EventHappen,		// イベント発生
+		TimeStopEventHappen,// 時間停止イベント発生
+		Bom,				// 爆破
+		UFO,				// UFO
+		NewField,			// 新しいフィールドに遷移
 
 		SEMax
 	};

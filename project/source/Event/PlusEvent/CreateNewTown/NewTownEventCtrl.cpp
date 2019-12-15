@@ -20,6 +20,9 @@
 #include "../../../Sound/PlayBGM.h"
 #include "../../../Booth/BoothController.h"
 
+#include "../../../Sound/SoundConfig.h"
+#include "../../../../Framework/Sound/SoundEffect.h"
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -71,6 +74,8 @@ NewTownEventCtrl::~NewTownEventCtrl()
 void NewTownEventCtrl::Init()
 {
 	NewTownEvent->Init();
+
+	SE::Play(SoundConfig::SEID::TimeStopEventHappen, 1.0f);
 
 	//ブースのLEDを点滅させる
 	BoothController::Instance()->BlinkLED(true);

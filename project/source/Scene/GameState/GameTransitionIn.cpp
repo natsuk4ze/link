@@ -19,6 +19,7 @@
 
 #include "../../Sound/PlayBGM.h"
 #include "../../Sound/SoundConfig.h"
+#include "../../../Framework/Task/TaskManager.h"
 
 /**************************************
 “üêˆ—
@@ -57,6 +58,9 @@ GameScene::State GameScene::GameTransitionIn::OnUpdate(GameScene & entity)
 
 	if (entity.cntFrame == 100)
 	{
+		TaskManager::Instance()->CreateDelayedTask(20, []() {
+			SE::Play(SoundConfig::SEID::NewField, 1.0f);
+		});
 		GuideViewer::Instance()->SetActive(false);
 		entity.field->SetViewerActive(false);
 		entity.gameViewer->SetGradeTitle(entity.level, [&]()

@@ -165,6 +165,7 @@ void AILevelDecreaseEvent::Update()
 		});
 		EventState = EffectHappend;
 		PlayBGM::Instance()->FadeOut();
+		SE::Play(SoundConfig::SEID::Bom, 1.0f);
 		break;
 
 		// AIレベル減らす
@@ -343,6 +344,8 @@ void AILevelDecreaseEvent::ReceiveBeatResult(bool IsSuccess)
 
 		//ガイドキャラに失敗モーションをさせる
 		guideActor->ChangeAnim(GuideActor::AnimState::Defeat, true);
+
+		SE::Play(SoundConfig::SEID::UFO, 1.0f);
 	}
 }
 

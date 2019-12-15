@@ -54,6 +54,8 @@ const char* SoundConfig::SEPath[SEID::SEMax]
 	{"data/SOUND/SE/btn01.wav"},
 	{"data/SOUND/SE/Onmtp-Impact01-1.wav"},
 	{"data/SOUND/SE/punch_09.wav"},			// デュクシ
+	{"data/SOUND/SE/gong-played1.wav"},
+	{"data/SOUND/SE/gong-played2.wav"},
 	{"data/SOUND/SE/quiz-right_02.wav"},	// ピンポンピンポーン
 	{"data/SOUND/SE/quiz-wrong_02.wav"},	// ブブー
 	{"data/SOUND/SE/land-the-spaceship_02.wav"},	// っすぅーーーーーおぉーーーーーん（通り過ぎる音）
@@ -62,10 +64,11 @@ const char* SoundConfig::SEPath[SEID::SEMax]
 	{"data/SOUND/SE/wind_04.wav"},			// ンゴオオオオオオオオオオオオ
 	{"data/SOUND/SE/alrat_02.wav"},			// 警告
 	{"data/SOUND/SE/othr11.wav"},
-	{"data/SOUND/SE/se-amd05.wav"},
+	{"data/SOUND/SE/se_amd05.wav"},
 	{"data/SOUND/SE/chime_01.wav"},			// ピンポーン
 	{"data/SOUND/SE/blast_05.wav"},			// 爆発
-	{"data/SOUND/SE/fly-a-spaceship_04"}	// うにょにょにょ
+	{"data/SOUND/SE/fly-a-spaceship_04.wav"},	// うにょにょにょ
+	{"data/SOUND/SE/eye-shine1.wav"}
 };
 
 const float SoundConfig::VolumeVoice = 1.0f;

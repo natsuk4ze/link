@@ -106,5 +106,10 @@ void NewTownEvent_City::CreateNewTown(void)
 		camera->Return(15, EventOverFunc);
 	});
 
-	SE::Play(SoundConfig::SEID::CreationEvent, 1.0f);
+	//SE::Play(SoundConfig::SEID::CreationEvent, 1.0f);
+	SE::Play(SoundConfig::SEID::NewTownSE, 1.0f);
+	TaskManager::Instance()->CreateDelayedTask(60, [&]()
+	{
+		SE::Play(SoundConfig::SEID::CreationEvent, 1.0f);
+	});
 }

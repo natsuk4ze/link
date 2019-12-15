@@ -310,6 +310,8 @@ void CityDestroyEvent::ReceiveBeatResult(bool IsSuccess)
 		// ¬Œ÷Aè¦ÎŒ‚”j
 		EventState = State::BeatGameSuccess;
 		success = true;
+
+		SE::Play(SoundConfig::SEID::Bom, 1.0f);
 	}
 	else
 	{
@@ -318,7 +320,9 @@ void CityDestroyEvent::ReceiveBeatResult(bool IsSuccess)
 		success = false;
 		
 		D3DXVECTOR3 cameraPos = camera->GetPosition() + Vector3::Up * 30.0f;
-		camera->Move(cameraPos, 10, 100.0f);
+		camera->Move(cameraPos, 10, 100.0f, []() {
+			SE::Play(SoundConfig::SEID::Bom, 1.0f);
+		});
 
 		guideActor->SetActive(false);
 	}

@@ -14,6 +14,8 @@
 #include "../Object/WaterHeightController.h"
 
 #include "../../../Library/cppLinq/cpplinq.hpp"
+#include "../../Sound/SoundConfig.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 
 #include <algorithm>
 
@@ -52,6 +54,7 @@ namespace Field::Model
 		if (!place->CanStartRoute())
 			return false;
 
+		SE::Play(SoundConfig::Select02, 1.0f);
 		//コンテナに追加してreturn true
 		container.push_back(place);
 		CreatePin(place, BuildRoad, isSea);
@@ -67,6 +70,7 @@ namespace Field::Model
 		if (place->IsDevelopableType())
 			return false;
 
+		SE::Play(SoundConfig::Select03, 1.0f);
 		//コンテナに追加してreturn true
 		container.push_back(place);
 		CreatePin(place, Develop, isSea);
@@ -166,6 +170,7 @@ namespace Field::Model
 			return false;
 		}
 
+		SE::Play(SoundConfig::SEID::Bom, 1.0f);
 		return true;
 	}
 

@@ -161,5 +161,10 @@ void NewTownEvent_Space::FallenStart(void)
 	// 惑星落下エフェクト
 	SpaceParticleManager::Instance()->SetPlanetFallEffect(StartPos, &MoveTailEmitter, &StarDustEmitter);
 
-	SE::Play(SoundConfig::SEID::CreationEvent, 1.0f);
+	SE::Play(SoundConfig::SEID::NewStarSE, 1.0f);
+	TaskManager::Instance()->CreateDelayedTask(90, [&]()
+	{
+		SE::Play(SoundConfig::SEID::CreationEvent, 1.0f);
+	});
+
 }
