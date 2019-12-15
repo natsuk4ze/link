@@ -40,6 +40,7 @@ namespace Field::Actor
 		const static std::string WhirlPoolTag;		//渦潮のリソースタグ
 
 		const static std::string GroundTag;			//地面のリソースタグ
+		const static std::string WorldGroundTag;	//国レベルの地面リソースタグ
 		const static std::string RiverTag;			//川のリソースタグ
 		const static std::string SeaTag;			//海のリソースタグ
 

@@ -96,6 +96,11 @@ namespace Field::Actor
 	const std::string ActorLoader::GroundTag = "Ground";
 
 	/**************************************
+	国レベル地面リソースタグ
+	***************************************/
+	const std::string ActorLoader::WorldGroundTag = "Ground-World";
+
+	/**************************************
 	川のリソースタグ
 	***************************************/
 	const std::string ActorLoader::RiverTag = "River";
@@ -179,6 +184,7 @@ namespace Field::Actor
 		modelFileName[WaterCross] = data[WaterCross].string_value();
 		modelFileName[WhirlPoolTag] = data[WhirlPoolTag].string_value();
 		modelFileName[GroundTag] = data[GroundTag].string_value();
+		modelFileName[WorldGroundTag] = data[WorldGroundTag].string_value();
 		modelFileName[RiverTag] = data[RiverTag].string_value();
 		modelFileName[SeaTag] = data[SeaTag].string_value();
 
