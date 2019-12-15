@@ -15,6 +15,9 @@
 #include "../../../Framework/Tool/DebugWindow.h"
 #include "../../../Framework/Input/input.h"
 #include <string>
+
+#include "../../Sound/SoundConfig.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 using std::string;
 
 // カーソル移動の間隔
@@ -136,6 +139,7 @@ void RewardViewer::Update()
 	// 終了
 	if (Keyboard::GetTrigger(DIK_X) || GamePad::GetTrigger(0, BUTTON_X))
 	{
+		SE::Play(SoundConfig::SEID::Select01, 1.0f);
 		isPlaying = false;
 	}
 }
@@ -184,6 +188,7 @@ void RewardViewer::CursorMove(void)
 	// 左
 	if (Keyboard::GetTrigger(DIK_LEFT) || GamePad::GetTriggerPOV(0, POV_LEFT))
 	{
+		SE::Play(SoundConfig::SEID::MoveCursor, 1.0f);
 		DevideX--;
 
 		if (DevideX < 0)
@@ -201,6 +206,7 @@ void RewardViewer::CursorMove(void)
 	// 右
 	else if (Keyboard::GetTrigger(DIK_RIGHT) || GamePad::GetTriggerPOV(0, POV_RIGHT))
 	{
+		SE::Play(SoundConfig::SEID::MoveCursor, 1.0f);
 		DevideX++;
 
 		if (DevideY != 2)
@@ -216,6 +222,7 @@ void RewardViewer::CursorMove(void)
 	// 上
 	if (Keyboard::GetTrigger(DIK_UP) || GamePad::GetTriggerPOV(0, POV_UP))
 	{
+		SE::Play(SoundConfig::SEID::MoveCursor, 1.0f);
 		DevideY--;
 
 		if (DevideY < 0)
@@ -233,6 +240,7 @@ void RewardViewer::CursorMove(void)
 	// 下
 	else if (Keyboard::GetTrigger(DIK_DOWN) || GamePad::GetTriggerPOV(0, POV_DOWN))
 	{
+		SE::Play(SoundConfig::SEID::MoveCursor, 1.0f);
 		DevideY++;
 
 		if (DevideX > 1)

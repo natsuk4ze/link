@@ -13,6 +13,8 @@
 #include "../../Event/EventController.h"
 #include "../../Field/FieldController.h"
 #include "../../Booth/BoothController.h"
+#include "../../Sound/SoundConfig.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 #include "../../Viewer/GameScene/Controller/GameViewer.h"
 
 /**************************************
@@ -25,7 +27,9 @@ void GameScene::GameTransitionOut::OnStart(GameScene & entity)
 
 	entity.cntFrame = 0;
 
-	//gamaeViewerをオフに
+	SE::Play(SoundConfig::SEID::Transition, 1.0f);
+
+//gamaeViewerをオフに
 	entity.gameViewer->SetActive(false, GameViewer::ViewerNo::ItemStock);
 	entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Timer);
 	entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Level);

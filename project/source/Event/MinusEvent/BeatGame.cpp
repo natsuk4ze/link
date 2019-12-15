@@ -15,6 +15,9 @@
 #include "../../Viewer/GameScene/Controller/BeatGameViewer.h"
 #include "../../../Framework/Input/input.h"
 #include "../../Reward/RewardController.h"
+#include "../../Sound/SoundConfig.h"
+#include "../../../Framework/Sound/SoundEffect.h"
+#include "../../../Framework/Task/TaskManager.h"
 
 //*****************************************************************************
 // スタティック変数宣言
@@ -61,6 +64,8 @@ BeatGame::BeatGame(BeatGame::GameType type,
 
 	//ビューワは最初は非表示
 	beatGameViewer->SetActive(false);
+
+	SE::Play(SoundConfig::SEID::TimeStopEventHappen, 1.0f);
 }
 
 //=============================================================================
@@ -95,6 +100,8 @@ void BeatGame::Update()
 
 			//準備完了状態に移行
 			isReady = true;
+
+			SE::Play(SoundConfig::SEID::BeatStart, 1.0f);
 		}
 	}
 	else
@@ -108,6 +115,7 @@ void BeatGame::Update()
 		//入力カウントを更新(*注意：本番はどのキー入力でもOKにする？)
 		if (Keyboard::GetTrigger(DIK_C) || GamePad::GetTrigger(0, BUTTON_A))
 		{
+			SE::Play(SoundConfig::SEID::Beat, 1.0f);
 			countInput++;
 		}
 
@@ -134,6 +142,12 @@ void BeatGame::Update()
 
 			//終了
 			isFinished = true;
+
+			SE::Play(SoundConfig::SEID::BeatFinish, 1.0f);
+			TaskManager::Instance()->CreateDelayedTask(60, [&]()
+			{
+				SE::Play(SoundConfig::SEID::BeatSuccess, 1.0f);
+			});
 		}
 
 		//失敗したか判定
@@ -153,6 +167,12 @@ void BeatGame::Update()
 
 			//終了
 			isFinished = true;
+
+			SE::Play(SoundConfig::SEID::BeatFinish, 1.0f);
+			TaskManager::Instance()->CreateDelayedTask(60, [&]()
+			{
+				SE::Play(SoundConfig::SEID::BeatFailed, 1.0f);
+			});
 		}
 	}
 	beatGameViewer->Update();
@@ -178,6 +198,7 @@ void BeatGame::SetReadyText(void)
 {
 	if (!canSetReady) return;
 
+	SE::Stop(SoundConfig::SEID::AIBurstSE);
 	beatGameViewer->SetReady();
 	canSetReady = false;
 }

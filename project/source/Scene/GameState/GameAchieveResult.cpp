@@ -119,7 +119,7 @@ GameScene::State GameScene::GameAchieveResult::OnUpdate(GameScene & entity)
 ***************************************/
 void GameScene::GameAchieveResult::TransitionToTitle(GameScene& entity)
 {
-	PlayBGM::Instance()->FadeOut(SoundConfig::BGMID::Result, 0.1f, 30, true);
+	PlayBGM::Instance()->FadeOut();
 
 	TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
 	{

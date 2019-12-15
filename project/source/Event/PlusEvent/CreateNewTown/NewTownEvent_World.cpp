@@ -13,6 +13,7 @@
 #include "../../../Field/Camera/EventCamera.h"
 #include "../../../Sound/PlayBGM.h"
 #include "../../../Sound/SoundConfig.h"
+#include "../../../../Framework/Sound/SoundEffect.h"
 
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
@@ -107,6 +108,13 @@ void NewTownEvent_World::CreateNewTown(void)
 	TaskManager::Instance()->CreateDelayedTask(180, [&]() 
 	{
 		camera->Return(15, EventOverFunc);
+	});
+
+	//SE::Play(SoundConfig::SEID::CreationEvent, 1.0f);
+	SE::Play(SoundConfig::SEID::NewContinentSE, 1.0f);
+	TaskManager::Instance()->CreateDelayedTask(60, [&]()
+	{
+		SE::Play(SoundConfig::SEID::CreationEvent, 1.0f);
 	});
 }
 

@@ -39,6 +39,9 @@
 
 #include <fstream>
 
+#include "../Sound/SoundConfig.h"
+#include "../../Framework/Sound/SoundEffect.h"
+
 #if _DEBUG
 #include "../../Framework/Resource/ResourceManager.h"
 #include "../../Framework/Renderer3D/BoardPolygon.h"
@@ -309,7 +312,7 @@ bool EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 			{
 				CameraTranslationPlugin* Test = CameraTranslationPlugin::Instance();
 				EventBase* Ptr = nullptr;
-
+				SE::Play(SoundConfig::SEID::EventHappen, 1.0f);
 				// イベントインスタンス作成
 				switch (EventPlace->EventType)
 				{

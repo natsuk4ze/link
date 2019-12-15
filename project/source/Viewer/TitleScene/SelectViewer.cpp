@@ -12,6 +12,8 @@
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "SelectLogo.h"
 #include "../../../Framework/Input/input.h"
+#include "../../Sound/SoundConfig.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 
 #include <algorithm>
 #include <functional>
@@ -81,6 +83,7 @@ void SelectViewer::Update()
 	{
 		if (logo[0]->Moveable())
 		{
+			SE::Play(SoundConfig::MoveCursor, 1.0f);
 			nextMode = Math::WrapAround(0, Mode::Max, ++nextMode);
 			for (auto& p : logo)
 			{
@@ -92,6 +95,7 @@ void SelectViewer::Update()
 	{
 		if (logo[0]->Moveable())
 		{
+			SE::Play(SoundConfig::MoveCursor, 1.0f);
 			nextMode = Math::WrapAround(0, Mode::Max, --nextMode);
 			for (auto& p : logo)
 			{

@@ -13,6 +13,7 @@
 #include "../../Scene/GameScene.h"
 #include "../../Sound/PlayBGM.h"
 #include "../../Sound/SoundConfig.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 
 //=====================================
 // コンストラクタ
@@ -87,7 +88,15 @@ void TitleViewer::SetActive(bool flag)
 //=====================================
 bool TitleViewer::CheckSceneChange()
 {
-	return Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C);
+	if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
+	{
+		SE::Play(SoundConfig::SEID::Select01, 1.0f);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 //=====================================
@@ -101,7 +110,7 @@ void TitleViewer::SetNextScene(GameScene& entity)
 		if (selectViewer->CheckNextScene() == 0)
 		{
 			// ゲーム開始
-			PlayBGM::Instance()->FadeOut(SoundConfig::BGMID::Title, 0.1f, 30, true);
+			PlayBGM::Instance()->FadeOut();
 			PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.1f, 30);
 			entity.ChangeState(GameScene::State::Idle);
 		}

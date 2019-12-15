@@ -8,6 +8,8 @@
 
 #include "../../../../main.h"
 #include "../../Framework/ViewerDrawer/BaseViewerDrawer.h"
+#include "../../../Sound/SoundConfig.h"
+#include "../../../../Framework/Sound/SoundEffect.h"
 
 //*****************************************************************************
 // コンストラクタ
@@ -72,4 +74,6 @@ void FieldErrorMessage::Set(ErroID id)
 
 	//再生状態に移行
 	isPlaying = true;
+
+	SE::Play(SoundConfig::SEID::Error, 1.0f);
 }

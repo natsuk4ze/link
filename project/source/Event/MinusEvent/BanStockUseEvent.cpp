@@ -14,6 +14,9 @@
 #include "../../../Framework/Sound/SoundEffect.h"
 #include "../../Sound/SoundConfig.h"
 #include "../../Sound/PlayBGM.h"
+#include "../../Booth/BoothController.h"
+#include "../../Sound/SoundConfig.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -75,6 +78,8 @@ void BanStockUseEvent::Init()
 		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::AIBurstEvent, 0.1f, 30);
 		beatGame->CountdownStart(); 
 	});
+
+	SE::Play(SoundConfig::SEID::AIBurstSE, 1.0f);
 
 	// 初期化終了
 	Initialized = true;

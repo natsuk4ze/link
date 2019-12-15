@@ -14,6 +14,8 @@
 
 #include "../../../../Framework/Task/TaskManager.h"
 #include "../../../../Framework/Math/Easing.h"
+#include "../../../../Framework/Sound/SoundEffect.h"
+#include "../../../Sound/SoundConfig.h"
 
 enum State
 {
@@ -158,4 +160,11 @@ void NewTownEvent_Space::FallenStart(void)
 
 	// 惑星落下エフェクト
 	SpaceParticleManager::Instance()->SetPlanetFallEffect(StartPos, &MoveTailEmitter, &StarDustEmitter);
+
+	SE::Play(SoundConfig::SEID::NewStarSE, 1.0f);
+	TaskManager::Instance()->CreateDelayedTask(90, [&]()
+	{
+		SE::Play(SoundConfig::SEID::CreationEvent, 1.0f);
+	});
+
 }
