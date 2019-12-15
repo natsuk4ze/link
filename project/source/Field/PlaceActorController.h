@@ -83,6 +83,9 @@ namespace Field::Actor
 		//街が繋がった
 		void OnConnectedTown(const Model::PlaceModel *place);
 
+		//モーフィング開始
+		void OnStartMorphing(const Model::PlaceModel *place, int next);
+
 		//パッセンジャー出発処理
 		void DepartPassenger(const Model::PlaceModel* start, const Model::PlaceModel* goal, const Model::PlaceModel* town);
 		
@@ -100,6 +103,9 @@ namespace Field::Actor
 
 		//海判定
 		bool IsOnSea(const FieldPosition& position) const;
+
+		// 作った交差点の数を取得
+		int GetJunctionNum(void);
 
 		//定数メンバ
 		static const D3DXVECTOR3 PositionEmitSmog;		//道落下時の煙発生位置

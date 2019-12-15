@@ -97,6 +97,8 @@ namespace Field::Model
 		PlaceModel* GetFirst() const;
 		PlaceModel* GetLast() const;
 
+		int GetRoadNum(void) { return this->route.size(); };
+
 	private:
 		PlaceModel *edgeStart, *edgeEnd;			//í[ì_ÇÃPlace
 		std::vector<PlaceModel*> route;				//ìπÇ∆Ç»ÇÈPlace

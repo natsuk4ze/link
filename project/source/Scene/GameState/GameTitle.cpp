@@ -17,6 +17,8 @@
 #include "../../../Framework/Serial/SerialWrapper.h"
 #include "../../Sound/PlayBGM.h"
 #include "../../Booth/BoothController.h"
+#include "../../Reward/RewardNotifier.h"
+#include "../../Reward/RewardController.h"
 
 //=====================================
 // 入場処理
@@ -25,6 +27,11 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 {
 	// シーンチェンジ
 	TransitionController::Instance()->SetTransition(true, TransitionType::HexaPop);
+
+	//実績のリセット
+	// リワードをリセット
+	entity.rewardNotifier->ResetAchieved();
+	RewardController::Instance()->ResetAllRewardData();
 
 	// カメラのモード切替
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::Arround);
@@ -39,7 +46,7 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	GuideViewer::Instance()->SetActive(false);
 	//entity.guideViewer->SetActive(false);
 	entity.resultViewer->SetActive(false);
-	entity.nemeEntryViewer->SetActive(false);
+	entity.nameEntryViewer->SetActive(false);
 
 	// タイトルのBGMを開始
 	PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Title, 0.1f, 30);

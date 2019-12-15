@@ -99,7 +99,8 @@ void GuideActor::Update()
 
 	if (auraEmitter != nullptr)
 		auraEmitter->SetPosition(transform->GetPosition());
-	Debug();
+
+	//Debug();
 }
 
 //=====================================

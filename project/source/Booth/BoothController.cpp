@@ -7,13 +7,16 @@
 //=====================================
 #include "BoothController.h"
 #include "../../Framework/Serial/SerialWrapper.h"
+#include "../../Framework/Core/PlayerPrefs.h"
 
 /**************************************
 ‰Šú‰»ˆ—
 ***************************************/
 void BoothController::Init()
 {
-	serial = new SerialWrapper(3);
+	int comNum = PlayerPrefs::GetNumber<int>("ComPort");
+
+	serial = new SerialWrapper(comNum);
 	serial->Begin(9600);
 }
 
@@ -28,10 +31,9 @@ void BoothController::Uninit()
 /**************************************
 ‰ñ“]ˆ—
 ***************************************/
-void BoothController::RotateTable(char angle)
+void BoothController::RotateTable(unsigned char angle)
 {
-	char buf[2] = { 'r', angle };
-	size_t numPut = serial->Write(buf, 2);
+	size_t numPut = serial->Write(angle);
 }
 
 /**************************************

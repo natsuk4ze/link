@@ -15,6 +15,8 @@
 #include "../../../Framework/Input/input.h"
 #include "../../Sound/PlayBGM.h"
 #include "../../Sound/SoundConfig.h"
+#include "../../Viewer/GameScene/Controller/NameEntryViewer.h"
+#include "../../Viewer/NameViewer/Name.h"
 
 #include <functional>
 
@@ -25,16 +27,13 @@ void GameScene::GameAchieveResult::OnStart(GameScene & entity)
 {
 	Debug::Log("AchieveResult is Started");
 
-	auto rewardContainer = RewardController::Instance()->IsAllAchieved();
-	for (int i = 0; i < RewardConfig::Max; i++)
-	{
-		rewardContainer.push_back(RewardConfig::Type(i));
-	}
+	auto rewardContainer = RewardController::Instance()->GetAllAchieved();
 
 	//実績がなかったらタイトルへ遷移
 	if (rewardContainer.empty())
 	{
 		TransitionToTitle(entity);
+		entity.step = Step::Transition;
 	}
 	//あったら表示開始
 	else
@@ -63,19 +62,53 @@ GameScene::State GameScene::GameAchieveResult::OnUpdate(GameScene & entity)
 		break;
 
 	case Step::AchieveInputWait:
-		if (Keyboard::GetTrigger(DIK_RETURN))
+
+		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 		{
 			//初達成の実績があったらネームエントリー
-			if (RewardController::Instance()->FindFirstAchieved())
+			if (RewardController::Instance()->ExistFirstAchieved())
 			{
-				entity.step = Step::AchieveInputWait;
+				// まだ名前が入力されなかったら
+				if (!entity.nameEntryViewer->GetNameEntered())
+				{
+					entity.nameEntryViewer->SlideNameEntryViewer(true);
+					entity.step = Step::AchieveNameEntryWait;
+				}
+				else
+				{
+					entity.step = Step::AchieveNameEntryFinish;
+				}
 			}
-			//なかったらタイトルへ
+			//なかったら遷移へ
 			else
 			{
-				TransitionToTitle(entity);
+				entity.step = Step::AchieveNameEntryFinish;
 			}
 		}
+		break;
+
+	case Step::AchieveNameEntryWait:
+
+		//名前入力の終了待ち
+		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
+		{
+			entity.nameEntryViewer->SlideNameEntryViewer(false);
+
+			//終了したら遷移
+			entity.step = Step::AchieveNameEntryFinish;
+		}
+		break;
+
+	case Step::AchieveNameEntryFinish:
+
+		//ネームを保存
+		RewardController::Instance()->SetFirstAchieverName(entity.nameEntryViewer->GetEntryNameID());
+
+		//遷移
+		TransitionToTitle(entity);
+		entity.step = Step::Transition;
+
+		break;
 	}
 
 	return State::AchieveResult;
@@ -96,6 +129,4 @@ void GameScene::GameAchieveResult::TransitionToTitle(GameScene& entity)
 		entity.field->Load();
 		entity.ChangeState(State::Title);
 	});
-
-	entity.step = Transition;
 }

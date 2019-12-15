@@ -159,22 +159,24 @@ void ResultViewer::Draw(void)
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 }
 
-//=============================================================================
-// パラメータ受け取る処理
-//=============================================================================
-void ResultViewer::ReceiveParam(int cityScore, int worldScore, int spaceScore)
-{
-	int param[ResultViewerParam::fieldTypeMax] = { cityScore ,worldScore ,spaceScore };
-
-	for (int i = 0; i < ResultViewerParam::fieldTypeMax; i++)
-	{
-		//コンテナに入れて
-		viewerParam->score[i] = param[i];
-
-		//コンテナからビュアーに渡す
-		scoreViewer->parameterBoxScore[i] = viewerParam->score[i];
-	}
-}
+////=============================================================================
+//// パラメータ受け取る処理
+////=============================================================================
+//void ResultViewer::ReceiveParam(int cityScore, int worldScore, int spaceScore)
+//{
+//	int param[ResultViewerParam::fieldTypeMax] = { cityScore ,worldScore ,spaceScore };
+//
+//	for (int i = 0; i < ResultViewerParam::fieldTypeMax; i++)
+//	{
+//		//コンテナに入れて
+//		viewerParam->score[i] = param[i];
+//
+//		//コンテナからビュアーに渡す
+//		scoreViewer->parameterBoxScore[i] = viewerParam->score[i];
+//	}
+//
+//	scoreViewer->SetRecievedParam();
+//}
 
 //=============================================================================
 // アニメーションの再生中判定
@@ -224,6 +226,14 @@ void ResultViewer::SetAchieveViewerActive(bool Flag)
 void ResultViewer::SetActive(bool flag)
 {
 	isActive = flag;
+}
+
+//=============================================================================
+// パラメータ受け取る処理
+//=============================================================================
+void ResultViewer::ReceiveParam(const ResultViewerParam & ResultPara)
+{
+	scoreViewer->ReceiveParam(ResultPara);
 }
 
 //=============================================================================

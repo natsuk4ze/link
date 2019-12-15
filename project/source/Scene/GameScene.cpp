@@ -37,6 +37,7 @@
 #include "../Reward/RewardController.h"
 #include "../Reward/RewardNotifier.h"
 #include "../Booth/BoothController.h"
+#include "../Presen/PresenDebugController.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
@@ -67,7 +68,7 @@ staticメンバ
 int GameScene::level = 0;		//デバッグ用フィールドレベル（本番では非staticメンバにする
 const float GameScene::BloomPower[] = { 0.6f, 0.55f, 0.50f };		//ブルームの強さ
 const float GameScene::BloomThrethold[] = { 0.6f, 0.5f, 0.4f };		//ブルームをかける輝度の閾値
-const unsigned char GameScene::AngleTable[3] = { 90, 120, 150 };
+const unsigned char GameScene::AngleTable[3] = { 45, 75, 105 };
 
 /**************************************
 初期化処理
@@ -91,12 +92,12 @@ void GameScene::Init()
 	eventHandler = new FieldEventHandler();
 	eventController->ReceiveFieldEventHandler(eventHandler);
 	bloomController = new BloomController();
-	serial = new SerialWrapper(3);								//TODO:ポート番号を変えられるようにする
 	Client = new UDPClient();
 	resultViewer = new ResultViewer();
-	nemeEntryViewer = new NameEntryViewer();
+	nameEntryViewer = new NameEntryViewer();
 	titleViewer = new TitleViewer();
 	rewardNotifier = new RewardNotifier();
+	debugController = new PresenDebugController(this);
 
 	// ガイドビュアーの初期化
 	GuideViewer::Instance()->Init();
@@ -160,13 +161,12 @@ void GameScene::Uninit()
 	SAFE_DELETE(eventController);
 	SAFE_DELETE(bloomController);
 	SAFE_DELETE(eventHandler);
-	SAFE_DELETE(serial);
 	SAFE_DELETE(Client);
-	//SAFE_DELETE(guideViewer);
 	SAFE_DELETE(resultViewer);
-	SAFE_DELETE(nemeEntryViewer);
+	SAFE_DELETE(nameEntryViewer);
 	SAFE_DELETE(titleViewer);
 	SAFE_DELETE(rewardNotifier);
+	SAFE_DELETE(debugController);
 
 	// ガイドビュアーの削除
 	GuideViewer::Instance()->Uninit();
@@ -190,6 +190,9 @@ void GameScene::Uninit()
 void GameScene::Update()
 {
 	ProfilerCPU::Instance()->BeginLabel("GameScene");
+
+	//デバッグ操作の更新
+	debugController->Update();
 
 	//ステートを更新
 	State next = fsm[currentState]->OnUpdate(*this);
@@ -217,16 +220,12 @@ void GameScene::Update()
 	field->EmbedViewerParam(gameParam);
 	gameViewer->ReceiveParam(gameParam);
 
-	// イベントビューアに必要なパラメータを渡す
-	//EventViewerParam eventParam;
-	//eventController->EmbedViewerParam(eventParam);
-
 	//ビュアー更新
 	gameViewer->Update();
 	GuideViewer::Instance()->Update();
 	resultViewer->Update();
-	nemeEntryViewer->Update();
 	titleViewer->Update();
+	nameEntryViewer->Update();
 	rewardNotifier->Update();
 
 	//パーティクル更新
@@ -242,18 +241,18 @@ void GameScene::Update()
 	//デバッグ機能
 	DebugTool();
 
-	Debug::Begin("EventHandler");
-	if (Debug::Button("Pause"))
-		eventHandler->PauseGame();
-	if (Debug::Button("Resume"))
-		eventHandler->ResumeGame();
-	if (Debug::Button("GetTownPos"))
-		eventHandler->GetNewTownPosition();
-	if (Debug::Button("DestroyTown"))
-		eventHandler->DestroyTown(eventHandler->GetDestroyTarget());
-	if (Debug::Button("CreateTown"))
-		eventHandler->CreateNewTown(eventHandler->GetNewTownPosition());
-	Debug::End();
+	//Debug::Begin("EventHandler");
+	//if (Debug::Button("Pause"))
+	//	eventHandler->PauseGame();
+	//if (Debug::Button("Resume"))
+	//	eventHandler->ResumeGame();
+	//if (Debug::Button("GetTownPos"))
+	//	eventHandler->GetNewTownPosition();
+	//if (Debug::Button("DestroyTown"))
+	//	eventHandler->DestroyTown(eventHandler->GetDestroyTarget());
+	//if (Debug::Button("CreateTown"))
+	//	eventHandler->CreateNewTown(eventHandler->GetNewTownPosition());
+	//Debug::End();
 }
 
 /**************************************
@@ -302,7 +301,7 @@ void GameScene::Draw()
 	gameViewer->Draw();
 	eventController->DrawEventViewer();
 	resultViewer->Draw();
-	nemeEntryViewer->Draw();
+	nameEntryViewer->Draw();
 	titleViewer->Draw();
 	rewardNotifier->Draw();
 
@@ -438,7 +437,7 @@ void GameScene::DebugTool()
 	Debug::NewLine();
 	if (Debug::Button("SendPacket"))
 	{
-		UDPClient::SendRankPacket("000102","123456789");
+		UDPClient::SendRankPacket("000102", "123456789");
 	}
 	Debug::SameLine();
 	if (Debug::Button("GetLastScore"))
@@ -511,7 +510,10 @@ void GameScene::SetFieldLevel(int level)
 	field->SetLevel((Field::FieldLevel)level);
 
 	// フィールドレベルアップパケットを送信
-	UDPClient::SendLevelUpPacket();
+	if (level != Field::FieldLevel::City)
+	{
+		UDPClient::SendLevelUpPacket();
+	}
 
 	//レベル固有のパーティクルマネージャ初期化
 	start = ProfilerCPU::GetCounter();
@@ -584,8 +586,4 @@ void GameScene::Clear()
 	end = ProfilerCPU::GetCounter();
 
 	Debug::Log("Clear Event : %f", ProfilerCPU::CalcElapsed(start, end));
-
-	// リワードをリセット
-	rewardNotifier->ResetAchieved();
-	RewardController::Instance()->ResetAllRewardData();
 }

@@ -58,8 +58,11 @@ void SealItemStockViewer::Update(void)
 	if (!isPlaying)
 		return;
 
-	Icon_White->Update();
-	Icon->Update();
+	if (!GetInPause())
+	{
+		Icon_White->Update();
+		Icon->Update();
+	}
 }
 
 //=============================================================================
@@ -71,8 +74,11 @@ void SealItemStockViewer::Draw(void)
 	if (!isPlaying)
 		return;
 
-	Icon_White->Draw();
-	Icon->Draw();
+	if (!GetInPause())
+	{
+		Icon_White->Draw();
+		Icon->Draw();
+	}
 }
 
 
@@ -91,9 +97,10 @@ void SealItemStockViewer::CountDownStart(void)
 //=============================================================================
 // ストック封印アイコンを設置する
 //=============================================================================
-void SealItemStockViewer::SetBanIcon(void)
+void SealItemStockViewer::SetBanIcon(std::function<bool(void)> func)
 {
 	// 初期化
+	GetInPause = func;
 	isPlaying = true;
 	Icon->SetSize(initIconSize);
 	Icon->SetVisible(true);

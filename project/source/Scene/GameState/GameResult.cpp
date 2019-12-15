@@ -12,6 +12,7 @@
 #include "../../Field/Camera/FieldCamera.h"
 #include "../../Viewer/GameScene/Controller/ResultViewer.h"
 #include "../../Viewer/GameScene/Controller/NameEntryViewer.h"
+#include "../../Event/EventController.h"
 #include "../../../Framework/Input/input.h"
 #include "../../../Framework/Transition/TransitionController.h"
 #include "../../../Framework/Network/UDPClient.h"
@@ -28,9 +29,6 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 {
 	entity.step = 0;
 
-	// 最下位のスコアを取得
-	//entity.Client->GetLastScore();
-
 	//スコア表示、名前入力などなど
 	// カメラのモード切り替え
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::Arround);
@@ -40,30 +38,42 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	entity.resultViewer->SlideScoreViewer(true);
 	entity.resultViewer->SetAchieveViewerActive(false);
 
+	// ネームエントリーの初期化
+	entity.nameEntryViewer->Init();
+
 	// 使用しないUIの描画をOFF
 	entity.field->SetViewerActive(false);
 	entity.gameViewer->SetActive(false);
-	entity.nemeEntryViewer->SetActive(false);
+	entity.nameEntryViewer->SetActive(false);
+	entity.eventController->ClearEventMessage();
 	GuideViewer::Instance()->SetActive(false);
 	//entity.guideViewer->SetActive(false);
 
 	//宇宙レベルのスコアを保存
 	if (level == 2)
 	{
-		entity.field->SetScore();
+		entity.field->SetResultPara();
+		//entity.field->SetScore();
 	}
 
 	// リザルト用のUIにAI発展レベルを渡す
-	int cityScore = (int)entity.field->GetScore(Field::FieldLevel::City);
-	int worldScore = (int)entity.field->GetScore(Field::FieldLevel::World);
-	int spaceScore = (int)entity.field->GetScore(Field::FieldLevel::Space);
-	entity.resultViewer->ReceiveParam(cityScore, worldScore, spaceScore);
+	//int cityScore = (int)entity.field->GetScore(Field::FieldLevel::City);
+	//int worldScore = (int)entity.field->GetScore(Field::FieldLevel::World);
+	//int spaceScore = (int)entity.field->GetScore(Field::FieldLevel::Space);
+	ResultViewerParam* Prarm = entity.field->GetResultPara();
+	entity.resultViewer->ReceiveParam(*Prarm);
 
 	SE::Play(SoundConfig::SEID::Finish, 1.0f);
 	PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Result, 0.1f, 30);
 
 	//全体スコアを計算
-	entity.entiretyScore = (int)(powf(10, 8) * spaceScore) + (int)(powf(10, 4) * worldScore) + cityScore;
+	string TotalScore = std::to_string(Prarm->score[Field::FieldLevel::Space]) +
+		std::to_string(Prarm->score[Field::FieldLevel::World]) +
+		std::to_string(Prarm->score[Field::FieldLevel::City]);
+	entity.entiretyScore = std::stoull(TotalScore);
+
+	//ランキング更新があったらネームエントリーへ
+	entity.ShowNameEntry = entity.entiretyScore > entity.Client->GetLastScore() ? true : false;
 }
 
 //=====================================
@@ -79,8 +89,8 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 
 	switch (entity.step)
 	{
-		//TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
 	case Step::ScoreViewerIn:
+
 		if (entity.resultViewer->IsPlayingAnimation() != ResultViewer::PlayingIn)
 		{
 			entity.step = Step::ScoreInputWait;
@@ -91,38 +101,45 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 		{
 			//ランキング更新があったらネームエントリーへ
-			long long lastScore = entity.Client->GetLastScore();
-			if (entity.entiretyScore > lastScore)
+			if (entity.ShowNameEntry)
 			{
-				entity.nemeEntryViewer->SetActive(true);
+				entity.nameEntryViewer->SlideNameEntryViewer(true);
 				entity.step = Step::ScoreNameEntryWait;
 			}
 			//それ以外は達成実績表示へ遷移
 			else
 			{
-				entity.step = Step::ScoreNameEntryFinish;
+				entity.resultViewer->SlideScoreViewer(false);
+				entity.step = Step::ScoreViewerOut;
 			}
 		}
 		break;
 
 	case Step::ScoreNameEntryWait:
-		//TODO:ネームエントリーの終了をコールバックで受け取るようにする
+
+		//エンターキーでネームエントリー終了
+		//if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 		entity.step = Step::ScoreNameEntryFinish;
 		break;
 
 	case Step::ScoreNameEntryFinish:
+
 		//エンターキーが押されたらスコアビューワをスライドアウトさせる
 		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 		{
 			entity.resultViewer->SlideScoreViewer(false);
-			entity.nemeEntryViewer->SetActive(false);
+			entity.nameEntryViewer->SlideNameEntryViewer(false);
 			entity.step = Step::ScoreViewerOut;
+
+			// サーバーにランキングパケットを送信
+			entity.Client->SendRankPacket(entity.nameEntryViewer->GetEntryNameID(), entity.entiretyScore);
 		}
 		break;
 
 	case Step::ScoreViewerOut:
 		if (entity.resultViewer->IsPlayingAnimation() != ResultViewer::PlayingOut)
 		{
+			entity.nameEntryViewer->SetActive(false);
 			entity.ChangeState(State::AchieveResult);
 		}
 		break;

@@ -33,7 +33,7 @@ namespace Effect::Game
 		}
 
 		//エミッタコンテナ作成
-		const unsigned MaxEmitter = 64;
+		const unsigned MaxEmitter = 128;
 		const int DurationEmit = 3;
 		const int NumEmit = 50;
 		emitterContainer.resize(MaxEmitter, nullptr);

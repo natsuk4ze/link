@@ -58,7 +58,6 @@ namespace Field
 		fieldBorder(InitFieldBorder),
 		cntFrame(0),
 		developmentLevelAI(0),
-		realDevelopmentLevelAI(0),
 		developSpeedBonus(1.0f),
 		currentLevel(level),
 		operationZ(OperationExplanationViewer::OperationID::Z_None),
@@ -81,7 +80,7 @@ namespace Field
 		input = new FieldInput(this);
 		placeContainer = new Model::PlaceContainer();
 		viewer = new FieldViewer();
-		score = new Score();
+		//score = new Score();
 
 		//フィールドレベル設定
 		SetLevel(currentLevel);
@@ -92,12 +91,15 @@ namespace Field
 		fsm[State::Idle] = new IdleState();
 		fsm[State::Develop] = new UseItemState();
 
-		//コールバック作成
+		//ファンクタ作成
 		onConnectTown = std::bind(&FieldController::OnConnectedTown, this, std::placeholders::_1, std::placeholders::_2);
 		onChangePlaceType = std::bind(&Actor::PlaceActorController::ChangeActor, placeActController, std::placeholders::_1);
 
 		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
+
+		auto onStartMorph = std::bind(&Actor::PlaceActorController::OnStartMorphing, placeActController, std::placeholders::_1, std::placeholders::_2);
+		placeContainer->SetMorphingFantor(onStartMorph);
 
 		//ルートプロセッサ作成
 		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
@@ -127,7 +129,7 @@ namespace Field
 		SAFE_DELETE(input);
 		SAFE_DELETE(infoController);
 		SAFE_DELETE(viewer);
-		SAFE_DELETE(score);
+		//SAFE_DELETE(score);
 
 		//ステートマシン削除
 		Utility::DeleteContainer(fsm);
@@ -256,9 +258,20 @@ namespace Field
 		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
 
+		auto onStartMorph = std::bind(&Actor::PlaceActorController::OnStartMorphing, placeActController, std::placeholders::_1, std::placeholders::_2);
+		placeContainer->SetMorphingFantor(onStartMorph);
+
 		onChangePlaceType = std::bind(&Actor::PlaceActorController::ChangeActor, placeActController, std::placeholders::_1);
 
 		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
+
+		if (level == FieldLevel::City)
+		{
+			// 町レベルに遷移する時に、ストック数をリセットする（ライ）
+			developper->ResetStock();
+			// リザルト画面用のパラメータをリセットする
+			ResultPara.Clear();
+		}
 	}
 
 	/**************************************
@@ -281,7 +294,6 @@ namespace Field
 		//パラメータリセット
 		cntFrame = 0;
 		developmentLevelAI = 0.0f;
-		realDevelopmentLevelAI = 0.0f;
 		developSpeedBonus = 1.0f;
 		enableDevelop = true;
 		flgWaitPopup = false;
@@ -358,8 +370,8 @@ namespace Field
 		Debug::End();
 #endif
 
-		param.levelAI = (int)realDevelopmentLevelAI;
-		param.ratioLevel = (float)realDevelopmentLevelAI / MaxDevelopmentLevelAI;
+		param.levelAI = (int)developmentLevelAI;
+		param.ratioLevel = (float)developmentLevelAI / MaxDevelopmentLevelAI;
 		param.currentFieldLevel = (int)currentLevel;
 		developper->EmbedViewerParam(param);
 	}
@@ -378,8 +390,8 @@ namespace Field
 	bool FieldController::ShouldLevelUp()
 	{
 		//宇宙レベルではレベルアップしない
-		//if (currentLevel == FieldLevel::Space)
-		//	return false;
+		if (currentLevel == FieldLevel::Space)
+			return false;
 
 		//AI発展レベルが最大値に到達していたらレベルアップする
 		return developmentLevelAI >= MaxDevelopmentLevelAI;
@@ -557,13 +569,16 @@ namespace Field
 
 		float raiseValue = placeContainer->CalcDevelopmentLevelAI(developSpeedBonus);
 		float bonusSideWay = placeActController->GetSideWayBonus();
-		developmentLevelAI = Math::Clamp(0.0f, 9999.0f, developmentLevelAI + raiseValue + bonusSideWay);
-		realDevelopmentLevelAI = Easing::EaseValue(developmentLevelAI / 9999.0f, 0.0f, 9999.0f, EaseType::OutSine);
+
+		//宇宙レベルでは最大値をとりあえず増やしてしまう
+		float MaxLevel = currentLevel == FieldLevel::Space ? MaxDevelopmentLevelAI * 1000.0f : MaxDevelopmentLevelAI;
+
+		developmentLevelAI = Math::Clamp(0.0f, MaxLevel, developmentLevelAI + raiseValue + bonusSideWay);
 
 		// リワードに反映
 		if (currentLevel == FieldLevel::Space)
 		{
-			RewardController::Instance()->SetRewardData(RC::Type::MasterAI, (int)(realDevelopmentLevelAI));
+			RewardController::Instance()->SetRewardData(RC::Type::MasterAI, (int)(developmentLevelAI));
 		}
 	}
 
@@ -627,18 +642,42 @@ namespace Field
 	}
 
 	/**************************************
-	スコアの取得
+	リザルト画面用のパラメータを設定する
 	***************************************/
-	int FieldController::GetScore(FieldLevel current)
+	void FieldController::SetResultPara(void)
 	{
-		return score->GetScore(current);
+		ResultPara.score[currentLevel] = (int)developmentLevelAI;
+		ResultPara.builtRoad[currentLevel] = GetRoadNum();
+		ResultPara.connectedCity[currentLevel] = GetTownNum();
 	}
 
 	/**************************************
-	スコアのセット
+	リザルト画面用のパラメータを取得する
 	***************************************/
-	void FieldController::SetScore()
+	ResultViewerParam * FieldController::GetResultPara(void)
 	{
-		score->SetScore((int)realDevelopmentLevelAI, currentLevel);
+		return &this->ResultPara;
+	}
+
+	/**************************************
+	作った道の数を取得
+	***************************************/
+	int FieldController::GetRoadNum(void)
+	{
+		int RoadNum = 0;
+		for (auto & Route : routeContainer)
+		{
+			RoadNum += Route->GetRoadNum();
+		}
+
+		return placeActController->GetJunctionNum() + RoadNum;
+	}
+
+	/**************************************
+	繋がった町の数を取得
+	***************************************/
+	int FieldController::GetTownNum(void)
+	{
+		return placeContainer->GetTownNum();
 	}
 }

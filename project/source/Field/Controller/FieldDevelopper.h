@@ -35,6 +35,8 @@ namespace Field
 
 		void AddStock(int num);
 
+		void ResetStock(void);
+
 		void EmbedViewerParam(GameViewerParam& param);
 
 		static const int MaxStock;

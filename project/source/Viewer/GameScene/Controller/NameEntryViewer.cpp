@@ -19,9 +19,10 @@
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-NameEntryViewer::NameEntryViewer():
+NameEntryViewer::NameEntryViewer() :
 	entryNameID(),
-	reelCnt()
+	reelCnt(),
+	NameEntered(false)
 {
 	input = new NameEntryInput();
 
@@ -46,6 +47,21 @@ NameEntryViewer::~NameEntryViewer()
 	nameEntryViewer.clear();
 }
 
+//*****************************************************************************
+// 初期化処理
+//*****************************************************************************
+void NameEntryViewer::Init(void)
+{
+	for (int i = 0; i < entryNameMax; i++)
+	{
+		entryNameID[i] = 0;
+	}
+
+	reelCnt = 0;
+
+	NameEntered = false;
+}
+
 //=============================================================================
 // 更新処理
 //=============================================================================
@@ -55,28 +71,34 @@ void NameEntryViewer::Update()
 		return;
 
 #ifdef _DEBUG
-	for (int i = 0; i < entryNameMax; i++)
-	{
-		Debug::Text("nameID%d", entryNameID[i]);
-	}
-	if (Keyboard::GetTrigger(DIK_2))
-	{
-		SlideNameEntryViewer(true);
-	}
-	if (Keyboard::GetTrigger(DIK_3))
-	{
-		SlideNameEntryViewer(false);
-	}
+	//for (int i = 0; i < entryNameMax; i++)
+	//{
+	//	Debug::Text("nameID%d", entryNameID[i]);
+	//}
 
+	//if (Keyboard::GetTrigger(DIK_2))
+	//{
+	//	SlideNameEntryViewer(true);
+	//}
+	//if (Keyboard::GetTrigger(DIK_3))
+	//{
+	//	SlideNameEntryViewer(false);
+	//}
 #endif
 
 	MoveCursor();
 	UpDownReel();
-	SetEntryName();
+	//SetEntryName();
 
 	for (unsigned int i = 0; i < nameEntryViewer.size(); i++)
 	{
 		nameEntryViewer[i]->Update();
+	}
+
+	//ID格納
+	for (int i = 0; i < entryNameMax; i++)
+	{
+		entryNameID[i] = reelViewer->GetReelChar()[i];
 	}
 }
 
@@ -115,12 +137,7 @@ void NameEntryViewer::SetEntryName()
 		//初期化して
 		for (int i = 0; i < entryNameMax; i++)
 		{
-			entryNameID[i] = {};
-		}
-		//ID格納
-		for (int i = 0; i < entryNameMax; i++)
-		{
-			entryNameID[i] = reelViewer->GetReelChar()[i];
+			entryNameID[i] = 0;
 		}
 	}
 }
@@ -183,9 +200,30 @@ bool NameEntryViewer::GetIsActive()
 //=============================================================================
 // 登録名ID取得処理（文字テーブルの0～35までの値がentryNameMax個の配列）
 //=============================================================================
-int* NameEntryViewer::GetEntryNameID()
+std::string NameEntryViewer::GetEntryNameID()
 {
-	return entryNameID;
+	std::string NameStr;
+	NameStr += IntToString(entryNameID[0]);
+	NameStr += IntToString(entryNameID[1]);
+	NameStr += IntToString(entryNameID[2]);
+	return NameStr;
+}
+
+//=============================================================================
+// int型のネームがstring型に変換
+//=============================================================================
+std::string NameEntryViewer::IntToString(int NameInt)
+{
+	if (NameInt >= 0 && NameInt < 10)
+	{
+		return "0" + std::to_string(NameInt);
+	}
+	else if (NameInt >= 10)
+	{
+		return std::to_string(NameInt);
+	}
+
+	return "00";
 }
 
 //=============================================================================
@@ -199,10 +237,15 @@ void NameEntryViewer::SlideNameEntryViewer(bool isIn)
 		{
 			reelViewer->SetTelopIn();
 		});
+		isActive = true;
 	}
+	// 退場処理
 	else
 	{
 		bgViewer->SetBgOut();
 		reelViewer->SetTelopOut();
+
+		// プレイヤーネームが入力された
+		NameEntered = true;
 	}
 }

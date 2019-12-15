@@ -70,9 +70,6 @@ void BanStockUseEvent::Init()
 	// テロップ設置
 	eventViewer->SetEventTelop(EventTelop::AI_Strike, nullptr);
 
-	//ブースのLEDを点滅させる
-	BoothController::Instance()->BlinkLED(false);
-
 	// 怒り顔エフェクト設置
 	GameParticleManager::Instance()->SetAngryFaceEffect();
 

@@ -230,7 +230,7 @@ namespace Field::Model
 		//登録確認
 		if (townContainer.count(placeID) == 0)
 		{
-			townContainer.emplace(placeID, new TownModel(town, onDepartPassenger));
+			townContainer.emplace(placeID, new TownModel(town, onDepartPassenger, onStartMorph));
 		}
 
 		townContainer[placeID]->AddGate(gate);
@@ -459,6 +459,14 @@ namespace Field::Model
 	void Field::Model::PlaceContainer::SetDepartPassengerFanctor(const TownAction & action)
 	{
 		onDepartPassenger = action;
+	}
+
+	/**************************************
+	モーフィングファンクタ設定
+	***************************************/
+	void Field::Model::PlaceContainer::SetMorphingFantor(const MorphAction & action)
+	{
+		onStartMorph = action;
 	}
 
 	/**************************************

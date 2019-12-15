@@ -18,7 +18,6 @@
 #include "../../../Viewer/GameScene/GuideViewer/GuideViewer.h"
 #include "../../../Sound/SoundConfig.h"
 #include "../../../Sound/PlayBGM.h"
-#include "../../../Booth/BoothController.h"
 
 #include "../../../Sound/SoundConfig.h"
 #include "../../../../Framework/Sound/SoundEffect.h"
@@ -76,9 +75,6 @@ void NewTownEventCtrl::Init()
 	NewTownEvent->Init();
 
 	SE::Play(SoundConfig::SEID::TimeStopEventHappen, 1.0f);
-
-	//ブースのLEDを点滅させる
-	BoothController::Instance()->BlinkLED(true);
 
 	// 初期化終了
 	Initialized = true;
