@@ -21,14 +21,18 @@ namespace Field::Model
 	/**************************************
 	コンストラクタ
 	***************************************/
-	TownModel::TownModel(const PlaceModel* place, std::function<void(const PlaceModel *start, const PlaceModel *goal, const PlaceModel* town)>& action) :
+	TownModel::TownModel(
+		const PlaceModel* place, 
+		std::function<void(const PlaceModel *start, const PlaceModel *goal, const PlaceModel* town)>& departAction,
+		std::function<void(const PlaceModel *place, int next)> &morphAction) :
 		uniqueID(incrementID++),
 		place(place),
 		linkLevel(0),
 		biasLinkLevel(0),
 		cntFrame(0),
 		indexDestination(0),
-		departPassenger(action)
+		departPassenger(departAction),
+		startMorph(morphAction)
 	{
 		gateList.reserve(4);
 	}
@@ -86,6 +90,8 @@ namespace Field::Model
 	***************************************/
 	void TownModel::FindLinkedTown()
 	{
+		int prevLevel = linkLevel;
+
 		linkLevel = 0;
 
 		std::vector<unsigned> searchedRoute;
@@ -100,6 +106,13 @@ namespace Field::Model
 				route->FindLinkedTown(this, searchedRoute);
 			}
 		}
+
+		//0から上がったとき中にモーフィング
+		if (prevLevel == 0 && linkLevel > 0)
+			startMorph(place, 1);
+		//5以上になったとき大にモーフィング
+		if (prevLevel < 5 && linkLevel >= 5)
+			startMorph(place, 2);
 	}
 
 	/**************************************

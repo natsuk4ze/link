@@ -338,6 +338,20 @@ namespace Field::Actor
 	}
 
 	/**************************************
+	モーフィング開始
+	***************************************/
+	void Field::Actor::PlaceActorController::OnStartMorphing(const Model::PlaceModel * place, int next)
+	{
+		unsigned key = place->ID();
+
+		if (actorContainer.count(key) == 0)
+			return;
+
+		CityActor *actor = dynamic_cast<CityActor*>(actorContainer[key].get());
+		actor->StartMorph(next);
+	}
+
+	/**************************************
 	パッセンジャー出発処理
 	***************************************/
 	void PlaceActorController::DepartPassenger(const Model::PlaceModel * start, const Model::PlaceModel * goal, const Model::PlaceModel* town)

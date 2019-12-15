@@ -43,6 +43,9 @@ public:
 	//変化量を設定
 	void SetChange(float t);
 
+	//登録したメッシュを解放
+	void ReleaseRegistration();
+
 private:
 	//使用するメッシュ群
 	std::vector<LPD3DXMESH> meshTable;

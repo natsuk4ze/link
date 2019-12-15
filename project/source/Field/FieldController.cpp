@@ -88,12 +88,15 @@ namespace Field
 		fsm[State::Idle] = new IdleState();
 		fsm[State::Develop] = new UseItemState();
 
-		//コールバック作成
+		//ファンクタ作成
 		onConnectTown = std::bind(&FieldController::OnConnectedTown, this, std::placeholders::_1, std::placeholders::_2);
 		onChangePlaceType = std::bind(&Actor::PlaceActorController::ChangeActor, placeActController, std::placeholders::_1);
 
 		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
+
+		auto onStartMorph = std::bind(&Actor::PlaceActorController::OnStartMorphing, placeActController, std::placeholders::_1, std::placeholders::_2);
+		placeContainer->SetMorphingFantor(onStartMorph);
 
 		//ルートプロセッサ作成
 		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
@@ -251,6 +254,9 @@ namespace Field
 
 		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
+
+		auto onStartMorph = std::bind(&Actor::PlaceActorController::OnStartMorphing, placeActController, std::placeholders::_1, std::placeholders::_2);
+		placeContainer->SetMorphingFantor(onStartMorph);
 
 		onChangePlaceType = std::bind(&Actor::PlaceActorController::ChangeActor, placeActController, std::placeholders::_1);
 
