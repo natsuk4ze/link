@@ -74,11 +74,17 @@
 	"Space-Mountain":"フィールドレベル宇宙の山モデル",
 	"Space-Mountain":"data/MODEL/PlaceActor/blackhole.x",
 
-	"Ground":"地面のモデル",
+	"Ground":"街レベルの地面モデル",
 	"Ground":"data/MODEL/PlaceActor/ground.x",
+
+	"Ground-World":"国レベルの地面モデル",
+	"Ground-World":"data/MODEL/PlaceActor/ground_world.x",
 
 	"River":"川のモデル",
 	"River":"data/MODEL/PlaceActor/river.x",
+
+	"Sea":"海のモデル",
+	"Sea":"data/MODEL/PlaceActor/sea.x",
 
 	"City-Town-S":"町レベルの町モデル（小）",
 	"City-Town-S":"data/MODEL/PlaceActor/Morph/townS.x",
