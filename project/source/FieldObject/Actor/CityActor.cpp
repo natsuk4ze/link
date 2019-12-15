@@ -10,13 +10,15 @@
 #include "../Animation/ActorAnimation.h"
 #include "../../Field/ActorLoader.h"
 #include "../../../Framework/Renderer3D/MophingMeshContainer.h"
+#include "../../Effect/GameParticleManager.h"
+#include "../../../Framework/Task/TaskManager.h"
 
 #define USE_MORPHING
 
 //=====================================
 // staticメンバ
 //=====================================
-const int CityActor::DurationMorphing = 15;
+const int CityActor::DurationMorphing = 30;
 
 //=====================================
 // コンストラクタ
@@ -104,7 +106,18 @@ void CityActor::Update()
 		cntFrameMorphing++;
 
 		if (cntFrameMorphing == DurationMorphing)
+		{
 			inMorphing = false;
+			for (int i = 0; i < 20; i++)
+			{
+				D3DXVECTOR3 position = transform->GetPosition() + Vector3::Up * 1.0f * (float)i;
+				TaskManager::Instance()->CreateDelayedTask(i * 1, [=]()
+				{
+					GameParticleManager::Instance()->Generate(GameParticle::ColorfulDebis, position);
+				});
+			}
+		}
+
 	}
 }
 
