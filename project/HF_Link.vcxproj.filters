@@ -312,6 +312,7 @@
     <ClCompile Include="source\ModelView\ModelViewCamera.cpp" />
     <ClCompile Include="source\Booth\BoothController.cpp" />
     <ClCompile Include="source\Presen\PresenDebugController.cpp" />
+    <ClCompile Include="source\Effect\Game\General\EventHappen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -626,6 +627,7 @@
     <ClInclude Include="source\ModelView\ModelViewCamera.h" />
     <ClInclude Include="source\Booth\BoothController.h" />
     <ClInclude Include="source\Presen\PresenDebugController.h" />
+    <ClInclude Include="source\Effect\Game\General\EventHappen.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
