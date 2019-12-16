@@ -26,6 +26,9 @@ private:
 	RewardViewer* rewardViewer;
 
 	bool isActive;
+	bool isSelect;
+	bool isFlash;
+	int cntFrame;
 
 public:
 	enum MenuID
@@ -47,8 +50,7 @@ public:
 	MenuID GetSelectedMenu();
 	void SetRewardViewer();
 
-	// セレクトロゴの表示が"ゲーム開始"に設定する
-	void InitSelectLogo(void);
+	void Reset();
 };
 
 #endif

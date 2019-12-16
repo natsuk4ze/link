@@ -21,6 +21,7 @@
 #include "../../Reward/RewardController.h"
 #include "../../../Framework/Input/input.h"
 #include "../../../Framework/Sound/SoundEffect.h"
+#include "../../../Framework/Task/TaskManager.h"
 
 //=====================================
 // 入場処理
@@ -39,8 +40,8 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::Arround);
 
 	// タイトル画面で使用するUIの描画をON
-	entity.titleViewer->SetActive(true);
-	//entity.titleViewer->InitSelectLogo();
+	//entity.titleViewer->SetActive(true);
+	entity.titleViewer->Reset();
 
 	// 使用しないUIの描画をOFF
 	entity.field->SetViewerActive(false);
@@ -55,6 +56,8 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 
 	//モータの角度を初期化
 	BoothController::Instance()->RotateTable(GameScene::AngleTable[0]);
+
+	entity.step = 0;
 }
 
 //=====================================
@@ -64,8 +67,13 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 {
 	entity.field->UpdateObject();
 
+	if (entity.step == 1)
+		return State::Title;
+
 	if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 	{
+		SE::Play(SoundConfig::SEID::Select01, 1.0f);
+		entity.step++;
 		TitleViewer::MenuID selected = entity.titleViewer->GetSelectedMenu();
 
 		// シーンチェンジ
@@ -73,32 +81,40 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 		{
 			entity.remainTime = 30 * 180;
 			PlayBGM::Instance()->FadeOut();
-			PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.1f, 30);
+			TaskManager::Instance()->CreateDelayedTask(30, [&]() {
+				PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.1f, 30);
 
-			entity.titleViewer->SetActive(false);
+				entity.titleViewer->SetActive(false);
 
-			entity.gameViewer->SetActive(true);
-			entity.gameViewer->SetActive(false, GameViewer::ViewerNo::ItemStock);
-			entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Timer);
-			entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Level);
+				entity.gameViewer->SetActive(true);
+				entity.gameViewer->SetActive(false, GameViewer::ViewerNo::ItemStock);
+				entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Timer);
+				entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Level);
 
-			entity.gameViewer->SetGradeTitle(0, [&]()
-			{
-				entity.gameViewer->SetActive(true, GameViewer::ViewerNo::ItemStock);
-				entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Timer);
-				entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Level);
+				entity.gameViewer->SetGradeTitle(0, [&]()
+				{
+					entity.gameViewer->SetActive(true, GameViewer::ViewerNo::ItemStock);
+					entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Timer);
+					entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Level);
 
-				entity.ChangeState(GameScene::State::Idle);
+					entity.ChangeState(GameScene::State::Idle);
+					entity.step = 0;
+				});
 			});
-
 		}
 		else if (selected == TitleViewer::MenuID::ViewReward)
 		{
-			entity.titleViewer->SetRewardViewer();
+			TaskManager::Instance()->CreateDelayedTask(30, [&]() {
+				entity.titleViewer->SetRewardViewer();
+				entity.titleViewer->Reset();
+				entity.step = 0;
+			});
 		}
 		else if (selected == TitleViewer::QuitGame)
 		{
-			PostQuitMessage(0);
+			TaskManager::Instance()->CreateDelayedTask(30, [&]() {
+				PostQuitMessage(0);
+			});
 		}
 	}
 
