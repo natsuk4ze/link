@@ -10,7 +10,6 @@
 #include "SelectViewer.h"
 #include "RewardViewer.h"
 #include "../../../Framework/Input/input.h"
-#include "../../Scene/GameScene.h"
 #include "../../Sound/PlayBGM.h"
 #include "../../Sound/SoundConfig.h"
 #include "../../../Framework/Sound/SoundEffect.h"
