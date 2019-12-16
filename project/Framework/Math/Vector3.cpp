@@ -155,3 +155,30 @@ D3DXVECTOR3 Vector3::Random()
 	
 	return out;
 }
+
+/**************************************
+球面線形補間
+***************************************/
+D3DXVECTOR3 Vector3::Slerp(float t, const D3DXVECTOR3 & start, const D3DXVECTOR3 & end)
+{
+	D3DXVECTOR3 s, e;
+	D3DXVec3Normalize(&s, &start);
+	D3DXVec3Normalize(&e, &end);
+
+	// 2ベクトル間の角度（鋭角側）
+	float angle = acos(D3DXVec3Dot(&s, &e));
+
+	// sinθ
+	float SinTh = sin(angle);
+
+	// 補間係数
+	float Ps = sin(angle * (1 - t));
+	float Pe = sin(angle * t);
+
+	D3DXVECTOR3 out = (Ps * s + Pe * e) / SinTh;
+
+	// 一応正規化して球面線形補間に
+	D3DXVec3Normalize(&out, &out);
+
+	return out;
+}

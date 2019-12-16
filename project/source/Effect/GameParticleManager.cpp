@@ -22,6 +22,8 @@
 #include "Game\General\AuraEffect.h"
 #include "Game\General\PunchEffect.h"
 #include "Game\General\GaugeDebris.h"
+#include "Game/General/EventHappen.h"
+#include "Game\General\RouteEffect.h"
 
 /**************************************
 staticƒƒ“ƒo
@@ -50,8 +52,10 @@ void GameParticleManager::Init()
 	controllers[GameParticle::BlueAura] = new Effect::Game::AuraEffectController();
 	controllers[GameParticle::PunchEffect] = new Effect::Game::PunchEffectController();
 	controllers[GameParticle::GaudeDebris] = new Effect::Game::GaugeDebrisController();
+	controllers[GameParticle::EventHappen] = new Effect::Game::EventHappenController();
+	controllers[GameParticle::RouteTrace] = new Effect::Game::RouteEffectController();
 
-	crossFilter->SetPower(BloomPower[0], BloomPower[1], BloomPower[2]);
+ 	crossFilter->SetPower(BloomPower[0], BloomPower[1], BloomPower[2]);
 	crossFilter->SetThrethold(BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]);
 }
 

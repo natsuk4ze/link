@@ -30,7 +30,7 @@ static const D3DXVECTOR3 initNumSize = D3DXVECTOR3(140.0f, 140.0f, 0.0f);
 LevelViewer::LevelViewer()
 {	
 	//数字
-	num = new CountViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.80f, SCREEN_HEIGHT / 10 * 1.30f),
+	num = new CountViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.680f, SCREEN_HEIGHT / 10 * 1.30f),
 		D3DXVECTOR2(initNumSize.x, initNumSize.y), "data/TEXTURE/Viewer/GameViewer/LevelViewer/Number.png", 65.0f, 0.1f, 4);
 
 	//オーバーフロー用の数字
@@ -38,11 +38,11 @@ LevelViewer::LevelViewer()
 		D3DXVECTOR2(initNumSize.x/2, initNumSize.y/2),"data/TEXTURE/Viewer/GameViewer/LevelViewer/Number.png", 35.0f, 0.1f, 6);
 
 	//背景
-	bg = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.30f, SCREEN_HEIGHT / 10 * 1.20f),
+	bg = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.15f, SCREEN_HEIGHT / 10 * 1.20f),
 		D3DXVECTOR2(250.0f, 250.0f), "data/TEXTURE/Viewer/GameViewer/LevelViewer/BG.png");
 
 	//テキスト
-	text = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.30f, SCREEN_HEIGHT / 10 * 0.60f),
+	text = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.15f, SCREEN_HEIGHT / 10 * 0.60f),
 		D3DXVECTOR2(180.0f, 49.0f), "data/TEXTURE/Viewer/GameViewer/LevelViewer/Text.png");
 
 	//＋
@@ -50,10 +50,10 @@ LevelViewer::LevelViewer()
 		D3DXVECTOR2(60.0f, 60.0f), "data/TEXTURE/Viewer/GameViewer/LevelViewer/Plus.png");
 
 	//位の漢数字
-	place = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.90f, SCREEN_HEIGHT / 10 * 1.50f), 
-		D3DXVECTOR2(60.0f, 60.0f),"data/TEXTURE/Viewer/GameViewer/LevelViewer/PlaceText.png");
+	place = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.910f, SCREEN_HEIGHT / 10 * 1.520f), 
+		D3DXVECTOR2(35.0f, 35.0f),"data/TEXTURE/Viewer/GameViewer/LevelViewer/PlaceText.png");
 	place->SetTexture(2, 2, 3);
-	place->SetColor(SET_COLOR_RIGHTBLUE);
+
 
 	//円ゲージ
 	for (int i = 0; i < guageMax; i++)
@@ -61,7 +61,7 @@ LevelViewer::LevelViewer()
 		circleGuage[i] = new CircleGauge(D3DXVECTOR2(250.0f, 250.0f));
 		circleGuage[i]->LoadTexture("data/TEXTURE/Viewer/GameViewer/LevelViewer/CircleGuage.png");
 		circleGuage[i]->SetScale(D3DXVECTOR3(1.0f, 1.0f, 0.0f));
-		circleGuage[i]->SetPosition(D3DXVECTOR3(SCREEN_WIDTH / 10 * 9.30f, SCREEN_HEIGHT / 10 * 1.2f, 0.0f));
+		circleGuage[i]->SetPosition(D3DXVECTOR3(SCREEN_WIDTH / 10 * 9.150f, SCREEN_HEIGHT / 10 * 1.2f, 0.0f));
 		circleGuage[i]->SetFillStart(circleGuage[i]->Top);
 		circleGuage[i]->SetPercent(0.0f);
 	}
@@ -113,6 +113,9 @@ void LevelViewer::Update(void)
 //=============================================================================
 void LevelViewer::Draw(void)
 {
+	if (!isPlaying)
+		return;
+
 	//背景を先に描画
 	bg->Draw();
 
@@ -147,7 +150,7 @@ void LevelViewer::Draw(void)
 			num->intervalPosScr, num->intervalPosTex);
 	}
 
-	//place->Draw();
+	place->Draw();
 }
 
 //=============================================================================
@@ -256,6 +259,6 @@ void LevelViewer::SetPlaceTex(void)
 //=============================================================================
 bool LevelViewer::IsOverflowed(void)
 {
-	//宇宙レベルでAIレベルが9999を超えたらオーバーフロー発生
-	return (parameterBox[CurrentFieldLevel] == FieldType::Space) && (parameterBox[LevelAI] > 9999);
+	//AIレベルが9999を超えたらオーバーフロー発生
+	return parameterBox[LevelAI] > 9999;
 }

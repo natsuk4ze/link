@@ -10,7 +10,6 @@
 #include "SelectViewer.h"
 #include "RewardViewer.h"
 #include "../../../Framework/Input/input.h"
-#include "../../Scene/GameScene.h"
 #include "../../Sound/PlayBGM.h"
 #include "../../Sound/SoundConfig.h"
 #include "../../../Framework/Sound/SoundEffect.h"
@@ -66,7 +65,6 @@ void TitleViewer::Update()
 					isFlash = true;
 				}
 			}
-			//return;
 		}
 		selectViewer->Update();
 	}
@@ -109,74 +107,46 @@ void TitleViewer::SetActive(bool flag)
 }
 
 //=====================================
-// シーンチェンジ
-//=====================================
-bool TitleViewer::CheckSceneChange()
-{
-	if (isSelect)
-		return false;
-
-	if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
-	{
-		SE::Play(SoundConfig::SEID::Select01, 1.0f);
-		isSelect = true;
-		isFlash = true;
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-//=====================================
 // 次のシーンを指定する
 //=====================================
-void TitleViewer::SetNextScene(GameScene& entity)
+TitleViewer::MenuID TitleViewer::GetSelectedMenu()
 {
 	// リワードビューアが表示していなければ
-	if (!rewardViewer->isPlaying)
-	{
-		if (!isSelect)
-			return;
+	if (rewardViewer->isPlaying)
+		return None;
 
-		if (selectViewer->CheckNextScene() == 0)
-		{
-			// ゲーム開始
-			TaskManager::Instance()->CreateDelayedTask(30, [&]() {
-				PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.1f, 30);
-				entity.ChangeState(GameScene::State::Idle);
-				//isActive = true;
-				isSelect = false;
-				isFlash = false;
-				cntFrame = 0;
-			});
-			PlayBGM::Instance()->FadeOut();
-		}
-		else if (selectViewer->CheckNextScene() == 1)
-		{
-			// ゲーム開始
-			TaskManager::Instance()->CreateDelayedTask(30, [&]() {
-				// トロフィー確認
-				rewardViewer->isPlaying = true;
-				isActive = true;
-				isFlash = false;
-				isSelect = false;
-				cntFrame = 0;
-			});
-		}
-		else if (selectViewer->CheckNextScene() == 2)
-		{
-			// ゲーム終了
-			PostQuitMessage(0);
-		}
-	}
+	int next = selectViewer->CheckNextScene();
+
+	isSelect = true;
+	isFlash = true;
+
+	if (next == 0)
+		return StartGame;
+	
+	if (next == 1)
+		return ViewReward;
+
+	if (next == 2)
+		return QuitGame;
+
+	return None;
 }
 
 //=====================================
-// セレクトロゴの表示が"ゲーム開始"に設定する
+// 実績ビューアのセット
 //=====================================
-void TitleViewer::InitSelectLogo(void)
+void TitleViewer::SetRewardViewer()
 {
-	//selectViewer->InitSelectLogo();
+	rewardViewer->isPlaying = true;
+}
+
+//=====================================
+// ビュアーの各種データをリセット
+//=====================================
+void TitleViewer::Reset()
+{
+	isActive = true;
+	isFlash = false;
+	isSelect = false;
+	cntFrame = 0;
 }

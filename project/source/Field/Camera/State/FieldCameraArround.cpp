@@ -54,7 +54,7 @@ FieldCamera::Mode FieldCamera::FieldCameraArround::OnUpdate(FieldCamera & entity
 	else
 	{
 		// ‰ñ“]‚µ‘±‚¯‚é
-		entity.cameraAngle += 1.0f;
+		entity.cameraAngle += 0.25f;
 		if (entity.cameraAngle >= 180.0f)
 		{
 			entity.cameraAngle -= 360.0f;

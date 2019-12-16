@@ -288,7 +288,9 @@ void EventController::LoadCSV(const char* FilePath)
 			{
 				Field::FieldPosition Pos = { x, z };
 				EventCSVData.push_back(EventInfo{ Pos, Type });
-				infoEmitterContainer[Pos] = GameParticleManager::Instance()->Generate(GameParticle::EventInfo, Pos.ConvertToWorldPosition());
+				BaseEmitter *emitter = GameParticleManager::Instance()->Generate(GameParticle::EventInfo, Pos.ConvertToWorldPosition());
+				if (emitter != nullptr)
+					infoEmitterContainer[Pos] = emitter;
 			}
 			x++;
 		}
@@ -410,8 +412,13 @@ bool EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 				EventPlace = EventCSVData.erase(EventPlace);
 
 				//イベントインフォのエミッタを停止
-				infoEmitterContainer[PlacePos]->SetActive(false);
-				infoEmitterContainer.erase(PlacePos);
+				if (infoEmitterContainer.count(PlacePos) != 0)
+				{
+					infoEmitterContainer[PlacePos]->SetActive(false);
+					infoEmitterContainer.erase(PlacePos);
+
+					GameParticleManager::Instance()->Generate(GameParticle::EventHappen, PlacePos.ConvertToWorldPosition());
+				}
 			}
 			else
 				++EventPlace;
