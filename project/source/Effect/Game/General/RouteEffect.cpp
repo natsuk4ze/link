@@ -16,7 +16,7 @@ namespace Effect::Game
 	const float RouteEffect::InitSpeed = 0.08f;
 
 	/**************************************
-	RouteEffectControllerコンストラクタ	
+	RouteEffectControllerコンストラクタ
 	***************************************/
 	RouteEffectController::RouteEffectController() :
 		BaseParticleController(Particle_3D)
@@ -63,7 +63,8 @@ namespace Effect::Game
 		cntFrame = 0;
 		active = true;
 
-		moveDir = Vector3::Random();
+		startMoveDir = Vector3::Random();
+		endMoveDir = Vector3::Random();
 
 		transform->Rotate(Math::RandomRange(0.0f, 360.0f), Vector3::Forward);
 
@@ -80,10 +81,11 @@ namespace Effect::Game
 			return;
 
 		cntFrame++;
+		float t = (float)cntFrame / lifeFrame;
 
+		D3DXVECTOR3 moveDir = Vector3::Slerp(t, startMoveDir, endMoveDir);
 		transform->Move(moveDir * InitSpeed);
 
-		float t = (float)cntFrame / lifeFrame;
 		float scale = Easing::EaseValue(t, 1.0f, 0.0f, EaseType::InExpo);
 		transform->SetScale(Vector3::One * scale);
 	}

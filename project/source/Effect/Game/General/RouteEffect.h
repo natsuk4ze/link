@@ -37,7 +37,7 @@ namespace Effect::Game
 		static const float InitSpeed;
 
 	private:
-		D3DXVECTOR3 moveDir;
+		D3DXVECTOR3 startMoveDir, endMoveDir;
 	};
 }
 
