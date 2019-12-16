@@ -78,6 +78,8 @@ GameScene::State GameScene::GameTransitionIn::OnUpdate(GameScene & entity)
 			entity.gameViewer->SetActive(true, GameViewer::ViewerNo::ItemStock);
 			entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Timer);
 			entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Level);
+
+			entity.ChangeState(State::Idle);
 		});
 	}
 
