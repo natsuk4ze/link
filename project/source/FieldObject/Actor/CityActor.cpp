@@ -47,6 +47,8 @@ void CityActor::Init(const D3DXVECTOR3 & pos, Field::FieldLevel currentLevel)
 {
 	using Field::Actor::ActorLoader;
 
+	cntFrameMorphing = 0;
+
 #ifdef USE_MORPHING
 	switch (currentLevel)
 	{
