@@ -416,6 +416,8 @@ bool EventController::CheckEventHappen(const std::vector<Field::Model::PlaceMode
 				{
 					infoEmitterContainer[PlacePos]->SetActive(false);
 					infoEmitterContainer.erase(PlacePos);
+
+					GameParticleManager::Instance()->Generate(GameParticle::EventHappen, PlacePos.ConvertToWorldPosition());
 				}
 			}
 			else
