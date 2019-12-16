@@ -13,7 +13,7 @@ namespace Effect::Game
 	/**************************************
 	staticメンバ
 	***************************************/
-	const float RouteEffect::InitSpeed = 0.3f;
+	const float RouteEffect::InitSpeed = 0.05f;
 
 	/**************************************
 	RouteEffectControllerコンストラクタ	
@@ -22,7 +22,7 @@ namespace Effect::Game
 		BaseParticleController(Particle_3D)
 	{
 		//単位頂点バッファ作成
-		const D3DXVECTOR2 Size = { 2.0f, 2.0f };
+		const D3DXVECTOR2 Size = { 0.5f, 0.5f };
 		const D3DXVECTOR2 TexDiv = { 2.0f, 2.0f };
 		MakeUnitBuffer(Size, TexDiv);
 
@@ -38,7 +38,7 @@ namespace Effect::Game
 		}
 
 		//エミッタコンテナ作成
-		const unsigned MaxEmitter = 1;
+		const unsigned MaxEmitter = 2;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
@@ -64,6 +64,8 @@ namespace Effect::Game
 		active = true;
 
 		moveDir = Vector3::Random();
+
+		transform->Rotate(Math::RandomRange(0.0f, 360.0f), Vector3::Forward);
 	}
 
 	/**************************************
