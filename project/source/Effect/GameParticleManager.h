@@ -33,6 +33,7 @@ namespace GameParticle
 		PunchEffect,	//パンチエフェクト
 		GaudeDebris,	//ゲージ破片
 		EventHappen,	//イベント発生エフェクト
+		RouteTrace,		//ルートエフェクト
 		Max
 	};
 }
