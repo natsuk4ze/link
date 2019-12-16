@@ -28,6 +28,14 @@ private:
 	bool isActive;
 
 public:
+	enum MenuID
+	{
+		StartGame,
+		ViewReward,
+		QuitGame,
+		None
+	};
+
 	TitleViewer();
 	~TitleViewer();
 
@@ -36,8 +44,9 @@ public:
 
 	void SetActive(bool flag);
 
-	bool CheckSceneChange();
-	void SetNextScene(GameScene& entity);
+	MenuID GetSelectedMenu();
+	void SetRewardViewer();
+
 	// セレクトロゴの表示が"ゲーム開始"に設定する
 	void InitSelectLogo(void);
 };

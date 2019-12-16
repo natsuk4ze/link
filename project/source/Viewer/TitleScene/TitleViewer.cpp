@@ -84,47 +84,34 @@ void TitleViewer::SetActive(bool flag)
 }
 
 //=====================================
-// シーンチェンジ
+// 次のシーンを指定する
 //=====================================
-bool TitleViewer::CheckSceneChange()
+TitleViewer::MenuID TitleViewer::GetSelectedMenu()
 {
-	if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
-	{
-		SE::Play(SoundConfig::SEID::Select01, 1.0f);
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	// リワードビューアが表示していなければ
+	if (rewardViewer->isPlaying)
+		return None;
+
+	int next = selectViewer->CheckNextScene();
+
+	if (next == 0)
+		return StartGame;
+	
+	if (next == 1)
+		return ViewReward;
+
+	if (next == 2)
+		return QuitGame;
+
+	return None;
 }
 
 //=====================================
-// 次のシーンを指定する
+// 実績ビューアのセット
 //=====================================
-void TitleViewer::SetNextScene(GameScene& entity)
+void TitleViewer::SetRewardViewer()
 {
-	// リワードビューアが表示していなければ
-	if (!rewardViewer->isPlaying)
-	{
-		if (selectViewer->CheckNextScene() == 0)
-		{
-			// ゲーム開始
-			PlayBGM::Instance()->FadeOut();
-			PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.1f, 30);
-			entity.ChangeState(GameScene::State::Idle);
-		}
-		else if (selectViewer->CheckNextScene() == 1)
-		{
-			// トロフィー確認
-			rewardViewer->isPlaying = true;
-		}
-		else if (selectViewer->CheckNextScene() == 2)
-		{
-			// ゲーム終了
-			PostQuitMessage(0);
-		}
-	}
+	rewardViewer->isPlaying = true;
 }
 
 //=====================================

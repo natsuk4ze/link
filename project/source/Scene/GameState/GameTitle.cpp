@@ -19,6 +19,8 @@
 #include "../../Booth/BoothController.h"
 #include "../../Reward/RewardNotifier.h"
 #include "../../Reward/RewardController.h"
+#include "../../../Framework/Input/input.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 
 //=====================================
 // 入場処理
@@ -62,11 +64,26 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 {
 	entity.field->UpdateObject();
 
-	// シーンチェンジ
-	if (entity.titleViewer->CheckSceneChange())
+	if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 	{
-		entity.remainTime = 30 * 180;
-		entity.titleViewer->SetNextScene(entity);
+		TitleViewer::MenuID selected = entity.titleViewer->GetSelectedMenu();
+
+		// シーンチェンジ
+		if (selected == TitleViewer::MenuID::StartGame)
+		{
+			entity.remainTime = 30 * 180;
+			PlayBGM::Instance()->FadeOut();
+			PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.1f, 30);
+			entity.ChangeState(GameScene::State::Idle);
+		}
+		else if (selected == TitleViewer::MenuID::ViewReward)
+		{
+			entity.titleViewer->SetRewardViewer();
+		}
+		else if (selected == TitleViewer::QuitGame)
+		{
+			PostQuitMessage(0);
+		}
 	}
 
 	State next = State::Title;
