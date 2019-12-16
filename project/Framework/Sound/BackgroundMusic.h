@@ -44,7 +44,7 @@ public:
 	static void Stop();
 
 	//再開処理
-	static void Resume(int tag);
+	static void Resume(int tag, float volume = 1.0f);
 	static void Resume();
 
 	//フェードイン、フェードアウト

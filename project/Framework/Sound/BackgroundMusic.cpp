@@ -125,12 +125,13 @@ void BGM::Stop()
 /**************************************
 ÄŠJˆ—
 ***************************************/
-void BGM::Resume(int tag)
+void BGM::Resume(int tag, float volume)
 {
 	//“o˜^Šm”F
 	if (musicContainer.count(tag) == 0)
 		return;
 
+	musicContainer[tag]->SetVolume(volume);
 	musicContainer[tag]->ChangeState(fsm[MusicClip::OnResume]);
 }
 
