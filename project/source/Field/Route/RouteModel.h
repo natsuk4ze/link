@@ -97,6 +97,7 @@ namespace Field::Model
 		PlaceModel* GetFirst() const;
 		PlaceModel* GetLast() const;
 
+		// ì‚Á‚½“¹‚Ì”‚ðŽæ“¾
 		int GetRoadNum(void) { return this->route.size(); };
 
 	private:

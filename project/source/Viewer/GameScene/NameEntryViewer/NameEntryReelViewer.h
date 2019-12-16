@@ -38,8 +38,8 @@ public:
 	//リールの文字を取得する
 	int* GetReelChar(void);
 
-	void MoveCursorRight(void);
-	void MoveCursorLeft(void);
+	bool MoveCursorRight(void);
+	bool MoveCursorLeft(void);
 
 	void SetTelopIn();
 	void SetTelopOut();
@@ -64,6 +64,9 @@ private:
 
 	bool isInPlaying;
 	bool isOutPlaying;
+
+	// カーソルが移動できるかどうか
+	bool CursorMovable;
 
 	BaseViewerDrawer * reel[entryNameMax];
 	BaseViewerDrawer * cursor;

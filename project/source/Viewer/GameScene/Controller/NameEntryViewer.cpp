@@ -21,7 +21,7 @@
 //*****************************************************************************
 NameEntryViewer::NameEntryViewer() :
 	entryNameID(),
-	reelCnt(),
+	reelCnt(0),
 	NameEntered(false)
 {
 	input = new NameEntryInput();
@@ -52,6 +52,7 @@ NameEntryViewer::~NameEntryViewer()
 //*****************************************************************************
 void NameEntryViewer::Init(void)
 {
+	// ネームIDをリセット
 	for (int i = 0; i < entryNameMax; i++)
 	{
 		entryNameID[i] = 0;
@@ -150,17 +151,25 @@ void NameEntryViewer::MoveCursor()
 	//右ボタンが押された
 	if (input->GetCursorRight())
 	{
-		if (reelCnt >= entryNameMax - 1) return;
-		reelCnt++;
-		reelViewer->MoveCursorRight();
+		if (reelCnt >= entryNameMax - 1)
+			return;
+		else
+		{
+			if (reelViewer->MoveCursorRight())
+				reelCnt++;
+		}
 	}
 
 	//左ボタンが押された
 	if (input->GetCursorLeft())
 	{
-		if (reelCnt <= 0) return;
-		reelCnt--;
-		reelViewer->MoveCursorLeft();
+		if (reelCnt <= 0)
+			return;
+		else
+		{
+			if (reelViewer->MoveCursorLeft())
+				reelCnt--;
+		}
 	}
 }
 
