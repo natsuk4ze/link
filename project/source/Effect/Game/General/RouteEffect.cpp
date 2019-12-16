@@ -13,7 +13,7 @@ namespace Effect::Game
 	/**************************************
 	staticメンバ
 	***************************************/
-	const float RouteEffect::InitSpeed = 0.05f;
+	const float RouteEffect::InitSpeed = 0.08f;
 
 	/**************************************
 	RouteEffectControllerコンストラクタ	
@@ -22,12 +22,12 @@ namespace Effect::Game
 		BaseParticleController(Particle_3D)
 	{
 		//単位頂点バッファ作成
-		const D3DXVECTOR2 Size = { 0.5f, 0.5f };
+		const D3DXVECTOR2 Size = { 0.8f, 0.8f };
 		const D3DXVECTOR2 TexDiv = { 2.0f, 2.0f };
 		MakeUnitBuffer(Size, TexDiv);
 
 		//テクスチャ読み込み
-		LoadTexture("data/TEXTURE/Particle/EventInfo.png");
+		LoadTexture("data/TEXTURE/Particle/RouteTrace.png");
 
 		//パーティクルコンテナ作成
 		const unsigned MaxParticle = 512;
@@ -47,7 +47,7 @@ namespace Effect::Game
 	}
 
 	/**************************************
-	RouteEffectControllerコンストラクタ
+	RouteEffectコンストラクタ
 	***************************************/
 	RouteEffect::RouteEffect() :
 		Particle3D(30, 60)
@@ -56,7 +56,7 @@ namespace Effect::Game
 	}
 
 	/**************************************
-	RouteEffectControllerコンストラクタ
+	RouteEffect初期化処理
 	***************************************/
 	void RouteEffect::Init()
 	{
@@ -66,10 +66,13 @@ namespace Effect::Game
 		moveDir = Vector3::Random();
 
 		transform->Rotate(Math::RandomRange(0.0f, 360.0f), Vector3::Forward);
+
+		uv.u = Math::RandomRange(0, 2) * 0.5f;
+		uv.v = Math::RandomRange(0, 2) * 0.5f;
 	}
 
 	/**************************************
-	RouteEffectControllerコンストラクタ
+	RouteEffect更新処理
 	***************************************/
 	void RouteEffect::Update()
 	{
