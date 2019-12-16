@@ -40,7 +40,7 @@ namespace Effect::Game
 
 		//エミッタコンテナ作成
 		// イベントマスの最大数
-		const unsigned MaxEmitter = 70;
+		const unsigned MaxEmitter = 128;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
