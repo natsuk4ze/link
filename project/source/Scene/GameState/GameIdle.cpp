@@ -53,8 +53,6 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 	//AI発展レベルが最大に到達していたらレベルアップ
 	else if (entity.field->ShouldLevelUp())
 	{
-		PlayBGM::Instance()->FadeOut();
-
 		if(level < 2)
 		{
 			entity.ChangeState(State::LevelUp);
@@ -85,7 +83,6 @@ void GameScene::GameIdle::OnStart(GameScene & entity)
 	// カメラの焦点をセット
 	entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
-
 
 	// ゲームシーンで使用するUIの描画をON
 	entity.field->SetViewerActive(true);

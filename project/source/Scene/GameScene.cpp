@@ -345,9 +345,6 @@ void GameScene::OnLevelUp()
 	//現在の制限時間を保存
 	PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_RemainTime), remainTime);
 
-	//BGMをフェードアウト
-	BGM::Fade(0.0f, 30, true);
-
 	//テストなのでインクリメントしてしまう
 	//本番ではちゃんと制限する
 	level++;
