@@ -113,6 +113,9 @@ void LevelViewer::Update(void)
 //=============================================================================
 void LevelViewer::Draw(void)
 {
+	if (!isPlaying)
+		return;
+
 	//”wŒi‚ðæ‚É•`‰æ
 	bg->Draw();
 

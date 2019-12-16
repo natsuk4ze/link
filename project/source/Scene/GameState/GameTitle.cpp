@@ -74,7 +74,23 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 			entity.remainTime = 30 * 180;
 			PlayBGM::Instance()->FadeOut();
 			PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.1f, 30);
-			entity.ChangeState(GameScene::State::Idle);
+
+			entity.titleViewer->SetActive(false);
+
+			entity.gameViewer->SetActive(true);
+			entity.gameViewer->SetActive(false, GameViewer::ViewerNo::ItemStock);
+			entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Timer);
+			entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Level);
+
+			entity.gameViewer->SetGradeTitle(0, [&]()
+			{
+				entity.gameViewer->SetActive(true, GameViewer::ViewerNo::ItemStock);
+				entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Timer);
+				entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Level);
+
+				entity.ChangeState(GameScene::State::Idle);
+			});
+
 		}
 		else if (selected == TitleViewer::MenuID::ViewReward)
 		{
