@@ -26,6 +26,9 @@ private:
 	RewardViewer* rewardViewer;
 
 	bool isActive;
+	bool isSelect;
+	bool isFlash;
+	int cntFrame;
 
 public:
 	TitleViewer();
