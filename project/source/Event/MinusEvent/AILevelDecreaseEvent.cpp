@@ -107,7 +107,7 @@ void AILevelDecreaseEvent::Init()
 	{
 		//BGMのクロスフェード
 		PlayBGM::Instance()->FadeOut();
-		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::UFOEvent, SoundConfig::VolumeBGM, 30);
+		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::UFOEvent, SoundConfig::VolumeBGM, 30, false);
 
 		camera->Translation(TownPos, 30, [&]() {
 			UFODebutStart(); 
