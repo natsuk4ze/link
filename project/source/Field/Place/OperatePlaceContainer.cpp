@@ -68,7 +68,7 @@ namespace Field::Model
 		if (!place->CanStartRoute())
 			return false;
 
-		SE::Play(SoundConfig::Select02, 1.0f);
+		SE::Play(SoundConfig::Select02, 0.5f);
 
 		//コンテナに追加してreturn true
 		container.push_back(place);
@@ -86,7 +86,7 @@ namespace Field::Model
 		if (place->IsDevelopableType())
 			return false;
 
-		SE::Play(SoundConfig::Select03, 1.0f);
+		SE::Play(SoundConfig::Select03, 0.5f);
 
 		//コンテナに追加してreturn true
 		container.push_back(place);

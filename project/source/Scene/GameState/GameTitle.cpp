@@ -72,7 +72,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 
 	if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 	{
-		SE::Play(SoundConfig::SEID::Select01, 1.0f);
+		SE::Play(SoundConfig::SEID::Select01, 0.5f);
 		entity.step++;
 
 		TitleViewer::MenuID selected = entity.titleViewer->GetSelectedMenu();
