@@ -7,16 +7,15 @@ void setup() {
 
   //サーボのアタッチ
   myServo.attach(9);
-  myServo.write(45, 5, true);
+  myServo.write(90, 5, true);
 }
 
 void loop()
 {
   //サーボモータの制御
-  char head = Serial.read();
-
-  if (head > 0)
+  if (Serial.available() > 0)
   {
+    char head = Serial.read();
     unsigned char angle = head;
     myServo.write(angle, 5, true);
   }

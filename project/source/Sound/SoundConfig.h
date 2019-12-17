@@ -94,6 +94,8 @@ public:
 
 	//É{ÉCÉXSEÇÃâπó 
 	static const float VolumeVoice;
+
+	static BGMID GetBgmID(int fieldLevel);
 };
 
 #endif

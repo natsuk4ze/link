@@ -68,7 +68,7 @@ staticメンバ
 int GameScene::level = 0;		//デバッグ用フィールドレベル（本番では非staticメンバにする
 const float GameScene::BloomPower[] = { 0.6f, 0.55f, 0.50f };		//ブルームの強さ
 const float GameScene::BloomThrethold[] = { 0.6f, 0.5f, 0.4f };		//ブルームをかける輝度の閾値
-const unsigned char GameScene::AngleTable[3] = { 45, 75, 105 };
+const unsigned char GameScene::AngleTable[3] = { 105, 140, 175 };
 
 /**************************************
 初期化処理
@@ -344,9 +344,6 @@ void GameScene::OnLevelUp()
 {
 	//現在の制限時間を保存
 	PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_RemainTime), remainTime);
-
-	//BGMをフェードアウト
-	BGM::Fade(0.0f, 30, true);
 
 	//テストなのでインクリメントしてしまう
 	//本番ではちゃんと制限する

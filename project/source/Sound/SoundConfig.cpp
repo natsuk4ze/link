@@ -74,6 +74,18 @@ const char* SoundConfig::SEPath[SEID::SEMax]
 const float SoundConfig::VolumeVoice = 1.0f;
 
 /**************************************
-プロトタイプ宣言
+現在のレベルでのBGMのID取得処理
 ***************************************/
+SoundConfig::BGMID SoundConfig::GetBgmID(int fieldLevel)
+{
+	if (fieldLevel == 0)
+		return City;
 
+	if (fieldLevel == 1)
+		return World;
+
+	if (fieldLevel == 2)
+		return Space;
+
+	return City;
+}

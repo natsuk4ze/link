@@ -55,7 +55,7 @@ CityDestroyEvent::CityDestroyEvent(EventViewer* eventViewer, BeatGameViewer* bea
 	beatViewer(beatViewer),
 	success(false)
 {
-	PlayBGM::Instance()->Pause();
+
 }
 
 //=============================================================================
@@ -104,7 +104,8 @@ void CityDestroyEvent::Init()
 	// テロップ設置
 	eventViewer->SetEventTelop(EventTelop::Meteorite, [&]()
 	{
-		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::DestroyEvent, 0.1f, 30);
+		PlayBGM::Instance()->FadeOut();
+		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::DestroyEvent, 0.5f, 60);
 		camera->Translation(TownPos, 30, [&]() {MeteorFallStart(); });
 	});
 
@@ -267,6 +268,7 @@ void CityDestroyEvent::EventOver(void)
 			GuideActor::AnimState::Defeat,
 			SoundConfig::MeteorBreakFailed);
 	}
+
 	PlayBGM::Instance()->ResumePrev();
 }
 

@@ -54,7 +54,6 @@ NewTownEventCtrl::NewTownEventCtrl(EventViewer *Ptr, int FieldLevel, EventCamera
 	{
 		NewTownEvent = new NewTownEvent_Space(Ptr, [&]() {EventOver(); }, camera);
 	}
-	PlayBGM::Instance()->Pause();
 }
 
 //=============================================================================

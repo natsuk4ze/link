@@ -105,8 +105,12 @@ float4 PS(VS_OUT In) : COLOR0
 {
 	 float4 col0 = tex2D(s0, In.uv1);
 	 float4 col1 = tex2D(nextSampler, In.uv2);
+	 float4 texColor = lerp(col0, col1, t);
 
-	 return lerp(col0, col1, t) * In.color;
+	 if (texColor.r == 0.0f && texColor.g == 0.0f && texColor.b == 0.0f)
+		 return  In.color;
+	 else
+		 return texColor * In.color;
 }
 
 /**************************************

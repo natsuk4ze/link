@@ -13,11 +13,13 @@
 #include "../../Sound/PlayBGM.h"
 #include "../../Sound/SoundConfig.h"
 #include "../../../Framework/Sound/SoundEffect.h"
+#include "../../../Framework/Task/TaskManager.h"
 
 //=====================================
 // コンストラクタ
 //=====================================
-TitleViewer::TitleViewer()
+TitleViewer::TitleViewer() :
+	cntFrame(0), isSelect(false), isFlash(false)
 {
 	logo = new TitleLogo();
 	selectViewer = new SelectViewer();
@@ -45,6 +47,25 @@ void TitleViewer::Update()
 	logo->Update();
 	if (!rewardViewer->isPlaying)
 	{
+		if (isSelect)
+		{
+			// 点滅処理
+			cntFrame++;
+			if (isFlash)
+			{
+				if (cntFrame % 5 == 0)
+				{
+					isFlash = false;
+				}
+			}
+			else
+			{
+				if (cntFrame % 5 == 0)
+				{
+					isFlash = true;
+				}
+			}
+		}
 		selectViewer->Update();
 	}
 	else
@@ -64,6 +85,9 @@ void TitleViewer::Draw()
 	if (!rewardViewer->isPlaying)
 	{
 		logo->Draw();
+
+		if (isFlash)
+			return;
 
 		// 別ウインドウを作成するので最後
 		selectViewer->Draw();
@@ -93,6 +117,9 @@ TitleViewer::MenuID TitleViewer::GetSelectedMenu()
 
 	int next = selectViewer->CheckNextScene();
 
+	isSelect = true;
+	isFlash = true;
+
 	if (next == 0)
 		return StartGame;
 	
@@ -114,9 +141,12 @@ void TitleViewer::SetRewardViewer()
 }
 
 //=====================================
-// セレクトロゴの表示が"ゲーム開始"に設定する
+// ビュアーの各種データをリセット
 //=====================================
-void TitleViewer::InitSelectLogo(void)
+void TitleViewer::Reset()
 {
-	//selectViewer->InitSelectLogo();
+	isActive = true;
+	isFlash = false;
+	isSelect = false;
+	cntFrame = 0;
 }

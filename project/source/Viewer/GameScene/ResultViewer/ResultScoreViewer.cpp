@@ -17,9 +17,9 @@ using std::string;
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-static const D3DXVECTOR2 scoreTextGapPos = D3DXVECTOR2(-120.0f,-40.0f);
-static const D3DXVECTOR2 rewardTextGapPos = D3DXVECTOR2(-120.0f, 35.0f);
-static const float fieldTelopGapPos = 200.0f;
+static const D3DXVECTOR2 scoreTextGapPos = D3DXVECTOR2(-180.0f,-40.0f);
+static const D3DXVECTOR2 rewardTextGapPos = D3DXVECTOR2(-180.0f, 35.0f);
+static const float fieldTelopGapPos = 180.0f;
 
 //*****************************************************************************
 // コンストラクタ

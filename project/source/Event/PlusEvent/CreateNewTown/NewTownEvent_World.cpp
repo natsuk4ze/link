@@ -14,6 +14,7 @@
 #include "../../../Sound/PlayBGM.h"
 #include "../../../Sound/SoundConfig.h"
 #include "../../../../Framework/Sound/SoundEffect.h"
+#include "../../../Sound/PlayBGM.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -63,6 +64,9 @@ void NewTownEvent_World::Init()
 	{
 		// 予定地にカメラを移動させる
 		camera->Translation(TownPos, 30, [&]() {CreateNewTown(); });
+
+		//BGMフェードアウト
+		PlayBGM::Instance()->FadeOut(SoundConfig::BGMID::World, 0.0f, 90, false);
 	});
 
 	// 初期化終了

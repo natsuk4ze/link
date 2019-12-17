@@ -313,6 +313,7 @@
     <ClCompile Include="source\Booth\BoothController.cpp" />
     <ClCompile Include="source\Presen\PresenDebugController.cpp" />
     <ClCompile Include="source\Effect\Game\General\EventHappen.cpp" />
+    <ClCompile Include="source\Effect\Game\General\RouteEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -628,6 +629,7 @@
     <ClInclude Include="source\Booth\BoothController.h" />
     <ClInclude Include="source\Presen\PresenDebugController.h" />
     <ClInclude Include="source\Effect\Game\General\EventHappen.h" />
+    <ClInclude Include="source\Effect\Game\General\RouteEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
