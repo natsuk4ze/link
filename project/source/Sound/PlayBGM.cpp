@@ -31,7 +31,7 @@ void PlayBGM::FadeOut(SoundConfig::BGMID tag, float volume, int duration, bool f
 //=====================================
 void PlayBGM::FadeOut()
 {
-	BGM::Fade(current, 0.1f, 90, true);
+	BGM::Fade(current, 0.1f, 30, true);
 }
 
 //=====================================

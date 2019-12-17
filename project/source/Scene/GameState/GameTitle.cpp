@@ -81,9 +81,11 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 		if (selected == TitleViewer::MenuID::StartGame)
 		{
 			entity.remainTime = 30 * 180;
+
 			PlayBGM::Instance()->FadeOut();
+			PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.3f, 30);
+
 			TaskManager::Instance()->CreateDelayedTask(30, [&]() {
-				PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.1f, 30);
 
 				entity.titleViewer->SetActive(false);
 
