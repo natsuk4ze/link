@@ -34,10 +34,7 @@ void Draw(void);
 //*****************************************************************************
 LPDIRECT3D9			g_pD3D = NULL;			// Direct3D オブジェクト
 LPDIRECT3DDEVICE9	g_pD3DDevice = NULL;	// Deviceオブジェクト(描画に必要)
-static D3DXCOLOR backColor = D3DCOLOR_RGBA(0, 0, 50, 255);
-int					g_nCountFPS;			// FPSカウンタ
-bool				g_bDispDebug = true;	// デバッグ表示ON/OFF
-static bool flgPause = false;
+
 static GameMain* game;
 
 //=============================================================================
@@ -55,9 +52,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	//_CrtSetBreakAlloc(144324);
 
 	DWORD dwExecLastTime;
-	DWORD dwFPSLastTime;
 	DWORD dwCurrentTime;
-	DWORD dwFrameCount;
 
 	WNDCLASSEX wcex =
 	{
@@ -102,10 +97,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	// フレームカウント初期化
 	timeBeginPeriod(1);				// 分解能を設定
-	dwExecLastTime =
-		dwFPSLastTime = timeGetTime();
-	dwCurrentTime =
-		dwFrameCount = 0;
+	dwExecLastTime = timeGetTime();
+	dwCurrentTime = 0;
 
 	// ウインドウの表示(初期化処理の後に呼ばないと駄目)
 	ShowWindow(hWnd, SW_MAXIMIZE);
@@ -118,7 +111,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			if (msg.message == WM_QUIT)
-			{// PostQuitMessage()が呼ばれたらループ終了
+			{
+				// PostQuitMessage()が呼ばれたらループ終了
 				break;
 			}
 			else
@@ -131,12 +125,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		else
 		{
 			dwCurrentTime = timeGetTime();
-			if ((dwCurrentTime - dwFPSLastTime) >= 500)	// 0.5秒ごとに実行
-			{
-				g_nCountFPS = dwFrameCount * 1000 / (dwCurrentTime - dwFPSLastTime);
-				dwFPSLastTime = dwCurrentTime;
-				dwFrameCount = 0;
-			}
 
 			if ((dwCurrentTime - dwExecLastTime) >= (1000 / 30))
 			{
@@ -147,8 +135,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 				// 描画処理
 				Draw();
-
-				dwFrameCount++;
 			}
 		}
 	}
@@ -306,17 +292,11 @@ void Uninit(void)
 {
 	SAFE_DELETE(game);
 
-	if (g_pD3DDevice != NULL)
-	{// デバイスの開放
-		g_pD3DDevice->Release();
-		g_pD3DDevice = NULL;
-	}
+	// デバイスの開放
+	SAFE_RELEASE(g_pD3DDevice);
 
-	if (g_pD3D != NULL)
-	{// Direct3Dオブジェクトの開放
-		g_pD3D->Release();
-		g_pD3D = NULL;
-	}
+	// Direct3Dオブジェクトの開放
+	SAFE_RELEASE(g_pD3D);
 }
 
 //=============================================================================
@@ -334,7 +314,7 @@ void Draw(void)
 {
 	if (SUCCEEDED(g_pD3DDevice->BeginScene()))
 	{
-		g_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), backColor, 1.0f, 0);
+		g_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(0, 0, 50, 255), 1.0f, 0);
 
 		game->Draw();
 
@@ -351,44 +331,4 @@ void Draw(void)
 LPDIRECT3DDEVICE9 GetDevice(void)
 {
 	return g_pD3DDevice;
-}
-
-/******************************************************************************
-//関数名	：LPDIRECT3DTEXTURE9 CreateTextureFromFile(LPSTR szName, LPDIRECT3DDEVICE9 lpD3DDevice)
-//引数1		：LPSTR szName：読み込みたいファイル名
-//引数2		：LPDIRECT3DDEVICE9 lpD3DDevice：デバイスオブジェクト
-//戻り値	：読み込んだテクスチャへのポインタ
-//説明		：サイズを指定してテクスチャファイルを読み込む関数
-******************************************************************************/
-LPDIRECT3DTEXTURE9 CreateTextureFromFile(LPSTR szName, LPDIRECT3DDEVICE9 lpD3DDevice)
-{
-	HRESULT             hRet;
-
-	//戻り値のテクスチャ
-	LPDIRECT3DTEXTURE9  lpTex = NULL;
-	if (lpD3DDevice) {
-
-		//D3DXGetImageInfoFromFileで使用する画像ファイルの情報
-		D3DXIMAGE_INFO      iinfo;
-
-		//画像ファイルの情報を取得
-		hRet = D3DXGetImageInfoFromFile(szName, &iinfo);
-		if (hRet == D3D_OK)
-		{
-			//テクスチャをファイルから作成
-			hRet = D3DXCreateTextureFromFileEx(
-				lpD3DDevice,
-				szName,
-				iinfo.Width, iinfo.Height,			//取得した画像ファイルのサイズを指定する
-				1, 0,
-				D3DFMT_A8R8G8B8,
-				D3DPOOL_MANAGED,
-				D3DX_FILTER_NONE,
-				D3DX_FILTER_NONE,
-				0xFF000000,
-				NULL, NULL,
-				&lpTex);
-		}
-	}
-	return lpTex;
 }
