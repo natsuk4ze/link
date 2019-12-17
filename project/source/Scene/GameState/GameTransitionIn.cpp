@@ -61,10 +61,6 @@ GameScene::State GameScene::GameTransitionIn::OnUpdate(GameScene & entity)
 
 	if (entity.cntFrame == 100)
 	{
-		TaskManager::Instance()->CreateDelayedTask(20, []() {
-			SE::Play(SoundConfig::SEID::NewField, 1.0f);
-		});
-
 		GuideViewer::Instance()->SetActive(false);
 		entity.field->SetViewerActive(false);
 
