@@ -26,8 +26,19 @@ private:
 	RewardViewer* rewardViewer;
 
 	bool isActive;
+	bool isSelect;
+	bool isFlash;
+	int cntFrame;
 
 public:
+	enum MenuID
+	{
+		StartGame,
+		ViewReward,
+		QuitGame,
+		None
+	};
+
 	TitleViewer();
 	~TitleViewer();
 
@@ -36,10 +47,10 @@ public:
 
 	void SetActive(bool flag);
 
-	bool CheckSceneChange();
-	void SetNextScene(GameScene& entity);
-	// セレクトロゴの表示が"ゲーム開始"に設定する
-	void InitSelectLogo(void);
+	MenuID GetSelectedMenu();
+	void SetRewardViewer();
+
+	void Reset();
 };
 
 #endif

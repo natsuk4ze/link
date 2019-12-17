@@ -34,6 +34,9 @@ public:
 	// 達成者がすでにいるかチェック
 	bool CheckFirstAchieved();
 
+	//今回のプレイで初達成したかどうか
+	bool IsAchievedThisTime() const;
+
 	// 達成をリセット
 	void ResetAchieved();
 

@@ -99,9 +99,9 @@ private:
 	FieldEventHandler* eventHandler;			//イベントハンドラ
 	UDPClient *Client;							//クライアント
 	ResultViewer*resultViewer;					//リザルトビュアー
-	NameEntryViewer *nemeEntryViewer;			//名前登録ビュアー
+	NameEntryViewer *nameEntryViewer;			//名前登録ビュアー
 	TitleViewer* titleViewer;					// タイトルビュアー
-	RewardNotifier* rewardNotifier;					// リワードビュアー
+	RewardNotifier* rewardNotifier;				// リワードビュアー
 
 	int remainTime;								//制限時間
 
@@ -109,7 +109,8 @@ private:
 
 	int step;									//各ステートの現在ステップ
 
-	long long entiretyScore;					//全レベルの合計スコア
+	unsigned long long entiretyScore;			//全レベルの合計スコア
+	bool ShowNameEntry;							//ネームエントリービューア表示のフラグ
 
 	bool debugReward;							//実績リザルト画面でデバッグを使用するか
 	bool debugAchievedResult[10];				//デバッグ用の達成実績

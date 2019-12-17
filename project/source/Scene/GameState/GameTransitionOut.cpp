@@ -13,6 +13,8 @@
 #include "../../Event/EventController.h"
 #include "../../Field/FieldController.h"
 #include "../../Booth/BoothController.h"
+#include "../../Sound/SoundConfig.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 #include "../../Viewer/GameScene/Controller/GameViewer.h"
 
 /**************************************
@@ -24,6 +26,8 @@ void GameScene::GameTransitionOut::OnStart(GameScene & entity)
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::TransitionOut);
 
 	entity.cntFrame = 0;
+
+	SE::Play(SoundConfig::SEID::Transition, 1.0f);
 
 	//gamaeViewer‚ðƒIƒt‚É
 	entity.gameViewer->SetActive(false, GameViewer::ViewerNo::ItemStock);

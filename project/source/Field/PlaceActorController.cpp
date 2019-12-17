@@ -36,6 +36,8 @@
 #include "../FieldObject/Animation/ActorAnimation.h"
 #include "ActorLoader.h"
 #include "../Field/Object/WaterHeightController.h"
+#include "../../Framework/Sound/SoundEffect.h"
+#include "../Sound/SoundConfig.h"
 
 namespace Field::Actor
 {
@@ -338,6 +340,20 @@ namespace Field::Actor
 	}
 
 	/**************************************
+	モーフィング開始
+	***************************************/
+	void Field::Actor::PlaceActorController::OnStartMorphing(const Model::PlaceModel * place, int next)
+	{
+		unsigned key = place->ID();
+
+		if (actorContainer.count(key) == 0)
+			return;
+
+		CityActor *actor = dynamic_cast<CityActor*>(actorContainer[key].get());
+		actor->StartMorph(next);
+	}
+
+	/**************************************
 	パッセンジャー出発処理
 	***************************************/
 	void PlaceActorController::DepartPassenger(const Model::PlaceModel * start, const Model::PlaceModel * goal, const Model::PlaceModel* town)
@@ -433,6 +449,20 @@ namespace Field::Actor
 	bool PlaceActorController::IsOnSea(const FieldPosition & position) const
 	{
 		return bgContainer->IsSeaPlace(position);
+	}
+
+	/**************************************
+	作った交差点の数を取得
+	***************************************/
+	int Field::Actor::PlaceActorController::GetJunctionNum(void)
+	{
+		int JunctionNum = 0;
+		for (auto & Actor : actorContainer)
+		{
+			if (Actor.second->IsType(PlaceType::Junction))
+				JunctionNum++;
+		}
+		return JunctionNum;
 	}
 
 	/**************************************
@@ -535,7 +565,9 @@ namespace Field::Actor
 		actor->Rotate(rotateAngle);
 
 		// 生成アニメーション
-		ActorAnimation::FallAndExpantion(*actor);
+		ActorAnimation::FallAndExpantion(*actor, []() {
+			SE::Play(SoundConfig::SEID::Fall, 1.0f);
+		});
 
 		AddContainer(place->ID(), actor);
 
@@ -562,7 +594,9 @@ namespace Field::Actor
 			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::CrossJunction, onWater);
 
 			// 生成アニメーション
-			ActorAnimation::RotateAndExpantion(*actor);
+			ActorAnimation::RotateAndExpantion(*actor, []() {
+				SE::Play(SoundConfig::SEID::Fall, 1.0f);
+			});
 			AddContainer(place->ID(), actor);
 
 		}
@@ -588,7 +622,9 @@ namespace Field::Actor
 			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::T_Junction, onWater);
 
 			// 生成アニメーション
-			ActorAnimation::RotateAndExpantion(*actor);
+			ActorAnimation::RotateAndExpantion(*actor, []() {
+				SE::Play(SoundConfig::SEID::Fall, 1.0f);
+			});
 		}
 
 		//A*に登録
@@ -610,7 +646,9 @@ namespace Field::Actor
 		actor->Rotate(rotateAngle);
 
 		//アニメーション
-		ActorAnimation::ExpantionYAndReturnToOrigin(*actor);
+		ActorAnimation::ExpantionYAndReturnToOrigin(*actor, []() {
+			SE::Play(SoundConfig::SEID::Fall, 1.0f);
+		});
 
 		AddContainer(place->ID(), actor);
 	}
@@ -651,6 +689,7 @@ namespace Field::Actor
 			ActorAnimation::FallAndExpantion(*actor, [=]()
 		{
 			GameParticleManager::Instance()->Generate(GameParticle::ColorfulDebis, actorPos + PositionEmitSmog);
+			SE::Play(SoundConfig::SEID::Fall, 1.0f);
 		});
 
 		else
@@ -660,6 +699,7 @@ namespace Field::Actor
 				ActorAnimation::FallAndExpantion(*actor, [=]()
 				{
 					GameParticleManager::Instance()->Generate(GameParticle::ColorfulDebis, actorPos + PositionEmitSmog);
+					SE::Play(SoundConfig::SEID::Fall, 1.0f);
 				});
 			});
 		}

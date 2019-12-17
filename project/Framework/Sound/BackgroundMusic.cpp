@@ -125,12 +125,13 @@ void BGM::Stop()
 /**************************************
 再開処理
 ***************************************/
-void BGM::Resume(int tag)
+void BGM::Resume(int tag, float volume)
 {
 	//登録確認
 	if (musicContainer.count(tag) == 0)
 		return;
 
+	musicContainer[tag]->SetVolume(volume);
 	musicContainer[tag]->ChangeState(fsm[MusicClip::OnResume]);
 }
 
@@ -148,9 +149,14 @@ void BGM::Resume()
 /**************************************
 フェードイン処理
 ***************************************/
-void BGM::FadeIn(int tag, float volume, int duration)
+void BGM::FadeIn(int tag, float volume, int duration, bool isResume)
 {
-	Play(tag, 0.0f);
+
+	if (isResume)
+		Resume(tag, 0.0f);
+	else
+		Play(tag, 0.0f);
+
 	Fade(tag, volume, duration, false);
 }
 

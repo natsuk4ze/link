@@ -82,6 +82,11 @@ public:
 	***************************************/
 	static D3DXVECTOR3 Random();
 
+	/**************************************
+	//ãÖñ ê¸å`ï‚ä‘
+	***************************************/
+	static D3DXVECTOR3 Slerp(float t, const D3DXVECTOR3& start, const D3DXVECTOR3& end);
+
 private:
 	Vector3();
 };

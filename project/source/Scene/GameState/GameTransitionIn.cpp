@@ -19,6 +19,7 @@
 
 #include "../../Sound/PlayBGM.h"
 #include "../../Sound/SoundConfig.h"
+#include "../../../Framework/Task/TaskManager.h"
 
 /**************************************
 入場処理
@@ -34,7 +35,10 @@ void GameScene::GameTransitionIn::OnStart(GameScene & entity)
 	//マップ読み込み
 	entity.field->Load();
 
-	//アクター切り替え
+	//BGMをクロスフェード
+	SoundConfig::BGMID bgmID = SoundConfig::GetBgmID(entity.level);
+	PlayBGM::Instance()->FadeOut();
+	PlayBGM::Instance()->FadeIn(bgmID, 1.0f, 90);
 
 	entity.cntFrame = 0;
 }
@@ -57,8 +61,13 @@ GameScene::State GameScene::GameTransitionIn::OnUpdate(GameScene & entity)
 
 	if (entity.cntFrame == 100)
 	{
+		TaskManager::Instance()->CreateDelayedTask(20, []() {
+			SE::Play(SoundConfig::SEID::NewField, 1.0f);
+		});
+
 		GuideViewer::Instance()->SetActive(false);
 		entity.field->SetViewerActive(false);
+
 		entity.gameViewer->SetGradeTitle(entity.level, [&]()
 		{
 			GuideViewer::Instance()->SetActive(true);
@@ -70,15 +79,7 @@ GameScene::State GameScene::GameTransitionIn::OnUpdate(GameScene & entity)
 			entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Timer);
 			entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Level);
 
-			entity.ChangeState(GameScene::Idle);
-			if (level == 1)
-			{
-				PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::World, 0.1f, 30);
-			}
-			else if (level == 2)
-			{
-				PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Space, 0.1f, 30);
-			}
+			entity.ChangeState(State::Idle);
 		});
 	}
 

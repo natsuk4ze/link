@@ -38,6 +38,9 @@
 #include "../../Framework/Math/Easing.h"
 #include "../Reward/RewardController.h"
 
+#include "../../Framework/Sound/SoundEffect.h"
+#include "../Sound/SoundConfig.h"
+
 namespace Field
 {
 	/**************************************
@@ -77,7 +80,7 @@ namespace Field
 		input = new FieldInput(this);
 		placeContainer = new Model::PlaceContainer();
 		viewer = new FieldViewer();
-		score = new Score();
+		//score = new Score();
 
 		//フィールドレベル設定
 		SetLevel(currentLevel);
@@ -88,12 +91,15 @@ namespace Field
 		fsm[State::Idle] = new IdleState();
 		fsm[State::Develop] = new UseItemState();
 
-		//コールバック作成
+		//ファンクタ作成
 		onConnectTown = std::bind(&FieldController::OnConnectedTown, this, std::placeholders::_1, std::placeholders::_2);
 		onChangePlaceType = std::bind(&Actor::PlaceActorController::ChangeActor, placeActController, std::placeholders::_1);
 
 		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
+
+		auto onStartMorph = std::bind(&Actor::PlaceActorController::OnStartMorphing, placeActController, std::placeholders::_1, std::placeholders::_2);
+		placeContainer->SetMorphingFantor(onStartMorph);
 
 		//ルートプロセッサ作成
 		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
@@ -123,7 +129,7 @@ namespace Field
 		SAFE_DELETE(input);
 		SAFE_DELETE(infoController);
 		SAFE_DELETE(viewer);
-		SAFE_DELETE(score);
+		//SAFE_DELETE(score);
 
 		//ステートマシン削除
 		Utility::DeleteContainer(fsm);
@@ -252,9 +258,20 @@ namespace Field
 		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
 
+		auto onStartMorph = std::bind(&Actor::PlaceActorController::OnStartMorphing, placeActController, std::placeholders::_1, std::placeholders::_2);
+		placeContainer->SetMorphingFantor(onStartMorph);
+
 		onChangePlaceType = std::bind(&Actor::PlaceActorController::ChangeActor, placeActController, std::placeholders::_1);
 
 		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
+
+		if (level == FieldLevel::City)
+		{
+			// 町レベルに遷移する時に、ストック数をリセットする（ライ）
+			developper->ResetStock();
+			// リザルト画面用のパラメータをリセットする
+			ResultPara.Clear();
+		}
 	}
 
 	/**************************************
@@ -570,6 +587,7 @@ namespace Field
 	***************************************/
 	void FieldController::OnConnectedTown(const Model::PlaceModel * town, const Model::PlaceModel * gate)
 	{
+		SE::Play(SoundConfig::SEID::Select01, 1.0f);
 		placeContainer->OnConnectedTown(town, gate);
 		placeActController->OnConnectedTown(town);
 	}
@@ -624,18 +642,42 @@ namespace Field
 	}
 
 	/**************************************
-	スコアの取得
+	リザルト画面用のパラメータを設定する
 	***************************************/
-	int FieldController::GetScore(FieldLevel current)
+	void FieldController::SetResultPara(void)
 	{
-		return score->GetScore(current);
+		ResultPara.score[currentLevel] = (int)developmentLevelAI;
+		ResultPara.builtRoad[currentLevel] = GetRoadNum();
+		ResultPara.connectedCity[currentLevel] = GetTownNum();
 	}
 
 	/**************************************
-	スコアのセット
+	リザルト画面用のパラメータを取得する
 	***************************************/
-	void FieldController::SetScore()
+	ResultViewerParam * FieldController::GetResultPara(void)
 	{
-		score->SetScore((int)developmentLevelAI, currentLevel);
+		return &this->ResultPara;
+	}
+
+	/**************************************
+	作った道の数を取得
+	***************************************/
+	int FieldController::GetRoadNum(void)
+	{
+		int RoadNum = 0;
+		for (auto & Route : routeContainer)
+		{
+			RoadNum += Route->GetRoadNum();
+		}
+
+		return placeActController->GetJunctionNum() + RoadNum;
+	}
+
+	/**************************************
+	繋がった町の数を取得
+	***************************************/
+	int FieldController::GetTownNum(void)
+	{
+		return placeContainer->GetTownNum();
 	}
 }

@@ -14,11 +14,21 @@
 #include "../Object/WaterHeightController.h"
 
 #include "../../../Library/cppLinq/cpplinq.hpp"
+#include "../../Sound/SoundConfig.h"
+#include "../../../Framework/Sound/SoundEffect.h"
+#include "../../Effect/GameParticleManager.h"
+#include "../../../Framework/Particle/BaseEmitter.h"
+#include "../../../Framework/Tween/Tween.h"
 
 #include <algorithm>
 
 namespace Field::Model
 {
+	/**************************************
+	staticメンバ
+	***************************************/
+	const int OperatePlaceContainer::DurationMoveEmitter = 5;
+
 	/**************************************
 	using宣言
 	***************************************/
@@ -33,6 +43,12 @@ namespace Field::Model
 	{
 		const D3DXVECTOR2 SizePin{ 4.5f, 4.5f };
 		ResourceManager::Instance()->MakePolygon("PinActor", "data/TEXTURE/Field/fieldpin.png", SizePin, { 2.0f, 1.0f });
+
+		emitter = GameParticleManager::Instance()->Generate(GameParticle::RouteTrace, Vector3::Zero);
+		emitter->SetActive(false);
+		effectPinIndex = 0;
+
+		onReachEmitter = std::bind(&OperatePlaceContainer::_OnReachEmitter, this);
 	}
 
 	/**************************************
@@ -52,9 +68,12 @@ namespace Field::Model
 		if (!place->CanStartRoute())
 			return false;
 
+		SE::Play(SoundConfig::Select02, 1.0f);
+
 		//コンテナに追加してreturn true
 		container.push_back(place);
 		CreatePin(place, BuildRoad, isSea);
+
 		return true;
 	}
 
@@ -66,6 +85,8 @@ namespace Field::Model
 		//開発可能タイプ以外か確認
 		if (place->IsDevelopableType())
 			return false;
+
+		SE::Play(SoundConfig::Select03, 1.0f);
 
 		//コンテナに追加してreturn true
 		container.push_back(place);
@@ -96,7 +117,7 @@ namespace Field::Model
 		//追加してreturn true
 		container.push_back(place);
 		CreatePin(place, BuildRoad, isSea);
-
+		
 		return true;
 	}
 
@@ -166,6 +187,7 @@ namespace Field::Model
 			return false;
 		}
 
+		SE::Play(SoundConfig::SEID::Bom, 1.0f);
 		return true;
 	}
 
@@ -177,6 +199,14 @@ namespace Field::Model
 		container.clear();
 		std::vector<PlaceModel*>().swap(container);
 		actorContainer.clear();
+
+		if (emitter != nullptr)
+		{
+			emitter->SetActive(false);
+		}
+
+		emitter->SetActive(false);
+		effectPinIndex = 0;
 	}
 
 	/**************************************
@@ -196,6 +226,10 @@ namespace Field::Model
 		{
 			actor->Update();
 		}
+
+		cntFrame = Math::WrapAround(0, 60, ++cntFrame);
+		if (cntFrame == 0)
+			StartEmitterMoving();
 	}
 
 	/**************************************
@@ -224,6 +258,46 @@ namespace Field::Model
 	}
 
 	/**************************************
+	ルートエフェクト移動開始処理
+	***************************************/
+	void Field::Model::OperatePlaceContainer::StartEmitterMoving()
+	{
+		if (actorContainer.size() < 2)
+			return;
+
+		if (emitter->IsActive())
+			return;
+
+		D3DXVECTOR3 pinPosition = actorContainer[0]->GetPosition();
+		emitter->SetActive(true);
+		emitter->SetPosition(pinPosition);
+
+		D3DXVECTOR3 nextPosition = actorContainer[1]->GetPosition();
+		Tween::Move(*emitter, nextPosition, DurationMoveEmitter, EaseType::Linear, onReachEmitter);
+
+		effectPinIndex = 1;
+	}
+
+	/**************************************
+	エミッター到着コールバック
+	***************************************/
+	void Field::Model::OperatePlaceContainer::_OnReachEmitter()
+	{
+		effectPinIndex++;
+
+		if (effectPinIndex < (int)actorContainer.size())
+		{
+			D3DXVECTOR3 position = actorContainer[effectPinIndex]->GetPosition();
+			Tween::Move(*emitter, position, DurationMoveEmitter, EaseType::Linear, onReachEmitter);
+		}
+		else
+		{
+			effectPinIndex = 0;
+			emitter->SetActive(false);
+		}
+	}
+
+	/**************************************
 	PinActorコンストラクタ
 	***************************************/
 	PinActor::PinActor(const D3DXVECTOR3& position, OperatePlaceContainer::Mode mode, bool isSea) :
@@ -232,7 +306,10 @@ namespace Field::Model
 		polygon = new BoardPolygon();
 		polygon->SetTexDiv({ 2.0f, 1.0f });
 		polygon->SetTextureIndex(mode);
+
 		ResourceManager::Instance()->GetPolygon("PinActor", polygon);
+
+		transform->SetPosition(position);
 		Tween::Move(*this, position + Vector3::Up * 10.0f, position, 30, EaseType::OutCubic);
 	}
 

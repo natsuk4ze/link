@@ -68,7 +68,7 @@ staticメンバ
 int GameScene::level = 0;		//デバッグ用フィールドレベル（本番では非staticメンバにする
 const float GameScene::BloomPower[] = { 0.6f, 0.55f, 0.50f };		//ブルームの強さ
 const float GameScene::BloomThrethold[] = { 0.6f, 0.5f, 0.4f };		//ブルームをかける輝度の閾値
-const unsigned char GameScene::AngleTable[3] = { 45, 75, 105 };
+const unsigned char GameScene::AngleTable[3] = { 105, 140, 175 };
 
 /**************************************
 初期化処理
@@ -94,7 +94,7 @@ void GameScene::Init()
 	bloomController = new BloomController();
 	Client = new UDPClient();
 	resultViewer = new ResultViewer();
-	nemeEntryViewer = new NameEntryViewer();
+	nameEntryViewer = new NameEntryViewer();
 	titleViewer = new TitleViewer();
 	rewardNotifier = new RewardNotifier();
 	debugController = new PresenDebugController(this);
@@ -163,7 +163,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(eventHandler);
 	SAFE_DELETE(Client);
 	SAFE_DELETE(resultViewer);
-	SAFE_DELETE(nemeEntryViewer);
+	SAFE_DELETE(nameEntryViewer);
 	SAFE_DELETE(titleViewer);
 	SAFE_DELETE(rewardNotifier);
 	SAFE_DELETE(debugController);
@@ -220,15 +220,12 @@ void GameScene::Update()
 	field->EmbedViewerParam(gameParam);
 	gameViewer->ReceiveParam(gameParam);
 
-	// イベントビューアに必要なパラメータを渡す
-	//EventViewerParam eventParam;
-	//eventController->EmbedViewerParam(eventParam);
-
 	//ビュアー更新
 	gameViewer->Update();
 	GuideViewer::Instance()->Update();
 	resultViewer->Update();
 	titleViewer->Update();
+	nameEntryViewer->Update();
 	rewardNotifier->Update();
 
 	//パーティクル更新
@@ -244,18 +241,18 @@ void GameScene::Update()
 	//デバッグ機能
 	DebugTool();
 
-	Debug::Begin("EventHandler");
-	if (Debug::Button("Pause"))
-		eventHandler->PauseGame();
-	if (Debug::Button("Resume"))
-		eventHandler->ResumeGame();
-	if (Debug::Button("GetTownPos"))
-		eventHandler->GetNewTownPosition();
-	if (Debug::Button("DestroyTown"))
-		eventHandler->DestroyTown(eventHandler->GetDestroyTarget());
-	if (Debug::Button("CreateTown"))
-		eventHandler->CreateNewTown(eventHandler->GetNewTownPosition());
-	Debug::End();
+	//Debug::Begin("EventHandler");
+	//if (Debug::Button("Pause"))
+	//	eventHandler->PauseGame();
+	//if (Debug::Button("Resume"))
+	//	eventHandler->ResumeGame();
+	//if (Debug::Button("GetTownPos"))
+	//	eventHandler->GetNewTownPosition();
+	//if (Debug::Button("DestroyTown"))
+	//	eventHandler->DestroyTown(eventHandler->GetDestroyTarget());
+	//if (Debug::Button("CreateTown"))
+	//	eventHandler->CreateNewTown(eventHandler->GetNewTownPosition());
+	//Debug::End();
 }
 
 /**************************************
@@ -304,7 +301,7 @@ void GameScene::Draw()
 	gameViewer->Draw();
 	eventController->DrawEventViewer();
 	resultViewer->Draw();
-	nemeEntryViewer->Draw();
+	nameEntryViewer->Draw();
 	titleViewer->Draw();
 	rewardNotifier->Draw();
 
@@ -347,9 +344,6 @@ void GameScene::OnLevelUp()
 {
 	//現在の制限時間を保存
 	PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_RemainTime), remainTime);
-
-	//BGMをフェードアウト
-	BGM::Fade(0.0f, 30, true);
 
 	//テストなのでインクリメントしてしまう
 	//本番ではちゃんと制限する

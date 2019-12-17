@@ -10,11 +10,13 @@
 
 #include "../../../main.h"
 #include <vector>
+#include <functional>
 
 /**************************************
 前方宣言
 ***************************************/
 class BoardPolygon;
+class BaseEmitter;
 
 namespace Field::Model
 {
@@ -64,17 +66,28 @@ namespace Field::Model
 		//デバッグ表示
 		void Draw();
 
+		const static int DurationMoveEmitter;
+
 	private:
 		std::vector<PlaceModel*> container;		//PlaceModelコンテナ
 		std::vector<std::unique_ptr<PinActor>> actorContainer;	//PinActorコンテナ
 
+		int effectPinIndex;
+		BaseEmitter *emitter;
+		int cntFrame;
+
 		void CreatePin(const PlaceModel* place, Mode mode, bool isSea);
+
+		std::function<void()> onReachEmitter;
+
+		void StartEmitterMoving();
+		void _OnReachEmitter();
 	};
 
 	/**************************************
 	ピンアクタークラス
 	***************************************/
-	class PinActor : GameObject
+	class PinActor : public GameObject
 	{
 	public:
 		PinActor(const D3DXVECTOR3& position, OperatePlaceContainer::Mode mode, bool isSea);

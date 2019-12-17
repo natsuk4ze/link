@@ -162,10 +162,10 @@ namespace Field::Actor
 #endif
 
 		//メッシュコンテナ作成
-		ResourceManager::Instance()->GetMesh(ActorLoader::GroundTag.c_str(), groundMesh);
+		ResourceManager::Instance()->GetMesh(ActorLoader::WorldGroundTag.c_str(), groundMesh);
 		groundMesh->Init();
 
-		ResourceManager::Instance()->GetMesh(ActorLoader::RiverTag.c_str(), seaMesh);
+		ResourceManager::Instance()->GetMesh(ActorLoader::SeaTag.c_str(), seaMesh);
 		seaMesh->Init();
 	}
 

@@ -35,9 +35,10 @@ public:
 		BGMMax
 	};
 
-	// Voiceの通し番号
-	enum VoiceID
+	// SEの通し番号
+	enum SEID
 	{
+		// *** Voice ***
 		AIBonus,				// AIレベルにボーナス（茶柱イベント）
 		AIOutofControll,		// AI暴走
 		AIOutofControllStop,	// AI暴走阻止
@@ -55,15 +56,46 @@ public:
 		UFOFailed,				// UFOイベント失敗
 		UFOSuccess,				// UFOイベント成功
 
-		VoiceMax
+		// *** ME ***
+		CreationEvent,
+		FieldLevelUp,
+		Finish,
+		CountDown,
+
+		// *** SE ***
+		Select01,			// 決定、道終点
+		Select02,			// 道始点
+		Select03,			// 道始点（ドリル）
+		MoveCursor,			// カーソル移動
+		Fall,				// 道落下
+		Beat,				// 連打
+		BeatStart,			// 連打ゲームスタート
+		BeatFinish,			// 連打ゲーム終了
+		BeatSuccess,		// 連打ゲーム成功
+		BeatFailed,			// 連打ゲーム失敗
+		Transition,			// シーンチェンジ
+		NewTownSE,			// 新しい町出現
+		NewContinentSE,		// 新大陸出現
+		NewStarSE,			// 新しい星誕生
+		AIBurstSE,			// AI暴走
+		Error,				// そこに道は置けません
+		EventHappen,		// イベント発生
+		TimeStopEventHappen,// 時間停止イベント発生
+		Bom,				// 爆破
+		UFO,				// UFO
+		NewField,			// 新しいフィールドに遷移
+
+		SEMax
 	};
 
 	//音声ファイルのパス
 	static const char* BGMPath[BGMID::BGMMax];
-	static const char* VoicePath[VoiceID::VoiceMax];
+	static const char* SEPath[SEID::SEMax];
 
 	//ボイスSEの音量
 	static const float VolumeVoice;
+
+	static BGMID GetBgmID(int fieldLevel);
 };
 
 #endif

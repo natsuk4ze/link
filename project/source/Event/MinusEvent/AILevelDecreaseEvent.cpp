@@ -60,7 +60,7 @@ AILevelDecreaseEvent::AILevelDecreaseEvent(EventViewer* eventViewer, EventCamera
 	beatViewer(beatViewer),
 	success(false)
 {
-	PlayBGM::Instance()->Pause();
+
 }
 
 //=============================================================================
@@ -105,8 +105,11 @@ void AILevelDecreaseEvent::Init()
 	// テロップ設置
 	eventViewer->SetEventTelop(EventTelop::Alien, [&]()
 	{
+		//BGMのクロスフェード
+		PlayBGM::Instance()->FadeOut();
+		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::UFOEvent, 0.5f, 30);
+
 		camera->Translation(TownPos, 30, [&]() {
-			PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::UFOEvent, 0.1f, 30);
 			UFODebutStart(); 
 		});
 	});
@@ -161,6 +164,7 @@ void AILevelDecreaseEvent::Update()
 		});
 		EventState = EffectHappend;
 		PlayBGM::Instance()->FadeOut();
+		SE::Play(SoundConfig::SEID::Bom, 1.0f);
 		break;
 
 		// AIレベル減らす
@@ -256,6 +260,7 @@ void AILevelDecreaseEvent::EventOver(void)
 			GuideActor::AnimState::Pain,
 			SoundConfig::UFOFailed);
 	}
+
 	PlayBGM::Instance()->ResumePrev();
 }
 
@@ -339,6 +344,8 @@ void AILevelDecreaseEvent::ReceiveBeatResult(bool IsSuccess)
 
 		//ガイドキャラに失敗モーションをさせる
 		guideActor->ChangeAnim(GuideActor::AnimState::Defeat, true);
+
+		SE::Play(SoundConfig::SEID::UFO, 1.0f);
 	}
 }
 

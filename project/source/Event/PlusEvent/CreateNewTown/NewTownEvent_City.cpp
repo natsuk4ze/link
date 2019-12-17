@@ -10,6 +10,9 @@
 #include "../../../Effect/CityParticleManager.h"
 #include "../../../../Framework/Task/TaskManager.h"
 #include "../../../Field/Camera/EventCamera.h"
+#include "../../../../Framework/Sound/SoundEffect.h"
+#include "../../../Sound/SoundConfig.h"
+#include "../../../Sound/PlayBGM.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -59,6 +62,9 @@ void NewTownEvent_City::Init()
 	{
 		// 予定地にカメラを移動させる
 		camera->Translation(TownPos, 30, [&]() {CreateNewTown(); });
+
+		//BGMフェードアウト
+		PlayBGM::Instance()->FadeOut(SoundConfig::BGMID::City, 0.0f, 90, false);
 	});
 
 	// 初期化終了
@@ -102,5 +108,12 @@ void NewTownEvent_City::CreateNewTown(void)
 	TaskManager::Instance()->CreateDelayedTask(90, [&]() 
 	{
 		camera->Return(15, EventOverFunc);
+	});
+
+	//SE::Play(SoundConfig::SEID::CreationEvent, 1.0f);
+	SE::Play(SoundConfig::SEID::NewTownSE, 1.0f);
+	TaskManager::Instance()->CreateDelayedTask(60, [&]()
+	{
+		SE::Play(SoundConfig::SEID::CreationEvent, 1.0f);
 	});
 }

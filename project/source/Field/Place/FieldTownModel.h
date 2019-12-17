@@ -30,7 +30,10 @@ namespace Field::Model
 	{
 	public:
 		//コンストラクタ、デストラクタ
-		TownModel(const PlaceModel* place, std::function<void(const PlaceModel *start, const PlaceModel *goal, const PlaceModel *town)>& action);
+		TownModel(
+			const PlaceModel* place,
+			std::function<void(const PlaceModel *start, const PlaceModel *goal, const PlaceModel *town)>& departAction,
+			std::function<void(const PlaceModel *place, int next)> &morphAction);
 		~TownModel();
 
 		//更新処理
@@ -81,6 +84,9 @@ namespace Field::Model
 
 		//パッセンジャー出発処理
 		std::function<void(const PlaceModel* start, const PlaceModel *end, const PlaceModel *town)> departPassenger;
+
+		//モーフィング開始処理
+		std::function<void(const PlaceModel* place, int next)> startMorph;
 
 		//繋がってる街への経路
 		//first : 相手の街, second : 出口

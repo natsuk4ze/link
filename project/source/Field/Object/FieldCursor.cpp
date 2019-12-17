@@ -10,6 +10,8 @@
 #include "../../../Framework/Tool/DebugWindow.h"
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../Object/WaterHeightController.h"
+#include "../../Sound/SoundConfig.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 
 #include <algorithm>
 
@@ -119,6 +121,8 @@ namespace Field
 
 		if (cntMove < MoveDuration)
 			return;
+
+		SE::Play(SoundConfig::SEID::MoveCursor, 1.0f);
 
 		//移動開始地点を保存
 		startPos = position.ConvertToWorldPosition();
