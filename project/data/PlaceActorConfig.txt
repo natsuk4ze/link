@@ -96,11 +96,11 @@
 	"City-Town-L":"data/MODEL/PlaceActor/Morph/townL.x",
 
 	"World-Town-S":"世界レベルの町モデル（小）",
-	"World-Town-S":"data/MODEL/PlaceActor/Big country.x",
+	"World-Town-S":"data/MODEL/PlaceActor/Morph/countryS.x",
 
 	"World-Town-M":"世界レベルの町モデル（中）",
-	"World-Town-M":"data/MODEL/PlaceActor/Big country.x",
+	"World-Town-M":"data/MODEL/PlaceActor/Morph/countryM.x",
 
 	"World-Town-L":"世界レベルの町モデル（大）",
-	"World-Town-L":"data/MODEL/PlaceActor/Big country.x"
+	"World-Town-L":"data/MODEL/PlaceActor/Morph/countryL.x"
 }
