@@ -27,7 +27,7 @@ void GameScene::GameTransitionOut::OnStart(GameScene & entity)
 
 	entity.cntFrame = 0;
 
-	SE::Play(SoundConfig::SEID::Transition, 1.0f);
+	SE::Play(SoundConfig::SEID::Transition, 0.4f);
 
 	//gamaeViewer‚ðƒIƒt‚É
 	entity.gameViewer->SetActive(false, GameViewer::ViewerNo::ItemStock);
