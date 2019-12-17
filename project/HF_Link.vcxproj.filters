@@ -630,6 +630,7 @@
     <ClInclude Include="source\Presen\PresenDebugController.h" />
     <ClInclude Include="source\Effect\Game\General\EventHappen.h" />
     <ClInclude Include="source\Effect\Game\General\RouteEffect.h" />
+    <ClInclude Include="Framework\Tool\MemoryDetect.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

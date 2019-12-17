@@ -35,8 +35,7 @@ public:
 
 	//アクティブ状態をセット
 	void SetActive(bool flag);
-
-	bool GetIsActive();
+	bool GetIsActive(void);
 
 	//登録名ID取得処理（文字テーブルの0～35までの値がentryNameMax個の配列）
 	std::string GetEntryNameID();

@@ -53,13 +53,9 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	if (level == 2)
 	{
 		entity.field->SetResultPara();
-		//entity.field->SetScore();
 	}
 
-	// リザルト用のUIにAI発展レベルを渡す
-	//int cityScore = (int)entity.field->GetScore(Field::FieldLevel::City);
-	//int worldScore = (int)entity.field->GetScore(Field::FieldLevel::World);
-	//int spaceScore = (int)entity.field->GetScore(Field::FieldLevel::Space);
+	// リザルト用のUIにパラメータを渡す
 	ResultViewerParam* Prarm = entity.field->GetResultPara();
 	entity.resultViewer->ReceiveParam(*Prarm);
 

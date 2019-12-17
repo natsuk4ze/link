@@ -47,10 +47,6 @@ private:
 	TextViewer *rewardText[telopMax];
 	ViewerAnimater*anim[Max];
 
-	//int score[telopMax];
-	//int connectedCity[telopMax];
-	//int builtRoad[telopMax];
-
 	//テロップスクリーンイン
 	void InCityTelop();
 	void InWorldTelop();
@@ -68,7 +64,6 @@ private:
 	D3DXVECTOR2 fieldTextStopPos[telopMax];
 
 	void GetStopPos();
-	//void SetText();
 
 	bool isInPlaying;
 	bool isOutPlaying;
@@ -87,12 +82,8 @@ public:
 	bool IsPlayingIn() const;
 	bool IsPlayingOut() const;
 
+	// 表示するパラメータを受け取る
 	void ReceiveParam(const ResultViewerParam& ResultPara);
-
-	//パラメータを受けとる箱
-	//int parameterBoxScore[3];
-	//int parameterBoxCity[3];
-	//int parameterBoxRoad[3];
 };
 
 #endif

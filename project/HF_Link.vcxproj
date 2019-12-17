@@ -114,6 +114,7 @@
     <ClInclude Include="Framework\Task\Task.h" />
     <ClInclude Include="Framework\Task\TaskManager.h" />
     <ClInclude Include="Framework\Tool\DebugWindow.h" />
+    <ClInclude Include="Framework\Tool\MemoryDetect.h" />
     <ClInclude Include="Framework\Tool\ProfilerCPU.h" />
     <ClInclude Include="Framework\Transition\BaseTransitionMask.h" />
     <ClInclude Include="Framework\Transition\HexaPopTransitionMask.h" />

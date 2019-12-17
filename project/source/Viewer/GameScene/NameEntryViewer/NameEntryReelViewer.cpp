@@ -107,6 +107,7 @@ void NameEntryReelViewer::Update(void)
 		anim[AnimScene::TelopIn]->PlayAnim([=]
 		{
 			anim[AnimScene::TelopIn]->SetPlayFinished(isInPlaying);
+			CursorMovable = true;
 		});
 	}
 	if (isOutPlaying)
@@ -114,6 +115,7 @@ void NameEntryReelViewer::Update(void)
 		anim[AnimScene::TelopOut]->PlayAnim([=]
 		{
 			anim[AnimScene::TelopOut]->SetPlayFinished(isOutPlaying);
+			CursorMovable = false;
 		});
 	}
 	text->SetPos((int)bg->position.x, (int)bg->position.y);
@@ -188,6 +190,9 @@ void NameEntryReelViewer::OutReel(std::function<void()> Callback)
 //=============================================================================
 void NameEntryReelViewer::ReelUp(int reelCnt)
 {
+	if (!CursorMovable)
+		return;
+
 	if (character[reelCnt] > 0)
 		character[reelCnt]--;
 	else
@@ -202,6 +207,9 @@ void NameEntryReelViewer::ReelUp(int reelCnt)
 //=============================================================================
 void NameEntryReelViewer::ReelDown(int reelCnt)
 {
+	if (!CursorMovable)
+		return;
+
 	if (character[reelCnt] < charTypeMax - 1)
 		character[reelCnt]++;
 	else
@@ -214,17 +222,27 @@ void NameEntryReelViewer::ReelDown(int reelCnt)
 //=============================================================================
 // カーソル右移動処理
 //=============================================================================
-void NameEntryReelViewer::MoveCursorRight(void)
+bool NameEntryReelViewer::MoveCursorRight(void)
 {
-	cursor->position.x += intervalReelPos;
+	if (!CursorMovable)
+		return false;
+	else
+		cursor->position.x += intervalReelPos;
+
+	return true;
 }
 
 //=============================================================================
 // カーソル左移動処理
 //=============================================================================
-void NameEntryReelViewer::MoveCursorLeft(void)
+bool NameEntryReelViewer::MoveCursorLeft(void)
 {
-	cursor->position.x -= intervalReelPos;
+	if (!CursorMovable)
+		return false;
+	else
+		cursor->position.x -= intervalReelPos;
+
+	return true;
 }
 
 //=============================================================================
