@@ -303,15 +303,15 @@ namespace Field
 			}
 
 			stockNum -= cntRiver;
+
+			// リワードに反映
+			RewardController::Instance()->SetRewardData(RC::Type::Artist, cntRiver);
 		}
 		else
 		{
 			//エラーメッセージを再生
 			entity->viewer->SetFieldErroMessage(FieldErrorMessage::ErroID::StockShortage);
 		}
-
-		// リワードに反映
-		RewardController::Instance()->SetRewardData(RC::Type::Artist, cntRiver);
 
 		return end;
 	}
