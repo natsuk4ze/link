@@ -44,11 +44,11 @@ public:
 	static void Stop();
 
 	//再開処理
-	static void Resume(int tag);
+	static void Resume(int tag, float volume = 1.0f);
 	static void Resume();
 
 	//フェードイン、フェードアウト
-	static void FadeIn(int tag, float volume, int duration);
+	static void FadeIn(int tag, float volume, int duration, bool isResume);
 	static void Fade(int tag, float volume, int duration, bool flgStop);
 	static void Fade(float volume, int duration, bool flgStop);
 

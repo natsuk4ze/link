@@ -36,8 +36,8 @@ private:
 	PlayBGM(){}
 	~PlayBGM(){}
 
-	SoundConfig::BGMID current;
-	SoundConfig::BGMID prev;
+	SoundConfig::BGMID current;		//åªç›ÇÃBGM
+	SoundConfig::BGMID prev;		//1Ç¬ëOÇÃBGM
 };
 
 #endif

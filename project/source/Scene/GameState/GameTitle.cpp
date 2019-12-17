@@ -74,6 +74,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 	{
 		SE::Play(SoundConfig::SEID::Select01, 1.0f);
 		entity.step++;
+
 		TitleViewer::MenuID selected = entity.titleViewer->GetSelectedMenu();
 
 		// シーンチェンジ

@@ -29,7 +29,7 @@ void GameScene::GameTransitionOut::OnStart(GameScene & entity)
 
 	SE::Play(SoundConfig::SEID::Transition, 1.0f);
 
-//gamaeViewerをオフに
+	//gamaeViewerをオフに
 	entity.gameViewer->SetActive(false, GameViewer::ViewerNo::ItemStock);
 	entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Timer);
 	entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Level);

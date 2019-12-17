@@ -16,6 +16,7 @@
 #include "../../../../Framework/Math/Easing.h"
 #include "../../../../Framework/Sound/SoundEffect.h"
 #include "../../../Sound/SoundConfig.h"
+#include "../../../Sound/PlayBGM.h"
 
 enum State
 {
@@ -86,6 +87,9 @@ void NewTownEvent_Space::Init()
 	{
 		// 惑星にカメラを移動させる
 		camera->Translation(StartPos, 30, [&]() {FallenStart(); });
+
+		//BGMフェードアウト
+		PlayBGM::Instance()->FadeOut(SoundConfig::BGMID::Space, 0.0f, 90, false);
 	});
 
 	// 初期化終了
