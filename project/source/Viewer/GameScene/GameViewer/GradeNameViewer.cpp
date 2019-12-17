@@ -8,6 +8,8 @@
 #include "GradeNameViewer.h"
 #include "../../Framework/ViewerDrawer/TextureDrawer.h"
 #include "../../../../Framework/Task/TaskManager.h"
+#include "../../../Sound/SoundConfig.h"
+#include "../../../../Framework/Sound/SoundEffect.h"
 
 const D3DXVECTOR3 TitleDefaultPos = D3DXVECTOR3(-350.0f, SCREEN_CENTER_Y - 80.0f, 0.0f);
 
@@ -79,7 +81,10 @@ void GradeNameViewer::SetGradeName(int fieldLevel, std::function<void(void)> cal
 	GradeTitle->SetIndex(fieldLevel);
 
 	GradeTitle->Move(30.0f, D3DXVECTOR3(300.0f, SCREEN_CENTER_Y - 80.0f, 0.0f), EaseType::OutQuart);
+
 	GradeTitle->Fade(30.0f, 1.0f);
+
+	SE::Play(SoundConfig::SEID::NewField, 0.2f);
 
 	TaskManager::Instance()->CreateDelayedTask(90, [&]()
 	{

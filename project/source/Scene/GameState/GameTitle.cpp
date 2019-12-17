@@ -52,7 +52,7 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	entity.nameEntryViewer->SetActive(false);
 
 	// タイトルのBGMを開始
-	PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Title, 0.1f, 30);
+	PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Title, SoundConfig::VolumeBGM, 30, false);
 
 	//モータの角度を初期化
 	BoothController::Instance()->RotateTable(GameScene::AngleTable[0]);
@@ -72,7 +72,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 
 	if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 	{
-		SE::Play(SoundConfig::SEID::Select01, 1.0f);
+		SE::Play(SoundConfig::SEID::Select01, 0.5f);
 		entity.step++;
 
 		TitleViewer::MenuID selected = entity.titleViewer->GetSelectedMenu();
@@ -81,9 +81,11 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 		if (selected == TitleViewer::MenuID::StartGame)
 		{
 			entity.remainTime = 30 * 180;
+
 			PlayBGM::Instance()->FadeOut();
+			PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.3f, 30, false);
+
 			TaskManager::Instance()->CreateDelayedTask(30, [&]() {
-				PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.1f, 30);
 
 				entity.titleViewer->SetActive(false);
 

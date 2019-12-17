@@ -128,18 +128,20 @@ void NewTownEventCtrl::EventOver(void)
 		GuideViewer::Instance()->SetData("新しい町が出現",
 			GuideActor::AnimState::Yeah,
 			SoundConfig::NewTown);
+		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, SoundConfig::VolumeBGM, 30);
 	}
 	else if (typeid(*NewTownEvent) == typeid(NewTownEvent_World))
 	{
 		GuideViewer::Instance()->SetData("新しい大陸が出現",
 			GuideActor::AnimState::Yeah,
 			SoundConfig::NewContinent);
+		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::World, SoundConfig::VolumeBGM, 30);
 	}
 	else if (typeid(*NewTownEvent) == typeid(NewTownEvent_Space))
 	{
 		GuideViewer::Instance()->SetData("新しい星が誕生",
 			GuideActor::AnimState::Yeah,
 			SoundConfig::NewStar);
+		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Space, SoundConfig::VolumeBGM, 30);
 	}
-	PlayBGM::Instance()->ResumePrev();
 }

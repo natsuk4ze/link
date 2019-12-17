@@ -95,6 +95,9 @@ public:
 	//ƒ{ƒCƒXSE‚Ì‰¹—Ê
 	static const float VolumeVoice;
 
+	//BGM‚Ì‰¹—Ê
+	static const float VolumeBGM;
+
 	static BGMID GetBgmID(int fieldLevel);
 };
 

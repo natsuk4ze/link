@@ -111,7 +111,7 @@ void NewTownEvent_City::CreateNewTown(void)
 	});
 
 	//SE::Play(SoundConfig::SEID::CreationEvent, 1.0f);
-	SE::Play(SoundConfig::SEID::NewTownSE, 1.0f);
+	SE::Play(SoundConfig::SEID::NewTownSE, 0.3f);
 	TaskManager::Instance()->CreateDelayedTask(60, [&]()
 	{
 		SE::Play(SoundConfig::SEID::CreationEvent, 1.0f);

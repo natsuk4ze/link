@@ -20,7 +20,7 @@ class PlayBGM :
 	friend class BaseSingleton<PlayBGM>;
 public:
 	// フェードイン、フェードアウト
-	void FadeIn(SoundConfig::BGMID tag, float volume, int duration);
+	void FadeIn(SoundConfig::BGMID tag, float volume, int duration, bool isResume = true);
 	void FadeOut(SoundConfig::BGMID tag, float volume, int duration, bool flagStop);
 	void FadeOut();
 
