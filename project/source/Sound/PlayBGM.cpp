@@ -13,7 +13,8 @@
 //=====================================
 void PlayBGM::FadeIn(SoundConfig::BGMID tag, float volume, int duration)
 {
-	BGM::FadeIn(tag, volume, duration);
+	BGM::FadeIn(tag, volume, duration, false);
+	prev = current;
 	current = tag;
 }
 
@@ -23,7 +24,6 @@ void PlayBGM::FadeIn(SoundConfig::BGMID tag, float volume, int duration)
 void PlayBGM::FadeOut(SoundConfig::BGMID tag, float volume, int duration, bool flagStop)
 {
 	BGM::Fade(tag, volume, duration, flagStop);
-	prev = current;
 }
 
 //=====================================
@@ -32,7 +32,6 @@ void PlayBGM::FadeOut(SoundConfig::BGMID tag, float volume, int duration, bool f
 void PlayBGM::FadeOut()
 {
 	BGM::Fade(current, 0.1f, 90, true);
-	prev = current;
 }
 
 //=====================================

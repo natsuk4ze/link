@@ -149,9 +149,14 @@ void BGM::Resume()
 /**************************************
 フェードイン処理
 ***************************************/
-void BGM::FadeIn(int tag, float volume, int duration)
+void BGM::FadeIn(int tag, float volume, int duration, bool isResume)
 {
-	Play(tag, 0.0f);
+
+	if (isResume)
+		Resume(tag, 0.0f);
+	else
+		Play(tag, 0.0f);
+
 	Fade(tag, volume, duration, false);
 }
 
