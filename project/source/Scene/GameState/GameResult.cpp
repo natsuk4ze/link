@@ -64,7 +64,7 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	entity.resultViewer->ReceiveParam(*Prarm);
 
 	SE::Play(SoundConfig::SEID::Finish, 1.0f);
-	PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Result, 0.1f, 30);
+	PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Result, SoundConfig::VolumeBGM, 30, false);
 
 	//全体スコアを計算
 	string TotalScore = std::to_string(Prarm->score[Field::FieldLevel::Space]) +

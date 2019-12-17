@@ -52,7 +52,7 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	entity.nameEntryViewer->SetActive(false);
 
 	// タイトルのBGMを開始
-	PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Title, 0.1f, 30);
+	PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Title, SoundConfig::VolumeBGM, 30, false);
 
 	//モータの角度を初期化
 	BoothController::Instance()->RotateTable(GameScene::AngleTable[0]);
@@ -83,7 +83,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 			entity.remainTime = 30 * 180;
 
 			PlayBGM::Instance()->FadeOut();
-			PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.3f, 30);
+			PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.3f, 30, false);
 
 			TaskManager::Instance()->CreateDelayedTask(30, [&]() {
 

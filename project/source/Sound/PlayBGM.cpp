@@ -11,9 +11,9 @@
 //=====================================
 // フェードイン
 //=====================================
-void PlayBGM::FadeIn(SoundConfig::BGMID tag, float volume, int duration)
+void PlayBGM::FadeIn(SoundConfig::BGMID tag, float volume, int duration, bool isResume)
 {
-	BGM::FadeIn(tag, volume, duration, false);
+	BGM::FadeIn(tag, volume, duration, isResume);
 	prev = current;
 	current = tag;
 }
@@ -31,7 +31,7 @@ void PlayBGM::FadeOut(SoundConfig::BGMID tag, float volume, int duration, bool f
 //=====================================
 void PlayBGM::FadeOut()
 {
-	BGM::Fade(current, 0.1f, 30, true);
+	BGM::Fade(current, 0.0f, 30, true);
 }
 
 //=====================================
@@ -66,6 +66,6 @@ void PlayBGM::Resume(SoundConfig::BGMID tag)
 //=====================================
 void PlayBGM::ResumePrev()
 {
-	BGM::Resume(prev);
+	BGM::FadeIn(prev, 0.3f, 30, true);
 	current = prev;
 }

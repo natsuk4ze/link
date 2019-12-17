@@ -72,6 +72,7 @@ const char* SoundConfig::SEPath[SEID::SEMax]
 };
 
 const float SoundConfig::VolumeVoice = 1.0f;
+const float SoundConfig::VolumeBGM = 0.3f;
 
 /**************************************
 Œ»İ‚ÌƒŒƒxƒ‹‚Å‚ÌBGM‚ÌIDæ“¾ˆ—

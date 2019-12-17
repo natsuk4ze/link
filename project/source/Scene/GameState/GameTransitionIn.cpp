@@ -38,7 +38,7 @@ void GameScene::GameTransitionIn::OnStart(GameScene & entity)
 	//BGMをクロスフェード
 	SoundConfig::BGMID bgmID = SoundConfig::GetBgmID(entity.level);
 	PlayBGM::Instance()->FadeOut();
-	PlayBGM::Instance()->FadeIn(bgmID, 0.3f, 90);
+	PlayBGM::Instance()->FadeIn(bgmID, 0.3f, 90, false);
 
 	entity.cntFrame = 0;
 }
