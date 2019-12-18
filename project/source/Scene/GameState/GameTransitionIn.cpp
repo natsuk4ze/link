@@ -38,7 +38,7 @@ void GameScene::GameTransitionIn::OnStart(GameScene & entity)
 	//BGMをクロスフェード
 	SoundConfig::BGMID bgmID = SoundConfig::GetBgmID(entity.level);
 	PlayBGM::Instance()->FadeOut();
-	PlayBGM::Instance()->FadeIn(bgmID, 1.0f, 90);
+	PlayBGM::Instance()->FadeIn(bgmID, 0.3f, 90, false);
 
 	entity.cntFrame = 0;
 }
@@ -61,10 +61,6 @@ GameScene::State GameScene::GameTransitionIn::OnUpdate(GameScene & entity)
 
 	if (entity.cntFrame == 100)
 	{
-		TaskManager::Instance()->CreateDelayedTask(20, []() {
-			SE::Play(SoundConfig::SEID::NewField, 1.0f);
-		});
-
 		GuideViewer::Instance()->SetActive(false);
 		entity.field->SetViewerActive(false);
 
@@ -78,6 +74,8 @@ GameScene::State GameScene::GameTransitionIn::OnUpdate(GameScene & entity)
 			entity.gameViewer->SetActive(true, GameViewer::ViewerNo::ItemStock);
 			entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Timer);
 			entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Level);
+
+			GuideViewer::Instance()->SetData("いい調子ですね\n引き続き頑張りましょう", GuideActor::AnimState::Excited, SoundConfig::SEID::NextField);
 
 			entity.ChangeState(State::Idle);
 		});

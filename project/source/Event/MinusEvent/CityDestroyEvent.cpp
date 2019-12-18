@@ -105,7 +105,7 @@ void CityDestroyEvent::Init()
 	eventViewer->SetEventTelop(EventTelop::Meteorite, [&]()
 	{
 		PlayBGM::Instance()->FadeOut();
-		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::DestroyEvent, 0.5f, 60);
+		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::DestroyEvent, 0.5f, 60, false);
 		camera->Translation(TownPos, 30, [&]() {MeteorFallStart(); });
 	});
 

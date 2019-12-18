@@ -122,7 +122,7 @@ namespace Field
 		if (cntMove < MoveDuration)
 			return;
 
-		SE::Play(SoundConfig::SEID::MoveCursor, 1.0f);
+		SE::Play(SoundConfig::SEID::MoveCursor, 0.2f);
 
 		//移動開始地点を保存
 		startPos = position.ConvertToWorldPosition();

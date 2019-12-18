@@ -38,7 +38,7 @@ GameScene::State GameScene::GameLevelUp::OnUpdate(GameScene & entity)
 		//リンクレベルポップアップを待つ必要がなくなったら演出開始
 		if (!entity.field->ShouldWaitPopup())
 		{
-			SE::Play(SoundConfig::SEID::FieldLevelUp, 1.0f);
+			SE::Play(SoundConfig::SEID::FieldLevelUpME, 1.0f);
 
 			// グレードアップ
 			entity.gameViewer->SetGradeUp([&]()

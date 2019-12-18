@@ -40,8 +40,6 @@ NewTownEventCtrl::NewTownEventCtrl(EventViewer *Ptr, int FieldLevel, EventCamera
 	eventViewer(Ptr),
 	eventCamera(camera)
 {
-	eventCamera->Init();
-
 	if (FieldLevel == Field::City)
 	{
 		NewTownEvent = new NewTownEvent_City(Ptr, [&]() {EventOver(); }, camera);
@@ -71,6 +69,8 @@ NewTownEventCtrl::~NewTownEventCtrl()
 //=============================================================================
 void NewTownEventCtrl::Init()
 {
+	eventCamera->Init();
+
 	NewTownEvent->Init();
 
 	SE::Play(SoundConfig::SEID::TimeStopEventHappen, 1.0f);
@@ -128,18 +128,20 @@ void NewTownEventCtrl::EventOver(void)
 		GuideViewer::Instance()->SetData("新しい町が出現",
 			GuideActor::AnimState::Yeah,
 			SoundConfig::NewTown);
+		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, SoundConfig::VolumeBGM, 30);
 	}
 	else if (typeid(*NewTownEvent) == typeid(NewTownEvent_World))
 	{
 		GuideViewer::Instance()->SetData("新しい大陸が出現",
 			GuideActor::AnimState::Yeah,
 			SoundConfig::NewContinent);
+		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::World, SoundConfig::VolumeBGM, 30);
 	}
 	else if (typeid(*NewTownEvent) == typeid(NewTownEvent_Space))
 	{
 		GuideViewer::Instance()->SetData("新しい星が誕生",
 			GuideActor::AnimState::Yeah,
 			SoundConfig::NewStar);
+		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Space, SoundConfig::VolumeBGM, 30);
 	}
-	PlayBGM::Instance()->ResumePrev();
 }

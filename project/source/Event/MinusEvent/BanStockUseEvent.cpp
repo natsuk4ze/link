@@ -44,7 +44,7 @@ BanStockUseEvent::BanStockUseEvent(EventViewer* eventViewer,
 	eventViewer(eventViewer),
 	beatViewer(beatViewer)
 {
-	PlayBGM::Instance()->Pause();
+
 }
 
 //=============================================================================
@@ -75,7 +75,8 @@ void BanStockUseEvent::Init()
 
 	// 怒り顔エフェクト終わるまで待つ
 	TaskManager::Instance()->CreateDelayedTask(150, [&]() {	
-		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::AIBurstEvent, 0.1f, 30);
+		PlayBGM::Instance()->FadeOut();
+		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::AIBurstEvent, SoundConfig::VolumeBGM, 60, false);
 		beatGame->CountdownStart(); 
 	});
 
@@ -167,6 +168,7 @@ void BanStockUseEvent::ReceiveBeatResult(bool IsSuccess)
 			GuideActor::AnimState::Pain,
 			SoundConfig::AIOutofControll);
 	}
+
 	PlayBGM::Instance()->FadeOut();
 	PlayBGM::Instance()->ResumePrev();
 }

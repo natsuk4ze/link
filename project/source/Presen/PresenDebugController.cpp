@@ -123,7 +123,7 @@ void PresenDebugController::_DecreaseLevelAI()
 		return;
 
 	Field::FieldController *controller = scene->field;
-	controller->developmentLevelAI -= 50.0f;
+	controller->developmentLevelAI = 0.0f;
 }
 
 /**************************************

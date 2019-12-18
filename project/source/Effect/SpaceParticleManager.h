@@ -19,7 +19,6 @@ namespace SpaceParticle
 {
 	enum ID
 	{
-		SpaceTear,		//時空断裂のスパーク,
 		StarRoad,		//銀河道
 		Blackhole,		//ブラックホール
 		MoveTail,		//移動の軌跡
