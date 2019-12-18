@@ -224,7 +224,7 @@ void LevelViewer::IncreaseDrawingRatioLevel(void)
 //=============================================================================
 void LevelViewer::DecreaseDrawingRatioLevel(void)
 {
-	const float ratioDecreaseSpeed = 0.007f;
+	const float ratioDecreaseSpeed = 0.05f;
 
 	drawingRatioLevel -= ratioDecreaseSpeed;
 	if (drawingRatioLevel <= parameterBox[RatioLevel])
