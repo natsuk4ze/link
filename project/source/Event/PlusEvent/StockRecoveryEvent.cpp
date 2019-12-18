@@ -20,12 +20,12 @@ const std::string StockRecoveryEvent::CityMessage[] = {
 	{"射的で景品ゲット！"}
 };
 const std::string StockRecoveryEvent::WorldMessage[] = {
-	{"裏庭から昔の金貨がザックザク！"},
-	{"海水浴中に砂浜に埋められてたらなんか出てきた！"},
-	{"こんなところに金隠しやがって..."}
+	{"裏庭から金貨がザックザク！"},
+	{"海水浴中に砂浜に埋められて\nたらなんか出てきた！"},
+	{"こんなとこに金隠しやがって"}
 };
 const std::string StockRecoveryEvent::SpaceMessage[] = {
-	{"ふと空を見上げたら星が綺麗だった"},
+	{"ふと空を見上げたら\n星が綺麗だった"},
 	{"あっ！流れ星！"},
 	{"ペガサス流星拳！！"}
 };

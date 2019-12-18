@@ -16,17 +16,17 @@
 const int LinkLevelDecreaseNum = -1;
 const std::string LinkLevelDecreaseEvent::CityMessage[] = {
 	{"発注数の桁5つ間違えた！\n賞味期限明日までじゃん！"},
-	{"SNSで拡散してもらわなくちゃ！"},
+	{"SNSで拡散してもらわなきゃ！"},
 	{"いや！ちがうんすよ店長！"}
 };
 const std::string LinkLevelDecreaseEvent::WorldMessage[] = {
 	{"隣の国が攻めてきた！"},
-	{"争いは同じレベルのもの同士でしか\n発生しない！"},
-	{"アフリカでは1分間に60秒進んでいます"}
+	{"争いは同じレベルのもの\n同士でしか発生しない！"},
+	{"アフリカでは1分間に60秒\n進んでいます"}
 };
 const std::string LinkLevelDecreaseEvent::SpaceMessage[] = {
 	{"君の...名前は！？"},
-	{"拝啓ドッペルゲンガー様　敬具"},
+	{"拝啓ドッペルゲンガー様\n　敬具"},
 	{"あなたは誰？中学の同級生？\n私は問う！"}
 };
 

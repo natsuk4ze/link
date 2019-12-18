@@ -18,8 +18,8 @@ const float BonusNum = 1.5f;
 // デフォルトのボーナス効果フレーム
 const int DefalutBonusFrame = 150;
 const std::string FamousPeopleEvent::message[] = {
-	{"最近ブームの芸人がうちの町にも来た！"},
-	{"M-1優勝芸人がこの町の観光大使に！？"},
+	{"ブームの芸人がうちの町に！"},
+	{"M-1優勝芸人が\nこの町の観光大使に！？"},
 	{"おにぎりマン大好き好き君"}
 };
 
