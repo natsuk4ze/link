@@ -9,7 +9,6 @@
 #include "../../Framework/Particle/BaseParticleController.h"
 #include "../../Framework/PostEffect/CrossFilterController.h"
 
-#include "Game/Space/SpaceTear.h"
 #include "Game/Space/StarRoad.h"
 #include "Game/Space/Blackhole.h"
 #include "Game/Space/MoveTail.h"
@@ -29,7 +28,6 @@ void SpaceParticleManager::Init()
 	SceneParticleManager::Init();
 
 	controllers.resize(SpaceParticle::Max, nullptr);
-	controllers[SpaceParticle::SpaceTear] = new Effect::Game::SpaceTearController();
 	controllers[SpaceParticle::StarRoad] = new Effect::Game::StarRoadController();
 	controllers[SpaceParticle::Blackhole] = new Effect::Game::BlackholeController();
 	controllers[SpaceParticle::MoveTail] = new Effect::Game::MoveTailController();
