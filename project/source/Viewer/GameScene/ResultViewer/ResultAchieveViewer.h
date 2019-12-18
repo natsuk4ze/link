@@ -39,12 +39,14 @@ public:
 	static const D3DXVECTOR3 InitTitlePos;
 	static const D3DXVECTOR3 DestTitlePos;
 	static const D3DXVECTOR3 InitTextPos;
+	static const D3DXVECTOR3 InitIconPos;
 	static const int SizeTextFont;
 private:
 	TextureDrawer *bg;
 	TextureDrawer *title;
 	TextureDrawer *NewIcon;
 	std::vector<TextViewer*> textContainer;
+	std::vector<int> IconPosVec;
 
 	void SlideinText();
 };

@@ -11,6 +11,7 @@
 #include "../../../../Framework/Task/TaskManager.h"
 #include "../../../../Framework/Tween/Tween.h"
 #include "../../../../Framework/Tool/DebugWindow.h"
+#include "../../../Reward/RewardController.h"
 
 /**************************************
 staticメンバ
@@ -19,6 +20,7 @@ const D3DXVECTOR3 ResultAchieveViewer::InitTitlePos = { -200.0f, 80.0f, 0.0f };
 const D3DXVECTOR3 ResultAchieveViewer::DestTitlePos = { 200.0f, 80.0f, 0.0f };
 const int ResultAchieveViewer::SizeTextFont = 90;
 const D3DXVECTOR3 ResultAchieveViewer::InitTextPos = { -ResultAchieveViewer::SizeTextFont * 13, 200.0f, 0.0f };
+const D3DXVECTOR3 ResultAchieveViewer::InitIconPos = D3DXVECTOR3(80.0f, 160.0f, 0.0f);
 
 /**************************************
 コンストラクタ
@@ -40,7 +42,7 @@ ResultAchieveViewer::ResultAchieveViewer()
 
 	NewIcon = new TextureDrawer(D3DXVECTOR2(250.0f, 50.0f));
 	NewIcon->LoadTexture("data/TEXTURE/Viewer/ResultViewer/ResultAchieveViewer/NewAchieve.png");
-	NewIcon->SetPosition(D3DXVECTOR3(80.0f, 160.0f, 0.0f));
+	NewIcon->SetPosition(InitIconPos);
 
 	textContainer.resize(RewardConfig::Type::Max, nullptr);
 	for (unsigned i = 0; i < textContainer.size(); i++)
@@ -109,7 +111,11 @@ void ResultAchieveViewer::Draw()
 		text->Draw();
 	}
 
-	NewIcon->Draw();
+	for (auto &i : IconPosVec)
+	{
+		NewIcon->SetPosition(InitIconPos + Vector3::Up * 90.0f * (float)i);
+		NewIcon->Draw();
+	}
 }
 
 /**************************************
@@ -119,13 +125,24 @@ void ResultAchieveViewer::SetReward(std::vector<RewardConfig::Type>& rewardConta
 {
 	using RewardConfig::RewardName;
 
+	// 初期化
+	IconPosVec.clear();
+
 	//達成している実績名をテキストビューワに設定
-	for (unsigned i = 0; i < textContainer.size(); i++)
+	//for (unsigned i = 0; i < textContainer.size(); i++)
+	for (unsigned i = 0; i < rewardContainer.size(); i++)
 	{
 		TextViewer *text = textContainer[i];
 
-		std::string rewardName = i < rewardContainer.size() ? RewardName[rewardContainer[i]] : "";
+		//std::string rewardName = i < rewardContainer.size() ? RewardName[rewardContainer[i]] : "";
+		std::string rewardName = RewardName[rewardContainer.at(i)];
 		text->SetText(rewardName);
+
+		// この実績は初達成であれば、Newアイコンを付ける
+		if (RewardController::Instance()->IsFirstAchieved(rewardContainer.at(i)) == false)
+		{
+			IconPosVec.push_back(i);
+		}
 	}
 }
 

@@ -113,6 +113,7 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 
 	case Step::ScoreNameEntryWait:
 
+		// スライドインが終了するまで待つ
 		if (!entity.nameEntryViewer->GetSlideOver())
 			break;
 
