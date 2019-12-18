@@ -72,6 +72,7 @@ public:
 	bool GetInPause(void);
 	bool EventDebug(int fieldLevel);
 	void ClearEventMessage(void);
+	bool IsEmptyEventVec() const;
 
 	friend class PresenDebugController;
 };

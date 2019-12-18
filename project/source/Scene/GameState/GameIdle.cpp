@@ -51,7 +51,7 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 		entity.ChangeState(State::Finish);
 	}
 	//AI発展レベルが最大に到達していたらレベルアップ
-	else if (entity.field->ShouldLevelUp())
+	else if (entity.field->ShouldLevelUp() && entity.eventController->IsEmptyEventVec())
 	{
 		if(level < 2)
 		{

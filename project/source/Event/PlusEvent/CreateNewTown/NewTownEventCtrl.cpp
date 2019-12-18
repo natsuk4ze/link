@@ -40,8 +40,6 @@ NewTownEventCtrl::NewTownEventCtrl(EventViewer *Ptr, int FieldLevel, EventCamera
 	eventViewer(Ptr),
 	eventCamera(camera)
 {
-	eventCamera->Init();
-
 	if (FieldLevel == Field::City)
 	{
 		NewTownEvent = new NewTownEvent_City(Ptr, [&]() {EventOver(); }, camera);
@@ -71,6 +69,8 @@ NewTownEventCtrl::~NewTownEventCtrl()
 //=============================================================================
 void NewTownEventCtrl::Init()
 {
+	eventCamera->Init();
+
 	NewTownEvent->Init();
 
 	SE::Play(SoundConfig::SEID::TimeStopEventHappen, 1.0f);
