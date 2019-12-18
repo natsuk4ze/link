@@ -17,6 +17,8 @@
 #include "../../Viewer/GameScene/Controller/FieldViewer.h"
 #include "../../Effect/GameParticleManager.h"
 #include "../../Reward/RewardController.h"
+#include "../../Sound/SoundConfig.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 
 #include "../../../Library/cppLinq/cpplinq.hpp"
 
@@ -215,6 +217,9 @@ namespace Field
 
 			// リワードに反映
 			RewardController::Instance()->SetRewardData(RC::Type::Destructer, cntMountain);
+
+			//SE再生
+			SE::Play(SoundConfig::SEID::Bom, 1.0f);
 		}
 		else
 		{
@@ -306,6 +311,9 @@ namespace Field
 
 			// リワードに反映
 			RewardController::Instance()->SetRewardData(RC::Type::Artist, cntRiver);
+
+			//SE再生
+			SE::Play(SoundConfig::Fall, 1.0f);
 		}
 		else
 		{
