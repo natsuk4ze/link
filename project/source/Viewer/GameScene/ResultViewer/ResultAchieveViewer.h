@@ -44,9 +44,8 @@ public:
 private:
 	TextureDrawer *bg;
 	TextureDrawer *title;
-	TextureDrawer *NewIcon;
 	std::vector<TextViewer*> textContainer;
-	std::vector<int> IconPosVec;
+	std::vector<TextureDrawer*> NewIconContainer;
 
 	void SlideinText();
 };

@@ -494,6 +494,31 @@ void GameScene::DebugTool()
 	}
 
 	Debug::End();
+
+	// リワードコントローラー
+	Debug::Begin("Reward Controller");
+	if (Debug::Button("ButtonMashing"))
+		RewardController::Instance()->SetRewardData(RC::ButtonMashing, 3);
+	if (Debug::Button("Destructer"))
+		RewardController::Instance()->SetRewardData(RC::Destructer, 20);
+	if (Debug::Button("Artist"))
+		RewardController::Instance()->SetRewardData(RC::Artist, 15);
+	if (Debug::Button("Linker"))
+		RewardController::Instance()->SetRewardData(RC::Linker, 15);
+	if (Debug::Button("MinusMaster"))
+		RewardController::Instance()->SetRewardData(RC::MinusMaster, 10);
+	if (Debug::Button("All Reward"))
+	{
+		RewardController::Instance()->SetRewardData(RC::ButtonMashing, 3);
+		RewardController::Instance()->SetRewardData(RC::Destructer, 20);
+		RewardController::Instance()->SetRewardData(RC::Artist, 15);
+		RewardController::Instance()->SetRewardData(RC::Linker, 15);
+		RewardController::Instance()->SetRewardData(RC::MinusMaster, 10);
+		RewardController::Instance()->SetRewardData(RC::PlusMaster, 20);
+		RewardController::Instance()->SetRewardData(RC::Pioneer, 250);
+		RewardController::Instance()->SetRewardData(RC::MasterAI, 10000);
+	}
+	Debug::End();
 }
 
 /**************************************

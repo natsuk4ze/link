@@ -20,7 +20,8 @@ const D3DXVECTOR3 ResultAchieveViewer::InitTitlePos = { -200.0f, 80.0f, 0.0f };
 const D3DXVECTOR3 ResultAchieveViewer::DestTitlePos = { 200.0f, 80.0f, 0.0f };
 const int ResultAchieveViewer::SizeTextFont = 90;
 const D3DXVECTOR3 ResultAchieveViewer::InitTextPos = { -ResultAchieveViewer::SizeTextFont * 13, 200.0f, 0.0f };
-const D3DXVECTOR3 ResultAchieveViewer::InitIconPos = D3DXVECTOR3(80.0f, 160.0f, 0.0f);
+//const D3DXVECTOR3 ResultAchieveViewer::InitIconPos = D3DXVECTOR3(80.0f, 160.0f, 0.0f);
+const D3DXVECTOR3 ResultAchieveViewer::InitIconPos = D3DXVECTOR3(-1140.0f, 160.0f, 0.0f);
 
 /**************************************
 コンストラクタ
@@ -40,9 +41,15 @@ ResultAchieveViewer::ResultAchieveViewer()
 	title->LoadTexture("data/TEXTURE/Viewer/ResultViewer/ResultAchieveViewer/AchieveTitle.png");
 	title->SetPosition(InitTitlePos);
 
-	NewIcon = new TextureDrawer(D3DXVECTOR2(250.0f, 50.0f));
-	NewIcon->LoadTexture("data/TEXTURE/Viewer/ResultViewer/ResultAchieveViewer/NewAchieve.png");
-	NewIcon->SetPosition(InitIconPos);
+	NewIconContainer.reserve(RewardConfig::Type::Max);
+	for (unsigned i = 0; i < RewardConfig::Type::Max; i++)
+	{
+		NewIconContainer.push_back(new TextureDrawer(D3DXVECTOR2(250.0f, 50.0f), false));
+		NewIconContainer.at(i)->LoadTexture("data/TEXTURE/Viewer/ResultViewer/ResultAchieveViewer/NewAchieve.png");
+
+		D3DXVECTOR3 IconPos = InitIconPos + Vector3::Up * (float)SizeTextFont * (float)i;
+		NewIconContainer.at(i)->SetPosition(IconPos);
+	}
 
 	textContainer.resize(RewardConfig::Type::Max, nullptr);
 	for (unsigned i = 0; i < textContainer.size(); i++)
@@ -66,7 +73,7 @@ ResultAchieveViewer::~ResultAchieveViewer()
 {
 	SAFE_DELETE(bg);
 	SAFE_DELETE(title);
-	SAFE_DELETE(NewIcon);
+	Utility::DeleteContainer(NewIconContainer);
 
 	for (auto&& text : textContainer)
 	{
@@ -83,16 +90,13 @@ void ResultAchieveViewer::Update()
 	if (!isPlaying)
 		return;
 
-#if _DEBUG
-	Debug::Begin("TexturePos");
-	static D3DXVECTOR3 IconPos = D3DXVECTOR3(80.0f, 160.0f, 0.0f);
-	Debug::Input("IconPos", IconPos);
-	NewIcon->SetPosition(IconPos);
-	Debug::End();
-#endif
-
 	bg->Update();
 	title->Update();
+
+	for (auto &Icon : NewIconContainer)
+	{
+		Icon->Update();
+	}
 }
 
 /**************************************
@@ -111,10 +115,9 @@ void ResultAchieveViewer::Draw()
 		text->Draw();
 	}
 
-	for (auto &i : IconPosVec)
+	for (auto &Icon : NewIconContainer)
 	{
-		NewIcon->SetPosition(InitIconPos + Vector3::Up * 90.0f * (float)i);
-		NewIcon->Draw();
+		Icon->Draw();
 	}
 }
 
@@ -125,23 +128,24 @@ void ResultAchieveViewer::SetReward(std::vector<RewardConfig::Type>& rewardConta
 {
 	using RewardConfig::RewardName;
 
-	// 初期化
-	IconPosVec.clear();
-
 	//達成している実績名をテキストビューワに設定
-	//for (unsigned i = 0; i < textContainer.size(); i++)
-	for (unsigned i = 0; i < rewardContainer.size(); i++)
+	for (unsigned i = 0; i < textContainer.size(); i++)
 	{
 		TextViewer *text = textContainer[i];
 
-		//std::string rewardName = i < rewardContainer.size() ? RewardName[rewardContainer[i]] : "";
-		std::string rewardName = RewardName[rewardContainer.at(i)];
+		std::string rewardName = i < rewardContainer.size() ? RewardName[rewardContainer.at(i)] : "";
 		text->SetText(rewardName);
 
 		// この実績は初達成であれば、Newアイコンを付ける
-		if (RewardController::Instance()->IsFirstAchieved(rewardContainer.at(i)) == false)
+		if (rewardName != "" && RewardController::Instance()->IsFirstAchieved(rewardContainer.at(i)) == false)
 		{
-			IconPosVec.push_back(i);
+			D3DXVECTOR3 IconPos = InitIconPos + Vector3::Up * (float)SizeTextFont * (float)i;
+			NewIconContainer.at(i)->SetVisible(true);
+			NewIconContainer.at(i)->SetPosition(IconPos);
+		}
+		else
+		{
+			NewIconContainer.at(i)->SetVisible(false);
 		}
 	}
 }
@@ -178,6 +182,7 @@ void ResultAchieveViewer::SlideinText()
 	D3DXVECTOR3 destPos = { 50.0f, initPos.y, 0.0f };
 	int delay = 2;
 
+	// テキスト
 	for (auto&& text : textContainer)
 	{
 		if (text->GetText() == "")
@@ -193,6 +198,21 @@ void ResultAchieveViewer::SlideinText()
 
 		initPos.y += (float)SizeTextFont;
 		destPos.y += (float)SizeTextFont;
+		delay += 5;
+	}
+
+	// Newアイコン
+	delay = 2;
+	for (auto & Icon : NewIconContainer)
+	{
+		D3DXVECTOR3 DestPos = Icon->GetPosition();
+		DestPos.x = 80.0f;
+
+		TaskManager::Instance()->CreateDelayedTask(delay, [&, DestPos]()
+		{
+			Icon->Move(30.0f, DestPos, EaseType::OutCubic);
+		});
+
 		delay += 5;
 	}
 }
