@@ -45,7 +45,7 @@ GuideActor::GuideActor() :
 	auraEmitter(nullptr),
 	punchEmitter(nullptr)
 {
-	transform->SetPosition(D3DXVECTOR3(0.0f, -10.0f, 15.0f));
+	transform->SetPosition(D3DXVECTOR3(0.0f, -10.0f, 18.0f));
 	transform->SetScale(Vector3::One * 0.3f);
 	transform->SetRotation(Vector3::Zero);
 	SetActive(true);
