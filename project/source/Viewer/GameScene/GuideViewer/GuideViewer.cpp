@@ -25,7 +25,7 @@
 // スタティックメンバ初期化
 //**************************************
 const D3DXVECTOR2 GuideViewer::SubScreenSize = D3DXVECTOR2(360.0f, 360.0f);
-const D3DXVECTOR2 GuideViewer::SubScreenPosition = D3DXVECTOR2(30.0f, 690.0f);
+const D3DXVECTOR2 GuideViewer::SubScreenPosition = D3DXVECTOR2(50.0f, 670.0f);
 
 //=====================================
 // 初期化
