@@ -36,8 +36,8 @@ public:
 		WaveHand,	// 顔の前で手をふる（いやいやないない、みたいな）
 		Defeat,		// 顔を手で覆ってああーって感じ○
 		Surprised,	// えぇー！？○
-		TalkingTypeA,	// 両手を広げてアピールしながら話す
-		TalkingTypeB,	// 電話してる感じ
+		TalkingTypeA,	// 両手を広げてアピールしながら話す○
+		TalkingTypeB,	// 電話してる感じ○
 		SecretTalk,		// 内緒話
 		FightingIdle,	// ファイティングポーズ
 		Rush,			// パンチ連打

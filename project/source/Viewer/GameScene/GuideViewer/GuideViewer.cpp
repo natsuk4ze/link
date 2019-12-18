@@ -158,6 +158,9 @@ void GuideViewer::SetData(const std::string& message, GuideActor::AnimState next
 //=====================================
 void GuideViewer::UpdateDeque()
 {
+	if (!isActive)
+		return;
+
 	cntQue++;
 	
 	// 同じボイスが続く場合、削除

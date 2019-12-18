@@ -40,12 +40,26 @@ const char* SoundConfig::SEPath[SEID::SEMax]
 	{"data/SOUND/VOICE/robo/TimeLimitHeal.wav"},
 	{"data/SOUND/VOICE/robo/UMAFailed.wav"},
 	{"data/SOUND/VOICE/robo/UMAStop.wav"},
+	{"data/SOUND/VOICE/GameStart.wav"},
+	{"data/SOUND/VOICE/FieldLevelUp.wav"},
+	{"data/SOUND/VOICE/NextField.wav"},
+	{"data/SOUND/VOICE/NewRecord.wav"},
+	{"data/SOUND/VOICE/NewReward.wav"},
+	{"data/SOUND/VOICE/ButtonMashing.wav"},
+	{"data/SOUND/VOICE/Destructer.wav"},
+	{"data/SOUND/VOICE/Artist.wav"},
+	{"data/SOUND/VOICE/Linker.wav"},
+	{"data/SOUND/VOICE/MinusMaster.wav"},
+	{"data/SOUND/VOICE/PlusMaster.wav"},
+	{"data/SOUND/VOICE/Pioneer.wav"},
+	{"data/SOUND/VOICE/MasterAI.wav"},
+	{"data/SOUND/VOICE/MinusComplete.wav"},
+	{"data/SOUND/VOICE/PlusComplete.wav"},
 
 	// *** ME ***
 	{"data/SOUND/ME/MusMus-JGL-004.wav"},
 	{"data/SOUND/ME/MusMus-JGL-023.wav"},
 	{"data/SOUND/ME/MusMus-JGL-026.wav"},
-	{"data/SOUND/ME/CountDown.wav"},
 
 	// *** SE ***
 	{"data/SOUND/SE/kettei-02.wav"},

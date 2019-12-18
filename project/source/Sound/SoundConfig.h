@@ -36,9 +36,10 @@ public:
 	};
 
 	// SEの通し番号
-	enum SEID
+	enum SEID : int
 	{
 		// *** Voice ***
+		// ***** イベント関連ボイス *****
 		AIBonus,				// AIレベルにボーナス（茶柱イベント）
 		AIOutofControll,		// AI暴走
 		AIOutofControllStop,	// AI暴走阻止
@@ -55,12 +56,28 @@ public:
 		TimeLimitHeal,			// 制限時間回復
 		UFOFailed,				// UFOイベント失敗
 		UFOSuccess,				// UFOイベント成功
+		// ***** ゲーム進行関連ボイス *****
+		GameStart,				// ゲームスタート
+		FieldLevelUp,			// フィールドレベルアップ
+		NextField,				// 次のフィールドが始まる
+		NewRecord,				// スコア更新
+		NewReward,				// 新しく達成したリワードがある
+		// ***** リワード関連ボイス *****
+		ButtonMashing,			// ボタン連打イベント○回クリア
+		Destructer,				// 山破壊○回
+		Artist,					// 橋を架ける○個
+		Linker,					// 町のリンクレベル○レベル到達
+		MinusMaster,			// マイナスイベント○回
+		PlusMaster,				// プラスイベント○回
+		Pioneer,				// 道を○個
+		MasterAI,				// AIレベル○レベルに到達
+		MinusComplete,			// マイナスイベントコンプリート
+		PlusComplete,			// プラスイベントコンプリート
 
 		// *** ME ***
-		CreationEvent,
-		FieldLevelUp,
-		Finish,
-		CountDown,
+		CreationEventME,
+		FieldLevelUpME,
+		FinishME,
 
 		// *** SE ***
 		Select01,			// 決定、道終点

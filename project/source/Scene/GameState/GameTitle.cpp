@@ -100,6 +100,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 					entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Timer);
 					entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Level);
 
+					GuideViewer::Instance()->SetData("‚³‚ A’£‚èØ‚Á‚Äs‚«‚Ü‚µ‚å‚¤", GuideActor::AnimState::TalkingTypeA, SoundConfig::SEID::GameStart);
 					entity.ChangeState(GameScene::State::Idle);
 					entity.step = 0;
 				});
