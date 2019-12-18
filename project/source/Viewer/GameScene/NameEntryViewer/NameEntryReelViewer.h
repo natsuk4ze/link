@@ -44,6 +44,9 @@ public:
 	void SetTelopIn();
 	void SetTelopOut();
 
+	// カーソルが動けるかどうかのフラグを取得
+	bool GetCursorMovable(void) { return this->CursorMovable; };
+
 private:
 
 	enum AnimScene

@@ -113,23 +113,28 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 
 	case Step::ScoreNameEntryWait:
 
+		if (!entity.nameEntryViewer->GetSlideOver())
+			break;
+
 		//エンターキーでネームエントリー終了
-		//if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
-		entity.step = Step::ScoreNameEntryFinish;
+		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
+		{
+			entity.step = Step::ScoreNameEntryFinish;
+		}
 		break;
 
 	case Step::ScoreNameEntryFinish:
 
 		//エンターキーが押されたらスコアビューワをスライドアウトさせる
-		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
-		{
+		//if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
+		//{
 			entity.resultViewer->SlideScoreViewer(false);
 			entity.nameEntryViewer->SlideNameEntryViewer(false);
 			entity.step = Step::ScoreViewerOut;
 
 			// サーバーにランキングパケットを送信
 			entity.Client->SendRankPacket(entity.nameEntryViewer->GetEntryNameID(), entity.entiretyScore);
-		}
+		//}
 		break;
 
 	case Step::ScoreViewerOut:

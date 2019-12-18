@@ -30,10 +30,11 @@
 class BaseTextureDrawer
 {
 protected:
-	D3DXVECTOR3	Position;
-	D3DXVECTOR2	Size;
 	VERTEX_2D Vertex[NUM_VERTEX];
 	LPDIRECT3DTEXTURE9 Texture = nullptr;
+
+	D3DXVECTOR3	Position;
+	D3DXVECTOR2	Size;
 	bool Visible = true;
 
 public:

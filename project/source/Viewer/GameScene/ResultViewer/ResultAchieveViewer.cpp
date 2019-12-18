@@ -10,6 +10,7 @@
 #include "../../../../Framework/Renderer2D/TextViewer.h"
 #include "../../../../Framework/Task/TaskManager.h"
 #include "../../../../Framework/Tween/Tween.h"
+#include "../../../../Framework/Tool/DebugWindow.h"
 
 /**************************************
 staticƒƒ“ƒo
@@ -37,6 +38,10 @@ ResultAchieveViewer::ResultAchieveViewer()
 	title->LoadTexture("data/TEXTURE/Viewer/ResultViewer/ResultAchieveViewer/AchieveTitle.png");
 	title->SetPosition(InitTitlePos);
 
+	NewIcon = new TextureDrawer(D3DXVECTOR2(250.0f, 50.0f));
+	NewIcon->LoadTexture("data/TEXTURE/Viewer/ResultViewer/ResultAchieveViewer/NewAchieve.png");
+	NewIcon->SetPosition(D3DXVECTOR3(80.0f, 160.0f, 0.0f));
+
 	textContainer.resize(RewardConfig::Type::Max, nullptr);
 	for (unsigned i = 0; i < textContainer.size(); i++)
 	{
@@ -59,6 +64,7 @@ ResultAchieveViewer::~ResultAchieveViewer()
 {
 	SAFE_DELETE(bg);
 	SAFE_DELETE(title);
+	SAFE_DELETE(NewIcon);
 
 	for (auto&& text : textContainer)
 	{
@@ -74,6 +80,14 @@ void ResultAchieveViewer::Update()
 {
 	if (!isPlaying)
 		return;
+
+#if _DEBUG
+	Debug::Begin("TexturePos");
+	static D3DXVECTOR3 IconPos = D3DXVECTOR3(80.0f, 160.0f, 0.0f);
+	Debug::Input("IconPos", IconPos);
+	NewIcon->SetPosition(IconPos);
+	Debug::End();
+#endif
 
 	bg->Update();
 	title->Update();
@@ -94,6 +108,8 @@ void ResultAchieveViewer::Draw()
 	{
 		text->Draw();
 	}
+
+	NewIcon->Draw();
 }
 
 /**************************************

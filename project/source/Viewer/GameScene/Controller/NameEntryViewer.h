@@ -45,6 +45,9 @@ public:
 	// プレイヤーネームが入力されたフラグを制御する（ライ）
 	bool GetNameEntered(void) { return this->NameEntered; };
 	void SetNameEntered(bool Flag) { this->NameEntered = Flag; };
+	
+	// スライドインが終わったかどうかのフラグを取得
+	bool GetSlideOver(void);
 
 private:
 	std::vector <BaseViewer*> nameEntryViewer;

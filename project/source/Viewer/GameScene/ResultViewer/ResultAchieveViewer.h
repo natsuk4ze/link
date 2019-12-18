@@ -43,6 +43,7 @@ public:
 private:
 	TextureDrawer *bg;
 	TextureDrawer *title;
+	TextureDrawer *NewIcon;
 	std::vector<TextViewer*> textContainer;
 
 	void SlideinText();
