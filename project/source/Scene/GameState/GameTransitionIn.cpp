@@ -75,6 +75,8 @@ GameScene::State GameScene::GameTransitionIn::OnUpdate(GameScene & entity)
 			entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Timer);
 			entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Level);
 
+			GuideViewer::Instance()->SetData("‚¢‚¢’²Žq‚Å‚·‚Ë\nˆø‚«‘±‚«Šæ’£‚è‚Ü‚µ‚å‚¤", GuideActor::AnimState::Excited, SoundConfig::SEID::NextField);
+
 			entity.ChangeState(State::Idle);
 		});
 	}

@@ -24,9 +24,9 @@ EventMessage::EventMessage()
 	//背景
 	bg = new BaseViewerDrawer();
 	bg->LoadTexture("data/TEXTURE/Viewer/EventViewer/EventMessage/BG.png");
-	bg->size = D3DXVECTOR3(560.0f, 104.0f, 0.0f);
+	bg->size = D3DXVECTOR3(600.0f, 104.0f, 0.0f);
 	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	bg->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 8.6f, SCREEN_HEIGHT*1.5f,0.0f);
+	bg->position = D3DXVECTOR3(SCREEN_WIDTH / 10 * 8.4f, SCREEN_HEIGHT*1.5f,0.0f);
 	bg->MakeVertex();
 
 	//アニメーション

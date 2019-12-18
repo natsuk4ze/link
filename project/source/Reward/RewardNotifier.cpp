@@ -9,6 +9,7 @@
 #include "RewardController.h"
 #include "../../Framework/Tool/DebugWindow.h"
 #include "AchieveViewer.h"
+#include "../Viewer/GameScene/GuideViewer/GuideViewer.h"
 
 //=====================================
 // コンストラクタ
@@ -56,11 +57,16 @@ void RewardNotifier::CheckAchieved()
 {
 	for (int i = 0; i < RC::Type::Max; i++)
 	{
+		// 既に表示していたらリターン
 		if (achieved[i])
 			continue;
 
 		if (RewardController::Instance()->IsAchieved(RC::Type(i)))
 		{
+			GuideViewer::Instance()->SetData("実績を解除しました",
+				GuideActor::AnimState::TalkingTypeB,
+				SoundConfig::SEID(i + (int)SoundConfig::SEID::ButtonMashing));
+
 			achieved[i] = true;
 			achieveViewer->SetIndex(i);
 			achieveViewer->SetActive();

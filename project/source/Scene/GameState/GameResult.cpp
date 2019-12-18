@@ -59,7 +59,7 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	ResultViewerParam* Prarm = entity.field->GetResultPara();
 	entity.resultViewer->ReceiveParam(*Prarm);
 
-	SE::Play(SoundConfig::SEID::Finish, 0.5f);
+	SE::Play(SoundConfig::SEID::FinishME, 0.5f);
 	PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Result, SoundConfig::VolumeBGM, 300, false);
 
 	//全体スコアを計算
@@ -99,6 +99,7 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 			//ランキング更新があったらネームエントリーへ
 			if (entity.ShowNameEntry)
 			{
+				SE::Play(SoundConfig::SEID::NewRecord, SoundConfig::VolumeVoice);
 				entity.nameEntryViewer->SlideNameEntryViewer(true);
 				entity.step = Step::ScoreNameEntryWait;
 			}
@@ -126,6 +127,7 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 			entity.resultViewer->SlideScoreViewer(false);
 			entity.nameEntryViewer->SlideNameEntryViewer(false);
 			entity.step = Step::ScoreViewerOut;
+			SE::Play(SoundConfig::SEID::NewReward, SoundConfig::VolumeVoice);
 
 			// サーバーにランキングパケットを送信
 			entity.Client->SendRankPacket(entity.nameEntryViewer->GetEntryNameID(), entity.entiretyScore);

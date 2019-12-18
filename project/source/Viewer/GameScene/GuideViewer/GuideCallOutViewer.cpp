@@ -24,14 +24,14 @@ GuideCallOutViewer::GuideCallOutViewer()
 	//ƒeƒLƒXƒg
 	text = new TextViewer("‚µ‚Ë‚«‚á‚Õ‚µ‚å‚ñ", 25);
 	text->SetColor(SET_COLOR_BLACK);
-	text->SetPos((int)(SCREEN_WIDTH / 10 * 1.5f), (int)(SCREEN_HEIGHT/10*9.1f));
+	text->SetPos((int)(SCREEN_WIDTH / 10 * 1.7f), (int)(SCREEN_HEIGHT/10*9.6f));
 
 	//”wŒi
 	bg = new BaseViewerDrawer();
 	bg->LoadTexture("data/TEXTURE/Viewer/GuideViewer/GuideCallOutViewer/CallOut.png");
 	bg->size = D3DXVECTOR3(400.0f, 120.0f, 0.0f);
 	bg->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	bg->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 1.5), (float)(SCREEN_HEIGHT / 10 * 9), 0.0f);
+	bg->position = D3DXVECTOR3((float)(SCREEN_WIDTH / 10 * 1.7f), (float)(SCREEN_HEIGHT / 10 * 9.5f), 0.0f);
 	bg->MakeVertex();
 }
 
