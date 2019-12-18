@@ -538,6 +538,13 @@ bool EventController::EventDebug(int FieldLevel)
 			[&]() {return GetInPause(); });
 		flgPause = true;
 	}
+	if (Debug::Button("Happen at the sametime"))
+	{
+		Ptr = new AILevelDecreaseEvent(eventViewer, camera, beatViewer);
+		EventVec.push_back(Ptr);
+		flgPause = true;
+		Ptr = new NewTownEventCtrl(eventViewer, FieldLevel, camera);
+	}
 
 	if (Ptr != nullptr)
 	{
