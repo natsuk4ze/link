@@ -29,7 +29,7 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	void StartMorph(int next);
+	void StartMorph(int current, int next);
 
 	static const int DurationMorphing;
 

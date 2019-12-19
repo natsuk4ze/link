@@ -149,11 +149,11 @@ void CityActor::Draw()
 //=====================================
 // モーフィング開始
 //=====================================
-void CityActor::StartMorph(int next)
+void CityActor::StartMorph(int current, int next)
 {
 	cntFrameMorphing = 0;
 
-	morphContainer->SetCurrent(next - 1);
+	morphContainer->SetCurrent(current);
 	
 	currentMorphing = next;
 	morphContainer->SetNext(next);

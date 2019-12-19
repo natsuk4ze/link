@@ -98,7 +98,7 @@ namespace Field
 		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
 
-		auto onStartMorph = std::bind(&Actor::PlaceActorController::OnStartMorphing, placeActController, std::placeholders::_1, std::placeholders::_2);
+		auto onStartMorph = std::bind(&Actor::PlaceActorController::OnStartMorphing, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		placeContainer->SetMorphingFantor(onStartMorph);
 
 		//ルートプロセッサ作成
@@ -258,7 +258,7 @@ namespace Field
 		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
 
-		auto onStartMorph = std::bind(&Actor::PlaceActorController::OnStartMorphing, placeActController, std::placeholders::_1, std::placeholders::_2);
+		auto onStartMorph = std::bind(&Actor::PlaceActorController::OnStartMorphing, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		placeContainer->SetMorphingFantor(onStartMorph);
 
 		onChangePlaceType = std::bind(&Actor::PlaceActorController::ChangeActor, placeActController, std::placeholders::_1);
