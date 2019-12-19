@@ -199,6 +199,7 @@ void BeatGame::SetReadyText(void)
 	if (!canSetReady) return;
 
 	SE::Stop(SoundConfig::SEID::AIBurstSE);
+	SE::Play(SoundConfig::SEID::Ready, SoundConfig::VolumeVoice);
 	beatGameViewer->SetReady();
 	canSetReady = false;
 }

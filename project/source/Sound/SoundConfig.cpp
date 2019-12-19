@@ -40,6 +40,7 @@ const char* SoundConfig::SEPath[SEID::SEMax]
 	{"data/SOUND/VOICE/robo/TimeLimitHeal.wav"},
 	{"data/SOUND/VOICE/robo/UMAFailed.wav"},
 	{"data/SOUND/VOICE/robo/UMAStop.wav"},
+	{"data/SOUND/VOICE/Ready.wav"},
 	{"data/SOUND/VOICE/GameStart.wav"},
 	{"data/SOUND/VOICE/FieldLevelUp.wav"},
 	{"data/SOUND/VOICE/NextField.wav"},

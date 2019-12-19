@@ -56,6 +56,7 @@ public:
 		TimeLimitHeal,			// 制限時間回復
 		UFOFailed,				// UFOイベント失敗
 		UFOSuccess,				// UFOイベント成功
+		Ready,					// レディ...
 		// ***** ゲーム進行関連ボイス *****
 		GameStart,				// ゲームスタート
 		FieldLevelUp,			// フィールドレベルアップ
