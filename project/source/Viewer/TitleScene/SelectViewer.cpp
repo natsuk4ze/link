@@ -79,11 +79,12 @@ void SelectViewer::Update()
 	// 描画順をソート（奥のものから先に描画するように）
 	std::sort(logo.begin(), logo.end(), std::greater<>());
 
-	if (Keyboard::GetPress(DIK_RIGHT) || GamePad::GetTriggerPOV(0,POV_RIGHT))
+	float inputX = Input::GetRepeatHorizontal();
+	if (inputX == 1.0f)
 	{
 		if (logo[0]->Moveable())
 		{
-			SE::Play(SoundConfig::MoveCursor, 1.0f);
+			SE::Play(SoundConfig::MoveCursor, 0.5f);
 			nextMode = Math::WrapAround(0, Mode::Max, ++nextMode);
 			for (auto& p : logo)
 			{
@@ -91,11 +92,11 @@ void SelectViewer::Update()
 			}
 		}
 	}
-	if (Keyboard::GetPress(DIK_LEFT) || GamePad::GetTriggerPOV(0, POV_LEFT))
+	if (inputX == -1.0f)
 	{
 		if (logo[0]->Moveable())
 		{
-			SE::Play(SoundConfig::MoveCursor, 1.0f);
+			SE::Play(SoundConfig::MoveCursor, 0.5f);
 			nextMode = Math::WrapAround(0, Mode::Max, --nextMode);
 			for (auto& p : logo)
 			{

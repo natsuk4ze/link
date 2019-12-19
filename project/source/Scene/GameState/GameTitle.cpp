@@ -72,15 +72,13 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 
 	if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 	{
-		SE::Play(SoundConfig::SEID::Select01, 0.5f);
-		entity.step++;
-
 		TitleViewer::MenuID selected = entity.titleViewer->GetSelectedMenu();
 
 		// シーンチェンジ
 		if (selected == TitleViewer::MenuID::StartGame)
 		{
 			entity.remainTime = 30 * 180;
+			entity.step++;
 
 			PlayBGM::Instance()->FadeOut();
 			PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.3f, 30, false);
@@ -100,7 +98,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 					entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Timer);
 					entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Level);
 
-					GuideViewer::Instance()->SetData("さあ、張り切って行きましょう", GuideActor::AnimState::TalkingTypeA, SoundConfig::SEID::GameStart);
+					GuideViewer::Instance()->SetData("張り切って行きましょう", GuideActor::AnimState::TalkingTypeA, SoundConfig::SEID::GameStart);
 					entity.ChangeState(GameScene::State::Idle);
 					entity.step = 0;
 				});
@@ -119,6 +117,11 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 			TaskManager::Instance()->CreateDelayedTask(30, [&]() {
 				PostQuitMessage(0);
 			});
+		}
+
+		if (selected != TitleViewer::None)
+		{
+			SE::Play(SoundConfig::SEID::Select01, 0.5f);
 		}
 	}
 

@@ -84,7 +84,7 @@ namespace Field::Actor
 		void OnConnectedTown(const Model::PlaceModel *place);
 
 		//モーフィング開始
-		void OnStartMorphing(const Model::PlaceModel *place, int next);
+		void OnStartMorphing(const Model::PlaceModel *place, int current, int next);
 
 		//パッセンジャー出発処理
 		void DepartPassenger(const Model::PlaceModel* start, const Model::PlaceModel* goal, const Model::PlaceModel* town);

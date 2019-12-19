@@ -309,6 +309,9 @@ void CityDestroyEvent::ReceiveBeatResult(bool IsSuccess)
 		EventState = State::BeatGameSuccess;
 		success = true;
 
+		//–h‰q‚É¬Œ÷‚µ‚½‚ç‘S‚Ä‚Ì’¬‚ðƒŠƒ“ƒNƒŒƒxƒ‹‚ð+1
+		fieldEventHandler->AdjustAllLinkLevel(1);
+
 		SE::Play(SoundConfig::SEID::Bom, 1.0f);
 	}
 	else

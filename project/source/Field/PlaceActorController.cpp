@@ -342,7 +342,7 @@ namespace Field::Actor
 	/**************************************
 	モーフィング開始
 	***************************************/
-	void Field::Actor::PlaceActorController::OnStartMorphing(const Model::PlaceModel * place, int next)
+	void Field::Actor::PlaceActorController::OnStartMorphing(const Model::PlaceModel * place, int current, int next)
 	{
 		unsigned key = place->ID();
 
@@ -350,7 +350,7 @@ namespace Field::Actor
 			return;
 
 		CityActor *actor = dynamic_cast<CityActor*>(actorContainer[key].get());
-		actor->StartMorph(next);
+		actor->StartMorph(current, next);
 	}
 
 	/**************************************

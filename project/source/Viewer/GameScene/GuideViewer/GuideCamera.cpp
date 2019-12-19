@@ -7,6 +7,8 @@
 //=====================================
 #include "GuideCamera.h"
 
+#define CAMERA_HEIGHT 7.0f
+
 //=====================================
 // コンストラクタ
 //=====================================
@@ -15,8 +17,8 @@ GuideCamera::GuideCamera()
 	const float ScreenHeight = 360.0f;
 	const float ScreenWidth = 360.0f;
 	const float InitViewAspect = ScreenWidth / ScreenHeight;
-	const D3DXVECTOR3 InitPos = D3DXVECTOR3(0.0f, 10.0f, 0.0f);
-	const D3DXVECTOR3 InitTarget = D3DXVECTOR3(0.0f, 10.0f, 100.0f);
+	const D3DXVECTOR3 InitPos = D3DXVECTOR3(0.0f, CAMERA_HEIGHT, 4.0f);
+	const D3DXVECTOR3 InitTarget = D3DXVECTOR3(0.0f, CAMERA_HEIGHT, 100.0f);
 	
 	transform->SetPosition(InitPos);
 	transform->LookAt(InitTarget);
@@ -35,6 +37,9 @@ GuideCamera::GuideCamera()
 		&InitPos,
 		&InitTarget,
 		&transform->Up());
+
+	viewNear = 0.5f;
+	viewFar = 500.0f;
 
 	//プロジェクション行列作成
 	D3DXMatrixIdentity(&projection);
@@ -60,39 +65,6 @@ GuideCamera::GuideCamera()
 //=====================================
 GuideCamera::~GuideCamera()
 {
-}
-
-void GuideCamera::Update(void)
-{
-	D3DXVECTOR3 eyePosition = transform->GetPosition();
-	D3DXVECTOR3 targetPosition = D3DXVECTOR3(0.0f, 10.0f, 100.0f);
-	D3DXVECTOR3 upVector = transform->Up();
-
-	//ビュー行列作成
-	D3DXMatrixIdentity(&view);
-	D3DXMatrixLookAtLH(&view,
-		&eyePosition,
-		&targetPosition,
-		&upVector);
-
-	//プロジェクション行列作成
-	D3DXMatrixIdentity(&projection);
-	D3DXMatrixPerspectiveFovLH(&projection,
-		viewAngle,
-		viewAspect,
-		viewNear,
-		viewFar);
-
-	//変換行列を計算
-	VPV = view * projection * viewport;
-
-	//逆行列を計算
-	D3DXMatrixInverse(&invView, NULL, &view);
-	D3DXMatrixInverse(&invProjection, NULL, &projection);
-	D3DXMatrixInverse(&invVPV, NULL, &VPV);
-
-	//視錐台計算
-	CalculateFrustrum();
 }
 
 D3DXVECTOR3 GuideCamera::UnProjection(const D3DXVECTOR3 & pos, float z) const
