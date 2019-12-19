@@ -153,7 +153,7 @@ void CityActor::StartMorph(int next)
 {
 	cntFrameMorphing = 0;
 
-	morphContainer->SetCurrent(currentMorphing);
+	morphContainer->SetCurrent(next - 1);
 	
 	currentMorphing = next;
 	morphContainer->SetNext(next);

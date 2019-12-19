@@ -187,7 +187,6 @@ namespace Field::Model
 			return false;
 		}
 
-		SE::Play(SoundConfig::SEID::Bom, 1.0f);
 		return true;
 	}
 

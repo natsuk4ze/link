@@ -258,3 +258,11 @@ void NameEntryViewer::SlideNameEntryViewer(bool isIn)
 		NameEntered = true;
 	}
 }
+
+//=============================================================================
+// スライドインが終わったかどうかのフラグを取得
+//=============================================================================
+bool NameEntryViewer::GetSlideOver(void)
+{
+	return reelViewer->GetCursorMovable();
+}
