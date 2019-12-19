@@ -73,7 +73,6 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 	if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 	{
 		SE::Play(SoundConfig::SEID::Select01, 0.5f);
-		entity.step++;
 
 		TitleViewer::MenuID selected = entity.titleViewer->GetSelectedMenu();
 
@@ -81,6 +80,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 		if (selected == TitleViewer::MenuID::StartGame)
 		{
 			entity.remainTime = 30 * 180;
+			entity.step++;
 
 			PlayBGM::Instance()->FadeOut();
 			PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.3f, 30, false);
