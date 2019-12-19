@@ -141,14 +141,6 @@ void TitleViewer::SetRewardViewer()
 }
 
 //=====================================
-// 実績ビューアを表示しているか
-//=====================================
-bool TitleViewer::GetRewardViewer()
-{
-	return rewardViewer->isPlaying;
-}
-
-//=====================================
 // ビュアーの各種データをリセット
 //=====================================
 void TitleViewer::Reset()

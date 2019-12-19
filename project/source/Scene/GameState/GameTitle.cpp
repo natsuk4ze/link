@@ -68,16 +68,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 	entity.field->UpdateObject();
 
 	if (entity.step == 1)
-	{
-		// リワード確認中にキャンセルボタンを押された場合
-		if (entity.titleViewer->GetRewardViewer())
-		{
-			if (Keyboard::GetTrigger(DIK_X) || GamePad::GetTrigger(0, BUTTON_X))
-				entity.step = 0;
-		}
-
 		return State::Title;
-	}
 
 	if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 	{
@@ -111,6 +102,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 
 					GuideViewer::Instance()->SetData("さあ、張り切って行きましょう", GuideActor::AnimState::TalkingTypeA, SoundConfig::SEID::GameStart);
 					entity.ChangeState(GameScene::State::Idle);
+					entity.step = 0;
 				});
 			});
 		}
@@ -119,6 +111,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 			TaskManager::Instance()->CreateDelayedTask(30, [&]() {
 				entity.titleViewer->SetRewardViewer();
 				entity.titleViewer->Reset();
+				entity.step = 0;
 			});
 		}
 		else if (selected == TitleViewer::QuitGame)
