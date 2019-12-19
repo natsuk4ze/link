@@ -111,6 +111,7 @@ namespace Field
 		int diff = currentLinkLevel - prevLinkLevel;
 		if (diff > 0)
 		{
+			SE::Play(SoundConfig::SEID::LinkLevelUpSE, 1.0f);
 			entity->flgWaitPopup = true;
 			entity->viewer->ViewLinkLevelUp(diff, [&]()
 			{

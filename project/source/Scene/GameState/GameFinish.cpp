@@ -9,12 +9,15 @@
 #include "../../Field/Camera/FieldCamera.h"
 #include "../../Viewer/GameScene/Controller/GameViewer.h"
 #include "../../Field/FieldController.h"
+#include "../../Sound/SoundConfig.h"
+#include "../../../Framework/Sound/SoundEffect.h"
 
 /**************************************
 入場処理
 ***************************************/
 void GameScene::GameFinish::OnStart(GameScene & entity)
 {
+	SE::Play(SoundConfig::SEID::TimeUp, 1.0f);
 	//タイムアップ表示、表示が終わったらリザルトへ遷移
 	entity.gameViewer->SetTimeUp([&]()
 	{

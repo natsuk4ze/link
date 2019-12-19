@@ -139,7 +139,7 @@ void RewardViewer::Update()
 	// èIóπ
 	if (Keyboard::GetTrigger(DIK_X) || GamePad::GetTrigger(0, BUTTON_X))
 	{
-		SE::Play(SoundConfig::SEID::Select01, 1.0f);
+		SE::Play(SoundConfig::SEID::Cancel, 1.0f);
 		isPlaying = false;
 	}
 }

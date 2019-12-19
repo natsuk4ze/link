@@ -111,7 +111,10 @@ void BeatGame::Update()
 		//入力カウントを更新(*注意：本番はどのキー入力でもOKにする？)
 		if(IsExistInput())
 		{
-			SE::Play(SoundConfig::SEID::Beat, 1.0f);
+			if (!isFinished)
+			{
+				SE::Play(SoundConfig::SEID::Beat, 1.0f);
+			}
 			countInput++;
 		}
 
@@ -195,6 +198,7 @@ void BeatGame::SetReadyText(void)
 	if (!canSetReady) return;
 
 	SE::Stop(SoundConfig::SEID::AIBurstSE);
+	SE::Stop(SoundConfig::SEID::UFOFall);
 	SE::Play(SoundConfig::SEID::Ready, SoundConfig::VolumeVoice);
 	beatGameViewer->SetReady();
 	canSetReady = false;
