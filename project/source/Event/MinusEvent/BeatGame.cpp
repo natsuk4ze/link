@@ -115,7 +115,10 @@ void BeatGame::Update()
 		//入力カウントを更新(*注意：本番はどのキー入力でもOKにする？)
 		if (Keyboard::GetTrigger(DIK_C) || GamePad::GetTrigger(0, BUTTON_A))
 		{
-			SE::Play(SoundConfig::SEID::Beat, 1.0f);
+			if (!isFinished)
+			{
+				SE::Play(SoundConfig::SEID::Beat, 1.0f);
+			}
 			countInput++;
 		}
 
