@@ -153,6 +153,9 @@ void BanStockUseEvent::ReceiveBeatResult(bool IsSuccess)
 {
 	if (IsSuccess)
 	{
+		//–h‰q‚É¬Œ÷‚µ‚½‚ç‘S‚Ä‚Ì’¬‚ğƒŠƒ“ƒNƒŒƒxƒ‹‚ğ+1
+		fieldEventHandler->AdjustAllLinkLevel(1);
+
 		// ¬Œ÷
 		EventOver();
 	}

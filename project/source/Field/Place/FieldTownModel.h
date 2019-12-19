@@ -33,7 +33,7 @@ namespace Field::Model
 		TownModel(
 			const PlaceModel* place,
 			std::function<void(const PlaceModel *start, const PlaceModel *goal, const PlaceModel *town)>& departAction,
-			std::function<void(const PlaceModel *place, int next)> &morphAction);
+			std::function<void(const PlaceModel *place, int current, int next)> &morphAction);
 		~TownModel();
 
 		//更新処理
@@ -79,6 +79,9 @@ namespace Field::Model
 		//フレームカウンタ
 		int cntFrame;
 
+		//モーフィングレベル
+		int levelMorphing;
+
 		//どの街へ向かわせるか
 		int indexDestination;
 
@@ -86,7 +89,7 @@ namespace Field::Model
 		std::function<void(const PlaceModel* start, const PlaceModel *end, const PlaceModel *town)> departPassenger;
 
 		//モーフィング開始処理
-		std::function<void(const PlaceModel* place, int next)> startMorph;
+		std::function<void(const PlaceModel* place, int current, int next)> startMorph;
 
 		//繋がってる街への経路
 		//first : 相手の街, second : 出口

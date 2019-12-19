@@ -1,7 +1,3 @@
-//*****************************************************************************
-// 11/15(金)～おおはま改変
-//*****************************************************************************
-
 //=============================================================================
 //
 // 連打ゲームイベントクラス [BeatGame.cpp]
@@ -113,7 +109,7 @@ void BeatGame::Update()
 		countFrame++;
 
 		//入力カウントを更新(*注意：本番はどのキー入力でもOKにする？)
-		if (Keyboard::GetTrigger(DIK_C) || GamePad::GetTrigger(0, BUTTON_A))
+		if(IsExistInput())
 		{
 			SE::Play(SoundConfig::SEID::Beat, 1.0f);
 			countInput++;
@@ -256,6 +252,25 @@ BeatTitleViewer::TitleID BeatGame::GetGameTitle(void)
 	}
 
 	return id;
+}
+
+//=============================================================================
+// 入力があるかどうか
+//=============================================================================
+bool BeatGame::IsExistInput() const
+{
+	if (isFinished)
+		return false;
+
+	//キーボードからの入力
+	if (Keyboard::GetTrigger(DIK_C))
+		return true;
+
+	//ゲームパッドからの入力
+	if (GamePad::GetTrigger(0, BUTTON_A) || GamePad::GetTrigger(0, BUTTON_C) || GamePad::GetTrigger(0, BUTTON_X))
+		return true;
+
+	return false;
 }
 
 //=============================================================================

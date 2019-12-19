@@ -24,12 +24,13 @@ namespace Field::Model
 	TownModel::TownModel(
 		const PlaceModel* place, 
 		std::function<void(const PlaceModel *start, const PlaceModel *goal, const PlaceModel* town)>& departAction,
-		std::function<void(const PlaceModel *place, int next)> &morphAction) :
+		std::function<void(const PlaceModel *place, int current, int next)> &morphAction) :
 		uniqueID(incrementID++),
 		place(place),
 		linkLevel(0),
 		biasLinkLevel(0),
 		cntFrame(0),
+		levelMorphing(0),
 		indexDestination(0),
 		departPassenger(departAction),
 		startMorph(morphAction)
@@ -90,8 +91,6 @@ namespace Field::Model
 	***************************************/
 	void TownModel::FindLinkedTown()
 	{
-		int prevLevel = linkLevel;
-
 		linkLevel = 0;
 
 		std::vector<unsigned> searchedRoute;
@@ -107,12 +106,20 @@ namespace Field::Model
 			}
 		}
 
-		//0から上がったとき中にモーフィング
-		if (prevLevel == 0 && linkLevel > 0)
-			startMorph(place, 1);
+		int currentLevel = linkLevel + biasLinkLevel;
+
 		//5以上になったとき大にモーフィング
-		if (prevLevel < 5 && linkLevel >= 5)
-			startMorph(place, 2);
+		if (levelMorphing < 2 && currentLevel >= 5)
+		{
+			startMorph(place, levelMorphing, 2);
+			levelMorphing = 2;
+		}
+		//0から上がったとき中にモーフィング
+		else if (levelMorphing < 1 && currentLevel >= 1)
+		{
+			startMorph(place, levelMorphing, 1);
+			currentLevel = 1;
+		}
 	}
 
 	/**************************************
