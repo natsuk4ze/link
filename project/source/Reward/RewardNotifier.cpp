@@ -66,6 +66,7 @@ void RewardNotifier::CheckAchieved()
 			GuideViewer::Instance()->SetData("ŽÀÑ‚ð‰ðœ‚µ‚Ü‚µ‚½",
 				GuideActor::AnimState::TalkingTypeB,
 				SoundConfig::SEID(i + (int)SoundConfig::SEID::ButtonMashing));
+			SE::Play(SoundConfig::SEID::Achieve, 1.0f);
 
 			achieved[i] = true;
 			achieveViewer->SetIndex(i);
