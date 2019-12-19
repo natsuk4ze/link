@@ -49,6 +49,7 @@ public:
 
 	MenuID GetSelectedMenu();
 	void SetRewardViewer();
+	bool GetRewardViewer();
 
 	void Reset();
 };
