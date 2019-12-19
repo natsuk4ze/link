@@ -349,6 +349,8 @@ namespace Field::Actor
 		if (actorContainer.count(key) == 0)
 			return;
 
+		SE::Play(SoundConfig::SEID::Morphing, 1.0f);
+
 		CityActor *actor = dynamic_cast<CityActor*>(actorContainer[key].get());
 		actor->StartMorph(current, next);
 	}
