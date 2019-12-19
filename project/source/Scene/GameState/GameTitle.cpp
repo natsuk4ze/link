@@ -72,8 +72,6 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 
 	if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 	{
-		SE::Play(SoundConfig::SEID::Select01, 0.5f);
-
 		TitleViewer::MenuID selected = entity.titleViewer->GetSelectedMenu();
 
 		// シーンチェンジ
@@ -119,6 +117,11 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 			TaskManager::Instance()->CreateDelayedTask(30, [&]() {
 				PostQuitMessage(0);
 			});
+		}
+
+		if (selected != TitleViewer::None)
+		{
+			SE::Play(SoundConfig::SEID::Select01, 0.5f);
 		}
 	}
 
