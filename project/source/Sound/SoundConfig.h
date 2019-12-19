@@ -109,6 +109,7 @@ public:
 		Achieve,			// ゲーム中にリワード到達を知らせる
 		UFOFall,			// UFOが降りてくる
 		Cancel,				// キャンセル
+		Rotation,			// ネームエントリーのリール回転音
 
 		SEMax
 	};

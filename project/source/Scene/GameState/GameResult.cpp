@@ -100,6 +100,7 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 			if (entity.ShowNameEntry)
 			{
 				SE::Play(SoundConfig::SEID::NewRecord, SoundConfig::VolumeVoice);
+				SE::Play(SoundConfig::SEID::Clap, 0.5f);
 				entity.nameEntryViewer->SlideNameEntryViewer(true);
 				entity.step = Step::ScoreNameEntryWait;
 			}
@@ -121,6 +122,7 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 		//エンターキーでネームエントリー終了
 		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 		{
+			SE::Play(SoundConfig::SEID::Select01, 1.0f);
 			entity.step = Step::ScoreNameEntryFinish;
 		}
 		break;
@@ -133,7 +135,6 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 			entity.resultViewer->SlideScoreViewer(false);
 			entity.nameEntryViewer->SlideNameEntryViewer(false);
 			entity.step = Step::ScoreViewerOut;
-			SE::Play(SoundConfig::SEID::NewReward, SoundConfig::VolumeVoice);
 
 			// サーバーにランキングパケットを送信
 			entity.Client->SendRankPacket(entity.nameEntryViewer->GetEntryNameID(), entity.entiretyScore);

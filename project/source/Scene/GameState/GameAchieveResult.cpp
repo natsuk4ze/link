@@ -17,6 +17,8 @@
 #include "../../Sound/SoundConfig.h"
 #include "../../Viewer/GameScene/Controller/NameEntryViewer.h"
 #include "../../Viewer/NameViewer/Name.h"
+#include "../../../Framework/Sound/SoundEffect.h"
+#include "../../Sound/SoundConfig.h"
 
 #include <functional>
 
@@ -45,6 +47,12 @@ void GameScene::GameAchieveResult::OnStart(GameScene & entity)
 	//‚ ‚Á‚½‚ç•\Ž¦ŠJŽn
 	else
 	{
+		SE::Play(SoundConfig::SEID::Clap, 0.5f);
+		if (RewardController::Instance()->ExistFirstAchieved())
+		{
+			SE::Play(SoundConfig::SEID::NewReward, SoundConfig::VolumeVoice);
+		}
+
 		entity.resultViewer->SetAchieveViewerActive(true);
 		entity.resultViewer->SetAchiveViewer(rewardContainer, [&]()
 		{

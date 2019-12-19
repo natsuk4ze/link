@@ -90,7 +90,8 @@ const char* SoundConfig::SEPath[SEID::SEMax]
 	{"data/SOUND/SE/clapping-hands1.wav"},
 	{"data/SOUND/SE/data-analysis1.wav"},
 	{"data/SOUND/SE/alien1.wav"},
-	{"data/SOUND/SE/cancel2.wav"}
+	{"data/SOUND/SE/cancel2.wav"},
+	{"data/SOUND/SE/punch-real-swing1.wav"}
 };
 
 const float SoundConfig::VolumeVoice = 1.0f;

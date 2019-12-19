@@ -16,6 +16,9 @@
 #include "../../../../Framework/Tool/DebugWindow.h"
 #endif
 
+#include "../../../Sound/SoundConfig.h"
+#include "../../../../Framework/Sound/SoundEffect.h"
+
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
@@ -156,7 +159,10 @@ void NameEntryViewer::MoveCursor()
 		else
 		{
 			if (reelViewer->MoveCursorRight())
+			{
+				SE::Play(SoundConfig::SEID::MoveCursor, 1.0f);
 				reelCnt++;
+			}
 		}
 	}
 
@@ -168,7 +174,10 @@ void NameEntryViewer::MoveCursor()
 		else
 		{
 			if (reelViewer->MoveCursorLeft())
+			{
+				SE::Play(SoundConfig::SEID::MoveCursor, 1.0f);
 				reelCnt--;
+			}
 		}
 	}
 }
@@ -181,11 +190,13 @@ void NameEntryViewer::UpDownReel()
 	//上ボタンが押された
 	if (input->GetReelUp())
 	{
+		SE::Play(SoundConfig::SEID::Rotation, 1.0f);
 		reelViewer->ReelUp(reelCnt);
 	}
 	//下ボタンが押された
 	if (input->GetReelDown())
 	{
+		SE::Play(SoundConfig::SEID::Rotation, 1.0f);
 		reelViewer->ReelDown(reelCnt);
 	}
 }
