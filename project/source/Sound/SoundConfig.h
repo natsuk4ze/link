@@ -102,6 +102,13 @@ public:
 		Bom,				// 爆破
 		UFO,				// UFO
 		NewField,			// 新しいフィールドに遷移
+		TimeUp,				// 制限時間終了
+		LinkLevelUpSE,		// リンクレベル上昇
+		Morphing,			// モーフィング
+		Clap,				// ランキング更新したとき拍手
+		Achieve,			// ゲーム中にリワード到達を知らせる
+		UFOFall,			// UFOが降りてくる
+		Cancel,				// キャンセル
 
 		SEMax
 	};

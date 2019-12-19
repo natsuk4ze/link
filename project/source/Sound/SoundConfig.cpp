@@ -83,7 +83,14 @@ const char* SoundConfig::SEPath[SEID::SEMax]
 	{"data/SOUND/SE/chime_01.wav"},			// ÉsÉìÉ|Å[Éì
 	{"data/SOUND/SE/blast_05.wav"},			// îöî≠
 	{"data/SOUND/SE/fly-a-spaceship_04.wav"},	// Ç§Ç…ÇÂÇ…ÇÂÇ…ÇÂ
-	{"data/SOUND/SE/eye-shine1.wav"}
+	{"data/SOUND/SE/eye-shine1.wav"},
+	{"data/SOUND/SE/police-whistle2.wav"},
+	{"data/SOUND/SE/kira1.wav"},
+	{"data/SOUND/SE/recollection1.wav"},
+	{"data/SOUND/SE/clapping-hands1.wav"},
+	{"data/SOUND/SE/data-analysis1.wav"},
+	{"data/SOUND/SE/alien1.wav"},
+	{"data/SOUND/SE/cancel2.wav"}
 };
 
 const float SoundConfig::VolumeVoice = 1.0f;
