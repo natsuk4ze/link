@@ -38,6 +38,7 @@
 #include "../Reward/RewardNotifier.h"
 #include "../Booth/BoothController.h"
 #include "../Presen/PresenDebugController.h"
+#include "../Sound/PlayBGM.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
@@ -393,6 +394,9 @@ void GameScene::DebugTool()
 		SetFieldLevel(level);
 		field->Load();
 		ChangeState(Idle);
+
+		PlayBGM::Instance()->FadeOut();
+		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.3f, 90, false);
 	}
 	Debug::SameLine();
 	if (Debug::Button("WorldLevel"))
@@ -402,6 +406,9 @@ void GameScene::DebugTool()
 		SetFieldLevel(level);
 		field->Load();
 		ChangeState(Idle);
+
+		PlayBGM::Instance()->FadeOut();
+		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::World, 0.3f, 90, false);
 	}
 	Debug::SameLine();
 	if (Debug::Button("SpaceLevel"))
@@ -411,6 +418,9 @@ void GameScene::DebugTool()
 		SetFieldLevel(level);
 		field->Load();
 		ChangeState(Idle);
+
+		PlayBGM::Instance()->FadeOut();
+		PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Space, 0.3f, 90, false);
 	}
 
 	//Debug::NewLine();
