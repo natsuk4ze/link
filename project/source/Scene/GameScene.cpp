@@ -413,34 +413,34 @@ void GameScene::DebugTool()
 		ChangeState(Idle);
 	}
 
-	Debug::NewLine();
-	if (Debug::Button("All Reset"))
-	{
-		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::City);
-		PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_RemainTime), 30 * 180);
-		SceneManager::ChangeScene(GameConfig::SceneID::Game);
-	}
+	//Debug::NewLine();
+	//if (Debug::Button("All Reset"))
+	//{
+	//	PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), Field::FieldLevel::City);
+	//	PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_RemainTime), 30 * 180);
+	//	SceneManager::ChangeScene(GameConfig::SceneID::Game);
+	//}
 
-	Debug::NewLine();
-	if (Debug::Button("Add Time"))
-	{
-		remainTime += 30 * 10;
-	}
-	if (Debug::Button("Declease Time"))
-	{
-		remainTime -= 30 * 10;
-	}
+	//Debug::NewLine();
+	//if (Debug::Button("Add Time"))
+	//{
+	//	remainTime += 30 * 10;
+	//}
+	//if (Debug::Button("Declease Time"))
+	//{
+	//	remainTime -= 30 * 10;
+	//}
 
-	Debug::NewLine();
-	if (Debug::Button("SendPacket"))
-	{
-		UDPClient::SendRankPacket("000102", "123456789");
-	}
-	Debug::SameLine();
-	if (Debug::Button("GetLastScore"))
-	{
-		Client->GetLastScore();
-	}
+	//Debug::NewLine();
+	//if (Debug::Button("SendPacket"))
+	//{
+	//	UDPClient::SendRankPacket("000102", "123456789");
+	//}
+	//Debug::SameLine();
+	//if (Debug::Button("GetLastScore"))
+	//{
+	//	Client->GetLastScore();
+	//}
 
 	Debug::Text("State");
 	Debug::NewLine();
@@ -469,56 +469,56 @@ void GameScene::DebugTool()
 	}
 
 
-	Debug::NewLine();
-	Debug::Text("Event");
-	bool flgPause = eventController->EventDebug(level);
-	if (flgPause)
-	{
-		ChangeState(Pause);
-	}
+	//Debug::NewLine();
+	//Debug::Text("Event");
+	//bool flgPause = eventController->EventDebug(level);
+	//if (flgPause)
+	//{
+	//	ChangeState(Pause);
+	//}
 
-	Debug::NewLine();
-	Debug::Text("Bloom");
-	static D3DXVECTOR3 power = { BloomPower[0], BloomPower[1], BloomPower[2] };
-	static D3DXVECTOR3 threthold = { BloomThrethold[0], BloomThrethold[1], BloomThrethold[2] };
-	Debug::Slider("power", power, Vector3::Zero, Vector3::One);
-	Debug::Slider("threthold", threthold, Vector3::Zero, Vector3::One);
-	bloomController->SetPower(power.x, power.y, power.z);
-	bloomController->SetThrethold(threthold.x, threthold.y, threthold.z);
+	//Debug::NewLine();
+	//Debug::Text("Bloom");
+	//static D3DXVECTOR3 power = { BloomPower[0], BloomPower[1], BloomPower[2] };
+	//static D3DXVECTOR3 threthold = { BloomThrethold[0], BloomThrethold[1], BloomThrethold[2] };
+	//Debug::Slider("power", power, Vector3::Zero, Vector3::One);
+	//Debug::Slider("threthold", threthold, Vector3::Zero, Vector3::One);
+	//bloomController->SetPower(power.x, power.y, power.z);
+	//bloomController->SetThrethold(threthold.x, threthold.y, threthold.z);
 
-	Debug::NewLine();
-	Debug::Text("Achieve");
-	Debug::CheckBox("Use DebugAchieve", debugReward);
-	for (int i = 0; i < 10; i += 2)
-	{
-	}
+	//Debug::NewLine();
+	//Debug::Text("Achieve");
+	//Debug::CheckBox("Use DebugAchieve", debugReward);
+	//for (int i = 0; i < 10; i += 2)
+	//{
+	//}
 
 	Debug::End();
 
 	// リワードコントローラー
-	Debug::Begin("Reward Controller");
-	if (Debug::Button("ButtonMashing"))
-		RewardController::Instance()->SetRewardData(RC::ButtonMashing, 3);
-	if (Debug::Button("Destructer"))
-		RewardController::Instance()->SetRewardData(RC::Destructer, 20);
-	if (Debug::Button("Artist"))
-		RewardController::Instance()->SetRewardData(RC::Artist, 15);
-	if (Debug::Button("Linker"))
-		RewardController::Instance()->SetRewardData(RC::Linker, 15);
-	if (Debug::Button("MinusMaster"))
-		RewardController::Instance()->SetRewardData(RC::MinusMaster, 10);
-	if (Debug::Button("All Reward"))
-	{
-		RewardController::Instance()->SetRewardData(RC::ButtonMashing, 3);
-		RewardController::Instance()->SetRewardData(RC::Destructer, 20);
-		RewardController::Instance()->SetRewardData(RC::Artist, 15);
-		RewardController::Instance()->SetRewardData(RC::Linker, 15);
-		RewardController::Instance()->SetRewardData(RC::MinusMaster, 10);
-		RewardController::Instance()->SetRewardData(RC::PlusMaster, 20);
-		RewardController::Instance()->SetRewardData(RC::Pioneer, 250);
-		RewardController::Instance()->SetRewardData(RC::MasterAI, 10000);
-	}
-	Debug::End();
+	//Debug::Begin("Reward Controller");
+	//if (Debug::Button("ButtonMashing"))
+	//	RewardController::Instance()->SetRewardData(RC::ButtonMashing, 3);
+	//if (Debug::Button("Destructer"))
+	//	RewardController::Instance()->SetRewardData(RC::Destructer, 20);
+	//if (Debug::Button("Artist"))
+	//	RewardController::Instance()->SetRewardData(RC::Artist, 15);
+	//if (Debug::Button("Linker"))
+	//	RewardController::Instance()->SetRewardData(RC::Linker, 15);
+	//if (Debug::Button("MinusMaster"))
+	//	RewardController::Instance()->SetRewardData(RC::MinusMaster, 10);
+	//if (Debug::Button("All Reward"))
+	//{
+	//	RewardController::Instance()->SetRewardData(RC::ButtonMashing, 3);
+	//	RewardController::Instance()->SetRewardData(RC::Destructer, 20);
+	//	RewardController::Instance()->SetRewardData(RC::Artist, 15);
+	//	RewardController::Instance()->SetRewardData(RC::Linker, 15);
+	//	RewardController::Instance()->SetRewardData(RC::MinusMaster, 10);
+	//	RewardController::Instance()->SetRewardData(RC::PlusMaster, 20);
+	//	RewardController::Instance()->SetRewardData(RC::Pioneer, 250);
+	//	RewardController::Instance()->SetRewardData(RC::MasterAI, 10000);
+	//}
+	//Debug::End();
 }
 
 /**************************************
