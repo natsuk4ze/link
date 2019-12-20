@@ -132,15 +132,17 @@ void LevelViewer::Draw(void)
 
 	if (IsOverflowed())
 	{
+		int numTrillion = (int)parameterBox[LevelAI] / 10000;
 		//＋
 		plus->Draw();
-		plus->position.x = (SCREEN_WIDTH / 10 * 9.870f) - overflowNum->intervalPosScr*(std::to_string((int)parameterBox[LevelAI] - 9999).length());
+		plus->position.x = (SCREEN_WIDTH / 10 * 9.870f) - overflowNum->intervalPosScr*(std::to_string(numTrillion).length());
 		//オーバーフロー数字
-		overflowNum->DrawCounter(overflowNum->baseNumber, (int)parameterBox[LevelAI]-9999,
+		overflowNum->DrawCounter(overflowNum->baseNumber, numTrillion,
 			overflowNum->intervalPosScr, overflowNum->intervalPosTex);
 
 		//数字
-		num->DrawCounter(num->baseNumber, 9999, num->placeMax,
+		int numBillion = (int)parameterBox[LevelAI] % 10000;
+		num->DrawCounter(num->baseNumber, numBillion, num->placeMax,
 			num->intervalPosScr, num->intervalPosTex);
 	}
 	else
