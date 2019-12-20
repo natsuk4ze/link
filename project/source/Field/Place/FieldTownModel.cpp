@@ -87,6 +87,14 @@ namespace Field::Model
 	}
 
 	/**************************************
+	•â³’l‚È‚µ‚ÌƒŠƒ“ƒNƒŒƒxƒ‹æ“¾ˆ—
+	***************************************/
+	int TownModel::PureLinkLevel() const
+	{
+		return linkLevel;
+	}
+
+	/**************************************
 	Œq‚ª‚Á‚Ä‚¢‚éŠX‚ğ’T‚·ˆ—
 	***************************************/
 	void TownModel::FindLinkedTown()
@@ -118,7 +126,7 @@ namespace Field::Model
 		else if (levelMorphing < 1 && currentLevel >= 1)
 		{
 			startMorph(place, levelMorphing, 1);
-			currentLevel = 1;
+			levelMorphing = 1;
 		}
 	}
 

@@ -11,6 +11,7 @@
 #include "../../Field/FieldController.h"
 #include "../../Field/Camera/FieldCamera.h"
 #include "../../Event/EventController.h"
+#include "../../Sound/PlayBGM.h"
 
 /**************************************
 入場処理
@@ -38,12 +39,18 @@ GameScene::State GameScene::GameFarView::OnUpdate(GameScene & entity)
 	//残り時間が0になったら終了
 	if (entity.remainTime == 0)
 	{
+		PlayBGM::Instance()->FadeOut();
+		//entity.field->SetScore();
+		entity.field->SetResultPara();
 		entity.ChangeState(State::Finish);
 	}
 	//AI発展レベルが最大に到達していたらレベルアップ
-	else if (entity.field->ShouldLevelUp())
+	else if (entity.field->ShouldLevelUp() && entity.eventController->IsEmptyEventVec())
 	{
-		entity.ChangeState(State::LevelUp);
+		if (level < 2)
+		{
+			entity.ChangeState(State::LevelUp);
+		}
 	}
 	//視点変更ボタンが押されたらIdleモードへ遷移
 	else if (entity.field->ShouldSwicthCamera())

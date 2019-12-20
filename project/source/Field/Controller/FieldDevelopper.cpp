@@ -103,11 +103,11 @@ namespace Field
 		entity->placeActController->SetActor(ptr);
 
 		//リンクレベルを計算
-		int prevLinkLevel = entity->placeContainer->GetLinkLevel();
+		int prevLinkLevel = entity->placeContainer->GetPureLinkLevel();
 		entity->placeContainer->CalcLinkLevel();
 
 		//増加したリンクレベルを表示
-		int currentLinkLevel = entity->placeContainer->GetLinkLevel();
+		int currentLinkLevel = entity->placeContainer->GetPureLinkLevel();
 		int diff = currentLinkLevel - prevLinkLevel;
 		if (diff > 0)
 		{

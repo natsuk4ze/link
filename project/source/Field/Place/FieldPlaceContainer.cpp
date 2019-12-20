@@ -38,7 +38,8 @@ namespace Field::Model
 		trafficJamRate(0.0f),
 		trafficJamBias(0.0f),
 		onDepartPassenger(nullptr),
-		fieldLinkLevel(0)
+		fieldLinkLevel(0),
+		pureFieldLinkLevel(0)
 	{
 		placeVector.reserve(PlaceMax);
 
@@ -88,6 +89,7 @@ namespace Field::Model
 
 		initialized = false;
 		fieldLinkLevel = 0;
+		pureFieldLinkLevel = 0;
 	}
 
 #ifdef DEBUG_PLACEMODEL
@@ -256,11 +258,13 @@ namespace Field::Model
 	void Field::Model::PlaceContainer::CalcLinkLevel()
 	{
 		fieldLinkLevel = 0;
+		pureFieldLinkLevel = 0;
 
 		for (auto&& town : townContainer)
 		{
 			town.second->FindLinkedTown();
 			fieldLinkLevel += town.second->LinkLevel();
+			pureFieldLinkLevel += town.second->PureLinkLevel();
 		}
 	}
 
@@ -519,5 +523,13 @@ namespace Field::Model
 	int Field::Model::PlaceContainer::GetLinkLevel()
 	{
 		return fieldLinkLevel;
+	}
+
+	/**************************************
+	ƒŠƒ“ƒNƒŒƒxƒ‹æ“¾(•â³‚È‚µ)
+	***************************************/
+	int Field::Model::PlaceContainer::GetPureLinkLevel() const
+	{
+		return pureFieldLinkLevel;
 	}
 }

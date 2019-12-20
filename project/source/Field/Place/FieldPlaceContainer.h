@@ -107,6 +107,9 @@ namespace Field::Model
 		//リンクレベル取得
 		int GetLinkLevel();
 
+		//補正なしのリンクレベル取得
+		int GetPureLinkLevel() const;
+
 		// 繋がった町の数を取得
 		int GetTownNum(void) { return this->townContainer.size(); };
 
@@ -125,6 +128,7 @@ namespace Field::Model
 		int placeColumMax;						//1列あたりのプレイス最大数
 
 		int fieldLinkLevel;						//全Townのリンクレベルの合計
+		int pureFieldLinkLevel;					//補正なしのリンクレベルの合計
 
 		bool initialized;						//初期化フラグ
 

@@ -28,14 +28,14 @@ static const D3DXVECTOR3 initNumSize = D3DXVECTOR3(140.0f, 140.0f, 0.0f);
 // コンストラクタ
 //*****************************************************************************
 LevelViewer::LevelViewer()
-{	
+{
 	//数字
 	num = new CountViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.680f, SCREEN_HEIGHT / 10 * 1.30f),
 		D3DXVECTOR2(initNumSize.x, initNumSize.y), "data/TEXTURE/Viewer/GameViewer/LevelViewer/Number.png", 65.0f, 0.1f, 4);
 
 	//オーバーフロー用の数字
-	overflowNum = new CountViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.90f, SCREEN_HEIGHT / 10 * 2.20f), 
-		D3DXVECTOR2(initNumSize.x/2, initNumSize.y/2),"data/TEXTURE/Viewer/GameViewer/LevelViewer/Number.png", 35.0f, 0.1f, 6);
+	overflowNum = new CountViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.90f, SCREEN_HEIGHT / 10 * 2.20f),
+		D3DXVECTOR2(initNumSize.x / 2, initNumSize.y / 2), "data/TEXTURE/Viewer/GameViewer/LevelViewer/Number.png", 35.0f, 0.1f, 6);
 
 	//背景
 	bg = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.15f, SCREEN_HEIGHT / 10 * 1.20f),
@@ -50,8 +50,8 @@ LevelViewer::LevelViewer()
 		D3DXVECTOR2(60.0f, 60.0f), "data/TEXTURE/Viewer/GameViewer/LevelViewer/Plus.png");
 
 	//位の漢数字
-	place = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.910f, SCREEN_HEIGHT / 10 * 1.520f), 
-		D3DXVECTOR2(35.0f, 35.0f),"data/TEXTURE/Viewer/GameViewer/LevelViewer/PlaceText.png");
+	place = new BaseViewerDrawer(D3DXVECTOR2(SCREEN_WIDTH / 10 * 9.910f, SCREEN_HEIGHT / 10 * 1.520f),
+		D3DXVECTOR2(35.0f, 35.0f), "data/TEXTURE/Viewer/GameViewer/LevelViewer/PlaceText.png");
 	place->SetTexture(2, 2, 3);
 
 
@@ -132,15 +132,17 @@ void LevelViewer::Draw(void)
 
 	if (IsOverflowed())
 	{
+		int numTrillion = (int)parameterBox[LevelAI] / 10000;
 		//＋
 		plus->Draw();
-		plus->position.x = (SCREEN_WIDTH / 10 * 9.870f) - overflowNum->intervalPosScr*(std::to_string((int)parameterBox[LevelAI] - 9999).length());
+		plus->position.x = (SCREEN_WIDTH / 10 * 9.870f) - overflowNum->intervalPosScr*(std::to_string(numTrillion).length());
 		//オーバーフロー数字
-		overflowNum->DrawCounter(overflowNum->baseNumber, (int)parameterBox[LevelAI]-9999,
+		overflowNum->DrawCounter(overflowNum->baseNumber, numTrillion,
 			overflowNum->intervalPosScr, overflowNum->intervalPosTex);
 
 		//数字
-		num->DrawCounter(num->baseNumber, 9999, num->placeMax,
+		int numBillion = (int)parameterBox[LevelAI] % 10000;
+		num->DrawCounter(num->baseNumber, numBillion, num->placeMax,
 			num->intervalPosScr, num->intervalPosTex);
 	}
 	else
@@ -162,13 +164,16 @@ void LevelViewer::HopNumber(void)
 	if (isCurrentGreaterLast((float)parameterBox[LevelAI]))
 	{
 		//オーバーフロー中ならオーバーフロー数字を、そうでないなら通常の数字をホッピング
-		IsOverflowed() ? overflowNum->isHopped = true : num->isHopped = true;
+		if (IsOverflowed())
+			overflowNum->isHopped = true;
+
+		num->isHopped = true;
 	}
 
 	//数字のホップ量
 	const float hopNumValue = 50.0f;
 	num->size.y = num->HopNumber(num->size.y, initNumSize.y, hopNumValue);
-	overflowNum->size.y = overflowNum->HopNumber(overflowNum->size.y, initNumSize.y/2, hopNumValue/2);
+	overflowNum->size.y = overflowNum->HopNumber(overflowNum->size.y, initNumSize.y / 2, hopNumValue / 2);
 }
 
 //=============================================================================
@@ -241,7 +246,7 @@ void LevelViewer::SetPlaceTex(void)
 	switch ((int)parameterBox[CurrentFieldLevel])
 	{
 	case FieldType::City:
-		place->SetTexture(2,2,3);
+		place->SetTexture(2, 2, 3);
 		break;
 	case FieldType::World:
 		place->SetTexture(2, 2, 0);

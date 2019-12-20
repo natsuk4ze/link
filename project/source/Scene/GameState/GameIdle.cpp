@@ -57,8 +57,6 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 		{
 			entity.ChangeState(State::LevelUp);
 		}
-		else
-			entity.ChangeState(State::Result);
 	}
 	//‰“Œiƒ‚[ƒh‚Ö‚Ì‘JˆÚŠm”F
 	else if (entity.field->ShouldSwicthCamera())
