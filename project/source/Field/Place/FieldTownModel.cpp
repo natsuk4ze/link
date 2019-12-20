@@ -54,7 +54,7 @@ namespace Field::Model
 			return;
 
 		//4秒おきに繋がっている街に向かってパッセンジャーを出発させる
-		const int Interval = 120;
+		const int Interval = 60;
 		if (cntFrame % Interval == 0)
 		{
 			indexDestination = Math::WrapAround(0, (int)linkedTown.size(), ++indexDestination);
