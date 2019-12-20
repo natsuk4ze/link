@@ -118,7 +118,7 @@ namespace Field::Model
 		else if (levelMorphing < 1 && currentLevel >= 1)
 		{
 			startMorph(place, levelMorphing, 1);
-			currentLevel = 1;
+			levelMorphing = 1;
 		}
 	}
 
