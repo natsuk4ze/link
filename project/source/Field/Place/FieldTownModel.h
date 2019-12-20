@@ -45,6 +45,9 @@ namespace Field::Model
 		//リンクレベル取得処理
 		int LinkLevel();
 
+		//補正値なしのリンクレベル取得処理
+		int PureLinkLevel() const;
+
 		//繋がっている街を探す処理
 		void FindLinkedTown();
 
