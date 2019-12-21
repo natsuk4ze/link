@@ -24,6 +24,7 @@
 #include "Game\General\GaugeDebris.h"
 #include "Game/General/EventHappen.h"
 #include "Game\General\RouteEffect.h"
+#include "Game/General/Linkup.h"
 
 /**************************************
 staticƒƒ“ƒo
@@ -54,6 +55,7 @@ void GameParticleManager::Init()
 	controllers[GameParticle::GaudeDebris] = new Effect::Game::GaugeDebrisController();
 	controllers[GameParticle::EventHappen] = new Effect::Game::EventHappenController();
 	controllers[GameParticle::RouteTrace] = new Effect::Game::RouteEffectController();
+	controllers[GameParticle::LinkUp] = new Effect::Game::LinkLevelUpController();
 
  	crossFilter->SetPower(BloomPower[0], BloomPower[1], BloomPower[2]);
 	crossFilter->SetThrethold(BloomThrethold[0], BloomThrethold[1], BloomThrethold[2]);

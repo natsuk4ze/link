@@ -34,6 +34,7 @@ namespace GameParticle
 		GaudeDebris,	//ゲージ破片
 		EventHappen,	//イベント発生エフェクト
 		RouteTrace,		//ルートエフェクト
+		LinkUp,			//リンクレベルアップ
 		Max
 	};
 }
