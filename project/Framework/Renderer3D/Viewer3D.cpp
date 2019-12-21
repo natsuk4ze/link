@@ -131,6 +131,14 @@ void Viewer3D::SetRotation(float x, float y, float z)
 }
 
 /**************************************
+スケール設定
+***************************************/
+void Viewer3D::SetScale(const D3DXVECTOR3 & scale)
+{
+	transform->SetScale(scale);
+}
+
+/**************************************
 頂点バッファ作成処理
 ***************************************/
 void Viewer3D::MakeVertexBuffer(const D3DXVECTOR2& size)

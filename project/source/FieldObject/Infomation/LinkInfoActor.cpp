@@ -9,6 +9,7 @@
 #include "../../../Framework/Resource/ResourceManager.h"
 #include "../../Effect/GameParticleManager.h"
 #include "../../../Framework/Camera/Camera.h"
+#include "../../../Framework/Tween/Tween.h"
 
 //**************************************
 // スタティックメンバ初期化
@@ -89,6 +90,7 @@ void LinkInfoActor::Draw()
 	}
 	viewer->End2D();
 
+	viewer->SetScale(transform->GetScale());
 	viewer->Draw3D();
 
 }
@@ -107,6 +109,12 @@ void LinkInfoActor::SetLevel(const int& nextLevel)
 		{
 			GameParticleManager::Instance()->Generate(GameParticle::LinkUp, transform->GetPosition());
 		}
+
+		//ポップアップアニメーション
+		Tween::Scale(*this, D3DXVECTOR3(1.5f, 1.5f, 1.0f), 15, EaseType::OutCubic, [this]()
+		{
+			Tween::Scale(*this, Vector3::One, 15, EaseType::InExpo);
+		});
 	}
 
 	linkLevel = nextLevel;
