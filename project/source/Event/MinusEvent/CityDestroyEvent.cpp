@@ -261,6 +261,9 @@ void CityDestroyEvent::EventOver(void)
 		GuideViewer::Instance()->SetData("‚¢‚ñÎ‚Ì”j‰ó‚É¬Œ÷",
 			GuideActor::AnimState::Clapping,
 			SoundConfig::MeteorBreakSuccess);
+
+		//–h‰q‚É¬Œ÷‚µ‚½‚ç‘S‚Ä‚Ì’¬‚ðƒŠƒ“ƒNƒŒƒxƒ‹‚ð+1
+		fieldEventHandler->AdjustAllLinkLevel(1);
 	}
 	else
 	{
@@ -308,9 +311,6 @@ void CityDestroyEvent::ReceiveBeatResult(bool IsSuccess)
 		// ¬Œ÷Aè¦ÎŒ‚”j
 		EventState = State::BeatGameSuccess;
 		success = true;
-
-		//–h‰q‚É¬Œ÷‚µ‚½‚ç‘S‚Ä‚Ì’¬‚ðƒŠƒ“ƒNƒŒƒxƒ‹‚ð+1
-		fieldEventHandler->AdjustAllLinkLevel(1);
 
 		SE::Play(SoundConfig::SEID::Bom, 1.0f);
 	}

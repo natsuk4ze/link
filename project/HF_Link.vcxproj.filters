@@ -314,6 +314,7 @@
     <ClCompile Include="source\Presen\PresenDebugController.cpp" />
     <ClCompile Include="source\Effect\Game\General\EventHappen.cpp" />
     <ClCompile Include="source\Effect\Game\General\RouteEffect.cpp" />
+    <ClCompile Include="source\Effect\Game\General\Linkup.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationManager.h" />
@@ -631,6 +632,7 @@
     <ClInclude Include="source\Effect\Game\General\EventHappen.h" />
     <ClInclude Include="source\Effect\Game\General\RouteEffect.h" />
     <ClInclude Include="Framework\Tool\MemoryDetect.h" />
+    <ClInclude Include="source\Effect\Game\General\Linkup.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

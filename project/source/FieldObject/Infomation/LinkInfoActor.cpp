@@ -7,6 +7,9 @@
 //=====================================
 #include "LinkInfoActor.h"
 #include "../../../Framework/Resource/ResourceManager.h"
+#include "../../Effect/GameParticleManager.h"
+#include "../../../Framework/Camera/Camera.h"
+#include "../../../Framework/Tween/Tween.h"
 
 //**************************************
 // スタティックメンバ初期化
@@ -87,6 +90,7 @@ void LinkInfoActor::Draw()
 	}
 	viewer->End2D();
 
+	viewer->SetScale(transform->GetScale());
 	viewer->Draw3D();
 
 }
@@ -96,6 +100,23 @@ void LinkInfoActor::Draw()
 //=====================================
 void LinkInfoActor::SetLevel(const int& nextLevel)
 {
+	if (linkLevel < nextLevel)
+	{
+		//カメラの描画領域外ならエフェクトを発生させない
+		D3DXVECTOR3 screenPos = Camera::MainCamera()->Projection(transform->GetPosition());
+		if (screenPos.x >= 0.0f && screenPos.x <= (float)SCREEN_WIDTH
+			&& screenPos.y >= 0.0f && screenPos.y <= (float)SCREEN_HEIGHT)
+		{
+			GameParticleManager::Instance()->Generate(GameParticle::LinkUp, transform->GetPosition());
+		}
+
+		//ポップアップアニメーション
+		Tween::Scale(*this, D3DXVECTOR3(1.5f, 1.5f, 1.0f), 15, EaseType::OutCubic, [this]()
+		{
+			Tween::Scale(*this, Vector3::One, 15, EaseType::InExpo);
+		});
+	}
+
 	linkLevel = nextLevel;
 	digit[0] = linkLevel % 10;
 	digit[1] = linkLevel / 10;

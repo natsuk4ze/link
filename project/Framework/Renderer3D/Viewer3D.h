@@ -45,6 +45,9 @@ public:
 	//回転設定処理
 	virtual void SetRotation(float x, float y, float z);
 
+	//スケール設定
+	virtual void SetScale(const D3DXVECTOR3& scale);
+
 protected:
 	//レンダーターゲット関連のメンバ
 	LPDIRECT3DTEXTURE9 renderTarget;

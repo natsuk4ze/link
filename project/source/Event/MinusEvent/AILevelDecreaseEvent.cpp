@@ -254,6 +254,9 @@ void AILevelDecreaseEvent::EventOver(void)
 		GuideViewer::Instance()->SetData("NU‚ðH‚¢Ž~‚ß‚Ü‚µ‚½",
 			GuideActor::AnimState::Salute,
 			SoundConfig::UFOSuccess);
+
+		//–h‰q‚É¬Œ÷‚µ‚½‚ç‘S‚Ä‚Ì’¬‚ðƒŠƒ“ƒNƒŒƒxƒ‹‚ð+1
+		fieldEventHandler->AdjustAllLinkLevel(1);
 	}
 	else
 	{
@@ -327,9 +330,6 @@ void AILevelDecreaseEvent::ReceiveBeatResult(bool IsSuccess)
 		// ¬Œ÷
 		EventState = BeatGameSuccess;
 		success = true;
-
-		//–h‰q‚É¬Œ÷‚µ‚½‚ç‘S‚Ä‚Ì’¬‚ðƒŠƒ“ƒNƒŒƒxƒ‹‚ð+1
-		fieldEventHandler->AdjustAllLinkLevel(1);
 	}
 	else
 	{
