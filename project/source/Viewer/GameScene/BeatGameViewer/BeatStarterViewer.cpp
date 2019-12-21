@@ -128,6 +128,7 @@ void BeatStarterViewer::SetGo(void)
 	//レディーテキストを強制終了してからセット
 	shouldReady = false;
 	goText->size = D3DXVECTOR3(500.0f, 0.0f, 0.0f);
+	goText->SetAlpha(1.0f);
 	isPlaying = true;
 	shouldGo = true;
 }
