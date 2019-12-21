@@ -109,7 +109,7 @@ namespace Field::Actor
 
 		alongController->SetBuildBonusFunc([this]()
 		{
-			bonusSideWay += 0.5f;
+			bonusSideWay += 0.1f;
 		});
 	}
 

@@ -90,7 +90,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		NULL);
 
 	// 初期化処理(ウィンドウを作成してから行う)
-	if (FAILED(Init(hInstance, hWnd, false)))
+	if (FAILED(Init(hInstance, hWnd, true)))
 	{
 		return -1;
 	}
