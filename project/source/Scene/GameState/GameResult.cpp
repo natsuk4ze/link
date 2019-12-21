@@ -122,7 +122,7 @@ GameScene::State GameScene::GameResult::OnUpdate(GameScene & entity)
 		//エンターキーでネームエントリー終了
 		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 		{
-			SE::Play(SoundConfig::SEID::Select01, 1.0f);
+			SE::Play(SoundConfig::SEID::Select01, 0.5f);
 			entity.step = Step::ScoreNameEntryFinish;
 		}
 		break;

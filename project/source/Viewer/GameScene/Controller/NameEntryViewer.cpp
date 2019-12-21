@@ -160,7 +160,7 @@ void NameEntryViewer::MoveCursor()
 		{
 			if (reelViewer->MoveCursorRight())
 			{
-				SE::Play(SoundConfig::SEID::MoveCursor, 1.0f);
+				SE::Play(SoundConfig::SEID::MoveCursor, 0.5f);
 				reelCnt++;
 			}
 		}
@@ -175,7 +175,7 @@ void NameEntryViewer::MoveCursor()
 		{
 			if (reelViewer->MoveCursorLeft())
 			{
-				SE::Play(SoundConfig::SEID::MoveCursor, 1.0f);
+				SE::Play(SoundConfig::SEID::MoveCursor, 0.5f);
 				reelCnt--;
 			}
 		}

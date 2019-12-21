@@ -188,7 +188,7 @@ void RewardViewer::CursorMove(void)
 	// ç∂
 	if (Keyboard::GetTrigger(DIK_LEFT) || GamePad::GetTriggerPOV(0, POV_LEFT))
 	{
-		SE::Play(SoundConfig::SEID::MoveCursor, 1.0f);
+		SE::Play(SoundConfig::SEID::MoveCursor, 0.5f);
 		DevideX--;
 
 		if (DevideX < 0)
@@ -206,7 +206,7 @@ void RewardViewer::CursorMove(void)
 	// âE
 	else if (Keyboard::GetTrigger(DIK_RIGHT) || GamePad::GetTriggerPOV(0, POV_RIGHT))
 	{
-		SE::Play(SoundConfig::SEID::MoveCursor, 1.0f);
+		SE::Play(SoundConfig::SEID::MoveCursor, 0.5f);
 		DevideX++;
 
 		if (DevideY != 2)
@@ -222,7 +222,7 @@ void RewardViewer::CursorMove(void)
 	// è„
 	if (Keyboard::GetTrigger(DIK_UP) || GamePad::GetTriggerPOV(0, POV_UP))
 	{
-		SE::Play(SoundConfig::SEID::MoveCursor, 1.0f);
+		SE::Play(SoundConfig::SEID::MoveCursor, 0.5f);
 		DevideY--;
 
 		if (DevideY < 0)
@@ -240,7 +240,7 @@ void RewardViewer::CursorMove(void)
 	// â∫
 	else if (Keyboard::GetTrigger(DIK_DOWN) || GamePad::GetTriggerPOV(0, POV_DOWN))
 	{
-		SE::Play(SoundConfig::SEID::MoveCursor, 1.0f);
+		SE::Play(SoundConfig::SEID::MoveCursor, 0.5f);
 		DevideY++;
 
 		if (DevideX > 1)
