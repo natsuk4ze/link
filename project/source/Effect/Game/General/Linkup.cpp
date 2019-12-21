@@ -13,10 +13,10 @@ namespace Effect::Game
 	LinkupControllerコンストラクタ
 	***************************************/
 	LinkupController::LinkupController() :
-		BaseParticleController(Particle_3D)
+		BaseParticleController(Particle_3D, false)
 	{
 		//単位頂点バッファ作成
-		const D3DXVECTOR2 Size = { 1.0f, 1.0f };
+		const D3DXVECTOR2 Size = { 2.0f, 2.0f };
 		const D3DXVECTOR2 TexDiv = { 2.0f, 2.0f };
 		MakeUnitBuffer(Size, TexDiv);
 
@@ -36,7 +36,7 @@ namespace Effect::Game
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
-			emitter = new BaseEmitter(5, 60);
+			emitter = new BaseEmitter(3, 60);
 		}
 	}
 
@@ -44,7 +44,7 @@ namespace Effect::Game
 	Linkupコンストラクタ
 	***************************************/
 	Linkup::Linkup() :
-		Particle3D(15, 30)
+		Particle3D(30, 45)
 	{
 
 	}
@@ -57,10 +57,13 @@ namespace Effect::Game
 		cntFrame = 0;
 		active = true;
 
-		D3DXVECTOR3 offset = Vector3::Random() * Math::RandomRange(-2.0f, 2.0f);
+		D3DXVECTOR3 offset = Vector3::Random() * Math::RandomRange(-8.0f, 8.0f);
 		transform->Move(offset);
 
 		initScale = Math::RandomRange(0.5f, 1.5f);
+
+		uv.v = Math::RandomRange(0, 2) * 0.5f;
+		uv.u = Math::RandomRange(0, 2) * 0.5f;
 	}
 
 	/**************************************
@@ -73,10 +76,10 @@ namespace Effect::Game
 
 		cntFrame++;
 
-		transform->Move(Vector3::Up * 0.05f);
+		transform->Move(Vector3::Up * 0.1f);
 
 		float t = (float)cntFrame / lifeFrame;
-		float scale = Easing::EaseValue(t, initScale, 0.0f, EaseType::OutCubic);
+		float scale = Easing::EaseValue(t, initScale, 0.0f, EaseType::InExpo);
 		transform->SetScale(Vector3::One * scale);
 	}
 
