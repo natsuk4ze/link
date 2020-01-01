@@ -33,9 +33,9 @@ namespace Field
 	***************************************/
 	enum FieldLevel
 	{
-		City,	// 都市レベル
-		World,	// 国レベル
-		Space,	// 星レベル
+		City,		// 都市レベル
+		World,		// 国レベル
+		Space,		// 星レベル
 		Max
 	};
 

@@ -70,6 +70,7 @@ public:
 		Pause,
 		FarView,
 		Title,
+		Tutorial,
 		Result,
 		TransitionOut,
 		TransitionIn,
@@ -111,6 +112,8 @@ private:
 
 	unsigned long long entiretyScore;			//全レベルの合計スコア
 	bool ShowNameEntry;							//ネームエントリービューア表示のフラグ
+	bool InTutorial;							//チュートリアルかどうか
+
 
 	bool debugReward;							//実績リザルト画面でデバッグを使用するか
 	bool debugAchievedResult[10];				//デバッグ用の達成実績
@@ -136,6 +139,9 @@ private:
 	//フィールドレベル設定処理
 	void SetFieldLevel(int level);
 
+	//チュートリアル設定処理
+	void SetTutorial(void);
+
 	//クリア処理
 	void Clear();
 
@@ -152,6 +158,7 @@ private:
 	class GameFarView;
 	class GameWaitPopup;
 	class GameTitle;
+	class GameTutorial;
 	class GameResult;
 	class GameTransitionOut;
 	class GameTransitionIn;

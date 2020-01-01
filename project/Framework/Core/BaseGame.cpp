@@ -77,13 +77,31 @@ void BaseGame::Update()
 	if (Keyboard::GetTrigger(DIK_P))
 		pause = !pause;
 
+	// 他の音楽を聴きたいので、マスターアップする時に削除してください
+	//===============================
+#if _DEBUG
+	static bool SoundMute = true;
+	SE::Mute(true);
+#endif
+	//===============================
+
 	if (!pause)
 	{
 		ProfilerCPU::Instance()->Update();
 
 		sceneManager->Update();
 
+		// 他の音楽を聴きたいので、マスターアップする時に削除してください
+		//===============================
+#if _DEBUG
+		if (!SoundMute)
+		{
+			BGM::Update();
+		}
+		//===============================
+#else
 		BGM::Update();
+#endif
 		Tween::mInstance->Update();
 		TaskManager::Instance()->Update();
 		TransitionController::Instance()->Update();

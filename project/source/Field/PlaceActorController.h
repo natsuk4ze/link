@@ -55,7 +55,7 @@ namespace Field::Actor
 	class PlaceActorController
 	{
 	public:
-		PlaceActorController(Field::FieldLevel level);
+		PlaceActorController(Field::FieldLevel level, bool TutorialBackGround);
 		~PlaceActorController();
 
 		//XVˆ—A•`‰æˆ—

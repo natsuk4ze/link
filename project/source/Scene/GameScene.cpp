@@ -50,10 +50,11 @@
 #include "GameState/GamePause.h"
 #include "GameState/GameFarView.h"
 #include "GameState/GameTitle.h"
+#include "GameState/GameTutorial.h"
 #include "GameState/GameResult.h"
-#include "GameState\GameTransitionOut.h"
-#include "GameState\GameTransitionIn.h"
-#include "GameState\GameAchieveResult.h"
+#include "GameState/GameTransitionOut.h"
+#include "GameState/GameTransitionIn.h"
+#include "GameState/GameAchieveResult.h"
 
 #include "../../Framework/Tool/DebugWindow.h"
 #include "../../Framework/Sound/BackgroundMusic.h"
@@ -132,6 +133,7 @@ void GameScene::Init()
 	fsm[State::Pause] = new GamePause();
 	fsm[State::FarView] = new GameFarView();
 	fsm[State::Title] = new GameTitle();
+	fsm[State::Tutorial] = new GameTutorial();
 	fsm[State::Result] = new GameResult();
 	fsm[State::TransitionOut] = new GameTransitionOut();
 	fsm[State::TransitionIn] = new GameTransitionIn();
@@ -584,6 +586,24 @@ void GameScene::SetFieldLevel(int level)
 }
 
 /**************************************
+チュートリアル設定処理
+***************************************/
+void GameScene::SetTutorial(void)
+{
+	InTutorial = true;
+
+	//フィールドレベルを設定
+	field->SetTutorialField();
+
+	//レベル固有のパーティクルマネージャ初期化
+	levelParticleManager = CityParticleManager::Instance();
+	levelParticleManager->Init();
+
+	//イベントハンドラ設定
+	//SetEventHandler();
+}
+
+/**************************************
 シーンクリア処理
 ***************************************/
 void GameScene::Clear()
@@ -598,11 +618,11 @@ void GameScene::Clear()
 	Debug::Log("Clear Field : %f", ProfilerCPU::CalcElapsed(start, end));
 
 	//イベントコントローラクリア
-	start = ProfilerCPU::GetCounter();
-	eventController->Uninit();
-	end = ProfilerCPU::GetCounter();
+	//start = ProfilerCPU::GetCounter();
+	//eventController->Uninit();
+	//end = ProfilerCPU::GetCounter();
 
-	Debug::Log("Clear Event : %f", ProfilerCPU::CalcElapsed(start, end));
+	//Debug::Log("Clear Event : %f", ProfilerCPU::CalcElapsed(start, end));
 
 	//レベル固有のパーティクルを終了
 	start = ProfilerCPU::GetCounter();

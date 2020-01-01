@@ -43,8 +43,13 @@ public:
 	//再生中判定
 	static bool IsPlaying(int tag);
 
+	//サウンドのミュート
+	static void Mute(bool Flag);
+
 private:
 	//読み込んだサウンドのコンテナ
 	static std::unordered_map<int, LPDIRECTSOUNDBUFFER8> soundContainer;
+
+	static bool MuteFlag;
 };
 #endif

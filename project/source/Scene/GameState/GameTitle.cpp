@@ -94,24 +94,48 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 			PlayBGM::Instance()->FadeOut();
 			PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.3f, 30, false);
 
-			TaskManager::Instance()->CreateDelayedTask(30, [&]() {
-
+			TaskManager::Instance()->CreateDelayedTask(30, [&]()
+			{
 				entity.titleViewer->SetActive(false);
 
-				entity.gameViewer->SetActive(true);
-				entity.gameViewer->SetActive(false, GameViewer::ViewerNo::ItemStock);
-				entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Timer);
-				entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Level);
-
-				entity.gameViewer->SetGradeTitle(0, [&]()
+				TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
 				{
-					entity.gameViewer->SetActive(true, GameViewer::ViewerNo::ItemStock);
-					entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Timer);
-					entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Level);
+					entity.level = 0;
+					entity.Clear();
+					entity.SetTutorial();
+					entity.field->Load();
 
-					GuideViewer::Instance()->SetData("張り切って行きましょう", GuideActor::AnimState::TalkingTypeA, SoundConfig::SEID::GameStart);
-					entity.ChangeState(GameScene::State::Idle);
+					// カメラの焦点をセット
+					entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
+					entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
+
+					// シーンチェンジ
+					TransitionController::Instance()->SetTransition(true, TransitionType::HexaPop, [&]()
+					{
+						entity.gameViewer->SetActive(true);
+
+						// グレードタイトル
+						entity.gameViewer->SetGradeTitle(0, [&]()
+						{
+							GuideViewer::Instance()->SetData("張り切って行きましょう", GuideActor::AnimState::TalkingTypeA, SoundConfig::SEID::GameStart);
+							entity.ChangeState(GameScene::State::Tutorial);
+						});
+					});
 				});
+
+				//entity.gameViewer->SetActive(true);
+				////entity.gameViewer->SetActive(false, GameViewer::ViewerNo::ItemStock);
+				////entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Timer);
+				////entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Level);
+
+				//entity.gameViewer->SetGradeTitle(0, [&]()
+				//{
+				//	entity.gameViewer->SetActive(true, GameViewer::ViewerNo::ItemStock);
+				//	entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Timer);
+				//	entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Level);
+
+				//	//entity.ChangeState(GameScene::State::Idle);
+				//});
 			});
 		}
 		else if (selected == TitleViewer::MenuID::ViewReward)

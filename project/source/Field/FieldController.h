@@ -82,6 +82,9 @@ namespace Field
 		//フィールドレベル設定処理
 		void SetLevel(Field::FieldLevel level);
 
+		//チュートリアル用フィールドを設置する
+		void SetTutorialField(void);
+
 		//クリア処理
 		void Clear();
 
@@ -165,7 +168,8 @@ namespace Field
 		float developSpeedBonus;				//発展スピード増加ボーナス
 		bool enableDevelop;						//開拓可能かどうか
 		bool flgWaitPopup;						//ポップアップ待機状態
-		bool isViewerActive;							//UI描画可否判定
+		bool isViewerActive;					//UI描画可否判定
+		bool TutorialOver;						//チュートリアル終了フラグ
 
 		FieldLevel currentLevel;				//現在のフィールドレベル
 
