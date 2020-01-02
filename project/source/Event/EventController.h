@@ -44,7 +44,7 @@ private:
 
 	bool InBanStock;
 	bool InPauseEvent;
-	bool IsViewerPlaying;
+	//bool IsViewerPlaying;
 
 	std::map<Field::FieldPosition, BaseEmitter*> infoEmitterContainer;
 
@@ -60,6 +60,7 @@ public:
 	~EventController();
 
 	void Init(int FieldLevel);
+	void Init_Tutorial(void);
 	void Uninit(void);
 	void Update(void);
 	void UpdateViewer(void);

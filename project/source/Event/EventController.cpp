@@ -56,6 +56,7 @@ using namespace EventConfig;
 const char* EventCSVPath_City = "data/FIELD/City/City_Event.csv";
 const char* EventCSVPath_World = "data/FIELD/World/World_Event.csv";
 const char* EventCSVPath_Space = "data/FIELD/Space/Space_Event.csv";
+const char* EventCSVPath_Tutorial = "data/FIELD/Tutorial/Tutorial_Event.csv";
 
 
 //=============================================================================
@@ -63,8 +64,8 @@ const char* EventCSVPath_Space = "data/FIELD/Space/Space_Event.csv";
 //=============================================================================
 EventController::EventController(int FieldLevel) :
 	InBanStock(false),
-	InPauseEvent(false),
-	IsViewerPlaying(true)
+	InPauseEvent(false)
+	//IsViewerPlaying(true)
 {
 	eventViewer = new EventViewer();
 
@@ -133,6 +134,23 @@ void EventController::Init(int FieldLevel)
 }
 
 //=============================================================================
+// 初期化(チュートリアル専用)
+//=============================================================================
+void EventController::Init_Tutorial(void)
+{
+	// エミッターコンテナのクリア
+	for (auto&& pair : infoEmitterContainer)
+	{
+		if (pair.second != nullptr)
+			pair.second->SetActive(false);
+	}
+	infoEmitterContainer.clear();
+
+	// CSVファイルを読み取る
+	LoadCSV(EventCSVPath_Tutorial);
+}
+
+//=============================================================================
 // 終了
 //=============================================================================
 void EventController::Uninit(void)
@@ -154,13 +172,6 @@ void EventController::Uninit(void)
 //=============================================================================
 void EventController::Update()
 {
-#if _DEBUG
-	if (Keyboard::GetTrigger(DIK_F))
-	{
-		//EventVec.push_back(new NewTownEventCtrl(eventViewer, Field::Space, camera));
-	}
-#endif
-
 	for (auto &Event : EventVec)
 	{
 		if (Event->GetUse())
@@ -221,8 +232,8 @@ void EventController::DrawEventObject()
 //=============================================================================
 void EventController::DrawEventViewer()
 {
-	if (!IsViewerPlaying)
-		return;
+	//if (!IsViewerPlaying)
+	//	return;
 
 	//ビートビューア描画
 	beatViewer->Draw();

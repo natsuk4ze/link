@@ -43,6 +43,7 @@ class GuideViewer;
 class ResultViewer;
 class NameEntryViewer;
 class TitleViewer;
+class TutorialViewer;
 class RewardNotifier;
 class PresenDebugController;
 
@@ -97,11 +98,12 @@ private:
 	EventController *eventController;			//イベントコントローラー
 	GameParticleManager *particleManager;		//パーティクルマネージャ
 	SceneParticleManager *levelParticleManager;	//レベル個別のパーティクルマネージャ
-	FieldEventHandler* eventHandler;			//イベントハンドラ
+	FieldEventHandler *eventHandler;			//イベントハンドラ
 	UDPClient *Client;							//クライアント
-	ResultViewer*resultViewer;					//リザルトビュアー
+	ResultViewer *resultViewer;					//リザルトビュアー
 	NameEntryViewer *nameEntryViewer;			//名前登録ビュアー
-	TitleViewer* titleViewer;					// タイトルビュアー
+	TitleViewer *titleViewer;					// タイトルビュアー
+	TutorialViewer *tutorialViewer;				// チュートリアルビュアー
 	RewardNotifier* rewardNotifier;				// リワードビュアー
 
 	int remainTime;								//制限時間

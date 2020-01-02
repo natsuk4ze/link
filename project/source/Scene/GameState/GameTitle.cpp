@@ -13,6 +13,7 @@
 #include "../../Field/Camera/FieldCamera.h"
 #include "../../Viewer/GameScene/Controller/ResultViewer.h"
 #include "../../Viewer/GameScene/Controller/NameEntryViewer.h"
+#include "../../Viewer/TutorialScene/TutorialViewer.h"
 #include "../../../Framework/Transition/TransitionController.h"
 #include "../../../Framework/Serial/SerialWrapper.h"
 #include "../../Sound/PlayBGM.h"
@@ -31,7 +32,7 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	// シーンチェンジ
 	TransitionController::Instance()->SetTransition(true, TransitionType::HexaPop);
 
-	//実績のリセット
+	// 実績のリセット
 	// リワードをリセット
 	entity.rewardNotifier->ResetAchieved();
 	RewardController::Instance()->ResetAllRewardData();
@@ -115,11 +116,11 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 						entity.gameViewer->SetActive(true);
 
 						// グレードタイトル
-						entity.gameViewer->SetGradeTitle(0, [&]()
-						{
+						//entity.gameViewer->SetGradeTitle(0, [&]()
+						//{
 							GuideViewer::Instance()->SetData("張り切って行きましょう", GuideActor::AnimState::TalkingTypeA, SoundConfig::SEID::GameStart);
 							entity.ChangeState(GameScene::State::Tutorial);
-						});
+						//});
 					});
 				});
 

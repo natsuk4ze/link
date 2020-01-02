@@ -33,6 +33,7 @@
 #include "../Viewer/GameScene/Controller/ResultViewer.h"
 #include "../Viewer/GameScene/Controller/NameEntryViewer.h"
 #include "../Viewer/TitleScene/TitleViewer.h"
+#include "../Viewer/TutorialScene/TutorialViewer.h"
 #include "../Reward/RewardConfig.h"
 #include "../Reward/RewardController.h"
 #include "../Reward/RewardNotifier.h"
@@ -98,6 +99,7 @@ void GameScene::Init()
 	resultViewer = new ResultViewer();
 	nameEntryViewer = new NameEntryViewer();
 	titleViewer = new TitleViewer();
+	tutorialViewer = new TutorialViewer();
 	rewardNotifier = new RewardNotifier();
 	debugController = new PresenDebugController(this);
 
@@ -168,6 +170,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(resultViewer);
 	SAFE_DELETE(nameEntryViewer);
 	SAFE_DELETE(titleViewer);
+	SAFE_DELETE(tutorialViewer);
 	SAFE_DELETE(rewardNotifier);
 	SAFE_DELETE(debugController);
 
@@ -228,6 +231,7 @@ void GameScene::Update()
 	GuideViewer::Instance()->Update();
 	resultViewer->Update();
 	titleViewer->Update();
+	tutorialViewer->Update();
 	nameEntryViewer->Update();
 	rewardNotifier->Update();
 
@@ -306,6 +310,7 @@ void GameScene::Draw()
 	resultViewer->Draw();
 	nameEntryViewer->Draw();
 	titleViewer->Draw();
+	tutorialViewer->Draw();
 	rewardNotifier->Draw();
 
 	//*******別ウインドウを作成するため最後*******
@@ -599,8 +604,11 @@ void GameScene::SetTutorial(void)
 	levelParticleManager = CityParticleManager::Instance();
 	levelParticleManager->Init();
 
+	//イベントコントローラ作成
+	eventController->Init_Tutorial();
+
 	//イベントハンドラ設定
-	//SetEventHandler();
+	SetEventHandler();
 }
 
 /**************************************

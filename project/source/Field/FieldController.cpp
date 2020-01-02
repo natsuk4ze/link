@@ -64,7 +64,6 @@ namespace Field
 		operationX(OperationExplanationViewer::OperationID::X_None),
 		operationSpace(OperationExplanationViewer::OperationID::Space_None),
 		enableDevelop(true),
-		TutorialOver(true),
 		flgWaitPopup(false)
 	{
 		using Model::PlaceContainer;
@@ -261,7 +260,6 @@ namespace Field
 	***************************************/
 	void FieldController::SetTutorialField(void)
 	{
-		//TutorialOver = false;
 		currentLevel = FieldLevel::City;
 
 		//フィールドレベルが関係するインスタンスを作成
@@ -305,6 +303,14 @@ namespace Field
 
 		//NOTE:今はまだ移動範囲の拡大処理が無いのでここで移動範囲を決定してしまう
 		cursor->SetBorder(border.z - 1, border.x - 1, 0, 0);
+	}
+
+	/**************************************
+	開拓したかどうかを調べる
+	***************************************/
+	bool FieldController::IsDeveloped(void)
+	{
+		return developper->IsDeveloped();
 	}
 
 	/**************************************

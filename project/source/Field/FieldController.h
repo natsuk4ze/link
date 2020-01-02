@@ -82,8 +82,6 @@ namespace Field
 		//フィールドレベル設定処理
 		void SetLevel(Field::FieldLevel level);
 
-		//チュートリアル用フィールドを設置する
-		void SetTutorialField(void);
 
 		//クリア処理
 		void Clear();
@@ -125,6 +123,18 @@ namespace Field
 
 		// リザルト画面用のパラメータを取得する
 		ResultViewerParam* GetResultPara(void);
+
+		// 作った道の数を取得
+		int GetRoadNum(void);
+
+		// ====================
+		// チュートリアル用
+		// ====================
+		// チュートリアル用フィールドを設置する
+		void SetTutorialField(void);
+
+		// 開拓したかどうかを調べる
+		bool IsDeveloped(void);
 
 	private:
 		//内部クラス前方宣言
@@ -169,7 +179,7 @@ namespace Field
 		bool enableDevelop;						//開拓可能かどうか
 		bool flgWaitPopup;						//ポップアップ待機状態
 		bool isViewerActive;					//UI描画可否判定
-		bool TutorialOver;						//チュートリアル終了フラグ
+		//bool TutorialOver;						//チュートリアル終了フラグ
 
 		FieldLevel currentLevel;				//現在のフィールドレベル
 
@@ -203,8 +213,7 @@ namespace Field
 		//操作説明のセット
 		void SetOperationExplanation();
 
-		// 作った道の数を取得
-		int GetRoadNum(void);
+
 
 		// 繋がった町の数を取得
 		int GetTownNum(void);
