@@ -27,7 +27,9 @@ enum TutorialStep
 	Camera,
 	Event,
 	Score,
-	Over,
+	Exit,
+	WaitOver,
+	Transition,
 };
 
 /**************************************
@@ -39,7 +41,10 @@ void GameScene::GameTutorial::OnStart(GameScene & entity)
 	if (!Initialized)
 	{
 		entity.step = Road;
+		entity.tutorialViewer->Init();
 		FrameCount = 0;
+
+
 		Initialized = true;
 	}
 
@@ -74,7 +79,7 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 		}
 
 		// 道を作る操作を確認
-		if (entity.field->GetRoadNum() != 0 && !entity.tutorialViewer->isPlaying)
+		if (entity.field->GetRoadNum() != 0 && !entity.tutorialViewer->GetIsShowTexture())
 		{
 			ClearFlag = true;
 		}
@@ -100,7 +105,7 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 		}
 
 		// 開拓操作を確認
-		if (entity.field->IsDeveloped() && !entity.tutorialViewer->isPlaying)
+		if (entity.field->IsDeveloped() && !entity.tutorialViewer->GetIsShowTexture())
 		{
 			ClearFlag = true;
 		}
@@ -125,7 +130,7 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 		}
 
 		// カメラの操作を確認
-		if (!entity.tutorialViewer->isPlaying)
+		if (!entity.tutorialViewer->GetIsShowTexture())
 		{
 			if (Keyboard::GetTrigger(DIK_C) || Keyboard::GetTrigger(DIK_SPACE))
 			{
@@ -153,11 +158,12 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 		}
 
 		// イベントの発生を確認
-		if (!entity.eventController->IsEmptyEventVec())
+		if (!entity.eventController->IsEmptyEventVec() ||
+			(FrameCount >= 600 && !entity.tutorialViewer->GetIsShowTexture()))
 		{
 			ClearFlag = true;
 		}
-		
+
 		// 条件達成、次の説明に行く
 		if (ClearFlag)
 		{
@@ -183,23 +189,45 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 		{
 			FrameCount = 0;
 			ClearFlag = false;
-			entity.step = TutorialStep::Over;
+			entity.step = TutorialStep::Exit;
 		}
 
 		break;
-	case TutorialStep::Over:
+
+	case TutorialStep::Exit:
+
+		if (!entity.tutorialViewer->GetIsShowTexture())
+		{
+			ClearFlag = true;
+		}
+
+		// 条件達成、次の説明に行く
+		if (ClearFlag)
+		{
+			ClearFlag = false;
+			entity.step = TutorialStep::WaitOver;
+		}
+
+		break;
+	case TutorialStep::WaitOver:
 
 		// チュートリアル終了
-		if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
+		if (!entity.tutorialViewer->GetIsShowTexture())
 		{
-			// 初期化
-			entity.level = 0;
-			entity.InTutorial = false;
-			entity.remainTime = 30 * 180;
-			Initialized = false;
+			if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
+			{
+				entity.tutorialViewer->isPlaying = false;
+				entity.step = Transition;
 
-			// トランジション
-			entity.ChangeState(GameScene::State::TransitionOut);
+				// 初期化
+				entity.level = 0;
+				entity.InTutorial = false;
+				entity.remainTime = 30 * 180;
+				Initialized = false;
+
+				// トランジション
+				entity.ChangeState(GameScene::State::TransitionOut);
+			}
 		}
 		break;
 
@@ -210,37 +238,42 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 	// チュートリアル中に実績を達成しないために
 	RewardController::Instance()->ResetAllRewardData();
 
-	// イベント更新
-	entity.eventController->Update();
-	entity.eventController->UpdateViewer();
-
-	// フィールド更新
-	entity.field->UpdateLogic();
-	entity.field->UpdateObject();
-
-	// 操作説明していなければ、入力確認
-	if (!entity.tutorialViewer->isPlaying)
+	// 操作説明が表示していなければ、入力確認
+	if (entity.step != TutorialStep::Transition)
 	{
-		entity.field->CheckInput();
+		if (!entity.tutorialViewer->GetIsShowTexture())
+		{
+			// イベント更新
+			entity.eventController->Update();
+			entity.eventController->UpdateViewer();
 
-		// 遠景モードへの遷移確認
-		if (entity.field->ShouldSwicthCamera())
-		{
-			entity.ChangeState(State::FarView);
+			entity.field->CheckInput();
+
+			// フィールド更新
+			entity.field->UpdateLogic();
+			entity.field->UpdateObject();
+
+			entity.tutorialViewer->SetHelpMessage();
+
+			// 遠景モードへの遷移確認
+			if (entity.field->ShouldSwicthCamera())
+			{
+				entity.ChangeState(State::FarView);
+			}
+			// カメラを回転させるか
+			else if (entity.field->ShouldRotateCamera())
+			{
+				entity.fieldCamera->ChangeMode(FieldCamera::AngleRotate);
+			}
 		}
-		// カメラを回転させるか
-		else if (entity.field->ShouldRotateCamera())
+		else if (entity.step != TutorialStep::WaitOver)
 		{
-			entity.fieldCamera->ChangeMode(FieldCamera::AngleRotate);
-		}
-	}
-	else
-	{
-		// 説明終了
-		if (Keyboard::GetTrigger(DIK_Z) || GamePad::GetTrigger(0, BUTTON_C))
-		{
-			GuideViewer::Instance()->SetActive(true);
-			entity.tutorialViewer->isPlaying = false;
+			// 説明終了
+			if (Keyboard::GetTrigger(DIK_Z) || Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
+			{
+				GuideViewer::Instance()->SetActive(true);
+				entity.tutorialViewer->SetIsShowTexture(false);
+			}
 		}
 	}
 

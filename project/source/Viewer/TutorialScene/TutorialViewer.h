@@ -38,17 +38,24 @@ public:
 	TutorialViewer();
 	~TutorialViewer();
 
+	void Init(void);
 	void Update();
 	void Draw();
+	// チュートリアルの説明画面を表示
 	void ShowTutorial(HelpTextureType Type);
+	// ヘルプテキストを表示
+	void SetHelpMessage(void);
+	void SetIsShowTexture(bool Flag) { this->IsShowTexture = Flag; };
+	bool GetIsShowTexture(void) { return this->IsShowTexture; };
 
 private:
 	TextureDrawer *BackGround;
 	TextureDrawer *MessageFrame;
 	std::vector<TextureDrawer*> HelpTexture;
 	TextViewer *DescriptionText;
-	TextViewer *TitleText;
+	TextViewer *ExitText;
 	int TextureNum;
+	bool IsShowTexture;
 };
 
 #endif

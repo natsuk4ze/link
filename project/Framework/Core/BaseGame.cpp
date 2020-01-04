@@ -80,8 +80,8 @@ void BaseGame::Update()
 	// 他の音楽を聴きたいので、マスターアップする時に削除してください
 	//===============================
 #if _DEBUG
-	static bool SoundMute = true;
-	SE::Mute(true);
+	static bool SoundMute = false;
+	SE::Mute(false);
 #endif
 	//===============================
 

@@ -32,7 +32,8 @@ const char* TexturePath[TutorialViewer::HelpTextureType::Max] =
 // コンストラクタ
 //=============================================================================
 TutorialViewer::TutorialViewer() :
-	TextureNum(LinkRoad)
+	TextureNum(LinkRoad),
+	IsShowTexture(false)
 {
 	// 非表示する
 	isPlaying = false;
@@ -55,9 +56,14 @@ TutorialViewer::TutorialViewer() :
 	MessageFrame->SetPosition({ SCREEN_CENTER_X, 950.0f, 0.0f });
 
 	DescriptionText = new TextViewer("マキナス 4 Square", 50);;
-	DescriptionText->SetPosition(D3DXVECTOR3(350.0f, 900.0f, 0.0f));
+	DescriptionText->SetPosition(D3DXVECTOR3(350.0f, 950.0f, 0.0f));
 	DescriptionText->SetHorizontalAlignment(TextViewer::HorizontalAlignment::Left);
 	DescriptionText->SetText("ここは操作説明です。");
+
+	ExitText = new TextViewer("マキナス 4 Square", 80);;
+	ExitText->SetPosition(D3DXVECTOR3(SCREEN_CENTER_X, 850.0f, 0.0f));
+	ExitText->SetText("");
+	ExitText->SetActive(false);
 }
 
 //=============================================================================
@@ -69,6 +75,22 @@ TutorialViewer::~TutorialViewer()
 	SAFE_DELETE(MessageFrame);
 	SAFE_DELETE(DescriptionText);
 	Utility::DeleteContainer(HelpTexture);
+}
+
+//=============================================================================
+// 初期化
+//=============================================================================
+void TutorialViewer::Init(void)
+{
+	isPlaying = false;
+	IsShowTexture = false;
+	TextureNum = LinkRoad;
+	BackGround->SetVisible(false);
+	HelpTexture.at(TextureNum)->SetVisible(false);
+	MessageFrame->SetVisible(false);
+	DescriptionText->SetActive(false);
+	ExitText->SetActive(false);
+	ExitText->SetText("");
 }
 
 //=============================================================================
@@ -108,26 +130,81 @@ void TutorialViewer::Draw()
 	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 
+	// 黒い背景
 	BackGround->Draw();
 
+	// 説明画面
 	HelpTexture.at(TextureNum)->Draw();
 
+	// テキストのフレーム
 	MessageFrame->Draw();
+
+	// 説明テキスト
 	DescriptionText->Draw();
+
+	// 終了テキスト
+	ExitText->Draw();
 
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 }
 
 //=============================================================================
-// チュートリアルを表示する
+// チュートリアルの説明画面を表示
 //=============================================================================
 void TutorialViewer::ShowTutorial(HelpTextureType Type)
 {
+	// ガイド役の画面を非表示
 	GuideViewer::Instance()->SetActive(false);
-	isPlaying = true;
-	TextureNum = Type;
 
+	// 初期化
+	isPlaying = true;
+	IsShowTexture = true;
+	TextureNum = Type;
+	BackGround->SetVisible(true);
+	HelpTexture.at(TextureNum)->SetVisible(true);
+	MessageFrame->SetVisible(true);
+	DescriptionText->SetActive(true);
+	ExitText->SetActive(false);
+
+	// 画像のフェイドイン
 	HelpTexture.at(TextureNum)->SetAlpha(0.0f);
 	HelpTexture.at(TextureNum)->Fade(15.0f, 1.0f);
+
+	// 説明テキストの設置
+	switch (Type)
+	{
+	case TutorialViewer::LinkRoad:
+		DescriptionText->SetText("ここは道を作る操作説明第1行です。\nここは道を作る操作説明第2行です。\nここは道を作る操作説明第3行です。");
+		break;
+	case TutorialViewer::Develop:
+		DescriptionText->SetText("ここは開拓する操作説明第1行です。\nここは開拓する操作説明第2行です。\nここは開拓する操作説明第3行です。");
+		break;
+	case TutorialViewer::ChangeCamera:
+		DescriptionText->SetText("ここはカメラ操作説明第1行です。\nここはカメラ操作説明第2行です。\nここはカメラ操作説明第3行です。");
+		break;
+	case TutorialViewer::EventHappend:
+		DescriptionText->SetText("ここはイベント説明第1行です。\nここはイベント説明第2行です。\nここはイベント説明第3行です。");
+		ExitText->SetText("道でイベントマスを被る");
+		break;
+	case TutorialViewer::HighScore:
+		DescriptionText->SetText("ここは高得点説明第1行です。\nここは高得点説明第2行です。\nここは高得点説明第3行です。");
+		ExitText->SetText("チュートリアル終了：Enter Key");
+		break;
+	default:
+		break;
+	}
+}
+
+//=============================================================================
+// ヘルプテキストを表示
+//=============================================================================
+void TutorialViewer::SetHelpMessage(void)
+{
+	isPlaying = true;
+	BackGround->SetVisible(false);
+	HelpTexture.at(TextureNum)->SetVisible(false);
+	MessageFrame->SetVisible(false);
+	DescriptionText->SetActive(false);
+	ExitText->SetActive(true);
 }

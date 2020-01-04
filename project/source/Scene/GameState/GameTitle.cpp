@@ -23,6 +23,7 @@
 #include "../../../Framework/Input/input.h"
 #include "../../../Framework/Sound/SoundEffect.h"
 #include "../../../Framework/Task/TaskManager.h"
+#include "../../../Framework/Tool/DebugWindow.h"
 
 //=====================================
 // 入場処理
@@ -66,6 +67,13 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 //=====================================
 GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 {
+#if _DEBUG
+	static bool SkipTutorial = false;
+	Debug::Begin("DebugTool");
+	Debug::CheckBox("SkipTutorial", SkipTutorial);
+	Debug::End();
+#endif
+
 	entity.field->UpdateObject();
 
 	if (entity.step == 1)
@@ -98,7 +106,58 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 			TaskManager::Instance()->CreateDelayedTask(30, [&]()
 			{
 				entity.titleViewer->SetActive(false);
+#if _DEBUG
+				if (!SkipTutorial)
+				{
+					TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
+					{
+						entity.level = 0;
+						entity.Clear();
+						entity.SetTutorial();
+						entity.field->Load();
 
+						// カメラの焦点をセット
+						entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
+						entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
+
+						// シーンチェンジ
+						TransitionController::Instance()->SetTransition(true, TransitionType::HexaPop, [&]()
+						{
+							entity.gameViewer->SetActive(true);
+
+							// グレードタイトル
+							entity.gameViewer->SetGradeTitle(0, [&]()
+							{
+								GuideViewer::Instance()->SetData("張り切って行きましょう", GuideActor::AnimState::TalkingTypeA, SoundConfig::SEID::GameStart);
+								entity.ChangeState(GameScene::State::Tutorial);
+							});
+						});
+					});
+				}
+				else
+				{
+
+					TaskManager::Instance()->CreateDelayedTask(30, [&]() 
+					{
+						entity.titleViewer->SetActive(false);
+
+						entity.gameViewer->SetActive(true);
+						entity.gameViewer->SetActive(false, GameViewer::ViewerNo::ItemStock);
+						entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Timer);
+						entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Level);
+
+						entity.gameViewer->SetGradeTitle(0, [&]()
+						{
+							entity.gameViewer->SetActive(true, GameViewer::ViewerNo::ItemStock);
+							entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Timer);
+							entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Level);
+
+							GuideViewer::Instance()->SetData("張り切って行きましょう", GuideActor::AnimState::TalkingTypeA, SoundConfig::SEID::GameStart);
+							entity.ChangeState(GameScene::State::Idle);
+						});
+					});
+				}
+#else
 				TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
 				{
 					entity.level = 0;
@@ -116,27 +175,14 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 						entity.gameViewer->SetActive(true);
 
 						// グレードタイトル
-						//entity.gameViewer->SetGradeTitle(0, [&]()
-						//{
+						entity.gameViewer->SetGradeTitle(0, [&]()
+						{
 							GuideViewer::Instance()->SetData("張り切って行きましょう", GuideActor::AnimState::TalkingTypeA, SoundConfig::SEID::GameStart);
 							entity.ChangeState(GameScene::State::Tutorial);
-						//});
+						});
 					});
 				});
-
-				//entity.gameViewer->SetActive(true);
-				////entity.gameViewer->SetActive(false, GameViewer::ViewerNo::ItemStock);
-				////entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Timer);
-				////entity.gameViewer->SetActive(false, GameViewer::ViewerNo::Level);
-
-				//entity.gameViewer->SetGradeTitle(0, [&]()
-				//{
-				//	entity.gameViewer->SetActive(true, GameViewer::ViewerNo::ItemStock);
-				//	entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Timer);
-				//	entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Level);
-
-				//	//entity.ChangeState(GameScene::State::Idle);
-				//});
+#endif
 			});
 		}
 		else if (selected == TitleViewer::MenuID::ViewReward)
