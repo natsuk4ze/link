@@ -348,4 +348,12 @@ namespace Field
 	{
 		param.stockNum = stockNum;
 	}
+
+	/**************************************
+	ŠJ‘ñ‚µ‚½‚©‚Ç‚¤‚©‚ð’²‚×‚é
+	***************************************/
+	bool Field::FieldController::FieldDevelopper::IsDeveloped(void)
+	{
+		return stockNum == InitStock ? false : true;
+	}
 }

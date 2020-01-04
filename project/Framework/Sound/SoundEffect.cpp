@@ -13,6 +13,7 @@
 staticメンバ
 ***************************************/
 std::unordered_map<int, LPDIRECTSOUNDBUFFER8> SE::soundContainer;
+bool SE::MuteFlag = false;
 
 /**************************************
 読み込み処理
@@ -48,6 +49,10 @@ void SE::Play(int tag, float volume)
 {
 	//登録確認
 	if (soundContainer.count(tag) == 0)
+		return;
+
+	//ミュート中
+	if (MuteFlag)
 		return;
 
 	LPDIRECTSOUNDBUFFER8 buffer = soundContainer[tag];
@@ -112,4 +117,12 @@ bool SE::IsPlaying(int tag)
 
 	//ステータス取得
 	return Sound::IsPlaying(soundContainer[tag]);
+}
+
+/**************************************
+サウンドのミュート
+***************************************/
+void SE::Mute(bool Flag)
+{
+	MuteFlag = Flag;
 }

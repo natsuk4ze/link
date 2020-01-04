@@ -42,6 +42,12 @@ namespace Field
 		static const int MaxStock;
 		static const int InitStock;
 
+		// ====================
+		// チュートリアル用
+		// ====================
+		// 開拓したかどうかを調べる
+		bool IsDeveloped(void);
+
 	private:
 		FieldController *entity;
 
