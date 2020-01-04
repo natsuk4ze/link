@@ -175,20 +175,20 @@ void TutorialViewer::ShowTutorial(HelpTextureType Type)
 	switch (Type)
 	{
 	case TutorialViewer::LinkRoad:
-		DescriptionText->SetText("ここは道を作る操作説明第1行です。\nここは道を作る操作説明第2行です。\nここは道を作る操作説明第3行です。");
+		DescriptionText->SetText("ここは道の操作説明第1行です。\nここは道の操作説明第2行です。\nここは道の操作説明第3行です。");
 		break;
 	case TutorialViewer::Develop:
-		DescriptionText->SetText("ここは開拓する操作説明第1行です。\nここは開拓する操作説明第2行です。\nここは開拓する操作説明第3行です。");
+		DescriptionText->SetText("ここは開拓の操作説明第1行です。\nここは開拓の操作説明第2行です。\nここは開拓の操作説明第3行です。");
 		break;
 	case TutorialViewer::ChangeCamera:
-		DescriptionText->SetText("ここはカメラ操作説明第1行です。\nここはカメラ操作説明第2行です。\nここはカメラ操作説明第3行です。");
+		DescriptionText->SetText("ここはカメラの操作説明第1行です。\nここはカメラの操作説明第2行です。\nここはカメラの操作説明第3行です。");
 		break;
 	case TutorialViewer::EventHappend:
-		DescriptionText->SetText("ここはイベント説明第1行です。\nここはイベント説明第2行です。\nここはイベント説明第3行です。");
-		ExitText->SetText("道でイベントマスを被る");
+		DescriptionText->SetText("ここはイベントの説明第1行です。\nここはイベントの説明第2行です。\nここはイベントの説明第3行です。");
+		ExitText->SetText("道でイベントマスを覆う");
 		break;
 	case TutorialViewer::HighScore:
-		DescriptionText->SetText("ここは高得点説明第1行です。\nここは高得点説明第2行です。\nここは高得点説明第3行です。");
+		DescriptionText->SetText("ここは高得点の説明第1行です。\nここは高得点の説明第2行です。\nここは高得点の説明第3行です。");
 		ExitText->SetText("チュートリアル終了：Enter Key");
 		break;
 	default:
