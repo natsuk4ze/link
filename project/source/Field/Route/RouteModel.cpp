@@ -232,22 +232,21 @@ namespace Field::Model
 			//経路を保存
 			root->AddLinkedTown(town);
 		}
-		else
+
+		//隣接しているルートに対して再帰的に探索
+		for (auto&& adjacency : this->adjacentRoute)
 		{
-			//隣接しているルートに対して再帰的に探索
-			for (auto&& adjacency : this->adjacentRoute)
-			{
-				RouteModelPtr ptr = adjacency.route.lock();
+			RouteModelPtr ptr = adjacency.route.lock();
 
-				if (!ptr)
-					continue;
+			if (!ptr)
+				continue;
 
-				if (Utility::IsContain(searchedRoute, ptr->uniqueID))
-					continue;
+			if (Utility::IsContain(searchedRoute, ptr->uniqueID))
+				continue;
 
-				cntTown += ptr->FindLinkedTown(root, searchedRoute);
-			}
+			cntTown += ptr->FindLinkedTown(root, searchedRoute);
 		}
+
 
 		return cntTown;
 	}
