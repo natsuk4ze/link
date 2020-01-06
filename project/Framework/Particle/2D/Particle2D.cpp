@@ -44,6 +44,15 @@ Particle2D::Particle2D(float u, float v, int minLife, int maxLife) :
 }
 
 /**************************************
+コンストラクタ
+***************************************/
+Particle2D::Particle2D(const Particle2D & rhs) :
+	BaseParticle(rhs),
+	GameObject(false)
+{
+}
+
+/**************************************
 デストラクタ
 ***************************************/
 Particle2D::~Particle2D()

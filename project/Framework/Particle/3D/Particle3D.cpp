@@ -42,6 +42,15 @@ Particle3D::Particle3D(float u, float v, int minLife, int maxLife) :
 }
 
 /**************************************
+コンストラクタ
+***************************************/
+Particle3D::Particle3D(const Particle3D & rhs) :
+	BaseParticle(rhs),
+	BillboardObject(false)
+{
+}
+
+/**************************************
 デストラクタ
 ***************************************/
 Particle3D::~Particle3D()
