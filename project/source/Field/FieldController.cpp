@@ -190,6 +190,17 @@ namespace Field
 		bool isSea = placeActController->IsOnSea(cursor->GetModelPosition());
 		cursor->Draw(isSea);
 		operateContainer->Draw();
+
+#ifdef _DEBUG
+		//ルートのデバッグ情報表示
+		Debug::Begin("Debug Field");
+		for (auto&& route : routeContainer)
+		{
+			route->ViewDebug();
+			Debug::NewLine();
+		}
+		Debug::End();
+#endif
 	}
 
 	/**************************************
