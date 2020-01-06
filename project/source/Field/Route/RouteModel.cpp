@@ -10,6 +10,7 @@
 #include "../../../Library/cppLinq/cpplinq.hpp"
 #include "../../../Framework/Pattern/Delegate.h"
 #include "../Place/FieldTownModel.h"
+#include "../../../Framework/Tool/DebugWindow.h"
 
 #include <algorithm>
 
@@ -93,6 +94,29 @@ namespace Field::Model
 			return adjacaency.route.expired();
 		});
 		adjacentRoute.erase(itr, adjacentRoute.end());
+	}
+
+	/**************************************
+	デバッグ情報表示
+	***************************************/
+	void RouteModel::ViewDebug() const
+	{
+		Debug::Text("route id : %d", uniqueID);
+
+		FieldPosition startPos = edgeStart->GetPosition();
+		FieldPosition endPos = edgeEnd->GetPosition();
+		Debug::Text("start : %d, %d / end : %d, %d", startPos.x, startPos.z, endPos.x, endPos.z);
+
+		Debug::Text("cntPlace : %d", route.size());
+
+		Debug::Text("cntAdjacent : %d", adjacentRoute.size());
+		for (auto&& adjacent : adjacentRoute)
+		{
+			auto ptr = adjacent.route.lock();
+			Debug::Text("%d, ", ptr->uniqueID);
+			Debug::SameLine();
+		}
+		Debug::NewLine();
 	}
 
 	/**************************************
