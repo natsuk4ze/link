@@ -37,11 +37,23 @@ public:
 
 	virtual void UseCulling(bool value);
 
+	template<class T>
+	void CreateParticleContainer(unsigned sizeContainer, const T& proto)
+	{
+		particleContainer.resize(sizeContainer, nullptr);
+		for (auto&& particle : particleContainer)
+		{
+			particle = new T(proto);
+		}
+	}
+
 protected:
 	int cntFrame;
 	int duration;
 	int emitNum;
 	bool useCull;
+
+	std::vector<BaseParticle*> particleContainer;
 
 	std::function<void(void)> callback;
 };
