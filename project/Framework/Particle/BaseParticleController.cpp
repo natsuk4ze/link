@@ -107,24 +107,22 @@ bool BaseParticleController::Draw()
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//各パーティクルのパラメータを頂点バッファにセット
-	particleCount = renderer->EmbedUV(particleContainer);
-
-	if (particleCount == 0)
-		return false;
-
-	particleCount = renderer->EmbedTransform(particleContainer);
-
 	//ストリームソース設定
 	pDevice->SetStreamSource(0, unitBuff, 0, sizeof(ParticleUnit));
-	pDevice->SetStreamSourceFreq(0, D3DSTREAMSOURCE_INDEXEDDATA | particleCount);
 
 	//テクスチャ設定
 	pDevice->SetTexture(0, texture);
 
 	//描画
 	renderer->BeginPass(useType);
-	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, NUM_VERTEX, 0, NUM_POLYGON);
+
+	//エミッタにレンダラーを渡して必要な情報をプッシュさせる
+	//描画可能な最大数に到達したら自動で描画される
+	
+
+	//残っているものを描画してしまう
+	renderer->Draw();
+
 	renderer->EndPass();
 
 	return true;
