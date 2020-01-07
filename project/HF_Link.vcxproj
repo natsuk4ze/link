@@ -233,6 +233,7 @@
     <ClInclude Include="source\Field\Object\FieldSkyBox.h" />
     <ClInclude Include="source\Field\Object\SpaceBackGroundContainer.h" />
     <ClInclude Include="source\Field\Object\SpaceGrid.h" />
+    <ClInclude Include="source\Field\Object\TutorialBackGroundContainer.h" />
     <ClInclude Include="source\Field\Object\WaterHeightController.h" />
     <ClInclude Include="source\Field\Object\WorldBackGroundContainer.h" />
     <ClInclude Include="source\Field\PlaceActorController.h" />
@@ -271,6 +272,7 @@
     <ClInclude Include="source\Scene\GameState\GameTitle.h" />
     <ClInclude Include="source\Scene\GameState\GameTransitionOut.h" />
     <ClInclude Include="source\Scene\GameState\GameTransitionIn.h" />
+    <ClInclude Include="source\Scene\GameState\GameTutorial.h" />
     <ClInclude Include="source\Scene\ModelViewScene.h" />
     <ClInclude Include="source\Scene\MophingTestScene.h" />
     <ClInclude Include="source\Scene\ParticleTestScene.h" />
@@ -335,6 +337,7 @@
     <ClInclude Include="source\Viewer\TitleScene\SelectViewer.h" />
     <ClInclude Include="source\Viewer\TitleScene\TitleLogo.h" />
     <ClInclude Include="source\Viewer\TitleScene\TitleViewer.h" />
+    <ClInclude Include="source\Viewer\TutorialScene\TutorialViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Animation\AnimationManager.cpp" />
@@ -534,6 +537,7 @@
     <ClCompile Include="source\Field\Object\FieldSkyBox.cpp" />
     <ClCompile Include="source\Field\Object\SpaceBackGroundContainer.cpp" />
     <ClCompile Include="source\Field\Object\SpaceGrid.cpp" />
+    <ClCompile Include="source\Field\Object\TutorialBackGroundContainer.cpp" />
     <ClCompile Include="source\Field\Object\WaterHeightController.cpp" />
     <ClCompile Include="source\Field\Object\WorldBackGroundContainer.cpp" />
     <ClCompile Include="source\Field\PlaceActorController.cpp" />
@@ -569,6 +573,7 @@
     <ClCompile Include="source\Scene\GameState\GameTitle.cpp" />
     <ClCompile Include="source\Scene\GameState\GameTransitionOut.cpp" />
     <ClCompile Include="source\Scene\GameState\GameTransitionIn.cpp" />
+    <ClCompile Include="source\Scene\GameState\GameTutorial.cpp" />
     <ClCompile Include="source\Scene\ModelViewScene.cpp" />
     <ClCompile Include="source\Scene\MophingTestScene.cpp" />
     <ClCompile Include="source\Scene\ParticleTestScene.cpp" />
@@ -630,6 +635,7 @@
     <ClCompile Include="source\Viewer\TitleScene\SelectViewer.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\TitleLogo.cpp" />
     <ClCompile Include="source\Viewer\TitleScene\TitleViewer.cpp" />
+    <ClCompile Include="source\Viewer\TutorialScene\TutorialViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />

@@ -64,6 +64,9 @@ namespace Field::Model
 		//更新処理
 		void Update();
 
+		//情報表示
+		void ViewDebug() const;
+
 		//ルートとなる道を追加
 		void AddRoad(PlaceModel* place);
 

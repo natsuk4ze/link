@@ -43,6 +43,7 @@ class GuideViewer;
 class ResultViewer;
 class NameEntryViewer;
 class TitleViewer;
+class TutorialViewer;
 class RewardNotifier;
 class PresenDebugController;
 
@@ -70,6 +71,7 @@ public:
 		Pause,
 		FarView,
 		Title,
+		Tutorial,
 		Result,
 		TransitionOut,
 		TransitionIn,
@@ -96,11 +98,12 @@ private:
 	EventController *eventController;			//イベントコントローラー
 	GameParticleManager *particleManager;		//パーティクルマネージャ
 	SceneParticleManager *levelParticleManager;	//レベル個別のパーティクルマネージャ
-	FieldEventHandler* eventHandler;			//イベントハンドラ
+	FieldEventHandler *eventHandler;			//イベントハンドラ
 	UDPClient *Client;							//クライアント
-	ResultViewer*resultViewer;					//リザルトビュアー
+	ResultViewer *resultViewer;					//リザルトビュアー
 	NameEntryViewer *nameEntryViewer;			//名前登録ビュアー
-	TitleViewer* titleViewer;					// タイトルビュアー
+	TitleViewer *titleViewer;					// タイトルビュアー
+	TutorialViewer *tutorialViewer;				// チュートリアルビュアー
 	RewardNotifier* rewardNotifier;				// リワードビュアー
 
 	int remainTime;								//制限時間
@@ -111,6 +114,8 @@ private:
 
 	unsigned long long entiretyScore;			//全レベルの合計スコア
 	bool ShowNameEntry;							//ネームエントリービューア表示のフラグ
+	bool InTutorial;							//チュートリアルかどうか
+
 
 	bool debugReward;							//実績リザルト画面でデバッグを使用するか
 	bool debugAchievedResult[10];				//デバッグ用の達成実績
@@ -136,6 +141,9 @@ private:
 	//フィールドレベル設定処理
 	void SetFieldLevel(int level);
 
+	//チュートリアル設定処理
+	void SetTutorial(void);
+
 	//クリア処理
 	void Clear();
 
@@ -152,6 +160,7 @@ private:
 	class GameFarView;
 	class GameWaitPopup;
 	class GameTitle;
+	class GameTutorial;
 	class GameResult;
 	class GameTransitionOut;
 	class GameTransitionIn;

@@ -22,6 +22,7 @@
 #include "Object/CityBackGroundContainer.h"
 #include "Object/WorldBackGroundContainer.h"
 #include "Object/SpaceBackGroundContainer.h"
+#include "Object/TutorialBackGroundContainer.h"
 
 #include "../FieldObject/Actor/CityActor.h"
 #include "../FieldObject/Actor/CrossJunctionActor.h"
@@ -57,7 +58,7 @@ namespace Field::Actor
 	/**************************************
 	コンストラクタ
 	***************************************/
-	PlaceActorController::PlaceActorController(Field::FieldLevel level) :
+	PlaceActorController::PlaceActorController(Field::FieldLevel level, bool TutorialBackGround) :
 		currentLevel(level),
 		bonusSideWay(0.0f)
 	{
@@ -74,7 +75,7 @@ namespace Field::Actor
 		end = ProfilerCPU::GetCounter();
 
 		Debug::Log("Create AStarController : %f", ProfilerCPU::CalcElapsed(start, end));
-		
+
 		start = ProfilerCPU::GetCounter();
 		passengerController = new PassengerController(currentLevel);
 		end = ProfilerCPU::GetCounter();
@@ -82,23 +83,30 @@ namespace Field::Actor
 		Debug::Log("Create PassengerController : %f", ProfilerCPU::CalcElapsed(start, end));
 
 		start = ProfilerCPU::GetCounter();
-		switch (level)
+		if (!TutorialBackGround)
 		{
-		case FieldLevel::City:
-			bgContainer = new CityBackGroundContainer();
-			break;
+			switch (level)
+			{
+			case FieldLevel::City:
+				bgContainer = new CityBackGroundContainer();
+				break;
 
-		case FieldLevel::World:
-			bgContainer = new WorldBackGroundContainer();
-			break;
+			case FieldLevel::World:
+				bgContainer = new WorldBackGroundContainer();
+				break;
 
-		case FieldLevel::Space:
-			bgContainer = new SpaceBackGroundContainer();
-			break;
+			case FieldLevel::Space:
+				bgContainer = new SpaceBackGroundContainer();
+				break;
 
-		default:
-			bgContainer = new CityBackGroundContainer();
-			break;
+			default:
+				bgContainer = new CityBackGroundContainer();
+				break;
+			}
+		}
+		else
+		{
+			bgContainer = new TutorialBackGroundContainer();
 		}
 		end = ProfilerCPU::GetCounter();
 
@@ -140,7 +148,7 @@ namespace Field::Actor
 		passengerController->Update();
 
 		WaterHeightController::UpdateHeight();
-	
+
 		bgContainer->Update();
 
 		for (auto&& actor : actorContainer)
@@ -413,7 +421,7 @@ namespace Field::Actor
 		D3DXVECTOR3 actorPos = townActor->GetPosition();
 		Tween::Move(*townActor, actorPos + InitOffset, actorPos, 60, EaseType::InOutCirc, [=]()
 		{
-			for(int i = 0; i < 5; i++)
+			for (int i = 0; i < 5; i++)
 				GameParticleManager::Instance()->Generate(GameParticle::WhiteSmog, actorPos);
 		});
 
@@ -442,7 +450,7 @@ namespace Field::Actor
 				actorContainer[placeID]->OnSea(false);
 			}
 		}
-		
+
 	}
 
 	/**************************************
@@ -620,7 +628,7 @@ namespace Field::Actor
 			actor->Rotate(rotAngle);
 
 			AddContainer(place->ID(), actor);
-			
+
 			alongController->OnBuildRoad(actor->GetTransform(), Along::AlongController::RoadType::T_Junction, onWater);
 
 			// 生成アニメーション

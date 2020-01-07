@@ -15,6 +15,7 @@ namespace Field
 		"data/FIELD/City/City_Field.csv",
 		"data/FIELD/World/World_Field.csv",
 		"data/FIELD/Space/Space_Field.csv",
+		"data/FIELD/Tutorial/Tutorial_Field.csv",
 	};
 
 	/**************************************

@@ -34,7 +34,10 @@ GameScene::State GameScene::GameFarView::OnUpdate(GameScene & entity)
 	entity.eventController->Update();
 
 	//制限時間カウント
-	entity.remainTime = Math::Max(0, --entity.remainTime);
+	if (!entity.InTutorial)
+	{
+		entity.remainTime = Math::Max(0, --entity.remainTime);
+	}
 
 	//残り時間が0になったら終了
 	if (entity.remainTime == 0)
@@ -45,7 +48,7 @@ GameScene::State GameScene::GameFarView::OnUpdate(GameScene & entity)
 		entity.ChangeState(State::Finish);
 	}
 	//AI発展レベルが最大に到達していたらレベルアップ
-	else if (entity.field->ShouldLevelUp() && entity.eventController->IsEmptyEventVec())
+	else if (entity.field->ShouldLevelUp() && entity.eventController->IsEmptyEventVec() && !entity.InTutorial)
 	{
 		if (level < 2)
 		{
@@ -56,7 +59,14 @@ GameScene::State GameScene::GameFarView::OnUpdate(GameScene & entity)
 	else if (entity.field->ShouldSwicthCamera())
 	{
 		entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
-		entity.ChangeState(State::Idle);
+		if (!entity.InTutorial)
+		{
+			entity.ChangeState(State::Idle);
+		}
+		else
+		{
+			entity.ChangeState(State::Tutorial);
+		}
 	}
 
 	return State::FarView;

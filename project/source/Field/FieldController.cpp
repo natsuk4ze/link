@@ -190,6 +190,17 @@ namespace Field
 		bool isSea = placeActController->IsOnSea(cursor->GetModelPosition());
 		cursor->Draw(isSea);
 		operateContainer->Draw();
+
+#ifdef _DEBUG
+		//ルートのデバッグ情報表示
+		Debug::Begin("Debug Field");
+		for (auto&& route : routeContainer)
+		{
+			route->ViewDebug();
+			Debug::NewLine();
+		}
+		Debug::End();
+#endif
 	}
 
 	/**************************************
@@ -228,9 +239,7 @@ namespace Field
 
 		Debug::Log("Create Skybox : %f", ProfilerCPU::CalcElapsed(start, end));
 
-
-		placeActController = new Field::Actor::PlaceActorController(level);
-
+		placeActController = new Field::Actor::PlaceActorController(level, false);
 
 		start = ProfilerCPU::GetCounter();
 		infoController = new InfoController(level);
@@ -255,6 +264,64 @@ namespace Field
 			// リザルト画面用のパラメータをリセットする
 			ResultPara.Clear();
 		}
+	}
+
+	/**************************************
+	チュートリアル用フィールドを設置する
+	***************************************/
+	void FieldController::SetTutorialField(void)
+	{
+		currentLevel = FieldLevel::City;
+
+		//フィールドレベルが関係するインスタンスを作成
+		skybox = new FieldSkyBox(FieldLevel::City);
+
+		placeActController = new Field::Actor::PlaceActorController(FieldLevel::City, true);
+
+		infoController = new InfoController(FieldLevel::City);
+
+		auto onDepartPassenger = std::bind(&Actor::PlaceActorController::DepartPassenger, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+		placeContainer->SetDepartPassengerFanctor(onDepartPassenger);
+
+		auto onStartMorph = std::bind(&Actor::PlaceActorController::OnStartMorphing, placeActController, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+		placeContainer->SetMorphingFantor(onStartMorph);
+
+		onChangePlaceType = std::bind(&Actor::PlaceActorController::ChangeActor, placeActController, std::placeholders::_1);
+
+		routeProcessor = new Model::RouteProcessor(onChangePlaceType);
+
+		// 町レベルに遷移する時に、ストック数をリセットする（ライ）
+		developper->ResetStock();
+		// リザルト画面用のパラメータをリセットする
+		ResultPara.Clear();
+
+		//アクターのデータ読み込み
+		placeActController->Load();
+
+		// チュートリアルのマップデータは3番
+		placeContainer->LoadCSV(Const::FieldDataFile[3]);
+
+		//アクター生成
+		auto places = placeContainer->GetAllPlaces();
+		for (auto&& place : places)
+		{
+			placeActController->SetActor(place);
+		}
+
+		//カーソルのフィールドの中央へ設定
+		FieldPosition border = placeContainer->GetPlaceBorder();
+		cursor->SetModelPosition(border.x / 2, border.z / 2);
+
+		//NOTE:今はまだ移動範囲の拡大処理が無いのでここで移動範囲を決定してしまう
+		cursor->SetBorder(border.z - 1, border.x - 1, 0, 0);
+	}
+
+	/**************************************
+	開拓したかどうかを調べる
+	***************************************/
+	bool FieldController::IsDeveloped(void)
+	{
+		return developper->IsDeveloped();
 	}
 
 	/**************************************

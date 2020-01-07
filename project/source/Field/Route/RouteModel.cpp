@@ -10,6 +10,7 @@
 #include "../../../Library/cppLinq/cpplinq.hpp"
 #include "../../../Framework/Pattern/Delegate.h"
 #include "../Place/FieldTownModel.h"
+#include "../../../Framework/Tool/DebugWindow.h"
 
 #include <algorithm>
 
@@ -93,6 +94,29 @@ namespace Field::Model
 			return adjacaency.route.expired();
 		});
 		adjacentRoute.erase(itr, adjacentRoute.end());
+	}
+
+	/**************************************
+	デバッグ情報表示
+	***************************************/
+	void RouteModel::ViewDebug() const
+	{
+		Debug::Text("route id : %d", uniqueID);
+
+		FieldPosition startPos = edgeStart->GetPosition();
+		FieldPosition endPos = edgeEnd->GetPosition();
+		Debug::Text("start : %d, %d / end : %d, %d", startPos.x, startPos.z, endPos.x, endPos.z);
+
+		Debug::Text("cntPlace : %d", route.size());
+
+		Debug::Text("cntAdjacent : %d", adjacentRoute.size());
+		for (auto&& adjacent : adjacentRoute)
+		{
+			auto ptr = adjacent.route.lock();
+			Debug::Text("%d, ", ptr->uniqueID);
+			Debug::SameLine();
+		}
+		Debug::NewLine();
 	}
 
 	/**************************************
@@ -232,22 +256,21 @@ namespace Field::Model
 			//経路を保存
 			root->AddLinkedTown(town);
 		}
-		else
+
+		//隣接しているルートに対して再帰的に探索
+		for (auto&& adjacency : this->adjacentRoute)
 		{
-			//隣接しているルートに対して再帰的に探索
-			for (auto&& adjacency : this->adjacentRoute)
-			{
-				RouteModelPtr ptr = adjacency.route.lock();
+			RouteModelPtr ptr = adjacency.route.lock();
 
-				if (!ptr)
-					continue;
+			if (!ptr)
+				continue;
 
-				if (Utility::IsContain(searchedRoute, ptr->uniqueID))
-					continue;
+			if (Utility::IsContain(searchedRoute, ptr->uniqueID))
+				continue;
 
-				cntTown += ptr->FindLinkedTown(root, searchedRoute);
-			}
+			cntTown += ptr->FindLinkedTown(root, searchedRoute);
 		}
+
 
 		return cntTown;
 	}
