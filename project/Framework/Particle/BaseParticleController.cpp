@@ -48,8 +48,6 @@ BaseParticleController::~BaseParticleController()
 	SAFE_RELEASE(texture);
 	SAFE_RELEASE(unitBuff);
 
-	Utility::DeleteContainer(particleContainer);
-
 	Utility::DeleteContainer(emitterContainer);
 
 	renderer.reset();
@@ -60,11 +58,6 @@ BaseParticleController::~BaseParticleController()
 ***************************************/
 void BaseParticleController::Uninit()
 {
-	for (auto& particle : particleContainer)
-	{
-		particle->SetActive(false);
-	}
-
 	for (auto& emitter : emitterContainer)
 	{
 		emitter->SetActive(false);
@@ -80,23 +73,6 @@ void BaseParticleController::Update()
 	for (BaseEmitter *emitter : emitterContainer)
 	{
 		emitter->Update();
-	}
-
-	//全エミッタに対して放出処理
-	for (BaseEmitter* emitter : emitterContainer)
-	{
-		//放出処理
-		bool res = emitter->Emit(particleContainer);
-
-		//放出できるパーティクルが残っていなければbreak
-		if (!res)
-			break;		
-	}
-
-	//パーティクル更新
-	for (BaseParticle *particle : particleContainer)
-	{
-		particle->Update();
 	}
 }
 
@@ -118,7 +94,10 @@ bool BaseParticleController::Draw()
 
 	//エミッタにレンダラーを渡して必要な情報をプッシュさせる
 	//描画可能な最大数に到達したら自動で描画される
-	
+	for (auto&& emitter : emitterContainer)
+	{
+		emitter->PushRenderParameter(renderer);
+	}
 
 	//残っているものを描画してしまう
 	renderer->Draw();

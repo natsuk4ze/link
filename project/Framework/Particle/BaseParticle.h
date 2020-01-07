@@ -68,7 +68,7 @@ public:
 
 	virtual D3DXMATRIX GetWorldMtx() = 0;
 
-	ParticleUV uv;
+	virtual ParticleUV GetUV() const;
 
 protected:
 	int cntFrame;
@@ -77,6 +77,8 @@ protected:
 	int maxLife, minLife;
 
 	bool _IsActive() const;
+
+	ParticleUV uv;
 };
 
 #endif

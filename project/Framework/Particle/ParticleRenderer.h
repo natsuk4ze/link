@@ -36,8 +36,6 @@ public:
 	void BeginPass(DWORD pass);
 	void EndPass();
 
-	//UINT EmbedTransform(const std::vector<BaseParticle*> container);
-	//UINT EmbedUV(const std::vector<BaseParticle*> container);
 	void PushParticleParameter(const D3DXMATRIX& mtxWorld, const ParticleUV& uv);
 
 	void Draw();

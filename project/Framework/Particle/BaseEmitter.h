@@ -17,6 +17,7 @@
 BaseEmitterƒNƒ‰ƒX
 ***************************************/
 class BaseParticle;
+class ParticleRenderer;
 
 class BaseEmitter : public GameObject
 {
@@ -31,19 +32,21 @@ public:
 
 	virtual void Init(std::function<void(void)>& callback);
 	virtual void Update();
-	virtual bool Emit(std::vector<BaseParticle*>& container);
+	virtual bool Emit();
 
 	virtual bool IsActive() const override;
 
 	virtual void UseCulling(bool value);
 
+	void PushRenderParameter(std::shared_ptr<ParticleRenderer> renderer);
+
 	template<class T>
-	void CreateParticleContainer(unsigned sizeContainer, const T& proto)
+	void CreateParticleContainer(unsigned sizeContainer)
 	{
 		particleContainer.resize(sizeContainer, nullptr);
 		for (auto&& particle : particleContainer)
 		{
-			particle = new T(proto);
+			particle = new T();
 		}
 	}
 

@@ -77,6 +77,14 @@ BaseParticle::~BaseParticle()
 }
 
 /**************************************
+UV座標取得
+***************************************/
+ParticleUV BaseParticle::GetUV() const
+{
+	return uv;
+}
+
+/**************************************
 アクティブ判定
 ***************************************/
 bool BaseParticle::_IsActive() const

@@ -6,6 +6,8 @@
 //=====================================
 #include "BaseEmitter.h"
 #include "BaseParticle.h"
+#include "ParticleRenderer.h"
+
 #include "../Camera/Camera.h"
 
 /**************************************
@@ -85,7 +87,7 @@ BaseEmitter::BaseEmitter(int emitNumMin, int emitNumMax, int durationMin, int du
 ***************************************/
 BaseEmitter::~BaseEmitter()
 {
-
+	Utility::DeleteContainer(particleContainer);
 }
 
 /**************************************
@@ -95,7 +97,13 @@ void BaseEmitter::Init(std::function<void(void)>& callback)
 {
 	cntFrame = 0;
 	active = true;
+
 	this->callback = callback;
+
+	for (auto&& particle : particleContainer)
+	{
+		particle->SetActive(false);
+	}
 }
 
 /**************************************
@@ -108,7 +116,20 @@ void BaseEmitter::Update()
 
 	cntFrame++;
 
-	if (cntFrame == duration && callback != nullptr)
+	Emit();
+
+	bool isFinished = true;
+	for (auto&& particle : particleContainer)
+	{
+		if (!particle->IsActive())
+			continue;
+
+		isFinished = false;
+
+		particle->Update();
+	}
+
+	if (cntFrame == duration && isFinished && callback != nullptr)
 	{
 		callback();
 	}
@@ -117,7 +138,7 @@ void BaseEmitter::Update()
 /**************************************
 放出処理
 ***************************************/
-bool BaseEmitter::Emit(std::vector<BaseParticle*>& container)
+bool BaseEmitter::Emit()
 {
 	if (!IsActive())
 		return true;
@@ -131,7 +152,7 @@ bool BaseEmitter::Emit(std::vector<BaseParticle*>& container)
 	}
 
 	UINT cntEmit = 0;
-	for (auto& particle : container)
+	for (auto& particle : particleContainer)
 	{
 		if (particle->IsActive())
 			continue;
@@ -171,4 +192,21 @@ bool BaseEmitter::IsActive() const
 void BaseEmitter::UseCulling(bool value)
 {
 	useCull = value;
+}
+
+/**************************************
+描画情報をパーティクルレンダラーにわたす
+***************************************/
+void BaseEmitter::PushRenderParameter(std::shared_ptr<ParticleRenderer> renderer)
+{
+	for (auto&& particle : particleContainer)
+	{
+		if (!particle->IsActive())
+			continue;
+
+		D3DXMATRIX mtxWorld = particle->GetWorldMtx();
+		ParticleUV uv = particle->GetUV();
+
+		renderer->PushParticleParameter(mtxWorld, uv);
+	}
 }
