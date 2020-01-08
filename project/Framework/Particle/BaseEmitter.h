@@ -30,15 +30,18 @@ public:
 
 	virtual ~BaseEmitter();
 
-	virtual void Init(std::function<void(void)>& callback);
+	virtual void Init(const std::function<void(void)>& callback);
 	virtual void Update();
 	virtual bool Emit();
 
-	virtual bool IsActive() const override;
+	//virtual bool IsActive() const override;
 
 	virtual void UseCulling(bool value);
 
 	void PushRenderParameter(std::shared_ptr<ParticleRenderer> renderer);
+
+	virtual void Stop();
+	virtual void Loop(bool state);
 
 	template<class T>
 	void CreateParticleContainer(unsigned sizeContainer)
@@ -54,7 +57,11 @@ protected:
 	int cntFrame;
 	int duration;
 	int emitNum;
+
 	bool useCull;
+	bool isFinished;
+	bool enableEmit;
+	bool flgLoop;
 
 	std::vector<BaseParticle*> particleContainer;
 
