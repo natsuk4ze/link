@@ -23,16 +23,9 @@ namespace Effect::Game
 		const char* path = "data/TEXTURE/Particle/blueSpark.png";
 		LoadTexture(path);
 
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 256;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new BlueSpark();
-		}
-
 		//エミッターコンテナ作成
-		const unsigned MaxEmitter = 4;
+		const unsigned MaxParticle = 256;
+		const unsigned MaxEmitter = 1;
 		const int NumEmit = 22;
 		const int DurationEmit = (int)(30 * 2.0f);
 
@@ -40,6 +33,7 @@ namespace Effect::Game
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(NumEmit, DurationEmit);
+			emitter->CreateParticleContainer<BlueSpark>(MaxParticle);
 		}
 	}
 

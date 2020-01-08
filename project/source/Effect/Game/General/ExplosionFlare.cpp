@@ -24,13 +24,8 @@ namespace Effect::Game
 		const char* Path = "data/TEXTURE/Particle/ExplosionFlare.png";
 		LoadTexture(Path);
 
-		//パーティクルコンテナ作成
+		//1つのエミッタが持つパーティクル最大数
 		const unsigned MaxParticle = 128;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new ExplosionFlare();
-		}
 
 		//エミッターコンテナ作成処理
 		// 1つのコントローラーが同時に生成できるエフェクトの数
@@ -43,6 +38,7 @@ namespace Effect::Game
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(NumEmit, DurationEmit);
+			emitter->CreateParticleContainer<ExplosionFlare>(MaxParticle);
 		}
 	}
 

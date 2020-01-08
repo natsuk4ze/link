@@ -53,7 +53,6 @@ namespace Effect::Game
 	public:
 		BlackholeEmitter();
 
-		bool Emit(std::vector<BaseParticle*>& container) override;
 		bool IsActive() const override;
 	};
 }

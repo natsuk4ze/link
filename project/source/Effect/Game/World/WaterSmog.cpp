@@ -31,15 +31,8 @@ namespace Effect::Game
 		const char* Path = "data/TEXTURE/Particle/WaterSmog.png";
 		LoadTexture(Path);
 
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 512;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new WaterSmog();
-		}
-
 		//エミッターコンテナ作成処理
+		const unsigned MaxParticle = 512;
 		const unsigned MaxEmitter = 1;
 		const int NumEmit = 8;
 		const int DurationEmit = 60;
@@ -47,6 +40,7 @@ namespace Effect::Game
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(NumEmit, DurationEmit);
+			emitter->CreateParticleContainer<WaterSmog>(MaxParticle);
 		}
 	}
 

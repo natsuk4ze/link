@@ -25,20 +25,14 @@ namespace Effect::Game
 		//テクスチャ読み込み
 		LoadTexture("data/TEXTURE/Particle/auraParticle.png");
 
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 512;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new AuraEffect();
-		}
-
 		//エミッタコンテナ作成
-		const unsigned MaxEmitter = 8;
+		const unsigned MaxEmitter = 1;
+		const unsigned MaxParticle = 256;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(15, 0);
+			emitter->CreateParticleContainer<AuraEffect>(MaxParticle);
 		}
 	}
 

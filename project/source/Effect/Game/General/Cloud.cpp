@@ -34,20 +34,14 @@ namespace Effect::Game
 		//テクスチャ読み込み
 		LoadTexture("data/TEXTURE/Particle/cloud.png");
 
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 1024;
-		particleContainer.resize(MaxParticle);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new Cloud();
-		}
-
 		//エミッタコンテナ作成
-		const unsigned MaxEmitter = 4;
+		const unsigned MaxEmitter = 1;
+		const unsigned MaxParticle = 1024;
 		emitterContainer.resize(MaxEmitter);
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new CloudEmitter();
+			emitter->CreateParticleContainer<Cloud>(MaxParticle);
 		}
 	}
 
@@ -134,13 +128,13 @@ namespace Effect::Game
 	/**************************************
 	CloudEmitter放出処理
 	***************************************/
-	bool CloudEmitter::Emit(std::vector<BaseParticle*>& container)
+	bool CloudEmitter::Emit()
 	{
-		if (!IsActive())
+		if (!enableEmit)
 			return true;
 
 		int cntEmit = 0;
-		for (auto&& particle : container)
+		for (auto&& particle : particleContainer)
 		{
 			if (particle->IsActive())
 				continue;

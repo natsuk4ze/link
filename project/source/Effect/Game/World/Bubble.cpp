@@ -23,15 +23,8 @@ namespace Effect::Game
 		const char* path = "data/TEXTURE/Particle/Bubble.png";
 		LoadTexture(path);
 
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 512;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new Bubble();
-		}
-
 		//エミッターコンテナ作成
+		const unsigned MaxParticle = 512;
 		const unsigned MaxEmitter = 1;
 		const int NumEmit = 64;
 		const int DurationEmit = 90;
@@ -40,6 +33,7 @@ namespace Effect::Game
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(NumEmit, DurationEmit);
+			emitter->CreateParticleContainer<Bubble>(MaxParticle);
 		}
 	}
 

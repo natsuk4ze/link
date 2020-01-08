@@ -27,15 +27,8 @@ namespace Effect::Game
 		const char* Path = "data/TEXTURE/Particle/DarknessDebris.png";
 		LoadTexture(Path);
 
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 256;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto &particle : particleContainer)
-		{
-			particle = new Darkness();
-		}
-
 		//エミッターコンテナ作成処理
+		const unsigned MaxParticle = 256;
 		const unsigned MaxEmitter = 1;
 		const int NumEmit = 8;
 		const int DurationEmit = 90;
@@ -43,6 +36,7 @@ namespace Effect::Game
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(NumEmit, DurationEmit);
+			emitter->CreateParticleContainer<Darkness>(MaxParticle);
 		}
 	}
 

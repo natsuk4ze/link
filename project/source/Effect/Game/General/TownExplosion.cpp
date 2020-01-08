@@ -24,15 +24,8 @@ namespace Effect::Game
 		const char* Path = "data/TEXTURE/Particle/TownExplosion.png";
 		LoadTexture(Path);
 
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 1;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto &particle : particleContainer)
-		{
-			particle = new TownExplosion();
-		}
-
 		//エミッターコンテナ作成処理
+		const unsigned MaxParticle = 1;
 		const unsigned MaxEmitter = 1;
 		const int NumEmit = 1;
 		const int DurationEmit = 1;
@@ -40,6 +33,7 @@ namespace Effect::Game
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(NumEmit);
+			emitter->CreateParticleContainer<TownExplosion>(MaxParticle);
 		}
 	}
 

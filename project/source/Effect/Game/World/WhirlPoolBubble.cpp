@@ -30,20 +30,15 @@ namespace Effect::Game
 		//テクスチャ読み込み
 		LoadTexture("data/TEXTURE/Particle/WhirlPoolBubble.png");
 
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 4096;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new WhirlPoolBubble();
-		}
-
 		//エミッタコンテナ作成
+		const unsigned MaxParticle = 64;
 		const unsigned MaxEmitter = 512;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new WhirlPoolBubbleEmitter();
+			emitter->CreateParticleContainer<WhirlPoolBubble>(MaxParticle);
+			emitter->UseCulling(true);
 		}
 	}
 
@@ -94,49 +89,6 @@ namespace Effect::Game
 	WhirlPoolBubbleEmitter::WhirlPoolBubbleEmitter() :
 		BaseEmitter(3)
 	{
+		flgLoop = true;
 	}
-
-	/**************************************
-	WhirlPoolBubbleEmitter放出処理
-	***************************************/
-	bool WhirlPoolBubbleEmitter::Emit(std::vector<BaseParticle*>& container)
-	{
-		if (!IsActive())
-			return true;
-
-		//描画領域外だったら放出しない
-		D3DXVECTOR3 screenPos = Camera::MainCamera()->Projection(transform->GetPosition());
-		if (screenPos.x < 0.0f || screenPos.x >(float)SCREEN_WIDTH || screenPos.y < 0.0f || screenPos.y >(float)SCREEN_HEIGHT)
-			return true;
-
-		UINT cntEmit = 0;
-		for (auto& particle : container)
-		{
-			if (particle->IsActive())
-				continue;
-
-			//初期化処理
-			particle->SetTransform(*transform);
-			particle->Init();
-
-			//カウント
-			cntEmit++;
-
-			//決められ数だけ放出していたら終了
-			if (cntEmit == emitNum)
-				return true;
-		}
-
-		return false;
-	}
-
-	/**************************************
-	WhirlPoolBubbleEmitterアクティブ判定
-	***************************************/
-	bool WhirlPoolBubbleEmitter::IsActive() const
-	{
-		//一度セットされたら無限に放出し続ける
-		return active;
-	}
-
 }

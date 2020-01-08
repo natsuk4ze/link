@@ -24,15 +24,8 @@ namespace Effect::Game
 		const char* Path = "data/TEXTURE/Particle/levelup.png";
 		LoadTexture(Path);
 
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 256;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new StarDust();
-		}
-
 		//エミッタコンテナ作成
+		const unsigned MaxParticle = 256;
 		const unsigned MaxEmitter = 1;
 		const int DurationEmit = 60;
 		const int NumEmit = 8;
@@ -40,6 +33,7 @@ namespace Effect::Game
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(NumEmit, DurationEmit);
+			emitter->CreateParticleContainer<StarDust>(MaxParticle);
 		}
 	}
 

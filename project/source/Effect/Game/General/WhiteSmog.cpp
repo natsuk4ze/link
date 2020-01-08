@@ -25,15 +25,8 @@ namespace Effect::Game
 		const char* Path = "data/TEXTURE/Particle/smog.png";
 		LoadTexture(Path);
 
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 512;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new WhiteSmog();
-		}
-
 		//エミッターコンテナ作成処理
+		const unsigned MaxParticle = 64;
 		const unsigned MaxEmitter = 64;
 		const int NumEmit = 10;
 		const int DurationEmit = 5;
@@ -41,6 +34,7 @@ namespace Effect::Game
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(NumEmit, DurationEmit);
+			emitter->CreateParticleContainer<WhiteSmog>(MaxParticle);
 		}
 	}
 

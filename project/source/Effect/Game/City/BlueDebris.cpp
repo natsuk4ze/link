@@ -23,16 +23,10 @@ namespace Effect::Game
 		const D3DXVECTOR2 TextureDiv{ (float)BlueDebris::TexDiv, (float)BlueDebris::TexDiv };
 		MakeUnitBuffer(ParticleSize, TextureDiv);
 
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 256;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new BlueDebris();
-		}
 
 		//エミッターコンテナ作成
-		const unsigned MaxEmitter = 4;
+		const unsigned MaxParticle = 256;
+		const unsigned MaxEmitter = 1;
 		const int DurationEmit = (int)(30 * 2.3f);
 		const int NumEmit = 25;
 
@@ -40,6 +34,7 @@ namespace Effect::Game
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(NumEmit, DurationEmit);
+			emitter->CreateParticleContainer<BlueDebris>(MaxParticle);
 		}
 	}
 
@@ -57,6 +52,13 @@ namespace Effect::Game
 	***************************************/
 	BlueDebris::BlueDebris() :
 		Particle3D(MinLife, MaxLife),
+		InitSpeed(Math::RandomRange(MinSpeed, MaxSpeed)),
+		moveDirection(Vector3::Zero)
+	{
+	}
+
+	BlueDebris::BlueDebris(const BlueDebris& rhs) :
+		Particle3D(rhs),
 		InitSpeed(Math::RandomRange(MinSpeed, MaxSpeed)),
 		moveDirection(Vector3::Zero)
 	{

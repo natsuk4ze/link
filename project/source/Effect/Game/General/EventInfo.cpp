@@ -29,22 +29,16 @@ namespace Effect::Game
 		//テクスチャ読み込み
 		const char* TexName = "data/TEXTURE/Particle/eventInfo.png";
 		LoadTexture(TexName);
-
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 1024;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new EventInfoEffect();
-		}
-
+		
 		//エミッタコンテナ作成
-		// イベントマスの最大数
+		//イベントマスの最大数
+		const unsigned MaxParticle = 64;
 		const unsigned MaxEmitter = 128;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new EventInfoEmitter();
+			emitter->CreateParticleContainer<EventInfoEffect>(MaxParticle);
 		}
 	}
 
@@ -108,10 +102,17 @@ namespace Effect::Game
 	/**************************************
 	EventInfoEffectEmitter初期化処理
 	***************************************/
-	void EventInfoEmitter::Init(std::function<void()>& callback)
+	void EventInfoEmitter::Init(const std::function<void()>& callback)
 	{
 		cntFrame = Math::RandomRange(0, PeriodEmit);
 		active = true;
+		isFinished = false;
+		enableEmit = true;
+
+		for (auto&& particle : particleContainer)
+		{
+			particle->SetActive(false);
+		}
 	}
 
 	/**************************************
@@ -119,17 +120,38 @@ namespace Effect::Game
 	***************************************/
 	void EventInfoEmitter::Update()
 	{
+		if (!active)
+			return;
+
 		cntFrame = Math::WrapAround(0, PeriodEmit, ++cntFrame);
+
+		Emit();
+
+		isFinished = true;
+		for (auto&& particle : particleContainer)
+		{
+			if (!particle->IsActive())
+				continue;
+
+			isFinished = false;
+
+			particle->Update();
+		}
+
+		if (cntFrame == duration && isFinished && callback != nullptr)
+		{
+			callback();
+		}
 	}
 
 	/**************************************
 	EventInfoEffectEmitter放出処理
 	***************************************/
-	bool EventInfoEmitter::Emit(std::vector<BaseParticle*>& container)
+	bool EventInfoEmitter::Emit()
 	{
 		if (cntFrame != 0)
 			return true;
 
-		return BaseEmitter::Emit(container);
+		return BaseEmitter::Emit();
 	}
 }

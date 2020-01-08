@@ -23,15 +23,8 @@ namespace Effect::Game
 		const char* path = "data/TEXTURE/Particle/MoveTail.png";
 		LoadTexture(path);
 
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 64;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new MoveTail();
-		}
-
 		//エミッターコンテナ作成
+		const unsigned MaxParticle = 64;
 		const unsigned MaxEmitter = 1;
 		const int NumEmit = 1;
 		const int DurationEmit = 40;
@@ -39,6 +32,7 @@ namespace Effect::Game
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(NumEmit, DurationEmit);
+			emitter->CreateParticleContainer<MoveTail>(MaxParticle);
 		}
 	}
 

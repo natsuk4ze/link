@@ -25,19 +25,13 @@ namespace Effect::Game
 		LoadTexture("data/TEXTURE/Particle/punchEffect.png");
 
 		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 256;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new PunchEffect();
-		}
-
-		//エミッタコンテナ作成
+		const unsigned MaxParticle = 64;
 		const unsigned MaxEmitter = 4;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(15, 0);
+			emitter->CreateParticleContainer<PunchEffect>(MaxParticle);
 		}
 	}
 
