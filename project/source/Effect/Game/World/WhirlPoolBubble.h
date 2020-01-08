@@ -49,9 +49,6 @@ namespace Effect::Game
 	{
 	public:
 		WhirlPoolBubbleEmitter();
-
-		bool Emit(std::vector<BaseParticle*>& container) override;
-		bool IsActive() const override;
 	};
 }
 

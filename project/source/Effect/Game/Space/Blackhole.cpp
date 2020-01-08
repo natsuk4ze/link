@@ -30,20 +30,15 @@ namespace Effect::Game
 		//テクスチャ読み込み
 		LoadTexture("data/TEXTURE/Particle/blackhole.png");
 
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 4096;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new Blackhole();
-		}
-
 		//エミッタコンテナ作成
+		const unsigned MaxParticle = 64;
 		const unsigned MaxEmitter = 512;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BlackholeEmitter();
+			emitter->CreateParticleContainer<Blackhole>(MaxParticle);
+			emitter->UseCulling(true);
 		}
 	}
 
@@ -101,19 +96,7 @@ namespace Effect::Game
 	BlackholeEmitter::BlackholeEmitter() :
 		BaseEmitter(5)
 	{
-	}
-
-	/**************************************
-	BlackholeEmitter放出処理
-	***************************************/
-	bool BlackholeEmitter::Emit(std::vector<BaseParticle*>& container)
-	{
-		//描画領域外だったら放出しない
-		D3DXVECTOR3 screenPos = Camera::MainCamera()->Projection(transform->GetPosition());
-		if (screenPos.x < 0.0f || screenPos.x >(float)SCREEN_WIDTH || screenPos.y < 0.0f || screenPos.y >(float)SCREEN_HEIGHT)
-			return true;
-
-		return BaseEmitter::Emit(container);
+		flgLoop = true;
 	}
 
 	/**************************************

@@ -268,8 +268,9 @@ namespace Field::Model
 			return;
 
 		D3DXVECTOR3 pinPosition = actorContainer[0]->GetPosition();
-		emitter->SetActive(true);
+		emitter->Init(nullptr);
 		emitter->SetPosition(pinPosition);
+		emitter->Loop(true);
 
 		D3DXVECTOR3 nextPosition = actorContainer[1]->GetPosition();
 		Tween::Move(*emitter, nextPosition, DurationMoveEmitter, EaseType::Linear, onReachEmitter);
@@ -292,7 +293,8 @@ namespace Field::Model
 		else
 		{
 			effectPinIndex = 0;
-			emitter->SetActive(false);
+			emitter->Stop();
+			emitter->Loop(false);
 		}
 	}
 

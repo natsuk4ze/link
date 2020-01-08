@@ -24,22 +24,16 @@ namespace Effect::Game
 		const char* Path = "data/TEXTURE/Particle/colorfulDebris.png";
 		LoadTexture(Path);
 
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 2048;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new ColorfulDebris();
-		}
-
 		//エミッタコンテナ作成
-		const unsigned MaxEmitter = 128;
+		const unsigned MaxParticle = 64;
+		const unsigned MaxEmitter = 32;
 		const int DurationEmit = 3;
 		const int NumEmit = 50;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(NumEmit, DurationEmit);
+			emitter->CreateParticleContainer<ColorfulDebris>(MaxParticle);
 		}
 	}
 

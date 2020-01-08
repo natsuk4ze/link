@@ -34,6 +34,7 @@ namespace Effect::Game
 		static const int TexDiv;
 
 		BlueDebris();
+		BlueDebris(const BlueDebris& rhs);
 
 		void Init();
 		void Update();

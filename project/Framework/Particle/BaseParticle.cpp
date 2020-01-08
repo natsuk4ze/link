@@ -22,7 +22,8 @@
 コンストラクタ
 ***************************************/
 BaseParticle::BaseParticle() :
-	uv(ParticleUV())
+	uv(ParticleUV()),
+	lifeFrame(1), maxLife(1), minLife(1)
 {
 
 }
@@ -32,7 +33,7 @@ BaseParticle::BaseParticle() :
 ***************************************/
 BaseParticle::BaseParticle(int life) :
 	uv(ParticleUV()),
-	lifeFrame(life)
+	lifeFrame(life), minLife(life), maxLife(1)
 {
 
 }
@@ -42,7 +43,8 @@ BaseParticle::BaseParticle(int life) :
 ***************************************/
 BaseParticle::BaseParticle(int lifeMin, int lifeMax) :
 	uv(ParticleUV()),
-	lifeFrame(Math::RandomRange(lifeMin, lifeMax))
+	lifeFrame(Math::RandomRange(lifeMin, lifeMax)),
+	minLife(lifeMin), maxLife(lifeMax)
 {
 
 }
@@ -52,7 +54,18 @@ BaseParticle::BaseParticle(int lifeMin, int lifeMax) :
 ***************************************/
 BaseParticle::BaseParticle(float u, float v, int lifeMin, int lifeMax) :
 	uv(ParticleUV(u, v)),
-	lifeFrame(Math::RandomRange(lifeMin, lifeMax))
+	lifeFrame(Math::RandomRange(lifeMin, lifeMax)),
+	minLife(lifeMin), maxLife(lifeMax)
+{
+}
+
+/**************************************
+コンストラクタ
+***************************************/
+BaseParticle::BaseParticle(const BaseParticle & rhs) :
+	uv(rhs.uv),
+	lifeFrame(Math::RandomRange(rhs.maxLife, rhs.minLife)),
+	minLife(rhs.minLife), maxLife(rhs.maxLife)
 {
 }
 
@@ -61,6 +74,14 @@ BaseParticle::BaseParticle(float u, float v, int lifeMin, int lifeMax) :
 ***************************************/
 BaseParticle::~BaseParticle()
 {
+}
+
+/**************************************
+UV座標取得
+***************************************/
+ParticleUV BaseParticle::GetUV() const
+{
+	return uv;
 }
 
 /**************************************

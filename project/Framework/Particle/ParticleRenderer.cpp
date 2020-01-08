@@ -16,7 +16,8 @@
 ***************************************/
 ParticleRenderer::ParticleRenderer() :
 	declare(NULL), effect(NULL),indexBuff(NULL), transformBuff(NULL), uvBuff(NULL),
-	hMtxInvView(NULL), hMtxProjection(NULL), hMtxView(NULL)
+	hMtxInvView(NULL), hMtxProjection(NULL), hMtxView(NULL),
+	count(0), pMatrix(NULL), pUV(NULL)
 {
 	MakeDeclaration();
 	MakeTransformBuffer();
@@ -43,10 +44,6 @@ ParticleRenderer::~ParticleRenderer()
 void ParticleRenderer::BeginDraw()
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-	//レンダーステート切り替え
-	//pDevice->SetRenderState(D3DRS_LIGHTING, false);
-	//pDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
 
 	//ビュー行列、プロジェクション行列、ビュー逆行列を取得
 	D3DXMATRIX view, proj, invView, screenProj;
@@ -86,16 +83,11 @@ void ParticleRenderer::BeginDraw()
 ***************************************/
 void ParticleRenderer::EndDraw()
 {
-
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	//シェーダによる描画終了
 	effect->End();
-
-	//レンダーステート復元
-	//pDevice->SetRenderState(D3DRS_LIGHTING, true);
-	//pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
-
+	
 	//ストリーム周波数復元
 	pDevice->SetStreamSourceFreq(0, 1);
 	pDevice->SetStreamSourceFreq(1, 1);
@@ -108,6 +100,10 @@ Transform情報埋め込み処理
 void ParticleRenderer::BeginPass(DWORD pass)
 {
 	effect->BeginPass(pass);
+
+	count = 0;
+	transformBuff->Lock(0, 0, (void**)&pMatrix, 0);
+	uvBuff->Lock(0, 0, (void**)&pUV, 0);
 }
 
 /**************************************
@@ -119,51 +115,41 @@ void ParticleRenderer::EndPass()
 }
 
 /**************************************
-Transform情報埋め込み処理
+Particle情報埋め込み処理
 ***************************************/
-UINT ParticleRenderer::EmbedTransform(const std::vector<BaseParticle*> container)
+void ParticleRenderer::PushParticleParameter(const D3DXMATRIX & mtxWorld, const ParticleUV & uv)
 {
-	assert(container.size() <= PARTICLE_NUM_MAX);
+	*pMatrix = mtxWorld;
+	pMatrix++;
 
-	UINT count = 0;
-	D3DXMATRIX *pTr;
-	transformBuff->Lock(0, 0, (void**)&pTr, 0);
-	for (BaseParticle *particle : container)
+	*pUV = uv;
+	pUV++;
+
+	count++;
+
+	if (count >= PARTICLE_NUM_MAX)
 	{
-		if (!particle->IsActive())
-			continue;
+		Draw();
 
-		*pTr = particle->GetWorldMtx();
-		pTr++;
-		count++;
+		count = 0;
+		transformBuff->Lock(0, 0, (void**)&pMatrix, 0);
+		uvBuff->Lock(0, 0, (void**)&pUV, 0);
 	}
-	transformBuff->Unlock();
-
-	return count;
 }
 
 /**************************************
-UV情報埋め込み処理
+描画処理
 ***************************************/
-UINT ParticleRenderer::EmbedUV(const std::vector<BaseParticle*> container)
+void ParticleRenderer::Draw()
 {
-	assert(container.size() <= PARTICLE_NUM_MAX);
-
-	UINT count = 0;
-	ParticleUV *pUV;
-	uvBuff->Lock(0, 0, (void**)&pUV, 0);
-	for (BaseParticle *particle : container)
-	{
-		if (!particle->IsActive())
-			continue;
-
-		*pUV = particle->uv;
-		pUV++;
-		count++;
-	}
 	transformBuff->Unlock();
+	uvBuff->Unlock();
 
-	return count;
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+
+	pDevice->SetStreamSourceFreq(0, D3DSTREAMSOURCE_INDEXEDDATA | count);
+
+	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, NUM_VERTEX, 0, NUM_POLYGON);
 }
 
 /**************************************

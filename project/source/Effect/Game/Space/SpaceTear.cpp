@@ -25,20 +25,14 @@ namespace Effect::Game
 		const char* TexturePath = "data/TEXTURE/Particle/TearSpark.png";
 		LoadTexture(TexturePath);
 
-		//パーティクルコンテナ作成
-		const size_t MaxParticle = 2048;
-		particleContainer.resize(MaxParticle);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new SpaceTear();
-		}
-
 		//エミッタコンテナ作成
+		const size_t MaxParticle = 32;
 		const size_t MaxEmitter = 512;
 		emitterContainer.resize(MaxEmitter);
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new SpaceTearEmitter();
+			emitter->CreateParticleContainer<SpaceTear>(MaxParticle);
 		}
 	}
 

@@ -25,22 +25,16 @@ namespace Effect::Game
 		const char* Path = "data/TEXTURE/Particle/angryFace.png";
 		LoadTexture(Path);
 
-		//パーティクルコンテナ作成
-		const int MaxParticle = 1024;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new AngryFace();
-		}
-
 		//エミッタコンテナ作成
-		const int MaxEmitter = 4;
+		const int MaxParticle = 1024;
+		const int MaxEmitter = 1;
 		const int DurationEmit = 60;
 		const int NumEmit = 15;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(NumEmit, DurationEmit);
+			emitter->CreateParticleContainer<AngryFace>(MaxParticle);
 		}
 	}
 

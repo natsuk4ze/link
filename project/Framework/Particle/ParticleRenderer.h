@@ -19,6 +19,7 @@
 前方宣言
 ***************************************/
 class BaseParticle;
+class ParticleUV;
 
 /**************************************
 クラス定義
@@ -35,8 +36,9 @@ public:
 	void BeginPass(DWORD pass);
 	void EndPass();
 
-	UINT EmbedTransform(const std::vector<BaseParticle*> container);
-	UINT EmbedUV(const std::vector<BaseParticle*> container);
+	void PushParticleParameter(const D3DXMATRIX& mtxWorld, const ParticleUV& uv);
+
+	void Draw();
 
 private:
 	LPDIRECT3DVERTEXDECLARATION9 declare;
@@ -44,6 +46,10 @@ private:
 	LPDIRECT3DINDEXBUFFER9 indexBuff;
 	LPDIRECT3DVERTEXBUFFER9 transformBuff, uvBuff;
 	D3DXHANDLE hMtxView, hMtxProjection, hMtxInvView, hScreenProj;
+
+	UINT count;
+	D3DXMATRIX *pMatrix;
+	ParticleUV *pUV;
 
 	void LoadEffect();
 	void MakeDeclaration();

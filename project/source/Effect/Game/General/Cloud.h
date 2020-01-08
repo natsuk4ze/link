@@ -56,7 +56,7 @@ namespace Effect::Game
 	public:
 		CloudEmitter();
 
-		bool Emit(std::vector<BaseParticle*>& container) override;
+		bool Emit() override;
 	};
 }
 

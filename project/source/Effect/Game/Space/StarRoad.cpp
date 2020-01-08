@@ -32,20 +32,15 @@ namespace Effect::Game
 		//テクスチャ読み込み
 		LoadTexture("data/TEXTURE/Particle/star.png");
 
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 4096; 
-		particleContainer.resize(MaxParticle);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new StarRoad();
-		}
-
 		//エミッターコンテナ作成
-		const unsigned MaxEmitter = 1024;
+		const unsigned MaxParticle = 64; 
+		const unsigned MaxEmitter = 512;
 		emitterContainer.resize(MaxEmitter);
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new StarRoadEmitter();
+			emitter->CreateParticleContainer<StarRoad>(MaxParticle);
+			emitter->UseCulling(false);
 		}
 	}
 
@@ -108,14 +103,15 @@ namespace Effect::Game
 	StarRoadEmitter::StarRoadEmitter() :
 		BaseEmitter(2)
 	{
+		flgLoop = true;
 	}
 
 	/**************************************
 	StarRoadEmitter放出処理
 	***************************************/
-	bool StarRoadEmitter::Emit(std::vector<BaseParticle*>& container)
+	bool StarRoadEmitter::Emit()
 	{
-		if (!IsActive())
+		if (!enableEmit)
 			return true;
 
 		//描画領域外だったら放出しない
@@ -124,7 +120,7 @@ namespace Effect::Game
 			return true;
 
 		UINT cntEmit = 0;
-		for (auto& particle : container)
+		for (auto& particle : particleContainer)
 		{
 			if (particle->IsActive())
 				continue;

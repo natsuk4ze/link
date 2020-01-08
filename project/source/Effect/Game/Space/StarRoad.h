@@ -53,7 +53,7 @@ namespace Effect::Game
 	public:
 		StarRoadEmitter();
 
-		bool Emit(std::vector<BaseParticle*>& container) override;
+		bool Emit() override;
 		bool IsActive() const override;
 	};
 }

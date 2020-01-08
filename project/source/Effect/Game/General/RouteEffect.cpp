@@ -29,20 +29,14 @@ namespace Effect::Game
 		//テクスチャ読み込み
 		LoadTexture("data/TEXTURE/Particle/RouteTrace.png");
 
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 512;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new RouteEffect();
-		}
-
 		//エミッタコンテナ作成
-		const unsigned MaxEmitter = 2;
+		const unsigned MaxParticle = 512;
+		const unsigned MaxEmitter = 1;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(10, 0);
+			emitter->CreateParticleContainer<RouteEffect>(MaxParticle);
 		}
 	}
 

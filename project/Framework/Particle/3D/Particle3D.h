@@ -26,6 +26,8 @@ public:
 	Particle3D(int life);
 	Particle3D(int minLife, int maxLife);
 	Particle3D(float u, float v, int minLife, int maxLife);
+	Particle3D(const Particle3D& rhs);
+
 	virtual ~Particle3D();
 
 	virtual bool IsActive() const;

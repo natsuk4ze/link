@@ -47,9 +47,9 @@ namespace Effect::Game
 	public:
 		EventInfoEmitter();
 
-		virtual void Init(std::function<void()>& callback) override;
+		virtual void Init(const std::function<void()>& callback) override;
 		virtual void Update() override;
-		virtual bool Emit(std::vector<BaseParticle*>& container) override;
+		virtual bool Emit() override;
 
 		const static int PeriodEmit;
 	};

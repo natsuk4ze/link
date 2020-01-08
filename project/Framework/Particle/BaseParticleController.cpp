@@ -48,8 +48,6 @@ BaseParticleController::~BaseParticleController()
 	SAFE_RELEASE(texture);
 	SAFE_RELEASE(unitBuff);
 
-	Utility::DeleteContainer(particleContainer);
-
 	Utility::DeleteContainer(emitterContainer);
 
 	renderer.reset();
@@ -60,11 +58,6 @@ BaseParticleController::~BaseParticleController()
 ***************************************/
 void BaseParticleController::Uninit()
 {
-	for (auto& particle : particleContainer)
-	{
-		particle->SetActive(false);
-	}
-
 	for (auto& emitter : emitterContainer)
 	{
 		emitter->SetActive(false);
@@ -81,23 +74,6 @@ void BaseParticleController::Update()
 	{
 		emitter->Update();
 	}
-
-	//全エミッタに対して放出処理
-	for (BaseEmitter* emitter : emitterContainer)
-	{
-		//放出処理
-		bool res = emitter->Emit(particleContainer);
-
-		//放出できるパーティクルが残っていなければbreak
-		if (!res)
-			break;		
-	}
-
-	//パーティクル更新
-	for (BaseParticle *particle : particleContainer)
-	{
-		particle->Update();
-	}
 }
 
 /**************************************
@@ -107,24 +83,25 @@ bool BaseParticleController::Draw()
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//各パーティクルのパラメータを頂点バッファにセット
-	particleCount = renderer->EmbedUV(particleContainer);
-
-	if (particleCount == 0)
-		return false;
-
-	particleCount = renderer->EmbedTransform(particleContainer);
-
 	//ストリームソース設定
 	pDevice->SetStreamSource(0, unitBuff, 0, sizeof(ParticleUnit));
-	pDevice->SetStreamSourceFreq(0, D3DSTREAMSOURCE_INDEXEDDATA | particleCount);
 
 	//テクスチャ設定
 	pDevice->SetTexture(0, texture);
 
 	//描画
 	renderer->BeginPass(useType);
-	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, NUM_VERTEX, 0, NUM_POLYGON);
+
+	//エミッタにレンダラーを渡して必要な情報をプッシュさせる
+	//描画可能な最大数に到達したら自動で描画される
+	for (auto&& emitter : emitterContainer)
+	{
+		emitter->PushRenderParameter(renderer);
+	}
+
+	//残っているものを描画してしまう
+	renderer->Draw();
+
 	renderer->EndPass();
 
 	return true;

@@ -23,20 +23,14 @@ namespace Effect::Game
 		//テクスチャ読み込み
 		LoadTexture("data/TEXTURE/Particle/Linkup.png");
 
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 512;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new Linkup();
-		}
-
 		//エミッタコンテナ作成
+		const unsigned MaxParticle = 128;
 		const unsigned MaxEmitter = 16;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(3, 60);
+			emitter->CreateParticleContainer<Linkup>(MaxParticle);
 		}
 	}
 

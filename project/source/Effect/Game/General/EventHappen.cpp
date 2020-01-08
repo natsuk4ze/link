@@ -23,20 +23,14 @@ namespace Effect::Game
 		//テクスチャ読み込み
 		LoadTexture("data/TEXTURE/Particle/eventInfo.png");
 
-		//パーティクルコンテナ作成
-		const unsigned Maxparticle = 512;
-		particleContainer.resize(Maxparticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new EventHappen();
-		}
-
 		//エミッタコンテナ作成
-		const unsigned MaxEmitter = 16;
+		const unsigned Maxparticle = 128;
+		const unsigned MaxEmitter = 8;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(15, 20);
+			emitter->CreateParticleContainer<EventHappen>(Maxparticle);
 		}
 	}
 

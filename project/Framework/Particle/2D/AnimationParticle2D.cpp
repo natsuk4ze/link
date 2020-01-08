@@ -35,6 +35,15 @@ AnimationParticle2D::AnimationParticle2D(float divX, float divY, int lifeMin, in
 }
 
 /**************************************
+コンストラクタ
+***************************************/
+AnimationParticle2D::AnimationParticle2D(const AnimationParticle2D & rhs) :
+	Particle2D(rhs)
+{
+	SetAnimParameter(rhs.texDiv.x, rhs.texDiv.y);
+}
+
+/**************************************
 アニメーション処理
 ***************************************/
 void AnimationParticle2D::Animation(float t)

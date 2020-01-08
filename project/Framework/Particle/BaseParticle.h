@@ -35,6 +35,12 @@ public:
 	{
 
 	}
+
+	ParticleUV(const ParticleUV& rhs) :
+		u(rhs.u), v(rhs.v)
+	{
+
+	}
 };
 
 /**************************************
@@ -48,6 +54,7 @@ public:
 	BaseParticle(int life);
 	BaseParticle(int lifeMin, int lifeMax);
 	BaseParticle(float u, float v, int lifeMin, int lifeMax);
+	BaseParticle(const BaseParticle& rhs);
 	virtual ~BaseParticle();
 
 	virtual void Init() = 0;
@@ -61,13 +68,17 @@ public:
 
 	virtual D3DXMATRIX GetWorldMtx() = 0;
 
-	ParticleUV uv;
+	virtual ParticleUV GetUV() const;
 
 protected:
 	int cntFrame;
+
 	int lifeFrame;
+	int maxLife, minLife;
 
 	bool _IsActive() const;
+
+	ParticleUV uv;
 };
 
 #endif

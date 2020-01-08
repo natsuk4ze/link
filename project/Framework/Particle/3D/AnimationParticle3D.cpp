@@ -38,6 +38,15 @@ AnimationParticle3D::AnimationParticle3D(float divX, float divY, int lifeMin, in
 }
 
 /**************************************
+コンストラクタ
+***************************************/
+AnimationParticle3D::AnimationParticle3D(const AnimationParticle3D & rhs) :
+	Particle3D(rhs)
+{
+	SetAnimParameter(rhs.texDiv.x, rhs.texDiv.y);
+}
+
+/**************************************
 アニメーション処理
 ***************************************/
 void AnimationParticle3D::Animation(float t)

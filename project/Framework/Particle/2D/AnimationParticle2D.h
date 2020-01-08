@@ -25,6 +25,7 @@ public:
 	AnimationParticle2D(float fivX, float divY);
 	AnimationParticle2D(float divX, float divY, int life);
 	AnimationParticle2D(float divX, float divY, int lifeMin, int lifeMax);
+	AnimationParticle2D(const AnimationParticle2D& rhs);
 
 	void SetAnimParameter(float texDixX, float texDivY);
 	void SetAnimParameter(const D3DXVECTOR2& texDiv);

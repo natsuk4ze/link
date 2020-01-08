@@ -24,16 +24,9 @@ namespace Effect::Game
 		//テクスチャ読み込み
 		LoadTexture("data/TEXTURE/Particle/levelup.png");
 
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 512;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new LinkLevelUp();
-		}
-
 		//エミッターコンテナ作成
-		const unsigned MaxEmitter = 32;
+		const unsigned MaxParticle = 128;
+		const unsigned MaxEmitter = 1;
 		const int DurationEmit = 5;
 		const int NumEmit = 30;
 
@@ -41,6 +34,7 @@ namespace Effect::Game
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(NumEmit, DurationEmit);
+			emitter->CreateParticleContainer<LinkLevelUp>(MaxParticle);
 		}
 	}
 

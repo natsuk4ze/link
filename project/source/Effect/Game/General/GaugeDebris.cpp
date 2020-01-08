@@ -24,20 +24,14 @@ namespace Effect::Game
 		//テクスチャ読み込み
 		LoadTexture("data/TEXTURE/Particle/gaugeDebris.png");
 
-		//パーティクルコンテナ作成
-		const unsigned MaxParticle = 512;
-		particleContainer.resize(MaxParticle, nullptr);
-		for (auto&& particle : particleContainer)
-		{
-			particle = new GaugeDebris();
-		}
-
 		//エミッタコンテナ作成
-		const unsigned MaxEmitter = 16;
+		const unsigned MaxParticle = 128;
+		const unsigned MaxEmitter = 8;
 		emitterContainer.resize(MaxEmitter, nullptr);
 		for (auto&& emitter : emitterContainer)
 		{
 			emitter = new BaseEmitter(60, 3);
+			emitter->CreateParticleContainer<GaugeDebris>(MaxParticle);
 		}
 	}
 
