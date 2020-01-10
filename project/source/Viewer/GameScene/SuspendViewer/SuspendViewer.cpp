@@ -9,6 +9,8 @@
 
 #include "../../../../Framework/Tool/DebugWindow.h"
 #include "../../../../Framework/Input/input.h"
+#include "../../../../Framework/Sound/SoundEffect.h"
+#include "../../../Sound/SoundConfig.h"
 
 /**************************************
 ƒOƒ[ƒoƒ‹•Ï”
@@ -36,7 +38,7 @@ SuspendViewer::SuspendViewer() :
 	bg->LoadTexture("data/TEXTURE/Viewer/SuspendViewer/suspendBG.png");
 	bg->SetPosition({ SCREEN_CENTER_X, SCREEN_CENTER_Y, 0.0f });
 	bg->SetSize(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f);
-	bg->SetColor({ 1.0f, 1.0f, 1.0f, 0.5f });
+	bg->SetColor({ 1.0f, 1.0f, 1.0f, 0.75f });
 
 	LoadTexture("data/TEXTURE/Viewer/SuspendViewer/suspendFrame.png");
 	transform->SetPosition({ SCREEN_CENTER_X, SCREEN_CENTER_Y, 0.0f });
@@ -58,6 +60,15 @@ SuspendViewer::~SuspendViewer()
 ***************************************/
 void SuspendViewer::Update()
 {
+	if (!active)
+		return;
+
+	if (Input::GetTriggerHorizontal())
+	{
+		selectedYes = !selectedYes;
+		SE::Play(SoundConfig::MoveCursor, 0.5f);
+	}
+
 	D3DXCOLOR colorYes = selectedYes ? D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f) : D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.0f);
 	D3DXCOLOR colorNo = selectedYes ? D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.0f) : D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	dialogYes->SetColor(colorYes);
