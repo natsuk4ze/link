@@ -171,6 +171,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 					entity.field->Load();
 
 					// カメラの焦点をセット
+					entity.fieldCamera->InitRotatedAngle();
 					entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
 					entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
 
