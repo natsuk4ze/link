@@ -43,10 +43,10 @@ void PresenDebugController::Update()
 		_DecreaseLevelAI();
 	}
 	//L1ボタンで隕石召喚
-	if (GamePad::GetTrigger(0, BUTTON_Y))
-	{
-		_RaiseMeteorEvent();
-	}
+	//if (GamePad::GetTrigger(0, BUTTON_Y))
+	//{
+	//	_RaiseMeteorEvent();
+	//}
 	//L2ボタンで強制レベルアップ
 	if (GamePad::GetTrigger(0, BUTTON_L))
 	{

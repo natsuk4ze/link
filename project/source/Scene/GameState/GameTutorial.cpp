@@ -131,7 +131,8 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 		// カメラの操作を確認
 		if (!entity.tutorialViewer->GetIsShowTexture())
 		{
-			if (Keyboard::GetTrigger(DIK_C) || Keyboard::GetTrigger(DIK_SPACE))
+			if (Keyboard::GetTrigger(DIK_C) || Keyboard::GetTrigger(DIK_SPACE) ||
+				GamePad::GetTrigger(0, BUTTON_A) || GamePad::GetTrigger(0, BUTTON_Z))
 			{
 				ClearFlag = true;
 			}
@@ -213,7 +214,7 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 		// チュートリアル終了
 		if (!entity.tutorialViewer->GetIsShowTexture())
 		{
-			if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
+			if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_Y))
 			{
 				entity.tutorialViewer->SetActive(false);
 				entity.step = Transition;
@@ -264,7 +265,7 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 				entity.fieldCamera->ChangeMode(FieldCamera::AngleRotate);
 			}
 
-			if (Keyboard::GetTrigger(DIK_V))
+			if (Keyboard::GetTrigger(DIK_V) || GamePad::GetTrigger(0, BUTTON_R))
 			{
 				entity.ChangeState(GameScene::State::Interrupt);
 			}

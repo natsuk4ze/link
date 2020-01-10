@@ -189,7 +189,14 @@ void TutorialViewer::ShowTutorial(HelpTextureType Type)
 		break;
 	case TutorialViewer::HighScore:
 		DescriptionText->SetText("ここは高得点の説明第1行です。\nここは高得点の説明第2行です。\nここは高得点の説明第3行です。");
-		ExitText->SetText("チュートリアル終了：Enter Key");
+		if (GamePad::GetPadCount() == 0)
+		{
+			ExitText->SetText("チュートリアル終了：Enter Key");
+		}
+		else
+		{
+			ExitText->SetText("チュートリアル終了：L1 Button");
+		}
 		break;
 	default:
 		break;

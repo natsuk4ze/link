@@ -20,7 +20,7 @@
 コンストラクタ
 ***************************************/
 SuspendViewer::SuspendViewer() :
-	selectedYes(true)
+	selectedYes(false)
 {
 	dialogYes = new Polygon2D();
 	dialogYes->LoadTexture("data/TEXTURE/Viewer/SuspendViewer/suspendText.png");
