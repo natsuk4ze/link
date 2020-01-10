@@ -145,6 +145,9 @@ void ParticleRenderer::Draw()
 	transformBuff->Unlock();
 	uvBuff->Unlock();
 
+	if (count == 0)
+		return;
+
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	pDevice->SetStreamSourceFreq(0, D3DSTREAMSOURCE_INDEXEDDATA | count);
