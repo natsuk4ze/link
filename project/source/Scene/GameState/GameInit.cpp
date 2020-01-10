@@ -27,6 +27,7 @@
 #include "../../Sound/SoundConfig.h"
 #include "../../../Framework/Sound/BackgroundMusic.h"
 #include "../../Booth/BoothController.h"
+#include "../../Viewer/GameScene/SuspendViewer/SuspendViewer.h"
 
 /**************************************
 入場処理
@@ -51,6 +52,7 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	//entity.guideViewer->SetActive(false);
 	entity.resultViewer->SetActive(false);
 	entity.nameEntryViewer->SetActive(false);
+	entity.suspendViewer->SetActive(false);
 
 	//パーティクル初期化
 	entity.levelParticleManager->Init();
