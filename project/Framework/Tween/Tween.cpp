@@ -12,6 +12,7 @@ using namespace std;
 /**************************************
 マクロ定義
 ***************************************/
+bool Tween::PauseFlag = false;
 
 /**************************************
 コンストラクタ
@@ -46,6 +47,10 @@ Tween::~Tween()
 ***************************************/
 void Tween::Update()
 {
+	// ゲーム停止中
+	if (PauseFlag)
+		return;
+
 	for (auto&& tweener : tweenerContainer)
 	{
 		tweener->Update();

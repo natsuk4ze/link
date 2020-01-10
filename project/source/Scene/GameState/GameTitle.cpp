@@ -14,6 +14,7 @@
 #include "../../Viewer/GameScene/Controller/ResultViewer.h"
 #include "../../Viewer/GameScene/Controller/NameEntryViewer.h"
 #include "../../Viewer/TutorialScene/TutorialViewer.h"
+#include "../../Event/EventController.h"
 #include "../../../Framework/Transition/TransitionController.h"
 #include "../../../Framework/Serial/SerialWrapper.h"
 #include "../../Sound/PlayBGM.h"
@@ -49,9 +50,9 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	entity.field->SetViewerActive(false);
 	entity.gameViewer->SetActive(false);
 	GuideViewer::Instance()->SetActive(false);
-	//entity.guideViewer->SetActive(false);
 	entity.resultViewer->SetActive(false);
 	entity.nameEntryViewer->SetActive(false);
+	entity.eventController->ClearEventMessage();
 
 	// タイトルのBGMを開始
 	PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Title, SoundConfig::VolumeBGM, 30, false);

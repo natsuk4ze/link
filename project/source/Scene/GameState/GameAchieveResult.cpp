@@ -31,13 +31,6 @@ void GameScene::GameAchieveResult::OnStart(GameScene & entity)
 
 	auto rewardContainer = RewardController::Instance()->GetAllAchieved();
 
-//#if _DEBUG
-//	for (int i = 0; i < RewardConfig::Pioneer; i++)
-//	{
-//		rewardContainer.push_back((RC::Type)i);
-//	}
-//#endif
-
 	//ŽÀÑ‚ª‚È‚©‚Á‚½‚çƒ^ƒCƒgƒ‹‚Ö‘JˆÚ
 	if (rewardContainer.empty())
 	{

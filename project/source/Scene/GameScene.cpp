@@ -49,6 +49,7 @@
 #include "GameState/GameFinish.h"
 #include "GameState/GameLevelUp.h"
 #include "GameState/GamePause.h"
+#include "GameState/GameInterrupt.h"
 #include "GameState/GameFarView.h"
 #include "GameState/GameTitle.h"
 #include "GameState/GameTutorial.h"
@@ -133,9 +134,11 @@ void GameScene::Init()
 	fsm[State::Finish] = new GameFinish();
 	fsm[State::LevelUp] = new GameLevelUp();
 	fsm[State::Pause] = new GamePause();
+	fsm[State::Interrupt] = new GameInterrupt();
 	fsm[State::FarView] = new GameFarView();
 	fsm[State::Title] = new GameTitle();
-	fsm[State::Tutorial] = new GameTutorial();
+	TutorialState = new GameTutorial();
+	fsm[State::Tutorial] = TutorialState;
 	fsm[State::Result] = new GameResult();
 	fsm[State::TransitionOut] = new GameTransitionOut();
 	fsm[State::TransitionIn] = new GameTransitionIn();
@@ -211,39 +214,42 @@ void GameScene::Update()
 	}
 #endif
 
-	//カメラ更新
-	ProfilerCPU::Instance()->Begin("Update Camera");
-	fieldCamera->Update();
-	ProfilerCPU::Instance()->End("Update Camera");
+	if (currentState != State::Interrupt)
+	{
+		//カメラ更新
+		ProfilerCPU::Instance()->Begin("Update Camera");
+		fieldCamera->Update();
+		ProfilerCPU::Instance()->End("Update Camera");
 
-	//カメラの情報をエフェクトに渡す
-	SpriteEffect::SetView(fieldCamera->GetViewMtx());
-	SpriteEffect::SetProjection(fieldCamera->GetProjectionMtx());
+		//カメラの情報をエフェクトに渡す
+		SpriteEffect::SetView(fieldCamera->GetViewMtx());
+		SpriteEffect::SetProjection(fieldCamera->GetProjectionMtx());
 
-	//ビューワパラメータをビューワに渡す
-	GameViewerParam gameParam;
-	gameParam.remainTime = remainTime / 30.0f;
-	field->EmbedViewerParam(gameParam);
-	gameViewer->ReceiveParam(gameParam);
+		//ビューワパラメータをビューワに渡す
+		GameViewerParam gameParam;
+		gameParam.remainTime = remainTime / 30.0f;
+		field->EmbedViewerParam(gameParam);
+		gameViewer->ReceiveParam(gameParam);
 
-	//ビュアー更新
-	gameViewer->Update();
-	GuideViewer::Instance()->Update();
-	resultViewer->Update();
-	titleViewer->Update();
-	tutorialViewer->Update();
-	nameEntryViewer->Update();
-	rewardNotifier->Update();
+		//ビュアー更新
+		gameViewer->Update();
+		GuideViewer::Instance()->Update();
+		resultViewer->Update();
+		titleViewer->Update();
+		tutorialViewer->Update();
+		nameEntryViewer->Update();
+		rewardNotifier->Update();
 
-	//パーティクル更新
-	ProfilerCPU::Instance()->Begin("Update Particle");
+		//パーティクル更新
+		ProfilerCPU::Instance()->Begin("Update Particle");
 
-	if (levelParticleManager != nullptr)
-		levelParticleManager->Update();
+		if (levelParticleManager != nullptr)
+			levelParticleManager->Update();
 
-	particleManager->Update();
+		particleManager->Update();
 
-	ProfilerCPU::Instance()->End("Update Particle");
+		ProfilerCPU::Instance()->End("Update Particle");
+	}
 
 	//デバッグ機能
 	DebugTool();
@@ -596,6 +602,7 @@ void GameScene::SetFieldLevel(int level)
 void GameScene::SetTutorial(void)
 {
 	InTutorial = true;
+	TutorialState->Init(*this);
 
 	//フィールドレベルを設定
 	field->SetTutorialField();
