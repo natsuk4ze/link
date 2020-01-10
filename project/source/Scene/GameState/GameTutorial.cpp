@@ -215,7 +215,7 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 		{
 			if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 			{
-				entity.tutorialViewer->isPlaying = false;
+				entity.tutorialViewer->SetActive(false);
 				entity.step = Transition;
 
 				// ‰Šú‰»

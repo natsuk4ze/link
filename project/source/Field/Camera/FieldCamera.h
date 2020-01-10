@@ -47,6 +47,9 @@ public:
 	//追従目標設定処理
 	void SetFollowTarget(GameObject* object);
 
+	//回転した角度をリセットする
+	void InitRotatedAngle(void);
+
 	static const int DurationRotate;
 	static const float AnglePeriod;
 	static const float LengthFromTarget;
@@ -59,6 +62,7 @@ private:
 	int cntFrame;									//フレームカウント
 
 	float cameraAngle;								//カメラのXZ平面の角度
+	float RotatedAngle;								//回転した角度
 	float startAngle, endAngle;						//イージング用角度
 	int cntRotate;									//回転フレームカウント
 	float distance;									// カメラと焦点の距離
