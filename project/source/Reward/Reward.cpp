@@ -77,3 +77,11 @@ void Reward::ResetAchieved()
 {
 	this->achieve = false;
 }
+
+//=====================================
+// セーブデータの読み込み
+//=====================================
+void Reward::LoadData(bool flag)
+{
+	firstAchieve = flag;
+}
