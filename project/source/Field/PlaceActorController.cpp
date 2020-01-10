@@ -445,9 +445,13 @@ namespace Field::Actor
 				EraseFromContainer(placeID);
 			}
 			//“¹AŒð·“_‚ð—¤ã”»’è‚É•ÏX
-			else
+			else if(place->IsType(Model::PlaceType::Junction) || place->IsType(Model::PlaceType::Road))
 			{
-				actorContainer[placeID]->OnSea(false);
+				ChangeActor(place);
+				PlaceActor *actor = actorContainer[place->ID()].get();
+
+				D3DXVECTOR3 worldPosition = actor->GetPosition();
+				Tween::Move(*actor, worldPosition + Vector3::Down * 10.0f, worldPosition, 60, EaseType::InOutCubic);
 			}
 		}
 
