@@ -46,6 +46,9 @@ public:
 	// データのリセット
 	virtual void ResetData() = 0;
 
+	// セーブデータの読み込み
+	void LoadData(bool flag);
+
 protected:
 	RC::Type type;	// リワードの種類
 	bool firstAchieve;				// 最初の到達確認

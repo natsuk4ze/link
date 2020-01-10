@@ -11,6 +11,9 @@
 #include "StateReward.h"
 #include "MaxCheckReward.h"
 #include <algorithm>
+#include "../../Framework/Core/PlayerPrefs.h"
+#include "../../Framework/Core/Utility.h"
+#include "../Viewer/NameViewer/Name.h"
 
 //=====================================
 // データ作成
@@ -19,22 +22,36 @@ void RewardController::Create()
 {
 	for (int i = 0; i < RC::Type::Max; i++)
 	{
-		if (rewardPool.count(RC::Type(i)) == 0)
+		RC::Type type = RC::Type(i);
+		if (rewardPool.count(type) == 0)
 		{
-			if (RC::Type(i) == RC::MinusComplete || RC::Type(i) == RC::PlusComplete)
+			if (type == RC::MinusComplete || type == RC::PlusComplete)
 			{
-				Reward* reward = new StateReward(RC::Type(i), RC::MaxData[i]);
-				rewardPool.emplace(RC::Type(i), reward);
+				Reward* reward = new StateReward(type, RC::MaxData[i]);
+				rewardPool.emplace(type, reward);
 			}
-			else if (RC::Type(i) == RC::Linker || RC::Type(i) == RC::MasterAI)
+			else if (type == RC::Linker || type == RC::MasterAI)
 			{
-				Reward* reward = new MaxCheckReward(RC::Type(i), RC::MaxData[i]);
-				rewardPool.emplace(RC::Type(i), reward);
+				Reward* reward = new MaxCheckReward(type, RC::MaxData[i]);
+				rewardPool.emplace(type, reward);
 			}
 			else
 			{
-				Reward* reward = new CountupReward(RC::Type(i), RC::MaxData[i]);
-				rewardPool.emplace(RC::Type(i), reward);
+				Reward* reward = new CountupReward(type, RC::MaxData[i]);
+				rewardPool.emplace(type, reward);
+			}
+
+			// セーブデータの読み込み
+			bool flag = PlayerPrefs::GetBool(Utility::ToString(type));
+			rewardPool[type]->LoadData(flag);
+			if (flag)
+			{
+				int num[3];
+				for (int n = 0; n < 3; n++)
+				{
+					num[n] = PlayerPrefs::GetNumber<int>(Utility::ToString(type) + std::to_string(n));
+				}
+				rewardPool[type]->SetName(Name(num[0], num[1], num[2]));
 			}
 		}
 		else
@@ -128,7 +145,14 @@ void RewardController::SetFirstAchieverName(const Name& name)
 
 		if (rewardPool[key]->IsAchievedThisTime())
 		{
-			rewardPool[RC::Type(i)]->SetName(name);
+			rewardPool[key]->SetName(name);
+
+			// セーブデータ更新
+			PlayerPrefs::SaveBool(Utility::ToString(key), true);
+			for (int num = 0; num < 3; num++)
+			{
+				PlayerPrefs::SaveNumber(Utility::ToString(key) + std::to_string(num), rewardPool[key]->GetName()->Get(num));
+			}
 		}
 	}
 }
