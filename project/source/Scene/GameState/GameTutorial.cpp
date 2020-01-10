@@ -277,5 +277,21 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 		}
 	}
 
+	//デバッグ用スキップ機能
+	if (Keyboard::GetTrigger(DIK_F5))
+	{
+		entity.tutorialViewer->isPlaying = false;
+		entity.step = Transition;
+
+		// 初期化
+		entity.level = 0;
+		entity.InTutorial = false;
+		entity.remainTime = 30 * 180;
+		Initialized = false;
+
+		// トランジション
+		entity.ChangeState(GameScene::State::TransitionOut);
+	}
+
 	return State::Tutorial;
 }
