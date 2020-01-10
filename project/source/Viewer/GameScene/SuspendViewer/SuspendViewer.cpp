@@ -92,8 +92,14 @@ void SuspendViewer::Draw()
 
 	Polygon2D::Draw();
 
-	dialogNo->Draw();
-	dialogYes->Draw();
+	if (selectedYes)
+	{
+		dialogYes->Draw();
+	}
+	else
+	{
+		dialogNo->Draw();
+	}
 
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);

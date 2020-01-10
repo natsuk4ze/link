@@ -53,6 +53,7 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	entity.resultViewer->SetActive(false);
 	entity.nameEntryViewer->SetActive(false);
 	entity.eventController->ClearEventMessage();
+	entity.tutorialViewer->isPlaying = false;
 
 	// タイトルのBGMを開始
 	PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Title, SoundConfig::VolumeBGM, 30, false);
@@ -61,6 +62,7 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	BoothController::Instance()->RotateTable(GameScene::AngleTable[0]);
 
 	entity.step = 0;
+	entity.InTutorial = false;
 }
 
 //=====================================

@@ -10,9 +10,7 @@
 #include "../../Event/EventController.h"
 #include "../../Viewer/GameScene/Controller/GameViewer.h"
 #include "../../Viewer/GameScene/GuideViewer/GuideViewer.h"
-#include "../../Viewer/TitleScene/TitleViewer.h"
-#include "../../Viewer/TutorialScene/TutorialViewer.h"
-#include "../../Reward/RewardController.h"
+#include "../../Viewer/GameScene/SuspendViewer/SuspendViewer.h"
 #include "../../Sound/PlayBGM.h"
 #include "../../Sound/SoundConfig.h"
 
@@ -28,10 +26,12 @@
 void GameScene::GameInterrupt::OnStart(GameScene & entity)
 {
 	// ビュアーのActive On
+	entity.suspendViewer->SetActive(true);
 
 	// ガイド役の画面を非表示
 	GuideViewer::Instance()->SetActive(false);
 
+	// Tweenクラスのポーズフラグを設置する
 	Tween::SetPause(true);
 }
 
@@ -40,30 +40,44 @@ void GameScene::GameInterrupt::OnStart(GameScene & entity)
 ***************************************/
 GameScene::State GameScene::GameInterrupt::OnUpdate(GameScene & entity)
 {
-	if (Keyboard::GetTrigger(DIK_V))
+	entity.suspendViewer->Update();
+
+	if (Keyboard::GetTrigger(DIK_Z) || Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 	{
-		entity.ChangeState(entity.prevState);
-
-		// ビュアーのActive Off
-
-		// Tweenクラスのポーズフラグを設置する
-		Tween::SetPause(false);
-	}
-	else if (Keyboard::GetTrigger(DIK_2))
-	{
-		PlayBGM::Instance()->FadeOut();
-
-		TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
+		// いいえ
+		if (entity.suspendViewer->GetSelected() == SuspendViewer::Dialog::No)
 		{
+			// ガイド役の画面を表示
+			GuideViewer::Instance()->SetActive(true);
+
+			// ビュアーのActive Off
+			entity.suspendViewer->SetActive(false);
+
 			// Tweenクラスのポーズフラグを設置する
 			Tween::SetPause(false);
 
-			entity.level = 0;
-			entity.Clear();
-			entity.SetFieldLevel(0);
-			entity.field->Load();
-			entity.ChangeState(State::Title);
-		});
+			entity.ChangeState(entity.prevState);
+		}
+		// はい
+		else if (entity.suspendViewer->GetSelected() == SuspendViewer::Dialog::Yes)
+		{
+			PlayBGM::Instance()->FadeOut();
+
+			// ビュアーのActive Off
+			entity.suspendViewer->SetActive(false);
+
+			TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
+			{
+				// Tweenクラスのポーズフラグを設置する
+				Tween::SetPause(false);
+
+				entity.level = 0;
+				entity.Clear();
+				entity.SetFieldLevel(0);
+				entity.field->Load();
+				entity.ChangeState(State::Title);
+			});
+		}
 	}
 
 	return State::Interrupt;
