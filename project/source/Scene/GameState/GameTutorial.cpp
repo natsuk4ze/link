@@ -37,17 +37,6 @@ enum TutorialStep
 ***************************************/
 void GameScene::GameTutorial::OnStart(GameScene & entity)
 {
-	// 初めての入場処理の初期化
-	if (!Initialized)
-	{
-		entity.step = Road;
-		entity.tutorialViewer->Init();
-		FrameCount = 0;
-
-
-		Initialized = true;
-	}
-
 	// カメラの焦点をセット
 	entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
@@ -60,6 +49,16 @@ void GameScene::GameTutorial::OnStart(GameScene & entity)
 	entity.remainTime = 30 * 999;
 }
 
+/**************************************
+初期化
+***************************************/
+void GameScene::GameTutorial::Init(GameScene& entity)
+{
+	entity.step = Road;
+	entity.tutorialViewer->Init();
+	FrameCount = 0;
+	ClearFlag = false;
+}
 
 /**************************************
 更新処理
@@ -216,14 +215,13 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 		{
 			if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 			{
-				entity.tutorialViewer->isPlaying = false;
+				entity.tutorialViewer->SetActive(false);
 				entity.step = Transition;
 
 				// 初期化
 				entity.level = 0;
 				entity.InTutorial = false;
 				entity.remainTime = 30 * 180;
-				Initialized = false;
 
 				// トランジション
 				entity.ChangeState(GameScene::State::TransitionOut);
@@ -238,9 +236,9 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 	// チュートリアル中に実績を達成しないために
 	RewardController::Instance()->ResetAllRewardData();
 
-	// 操作説明が表示していなければ、入力確認
 	if (entity.step != TutorialStep::Transition)
 	{
+		// 操作説明が表示していなければ、入力確認
 		if (!entity.tutorialViewer->GetIsShowTexture())
 		{
 			// イベント更新
@@ -264,6 +262,11 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 			else if (entity.field->ShouldRotateCamera())
 			{
 				entity.fieldCamera->ChangeMode(FieldCamera::AngleRotate);
+			}
+
+			if (Keyboard::GetTrigger(DIK_V))
+			{
+				entity.ChangeState(GameScene::State::Interrupt);
 			}
 		}
 		else if (entity.step != TutorialStep::WaitOver)

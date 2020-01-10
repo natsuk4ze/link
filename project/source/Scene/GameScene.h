@@ -70,6 +70,7 @@ public:
 		Finish,
 		LevelUp,
 		Pause,
+		Interrupt,
 		FarView,
 		Title,
 		Tutorial,
@@ -159,6 +160,7 @@ private:
 	class GameFinish;
 	class GameLevelUp;
 	class GamePause;
+	class GameInterrupt;
 	class GameFarView;
 	class GameWaitPopup;
 	class GameTitle;
@@ -167,6 +169,9 @@ private:
 	class GameTransitionOut;
 	class GameTransitionIn;
 	class GameAchieveResult;
+
+	// チュートリアルの初期化関数を呼ぶための変数
+	GameTutorial* TutorialState;
 
 	//デバッグ用フィールドレベル
 	static int level;

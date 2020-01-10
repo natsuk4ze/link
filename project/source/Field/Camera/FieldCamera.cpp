@@ -35,6 +35,7 @@ FieldCamera::FieldCamera() :
 	goalPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f)), 
 	cntFrame(0),
 	cameraAngle(InitCameraAngle),
+	RotatedAngle(InitCameraAngle),
 	startAngle(InitCameraAngle),
 	endAngle(InitCameraAngle),
 	cntRotate(DurationRotate),
@@ -96,4 +97,12 @@ void FieldCamera::ChangeMode(Mode next)
 void FieldCamera::SetFollowTarget(GameObject * object)
 {
 	targetObject = object;
+}
+
+/**************************************
+‰ñ“]‚µ‚½Šp“x‚ðƒŠƒZƒbƒg‚·‚é
+***************************************/
+void FieldCamera::InitRotatedAngle(void)
+{
+	RotatedAngle = InitCameraAngle;
 }

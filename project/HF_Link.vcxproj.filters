@@ -318,6 +318,7 @@
     <ClCompile Include="source\Scene\GameState\GameTutorial.cpp" />
     <ClCompile Include="source\Field\Object\TutorialBackGroundContainer.cpp" />
     <ClCompile Include="source\Viewer\TutorialScene\TutorialViewer.cpp" />
+    <ClCompile Include="source\Scene\GameState\GameInterrupt.cpp" />
     <ClCompile Include="source\Viewer\GameScene\SuspendViewer\SuspendViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -640,6 +641,7 @@
     <ClInclude Include="source\Scene\GameState\GameTutorial.h" />
     <ClInclude Include="source\Field\Object\TutorialBackGroundContainer.h" />
     <ClInclude Include="source\Viewer\TutorialScene\TutorialViewer.h" />
+    <ClInclude Include="source\Scene\GameState\GameInterrupt.h" />
     <ClInclude Include="source\Viewer\GameScene\SuspendViewer\SuspendViewer.h" />
   </ItemGroup>
   <ItemGroup>

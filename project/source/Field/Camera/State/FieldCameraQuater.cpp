@@ -15,7 +15,7 @@
 void FieldCamera::FieldCameraQuater::OnStart(FieldCamera & entity)
 {
 	//ƒpƒ‰ƒ[ƒ^‰Šú‰»
-	entity.cameraAngle = -45.0f;
+	entity.cameraAngle = entity.RotatedAngle;
 	entity.startPosition = entity.transform->GetPosition() - entity.targetObject->GetPosition();
 	entity.cntFrame = 0;
 

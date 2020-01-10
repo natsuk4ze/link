@@ -47,6 +47,7 @@ public:
 	void SetHelpMessage(void);
 	void SetIsShowTexture(bool Flag) { this->IsShowTexture = Flag; };
 	bool GetIsShowTexture(void) { return this->IsShowTexture; };
+	void SetActive(bool Flag) { this->isPlaying = Flag; };
 
 private:
 	TextureDrawer *BackGround;

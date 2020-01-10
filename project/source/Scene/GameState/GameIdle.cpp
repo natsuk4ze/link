@@ -70,6 +70,12 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 		entity.fieldCamera->ChangeMode(FieldCamera::AngleRotate);
 	}
 
+	// É|Å[ÉYâÊñ 
+	if (Keyboard::GetTrigger(DIK_V))
+	{
+		entity.ChangeState(GameScene::State::Interrupt);
+	}
+
 	return State::Idle;
 }
 

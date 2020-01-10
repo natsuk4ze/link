@@ -69,5 +69,11 @@ GameScene::State GameScene::GameFarView::OnUpdate(GameScene & entity)
 		}
 	}
 
+	// É|Å[ÉY
+	if (Keyboard::GetTrigger(DIK_V))
+	{
+		entity.ChangeState(GameScene::State::Interrupt);
+	}
+
 	return State::FarView;
 }

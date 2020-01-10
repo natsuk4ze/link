@@ -14,6 +14,7 @@
 #include "../../Viewer/GameScene/Controller/ResultViewer.h"
 #include "../../Viewer/GameScene/Controller/NameEntryViewer.h"
 #include "../../Viewer/TutorialScene/TutorialViewer.h"
+#include "../../Event/EventController.h"
 #include "../../../Framework/Transition/TransitionController.h"
 #include "../../../Framework/Serial/SerialWrapper.h"
 #include "../../Sound/PlayBGM.h"
@@ -49,9 +50,10 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	entity.field->SetViewerActive(false);
 	entity.gameViewer->SetActive(false);
 	GuideViewer::Instance()->SetActive(false);
-	//entity.guideViewer->SetActive(false);
 	entity.resultViewer->SetActive(false);
 	entity.nameEntryViewer->SetActive(false);
+	entity.eventController->ClearEventMessage();
+	entity.tutorialViewer->SetActive(false);
 
 	// タイトルのBGMを開始
 	PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Title, SoundConfig::VolumeBGM, 30, false);
@@ -60,6 +62,7 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	BoothController::Instance()->RotateTable(GameScene::AngleTable[0]);
 
 	entity.step = 0;
+	entity.InTutorial = false;
 }
 
 //=====================================
@@ -117,6 +120,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 						entity.field->Load();
 
 						// カメラの焦点をセット
+						entity.fieldCamera->InitRotatedAngle();
 						entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
 						entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
 
@@ -151,6 +155,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 							entity.gameViewer->SetActive(true, GameViewer::ViewerNo::ItemStock);
 							entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Timer);
 							entity.gameViewer->SetActive(true, GameViewer::ViewerNo::Level);
+							entity.fieldCamera->InitRotatedAngle();
 
 							GuideViewer::Instance()->SetData("張り切って行きましょう", GuideActor::AnimState::TalkingTypeA, SoundConfig::SEID::GameStart);
 							entity.ChangeState(GameScene::State::Idle);
@@ -166,6 +171,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 					entity.field->Load();
 
 					// カメラの焦点をセット
+					entity.fieldCamera->InitRotatedAngle();
 					entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
 					entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
 

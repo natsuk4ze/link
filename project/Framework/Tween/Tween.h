@@ -96,6 +96,8 @@ public:
 	***************************************/
 	static void Turn(GameObject& ref, const D3DXVECTOR3& endDirection, int duration, EaseType type, const D3DXVECTOR3& dummyAxis, std::function<void()> callback = nullptr);
 
+	static void SetPause(bool Flag) { Tween::PauseFlag = Flag; };
+
 private:
 	void Update();
 	void ClearContainer();
@@ -103,6 +105,7 @@ private:
 
 	class Tweener;
 	std::list<Tween::Tweener*> tweenerContainer;
+	static bool PauseFlag;
 
 	static Tween* mInstance;
 	Tween();
