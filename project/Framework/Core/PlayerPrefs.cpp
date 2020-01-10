@@ -19,7 +19,7 @@ bool PlayerPrefs::GetBool(const std::string & key)
 {
 	picojson::value value = GetData(key);
 
-	if (!value.is<picojson::null>())
+	if (value.is<picojson::null>())
 		return false;
 
 	return value.get<bool>();
@@ -32,7 +32,7 @@ std::string PlayerPrefs::GetString(const std::string & key)
 {
 	picojson::value value = GetData(key);
 
-	if (!value.is<picojson::null>())
+	if (value.is<picojson::null>())
 		return false;
 
 	return value.get<std::string>();
