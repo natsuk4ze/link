@@ -40,6 +40,7 @@
 #include "../Booth/BoothController.h"
 #include "../Presen/PresenDebugController.h"
 #include "../Sound/PlayBGM.h"
+#include "../Viewer/GameScene/SuspendViewer/SuspendViewer.h"
 
 #include "../../Framework/PostEffect/BloomController.h"
 #include "../../Framework/Effect/SpriteEffect.h"
@@ -103,6 +104,7 @@ void GameScene::Init()
 	tutorialViewer = new TutorialViewer();
 	rewardNotifier = new RewardNotifier();
 	debugController = new PresenDebugController(this);
+	suspendViewer = new SuspendViewer();
 
 	// ガイドビュアーの初期化
 	GuideViewer::Instance()->Init();
@@ -176,6 +178,7 @@ void GameScene::Uninit()
 	SAFE_DELETE(tutorialViewer);
 	SAFE_DELETE(rewardNotifier);
 	SAFE_DELETE(debugController);
+	SAFE_DELETE(suspendViewer);
 
 	// ガイドビュアーの削除
 	GuideViewer::Instance()->Uninit();
@@ -318,6 +321,7 @@ void GameScene::Draw()
 	titleViewer->Draw();
 	tutorialViewer->Draw();
 	rewardNotifier->Draw();
+	suspendViewer->Draw();
 
 	//*******別ウインドウを作成するため最後*******
 	GuideViewer::Instance()->Draw();

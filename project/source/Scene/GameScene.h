@@ -46,6 +46,7 @@ class TitleViewer;
 class TutorialViewer;
 class RewardNotifier;
 class PresenDebugController;
+class SuspendViewer;
 
 /**************************************
 クラス定義
@@ -106,6 +107,7 @@ private:
 	TitleViewer *titleViewer;					// タイトルビュアー
 	TutorialViewer *tutorialViewer;				// チュートリアルビュアー
 	RewardNotifier* rewardNotifier;				// リワードビュアー
+	SuspendViewer *suspendViewer;				// サスペンドビューワー
 
 	int remainTime;								//制限時間
 
