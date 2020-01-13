@@ -176,23 +176,39 @@ void TutorialViewer::ShowTutorial(HelpTextureType Type)
 	switch (Type)
 	{
 	case TutorialViewer::LinkRoad:
-		text += "町同士を繋げると、人が行き来して発展します\n";
+		text += "町同士を繋げるようにルートを作ると、人が行き来して発展します。\n";
 		text += "道の長さに制限はありませんが、\n";
-		text += "道を作るときは町同士が繋がっている必要があります";
+		text += "道を作るときは町同士が繋がっている必要があります。";
 		DescriptionText->SetText(text);
 		break;
+
 	case TutorialViewer::Develop:
-		DescriptionText->SetText("ここは開拓の操作説明第1行です。\nここは開拓の操作説明第2行です。\nここは開拓の操作説明第3行です。");
+		text += "川や山などを指定してルートを作ると、\n";
+		text += "開拓して道を置けるようになります。\n";
+		text += "開拓1マスにつき、画面左のストックを1個使います。\n";
+		DescriptionText->SetText(text);
 		break;
+
 	case TutorialViewer::ChangeCamera:
-		DescriptionText->SetText("ここはカメラの操作説明第1行です。\nここはカメラの操作説明第2行です。\nここはカメラの操作説明第3行です。");
+		text += "カメラを動かして視点を切り替えることができます。\n";
+		text += "フィールドを遠くから眺めて開発計画を立てましょう。\n";
+		text += "遠くから眺めてる間はルートを作ることができません。";
+		DescriptionText->SetText(text);
 		break;
+
 	case TutorialViewer::EventHappend:
-		DescriptionText->SetText("ここはイベントの説明第1行です。\nここはイベントの説明第2行です。\nここはイベントの説明第3行です。");
+		text += "光が出ているマスに道を置くと様々なイベントが発生します。\n";
+		text += "プレイヤーにとって良いイベントだけでなく、\n";
+		text += "悪いイベントが起きることもあるので注意しましょう。";
+		DescriptionText->SetText(text);
 		ExitText->SetText("道でイベントマスを覆う");
 		break;
+
 	case TutorialViewer::HighScore:
-		DescriptionText->SetText("ここは高得点の説明第1行です。\nここは高得点の説明第2行です。\nここは高得点の説明第3行です。");
+		text += "一度にたくさんの町を繋げられるように道を繋ぐと、\n";
+		text += "たくさんのポイントが入り、スコアが高くなります。\n";
+		text += "ハイスコアを目指して頑張りましょう。\n";
+		DescriptionText->SetText(text);
 		if (GamePad::GetPadCount() == 0)
 		{
 			ExitText->SetText("チュートリアル終了：Enter Key");
@@ -202,6 +218,7 @@ void TutorialViewer::ShowTutorial(HelpTextureType Type)
 			ExitText->SetText("チュートリアル終了：L1 Button");
 		}
 		break;
+
 	default:
 		break;
 	}
