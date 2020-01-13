@@ -181,7 +181,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 						entity.gameViewer->SetActive(true);
 
 						// グレードタイトル
-						entity.gameViewer->SetGradeTitle(4, [&]()
+						entity.gameViewer->SetGradeTitle(3, [&]()
 						{
 							GuideViewer::Instance()->SetData("張り切って行きましょう", GuideActor::AnimState::TalkingTypeA, SoundConfig::SEID::GameStart);
 							entity.ChangeState(GameScene::State::Tutorial);
