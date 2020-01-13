@@ -172,10 +172,14 @@ void TutorialViewer::ShowTutorial(HelpTextureType Type)
 	HelpTexture.at(TextureNum)->Fade(15.0f, 1.0f);
 
 	// 説明テキストの設置
+	std::string text = "";
 	switch (Type)
 	{
 	case TutorialViewer::LinkRoad:
-		DescriptionText->SetText("ここは道の操作説明第1行です。\nここは道の操作説明第2行です。\nここは道の操作説明第3行です。");
+		text += "町同士を繋げると、人が行き来して発展します\n";
+		text += "道の長さに制限はありませんが、\n";
+		text += "道を作るときは町同士が繋がっている必要があります";
+		DescriptionText->SetText(text);
 		break;
 	case TutorialViewer::Develop:
 		DescriptionText->SetText("ここは開拓の操作説明第1行です。\nここは開拓の操作説明第2行です。\nここは開拓の操作説明第3行です。");
