@@ -291,7 +291,6 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 		entity.level = 0;
 		entity.InTutorial = false;
 		entity.remainTime = 30 * 180;
-		Initialized = false;
 
 		// ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“
 		entity.ChangeState(GameScene::State::TransitionOut);
