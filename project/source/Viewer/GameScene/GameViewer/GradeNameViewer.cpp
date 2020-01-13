@@ -22,7 +22,7 @@ GradeNameViewer::GradeNameViewer(void) :
 {
 	isPlaying = true;
 
-	GradeTitle = new TextureDrawer(D3DXVECTOR2(600.0f, 600.0f), 1, 3);
+	GradeTitle = new TextureDrawer(D3DXVECTOR2(600.0f, 600.0f), 1, 4);
 	GradeTitle->LoadTexture("data/TEXTURE/Viewer/GameViewer/GradeUpViewer/GradeName.png");
 	GradeTitle->SetPosition(TitleDefaultPos);
 	GradeTitle->SetIndex(0);

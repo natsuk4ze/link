@@ -240,7 +240,7 @@ BeatTitleViewer::TitleID BeatGame::GetGameTitle(void)
 	switch (playingEvent)
 	{
 	case BeatGame::AILevelDecrease:
-		id = BeatTitleViewer::CalmAI;
+		id = BeatTitleViewer::ProtectCity;
 		break;
 
 	case BeatGame::BanStockUse:
