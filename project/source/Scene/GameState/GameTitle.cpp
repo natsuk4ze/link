@@ -63,6 +63,7 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 
 	entity.step = 0;
 	entity.InTutorial = false;
+	SelectedFlag = false;
 }
 
 //=====================================
@@ -93,7 +94,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 		return State::Title;
 	}
 
-	if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
+	if ((Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C)) && !SelectedFlag)
 	{
 		TitleViewer::MenuID selected = entity.titleViewer->GetSelectedMenu();
 
@@ -102,6 +103,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 		{
 			entity.remainTime = 30 * 180;
 			entity.step++;
+			SelectedFlag = true;
 
 			PlayBGM::Instance()->FadeOut();
 			PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.3f, 30, false);

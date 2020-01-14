@@ -21,6 +21,10 @@ class GameScene::GameTitle :
 public:
 	State OnUpdate(GameScene& entity);
 	void OnStart(GameScene& entity);
+
+private:
+	// ‘I‘ð‚µ‚½‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
+	bool SelectedFlag;
 };
 
 #endif
