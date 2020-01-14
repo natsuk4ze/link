@@ -22,7 +22,9 @@ class GameScene::GameTutorial : public BaseState<GameScene, GameScene::State>
 public:
 	virtual State OnUpdate(GameScene& entity) override;
 	virtual void OnStart(GameScene& entity) override;
+
 	void Init(GameScene& entity);
+	void TutorialClear(GameScene& entity);
 	
 private:
 	int FrameCount = 0;

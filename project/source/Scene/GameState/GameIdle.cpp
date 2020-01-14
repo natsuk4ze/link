@@ -71,7 +71,7 @@ GameScene::State GameScene::GameIdle::OnUpdate(GameScene & entity)
 	}
 
 	// É|Å[ÉYâÊñ 
-	if (Keyboard::GetTrigger(DIK_V))
+	if (Keyboard::GetTrigger(DIK_V) || GamePad::GetTrigger(0, BUTTON_R))
 	{
 		entity.ChangeState(GameScene::State::Interrupt);
 	}
