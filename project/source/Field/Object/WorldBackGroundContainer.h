@@ -33,7 +33,7 @@ namespace Field::Actor
 		void Update();
 		void Draw();
 
-		void Load();
+		void Load(int csvNo);
 
 		bool IsSeaPlace(const FieldPosition& position) const;
 

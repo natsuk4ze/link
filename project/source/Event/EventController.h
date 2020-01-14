@@ -56,10 +56,10 @@ private:
 #endif
 
 public:
-	EventController(int FieldLevel);
+	EventController(int FieldLevel, int csvNo);
 	~EventController();
 
-	void Init(int FieldLevel);
+	void Init(int FieldLevel, int csvNo);
 	void Init_Tutorial(void);
 	void Uninit(void);
 	void Update(void);

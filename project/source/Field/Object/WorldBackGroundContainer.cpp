@@ -92,12 +92,12 @@ namespace Field::Actor
 	/**************************************
 	“Ç‚İ‚İˆ—
 	***************************************/
-	void WorldBackGroundContainer::Load()
+	void WorldBackGroundContainer::Load(int csvNo)
 	{
 		using Model::PlaceType;
 
 		//CSVƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚İ
-		std::ifstream layerData(Const::FieldLayerFile[0]);
+		std::ifstream layerData(Const::FieldLayerFile[csvNo]);
 
 		std::string layerLine;
 		const char Delim = ',';		//‹æØ‚è•¶š

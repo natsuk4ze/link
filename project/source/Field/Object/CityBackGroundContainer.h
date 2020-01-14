@@ -40,14 +40,14 @@ namespace Field::Actor
 		void Update();
 		void Draw();
 
-		void Load();
+		void Load(int csvNo);
 
 		bool EnableAtlantis(const FieldPosition& position) const;
 
 	private:
 		InstancingMeshContainer *groundMesh;
 
-		std::map<FieldPosition, int> LoadRiverFlowData();
+		std::map<FieldPosition, int> LoadRiverFlowData(int csvNo);
 	};
 }
 #endif

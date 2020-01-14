@@ -80,6 +80,9 @@ const unsigned char GameScene::AngleTable[3] = { 105, 140, 175 };
 ***************************************/
 void GameScene::Init()
 {
+	// 読み込むCSV番号を作成
+	csvNo = Math::RandomRange(0, CsvFileMax);
+
 	//カメラ作成
 	fieldCamera = new FieldCamera();
 	Camera::SetMainCamera(fieldCamera);
@@ -93,7 +96,7 @@ void GameScene::Init()
 	//各インスタンス作成
 	field = new Field::FieldController(level);
 	gameViewer = new GameViewer();
-	eventController = new EventController(level);
+	eventController = new EventController(level, csvNo);
 	eventHandler = new FieldEventHandler();
 	eventController->ReceiveFieldEventHandler(eventHandler);
 	bloomController = new BloomController();
@@ -409,7 +412,7 @@ void GameScene::DebugTool()
 		level = 0;
 		Clear();
 		SetFieldLevel(level);
-		field->Load();
+		field->Load(csvNo);
 		ChangeState(Idle);
 
 		PlayBGM::Instance()->FadeOut();
@@ -421,7 +424,7 @@ void GameScene::DebugTool()
 		level = 1;
 		Clear();
 		SetFieldLevel(level);
-		field->Load();
+		field->Load(csvNo);
 		ChangeState(Idle);
 
 		PlayBGM::Instance()->FadeOut();
@@ -433,7 +436,7 @@ void GameScene::DebugTool()
 		level = 2;
 		Clear();
 		SetFieldLevel(level);
-		field->Load();
+		field->Load(csvNo);
 		ChangeState(Idle);
 
 		PlayBGM::Instance()->FadeOut();
@@ -590,7 +593,7 @@ void GameScene::SetFieldLevel(int level)
 	start = ProfilerCPU::GetCounter();
 
 	//イベントコントローラ作成
-	eventController->Init(level);
+	eventController->Init(level, csvNo);
 
 	//イベントハンドラ設定
 	SetEventHandler();

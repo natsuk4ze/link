@@ -32,7 +32,7 @@ namespace Field::Actor
 		virtual void Update() = 0;
 		virtual void Draw() = 0;
 
-		virtual void Load() = 0;
+		virtual void Load(int csvNo) = 0;
 
 		virtual bool IsSeaPlace(const FieldPosition& position) const;
 		virtual bool EnableAtlantis(const FieldPosition& position) const = 0;

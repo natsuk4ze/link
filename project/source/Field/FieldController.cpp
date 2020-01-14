@@ -296,10 +296,10 @@ namespace Field
 		ResultPara.Clear();
 
 		//アクターのデータ読み込み
-		placeActController->Load();
+		placeActController->Load(0);
 
-		// チュートリアルのマップデータは3番
-		placeContainer->LoadCSV(Const::FieldDataFile[3]);
+		// チュートリアルのマップデータ読み込み
+		placeContainer->LoadCSV(Const::TutorialDataFile);
 
 		//アクター生成
 		auto places = placeContainer->GetAllPlaces();
@@ -355,18 +355,28 @@ namespace Field
 
 	/**************************************
 	CSV読み込み処理
-	TODO：読み込むデータを選択できるようにする
 	***************************************/
-	void FieldController::Load()
+	void FieldController::Load(int csvNo)
 	{
 		LARGE_INTEGER start, end;
 
 		//アクターのデータ読み込み
-		placeActController->Load();
+		placeActController->Load(csvNo);
 
 		//モデルのデータ読み込み
 		start = ProfilerCPU::GetCounter();
-		placeContainer->LoadCSV(Const::FieldDataFile[currentLevel]);
+		switch (currentLevel)
+		{
+		case Field::City:
+			placeContainer->LoadCSV(Const::CityDataFile[csvNo]);
+			break;
+		case Field::World:
+			placeContainer->LoadCSV(Const::WorldDataFile[csvNo]);
+			break;
+		case Field::Space:
+			placeContainer->LoadCSV(Const::SpaceDataFile[csvNo]);
+			break;
+		}
 		end = ProfilerCPU::GetCounter();
 
 		Debug::Log("Load ModelData : %f", ProfilerCPU::CalcElapsed(start, end));
