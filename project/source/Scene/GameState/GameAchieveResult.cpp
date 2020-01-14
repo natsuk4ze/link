@@ -132,9 +132,10 @@ void GameScene::GameAchieveResult::TransitionToTitle(GameScene& entity)
 	TransitionController::Instance()->SetTransition(false, TransitionType::HexaPop, [&]()
 	{
 		entity.level = 0;
+		entity.csvNo = rand() % entity.CsvFileMax;
 		entity.Clear();
 		entity.SetFieldLevel(0);
-		entity.field->Load();
+		entity.field->Load(entity.csvNo);
 		entity.ChangeState(State::Title);
 	});
 }

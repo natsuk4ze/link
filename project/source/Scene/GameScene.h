@@ -115,6 +115,9 @@ private:
 
 	int step;									//各ステートの現在ステップ
 
+	int csvNo;									// 読み込むCSV番号
+	const int CsvFileMax = 3;					// CSVデータ数
+
 	unsigned long long entiretyScore;			//全レベルの合計スコア
 	bool ShowNameEntry;							//ネームエントリービューア表示のフラグ
 	bool InTutorial;							//チュートリアルかどうか

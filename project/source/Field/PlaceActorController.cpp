@@ -211,20 +211,20 @@ namespace Field::Actor
 	/**************************************
 	リソース読み込み処理
 	***************************************/
-	void PlaceActorController::Load()
+	void PlaceActorController::Load(int csvNo)
 	{
 		LARGE_INTEGER start, end;
 
 		//背景データをロード
 		start = ProfilerCPU::GetCounter();
-		bgContainer->Load();
+		bgContainer->Load(csvNo);
 		end = ProfilerCPU::GetCounter();
 
 		Debug::Log("Load BG : %f", ProfilerCPU::CalcElapsed(start, end));
 
 		// パッセンジャーの背景データをロード
 		start = ProfilerCPU::GetCounter();
-		passengerController->LoadCSV(Field::Const::FieldLayerFile[0]);
+		passengerController->LoadCSV(Field::Const::FieldLayerFile[csvNo]);
 		end = ProfilerCPU::GetCounter();
 
 		Debug::Log("Load Passenger : %f", ProfilerCPU::CalcElapsed(start, end));

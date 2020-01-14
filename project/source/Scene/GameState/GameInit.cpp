@@ -67,7 +67,7 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
 
 	//CSVデータをロード
-	entity.field->Load();
+	entity.field->Load(entity.csvNo);
 
 	//イベントハンドラ設定
 	entity.SetEventHandler();

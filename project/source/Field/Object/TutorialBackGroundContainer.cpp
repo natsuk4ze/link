@@ -82,12 +82,12 @@ namespace Field::Actor
 	/**************************************
 	読み込み処理
 	***************************************/
-	void TutorialBackGroundContainer::Load()
+	void TutorialBackGroundContainer::Load(int csvNo)
 	{
 		using Model::PlaceType;
 
 		//CSVファイルを読み込み
-		std::ifstream stream(Const::FieldDataFile[3]);
+		std::ifstream stream(Const::TutorialDataFile);
 
 		std::string line;			//CSVを1行ずつ読むバッファ
 		const char Delim = ',';		//区切り文字

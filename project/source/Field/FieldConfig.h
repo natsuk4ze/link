@@ -19,7 +19,10 @@ namespace Field
 	class Const
 	{
 	public:
-		static const char* FieldDataFile[];		//PlaceデータのCSVファイル名
+		static const char* CityDataFile[];		// Cityレベルのフィールドデータ
+		static const char* WorldDataFile[];		// Worldレベルのフィールドデータ
+		static const char* SpaceDataFile[];		// Spaceレベルのフィールドデータ
+		static const char* TutorialDataFile;	// Tutorialレベルのフィールドデータ
 		static const char* FieldLayerFile[];	//陸地、海データのCSVファイル名
 		static const char* RiverFlowFile[];		//川の流れる向きのCSVファイル名
 

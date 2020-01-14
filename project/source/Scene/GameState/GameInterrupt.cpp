@@ -74,7 +74,7 @@ GameScene::State GameScene::GameInterrupt::OnUpdate(GameScene & entity)
 				entity.level = 0;
 				entity.Clear();
 				entity.SetFieldLevel(0);
-				entity.field->Load();
+				entity.field->Load(entity.csvNo);
 				entity.ChangeState(State::Title);
 			});
 		}

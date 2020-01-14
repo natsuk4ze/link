@@ -33,7 +33,7 @@ void GameScene::GameTransitionIn::OnStart(GameScene & entity)
 	entity.SetFieldLevel(entity.level);
 
 	//マップ読み込み
-	entity.field->Load();
+	entity.field->Load(entity.csvNo);
 
 	//BGMをクロスフェード
 	SoundConfig::BGMID bgmID = SoundConfig::GetBgmID(entity.level);

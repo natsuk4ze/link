@@ -32,7 +32,7 @@ namespace Field::Actor
 		void Update();
 		void Draw();
 
-		void Load();
+		void Load(int csvNo);
 
 		bool EnableAtlantis(const FieldPosition& position) const;
 
