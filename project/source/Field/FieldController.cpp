@@ -62,9 +62,10 @@ namespace Field
 		currentLevel(level),
 		operationZ(OperationExplanationViewer::OperationID::Z_None),
 		operationX(OperationExplanationViewer::OperationID::X_None),
-		operationSpace(OperationExplanationViewer::OperationID::Space_None),
+		operationSpace(OperationExplanationViewer::OperationID::C_None),
 		enableDevelop(true),
-		flgWaitPopup(false)
+		flgWaitPopup(false),
+		inFarView(false)
 	{
 		using Model::PlaceContainer;
 		using Model::PlaceModel;
@@ -231,6 +232,7 @@ namespace Field
 		LARGE_INTEGER start, end;
 
 		currentLevel = level;
+		SetFarView(false);;
 
 		//フィールドレベルが関係するインスタンスを作成
 		start = ProfilerCPU::GetCounter();
@@ -272,6 +274,7 @@ namespace Field
 	void FieldController::SetTutorialField(void)
 	{
 		currentLevel = FieldLevel::City;
+		SetFarView(false);
 
 		//フィールドレベルが関係するインスタンスを作成
 		skybox = new FieldSkyBox(FieldLevel::City);
@@ -322,6 +325,28 @@ namespace Field
 	bool FieldController::IsDeveloped(void)
 	{
 		return developper->IsDeveloped();
+	}
+
+	/**************************************
+	ファービュー設定
+	***************************************/
+	void FieldController::SetFarView(bool state)
+	{
+		inFarView = state;
+
+		operationC = inFarView ?
+			OperationExplanationViewer::OperationID::C_None :
+			OperationExplanationViewer::OperationID::C_Change;
+
+		operationSpace = inFarView ?
+			OperationExplanationViewer::OperationID::NearView :
+			OperationExplanationViewer::OperationID::FarView;
+
+		if (inFarView)
+		{
+			operationZ = OperationExplanationViewer::OperationID::Z_None;
+			operationX = OperationExplanationViewer::OperationID::X_None;
+		}
 	}
 
 	/**************************************
@@ -689,6 +714,7 @@ namespace Field
 		viewer->SetOperationExplanation(
 			(OperationExplanationViewer::OperationID)operationZ,
 			(OperationExplanationViewer::OperationID)operationX,
+			(OperationExplanationViewer::OperationID)operationC,
 			(OperationExplanationViewer::OperationID)operationSpace
 		);
 	}

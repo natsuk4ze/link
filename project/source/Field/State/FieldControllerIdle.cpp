@@ -36,8 +36,6 @@ namespace Field
 			OperationExplanationViewer::OperationID::X_Develop :
 			OperationExplanationViewer::OperationID::X_None;
 
-		entity.operationSpace = OperationExplanationViewer::OperationID::Space_Change;
-
 		//ZƒL[‚ª‰Ÿ‚³‚ê‚½‚çBuild‚Ö‘JˆÚ
 		if (entity.input->GetBuildTrigger())
 		{
