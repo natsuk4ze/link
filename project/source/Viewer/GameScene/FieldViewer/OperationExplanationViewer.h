@@ -36,6 +36,8 @@ public:
 		X_Cancel,
 		//Spaceについて「視点変更」を表示する
 		Space_Change,
+		//「眺める」
+		FarView,
 		//Zについての操作を表示しない
 		Z_None,
 		//Xについての操作を表示しない
@@ -52,7 +54,7 @@ public:
 
 private:
 
-	const static int textMax = 3;
+	const static int textMax = 4;
 
 	//テキスト
 	BaseViewerDrawer * text[textMax];
