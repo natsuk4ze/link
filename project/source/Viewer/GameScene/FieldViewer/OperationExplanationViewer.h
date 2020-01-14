@@ -35,30 +35,34 @@ public:
 		//Xについて「キャンセル」を表示する
 		X_Cancel,
 		//Spaceについて「視点変更」を表示する
-		Space_Change,
+		C_Change,
+		//「眺める」
+		FarView,
+		// 「戻る」
+		NearView,
 		//Zについての操作を表示しない
 		Z_None,
 		//Xについての操作を表示しない
 		X_None,
 		//Spaceについての操作を表示しない
-		Space_None,
+		C_None,
 		//種類数
 		Max
 	};
 
 	void Update();
 	void Draw(void);
-	void Set(OperationID id0, OperationID id1, OperationID id2);
+	void Set(OperationID id0, OperationID id1, OperationID id2, OperationID id3);
 
 private:
 
-	const static int textMax = 3;
+	const static int textMax = 4;
 
 	//テキスト
 	BaseViewerDrawer * text[textMax];
 
 	//テクスチャUVセット処理
-	void SetTexture(OperationID id0, OperationID id1, OperationID id2);
+	void SetTexture(OperationID id0, OperationID id1, OperationID id2, OperationID id3);
 };
 
 #endif

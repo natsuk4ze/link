@@ -40,8 +40,10 @@ public:
 		OperationExplanationViewer::OperationID id0, 
 		//Xキーの操作に表示する説明ID
 		OperationExplanationViewer::OperationID id1, 
-		//Spaceキーの操作に表示する説明ID
-		OperationExplanationViewer::OperationID id2);
+		//Cキーの操作に表示する説明ID
+		OperationExplanationViewer::OperationID id2,
+		//Spaceキーの操作
+		OperationExplanationViewer::OperationID id3);
 
 	//上昇した分のリンクレベルを表示する
 	void ViewLinkLevelUp(int level, std::function<void()> callback = nullptr);

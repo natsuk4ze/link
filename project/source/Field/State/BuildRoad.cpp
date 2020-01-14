@@ -56,8 +56,6 @@ namespace Field
 
 		entity.operationX = OperationExplanationViewer::OperationID::X_Cancel;
 
-		entity.operationSpace = OperationExplanationViewer::OperationID::Space_Change;
-
 		//Zキーが押されたら操作対象のプレイスを道に変える
 		//TODO：キーボード以外の入力にも対応
 		if (entity.input->GetBuildTrigger())

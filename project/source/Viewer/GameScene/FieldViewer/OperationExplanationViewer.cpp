@@ -14,13 +14,19 @@
 OperationExplanationViewer::OperationExplanationViewer()
 {
 	//テキスト
-	for  (int i = 0; i < textMax; i++)
+	const D3DXVECTOR3 Size = { 250.0f, 62.5f, 0.0f };
+	const D3DXVECTOR3 BasePosition = { SCREEN_CENTER_X - Size.x * 1.5f, 960.0f, 0.0f };
+	for (int i = 0; i < textMax; i++)
 	{
+
 		text[i] = new BaseViewerDrawer();
 		text[i]->LoadTexture("data/TEXTURE/Viewer/FieldViewer/OperationExplanationViewer/OperationExplanation.png");
-		text[i]->size = D3DXVECTOR3(210.0f, 50.0f, 0.0f);
+		text[i]->size = Size;
 		text[i]->rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		text[i]->position = D3DXVECTOR3((float)(SCREEN_WIDTH/3 + (i*SCREEN_WIDTH/3/2)), SCREEN_CENTER_Y*1.8f, 0.0f);
+
+		D3DXVECTOR3 position = BasePosition;
+		position.x += Size.x * i;
+		text[i]->position = position;
 		text[i]->MakeVertex();
 
 		//初回のセットまで透明にしておく
@@ -60,13 +66,14 @@ void OperationExplanationViewer::Draw(void)
 //=============================================================================
 // テクスチャUVセット処理
 //=============================================================================
-void OperationExplanationViewer::SetTexture(OperationID id0, OperationID id1, OperationID id2)
+void OperationExplanationViewer::SetTexture(OperationID id0, OperationID id1, OperationID id2, OperationID id3)
 {
 	//idを格納しておく配列
 	OperationID id[textMax] = {
 		id0,
 		id1,
-		id2
+		id2,
+		id3
 	};
 
 	for (int i = 0; i < textMax; i++)
@@ -75,7 +82,7 @@ void OperationExplanationViewer::SetTexture(OperationID id0, OperationID id1, Op
 		//表示しないオペレーションなら透明にしておく
 		if (id[i] < Z_None)
 		{
-			const int textTypeMax = 5;
+			const int textTypeMax = 7;
 
 			//テキストのテクスチャUVを変更
 			text[i]->SetTexture(1, textTypeMax, id[i]);
@@ -94,8 +101,8 @@ void OperationExplanationViewer::SetTexture(OperationID id0, OperationID id1, Op
 //=============================================================================
 // 操作説明ビュアーのセット処理
 //=============================================================================
-void OperationExplanationViewer::Set(OperationID id0, OperationID id1, OperationID id2)
+void OperationExplanationViewer::Set(OperationID id0, OperationID id1, OperationID id2, OperationID id3)
 {
 	//テクスチャ情報受け渡し処理
-	SetTexture(id0,id1,id2);
+	SetTexture(id0, id1, id2, id3);
 }

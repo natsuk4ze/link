@@ -19,6 +19,7 @@
 void GameScene::GameFarView::OnStart(GameScene & entity)
 {
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::FarView);
+	entity.field->SetFarView(true);
 }
 
 /**************************************
@@ -59,6 +60,8 @@ GameScene::State GameScene::GameFarView::OnUpdate(GameScene & entity)
 	else if (entity.field->ShouldSwicthCamera())
 	{
 		entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
+		entity.field->SetFarView(false);
+
 		if (!entity.InTutorial)
 		{
 			entity.ChangeState(State::Idle);

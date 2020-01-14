@@ -125,7 +125,7 @@ namespace Field
 
 		// 作った道の数を取得
 		int GetRoadNum(void);
-
+		
 		// ====================
 		// チュートリアル用
 		// ====================
@@ -134,6 +134,8 @@ namespace Field
 
 		// 開拓したかどうかを調べる
 		bool IsDeveloped(void);
+
+		void SetFarView(bool state);
 
 	private:
 		//内部クラス前方宣言
@@ -186,6 +188,9 @@ namespace Field
 		int operationZ;
 		int operationX;
 		int operationSpace;
+		int operationC;
+
+		bool inFarView;
 
 		State current;
 		ControllerState *state;					//現在のステート

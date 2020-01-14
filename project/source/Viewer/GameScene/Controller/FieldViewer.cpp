@@ -52,10 +52,10 @@ void FieldViewer::Update()
 
 #ifdef _DEBUG
 
-	if (Keyboard::GetTrigger(DIK_O))
-	{
-		SetOperationExplanation(operationExplanation->X_Cancel, operationExplanation->X_Develop, operationExplanation->X_None);
-	}
+	//if (Keyboard::GetTrigger(DIK_O))
+	//{
+	//	SetOperationExplanation(operationExplanation->X_Cancel, operationExplanation->X_Develop, operationExplanation->X_None);
+	//}
 
 	if (Keyboard::GetTrigger(DIK_L))
 	{
@@ -114,7 +114,8 @@ void FieldViewer::ViewLinkLevelUp(int level, std::function<void()> callback)
 void FieldViewer::SetOperationExplanation(
 	OperationExplanationViewer::OperationID id1,
 	OperationExplanationViewer::OperationID id2,
-	OperationExplanationViewer::OperationID id3)
+	OperationExplanationViewer::OperationID id3,
+	OperationExplanationViewer::OperationID id4)
 {
-	operationExplanation->Set(id1,id2,id3);
+	operationExplanation->Set(id1,id2,id3, id4);
 }

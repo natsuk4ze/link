@@ -55,8 +55,6 @@ namespace Field
 			OperationExplanationViewer::OperationID::X_Develop :
 			OperationExplanationViewer::OperationID::X_None;
 
-		entity.operationSpace = OperationExplanationViewer::OperationID::Space_Change;
-
 		//Xキーが押されたら操作対象のプレイスを道に変える
 		//TODO：キーボード以外の入力にも対応
 		if (entity.input->GetDevelopTrigger())
