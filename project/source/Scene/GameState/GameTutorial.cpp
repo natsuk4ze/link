@@ -61,6 +61,23 @@ void GameScene::GameTutorial::Init(GameScene& entity)
 }
 
 /**************************************
+チュートリアルクリア処理
+***************************************/
+void GameScene::GameTutorial::TutorialClear(GameScene & entity)
+{
+	entity.tutorialViewer->SetActive(false);
+	entity.step = Transition;
+
+	// 初期化
+	entity.level = 0;
+	entity.InTutorial = false;
+	entity.remainTime = 30 * 180;
+
+	// トランジション
+	entity.ChangeState(GameScene::State::TransitionOut);
+}
+
+/**************************************
 更新処理
 ***************************************/
 GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
@@ -149,17 +166,19 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 
 	case TutorialStep::Event:
 
-		FrameCount++;
-
-		// 説明を表示する
-		if (FrameCount == 60)
+		if (!entity.tutorialViewer->GetIsShowTexture())
 		{
-			entity.tutorialViewer->ShowTutorial(TutorialViewer::HelpTextureType::EventHappend);
+			FrameCount++;
+
+			// 説明を表示する
+			if (FrameCount == 60)
+			{
+				entity.tutorialViewer->ShowTutorial(TutorialViewer::HelpTextureType::EventHappend);
+			}
 		}
 
 		// イベントの発生を確認
-		if (!entity.eventController->IsEmptyEventVec() ||
-			(FrameCount >= 600 && !entity.tutorialViewer->GetIsShowTexture()))
+		if (!entity.eventController->IsEmptyEventVec() || FrameCount >= 600)
 		{
 			ClearFlag = true;
 		}
@@ -214,18 +233,9 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 		// チュートリアル終了
 		if (!entity.tutorialViewer->GetIsShowTexture())
 		{
-			if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_Y))
+			if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_R))
 			{
-				entity.tutorialViewer->SetActive(false);
-				entity.step = Transition;
-
-				// 初期化
-				entity.level = 0;
-				entity.InTutorial = false;
-				entity.remainTime = 30 * 180;
-
-				// トランジション
-				entity.ChangeState(GameScene::State::TransitionOut);
+				TutorialClear(entity);
 			}
 		}
 		break;
@@ -265,9 +275,10 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 				entity.fieldCamera->ChangeMode(FieldCamera::AngleRotate);
 			}
 
-			if (Keyboard::GetTrigger(DIK_V) || GamePad::GetTrigger(0, BUTTON_R))
+			if (Keyboard::GetTrigger(DIK_F5) || GamePad::GetTrigger(0, BUTTON_R))
 			{
-				entity.ChangeState(GameScene::State::Interrupt);
+				TutorialClear(entity);
+				//entity.ChangeState(GameScene::State::Interrupt);
 			}
 		}
 		else if (entity.step != TutorialStep::WaitOver)
@@ -281,20 +292,20 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 		}
 	}
 
-	//デバッグ用スキップ機能
-	if (Keyboard::GetTrigger(DIK_F5))
-	{
-		entity.tutorialViewer->isPlaying = false;
-		entity.step = Transition;
+	////デバッグ用スキップ機能
+	//if (Keyboard::GetTrigger())
+	//{
+	//	entity.tutorialViewer->isPlaying = false;
+	//	entity.step = Transition;
 
-		// 初期化
-		entity.level = 0;
-		entity.InTutorial = false;
-		entity.remainTime = 30 * 180;
+	//	// 初期化
+	//	entity.level = 0;
+	//	entity.InTutorial = false;
+	//	entity.remainTime = 30 * 180;
 
-		// トランジション
-		entity.ChangeState(GameScene::State::TransitionOut);
-	}
+	//	// トランジション
+	//	entity.ChangeState(GameScene::State::TransitionOut);
+	//}
 
 	return State::Tutorial;
 }

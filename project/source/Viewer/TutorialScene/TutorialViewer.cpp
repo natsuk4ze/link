@@ -215,7 +215,7 @@ void TutorialViewer::ShowTutorial(HelpTextureType Type)
 		}
 		else
 		{
-			ExitText->SetText("チュートリアル終了：L1 Button");
+			ExitText->SetText("チュートリアル終了：Option Button");
 		}
 		break;
 
