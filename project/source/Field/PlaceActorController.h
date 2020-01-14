@@ -64,7 +64,7 @@ namespace Field::Actor
 
 		//読み込み処理
 		static void LoadResource();
-		void Load();
+		void Load(int csvNo);
 
 		//アクター生成処理
 		void SetActor(const Model::PlaceModel* place, int delay = 0);

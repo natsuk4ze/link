@@ -82,15 +82,15 @@ namespace Field::Actor
 	/**************************************
 	読み込み処理
 	***************************************/
-	void CityBackGroundContainer::Load()
+	void CityBackGroundContainer::Load(int csvNo)
 	{
 		using Model::PlaceType;
 
 		//川の流れる方向のデータを読み込み
-		std::map<FieldPosition, int> flowMap = LoadRiverFlowData();
+		std::map<FieldPosition, int> flowMap = LoadRiverFlowData(csvNo);
 
 		//CSVファイルを読み込み
-		std::ifstream stream(Const::FieldDataFile[0]);
+		std::ifstream stream(Const::CityDataFile[csvNo]);
 
 		std::string line;			//CSVを1行ずつ読むバッファ
 		const char Delim = ',';		//区切り文字
@@ -171,12 +171,12 @@ namespace Field::Actor
 	/**************************************
 	川データ読み込み
 	***************************************/
-	std::map<FieldPosition, int> CityBackGroundContainer::LoadRiverFlowData()
+	std::map<FieldPosition, int> CityBackGroundContainer::LoadRiverFlowData(int csvNo)
 	{
 		std::map<FieldPosition, int> out;
 
 		//CSVファイルを読み込み
-		std::ifstream stream(Const::RiverFlowFile[0]);
+		std::ifstream stream(Const::RiverFlowFile[csvNo]);
 
 		std::string line;			//CSVを1行ずつ読むバッファ
 		const char Delim = ',';		//区切り文字

@@ -134,7 +134,9 @@ void PassengerController::CheckPassengerMesh()
 void PassengerController::LoadCSV(const char* path)
 {
 	if (initializedMap)
-		return;
+	{
+		continentMap.clear();
+	}
 
 	std::fstream stream(path);
 

@@ -87,8 +87,7 @@ namespace Field
 		void Clear();
 
 		//データ読み込み処理
-		//TODO:読み込むデータを選択できるようにする
-		void Load();
+		void Load(int csvNo);
 
 		//入力確認処理
 		void CheckInput();

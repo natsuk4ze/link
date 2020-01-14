@@ -53,16 +53,28 @@ using namespace EventConfig;
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-const char* EventCSVPath_City = "data/FIELD/City/City_Event.csv";
-const char* EventCSVPath_World = "data/FIELD/World/World_Event.csv";
-const char* EventCSVPath_Space = "data/FIELD/Space/Space_Event.csv";
+const char* EventCSVPath_City[] = { 
+	"data/FIELD/City/City_Event.csv", 
+	"data/FIELD/City/City1_Event.csv",
+	"data/FIELD/City/City2_Event.csv"
+};
+const char* EventCSVPath_World[] = {
+	"data/FIELD/World/World_Event.csv", 
+	"data/FIELD/World/World1_Event.csv"
+	"data/FIELD/World/World2_Event.csv"
+};
+const char* EventCSVPath_Space[] = { 
+	"data/FIELD/Space/Space_Event.csv",
+	"data/FIELD/Space/Space1_Event.csv",
+	"data/FIELD/Space/Space2_Event.csv",
+};
 const char* EventCSVPath_Tutorial = "data/FIELD/Tutorial/Tutorial_Event.csv";
 
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-EventController::EventController(int FieldLevel) :
+EventController::EventController(int FieldLevel, int csvNo) :
 	InBanStock(false),
 	InPauseEvent(false)
 	//IsViewerPlaying(true)
@@ -73,7 +85,7 @@ EventController::EventController(int FieldLevel) :
 
 	beatViewer = new BeatGameViewer();
 
-	Init(FieldLevel);
+	Init(FieldLevel, csvNo);
 
 	camera->AddPlugin(CameraShakePlugin::Instance());
 
@@ -106,7 +118,7 @@ EventController::~EventController()
 //=============================================================================
 // 初期化
 //=============================================================================
-void EventController::Init(int FieldLevel)
+void EventController::Init(int FieldLevel, int csvNo)
 {
 	// エミッターコンテナのクリア
 	for (auto&& pair : infoEmitterContainer)
@@ -119,15 +131,15 @@ void EventController::Init(int FieldLevel)
 	// CSVファイルを読み取る
 	if (FieldLevel == Field::City)
 	{
-		LoadCSV(EventCSVPath_City);
+		LoadCSV(EventCSVPath_City[csvNo]);
 	}
 	else if (FieldLevel == Field::World)
 	{
-		LoadCSV(EventCSVPath_World);
+		LoadCSV(EventCSVPath_World[csvNo]);
 	}
 	else if (FieldLevel == Field::Space)
 	{
-		LoadCSV(EventCSVPath_Space);
+		LoadCSV(EventCSVPath_Space[csvNo]);
 	}
 
 	beatViewer->SetFieldLevel(FieldLevel);

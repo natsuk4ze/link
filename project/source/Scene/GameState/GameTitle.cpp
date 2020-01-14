@@ -117,7 +117,7 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 						entity.level = 0;
 						entity.Clear();
 						entity.SetTutorial();
-						entity.field->Load();
+						entity.field->Load(entity.csvNo);
 
 						// カメラの焦点をセット
 						entity.fieldCamera->InitRotatedAngle();
