@@ -275,10 +275,10 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 				entity.fieldCamera->ChangeMode(FieldCamera::AngleRotate);
 			}
 
+			// チュートリアル中止
 			if (Keyboard::GetTrigger(DIK_F5) || GamePad::GetTrigger(0, BUTTON_R))
 			{
 				TutorialClear(entity);
-				//entity.ChangeState(GameScene::State::Interrupt);
 			}
 		}
 		else if (entity.step != TutorialStep::WaitOver)
@@ -291,21 +291,6 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 			}
 		}
 	}
-
-	////デバッグ用スキップ機能
-	//if (Keyboard::GetTrigger())
-	//{
-	//	entity.tutorialViewer->isPlaying = false;
-	//	entity.step = Transition;
-
-	//	// 初期化
-	//	entity.level = 0;
-	//	entity.InTutorial = false;
-	//	entity.remainTime = 30 * 180;
-
-	//	// トランジション
-	//	entity.ChangeState(GameScene::State::TransitionOut);
-	//}
 
 	return State::Tutorial;
 }
