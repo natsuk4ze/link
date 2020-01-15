@@ -33,7 +33,7 @@ namespace Field
 	***************************************/
 	const char* Const::FieldLayerFile[] = {
 		"data/FIELD/World/World_Continent.csv",
-		"data/FIELD/World/World1_Continent.csv"
+		"data/FIELD/World/World1_Continent.csv",
 		"data/FIELD/World/World2_Continent.csv"
 	};
 
