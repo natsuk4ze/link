@@ -88,6 +88,8 @@ void GameScene::GameIdle::OnStart(GameScene & entity)
 	entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
 
+	entity.field->SetFarView(false);
+
 	// ゲームシーンで使用するUIの描画をON
 	entity.field->SetViewerActive(true);
 	entity.gameViewer->SetActive(true);

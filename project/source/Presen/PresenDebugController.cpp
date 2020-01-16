@@ -37,6 +37,8 @@ PresenDebugController::~PresenDebugController()
 ***************************************/
 void PresenDebugController::Update()
 {
+	return;
+
 	//Xƒ{ƒ^ƒ“‚ÅAIƒŒƒxƒ‹Œ¸­
 	if (GamePad::GetTrigger(0, BUTTON_B))
 	{
