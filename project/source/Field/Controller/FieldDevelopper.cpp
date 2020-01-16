@@ -87,6 +87,9 @@ namespace Field
 			if (place->IsType(PlaceType::None))
 				place->SetType(PlaceType::Road);
 
+			if (place->IsType(PlaceType::Bridge))
+				place->DevelopBridge();
+
 			cntRoot++;
 		}
 

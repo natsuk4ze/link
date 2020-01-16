@@ -57,7 +57,8 @@ namespace Field::Model
 		uniqueID(incrementID++),
 		type(type),
 		prevType(type),
-		Position(x, z)
+		Position(x, z),
+		isDeveloppedBridge(false)
 	{
 		//隣接プレイスのコンテナを準備
 		adjacencies.resize(Adjacency::Max, NULL);
@@ -124,6 +125,10 @@ namespace Field::Model
 	{
 		//空白タイプか橋でなければ道に出来ない
 		if (type != PlaceType::None && type != PlaceType::Bridge)
+			return false;
+
+		//橋の場合、開発済みなら駄目
+		if (type == PlaceType::Bridge && isDeveloppedBridge)
 			return false;
 
 		//隣接プレイスに交差点、街、道が含まれていたらルートを始められる
@@ -442,6 +447,14 @@ namespace Field::Model
 	std::vector<Adjacency> PlaceModel::GetConnectingAdjacency() const
 	{
 		return connectDirection;
+	}
+
+	/**************************************
+	橋の開発
+	***************************************/
+	void PlaceModel::DevelopBridge()
+	{
+		isDeveloppedBridge = true;
 	}
 
 }
