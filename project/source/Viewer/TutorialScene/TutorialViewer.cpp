@@ -64,6 +64,11 @@ TutorialViewer::TutorialViewer() :
 	ExitText->SetPosition(D3DXVECTOR3(SCREEN_CENTER_X, 950.0f, 0.0f));
 	ExitText->SetText("");
 	ExitText->SetActive(false);
+
+	textBG = new TextureDrawer({ 700.0f, 100.0f });
+	textBG->LoadTexture("data/TEXTURE/Viewer/TutorialViewer/TextBG.png");
+	textBG->SetPosition({ SCREEN_CENTER_X, 950.0f, 0.0f });
+	textBG->SetAlpha(0.5f);
 }
 
 //=============================================================================
@@ -90,7 +95,8 @@ void TutorialViewer::Init(void)
 	MessageFrame->SetVisible(false);
 	DescriptionText->SetActive(false);
 	ExitText->SetActive(false);
-	ExitText->SetText("");
+	ExitText->SetText("チュートリアル");
+	textBG->SetVisible(false);
 }
 
 //=============================================================================
@@ -143,6 +149,7 @@ void TutorialViewer::Draw()
 	DescriptionText->Draw();
 
 	// 終了テキスト
+	textBG->Draw();
 	ExitText->Draw();
 
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
@@ -166,6 +173,7 @@ void TutorialViewer::ShowTutorial(HelpTextureType Type)
 	MessageFrame->SetVisible(true);
 	DescriptionText->SetActive(true);
 	ExitText->SetActive(false);
+	textBG->SetVisible(false);
 
 	// 画像のフェイドイン
 	HelpTexture.at(TextureNum)->SetAlpha(0.0f);
@@ -204,7 +212,7 @@ void TutorialViewer::ShowTutorial(HelpTextureType Type)
 		text += "プレイヤーにとって良いイベントだけでなく、\n";
 		text += "悪いイベントが起きることもあるので注意しましょう。";
 		DescriptionText->SetText(text);
-		ExitText->SetText("道でイベントマスを覆う");
+		ExitText->SetText("イベントマスに道を作る");
 		break;
 
 	case TutorialViewer::HighScore:
@@ -218,7 +226,7 @@ void TutorialViewer::ShowTutorial(HelpTextureType Type)
 		}
 		else
 		{
-			ExitText->SetText("チュートリアル終了：Option Button");
+			ExitText->SetText("チュートリアル終了");
 		}
 		break;
 
@@ -238,4 +246,5 @@ void TutorialViewer::SetHelpMessage(void)
 	MessageFrame->SetVisible(false);
 	DescriptionText->SetActive(false);
 	ExitText->SetActive(true);
+	textBG->SetVisible(true);
 }

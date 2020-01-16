@@ -55,6 +55,8 @@ private:
 	std::vector<TextureDrawer*> HelpTexture;
 	TextViewer *DescriptionText;
 	TextViewer *ExitText;
+	TextureDrawer *textBG;
+
 	int TextureNum;
 	bool IsShowTexture;
 };
