@@ -53,22 +53,22 @@ using namespace EventConfig;
 //*****************************************************************************
 // É}ÉNÉçíËã`
 //*****************************************************************************
-const char* EventCSVPath_City[] = { 
+static const char* EventCSVPath_City[] = { 
 	"data/FIELD/City/City_Event.csv", 
 	"data/FIELD/City/City1_Event.csv",
 	"data/FIELD/City/City2_Event.csv"
 };
-const char* EventCSVPath_World[] = {
+static const char* EventCSVPath_World[] = {
 	"data/FIELD/World/World_Event.csv", 
-	"data/FIELD/World/World1_Event.csv"
+	"data/FIELD/World/World1_Event.csv",
 	"data/FIELD/World/World2_Event.csv"
 };
-const char* EventCSVPath_Space[] = { 
+static const char* EventCSVPath_Space[] = {
 	"data/FIELD/Space/Space_Event.csv",
 	"data/FIELD/Space/Space1_Event.csv",
 	"data/FIELD/Space/Space2_Event.csv",
 };
-const char* EventCSVPath_Tutorial = "data/FIELD/Tutorial/Tutorial_Event.csv";
+static const char* EventCSVPath_Tutorial = "data/FIELD/Tutorial/Tutorial_Event.csv";
 
 
 //=============================================================================

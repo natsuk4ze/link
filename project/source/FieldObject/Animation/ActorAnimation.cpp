@@ -16,7 +16,7 @@ void ActorAnimation::FallAndExpantion(GameObject& ref, std::function<void(void)>
 {
 	const int duration = 15;
 	Tween::Move(ref, ref.GetPosition() + D3DXVECTOR3(0.0f, 10.0f, 0.0f), ref.GetPosition(), duration, InQuint);
-	Tween::Scale(ref, D3DXVECTOR3(0.0f, 0.0f, 0.0f), Vector3::One * 0.25f, duration, OutCubic, callback);
+	Tween::Scale(ref, D3DXVECTOR3(0.0f, 0.0f, 0.0f), PlaceActor::Scale, duration, OutCubic, callback);
 }
 
 //=====================================
@@ -26,7 +26,7 @@ void ActorAnimation::RotateAndExpantion(GameObject& ref, std::function<void(void
 {
 	const int duration = 30;
 	Tween::Rotate(ref, ref.GetRotation() + D3DXVECTOR3(0.0f, 180.0f, 0.0f), ref.GetRotation(), duration, OutBack);
-	Tween::Scale(ref, D3DXVECTOR3(0.0f, 0.0f, 0.0f), ref.GetScale(), duration, OutBack, callback);
+	Tween::Scale(ref, D3DXVECTOR3(0.0f, 0.0f, 0.0f), PlaceActor::Scale, duration, OutBack, callback);
 }
 
 //=====================================
@@ -51,9 +51,9 @@ void ActorAnimation::Shrink(GameObject& ref, std::function<void(void)> callback)
 //=====================================
 void ActorAnimation::ExpantionYAndReturnToOrigin(GameObject& ref, std::function<void(void)> callback) 
 {
-	Tween::Scale(ref, ref.GetScale(), ref.GetScale() + D3DXVECTOR3(0.0f, 0.1f, 0.0f), 30, OutBack, [&ref, &callback] 
+	Tween::Scale(ref, ref.GetScale(), PlaceActor::Scale + D3DXVECTOR3(0.0f, 0.1f, 0.0f), 30, OutBack, [&ref, &callback]
 	{
-		Tween::Scale(ref, ref.GetScale(), ref.GetScale() - D3DXVECTOR3(0.0f, 0.1f, 0.0f), 30, InOutQuint, [&callback]
+		Tween::Scale(ref, PlaceActor::Scale + D3DXVECTOR3(0.0f, 0.1f, 0.0f), PlaceActor::Scale, 30, InOutQuint, [&callback]
 		{
 			callback;
 		});

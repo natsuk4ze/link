@@ -41,6 +41,8 @@ private:
 
 	int cntFrameMorphing;						//モーフィング中のカウンタ
 	int currentMorphing;						//現在のモーフィングインデックス
+
+	int fieldLevel;
 };
 
 #endif

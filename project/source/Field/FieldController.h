@@ -175,6 +175,7 @@ namespace Field
 
 		int fieldBorder;						//フィールド範囲(マス単位)
 		int cntFrame;							//フレームカウント
+		int cntStockRecovery;					//ストック回復カウント
 		float developmentLevelAI;				//AI発展レベル(リンクレベルの累積)
 		float developSpeedBonus;				//発展スピード増加ボーナス
 		bool enableDevelop;						//開拓可能かどうか

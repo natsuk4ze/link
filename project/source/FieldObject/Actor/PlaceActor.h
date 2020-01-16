@@ -47,6 +47,7 @@ public:
 	bool IsType(Field::Model::PlaceType Type);
 
 	static const D3DXVECTOR3 SizeCullingBox;			//視錐台カリングに使用するボックスの大きさ
+	static const D3DXVECTOR3 Scale;
 
 protected:
 	// ***継承先のクラスで読み込み***
@@ -55,9 +56,6 @@ protected:
 	// ******************************
 
 	bool onCamera;										// 描画の可否判定
-
-private:
-	static const D3DXVECTOR3 Scale;
 
 #if _DEBUG
 	void Debug();
