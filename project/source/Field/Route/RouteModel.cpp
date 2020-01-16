@@ -342,7 +342,7 @@ namespace Field::Model
 		auto opponents = place->GetEdgeOpponents();
 		for (auto&& opponent : opponents)
 		{
-			if (opponent != edgeEnd && opponent != edgeStart)
+			//if (opponent != edgeEnd && opponent != edgeStart)
 			{
 				edge = opponent;
 				break;

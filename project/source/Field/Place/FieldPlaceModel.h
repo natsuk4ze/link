@@ -96,6 +96,9 @@ namespace Field::Model
 		void AddDirection(PlaceModel* place);
 		std::vector<Adjacency> GetConnectingAdjacency() const;
 
+		//橋を開発
+		void DevelopBridge();
+
 #ifdef DEBUG_PLACEMODEL
 		//デバッグ用描画処理
 		void DrawDebug();
@@ -120,6 +123,9 @@ namespace Field::Model
 
 		//連結方向
 		std::vector<Adjacency> connectDirection;
+
+		//橋の場合、開発済みか
+		bool isDeveloppedBridge;
 	};
 }
 
