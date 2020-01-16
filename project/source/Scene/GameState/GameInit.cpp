@@ -37,10 +37,6 @@ void GameScene::GameInit::OnStart(GameScene & entity)
 	//ブース制御のシリアル通信開始
 	BoothController::Instance()->Init();
 
-	//テキストビューアで使用するフォントをロード
-	FontManager::Instance()->LoadFont("data/FONT/Makinas-4-Square.otf");
-	FontManager::Instance()->LoadFont("data/FONT/Text_cinecaption226.ttf");
-	
 	// イベント用モデル
 	ResourceManager::Instance()->LoadMesh("Meteor", "data/MODEL/Planet/Meteor.x");
 	ResourceManager::Instance()->LoadMesh("UFO", "data/MODEL/UFO/UFO.x");

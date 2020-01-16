@@ -9,6 +9,7 @@
 #include "../Framework/Core/SceneManager.h"
 #include "../Framework/Tool/DebugWindow.h"
 #include "../Framework/Core/PlayerPrefs.h"
+#include "../Framework/Resource/FontManager.h"
 
 #include "GameConfig.h"
 
@@ -28,6 +29,10 @@ GameMain::GameMain(HINSTANCE hInstance, HWND hWnd) :
 	sceneManager->Add(GameConfig::SceneID::ParticleTest, new ParticleTestScene(renderTexture, renderSurface));
 	sceneManager->Add(GameConfig::SceneID::ModelView, new ModelViewScene(renderTexture, renderSurface));
 	sceneManager->Add(GameConfig::SceneID::MophingTest, new MophingTestScene(renderTexture, renderSurface));
+
+	//テキストビューアで使用するフォントをロード
+	FontManager::Instance()->LoadFont("data/FONT/Makinas-4-Square.otf");
+	FontManager::Instance()->LoadFont("data/FONT/Text_cinecaption226.ttf");
 
 	//初期シーンに遷移
 	const int InitScene = GameConfig::SceneID::Game;
