@@ -48,6 +48,7 @@ void CityActor::Init(const D3DXVECTOR3 & pos, Field::FieldLevel currentLevel)
 	using Field::Actor::ActorLoader;
 
 	cntFrameMorphing = 0;
+	fieldLevel = currentLevel;
 
 #ifdef USE_MORPHING
 	switch (currentLevel)
@@ -119,7 +120,11 @@ void CityActor::Update()
 				});
 			}
 		}
+	}
 
+	if (fieldLevel == Field::FieldLevel::Space)
+	{
+		transform->Rotate(0.25f, Vector3::Up);
 	}
 }
 
