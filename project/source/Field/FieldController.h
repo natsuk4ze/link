@@ -135,7 +135,11 @@ namespace Field
 		// 開拓したかどうかを調べる
 		bool IsDeveloped(void);
 
+		//遠景状態の設定
 		void SetFarView(bool state);
+
+		//操作説明を表示するか
+		void EnableViewOperation(bool state);
 
 	private:
 		//内部クラス前方宣言

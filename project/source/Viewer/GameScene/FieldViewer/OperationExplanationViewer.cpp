@@ -11,7 +11,8 @@
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-OperationExplanationViewer::OperationExplanationViewer()
+OperationExplanationViewer::OperationExplanationViewer() :
+	active(true)
 {
 	//テキスト
 	const D3DXVECTOR3 Size = { 250.0f, 62.5f, 0.0f };
@@ -57,6 +58,9 @@ void OperationExplanationViewer::Update(void)
 //=============================================================================
 void OperationExplanationViewer::Draw(void)
 {
+	if (!active)
+		return;
+
 	for (int i = 0; i < textMax; i++)
 	{
 		text[i]->Draw();
@@ -105,4 +109,12 @@ void OperationExplanationViewer::Set(OperationID id0, OperationID id1, Operation
 {
 	//テクスチャ情報受け渡し処理
 	SetTexture(id0, id1, id2, id3);
+}
+
+//=============================================================================
+// アクティブ設定
+//=============================================================================
+void OperationExplanationViewer::SetActive(bool state)
+{
+	active = state;
 }

@@ -54,12 +54,16 @@ public:
 	void Draw(void);
 	void Set(OperationID id0, OperationID id1, OperationID id2, OperationID id3);
 
+	void SetActive(bool state);
+
 private:
 
 	const static int textMax = 4;
 
 	//テキスト
 	BaseViewerDrawer * text[textMax];
+
+	bool active;
 
 	//テクスチャUVセット処理
 	void SetTexture(OperationID id0, OperationID id1, OperationID id2, OperationID id3);

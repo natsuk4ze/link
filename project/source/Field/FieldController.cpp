@@ -358,6 +358,14 @@ namespace Field
 	}
 
 	/**************************************
+	‘€ìà–¾‚Ì•\¦İ’è
+	***************************************/
+	void FieldController::EnableViewOperation(bool state)
+	{
+		viewer->EnableViewOperation(state);
+	}
+
+	/**************************************
 	ƒNƒŠƒAˆ—
 	***************************************/
 	void FieldController::Clear()
