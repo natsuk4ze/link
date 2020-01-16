@@ -48,6 +48,9 @@ public:
 	//上昇した分のリンクレベルを表示する
 	void ViewLinkLevelUp(int level, std::function<void()> callback = nullptr);
 
+	//操作説明を表示するかどうか
+	void EnableViewOperation(bool state);
+
 private:
 	std::vector <BaseViewer*> fieldViewer;
 

@@ -61,9 +61,14 @@ TutorialViewer::TutorialViewer() :
 	DescriptionText->SetText("ここは操作説明です。");
 
 	ExitText = new TextViewer("マキナス 4 Square", 80);;
-	ExitText->SetPosition(D3DXVECTOR3(SCREEN_CENTER_X, 850.0f, 0.0f));
+	ExitText->SetPosition(D3DXVECTOR3(SCREEN_CENTER_X, 950.0f, 0.0f));
 	ExitText->SetText("");
 	ExitText->SetActive(false);
+
+	textBG = new TextureDrawer({ 700.0f, 100.0f });
+	textBG->LoadTexture("data/TEXTURE/Viewer/TutorialViewer/TextBG.png");
+	textBG->SetPosition({ SCREEN_CENTER_X, 950.0f, 0.0f });
+	textBG->SetAlpha(0.5f);
 }
 
 //=============================================================================
@@ -90,7 +95,8 @@ void TutorialViewer::Init(void)
 	MessageFrame->SetVisible(false);
 	DescriptionText->SetActive(false);
 	ExitText->SetActive(false);
-	ExitText->SetText("");
+	ExitText->SetText("チュートリアル");
+	textBG->SetVisible(false);
 }
 
 //=============================================================================
@@ -143,6 +149,7 @@ void TutorialViewer::Draw()
 	DescriptionText->Draw();
 
 	// 終了テキスト
+	textBG->Draw();
 	ExitText->Draw();
 
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, false);
@@ -166,6 +173,7 @@ void TutorialViewer::ShowTutorial(HelpTextureType Type)
 	MessageFrame->SetVisible(true);
 	DescriptionText->SetActive(true);
 	ExitText->SetActive(false);
+	textBG->SetVisible(false);
 
 	// 画像のフェイドイン
 	HelpTexture.at(TextureNum)->SetAlpha(0.0f);
@@ -180,6 +188,7 @@ void TutorialViewer::ShowTutorial(HelpTextureType Type)
 		text += "道の長さに制限はありませんが、\n";
 		text += "道を作るときは町同士が繋がっている必要があります。";
 		DescriptionText->SetText(text);
+		ExitText->SetText("町を道で繋ぐ");
 		break;
 
 	case TutorialViewer::Develop:
@@ -187,6 +196,7 @@ void TutorialViewer::ShowTutorial(HelpTextureType Type)
 		text += "開拓して道を置けるようになります。\n";
 		text += "開拓1マスにつき、画面左のストックを1個使います。\n";
 		DescriptionText->SetText(text);
+		ExitText->SetText("フィールドを開拓する");
 		break;
 
 	case TutorialViewer::ChangeCamera:
@@ -194,6 +204,7 @@ void TutorialViewer::ShowTutorial(HelpTextureType Type)
 		text += "フィールドを遠くから眺めて開発計画を立てましょう。\n";
 		text += "遠くから眺めてる間はルートを作ることができません。";
 		DescriptionText->SetText(text);
+		ExitText->SetText("カメラを切り替える");
 		break;
 
 	case TutorialViewer::EventHappend:
@@ -201,7 +212,7 @@ void TutorialViewer::ShowTutorial(HelpTextureType Type)
 		text += "プレイヤーにとって良いイベントだけでなく、\n";
 		text += "悪いイベントが起きることもあるので注意しましょう。";
 		DescriptionText->SetText(text);
-		ExitText->SetText("道でイベントマスを覆う");
+		ExitText->SetText("イベントマスに道を作る");
 		break;
 
 	case TutorialViewer::HighScore:
@@ -215,7 +226,7 @@ void TutorialViewer::ShowTutorial(HelpTextureType Type)
 		}
 		else
 		{
-			ExitText->SetText("チュートリアル終了：Option Button");
+			ExitText->SetText("チュートリアル終了");
 		}
 		break;
 
@@ -235,4 +246,5 @@ void TutorialViewer::SetHelpMessage(void)
 	MessageFrame->SetVisible(false);
 	DescriptionText->SetActive(false);
 	ExitText->SetActive(true);
+	textBG->SetVisible(true);
 }

@@ -109,6 +109,14 @@ void FieldViewer::ViewLinkLevelUp(int level, std::function<void()> callback)
 }
 
 //=============================================================================
+// 操作説明ビューアを表示するか
+//=============================================================================
+void FieldViewer::EnableViewOperation(bool state)
+{
+	operationExplanation->SetActive(state);
+}
+
+//=============================================================================
 // 操作説明ビューアを設置
 //=============================================================================
 void FieldViewer::SetOperationExplanation(

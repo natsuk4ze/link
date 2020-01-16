@@ -28,6 +28,8 @@ void GameScene::GameTransitionOut::OnStart(GameScene & entity)
 
 	entity.cntFrame = 0;
 
+	entity.field->EnableViewOperation(false);
+
 	SE::Play(SoundConfig::SEID::Transition, 0.4f);
 
 	//gamaeViewer‚ðƒIƒt‚É

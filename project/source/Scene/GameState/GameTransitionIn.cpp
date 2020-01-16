@@ -63,6 +63,7 @@ GameScene::State GameScene::GameTransitionIn::OnUpdate(GameScene & entity)
 	{
 		GuideViewer::Instance()->SetActive(false);
 		entity.field->SetViewerActive(false);
+		entity.field->EnableViewOperation(true);
 
 		entity.gameViewer->SetGradeTitle(entity.level, [&]()
 		{

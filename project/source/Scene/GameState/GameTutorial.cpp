@@ -41,6 +41,9 @@ void GameScene::GameTutorial::OnStart(GameScene & entity)
 	entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
 
+	// フィールドビューワの操作説明を非表示
+	entity.field->EnableViewOperation(false);
+
 	// ゲームシーンで使用するUIの描画をON
 	entity.field->SetViewerActive(true);
 	entity.gameViewer->SetActive(true);
