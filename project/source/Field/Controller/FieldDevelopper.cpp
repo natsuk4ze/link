@@ -19,6 +19,7 @@
 #include "../../Reward/RewardController.h"
 #include "../../Sound/SoundConfig.h"
 #include "../../../Framework/Sound/SoundEffect.h"
+#include "../../Scene/GameState/GameTutorial.h"
 
 #include "../../../Library/cppLinq/cpplinq.hpp"
 
@@ -216,6 +217,9 @@ namespace Field
 
 			stockNum -= cntMountain;
 
+			// チュートリアル用のフラグ、ゲームシーンで使いたいなら初期化を注意
+			DevelopFlag = true;
+
 			// リワードに反映
 			RewardController::Instance()->SetRewardData(RC::Type::Destructer, cntMountain);
 
@@ -310,6 +314,9 @@ namespace Field
 
 			stockNum -= cntRiver;
 
+			// チュートリアル用のフラグ、ゲームシーンで使いたいなら初期化を注意
+			DevelopFlag = true;
+
 			// リワードに反映
 			RewardController::Instance()->SetRewardData(RC::Type::Artist, cntRiver);
 
@@ -338,7 +345,9 @@ namespace Field
 	***************************************/
 	void Field::FieldController::FieldDevelopper::ResetStock(void)
 	{
+		// 初期化
 		stockNum = InitStock;
+		DevelopFlag = false;
 	}
 
 	/**************************************
@@ -350,10 +359,10 @@ namespace Field
 	}
 
 	/**************************************
-	開拓したかどうかを調べる
+	開拓したかどうかを調べる(チュートリアル用)
 	***************************************/
-	bool Field::FieldController::FieldDevelopper::IsDeveloped(void)
+	bool Field::FieldController::FieldDevelopper::GetDevelopFlag(void)
 	{
-		return stockNum == InitStock ? false : true;
+		return DevelopFlag;
 	}
 }

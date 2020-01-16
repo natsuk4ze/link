@@ -332,7 +332,7 @@ namespace Field
 	***************************************/
 	bool FieldController::IsDeveloped(void)
 	{
-		return developper->IsDeveloped();
+		return developper->GetDevelopFlag();
 	}
 
 	/**************************************

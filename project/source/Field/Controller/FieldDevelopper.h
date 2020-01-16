@@ -46,12 +46,17 @@ namespace Field
 		// チュートリアル用
 		// ====================
 		// 開拓したかどうかを調べる
-		bool IsDeveloped(void);
+		bool GetDevelopFlag(void);
 
 	private:
 		FieldController *entity;
 
 		int stockNum;
+
+		// ====================
+		// チュートリアル用
+		// ====================
+		bool DevelopFlag = false;
 	};
 }
 
