@@ -61,7 +61,7 @@ TutorialViewer::TutorialViewer() :
 	DescriptionText->SetText("ここは操作説明です。");
 
 	ExitText = new TextViewer("マキナス 4 Square", 80);;
-	ExitText->SetPosition(D3DXVECTOR3(SCREEN_CENTER_X, 850.0f, 0.0f));
+	ExitText->SetPosition(D3DXVECTOR3(SCREEN_CENTER_X, 950.0f, 0.0f));
 	ExitText->SetText("");
 	ExitText->SetActive(false);
 }
@@ -180,6 +180,7 @@ void TutorialViewer::ShowTutorial(HelpTextureType Type)
 		text += "道の長さに制限はありませんが、\n";
 		text += "道を作るときは町同士が繋がっている必要があります。";
 		DescriptionText->SetText(text);
+		ExitText->SetText("町を道で繋ぐ");
 		break;
 
 	case TutorialViewer::Develop:
@@ -187,6 +188,7 @@ void TutorialViewer::ShowTutorial(HelpTextureType Type)
 		text += "開拓して道を置けるようになります。\n";
 		text += "開拓1マスにつき、画面左のストックを1個使います。\n";
 		DescriptionText->SetText(text);
+		ExitText->SetText("フィールドを開拓する");
 		break;
 
 	case TutorialViewer::ChangeCamera:
@@ -194,6 +196,7 @@ void TutorialViewer::ShowTutorial(HelpTextureType Type)
 		text += "フィールドを遠くから眺めて開発計画を立てましょう。\n";
 		text += "遠くから眺めてる間はルートを作ることができません。";
 		DescriptionText->SetText(text);
+		ExitText->SetText("カメラを切り替える");
 		break;
 
 	case TutorialViewer::EventHappend:
