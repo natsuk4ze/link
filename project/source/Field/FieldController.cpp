@@ -57,6 +57,7 @@ namespace Field
 	FieldController::FieldController(Field::FieldLevel level) :
 		fieldBorder(InitFieldBorder),
 		cntFrame(0),
+		cntStockRecovery(0),
 		developmentLevelAI(0),
 		developSpeedBonus(1.0f),
 		currentLevel(level),
@@ -173,6 +174,13 @@ namespace Field
 
 		//AI発展レベルを計算
 		CalcDevelopmentLevelAI();
+
+		//ストックの回復(10秒おき)
+		cntStockRecovery = Math::WrapAround(0, 300, ++cntStockRecovery);
+		if (cntStockRecovery == 0)
+		{
+			developper->AddStock(1);
+		}
 	}
 
 	/**************************************
@@ -368,6 +376,7 @@ namespace Field
 
 		//パラメータリセット
 		cntFrame = 0;
+		cntStockRecovery = 0;
 		developmentLevelAI = 0.0f;
 		developSpeedBonus = 1.0f;
 		enableDevelop = true;
