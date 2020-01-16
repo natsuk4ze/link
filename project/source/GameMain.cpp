@@ -29,10 +29,6 @@ GameMain::GameMain(HINSTANCE hInstance, HWND hWnd) :
 	sceneManager->Add(GameConfig::SceneID::ModelView, new ModelViewScene(renderTexture, renderSurface));
 	sceneManager->Add(GameConfig::SceneID::MophingTest, new MophingTestScene(renderTexture, renderSurface));
 
-	//タイトルがまだ無いのでここでパラメータを初期化してしまう
-	PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_RemainTime), 30 * 180);
-	PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), 0);
-
 	//初期シーンに遷移
 	const int InitScene = GameConfig::SceneID::Game;
 	sceneManager->ChangeScene(InitScene);
