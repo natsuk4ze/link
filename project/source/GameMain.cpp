@@ -9,6 +9,7 @@
 #include "../Framework/Core/SceneManager.h"
 #include "../Framework/Tool/DebugWindow.h"
 #include "../Framework/Core/PlayerPrefs.h"
+#include "../Framework/Resource/FontManager.h"
 
 #include "GameConfig.h"
 
@@ -29,9 +30,9 @@ GameMain::GameMain(HINSTANCE hInstance, HWND hWnd) :
 	sceneManager->Add(GameConfig::SceneID::ModelView, new ModelViewScene(renderTexture, renderSurface));
 	sceneManager->Add(GameConfig::SceneID::MophingTest, new MophingTestScene(renderTexture, renderSurface));
 
-	//タイトルがまだ無いのでここでパラメータを初期化してしまう
-	PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_RemainTime), 30 * 180);
-	PlayerPrefs::SaveNumber<int>(Utility::ToString(GameConfig::Key_FieldLevel), 0);
+	//テキストビューアで使用するフォントをロード
+	FontManager::Instance()->LoadFont("data/FONT/Makinas-4-Square.otf");
+	FontManager::Instance()->LoadFont("data/FONT/Text_cinecaption226.ttf");
 
 	//初期シーンに遷移
 	const int InitScene = GameConfig::SceneID::Game;
