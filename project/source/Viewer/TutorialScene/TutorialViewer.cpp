@@ -65,7 +65,7 @@ TutorialViewer::TutorialViewer() :
 	ExitText->SetText("");
 	ExitText->SetActive(false);
 
-	textBG = new TextureDrawer({ 700.0f, 100.0f });
+	textBG = new TextureDrawer({ 900.0f, 100.0f });
 	textBG->LoadTexture("data/TEXTURE/Viewer/TutorialViewer/TextBG.png");
 	textBG->SetPosition({ SCREEN_CENTER_X, 950.0f, 0.0f });
 	textBG->SetAlpha(0.5f);

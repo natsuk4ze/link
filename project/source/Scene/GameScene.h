@@ -126,6 +126,8 @@ private:
 	bool debugReward;							//実績リザルト画面でデバッグを使用するか
 	bool debugAchievedResult[10];				//デバッグ用の達成実績
 
+	bool enableInput;
+
 	//ポストエフェクト関連
 	BloomController *bloomController;			//ブルームエフェクトのコントローラ
 

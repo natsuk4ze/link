@@ -236,7 +236,7 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 		// チュートリアル終了
 		if (!entity.tutorialViewer->GetIsShowTexture())
 		{
-			if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_R))
+			if (Keyboard::GetTrigger(DIK_RETURN) || GamePad::GetTrigger(0, BUTTON_C))
 			{
 				TutorialClear(entity);
 			}
