@@ -32,7 +32,11 @@
 void GameScene::GameTitle::OnStart(GameScene & entity)
 {
 	// シーンチェンジ
-	TransitionController::Instance()->SetTransition(true, TransitionType::HexaPop);
+	entity.enableInput = false;
+	TransitionController::Instance()->SetTransition(true, TransitionType::HexaPop, [&]
+	{
+		entity.enableInput = true;
+	});
 
 	// 実績のリセット
 	// リワードをリセット
@@ -79,6 +83,9 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 #endif
 
 	entity.field->UpdateObject();
+
+	if (!entity.enableInput)
+		return State::Title;
 
 	if (entity.step == 1)
 	{

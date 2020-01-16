@@ -155,6 +155,8 @@ void GameScene::Init()
 
 	//ステート初期化
 	ChangeState(State::Initialize);
+
+	enableInput = false;
 }
 
 /**************************************
