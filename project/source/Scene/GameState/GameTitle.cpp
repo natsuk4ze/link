@@ -112,9 +112,6 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 			entity.step++;
 			SelectedFlag = true;
 
-			PlayBGM::Instance()->FadeOut();
-			PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::City, 0.3f, 30, false);
-
 			TaskManager::Instance()->CreateDelayedTask(30, [&]()
 			{
 				entity.titleViewer->SetActive(false);
@@ -183,6 +180,9 @@ GameScene::State GameScene::GameTitle::OnUpdate(GameScene & entity)
 					entity.fieldCamera->InitRotatedAngle();
 					entity.fieldCamera->SetFollowTarget(entity.field->GetFieldCursor());
 					entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
+
+					PlayBGM::Instance()->FadeOut();
+					PlayBGM::Instance()->FadeIn(SoundConfig::BGMID::Tutorial, 0.5f, 60, false);
 
 					// シーンチェンジ
 					TransitionController::Instance()->SetTransition(true, TransitionType::HexaPop, [&]()

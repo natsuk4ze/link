@@ -38,7 +38,7 @@ void EventCamera::Init()
 	*this = *Camera::mainCamera;
 
 	//元のカメラをキャッシュ
-	defaultMainCamera = Camera::mainCamera;
+	defaultMainCamera = dynamic_cast<FieldCamera*>(Camera::mainCamera);
 
 	//自身をメインカメラにセット
 	Camera::SetMainCamera(this);
@@ -105,7 +105,7 @@ void EventCamera::Move(const D3DXVECTOR3 & position, int duration, float eyeDist
 void EventCamera::Translation(const D3DXVECTOR3 & position, int duration, std::function<void()> callback)
 {
 	float angleY = D3DXToRadian(FieldCamera::CameraAngleY);
-	float angleXZ = D3DXToRadian(FieldCamera::InitCameraAngle);
+	float angleXZ = D3DXToRadian(defaultMainCamera->GetRotatedAngle());;
 
 	D3DXVECTOR3 offset = D3DXVECTOR3(
 		cosf(angleY) * cosf(angleXZ),

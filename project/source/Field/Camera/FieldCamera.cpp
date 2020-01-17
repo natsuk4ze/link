@@ -106,3 +106,11 @@ void FieldCamera::InitRotatedAngle(void)
 {
 	RotatedAngle = InitCameraAngle;
 }
+
+/**************************************
+‰ñ“]Šp“xŽæ“¾
+***************************************/
+float FieldCamera::GetRotatedAngle() const
+{
+	return RotatedAngle;
+}

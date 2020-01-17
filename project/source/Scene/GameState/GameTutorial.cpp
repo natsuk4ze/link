@@ -197,9 +197,9 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 		}
 
 		// イベントの発生を確認
-		// もしくは、イベントマスがないかつ30秒以上経過
+		// もしくは、イベントマスがないかつ3秒以上経過
 		if (!entity.eventController->IsEmptyEventVec() || 
-			(FrameCount >= 900 && entity.eventController->GetRemainNum() == 0))
+			(FrameCount >= 90 && entity.eventController->GetRemainNum() == 0))
 		{
 			ClearFlag = true;
 		}

@@ -18,7 +18,8 @@ const char* SoundConfig::BGMPath[BGMID::BGMMax]
 	{"data/SOUND/BGM/Battle-Forbidden_loop.wav"},
 	{"data/SOUND/BGM/Battle-Noble_loop.wav"},
 	{"data/SOUND/BGM/Crasher_loop.wav"},
-	{"data/SOUND/BGM/MusMus-CT-NV-TT.wav"}
+	{"data/SOUND/BGM/MusMus-CT-NV-TT.wav"},
+	{"data/SOUND/BGM/DETROIT_BEAT.wav"},
 };
 
 const char* SoundConfig::SEPath[SEID::SEMax]
