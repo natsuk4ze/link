@@ -39,6 +39,16 @@ void PresenDebugController::Update()
 {
 	return;
 
+	//プレゼン用のデバッグ機能を使う時はreturnの上に移動させる
+	if (GamePad::GetTrigger(0, BUTTON_Y))
+	{
+		if (scene->currentState == GameScene::State::Idle)
+		{
+			scene->level++;
+			scene->ChangeState(GameScene::State::TransitionOut);
+		}
+	}
+
 	//XボタンでAIレベル減少
 	if (GamePad::GetTrigger(0, BUTTON_B))
 	{
