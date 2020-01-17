@@ -31,6 +31,7 @@ public:
 		UFOEvent,
 		AIBurstEvent,
 		Result,
+		Tutorial,
 
 		BGMMax
 	};
