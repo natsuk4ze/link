@@ -16,7 +16,7 @@ OperationExplanationViewer::OperationExplanationViewer() :
 {
 	//テキスト
 	const D3DXVECTOR3 Size = { 250.0f, 62.5f, 0.0f };
-	const D3DXVECTOR3 BasePosition = { SCREEN_CENTER_X - Size.x * 1.5f, 960.0f, 0.0f };
+	const D3DXVECTOR3 BasePosition = { SCREEN_CENTER_X - Size.x * 1.5f, 1000.0f, 0.0f };
 	for (int i = 0; i < textMax; i++)
 	{
 

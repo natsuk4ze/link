@@ -55,19 +55,21 @@ TutorialViewer::TutorialViewer() :
 	MessageFrame->LoadTexture("data/TEXTURE/Viewer/TutorialViewer/MessageFrame.png");
 	MessageFrame->SetPosition({ SCREEN_CENTER_X, 950.0f, 0.0f });
 
-	DescriptionText = new TextViewer("マキナス 4 Square", 50);;
+	DescriptionText = new TextViewer("マキナス 4 Square", 50);
+	//DescriptionText = new TextViewer("マキナス 4 Square", 150);
 	DescriptionText->SetPosition(D3DXVECTOR3(350.0f, 950.0f, 0.0f));
+	//DescriptionText->SetPosition(D3DXVECTOR3(350.0f, 1000.0f, 0.0f));
 	DescriptionText->SetHorizontalAlignment(TextViewer::HorizontalAlignment::Left);
 	DescriptionText->SetText("ここは操作説明です。");
 
 	ExitText = new TextViewer("マキナス 4 Square", 80);;
-	ExitText->SetPosition(D3DXVECTOR3(SCREEN_CENTER_X, 950.0f, 0.0f));
+	ExitText->SetPosition(D3DXVECTOR3(SCREEN_CENTER_X, 850.0f, 0.0f));
 	ExitText->SetText("");
 	ExitText->SetActive(false);
 
 	textBG = new TextureDrawer({ 900.0f, 100.0f });
 	textBG->LoadTexture("data/TEXTURE/Viewer/TutorialViewer/TextBG.png");
-	textBG->SetPosition({ SCREEN_CENTER_X, 950.0f, 0.0f });
+	textBG->SetPosition({ SCREEN_CENTER_X, 850.0f, 0.0f });
 	textBG->SetAlpha(0.5f);
 }
 
