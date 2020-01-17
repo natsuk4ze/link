@@ -26,7 +26,7 @@ namespace Effect::Game
 
 		//エミッターコンテナ作成
 		const unsigned MaxParticle = 128;
-		const unsigned MaxEmitter = 1;
+		const unsigned MaxEmitter = 4;
 		const int DurationEmit = 5;
 		const int NumEmit = 30;
 
