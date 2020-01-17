@@ -82,6 +82,19 @@ void GameScene::GameTutorial::TutorialClear(GameScene & entity)
 }
 
 /**************************************
+操作説明表示オフ
+***************************************/
+void GameScene::GameTutorial::SetExplanationNone(GameScene& entity)
+{
+	entity.field->SetOperationExplanation(
+		OperationExplanationViewer::OperationID::Z_None,
+		OperationExplanationViewer::OperationID::X_None,
+		OperationExplanationViewer::OperationID::C_None,
+		OperationExplanationViewer::OperationID::Space_None
+	);
+}
+
+/**************************************
 更新処理
 ***************************************/
 GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
@@ -314,23 +327,59 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 		break;
 
 	case TutorialStep::Stock:
-		entity.field->SetOperationExplanation(
-			OperationExplanationViewer::OperationID::Z_None,
-			OperationExplanationViewer::OperationID::X_Develop,
-			OperationExplanationViewer::OperationID::C_None,
-			OperationExplanationViewer::OperationID::Space_None
-		);
+		if (FrameCount >= StockViewTiming)
+		{
+			entity.field->SetOperationExplanation(
+				OperationExplanationViewer::OperationID::Z_None,
+				OperationExplanationViewer::OperationID::X_Develop,
+				OperationExplanationViewer::OperationID::C_None,
+				OperationExplanationViewer::OperationID::Space_None
+			);
+		}
+		else
+		{
+			SetExplanationNone(entity);
+		}
 
 		break;
 
 	case TutorialStep::Camera:
-		entity.field->SetOperationExplanation(
-			OperationExplanationViewer::OperationID::Z_None,
-			OperationExplanationViewer::OperationID::X_None,
-			OperationExplanationViewer::OperationID::C_Change,
-			OperationExplanationViewer::OperationID::FarView
-		);
+		if (FrameCount >= CameraViewTiming)
+		{
+			entity.field->SetOperationExplanation(
+				OperationExplanationViewer::OperationID::Z_None,
+				OperationExplanationViewer::OperationID::X_None,
+				OperationExplanationViewer::OperationID::C_Change,
+				OperationExplanationViewer::OperationID::FarView
+			);
+		}
+		else
+		{
+			SetExplanationNone(entity);
+		}
+		break;
 
+	case TutorialStep::Event:
+		if (FrameCount >= EventViewTiming)
+		{
+			entity.field->SetOperationExplanation(
+				OperationExplanationViewer::OperationID::Z_Build,
+				OperationExplanationViewer::OperationID::X_None,
+				OperationExplanationViewer::OperationID::C_None,
+				OperationExplanationViewer::OperationID::Space_None
+			);
+		}
+		else
+		{
+			SetExplanationNone(entity);
+		}
+		break;
+
+	case TutorialStep::Score:
+		if (FrameCount < ScoreViewTiming)
+		{
+			SetExplanationNone(entity);
+		}
 		break;
 
 	default:

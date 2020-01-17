@@ -30,5 +30,15 @@ private:
 	int FrameCount = 0;
 	// チュートリアル操作が終わるフラグ
 	bool ClearFlag = false;
+
+	enum Const
+	{
+		StockViewTiming = 120,
+		CameraViewTiming = 60,
+		EventViewTiming = 60,
+		ScoreViewTiming = 120,
+	};
+
+	void SetExplanationNone(GameScene& entity);
 };
 #endif
