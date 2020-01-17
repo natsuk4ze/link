@@ -15,6 +15,7 @@
 #include "../../Reward/RewardController.h"
 #include "../../Sound/PlayBGM.h"
 #include "../../Sound/SoundConfig.h"
+#include "../../Viewer/GameScene/FieldViewer/OperationExplanationViewer.h"
 
 #include "../../../Framework/Input/input.h"
 #include "../../../Framework/Transition/TransitionController.h"
@@ -81,6 +82,19 @@ void GameScene::GameTutorial::TutorialClear(GameScene & entity)
 }
 
 /**************************************
+操作説明表示オフ
+***************************************/
+void GameScene::GameTutorial::SetExplanationNone(GameScene& entity)
+{
+	entity.field->SetOperationExplanation(
+		OperationExplanationViewer::OperationID::Z_None,
+		OperationExplanationViewer::OperationID::X_None,
+		OperationExplanationViewer::OperationID::C_None,
+		OperationExplanationViewer::OperationID::Space_None
+	);
+}
+
+/**************************************
 更新処理
 ***************************************/
 GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
@@ -136,6 +150,7 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 			ClearFlag = false;
 			entity.step = TutorialStep::Camera;
 		}
+
 		break;
 
 	case TutorialStep::Camera:
@@ -165,6 +180,7 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 			ClearFlag = false;
 			entity.step = TutorialStep::Event;
 		}
+
 		break;
 
 	case TutorialStep::Event:
@@ -295,6 +311,79 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 				entity.tutorialViewer->SetIsShowTexture(false);
 			}
 		}
+	}
+
+	//ステップに合わせて操作説明を制御
+	switch (entity.step)
+	{
+	case TutorialStep::Road:
+		entity.field->SetOperationExplanation(
+			OperationExplanationViewer::OperationID::Z_Build,
+			OperationExplanationViewer::OperationID::X_None,
+			OperationExplanationViewer::OperationID::C_None,
+			OperationExplanationViewer::OperationID::Space_None
+		);
+
+		break;
+
+	case TutorialStep::Stock:
+		if (FrameCount >= StockViewTiming)
+		{
+			entity.field->SetOperationExplanation(
+				OperationExplanationViewer::OperationID::Z_None,
+				OperationExplanationViewer::OperationID::X_Develop,
+				OperationExplanationViewer::OperationID::C_None,
+				OperationExplanationViewer::OperationID::Space_None
+			);
+		}
+		else
+		{
+			SetExplanationNone(entity);
+		}
+
+		break;
+
+	case TutorialStep::Camera:
+		if (FrameCount >= CameraViewTiming)
+		{
+			entity.field->SetOperationExplanation(
+				OperationExplanationViewer::OperationID::Z_None,
+				OperationExplanationViewer::OperationID::X_None,
+				OperationExplanationViewer::OperationID::C_Change,
+				OperationExplanationViewer::OperationID::FarView
+			);
+		}
+		else
+		{
+			SetExplanationNone(entity);
+		}
+		break;
+
+	case TutorialStep::Event:
+		if (FrameCount >= EventViewTiming)
+		{
+			entity.field->SetOperationExplanation(
+				OperationExplanationViewer::OperationID::Z_Build,
+				OperationExplanationViewer::OperationID::X_None,
+				OperationExplanationViewer::OperationID::C_None,
+				OperationExplanationViewer::OperationID::Space_None
+			);
+		}
+		else
+		{
+			SetExplanationNone(entity);
+		}
+		break;
+
+	case TutorialStep::Score:
+		if (FrameCount < ScoreViewTiming)
+		{
+			SetExplanationNone(entity);
+		}
+		break;
+
+	default:
+		break;
 	}
 
 	return State::Tutorial;

@@ -46,6 +46,7 @@ public:
 		X_None,
 		//Space‚É‚Â‚¢‚Ä‚Ì‘€ì‚ğ•\¦‚µ‚È‚¢
 		C_None,
+		Space_None,
 		//í—Ş”
 		Max
 	};

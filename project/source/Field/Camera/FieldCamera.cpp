@@ -23,7 +23,7 @@ staticƒƒ“ƒo
 const int FieldCamera::DurationRotate = 15;
 const float FieldCamera::AnglePeriod = 45.0f;
 const float FieldCamera::LengthFromTarget = 70.0f;
-const float FieldCamera::InitCameraAngle = -45.0f;
+const float FieldCamera::InitCameraAngle = -90.0f;
 const float FieldCamera::CameraAngleY = 40.0f;
 
 /**************************************

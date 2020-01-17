@@ -366,6 +366,19 @@ namespace Field
 	}
 
 	/**************************************
+	‘€ìà–¾‚Ì•\¦İ’è
+	***************************************/
+	void FieldController::SetOperationExplanation(int operationZ, int operationX, int operationC, int operationSpace)
+	{
+		this->operationZ = operationZ;
+		this->operationX = operationX;
+		this->operationC = operationC;
+		this->operationSpace = operationSpace;
+
+		SetOperationExplanation();
+	}
+
+	/**************************************
 	ƒNƒŠƒAˆ—
 	***************************************/
 	void FieldController::Clear()

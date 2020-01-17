@@ -93,6 +93,10 @@ namespace Field
 		triggerX = Input::GetTriggerHorizontal() * directionInput;
 		triggerZ = -Input::GetTriggerVertical() * directionInput;
 
+		//斜め入力のトリガーを禁止
+		if (triggerX != 0.0f && triggerZ != 0.0f)
+			return;
+
 		//リピート確認
 		float repeatX = 0.0f, repeatZ = 0.0f;
 		if ((Input::GetPressHorizontail() != 0.0f || Input::GetPressVertical() != 0.0f))
@@ -108,6 +112,9 @@ namespace Field
 		{
 			cntInputRepeat = 0;
 		}
+
+		if (repeatX != 0.0f && repeatZ != 0.0f)
+			return;
 
 		//移動方向決定
 		D3DXVECTOR3 direction = { Math::Clamp(-1.0f, 1.0f, triggerX + repeatX) , 0.0f,  Math::Clamp(-1.0f, 1.0f, triggerZ + repeatZ) };
