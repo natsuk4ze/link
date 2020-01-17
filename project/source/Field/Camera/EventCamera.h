@@ -16,6 +16,7 @@
 /**************************************
 前方宣言
 ***************************************/
+class FieldCamera;
 
 /**************************************
 クラス定義
@@ -55,7 +56,7 @@ public:
 
 private:
 	//元のメインカメラ
-	Camera *defaultMainCamera;
+	FieldCamera *defaultMainCamera;
 
 	//移動イージング用パラメータ
 	int cntMove;

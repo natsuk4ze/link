@@ -50,6 +50,9 @@ public:
 	//‰ñ“]‚µ‚½Šp“x‚ðƒŠƒZƒbƒg‚·‚é
 	void InitRotatedAngle(void);
 
+	//‰ñ“]Šp“xŽæ“¾
+	float GetRotatedAngle() const;
+
 	static const int DurationRotate;
 	static const float AnglePeriod;
 	static const float LengthFromTarget;
