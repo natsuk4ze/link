@@ -496,9 +496,10 @@ bool EventController::GetInPause(void)
 //=============================================================================
 // イベントビューアが表示するかどうか
 //=============================================================================
-void EventController::ClearEventMessage(void)
+void EventController::ClearEventViewer(void)
 {
-	eventViewer->MessageClear();
+	eventViewer->ClearViewer();
+	InBanStock = false;
 }
 
 //=============================================================================

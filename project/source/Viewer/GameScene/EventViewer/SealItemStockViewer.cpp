@@ -102,12 +102,25 @@ void SealItemStockViewer::SetBanIcon(std::function<bool(void)> func)
 	// 初期化
 	GetInPause = func;
 	isPlaying = true;
+	Icon->Reset();
 	Icon->SetSize(initIconSize);
 	Icon->SetVisible(true);
+	Icon_White->Reset();
 	Icon_White->SetVisible(false);
 
 	Icon->SetScale(15.0f, 0.5f, EaseType::Linear, [&]()
 	{
 		CountDownStart();
 	});
+}
+
+//=============================================================================
+// ビュアーのリセット
+//=============================================================================
+void SealItemStockViewer::Reset(void)
+{
+	isPlaying = false;
+	Icon->SetSize(initIconSize);
+	Icon->SetVisible(false);
+	Icon_White->SetVisible(false);
 }

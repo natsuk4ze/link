@@ -56,7 +56,7 @@ void GameScene::GameTitle::OnStart(GameScene & entity)
 	GuideViewer::Instance()->SetActive(false);
 	entity.resultViewer->SetActive(false);
 	entity.nameEntryViewer->SetActive(false);
-	entity.eventController->ClearEventMessage();
+	entity.eventController->ClearEventViewer();
 	entity.tutorialViewer->SetActive(false);
 
 	// タイトルのBGMを開始

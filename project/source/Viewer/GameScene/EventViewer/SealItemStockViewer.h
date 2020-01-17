@@ -35,6 +35,7 @@ public:
 	void Update(void);
 	void Draw(void);
 	void SetBanIcon(std::function<bool(void)> func);
+	void Reset(void);
 };
 
 

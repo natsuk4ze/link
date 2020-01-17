@@ -90,6 +90,7 @@ public:
 	void Close(float Duration, CloseType closeType, EaseType Type = EaseType::Linear, std::function<void(void)> callback = nullptr);
 	void Move(float Duration, D3DXVECTOR3 DestPos, EaseType Type = EaseType::Linear, std::function<void(void)> callback = nullptr);
 	void Fade(float Duration, float DestAlpha, std::function<void(void)> callback = nullptr);
+	void Reset(void);
 };
 
 #endif

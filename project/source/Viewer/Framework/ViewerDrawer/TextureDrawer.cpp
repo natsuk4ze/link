@@ -192,7 +192,7 @@ void TextureDrawer::MakeVertex()
 //=============================================================================
 // 頂点座標の設定
 //=============================================================================
-void TextureDrawer::SetVertex()
+void TextureDrawer::SetVertex(void)
 {
 	Vertex[0].vtx = Position + D3DXVECTOR3(-Size.x / 2, -Size.y / 2, 0.0f);
 	Vertex[1].vtx = Position + D3DXVECTOR3(Size.x / 2, -Size.y / 2, 0.0f);
@@ -477,6 +477,23 @@ void TextureDrawer::Fade(float Duration, float DestAlpha, std::function<void(voi
 	Callback = callback;
 
 	// UVの初期化
+	SetTexture();
+}
+
+//=============================================================================
+// テクスチャリセット
+//=============================================================================
+void TextureDrawer::Reset(void)
+{
+	CountFrame = 0;
+	Duration = 0;
+	Callback = nullptr;
+	InMove = false;
+	InScale = false;
+	InExpand = false;
+	InClose = false;
+	InFade = false;
+	SetVertex();
 	SetTexture();
 }
 

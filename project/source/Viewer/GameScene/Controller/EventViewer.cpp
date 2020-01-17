@@ -171,9 +171,9 @@ void EventViewer::SetBanIcon(std::function<bool(void)> getInPause)
 }
 
 //=============================================================================
-// イベントメッセージのクリア
+// イベントビュアーのクリア
 //=============================================================================
-void EventViewer::MessageClear(void)
+void EventViewer::ClearViewer(void)
 {
 	messageContainer.clear();
 
@@ -181,5 +181,7 @@ void EventViewer::MessageClear(void)
 	{
 		eventMessage[i]->isPlaying = false;
 	}
+
+	sealStockViewer->Reset();
 }
 

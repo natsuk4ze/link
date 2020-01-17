@@ -45,7 +45,7 @@ void GameScene::GameResult::OnStart(GameScene & entity)
 	entity.field->SetViewerActive(false);
 	entity.gameViewer->SetActive(false);
 	entity.nameEntryViewer->SetActive(false);
-	entity.eventController->ClearEventMessage();
+	entity.eventController->ClearEventViewer();
 	GuideViewer::Instance()->SetActive(false);
 	//entity.guideViewer->SetActive(false);
 
