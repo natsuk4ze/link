@@ -112,13 +112,6 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 			entity.step = TutorialStep::Stock;
 		}
 
-		entity.field->SetOperationExplanation(
-			OperationExplanationViewer::OperationID::Z_Build,
-			OperationExplanationViewer::OperationID::X_None,
-			OperationExplanationViewer::OperationID::C_None,
-			OperationExplanationViewer::OperationID::Space_None
-		);
-
 		break;
 
 	case TutorialStep::Stock:
@@ -144,13 +137,6 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 			ClearFlag = false;
 			entity.step = TutorialStep::Camera;
 		}
-
-		entity.field->SetOperationExplanation(
-			OperationExplanationViewer::OperationID::Z_None,
-			OperationExplanationViewer::OperationID::X_Develop,
-			OperationExplanationViewer::OperationID::C_None,
-			OperationExplanationViewer::OperationID::Space_None
-		);
 
 		break;
 
@@ -181,13 +167,6 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 			ClearFlag = false;
 			entity.step = TutorialStep::Event;
 		}
-
-		entity.field->SetOperationExplanation(
-			OperationExplanationViewer::OperationID::Z_None,
-			OperationExplanationViewer::OperationID::X_None,
-			OperationExplanationViewer::OperationID::C_Change,
-			OperationExplanationViewer::OperationID::FarView
-		);
 
 		break;
 
@@ -319,6 +298,43 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 				entity.tutorialViewer->SetIsShowTexture(false);
 			}
 		}
+	}
+
+	//ステップに合わせて操作説明を制御
+	switch (entity.step)
+	{
+	case TutorialStep::Road:
+		entity.field->SetOperationExplanation(
+			OperationExplanationViewer::OperationID::Z_Build,
+			OperationExplanationViewer::OperationID::X_None,
+			OperationExplanationViewer::OperationID::C_None,
+			OperationExplanationViewer::OperationID::Space_None
+		);
+
+		break;
+
+	case TutorialStep::Stock:
+		entity.field->SetOperationExplanation(
+			OperationExplanationViewer::OperationID::Z_None,
+			OperationExplanationViewer::OperationID::X_Develop,
+			OperationExplanationViewer::OperationID::C_None,
+			OperationExplanationViewer::OperationID::Space_None
+		);
+
+		break;
+
+	case TutorialStep::Camera:
+		entity.field->SetOperationExplanation(
+			OperationExplanationViewer::OperationID::Z_None,
+			OperationExplanationViewer::OperationID::X_None,
+			OperationExplanationViewer::OperationID::C_Change,
+			OperationExplanationViewer::OperationID::FarView
+		);
+
+		break;
+
+	default:
+		break;
 	}
 
 	return State::Tutorial;
