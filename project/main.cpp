@@ -155,7 +155,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 //=============================================================================
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	Debug::WindPrcHandler(hWnd, uMsg, wParam, lParam);
+	//Debug::WindPrcHandler(hWnd, uMsg, wParam, lParam);
 
 	switch (uMsg)
 	{

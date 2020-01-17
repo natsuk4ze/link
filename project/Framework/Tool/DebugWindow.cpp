@@ -5,9 +5,9 @@
 //
 //=====================================
 #include "debugWindow.h"
-#include "../../Library/imgui/imgui.h"
-#include "../../Library/imgui/imgui_impl_win32.h"
-#include "../../Library/imgui/imgui_impl_dx9.h"
+//#include "../../Library/imgui/imgui.h"
+//#include "../../Library/imgui/imgui_impl_win32.h"
+//#include "../../Library/imgui/imgui_impl_dx9.h"
 #include "../Input/input.h"
 
 /**************************************
@@ -32,7 +32,7 @@ std::deque<std::string> Debug::textLog;
 /**************************************
 プロトタイプ宣言
 ***************************************/
-IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+//IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 /**************************************
 デバッグウィンドウ用コールバック
