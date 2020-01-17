@@ -15,6 +15,7 @@
 #include "../../Reward/RewardController.h"
 #include "../../Sound/PlayBGM.h"
 #include "../../Sound/SoundConfig.h"
+#include "../../Viewer/GameScene/FieldViewer/OperationExplanationViewer.h"
 
 #include "../../../Framework/Input/input.h"
 #include "../../../Framework/Transition/TransitionController.h"
@@ -111,6 +112,13 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 			entity.step = TutorialStep::Stock;
 		}
 
+		entity.field->SetOperationExplanation(
+			OperationExplanationViewer::OperationID::Z_Build,
+			OperationExplanationViewer::OperationID::X_None,
+			OperationExplanationViewer::OperationID::C_None,
+			OperationExplanationViewer::OperationID::Space_None
+		);
+
 		break;
 
 	case TutorialStep::Stock:
@@ -136,6 +144,14 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 			ClearFlag = false;
 			entity.step = TutorialStep::Camera;
 		}
+
+		entity.field->SetOperationExplanation(
+			OperationExplanationViewer::OperationID::Z_None,
+			OperationExplanationViewer::OperationID::X_Develop,
+			OperationExplanationViewer::OperationID::C_None,
+			OperationExplanationViewer::OperationID::Space_None
+		);
+
 		break;
 
 	case TutorialStep::Camera:
@@ -165,6 +181,14 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 			ClearFlag = false;
 			entity.step = TutorialStep::Event;
 		}
+
+		entity.field->SetOperationExplanation(
+			OperationExplanationViewer::OperationID::Z_None,
+			OperationExplanationViewer::OperationID::X_None,
+			OperationExplanationViewer::OperationID::C_Change,
+			OperationExplanationViewer::OperationID::FarView
+		);
+
 		break;
 
 	case TutorialStep::Event:

@@ -141,6 +141,13 @@ namespace Field
 		//操作説明を表示するか
 		void EnableViewOperation(bool state);
 
+		void SetOperationExplanation(
+			int operationZ,
+			int operationX,
+			int operationC,
+			int operationSpace
+		);
+
 	private:
 		//内部クラス前方宣言
 		class FieldDevelopper;
@@ -221,8 +228,6 @@ namespace Field
 
 		//操作説明のセット
 		void SetOperationExplanation();
-
-
 
 		// 繋がった町の数を取得
 		int GetTownNum(void);
