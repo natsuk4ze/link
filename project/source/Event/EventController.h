@@ -74,6 +74,7 @@ public:
 	bool EventDebug(int fieldLevel);
 	void ClearEventViewer(void);
 	bool IsEmptyEventVec() const;
+	int GetRemainNum(void);
 
 	friend class PresenDebugController;
 };

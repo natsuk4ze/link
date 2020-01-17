@@ -43,7 +43,7 @@ void GameScene::GameTutorial::OnStart(GameScene & entity)
 	entity.fieldCamera->ChangeMode(FieldCamera::Mode::QuaterView);
 
 	// フィールドビューワの操作説明を非表示
-	entity.field->EnableViewOperation(false);
+	//entity.field->EnableViewOperation(false);
 
 	// ゲームシーンで使用するUIの描画をON
 	entity.field->SetViewerActive(true);
@@ -205,7 +205,9 @@ GameScene::State GameScene::GameTutorial::OnUpdate(GameScene & entity)
 		}
 
 		// イベントの発生を確認
-		if (!entity.eventController->IsEmptyEventVec() || FrameCount >= 600)
+		// もしくは、イベントマスがないかつ30秒以上経過
+		if (!entity.eventController->IsEmptyEventVec() || 
+			(FrameCount >= 900 && entity.eventController->GetRemainNum() == 0))
 		{
 			ClearFlag = true;
 		}
