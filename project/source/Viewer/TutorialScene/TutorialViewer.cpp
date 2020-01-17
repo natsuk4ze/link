@@ -186,43 +186,36 @@ void TutorialViewer::ShowTutorial(HelpTextureType Type)
 	switch (Type)
 	{
 	case TutorialViewer::LinkRoad:
-		text += "町同士を繋げるようにルートを作ると、人が行き来して発展します。\n";
-		text += "道の長さに制限はありませんが、\n";
-		text += "道を作るときは町同士が繋がっている必要があります。";
-		//text += "赤ボタン：道を作る";
-		//DescriptionText->SetColor(D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+		text += "①町のとなりにカーソルを合わせて赤ボタンを押してみましょう\n";
+		text += "②別の町のとなりにカーソルを合わせて赤ボタンを押しましょう\n";
 		DescriptionText->SetText(text);
 		ExitText->SetText("町を道で繋ぐ");
 		break;
 
 	case TutorialViewer::Develop:
-		text += "川や山などを指定してルートを作ると、\n";
-		text += "開拓して道を置けるようになります。\n";
-		text += "開拓1マスにつき、画面左のストックを1個使います。\n";
+		text += "①川のとなりにカーソルを合わせて青ボタンを押してみましょう\n";
+		text += "②カーソルで川を挟むように移動させて、青ボタンを押してみましょう\n";
+		text += "③山でも同じように開拓ができます\n";
 		DescriptionText->SetText(text);
 		ExitText->SetText("フィールドを開拓する");
 		break;
 
 	case TutorialViewer::ChangeCamera:
-		text += "カメラを動かして視点を切り替えることができます。\n";
-		text += "フィールドを遠くから眺めて開発計画を立てましょう。\n";
-		text += "遠くから眺めてる間はルートを作ることができません。";
+		text += "黄色ボタンでカメラが回転します\n";
+		text += "緑ボタンで遠くからフィールドを眺めることができます\n";
 		DescriptionText->SetText(text);
 		ExitText->SetText("カメラを切り替える");
 		break;
 
 	case TutorialViewer::EventHappend:
-		text += "光が出ているマスに道を置くと様々なイベントが発生します。\n";
-		text += "プレイヤーにとって良いイベントだけでなく、\n";
-		text += "悪いイベントが起きることもあるので注意しましょう。";
+		text += "光が出ているマスを通って道を置くと様々なイベントが発生します\n";
 		DescriptionText->SetText(text);
 		ExitText->SetText("イベントマスに道を作る");
 		break;
 
 	case TutorialViewer::HighScore:
-		text += "一度にたくさんの町を繋げられるように道を繋ぐと、\n";
-		text += "たくさんのポイントが入り、スコアが高くなります。\n";
-		text += "ハイスコアを目指して頑張りましょう。\n";
+		text += "一度に多くの町を繋げるとたくさんのポイントが入ります\n";
+		text += "ハイスコアを目指して頑張りましょう\n";
 		DescriptionText->SetText(text);
 		if (GamePad::GetPadCount() == 0)
 		{
