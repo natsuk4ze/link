@@ -7,13 +7,13 @@ Experience the future of city planning with AI🤖
 
 ## Features
 
-* Animated 3D Objects.
-* Many events.
-* Fluent UI.
+* Animated 3D Objects
+* Many events
+* Fluent UI
 * Achevements
-* Saving
-* Score Ranking
+* Score ranking
 * Tutorial
+* Multi stages
 
 ## Installation
 
@@ -27,3 +27,7 @@ Clone this repo and hit _HF_Link(フルスクリーン).exe_ file, located in
 ## Supported Language
 
 * Ja🗾
+
+## LICENSE
+
+Belongs to us (contributors).
