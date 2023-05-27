@@ -7,31 +7,31 @@ Experience the future of city planning with AI🤖
 
 ## Features
 
-Animated 3D Objects👏
+・Animated 3D Objects👏
 
 ![example](https://github.com/natsuk4ze/link/blob/master/readme_assets/mateorite.gif)
 
-Many events☠
+・Many events☠
 
 ![example](https://github.com/natsuk4ze/link/blob/master/readme_assets/atrantise.gif)
 
-Fluent UI✨
+・Fluent UI✨
 
 ![example](https://github.com/natsuk4ze/link/blob/master/readme_assets/ui.gif)
 
-Achevements📛
+・Achevements📛
 
 ![example](https://github.com/natsuk4ze/link/blob/master/readme_assets/achivements.gif)
 
-Score ranking🎖
+・Score ranking🎖
 
 ![example](https://github.com/natsuk4ze/link/blob/master/readme_assets/score.gif)
 
-Tutorial✅
+・Tutorial✅
 
 ![example](https://github.com/natsuk4ze/link/blob/master/readme_assets/tutorial.gif)
 
-Multi stages🏝
+・Multi stages🏝
 
 ![example](https://github.com/natsuk4ze/link/blob/master/readme_assets/stage.gif)
 
