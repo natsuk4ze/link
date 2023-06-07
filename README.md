@@ -1,6 +1,6 @@
 # Link🏢
 
-Hi👋 Link is 3D simulation game created by the team _H206_(members below) at [HAL Tokyo🏫](https://www.hal.ac.jp/tokyo) using DirectX.
+Hi👋 Link is 3D simulation game created by the team [_H206_](#license) at [HAL Tokyo🏫](https://www.hal.ac.jp/tokyo) using DirectX.
 Experience the future of city planning with AI🤖
 
 Wins *HAL大賞*🏅 at [未来創造展2019](https://www.hal.ac.jp/tokyo/campuslife/ms2019)
