@@ -52,7 +52,7 @@ Clone this repo and hit _HF_Link(フルスクリーン).exe_ file, located in
 
 ## Awards
 
-* *HAL大賞*🏅 at [未来創造展2019](https://www.hal.ac.jp/tokyo/campuslife/ms2019)
+* *HAL大賞*🏅 at [未来創造展2020](https://www.hal.ac.jp/tokyo/campuslife/ms2020)
 
 ## License
 
